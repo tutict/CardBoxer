@@ -1,0 +1,12 @@
+CAUGHT       M1_own_world_3d_flipped_to_false rc=1 reds=8 restore=True own_world_3d_exactly_once,no_false_assignment,assignment_inside_setup
+CAUGHT       M2_own_world_3d_commented_out rc=1 reds=2 restore=True diff_only_one_code_line,legacy_source_sha_matches
+CAUGHT       M3_min_post_premise_faked rc=1 reds=1 restore=True min_post_premise_is_post
+CAUGHT       M4_shipped_check_boolean_flipped rc=1 reds=1 restore=True shipped_all_green
+CAUGHT       M5_all_checks_result_faked rc=1 reds=1 restore=True checks15_all_green
+CAUGHT       M6_legacy_stopgap_boolean_flipped rc=1 reds=2 restore=True legacy_all_green,stopgap_green
+CAUGHT       M7_baseline_boolean_flipped rc=1 reds=1 restore=True baseline_was_green
+CAUGHT       M8_tint_effect_flipped_negative rc=1 reds=1 restore=True tint_effect_positive
+DID NOT RUN SELFTEST_anchor_missing anchor_count=0
+MUTATION 8/9 CAUGHT / DID_NOT_RUN 1 / MISSED 0 / RESTORE 9/9 / clean=True
+MUTATION_WORLD3D_FIX_FAILED
+SELFTEST_DNR_EFFECTIVE (DID NOT RUN 分支有牙；整体仍按设计判 FAILED)

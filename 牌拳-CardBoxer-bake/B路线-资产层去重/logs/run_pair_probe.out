@@ -1,0 +1,17 @@
+RUN 5.566s rc=0 errors=0
+PLAYER res://assets/3d/player-rigged.glb yaw -55.0 meshes [{'albedo': 'res://assets/3d/player-rigged_texture_pbr_20250901.png', 'metallic': 1.0, 'name': 'player_HI_skinned', 'surfaces': 1, 'verts': 57934}]
+FOE res://assets/3d/foe-rigged.glb yaw 55.0 meshes [{'albedo': 'res://assets/3d/foe-rigged_texture_pbr_20250901.png', 'metallic': 1.0, 'name': 'foe_HI_skinned', 'surfaces': 1, 'verts': 64059}]
+CHECK rc True
+CHECK no_script_errors True
+CHECK no_payload_error True
+CHECK use_3d True
+CHECK both_layers True
+CHECK glb_paths_differ True
+CHECK foe_glb_is_foe True
+CHECK player_glb_is_player True
+CHECK both_sv_written True
+CHECK full_frame_written True
+CHECK albedo_paths_differ True
+CHECK player_verts_57934 True
+CHECK foe_verts_64059 True
+PAIR_PROBE_OK

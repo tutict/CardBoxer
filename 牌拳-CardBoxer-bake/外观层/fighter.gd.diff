@@ -1,0 +1,219 @@
+--- /c/Users/tutic/Desktop/学习资料/牌拳-CardBoxer-bake/orig/pre-skin/fighter.gd	2026-11-06 13:45:54.157005900 +0800
++++ /c/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/scripts/fighter.gd	2026-11-06 13:50:57.295979400 +0800
+@@ -19,6 +19,14 @@
+ ## .godot/global_script_class_cache.cfg，新加的 class_name 在缓存刷新前取不到。
+ const Motion = preload("res://scripts/card_motion.gd")
+ 
++## 外观层规格（琉音方向 / V4-02 设定图）。走 preload 而不是 class_name：
++## 非编辑器启动时新增的 class_name 在 global_script_class_cache 刷新前取不到。
++## 名字不能叫 Skin：那是 Godot 内置的骨骼蒙皮类，常量同名会让整棵脚本树
++## 报 "shadows a native class" 编译失败。
++const SkinSpec = preload("res://scripts/fighter_skin.gd")
++## 外观开关。false 就整层回到原自绘剪影 —— 旧绘制一行没删，回退只改这里。
++const SKIN_V2 := true
++
+ const GROUND_Y := 520.0
+ const ARENA_MIN := 150.0
+ const ARENA_MAX := 1130.0
+@@ -565,22 +573,26 @@
+ 	var body := main.lerp(Color(1, 1, 1), flash_mix * 0.55)
+ 	var limb := dark.lerp(Color(1, 1, 1), flash_mix * 0.45)
+ 
+-	# 后侧肢体先画，压暗，制造前后层次。
+-	_draw_limb(p["shoulder"], p["b_elbow"], limb.darkened(0.18), 11.0)
+-	_draw_limb(p["b_elbow"], p["b_hand"], limb.darkened(0.18), 10.0)
+-	_draw_glove(p["b_hand"], limb.darkened(0.3), trim.darkened(0.3))
+-	_draw_limb(p["hip"], p["b_knee"], limb.darkened(0.12), 14.0)
+-	_draw_limb(p["b_knee"], p["b_foot"], limb.darkened(0.12), 12.0)
+-	_draw_foot(p["b_foot"], limb.darkened(0.2))
+-
+-	_draw_torso(p, body)
+-	_draw_limb(p["hip"], p["f_knee"], limb, 15.0)
+-	_draw_limb(p["f_knee"], p["f_foot"], limb, 13.0)
+-	_draw_foot(p["f_foot"], limb.darkened(0.05))
+-	_draw_limb(p["shoulder"], p["f_elbow"], body, 12.0)
+-	_draw_limb(p["f_elbow"], p["f_hand"], body, 11.0)
+-	_draw_glove(p["f_hand"], body, trim)
+-	_draw_head(p, body, trim)
++	if SKIN_V2:
++		_draw_skin_v2(p, body, trim, flash_mix)
++	else:
++		# 原自绘剪影，一行未删：SKIN_V2 = false 即可整层回退。
++		# 后侧肢体先画，压暗，制造前后层次。
++		_draw_limb(p["shoulder"], p["b_elbow"], limb.darkened(0.18), 11.0)
++		_draw_limb(p["b_elbow"], p["b_hand"], limb.darkened(0.18), 10.0)
++		_draw_glove(p["b_hand"], limb.darkened(0.3), trim.darkened(0.3))
++		_draw_limb(p["hip"], p["b_knee"], limb.darkened(0.12), 14.0)
++		_draw_limb(p["b_knee"], p["b_foot"], limb.darkened(0.12), 12.0)
++		_draw_foot(p["b_foot"], limb.darkened(0.2))
++
++		_draw_torso(p, body)
++		_draw_limb(p["hip"], p["f_knee"], limb, 15.0)
++		_draw_limb(p["f_knee"], p["f_foot"], limb, 13.0)
++		_draw_foot(p["f_foot"], limb.darkened(0.05))
++		_draw_limb(p["shoulder"], p["f_elbow"], body, 12.0)
++		_draw_limb(p["f_elbow"], p["f_hand"], body, 11.0)
++		_draw_glove(p["f_hand"], body, trim)
++		_draw_head(p, body, trim)
+ 
+ 	if is_guarding():
+ 		var guard_color := Color(trim.r, trim.g, trim.b, 0.35 + 0.2 * sin(_breath * 12.0))
+@@ -659,6 +671,158 @@
+ 	)
+ 
+ 
++# ─────────────────────────────────────────────────────────────
++# 外观层 V2：琉音方向（V4-02 设定图）
++# 只吃 _build_pose() 的 11 关节 + lean，不碰判定、不改动作表。
++# 阵营色仍来自 palette()：拳套是唯一随玩家 / 对手变色的部件。
++# ─────────────────────────────────────────────────────────────
++
++func _draw_skin_v2(p: Dictionary, body: Color, trim: Color, flash_mix: float) -> void:
++	var f := float(facing)
++	var white: Color = SkinSpec.WHITE.lerp(Color(1, 1, 1), flash_mix * 0.35)
++	var ink: Color = SkinSpec.INK
++	var red: Color = SkinSpec.RED
++	var gold: Color = SkinSpec.GOLD
++	var back_white: Color = white.darkened(0.30)
++	var back_ink: Color = ink.lightened(0.10)
++
++	# 后侧肢体先画并压暗，保持与旧绘制一致的前后层次。
++	_skin_limb(p["hip"], p["b_knee"], back_white, 20.0, back_ink)
++	_skin_limb(p["b_knee"], p["b_foot"], back_white, 17.0, back_ink)
++	_skin_shoe(p["b_foot"], back_ink, gold.darkened(0.25), f)
++	_skin_limb(p["shoulder"], p["b_elbow"], back_white, 17.0, back_ink)
++	_skin_limb(p["b_elbow"], p["b_hand"], back_white, 15.0, back_ink)
++	_skin_glove(p["b_hand"], body.darkened(0.35), trim.darkened(0.30), f)
++
++	_skin_torso(p, white, ink, red, gold, f)
++	_skin_head(p, ink, red, gold, f)
++
++	_skin_limb(p["hip"], p["f_knee"], white, 22.0, ink)
++	_skin_limb(p["f_knee"], p["f_foot"], white, 18.0, ink)
++	_skin_shoe(p["f_foot"], ink, gold, f)
++	_skin_limb(p["shoulder"], p["f_elbow"], white, 19.0, ink)
++	_skin_limb(p["f_elbow"], p["f_hand"], white, 16.0, ink)
++	_skin_glove(p["f_hand"], body, trim, f)
++
++	_skin_ring_blade(p, gold, f)
++
++
++func _skin_limb(a: Vector2, b: Vector2, fill: Color, width: float, outline: Color) -> void:
++	draw_line(a, b, outline, width + 5.0, true)
++	draw_line(a, b, fill, width, true)
++	draw_circle(b, width * 0.5, fill)
++
++
++func _skin_glove(at: Vector2, fill: Color, edge: Color, f: float) -> void:
++	var r: float = SkinSpec.GLOVE_RADIUS
++	draw_circle(at, r + 3.0, SkinSpec.INK)
++	draw_circle(at, r, fill)
++	draw_arc(at, r, 0.0, TAU, 24, SkinSpec.GOLD, 2.0)
++	draw_circle(at + Vector2(5.0 * f, -5.0), 4.0, Color(edge.r, edge.g, edge.b, 0.55))
++
++
++func _skin_shoe(at: Vector2, fill: Color, gold: Color, f: float) -> void:
++	var top: float = SkinSpec.SHOE_TOP
++	var pts := PackedVector2Array([
++		at + Vector2(-15.0, top),
++		at + Vector2(15.0 * f, top),
++		at + Vector2(20.0 * f, 2.0),
++		at + Vector2(-17.0, 2.0),
++	])
++	draw_colored_polygon(pts, fill)
++	draw_line(at + Vector2(-17.0, 1.0), at + Vector2(20.0 * f, 1.0), gold, 2.5, true)
++	draw_circle(at + Vector2(6.0 * f, -9.0), 3.2, gold)
++
++
++func _skin_torso(p: Dictionary, white: Color, ink: Color, red: Color, gold: Color, f: float) -> void:
++	var hip: Vector2 = p["hip"]
++	var shoulder: Vector2 = p["shoulder"]
++	var lean: float = p["lean"]
++	var dir := Vector2(lean, 0.0)
++	var half: float = SkinSpec.TORSO_HALF
++
++	# 白色外层：从髋到肩的梯形，盖住整个躯干（中性全覆盖）。
++	var chest := PackedVector2Array([
++		hip + Vector2(-half, 6.0),
++		shoulder + Vector2(-half - 3.0, 2.0),
++		shoulder + Vector2(half + 1.0, 0.0) + dir,
++		hip + Vector2(half, 4.0),
++	])
++	draw_colored_polygon(chest, white)
++
++	# 黑色内层交领：两肩内侧收成 V，白边压出领口。
++	var neck_l := shoulder + Vector2(-12.0, 4.0)
++	var neck_r := shoulder + Vector2(12.0, 4.0) + dir
++	var v_tip := hip + Vector2(0.0, -26.0)
++	var collar := PackedVector2Array([neck_l, neck_r, v_tip])
++	draw_colored_polygon(collar, ink)
++	draw_line(neck_l, v_tip, white, 4.0, true)
++	draw_line(neck_r, v_tip, white, 4.0, true)
++
++	# 红腰带 + 金色 8 字扣 + 腰侧中国结（三道流苏）。
++	draw_line(hip + Vector2(-half - 2.0, -4.0), hip + Vector2(half + 2.0, -4.0), red, 9.0, true)
++	draw_arc(hip + Vector2(-6.0 * f, -4.0), 5.0, 0.0, TAU, 16, gold, 2.0)
++	draw_arc(hip + Vector2(6.0 * f, -4.0), 5.0, 0.0, TAU, 16, gold, 2.0)
++	var knot := hip + Vector2(22.0 * f, -2.0)
++	var diamond := PackedVector2Array([
++		knot + Vector2(0.0, -7.0), knot + Vector2(6.0, 0.0),
++		knot + Vector2(0.0, 7.0), knot + Vector2(-6.0, 0.0),
++	])
++	draw_colored_polygon(diamond, red)
++	draw_line(knot + Vector2(-3.0, 7.0), knot + Vector2(-3.0, 17.0), red, 2.0, true)
++	draw_line(knot + Vector2(0.0, 7.0), knot + Vector2(0.0, 17.0), red, 2.0, true)
++	draw_line(knot + Vector2(3.0, 7.0), knot + Vector2(3.0, 17.0), red, 2.0, true)
++
++
++func _skin_head(p: Dictionary, ink: Color, red: Color, gold: Color, f: float) -> void:
++	var head: Vector2 = p["head"]
++	var r := 20.0
++	var white: Color = SkinSpec.WHITE
++
++	# 后发压在脸后面；脸是浅肤色，不是阵营色。
++	draw_circle(head + Vector2(-4.0 * f, 2.0), r + 4.0, ink)
++	draw_circle(head, r, SkinSpec.SKIN_FACE)
++
++	# 刘海只盖额头，一缕白挑染对应「黑白交织」。
++	var bangs := PackedVector2Array([
++		head + Vector2(-20.0, -6.0), head + Vector2(-17.0, -17.0),
++		head + Vector2(0.0, -21.0), head + Vector2(17.0, -15.0),
++		head + Vector2(20.0, -6.0),
++	])
++	draw_colored_polygon(bangs, ink)
++	draw_line(head + Vector2(-14.0 * f, -12.0), head + Vector2(-6.0 * f, -18.0), white, 3.5, true)
++
++	# 空心双环发髻（丫鬟），前后错开；内圈用洞色挖空。
++	_skin_bun(head + Vector2(-13.0 * f, -26.0), ink, SkinSpec.BUN_RADIUS)
++	_skin_bun(head + Vector2(12.0 * f, -28.0), white, SkinSpec.BUN_RADIUS - 1.0)
++
++	# 一黑一白绒球 + 金 / 银发夹。
++	draw_circle(head + Vector2(-19.0 * f, -22.0), 4.0, ink)
++	draw_circle(head + Vector2(18.0 * f, -24.0), 4.0, white)
++	draw_line(head + Vector2(4.0 * f, -12.0), head + Vector2(12.0 * f, -13.0), gold, 2.5, true)
++	draw_line(head + Vector2(-2.0 * f, -11.0), head + Vector2(-9.0 * f, -12.0), SkinSpec.SILVER, 2.5, true)
++
++	# 俏皮半睁眼：细眼线 + 小瞳孔 + 一点 smirk，不画圆高光。
++	var eye := head + Vector2(9.0 * f, -3.0)
++	draw_line(eye + Vector2(-6.0, 0.0), eye + Vector2(6.0, 0.0), ink, 2.2, true)
++	draw_circle(eye + Vector2(2.0 * f, 1.0), 2.2, ink)
++	draw_line(head + Vector2(6.0 * f, 9.0), head + Vector2(13.0 * f, 8.0), red.darkened(0.45), 1.6, true)
++
++
++func _skin_bun(at: Vector2, fill: Color, radius: float) -> void:
++	draw_circle(at, radius, fill)
++	draw_circle(at, radius * 0.45, SkinSpec.HOLE)
++	draw_arc(at, radius, 0.0, TAU, 18, fill.darkened(0.35), 1.5)
++
++
++func _skin_ring_blade(p: Dictionary, gold: Color, f: float) -> void:
++	# 腰侧挂件：一黑一白两道弧，暗示可一分为二的环刃。
++	var hip: Vector2 = p["hip"]
++	var at := hip + Vector2(-26.0 * f, -10.0)
++	draw_arc(at, 11.0, -1.2, 1.9, 16, gold, 3.0)
++	draw_arc(at + Vector2(3.0 * f, 2.0), 11.0, 1.9, 4.2, 14, SkinSpec.WHITE, 2.5)
++
++
+ ## 一个步态循环里相位 p（0..1）处的脚：x = 沿面向轴的相对位移（向前为正），
+ ## y = 抬脚高度（向上为负，与绘制坐标一致）。
+ ## 支撑期 [0, WALK_DUTY) 里 x **线性后退** —— 后退速度正好等于身体的前进速度，

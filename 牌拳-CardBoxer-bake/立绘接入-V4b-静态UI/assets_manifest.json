@@ -1,0 +1,335 @@
+{
+  "note": "静态 UI 位用的透明 PNG；离线 Pillow 制备，非引擎实渲，非动作帧",
+  "geometry_from_hud_gd": {
+    "CARD_W": 148.0,
+    "CARD_H": 150.0,
+    "CARD_GAP": 16.0,
+    "HAND_Y": 552.0,
+    "BAR_W": 452.0
+  },
+  "draw_boxes": {
+    "card_art": [
+      136,
+      104
+    ],
+    "avatar": [
+      40,
+      40
+    ],
+    "profile_thumb": [
+      196,
+      258
+    ],
+    "profile_front_height": 500
+  },
+  "subject_boxes": {
+    "front": [
+      174,
+      96,
+      594,
+      672
+    ],
+    "angle25": [
+      156,
+      96,
+      569,
+      672
+    ],
+    "angle55": [
+      188,
+      96,
+      569,
+      672
+    ],
+    "back35": [
+      255,
+      96,
+      608,
+      672
+    ]
+  },
+  "outputs": [
+    {
+      "file": "card_p1.png",
+      "size": [
+        136,
+        104
+      ],
+      "mode": "RGBA",
+      "bytes": 16432,
+      "sha256": "d314725edb9f3c1b7ffbfa3a3e17980048c789dde8878ac485396975f9c83556",
+      "alpha_bbox": [
+        4,
+        23,
+        132,
+        104
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "center_alpha": 255,
+      "alpha_gt8_pct": 0.3062,
+      "source": "v4b-front.png",
+      "source_sha256": "4fac706982c7a763c653a1f8ae6eb63b26726d0587fa5c371dccc6c959c4c079"
+    },
+    {
+      "file": "card_p55.png",
+      "size": [
+        136,
+        104
+      ],
+      "mode": "RGBA",
+      "bytes": 16841,
+      "sha256": "1ae19c65674f2cda836592d77f731faa81753cf5daf79eb5659bb06883c8e35a",
+      "alpha_bbox": [
+        4,
+        15,
+        136,
+        104
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "center_alpha": 0,
+      "alpha_gt8_pct": 0.3286,
+      "source": "v4b-angle55.png",
+      "source_sha256": "caa7afb1a1f3e07bdb442090c1c0efad402d650d7e5bfcdf6e56fc2f722d28f8"
+    },
+    {
+      "file": "avatar_player.png",
+      "size": [
+        40,
+        40
+      ],
+      "mode": "RGBA",
+      "bytes": 4204,
+      "sha256": "385354bb495801bed95ec9115c35c514bdf35a65de6cc4acfcfd3aa45173b3ad",
+      "alpha_bbox": [
+        0,
+        0,
+        40,
+        40
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "center_alpha": 255,
+      "alpha_gt8_pct": 0.7694,
+      "source": "v4b-face-front.png",
+      "source_sha256": "b03a66235e80883ef25e793dd09918aa9fbacd18508c8d87f121077092fe13ce"
+    },
+    {
+      "file": "avatar_foe.png",
+      "size": [
+        40,
+        40
+      ],
+      "mode": "RGBA",
+      "bytes": 4068,
+      "sha256": "09ddb7e1f7a4b7fa0aa2bfedc393fcbb884bfdaed8bcfd722e2dfe67c84a4e8f",
+      "alpha_bbox": [
+        0,
+        0,
+        40,
+        40
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "center_alpha": 255,
+      "alpha_gt8_pct": 0.675,
+      "source": "foe-upper.png",
+      "source_sha256": "6f3e5c71bed4b2a7970729124c45cf9978a8f52f8fc6f8cf92ae407192dac3ed"
+    },
+    {
+      "file": "profile_front.png",
+      "size": [
+        365,
+        500
+      ],
+      "mode": "RGBA",
+      "bytes": 153640,
+      "sha256": "131a54cd129a963cf53b11ff2f9eec7b1b56fde923674616dcc0d243f7498198",
+      "alpha_bbox": [
+        0,
+        0,
+        365,
+        500
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "center_alpha": 255,
+      "alpha_gt8_pct": 0.3861,
+      "source": "v4b-front.png",
+      "source_sha256": "4fac706982c7a763c653a1f8ae6eb63b26726d0587fa5c371dccc6c959c4c079"
+    },
+    {
+      "file": "profile_25.png",
+      "size": [
+        196,
+        258
+      ],
+      "mode": "RGBA",
+      "bytes": 66096,
+      "sha256": "96c4011196c15685fd16c00f695238a731bbdd4b4f7f0ff66a896082a6f9ef07",
+      "alpha_bbox": [
+        0,
+        0,
+        196,
+        258
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "center_alpha": 255,
+      "alpha_gt8_pct": 0.5445,
+      "source": "v4b-angle25.png",
+      "source_sha256": "9f3d23b40d0a99db0116a9da283a593bf0cba9ab6715d40ac1a0c4d1e1228bf0"
+    },
+    {
+      "file": "profile_55.png",
+      "size": [
+        196,
+        258
+      ],
+      "mode": "RGBA",
+      "bytes": 63936,
+      "sha256": "d3be45d4af5e23d3ea79ded0512e0e6249f4db6df57695f8dfe63054f1611dd4",
+      "alpha_bbox": [
+        0,
+        0,
+        196,
+        258
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "center_alpha": 255,
+      "alpha_gt8_pct": 0.5045,
+      "source": "v4b-angle55.png",
+      "source_sha256": "caa7afb1a1f3e07bdb442090c1c0efad402d650d7e5bfcdf6e56fc2f722d28f8"
+    },
+    {
+      "file": "profile_back35.png",
+      "size": [
+        196,
+        258
+      ],
+      "mode": "RGBA",
+      "bytes": 57205,
+      "sha256": "0fb293913838ae03357eab334b4ce99f9bd523420011c8fdcbedb77e5a572455",
+      "alpha_bbox": [
+        0,
+        0,
+        196,
+        258
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "center_alpha": 255,
+      "alpha_gt8_pct": 0.4898,
+      "source": "v4b-back35.png",
+      "source_sha256": "8bd61ea07ed081ee327f8e6603f2dc1801c7ecf6a334f2d368dc570637a57f34"
+    }
+  ],
+  "checks": {
+    "all_rgba": true,
+    "all_corners_transparent": true,
+    "all_non_empty": true,
+    "foot_line_672": true,
+    "head_line_96": true,
+    "card_art_exact_size": true,
+    "avatar_exact_size": true,
+    "profile_thumb_exact_size": true
+  },
+  "checks_all_pass": true,
+  "foe_silhouette_stats": {
+    "note": "同相机 / 同归一化身高 1.72m 下的正面剪影与明度实测",
+    "design_goals": {
+      "max_luminance_ratio": 0.75,
+      "min_aspect_ratio": 1.15,
+      "min_shoulder_ratio": 1.15
+    },
+    "player_v4b": {
+      "file": "v4b-front.png",
+      "canvas": [
+        768,
+        768
+      ],
+      "alpha_bbox": [
+        174,
+        96,
+        594,
+        672
+      ],
+      "body_wh": [
+        420,
+        576
+      ],
+      "aspect_wh": 0.7292,
+      "mean_luminance": 0.5667,
+      "shoulder_max_span_px": 346,
+      "opaque_sample_px": 23316
+    },
+    "foe_v1": {
+      "file": "foe-front.png",
+      "canvas": [
+        768,
+        768
+      ],
+      "alpha_bbox": [
+        180,
+        96,
+        588,
+        672
+      ],
+      "body_wh": [
+        408,
+        576
+      ],
+      "aspect_wh": 0.7083,
+      "mean_luminance": 0.3256,
+      "shoulder_max_span_px": 400,
+      "opaque_sample_px": 35679
+    },
+    "ratios": {
+      "luminance_foe_over_player": 0.5746,
+      "aspect_foe_over_player": 0.9713,
+      "shoulder_foe_over_player": 1.1561
+    },
+    "goals": {
+      "luminance_dark_enough": true,
+      "aspect_bulky_enough": false,
+      "shoulder_broad_enough": true
+    },
+    "verdict": "SILHOUETTE_CONTRAST_SHORT"
+  },
+  "foe_silhouette_caveat": "对手怪 V1 剪影体量实测未达标（aspect_bulky_enough=false）；本轮仍用其真渲染作 HUD 头像，与玩家 V4b 形成配色/覆面对立，但『宽肩厚躯压过纤细玩家』这一条没有做到，须如实记账。",
+  "recompute": "python make_assets.py  # 每次从 hud.gd 现读几何并重算 sha256"
+}

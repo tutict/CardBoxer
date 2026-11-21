@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "role": "player",
+  "source_sha256": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+  "source_vertices": 57934,
+  "source_triangles": 79986,
+  "baseline_acceptance": "FAIL triangles only; morphs absent",
+  "new_vertices": 36666,
+  "new_faces": 43752,
+  "quads": 29075,
+  "quad_fraction": 0.6645410495520204,
+  "triangles": 73575,
+  "feature_loops": {
+    "eye_b": {
+      "connected_to_face_grid": true,
+      "boundary_vertices": 38,
+      "concentric_rings": 5
+    },
+    "eye_f": {
+      "connected_to_face_grid": true,
+      "boundary_vertices": 38,
+      "concentric_rings": 5
+    },
+    "lips": {
+      "connected_to_face_grid": true,
+      "boundary_vertices": 28,
+      "concentric_rings": 5
+    }
+  },
+  "max_body_projection_error_m": 0.07987268269062042,
+  "max_influences": 4,
+  "neutral_visible_weight": 0,
+  "morphs": [
+    "Basis",
+    "grip_half_f",
+    "grip_f",
+    "grip_half_b",
+    "grip_b"
+  ],
+  "texture_sizes": {
+    "player-basecolor-4k": [
+      4096,
+      4096
+    ],
+    "player-normal-4k": [
+      4096,
+      4096
+    ],
+    "player-orm-4k": [
+      4096,
+      4096
+    ]
+  },
+  "seconds": 84.73245477676392,
+  "outputs": {
+    "player-raw.glb": "4320e2bb2940d967af5b39dd2e76ed8cec21fb22e7388fe7d110b675d0c6927b",
+    "player-retopology.blend": "794b4852dd1701ff1518b4fc5e5e11a5d09c1264ed6e55edb307bc677938eed4",
+    "contact-sockets.json": "2fa97c8ff98fb481629a29438fe56dd5a5aa9be32330455656fe33840ab42754",
+    "textures\\player-basecolor-4k.png": "3ecedae53ec0f5471f3382dd1bef3d616c6fd42d2e59fa474a717cf4cf1addf7",
+    "textures\\player-normal-4k.png": "0070399bfe1fe4eb574f115ceae55f0f080cffd26691839c58a403aab7ab5eb2",
+    "textures\\player-orm-4k.png": "6b7e1c24ea8b45bb68c7b17a13904a841de5309f400c67ea0d3c08d5cb886f16"
+  },
+  "notes": [
+    "Repaired baseline weights barycentrically transferred; original14joint armature unchanged.",
+    "New base connectivity QuadriFlow, connected explicit eye/lip rings, manual procedural palm/finger rings and local joint grids.",
+    "Thumb is a sealed deliberate insert rooted under glove; originalscan costume is a connected surface.",
+    "PBR channels are rebaked using local sourceUV retargeting to avoid missed rays on thin overlapping scan components. Refined highdetail references retained.",
+    "Facial feature rings retain source form; no claim of feature-film facial animation rig."
+  ]
+}

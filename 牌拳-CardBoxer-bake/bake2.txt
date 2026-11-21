@@ -1,0 +1,23 @@
+rest bends: f_arm=89.5, b_arm=175.9, f_leg=34.0, b_leg=2.3
+[jab      ] 14 frames, impact @ 7, held  3/13, err 0.000, k<=1.45
+[cross    ] 22 frames, impact @10, held  4/21, err 0.583, k<=1.45
+[uppercut ] 24 frames, impact @11, held  4/23, err 0.000, k<=1.42
+[sweep    ] 28 frames, impact @13, held  5/27, err 0.000, k<=1.20
+[rush     ] 13 frames, impact @ 5, held  2/12, err 0.000, k<=1.21
+[backstep ] 11 frames, impact @ 4, held  2/10, err 0.000, k<=1.27
+[guard    ] 14 frames, impact @ 3, held  5/13, err 0.361, k<=1.05
+[sidestep ] 10 frames, impact @ 3, held  2/ 9, err 0.000, k<=1.04
+[focus    ] 22 frames, impact @11, held  7/21, err 0.000, k<=1.00
+[recover  ] 14 frames, impact @ 5, held  4/13, err 0.000, k<=1.00
+[wave     ] 36 frames, impact @18, held  8/35, err 2.802, k<=1.06
+[throw    ] 20 frames, impact @ 9, held  3/19, err 0.000, k<=1.12
+[hit_light] 16 frames (react), err 0.000
+[hit_heavy] 30 frames (react), err 1.217
+[block    ] 10 frames (react), err 0.000
+stance: 帧0 族内最大差 0.000 px，末帧回归最大差 1.000 px
+  stance[b_elbow]: 手写 -7.1,-122.7 → 实际 -18.0,-130.0（差 13.1 px）
+max stretch across all cards: 1.45x
+wrote baked2.json (12 cards, 3 motions)
+Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:35:40)
+
+Blender quit

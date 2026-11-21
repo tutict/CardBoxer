@@ -1,0 +1,13 @@
+M1 CAUGHT red=['C-01_baseline_inputs_intact', 'C-03_source_blend_single_truth'] restored=True
+M2 CAUGHT red=['C-02_game_source_unchanged', 'C-24_not_a_production_import'] restored=True
+M3 CAUGHT red=['C-08_foe_full_glb_shape'] restored=True
+M4 CAUGHT red=['C-10_textures_not_reencoded'] restored=True
+M5 CAUGHT red=['C-14_gltf_is_static_snapshot'] restored=True
+M6 CAUGHT red=['C-15_editor_import_succeeded'] restored=True
+M7 CAUGHT red=['C-17_foe_full_scene_tree'] restored=True
+M8 CAUGHT red=['C-20_pose_writable_but_highpoly_unbound'] restored=True
+M9 CAUGHT red=['C-20_pose_writable_but_highpoly_unbound'] restored=True
+M10 CAUGHT red=['C-22_source_wiring'] restored=True
+M11 CAUGHT red=['C-05_blend_structure_diagnosis', 'C-13_animations_nowhere'] restored=True
+TOTAL=11 CAUGHT=11 DID_NOT_RUN=0 RESTORE=11/11 CLEAN=True
+MUTATION_C_OK

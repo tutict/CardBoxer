@@ -1,0 +1,27 @@
+PASS V01   baseline 5 files byte-identical
+PASS V02   fighter.gd / project.godot untouched
+PASS V03   arena/hud/fx_layer actually changed
+PASS V04   gate defaults ON
+PASS V05   first-frame force + public force_redraw()
+PASS V06   3 branches gated, 0 bare queue_redraw in _process
+PASS V07   capture chain kept in hitstop + main
+PASS V08   _request_redraw body really queues/skips
+PASS V09   arena key covers all draw inputs (12 tokens)
+PASS V10   hud key covers arena.* fields (36, missing=[])
+PASS V11   pulse clock conditional + hud queue_redraw gated by key
+PASS V12   fighter.gd deliberately NOT gated
+PASS V13   fx_layer draw/时间 counters wired
+PASS V14   14/14 engine self-checks ALL GREEN
+PASS V15   5 injected-state PNGs valid 1280x720
+PASS V16   static frame: gate ON/OFF pixel-identical + byte-identical
+PASS V17   after change / after revert still pixel-identical
+PASS V18   state change is observable (no stale HUD)
+PASS V19   5-phase draw accounting: 270 -> 0, changes draw exactly once
+PASS V20   3-pair perf A/B: pixels equal, draw_us -> 0, TIME_PROCESS retired
+PASS V21   key cost measured: str 5.9862us / hash 0.1179us
+PASS V22   8/8 injected rhythm shots + arena.gd byte-restored
+PASS V23   current source sha matches frozen snapshot
+PASS V24   diagnosis doc + 4 new probe scripts present
+
+24/24 PASS
+RESULT: REDRAW_VERIFIED

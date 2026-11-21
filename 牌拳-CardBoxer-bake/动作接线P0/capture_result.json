@@ -1,0 +1,83 @@
+{
+  "records": [
+    {
+      "mode": "reveal",
+      "rc": 0,
+      "ok": true,
+      "shots": 1,
+      "bytes": 665235,
+      "marker": [
+        "[P0_SHOT] mode=reveal tk_phase=reveal p_action=focus e_action=focus hp=100/100"
+      ],
+      "taikou": [],
+      "gl": true,
+      "engine_errors": 0,
+      "marker_ok": true
+    },
+    {
+      "mode": "triple",
+      "rc": 0,
+      "ok": true,
+      "shots": 1,
+      "bytes": 693305,
+      "marker": [
+        "[P0_SHOT] mode=triple tk_phase=resolve motion=wave label=气功波 winner=player hp=100/77"
+      ],
+      "taikou": [
+        "[TAIKOU] turn=1 hp=100/77 rage=0/100 ex=-/- | 你 三同·999 [9, 9, 9] vs 青岚 散牌·和15 [2, 5, 8] | winner=player dmg=23 motion=wave react=hit_crush extra=super"
+      ],
+      "gl": true,
+      "engine_errors": 0,
+      "marker_ok": true
+    },
+    {
+      "mode": "sequence",
+      "rc": 0,
+      "ok": true,
+      "shots": 1,
+      "bytes": 697981,
+      "marker": [
+        "[P0_SHOT] mode=sequence tk_phase=resolve motion=cross label=交叉反击 winner=player hp=100/85"
+      ],
+      "taikou": [
+        "[TAIKOU] turn=1 hp=100/85 rage=0/75 ex=-/- | 你 三连·456 [4, 5, 6] vs 青岚 散牌·和15 [2, 5, 8] | winner=player dmg=15 motion=cross react=hit_heavy extra=launch"
+      ],
+      "gl": true,
+      "engine_errors": 0,
+      "marker_ok": true
+    },
+    {
+      "mode": "scatter",
+      "rc": 0,
+      "ok": true,
+      "shots": 1,
+      "bytes": 699661,
+      "marker": [
+        "[P0_SHOT] mode=scatter tk_phase=resolve motion=jab label=刺拳 winner=player hp=100/90"
+      ],
+      "taikou": [
+        "[TAIKOU] turn=1 hp=100/90 rage=0/50 ex=-/- | 你 散牌·和15 [2, 5, 8] vs 青岚 散牌·和4 [1, 1, 2] | winner=player dmg=10 motion=jab react=hit_light extra="
+      ],
+      "gl": true,
+      "engine_errors": 0,
+      "marker_ok": true
+    },
+    {
+      "mode": "draw",
+      "rc": 0,
+      "ok": true,
+      "shots": 1,
+      "bytes": 680094,
+      "marker": [
+        "[P0_SHOT] mode=draw tk_phase=resolve motion= label=对峙 winner=draw hp=97/97"
+      ],
+      "taikou": [
+        "[TAIKOU] turn=1 hp=97/97 rage=15/15 ex=-/- | 你 三同·111 [1, 1, 1] vs 青岚 三同·111 [1, 1, 1] | winner=draw dmg=3 motion= react=hit_light extra="
+      ],
+      "gl": true,
+      "engine_errors": 0,
+      "marker_ok": true
+    }
+  ],
+  "restore_ok": true
+}

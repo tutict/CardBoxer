@@ -1,0 +1,14 @@
+OK   scripts/combo_check.gd                   rc=0  COMBO CHECK: 8/8 passed
+OK   tests/motion_check.gd                    rc=0  MOTION CHECK: PASS
+OK   tests/pose_probe.gd                      rc=0  POSE PROBE: PASS
+OK   tests/duel_probe.gd                      rc=0  DUEL PROBE: PASS
+OK   tests/reach_probe.gd                     rc=0  REACH PROBE: PASS
+OK   tests/feet_probe.gd                      rc=0  FEET PROBE: PASS
+OK   tests/taikou_rules_check.gd              rc=0  TAIKOU RULES CHECK: 90/90 passed
+OK   tests/taikou_flow_check.gd               rc=0  TAIKOU FLOW CHECK: 51/51 passed
+OK   tests/taikou_rage_check.gd               rc=0  TAIKOU RAGE CHECK: 1482/1482 passed
+OK   tests/fighter_skin_check.gd              rc=0  FIGHTER SKIN CHECK: PASS
+OK   tests/battle_motion_p0_check.gd          rc=0  BATTLE MOTION P0 CHECK: 93/93 passed
+
+TOTAL 11 checks, 0 failed
+RESULT: ALL GREEN

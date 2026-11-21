@@ -1,0 +1,4 @@
+M1 CAUGHT  target_red=True sentinel_green=True restore=True red=['all_img_src_exist_and_relative']
+M2 CAUGHT  target_red=True sentinel_green=True restore=True red=['copies_match_sources_byte_for_byte']
+
+2/2 CAUGHT  restore=2/2  did_not_run=0  clean_rerun=GREEN  MUTATION_SHOWCASE_OK

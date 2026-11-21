@@ -1,0 +1,13 @@
+00:00.610  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\对手怪-可变形连续壳.blend"
+00:01.922  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\shell_isolate\b-strip-isolate.png'
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+MATRIX_WORLD [[1.0, 0.0, 0.0, 0.0], [0.0, 1.0, 0.0, 0.0], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]]
+CANDIDATES 2 UNDELETED 156
+STRIP 52129 verts 1134 deleted True yspan 0.6565 xspan 0.2004 local_z_span 1.4306
+STRIP 63424 verts 988 deleted True yspan 0.6008 xspan 0.1664 local_z_span 1.3119
+CHECK shells_2809 True
+CHECK long_narrow_candidates_found True
+CHECK all_long_narrow_shells_already_deleted True
+CHECK roi_hits_found True
+CHECK shot_written True
+STRIP_3D_B_OK

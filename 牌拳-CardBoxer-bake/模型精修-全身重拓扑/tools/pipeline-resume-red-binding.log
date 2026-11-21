@@ -1,0 +1,73 @@
+test_bridge_refuses_baseline_overwrite_and_unknown_joint (__main__.CanonicalTests.test_bridge_refuses_baseline_overwrite_and_unknown_joint) ... ok
+test_bridge_rejects_raw_rest_bind_drift_before_writing_outputs (__main__.CanonicalTests.test_bridge_rejects_raw_rest_bind_drift_before_writing_outputs) ... FAIL
+test_bridge_transforms_morph_tangent_as_normalized_direction_delta (__main__.CanonicalTests.test_bridge_transforms_morph_tangent_as_normalized_direction_delta) ... FAIL
+test_checker_detects_rig_drift_and_body_morph_leak (__main__.CanonicalTests.test_checker_detects_rig_drift_and_body_morph_leak) ... ok
+test_checker_rejects_baseline_missing_hand_morphs (__main__.CanonicalTests.test_checker_rejects_baseline_missing_hand_morphs) ... ok
+test_checker_rejects_forearm_weighted_morph_outside_source_hand_bounds (__main__.CanonicalTests.test_checker_rejects_forearm_weighted_morph_outside_source_hand_bounds) ... ok
+test_checker_rejects_invalid_tangent_uv_and_pbr_texcoord (__main__.CanonicalTests.test_checker_rejects_invalid_tangent_uv_and_pbr_texcoord) ... ok
+test_checker_rejects_truncated_png_atlas (__main__.CanonicalTests.test_checker_rejects_truncated_png_atlas) ... ok
+test_checker_reports_malformed_skin_without_crashing (__main__.CanonicalTests.test_checker_reports_malformed_skin_without_crashing) ... ERROR
+test_checker_returns_errors_for_malformed_morph_accessor (__main__.CanonicalTests.test_checker_returns_errors_for_malformed_morph_accessor) ... ok
+test_complete_fixture_passes_geometry_material_hand_acceptance (__main__.CanonicalTests.test_complete_fixture_passes_geometry_material_hand_acceptance) ... ok
+test_fixture_nonidentity_frame_and_reordered_joints_preserve_original_basis (__main__.CanonicalTests.test_fixture_nonidentity_frame_and_reordered_joints_preserve_original_basis) ... ok
+test_original_acceptance_red_missing_hand_morphs (__main__.CanonicalTests.test_original_acceptance_red_missing_hand_morphs) ... expected failure
+
+======================================================================
+ERROR: test_checker_reports_malformed_skin_without_crashing (__main__.CanonicalTests.test_checker_reports_malformed_skin_without_crashing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 269, in test_checker_reports_malformed_skin_without_crashing
+    result=checker.check_asset(src,candidate)
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\check_retopology_assets.py", line 91, in check_asset
+    if not np.array_equal(g.ibms(),src.ibms()): error("inverse_bind_matrices","Original IBM values changed")
+                          ~~~~~~^^
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\canonical_glb.py", line 111, in ibms
+    return self.accessor(s["inverseBindMatrices"]).reshape(-1,4,4).transpose(0,2,1) if "inverseBindMatrices" in s else np.repeat(np.eye(4)[None],len(s["joints"]),axis=0)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\canonical_glb.py", line 57, in accessor
+    a=self.doc["accessors"][index];w=WIDTH[a["type"]];dtype=np.dtype(DTYPES[a["componentType"]])
+      ~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+IndexError: list index out of range
+
+======================================================================
+FAIL: test_bridge_rejects_raw_rest_bind_drift_before_writing_outputs (__main__.CanonicalTests.test_bridge_rejects_raw_rest_bind_drift_before_writing_outputs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 249, in test_bridge_rejects_raw_rest_bind_drift_before_writing_outputs
+    with self.assertRaisesRegex(ValueError,"rest.bind"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_bridge_transforms_morph_tangent_as_normalized_direction_delta (__main__.CanonicalTests.test_bridge_transforms_morph_tangent_as_normalized_direction_delta)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 263, in test_bridge_transforms_morph_tangent_as_normalized_direction_delta
+    np.testing.assert_allclose(g.accessor(target["TANGENT"]),[[-.0194193243,.1961161351,0]]*3,atol=1e-6)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Blender Foundation\Blender 5.2\5.2\python\Lib\site-packages\numpy\testing\_private\utils.py", line 1718, in assert_allclose
+    assert_array_compare(compare, actual, desired, err_msg=str(err_msg),
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         verbose=verbose, header=header, equal_nan=equal_nan,
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         strict=strict)
+                         ^^^^^^^^^^^^^^
+  File "C:\Program Files\Blender Foundation\Blender 5.2\5.2\python\Lib\site-packages\numpy\testing\_private\utils.py", line 926, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Not equal to tolerance rtol=1e-07, atol=1e-06
+
+Mismatched elements: 6 / 9 (66.7%)
+Max absolute difference among violations: 0.20388387
+Max relative difference among violations: 1.03960784
+ ACTUAL: array([[0. , 0.4, 0. ],
+       [0. , 0.4, 0. ],
+       [0. , 0.4, 0. ]], dtype=float32)
+ DESIRED: array([[-0.019419,  0.196116,  0.      ],
+       [-0.019419,  0.196116,  0.      ],
+       [-0.019419,  0.196116,  0.      ]])
+
+----------------------------------------------------------------------
+Ran 13 tests in 2.308s
+
+FAILED (failures=2, errors=1, expected failures=1)

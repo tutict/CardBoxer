@@ -1,0 +1,22 @@
+M01 CAUGHT expect=jab_identical_to_baseline_independent                rc=1 hit=True restored=True
+M02 CAUGHT expect=endpoints_zero_drift_independent                     rc=1 hit=True restored=True
+M03 CAUGHT expect=mf_thresholds_met_independent                        rc=1 hit=True restored=True
+M04 CAUGHT expect=probe_rows_delta_matches_formula_independent         rc=1 hit=True restored=True
+M05 CAUGHT expect=backup_sha_match_apply_report                        rc=1 hit=True restored=True
+M06 CAUGHT expect=readback_report_self_consistent                      rc=1 hit=True restored=True
+M07 CAUGHT expect=probe_report_self_consistent                         rc=1 hit=True restored=True
+M08 CAUGHT expect=tear_report_self_consistent                          rc=1 hit=True restored=True
+M09 CAUGHT expect=apply_report_self_consistent                         rc=1 hit=True restored=True
+M10 CAUGHT expect=all_checks_15_of_15_independently                    rc=1 hit=True restored=True
+M11 CAUGHT expect=recommended_case_all_hard_constraints                rc=1 hit=True restored=True
+M12 CAUGHT expect=tear_568_rows_recomputed_match_report                rc=1 hit=True restored=True
+M13 CAUGHT expect=tear_within_anchor_and_headroom_2x_cost              rc=1 hit=True restored=True
+M14 CAUGHT expect=probe_pixel_diffs_recomputed_match_report            rc=1 hit=True restored=True
+M15 CAUGHT expect=probe_rows_delta_matches_formula_independent         rc=1 hit=True restored=True
+M16 CAUGHT expect=probe_rows_mf_matches_formula_independent            rc=1 hit=True restored=True
+M17 CAUGHT expect=probe_marker_matches_mode_independent                rc=1 hit=True restored=True
+M18 CAUGHT expect=spec_json_has_r1_and_r2_revisions                    rc=1 hit=True restored=True
+M19 CAUGHT expect=three_table_sha_match_apply_report                   rc=1 hit=True restored=True
+M20 CAUGHT expect=four_boards_present_and_dimensions_ok                rc=1 hit=True restored=True
+MUTATION_POSE_P5 20/20 CAUGHT / DNR 0 / BROKEN 0 / MISSED 0 / SKIPPED 0 / RESTORE 20/20 / expect_hit 20/20 / clean OK
+ALL GREEN

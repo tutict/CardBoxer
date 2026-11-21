@@ -1,0 +1,12 @@
+00:00.890  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\对手怪V1.blend"
+ENGINE=BLENDER_EEVEE BLENDER=5.2.3 LTS
+MESH name=node_0 verts=64024 faces=79998 uv_layers=1 modifiers=['ARMATURE']
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\probe_material.py:42: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  out = {"name": mat.name, "use_nodes": mat.use_nodes, "nodes": [], "links": []}
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\probe_material.py:43: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if not mat.use_nodes:
+MATERIALS [{"name": "Material.001", "tex": ["texture_pbr_20250901", "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness", "texture_pbr_20250901_normal"]}]
+BAKE {"has_render_bake": true, "bake_poll": false, "surfacedeform_bind_poll": true, "smart_uv_poll": false, "use_selected_to_active_attr": true, "margin_attr": true}
+SHELLS=2809 UV=['UVMap']
+MATERIAL_PROBE_OK
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

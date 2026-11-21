@@ -1,0 +1,222 @@
+DIAGNOSTIC_AUTHOR_ACCEPTANCE player {
+  "version": 1,
+  "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\baseline\\assets\\3d\\player-rigged.glb",
+  "candidate": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\pipeline_author_audit\\player-diagnostic-canonical.glb",
+  "ok": false,
+  "errors": [
+    {
+      "code": "tangent_basis",
+      "detail": "Tangent normal atlas requires an exported UV0 tangent basis"
+    },
+    {
+      "code": "morph_hand_only",
+      "detail": "grip_half_f.NORMAL: 3501 vertices outside its own distal forearm/hand"
+    },
+    {
+      "code": "morph_hand_only",
+      "detail": "grip_f.NORMAL: 3501 vertices outside its own distal forearm/hand"
+    },
+    {
+      "code": "morph_hand_only",
+      "detail": "grip_half_b.NORMAL: 3504 vertices outside its own distal forearm/hand"
+    },
+    {
+      "code": "morph_hand_only",
+      "detail": "grip_b.NORMAL: 3504 vertices outside its own distal forearm/hand"
+    },
+    {
+      "code": "orm_occlusion",
+      "detail": "Occlusion must use the same ORM image as metallic/roughness"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "visual_runtime_required",
+      "detail": "Surface openings, silhouette, all19 clips/both facings and render performance require the root's visual/runtime acceptance"
+    }
+  ],
+  "metrics": {
+    "vertices": 59195,
+    "triangles": 73575,
+    "joints": 14,
+    "surfaces": 1,
+    "materials": 1,
+    "degenerate_triangles": 0,
+    "weight_sum_error": 5.21540641784668e-08,
+    "neutral_max_weight": 0.0,
+    "rest_bind_error_m": 7.060051897060168e-07,
+    "sole_y_deviation_m": 6.867821866762824e-10,
+    "front_hand_distal_start_local_m": 0.19203710107535255,
+    "front_source_hand_bounds_local_m": [
+      [
+        0.10068579913888832,
+        0.17251759055872218,
+        -0.24227727904628857
+      ],
+      [
+        0.25231154354776497,
+        0.4040742021507051,
+        -0.048546093164870366
+      ]
+    ],
+    "front_hand_envelope_vertices": 1723,
+    "rear_hand_distal_start_local_m": 0.19387578092584984,
+    "rear_source_hand_bounds_local_m": [
+      [
+        -0.25534486022035374,
+        0.17405996669522114,
+        -0.23935553901689852
+      ],
+      [
+        -0.1042038497220187,
+        0.4077515618516997,
+        -0.04469032690042053
+      ]
+    ],
+    "rear_hand_envelope_vertices": 1729,
+    "morph_names": [
+      "grip_half_f",
+      "grip_f",
+      "grip_half_b",
+      "grip_b"
+    ],
+    "grip_half_f_active_vertices": 1003,
+    "grip_f_active_vertices": 1003,
+    "grip_half_b_active_vertices": 1033,
+    "grip_b_active_vertices": 1033,
+    "image_sizes": [
+      [
+        4096,
+        4096
+      ],
+      [
+        4096,
+        4096
+      ],
+      [
+        4096,
+        4096
+      ]
+    ],
+    "front_open_socket_surface_error_m": 2.0657245214880877e-18,
+    "front_half_socket_surface_error_m": 2.6221430352339502e-17,
+    "front_closed_socket_surface_error_m": 2.6613850514692812e-17,
+    "rear_open_socket_surface_error_m": 1.5378289178852317e-16,
+    "rear_half_socket_surface_error_m": 1.1293839277334364e-16,
+    "rear_closed_socket_surface_error_m": 2.364289714383083e-17
+  },
+  "source_sha256": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+  "candidate_sha256": "804e907be8c1f69de69ee0f735a825aedcd23ac4c938998abf2b49e2c54328bd",
+  "raw_sha256": "4320e2bb2940d967af5b39dd2e76ed8cec21fb22e7388fe7d110b675d0c6927b",
+  "sockets_sha256": "2fa97c8ff98fb481629a29438fe56dd5a5aa9be32330455656fe33840ab42754",
+  "inputs_stable_during_audit": true
+}
+DIAGNOSTIC_AUTHOR_ACCEPTANCE foe {
+  "version": 1,
+  "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\baseline\\assets\\3d\\foe-rigged.glb",
+  "candidate": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\pipeline_author_audit\\foe-diagnostic-canonical.glb",
+  "ok": false,
+  "errors": [
+    {
+      "code": "tangent_basis",
+      "detail": "Tangent normal atlas requires an exported UV0 tangent basis"
+    },
+    {
+      "code": "morph_hand_only",
+      "detail": "grip_half_f.NORMAL: 4053 vertices outside its own distal forearm/hand"
+    },
+    {
+      "code": "morph_hand_only",
+      "detail": "grip_f.NORMAL: 4053 vertices outside its own distal forearm/hand"
+    },
+    {
+      "code": "morph_hand_only",
+      "detail": "grip_half_b.NORMAL: 4061 vertices outside its own distal forearm/hand"
+    },
+    {
+      "code": "morph_hand_only",
+      "detail": "grip_b.NORMAL: 4061 vertices outside its own distal forearm/hand"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "visual_runtime_required",
+      "detail": "Surface openings, silhouette, all19 clips/both facings and render performance require the root's visual/runtime acceptance"
+    }
+  ],
+  "metrics": {
+    "vertices": 65417,
+    "triangles": 69468,
+    "joints": 14,
+    "surfaces": 1,
+    "materials": 1,
+    "degenerate_triangles": 0,
+    "weight_sum_error": 5.21540641784668e-08,
+    "neutral_max_weight": 0.0,
+    "rest_bind_error_m": 4.452979365800225e-07,
+    "sole_y_deviation_m": 4.407749543133832e-07,
+    "front_hand_distal_start_local_m": 0.18478234178950131,
+    "front_source_hand_bounds_local_m": [
+      [
+        -0.08896492756606265,
+        0.16479027993444875,
+        -0.3766289415540603
+      ],
+      [
+        0.16955264348609286,
+        0.38956468357900265,
+        -0.09158702679795983
+      ]
+    ],
+    "front_hand_envelope_vertices": 1181,
+    "rear_hand_distal_start_local_m": 0.18166743911151173,
+    "rear_source_hand_bounds_local_m": [
+      [
+        -0.16365594158906246,
+        0.16183668914717278,
+        -0.34364342259188546
+      ],
+      [
+        0.08780307242705708,
+        0.3833348782230235,
+        -0.07447582579040479
+      ]
+    ],
+    "rear_hand_envelope_vertices": 1177,
+    "morph_names": [
+      "grip_half_f",
+      "grip_f",
+      "grip_half_b",
+      "grip_b"
+    ],
+    "grip_half_f_active_vertices": 823,
+    "grip_f_active_vertices": 823,
+    "grip_half_b_active_vertices": 816,
+    "grip_b_active_vertices": 816,
+    "image_sizes": [
+      [
+        4096,
+        4096
+      ],
+      [
+        4096,
+        4096
+      ],
+      [
+        4096,
+        4096
+      ]
+    ],
+    "front_open_socket_surface_error_m": 8.355436723213863e-17,
+    "front_half_socket_surface_error_m": 0.0,
+    "front_closed_socket_surface_error_m": 1.433355787370047e-16,
+    "rear_open_socket_surface_error_m": 0.0,
+    "rear_half_socket_surface_error_m": 5.551115123125783e-17,
+    "rear_closed_socket_surface_error_m": 8.379481490369294e-17
+  },
+  "source_sha256": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+  "candidate_sha256": "67f71b3e32e9988b8047fcddccb2644ea82e1279892063db5977251f0c81f75e",
+  "raw_sha256": "f25abddf501a257ab00283e205984ed10a433d8716f52cacad2640a5996ad824",
+  "sockets_sha256": "1cd73c039f3531a82a0ebef6fc23a03e724b80298db5956e27437353bef7735b",
+  "inputs_stable_during_audit": true
+}

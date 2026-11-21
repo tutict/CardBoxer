@@ -1,0 +1,8 @@
+RESUME_START job_id=1510835580992241664 (query only, no resubmit)
+QUERY 1 status=DONE elapsed=1s
+RESULT_URLS 4 transient_queries=0
+DOWNLOADED artifact_01.zip 36062095 B
+DOWNLOADED artifact_02.png 127531 B
+DOWNLOADED artifact_03.glb 41628356 B
+DOWNLOADED artifact_04.fbx 40901036 B
+RESUME_OK artifacts=4 glb=artifact_03.glb viewer=generated_model_20261108-104647_viewer.html elapsed=4s

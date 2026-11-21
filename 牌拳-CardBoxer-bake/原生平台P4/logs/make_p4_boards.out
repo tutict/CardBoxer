@@ -1,0 +1,7 @@
+CURVE {'path': 'C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\原生平台P4\\boards\\P4-平台曲线对照.png', 'size': [1400, 840], 'frames': 22, 'original_flat_pairs_in_focus': 7, 'shipped_flat_pairs_in_focus': 0, 'cards': 4}
+CHECK three_boards_written True
+CHECK curve_flat_reduced_in_focus True
+CHECK strip_24_panels True
+CHECK compare_three_frames True
+CHECK probe_all_checks_green True
+P4_BOARDS_OK

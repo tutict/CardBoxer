@@ -1,0 +1,2770 @@
+===== G/make_baseline_g.py =====
+"""G 路线 P0：备份可运行游戏工程全部源码，写逐文件 size+sha256 基线。
+
+二进制复制，绝不用 read_text/write_text（换行口径会污染证据）。
+排除 .godot/ 与 __pycache__/：那是引擎缓存，不是源码。
+用法：python make_baseline_g.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import shutil
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+ORIG = HERE / "orig" / "pre-3d"
+BASELINE = HERE / "baseline_g.json"
+EXCLUDE_DIRS = {".godot", "__pycache__"}
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def game_files() -> list[Path]:
+    out = []
+    for p in sorted(GAME.rglob("*")):
+        if not p.is_file():
+            continue
+        rel = p.relative_to(GAME)
+        if any(part in EXCLUDE_DIRS for part in rel.parts):
+            continue
+        out.append(p)
+    return out
+
+
+def main() -> int:
+    files = game_files()
+    rows = []
+    for p in files:
+        rel = p.relative_to(GAME)
+        dst = ORIG / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(p, dst)
+        rows.append({"rel": str(rel).replace("\\", "/"),
+                     "size": p.stat().st_size,
+                     "sha256": sha256(p)})
+    # 备份必须逐字节一致，否则「备份成功」是假的
+    mismatch = []
+    for row in rows:
+        q = ORIG / row["rel"]
+        if not q.is_file() or q.stat().st_size != row["size"] \
+                or sha256(q) != row["sha256"]:
+            mismatch.append(row["rel"])
+    payload = {
+        "game": str(GAME),
+        "count": len(rows),
+        "backup": str(ORIG),
+        "backup_verified": not mismatch,
+        "backup_mismatch": mismatch,
+        "files": rows,
+    }
+    BASELINE.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                        encoding="utf-8")
+    print(f"BASELINE_FILES={len(rows)} BACKUP_VERIFIED={not mismatch} "
+          f"MISMATCH={len(mismatch)}")
+    print("BASELINE_G_OK" if not mismatch else "BASELINE_G_FAILED")
+    return 0 if not mismatch else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/run_all_checks_g.py =====
+"""跑当前游戏树上 15 套引擎内自检，按 tag 分开落盘，不污染旧归档。
+
+用法：python run_all_checks_g.py before
+      python run_all_checks_g.py after
+"""
+from __future__ import annotations
+
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+LOGS = HERE / "logs" / "checks"
+
+CHECKS = [
+    ("motion_check", "res://tests/motion_check.gd"),
+    ("pose_probe", "res://tests/pose_probe.gd"),
+    ("duel_probe", "res://tests/duel_probe.gd"),
+    ("reach_probe", "res://tests/reach_probe.gd"),
+    ("feet_probe", "res://tests/feet_probe.gd"),
+    ("fighter_skin_check", "res://tests/fighter_skin_check.gd"),
+    ("battle_motion_p0_check", "res://tests/battle_motion_p0_check.gd"),
+    ("battle_rhythm_check", "res://tests/battle_rhythm_check.gd"),
+    ("engine_opt_check", "res://tests/engine_opt_check.gd"),
+    ("redraw_gate_check", "res://tests/redraw_gate_check.gd"),
+    ("taikou_flow_check", "res://tests/taikou_flow_check.gd"),
+    ("taikou_rage_check", "res://tests/taikou_rage_check.gd"),
+    ("taikou_rules_check", "res://tests/taikou_rules_check.gd"),
+    ("combo_check", "res://scripts/combo_check.gd"),
+    ("portrait_wiring_check", "res://tests/portrait_wiring_check.gd"),
+]
+
+
+def summary(text: str) -> str:
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+    hits = [ln for ln in lines
+            if ("CHECK" in ln.upper() or "PROBE" in ln.upper()
+                or "passed" in ln.lower())
+            and not ln.startswith("at:")]
+    return hits[-1] if hits else (lines[-1] if lines else "<empty output>")
+
+
+def main() -> int:
+    tag = sys.argv[1] if len(sys.argv) > 1 else "run"
+    LOGS.mkdir(parents=True, exist_ok=True)
+    rows, failures = [], []
+    for name, script in CHECKS:
+        p = GAME / script.replace("res://", "")
+        if not p.is_file():
+            failures.append(name)
+            rows.append({"name": name, "rc": -1, "ok": False,
+                         "summary": "MISSING FILE"})
+            print(f"FAIL {name:32s} MISSING FILE")
+            continue
+        try:
+            proc = subprocess.run(
+                [str(GODOT), "--headless", "--path", str(GAME),
+                 "--script", script],
+                capture_output=True, timeout=180, cwd=str(GAME))
+            rc = proc.returncode
+            text = (proc.stdout + b"\n" + proc.stderr).decode("utf-8", "replace")
+        except subprocess.TimeoutExpired:
+            rc, text = -1, "TIMEOUT"
+        bad = (rc != 0 or "FAIL:" in text or "SCRIPT ERROR" in text
+               or "Parse Error" in text or len(text.strip()) < 20)
+        rows.append({"name": name, "rc": rc, "ok": not bad,
+                     "summary": summary(text)})
+        (LOGS / f"{tag}_{name}.log").write_text(text, encoding="utf-8")
+        if bad:
+            failures.append(name)
+        print(("FAIL " if bad else "OK   ") +
+              f"{name:32s} rc={rc}  {summary(text)}")
+    payload = {"tag": tag, "total": len(CHECKS), "failed": failures,
+               "result": "ALL GREEN" if not failures else "FAILED",
+               "checks": rows}
+    (HERE / "data" / f"all_checks_{tag}.json").write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8")
+    (HERE / "logs" / f"自检汇总-{tag}.txt").write_text(
+        "\n".join(f"{'OK' if r['ok'] else 'FAIL'} {r['name']:32s} "
+                  f"rc={r['rc']} {r['summary']}" for r in rows)
+        + f"\n\nTOTAL {len(CHECKS)} checks, {len(failures)} failed\n"
+        + f"RESULT: {payload['result']}\n", encoding="utf-8")
+    print(f"\nTOTAL {len(CHECKS)} checks, {len(failures)} failed")
+    print("ALL_GREEN" if not failures else "FAILED " + ", ".join(failures))
+    return 0 if not failures else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/run_probe_subviewport.py =====
+"""G 路线 P0 技术探针：2D 主视口 + 3D SubViewport 混合渲染能否成立。
+
+只读 F 路线已交付的 player-rigged.glb，复制到隔离工程，
+editor 导入后带窗口截一张 1280x720，用 Pillow 证明 3D 区域真的有内容。
+用法：python run_probe_subviewport.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import time
+from pathlib import Path
+
+from PIL import Image
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+F = BAKE / "F路线-Godot驱动层"
+PROJECT = HERE / "probe_project_g"
+ASSETS = PROJECT / "assets"
+SHOTS = HERE / "shots"
+LOGS = HERE / "logs"
+DATA = HERE / "data"
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+GLB = "player-rigged.glb"
+OUT = DATA / "subviewport_probe.json"
+
+VIEW_BOX = (340, 80, 940, 640)     # 3D SubViewport 贴到 2D 的位置
+RED_BOX = (40, 120, 220, 540)      # 2D 绘制链锚点
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def run(cmd: list[str], env: dict, timeout: int, log: Path):
+    t0 = time.perf_counter()
+    try:
+        r = subprocess.run(cmd, env=env, capture_output=True, timeout=timeout)
+        code, out, err = r.returncode, r.stdout, r.stderr
+    except subprocess.TimeoutExpired as exc:
+        code = -1
+        out = exc.stdout or b""
+        err = (exc.stderr or b"") + b"\n=== TIMEOUT ===\n"
+    text = (out + b"\n=== STDERR ===\n" + err).decode("utf-8", "replace")
+    log.write_text(text, encoding="utf-8")
+    return round(time.perf_counter() - t0, 3), code, text
+
+
+def pixels(path: Path) -> dict:
+    im = Image.open(path).convert("RGB")
+    view = im.crop(VIEW_BOX)
+    red = im.crop(RED_BOX)
+    bright = 0
+    colors = set()
+    for r, g, b in view.get_flattened_data():
+        if r + g + b > 150:
+            bright += 1
+        colors.add((r // 8, g // 8, b // 8))
+    red_px = sum(1 for r, g, b in red.get_flattened_data()
+                 if r > 100 and r > g * 2)
+    return {
+        "w": im.width, "h": im.height,
+        "view_bright_px": bright,
+        "view_color_bins": len(colors),
+        "red_anchor_px": red_px,
+    }
+
+
+def main() -> int:
+    assert GODOT.is_file(), GODOT
+    for d in (ASSETS, SHOTS, LOGS, DATA):
+        d.mkdir(parents=True, exist_ok=True)
+    src = F / GLB
+    dst = ASSETS / GLB
+    assert src.is_file(), src
+    shutil.copyfile(src, dst)
+    src_sha, dst_sha = sha256(src), sha256(dst)
+    assert src_sha == dst_sha
+
+    env = os.environ.copy()
+    dt_import, rc_import, _ = run(
+        [str(GODOT), "--headless", "--editor", "--quit",
+         "--path", str(PROJECT)],
+        env, 300, LOGS / "godot_editor_import_g.log")
+
+    env["G_SHOT_DIR"] = str(SHOTS)
+    dt, rc, log = run(
+        [str(GODOT), "--path", str(PROJECT),
+         "--resolution", "1280x720",
+         "--script", "res://probes/probe_subviewport.gd",
+         "--quit-after", "6000"],
+        env, 300, LOGS / "godot_subviewport.log")
+
+    marker = "SV_JSON "
+    line = next((l for l in log.splitlines() if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no SV_JSON"}
+    p = Path(payload.get("path", "")) if payload.get("path") else None
+    stats = pixels(p) if p and p.is_file() else {}
+    has_gl = "OpenGL API" in log
+    errors = log.count("SCRIPT ERROR")
+
+    checks = {
+        "import_rc": rc_import == 0,
+        "render_rc": rc == 0,
+        "has_opengl": has_gl,
+        "no_script_errors": errors == 0,
+        "no_payload_error": "error" not in payload,
+        "texture_drawn": payload.get("tex_ok") is True,
+        "save_ok": payload.get("save_error") == 0,
+        "size_1280x720": stats.get("w") == 1280 and stats.get("h") == 720,
+        "canvas_redrawn": int(payload.get("draw_count", 0)) >= 2,
+        "3d_region_nonblank": stats.get("view_bright_px", 0) > 20000,
+        "3d_region_textured": stats.get("view_color_bins", 0) > 200,
+        "2d_anchor_visible": stats.get("red_anchor_px", 0) > 50000,
+        "glb_identical": src_sha == dst_sha,
+    }
+    ok = all(checks.values())
+    OUT.write_text(json.dumps({
+        "src": str(src), "src_sha256": src_sha,
+        "import": {"seconds": dt_import, "returncode": rc_import},
+        "render": {"seconds": dt, "returncode": rc,
+                   "has_opengl": has_gl, "script_errors": errors,
+                   "headless": False},
+        "payload": payload, "pixels": stats,
+        "checks": checks, "failed": [k for k, v in checks.items() if not v],
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"IMPORT rc={rc_import} {dt_import}s  RENDER rc={rc} {dt}s "
+          f"gl={has_gl} errs={errors}")
+    print(f"PAYLOAD tex_ok={payload.get('tex_ok')} "
+          f"draw_count={payload.get('draw_count')} "
+          f"sv_size={payload.get('sv_size')} "
+          f"save_error={payload.get('save_error')}")
+    print(f"PIXELS {stats}")
+    for k, v in checks.items():
+        if not v:
+            print("  FAIL", k)
+    print("SUBVIEWPORT_PROBE_OK" if ok else "SUBVIEWPORT_PROBE_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/install_assets_g.py =====
+"""G 路线 P1：把 F 路线已验证的 3D 资产与 RigDriver 搬进可运行游戏工程。
+
+只读 F 归档，二进制复制，逐项 sha256 核对；不改任何既有游戏文件。
+Godot editor 导入可 headless（渲染才需要窗口）。
+用法：python install_assets_g.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import time
+from pathlib import Path
+
+from PIL import Image
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+F = BAKE / "F路线-Godot驱动层"
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+LOGS = HERE / "logs"
+OUT = HERE / "data" / "install_assets_g.json"
+
+SOURCES = [
+    (F / "player-rigged.glb", "assets/3d/player-rigged.glb"),
+    (F / "data" / "motion_input.json", "data/motion_input.json"),
+    (F / "probe_project_f" / "scenes" / "rig_driver.gd",
+     "scripts/rig_driver.gd"),
+]
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def run(cmd: list[str], env: dict, timeout: int, log: Path):
+    t0 = time.perf_counter()
+    try:
+        r = subprocess.run(cmd, env=env, capture_output=True, timeout=timeout)
+        code, out, err = r.returncode, r.stdout, r.stderr
+    except subprocess.TimeoutExpired as exc:
+        code = -1
+        out = exc.stdout or b""
+        err = (exc.stderr or b"") + b"\n=== TIMEOUT ===\n"
+    text = (out + b"\n=== STDERR ===\n" + err).decode("utf-8", "replace")
+    log.write_text(text, encoding="utf-8")
+    return round(time.perf_counter() - t0, 3), code, text
+
+
+def main() -> int:
+    assert GODOT.is_file(), GODOT
+    LOGS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    (GAME / "assets" / "3d").mkdir(parents=True, exist_ok=True)
+
+    copies = []
+    for src, rel in SOURCES:
+        assert src.is_file(), src
+        dst = GAME / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(src, dst)
+        a, b = sha256(src), sha256(dst)
+        copies.append({"src": str(src), "dst": str(dst), "rel": rel,
+                       "bytes": dst.stat().st_size, "sha256": a,
+                       "identical": a == b})
+
+    env = os.environ.copy()
+    dt, rc, text = run(
+        [str(GODOT), "--headless", "--editor", "--quit",
+         "--path", str(GAME)],
+        env, 300, LOGS / "godot_editor_import_game_g.log")
+    errors = text.count("SCRIPT ERROR") + text.count("Parse Error")
+
+    d3 = GAME / "assets" / "3d"
+    generated = []
+    for p in sorted(d3.rglob("*")):
+        if p.is_file():
+            row = {"rel": str(p.relative_to(GAME)).replace("\\", "/"),
+                   "bytes": p.stat().st_size, "sha256": sha256(p)}
+            if p.suffix.lower() == ".png":
+                with Image.open(p) as im:
+                    row["size"] = [im.width, im.height]
+            generated.append(row)
+    pngs = [g for g in generated if g["rel"].endswith(".png")]
+    import_file = d3 / "player-rigged.glb.import"
+
+    checks = {
+        "three_copies_identical": all(c["identical"] for c in copies),
+        "import_rc": rc == 0,
+        "import_no_parse_errors": errors == 0,
+        "glb_import_stamp": import_file.is_file(),
+        "three_pbr_extracted": len(pngs) == 3,
+        "pbr_all_4096": all(g.get("size") == [4096, 4096] for g in pngs),
+        "motion_input_in_game": (GAME / "data" / "motion_input.json").is_file(),
+        "rig_driver_in_game": (GAME / "scripts" / "rig_driver.gd").is_file(),
+    }
+    ok = all(checks.values())
+    OUT.write_text(json.dumps({
+        "import": {"seconds": dt, "returncode": rc, "errors": errors},
+        "copies": copies, "generated": generated,
+        "checks": checks, "failed": [k for k, v in checks.items() if not v],
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    for c in copies:
+        print(f"COPY {c['rel']:42s} {c['bytes']:>10} B "
+              f"sha={c['sha256'][:12]} identical={c['identical']}")
+    print(f"IMPORT rc={rc} {dt}s errors={errors} "
+          f"generated={len(generated)} pngs={len(pngs)}")
+    for k, v in checks.items():
+        if not v:
+            print("  FAIL", k)
+    print("INSTALL_ASSETS_G_OK" if ok else "INSTALL_ASSETS_G_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/make_baseline_project_g.py =====
+"""G 路线 A/B：从 orig/pre-3d 造一份可运行的「改动前」游戏工程副本。
+
+副本是独立 Godot 工程，注入式截帧在它上面跑，不与当前工程抢资源。
+用法：python make_baseline_project_g.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+ORIG = HERE / "orig" / "pre-3d"
+PROJECT = HERE / "baseline_project"
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+OUT = HERE / "data" / "baseline_project_g.json"
+LOGS = HERE / "logs"
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def main() -> int:
+    assert ORIG.is_dir(), ORIG
+    assert GODOT.is_file(), GODOT
+    LOGS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    if PROJECT.is_dir():
+        shutil.rmtree(PROJECT)
+    PROJECT.mkdir(parents=True)
+
+    rows = []
+    for p in sorted(ORIG.rglob("*")):
+        if not p.is_file():
+            continue
+        rel = p.relative_to(ORIG)
+        dst = PROJECT / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(p, dst)
+        rows.append({"rel": str(rel).replace("\\", "/"),
+                     "sha256": sha256(p),
+                     "identical": sha256(p) == sha256(dst)})
+
+    t0 = time.perf_counter()
+    env = os.environ.copy()
+    proc = subprocess.run(
+        [str(GODOT), "--headless", "--editor", "--quit",
+         "--path", str(PROJECT)],
+        env=env, capture_output=True, timeout=300, cwd=str(PROJECT))
+    dt = round(time.perf_counter() - t0, 3)
+    (LOGS / "godot_editor_import_baseline_project.log").write_bytes(
+        proc.stdout + b"\n--- STDERR ---\n" + proc.stderr)
+    text = (proc.stdout + proc.stderr).decode("utf-8", "replace")
+    errors = text.count("SCRIPT ERROR") + text.count("Parse Error")
+
+    checks = {
+        "copied_105": len(rows) == 105,
+        "all_identical": all(r["identical"] for r in rows),
+        "import_rc": proc.returncode == 0,
+        "import_no_errors": errors == 0,
+        "project_godot_present": (PROJECT / "project.godot").is_file(),
+        "no_3d_assets": not (PROJECT / "assets" / "3d").exists(),
+        "no_rig_driver": not (PROJECT / "scripts" / "rig_driver.gd").exists(),
+    }
+    ok = all(checks.values())
+    OUT.write_text(json.dumps({
+        "project": str(PROJECT), "files": len(rows),
+        "import": {"seconds": dt, "returncode": proc.returncode,
+                   "errors": errors},
+        "checks": checks, "failed": [k for k, v in checks.items() if not v],
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"BASELINE_PROJECT files={len(rows)} import_rc={proc.returncode} "
+          f"{dt}s errors={errors}")
+    for k, v in checks.items():
+        if not v:
+            print("  FAIL", k)
+    print("BASELINE_PROJECT_G_OK" if ok else "BASELINE_PROJECT_G_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/capture_g.py =====
+"""G 路线 A/B 截帧：复用侧身节奏接线已验证的「注入式确定性截帧」。
+
+三组：
+  baseline = orig/pre-3d 副本工程（改动前，无 3D）
+  off      = 当前工程，CARD_BOXER_3D 未设（双轨默认关）
+  on       = 当前工程，CARD_BOXER_3D=1（玩家侧 3D）
+每组同一套注入（构造牌型 -> _resolve_taikou -> 手动推进节奏 -> hitstop 冻结），
+arena.gd 逐字节还原 + sha256 证明，保证 A/B 可复算。
+
+用法：python capture_g.py baseline|off|on [mode ...]
+"""
+from __future__ import annotations
+
+import json
+import os
+import shutil
+import sys
+import tempfile
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+BASE_PROJECT = HERE / "baseline_project"
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+OUT = HERE / "data"
+
+DEFAULT_MODES = ["t000", "t048", "t112", "t140", "draw", "foewin"]
+
+
+def main() -> int:
+    if len(sys.argv) < 2 or sys.argv[1] not in ("baseline", "off", "on"):
+        print("USAGE: python capture_g.py baseline|off|on [mode ...]")
+        return 2
+    group = sys.argv[1]
+    modes = sys.argv[2:] or DEFAULT_MODES
+
+    sys.path.insert(0, str(BAKE / "侧身节奏接线"))
+    import capture_rhythm as cr  # noqa: E402
+
+    project = BASE_PROJECT if group == "baseline" else GAME
+    assert project.is_dir(), project
+    shots = HERE / "shots" / group
+    shots.mkdir(parents=True, exist_ok=True)
+    logdir = HERE / "logs" / ("capture_" + group)
+    logdir.mkdir(parents=True, exist_ok=True)
+
+    cr.GAME = project
+    cr.ARENA = project / "scripts" / "arena.gd"
+    cr.GODOT = GODOT
+    cr.OUT = shots
+    cr.TMP = Path(tempfile.mkdtemp(prefix="fa-g-%s-" % group))
+    cr.LOGDIR = logdir
+    full_cases = dict(cr.CASES)
+    cr.CASES = {k: full_cases[k] for k in modes}
+
+    if group == "on":
+        os.environ["CARD_BOXER_3D"] = "1"
+    else:
+        os.environ.pop("CARD_BOXER_3D", None)
+
+    sys.argv = [sys.argv[0]] + modes
+    rc = cr.main()
+
+    result = {}
+    p = shots / "capture_result.json"
+    if p.is_file():
+        result = json.loads(p.read_text(encoding="utf-8"))
+    payload = {
+        "group": group, "project": str(project), "modes": modes,
+        "env_3d": os.environ.get("CARD_BOXER_3D", ""),
+        "returncode": rc, "restore_ok": result.get("restore_ok"),
+        "records": result.get("records", []),
+        "pngs": sorted(x.name for x in shots.glob("*.png")),
+    }
+    (OUT / ("capture_%s.json" % group)).write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8")
+    print(f"GROUP {group} rc={rc} restore={payload['restore_ok']} "
+          f"pngs={len(payload['pngs'])}")
+    # 临时目录只留证据，不进交付清单
+    shutil.rmtree(cr.TMP, ignore_errors=True)
+    return rc
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/compare_g.py =====
+"""G 路线 A/B 判据：判定零变化 / 3D 开可见 / 动作随节奏变 / 对照板。
+
+【判据订正 2026-11-11】第一版逐模式断言 baseline 与 off 的整帧
+「跨进程逐像素等价」，实测 6/6 全 FAIL。根因不是回归：Godot 每次启动
+会随机化全局 RNG，手牌 / 观众席 / 灯光相位在不同进程间天然不同。
+diag_ab.py 实测 baseline_vs_off 的 mae=10.43、gt6=34785 px，且差异
+均匀铺满全屏（top_bg / mid / bottom_hud / player 四区都有），不是角色
+局部变化。项目既有订正口径见 引擎优化/compare_regression.py。
+
+因此**退役** `off_pixel_identical_*` 这 6 条，换成三条真正有牙的证据：
+  ① static_ab_g.json：同一冻结状态（paused + 隐藏动态子节点）跨进程
+     逐像素等价 changed_pixels=0 —— 这是「默认关零污染」的硬证据；
+  ② same_tree_ab_g.json：同一进程同一棵树 off→on 的 ROI 判据全绿；
+  ③ 逐模式 RHYTHM_SHOT marker 三组逐字相同 —— 判定层零变化。
+跨进程的 `on_vs_off_changed_px` 只作观察值记录，不再当等价判据。
+
+用法：python compare_g.py
+"""
+from __future__ import annotations
+
+import json
+import re
+import sys
+from pathlib import Path
+
+from PIL import Image, ImageChops, ImageDraw, ImageFont
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+SHOTS = HERE / "shots"
+LOGS = HERE / "logs"
+BOARDS = HERE / "boards"
+DATA = HERE / "data"
+OUT = DATA / "ab_g.json"
+
+sys.path.insert(0, str(BAKE / "侧身节奏接线"))
+import capture_rhythm as cr  # noqa: E402
+
+MODES = ["t000", "t048", "t112", "t140", "draw", "foewin"]
+GROUPS = ["baseline", "off", "on"]
+PLAYER_ROI = (290, 270, 580, 535)   # 玩家侧 3D 角色区域（2D 坐标）
+
+FONT_PATH = Path(r"C:\Windows\Fonts\msyh.ttc")
+
+
+def shot(group: str, mode: str) -> Path:
+    return SHOTS / group / cr.CASES[mode][3]
+
+
+def diff_px(a: Image.Image, b: Image.Image, box=None) -> int:
+    x = a.convert("RGB") if box is None else a.convert("RGB").crop(box)
+    y = b.convert("RGB") if box is None else b.convert("RGB").crop(box)
+    d = ImageChops.difference(x, y)
+    return sum(1 for px in d.get_flattened_data() if px != (0, 0, 0))
+
+
+def marker(group: str, mode: str) -> str:
+    p = LOGS / ("capture_" + group) / ("capture_%s.log" % mode)
+    if not p.is_file():
+        return ""
+    text = p.read_text(encoding="utf-8", errors="replace")
+    hits = re.findall(r"\[RHYTHM_SHOT\][^\r\n]*", text)
+    return hits[0].strip() if hits else ""
+
+
+def font(sz: int):
+    if FONT_PATH.is_file():
+        return ImageFont.truetype(str(FONT_PATH), sz)
+    return ImageFont.load_default()
+
+
+def board(rows: list[tuple[str, list[tuple[str, Path]]]], out: Path,
+          cell: tuple[int, int] = (620, 350)) -> None:
+    w, h = cell
+    pad, label_h = 18, 30
+    canvas = Image.new("RGB", (len(rows[0][1]) * (w + pad) + pad,
+                              len(rows) * (h + label_h + pad) + pad),
+                       (20, 24, 34))
+    d = ImageDraw.Draw(canvas)
+    f = font(20)
+    for r, (row_name, items) in enumerate(rows):
+        for c, (name, p) in enumerate(items):
+            x = pad + c * (w + pad)
+            y = pad + r * (h + label_h + pad)
+            im = Image.open(p).convert("RGB").resize((w, h))
+            canvas.paste(im, (x, y))
+            d.text((x + 4, y + h + 2), f"{row_name} / {name}",
+                   font=f, fill=(150, 220, 200))
+    canvas.save(out)
+
+
+def main() -> int:
+    BOARDS.mkdir(parents=True, exist_ok=True)
+    DATA.mkdir(parents=True, exist_ok=True)
+    per_mode, checks, notes = {}, {}, {}
+
+    for mode in MODES:
+        paths = {g: shot(g, mode) for g in GROUPS}
+        present = all(p.is_file() for p in paths.values())
+        if not present:
+            checks[f"pngs_{mode}"] = False
+            continue
+        checks[f"pngs_{mode}"] = True
+        ims = {g: Image.open(p) for g, p in paths.items()}
+        eq = diff_px(ims["baseline"], ims["off"])
+        on_off = diff_px(ims["on"], ims["off"])
+        marks = {g: marker(g, mode) for g in GROUPS}
+        per_mode[mode] = {
+            "baseline_vs_off_changed_px": eq,
+            "on_vs_off_changed_px": on_off,
+            "marker_baseline": marks["baseline"],
+            "marker_off": marks["off"],
+            "marker_on": marks["on"],
+            "marker_all_same": (bool(marks["baseline"])
+                                and marks["baseline"] == marks["off"]
+                                and marks["off"] == marks["on"]),
+        }
+        # eq 只记录、不判绿（跨进程 RNG 噪声），见模块 docstring 的退役说明。
+        checks[f"on_visible_{mode}"] = on_off > 20000
+        checks[f"judgement_same_{mode}"] = per_mode[mode]["marker_all_same"]
+        for g, p in paths.items():
+            notes.setdefault(g, {})[mode] = {
+                "bytes": p.stat().st_size,
+                "w": ims[g].width, "h": ims[g].height,
+            }
+
+    # 3D 动作随节奏变化：只看玩家侧 ROI，排除 HUD / banner 差异。
+    if all(shot("on", m).is_file() for m in ("t000", "t048", "t112")):
+        a = Image.open(shot("on", "t000"))
+        b = Image.open(shot("on", "t048"))
+        c = Image.open(shot("on", "t112"))
+        roi = {
+            "t000_vs_t048": diff_px(a, b, PLAYER_ROI),
+            "t048_vs_t112": diff_px(b, c, PLAYER_ROI),
+            "t000_vs_t112": diff_px(a, c, PLAYER_ROI),
+        }
+        notes["on_player_roi_changed_px"] = roi
+        # 口径提醒：这三个数含跨进程 RNG 噪声（约 7 万量级），**不能**
+        # 当作「3D 动作随节奏变化」的证据。那条硬证据是
+        # same_tree_ab_g.json 的 on-stance/on-jab6/on-wave17 同树对比。
+        # 这里只保留「截帧非空、非全同」的下限，防止整批截图失效。
+        checks["on_roi_frames_not_identical"] = (
+            roi["t000_vs_t048"] > 500 and roi["t048_vs_t112"] > 500)
+        board([
+            ("3D ON", [("t000 起手", shot("on", "t000")),
+                       ("t048 命中", shot("on", "t048")),
+                       ("t112 攻击窗末", shot("on", "t112"))]),
+        ], BOARDS / "G-3D动作三帧.png")
+    else:
+        checks["3d_motion_changes_in_player_roi"] = False
+
+    if shot("off", "t048").is_file():
+        board([
+            ("t048 命中帧", [
+                ("改动前 baseline", shot("baseline", "t048")),
+                ("默认关 off", shot("off", "t048")),
+                ("3D 开 on", shot("on", "t048"))]),
+        ], BOARDS / "G-双轨AB对照.png")
+
+    captures = {}
+    for g in GROUPS:
+        p = DATA / ("capture_%s.json" % g)
+        captures[g] = json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}
+    checks["all_groups_restored"] = all(
+        captures[g].get("restore_ok") is True for g in GROUPS)
+    checks["all_groups_rc0"] = all(
+        captures[g].get("returncode") == 0 for g in GROUPS)
+
+    # 退役 6 条跨进程等价后，用三条硬证据顶上，点名具体值而不是宽松下限。
+    static = DATA / "static_ab_g.json"
+    st = json.loads(static.read_text(encoding="utf-8")) if static.is_file() else {}
+    same = DATA / "same_tree_ab_g.json"
+    sm = json.loads(same.read_text(encoding="utf-8")) if same.is_file() else {}
+    checks["static_default_off_pixel_identical"] = (
+        st.get("changed_pixels") == 0 and st.get("ok") is True)
+    checks["same_tree_ab_all_green"] = sm.get("ok") is True
+    checks["same_tree_3d_visible_in_roi"] = bool(
+        sm.get("checks", {}).get("3d_visible_in_roi"))
+    checks["retired_cross_process_claim_not_reused"] = all(
+        not k.startswith("off_pixel_identical") for k in checks)
+    checks["retirement_documented"] = "退役" in (__doc__ or "")
+
+    failed = [k for k, v in checks.items() if not v]
+    ok = not failed
+    OUT.write_text(json.dumps({
+        "modes": MODES, "groups": GROUPS,
+        "player_roi": list(PLAYER_ROI),
+        "per_mode": per_mode, "notes": notes,
+        "checks": checks, "failed": failed, "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    for m in MODES:
+        r = per_mode.get(m)
+        if r:
+            print(f"{m:8s} base-vs-off={r['baseline_vs_off_changed_px']:>7} "
+                  f"on-vs-off={r['on_vs_off_changed_px']:>7} "
+                  f"marker_same={r['marker_all_same']}")
+    print("ROI", notes.get("on_player_roi_changed_px"))
+    for k in failed:
+        print("  FAIL", k)
+    print("AB_G_OK" if ok else "AB_G_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/diag_ab.py =====
+"""诊断 baseline vs off 的像素差异量级：是量化抖动还是内容不同。
+
+用法：python diag_ab.py
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from PIL import Image, ImageChops
+
+HERE = Path(__file__).resolve().parent
+SHOTS = HERE / "shots"
+OUT = HERE / "data" / "diag_ab.json"
+NAME = "节奏帧-t048-命中HIT.png"
+REGIONS = {
+    "top_bg": (0, 0, 1280, 180),
+    "mid": (0, 180, 1280, 520),
+    "bottom_hud": (0, 520, 1280, 720),
+    "player": (290, 270, 580, 535),
+}
+
+
+def stat(a: Image.Image, b: Image.Image) -> dict:
+    d = ImageChops.difference(a.convert("RGB"), b.convert("RGB"))
+    px = list(d.get_flattened_data())
+    n = len(px)
+    total = sum(sum(p) for p in px)
+    buckets = {"eq0": 0, "1to2": 0, "3to6": 0, "7to16": 0, "gt16": 0}
+    for p in px:
+        m = max(p)
+        if m == 0:
+            buckets["eq0"] += 1
+        elif m <= 2:
+            buckets["1to2"] += 1
+        elif m <= 6:
+            buckets["3to6"] += 1
+        elif m <= 16:
+            buckets["7to16"] += 1
+        else:
+            buckets["gt16"] += 1
+    return {
+        "pixels": n,
+        "mae": round(total / (n * 3), 5),
+        "max_channel": max(max(p) for p in px),
+        "buckets": buckets,
+        "changed_gt6": buckets["7to16"] + buckets["gt16"],
+        "bbox": d.getbbox(),
+    }
+
+
+def main() -> int:
+    pairs = {
+        "baseline_vs_off": (SHOTS / "baseline" / NAME, SHOTS / "off" / NAME),
+        "on_vs_off": (SHOTS / "on" / NAME, SHOTS / "off" / NAME),
+        "baseline_vs_on": (SHOTS / "baseline" / NAME, SHOTS / "on" / NAME),
+    }
+    out = {}
+    for k, (pa, pb) in pairs.items():
+        if not (pa.is_file() and pb.is_file()):
+            out[k] = {"error": "missing"}
+            continue
+        a, b = Image.open(pa), Image.open(pb)
+        out[k] = {"whole": stat(a, b), "regions": {
+            name: stat(a.crop(box), b.crop(box))
+            for name, box in REGIONS.items()}}
+        d = ImageChops.difference(a.convert("RGB"), b.convert("RGB"))
+        # 8 倍放大，肉眼看差异分布
+        d.point(lambda v: min(255, v * 8)).save(
+            HERE / "shots" / ("diag-diff-%s.png" % k))
+    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for k, v in out.items():
+        if "error" in v:
+            print(k, v["error"])
+            continue
+        w = v["whole"]
+        print(f"{k:18s} mae={w['mae']:<9} max={w['max_channel']:<4} "
+              f"gt6={w['changed_gt6']:<8} buckets={w['buckets']}")
+        for r, s in v["regions"].items():
+            print(f"    {r:12s} mae={s['mae']:<9} gt6={s['changed_gt6']:<8} "
+                  f"max={s['max_channel']}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/run_static_ab_g.py =====
+"""G 路线：改动前 vs 默认关的「同状态静态背景」逐像素等价。
+
+复用引擎优化已验证的 tests/perf_probe.gd 口径：
+实例化 main.tscn 后 paused + 隐藏动态子节点，_shake 恒 0，
+同一冻结状态跨进程可复现，差异必须为 0。
+跨运行全游戏帧不可比（Godot 每次启动随机化全局 RNG），见
+引擎优化/compare_regression.py 的订正。
+
+用法：python run_static_ab_g.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import subprocess
+import time
+from pathlib import Path
+
+from PIL import Image, ImageChops
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+BASE_PROJECT = HERE / "baseline_project"
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+OUT = HERE / "data" / "static_ab_g.json"
+LOGS = HERE / "logs"
+SHOTS = HERE / "shots" / "static_ab"
+PROBE = "res://tests/perf_probe.gd"
+
+
+def run(project: Path, tag: str) -> dict:
+    d = SHOTS / tag
+    d.mkdir(parents=True, exist_ok=True)
+    png = d / "背景基线.png"
+    js = d / "perf.json"
+    env = os.environ.copy()
+    env.pop("CARD_BOXER_3D", None)
+    env["CARD_BOXER_PERF_OUT"] = str(png)
+    env["CARD_BOXER_PERF_JSON"] = str(js)
+    env["CARD_BOXER_PERF_FRAMES"] = "120"
+    t0 = time.perf_counter()
+    try:
+        proc = subprocess.run(
+            [str(GODOT), "--path", str(project),
+             "--resolution", "1280x720", "--quit-after", "900",
+             "--script", PROBE],
+            env=env, capture_output=True, timeout=240, cwd=str(project))
+        rc = proc.returncode
+        text = (proc.stdout + b"\n--- STDERR ---\n"
+                + proc.stderr).decode("utf-8", "replace")
+    except subprocess.TimeoutExpired as exc:
+        rc = -1
+        text = ((exc.stdout or b"") + b"\n--- TIMEOUT ---\n").decode(
+            "utf-8", "replace")
+    dt = round(time.perf_counter() - t0, 3)
+    (LOGS / ("static_ab_%s.log" % tag)).write_text(text, encoding="utf-8")
+    perf = json.loads(js.read_text(encoding="utf-8")) if js.is_file() else {}
+    return {"tag": tag, "project": str(project), "rc": rc, "seconds": dt,
+            "png": png, "perf": perf,
+            "marker": "PERF_PROBE_DONE" in text,
+            "errors": text.count("SCRIPT ERROR") + text.count("Parse Error"),
+            "has_opengl": "OpenGL API" in text}
+
+
+def main() -> int:
+    LOGS.mkdir(parents=True, exist_ok=True)
+    SHOTS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    a = run(BASE_PROJECT, "baseline")
+    b = run(GAME, "off")
+
+    ia = Image.open(a["png"]).convert("RGB") if a["png"].is_file() else None
+    ib = Image.open(b["png"]).convert("RGB") if b["png"].is_file() else None
+    changed = None
+    if ia is not None and ib is not None and ia.size == ib.size:
+        changed = sum(ImageChops.difference(ia, ib)
+                      .convert("L").histogram()[1:])
+    checks = {
+        "both_rc0": a["rc"] == 0 and b["rc"] == 0,
+        "both_markers": a["marker"] and b["marker"],
+        "both_gl": a["has_opengl"] and b["has_opengl"],
+        "no_errors": a["errors"] == 0 and b["errors"] == 0,
+        "both_png": ia is not None and ib is not None,
+        "same_size": ia is not None and ib is not None and ia.size == ib.size,
+        "pixel_identical": changed == 0,
+        "same_sample_count": a["perf"].get("samples") == 120
+                             and b["perf"].get("samples") == 120,
+        "same_viewport": a["perf"].get("viewport") == [1280, 720]
+                         and b["perf"].get("viewport") == [1280, 720],
+    }
+    ok = all(checks.values())
+    OUT.write_text(json.dumps({
+        "baseline": {k: (str(v) if isinstance(v, Path) else v)
+                     for k, v in a.items()},
+        "off": {k: (str(v) if isinstance(v, Path) else v)
+                for k, v in b.items()},
+        "changed_pixels": changed,
+        "prims_mean": {"baseline": a["perf"].get("primitives", {}).get("mean"),
+                       "off": b["perf"].get("primitives", {}).get("mean")},
+        "draw_calls_mean": {"baseline": a["perf"].get("draw_calls", {}).get("mean"),
+                            "off": b["perf"].get("draw_calls", {}).get("mean")},
+        "checks": checks, "failed": [k for k, v in checks.items() if not v],
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"BASELINE rc={a['rc']} {a['seconds']}s  OFF rc={b['rc']} {b['seconds']}s")
+    print(f"CHANGED_PIXELS={changed} prims={OUT.parent.joinpath('static_ab_g.json').name}")
+    for k, v in checks.items():
+        if not v:
+            print("  FAIL", k)
+    print("STATIC_AB_G_OK" if ok else "STATIC_AB_G_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/run_three_d_probe.py =====
+"""G 路线：同进程同树 3D 双轨 A/B 探针驱动。
+
+用法：python run_three_d_probe.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import subprocess
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+OUTDIR = HERE / "shots" / "ab_same_tree"
+LOGS = HERE / "logs"
+OUT = HERE / "data" / "three_d_ab.json"
+
+
+def main() -> int:
+    assert GODOT.is_file(), GODOT
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    LOGS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    env.pop("CARD_BOXER_3D", None)      # 探针自己挂层，off 阶段必须无 3D
+    env["G_3D_AB_DIR"] = str(OUTDIR)
+    t0 = time.perf_counter()
+    try:
+        proc = subprocess.run(
+            [str(GODOT), "--path", str(GAME), "--resolution", "1280x720",
+             "--quit-after", "900",
+             "--script", "res://tests/three_d_probe.gd"],
+            env=env, capture_output=True, timeout=240, cwd=str(GAME))
+        rc, text = proc.returncode, (proc.stdout + b"\n--- STDERR ---\n"
+                                     + proc.stderr).decode("utf-8", "replace")
+    except subprocess.TimeoutExpired as exc:
+        rc = -1
+        text = ((exc.stdout or b"") + b"\n--- TIMEOUT ---\n").decode(
+            "utf-8", "replace")
+    dt = round(time.perf_counter() - t0, 3)
+    (LOGS / "godot_three_d_ab.log").write_text(text, encoding="utf-8")
+
+    marker = "G3D_AB_JSON "
+    line = next((l for l in text.splitlines() if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no marker"}
+    rows = payload.get("shots", [])
+    has_gl = "OpenGL API" in text
+    errors = text.count("SCRIPT ERROR") + text.count("Parse Error")
+
+    checks = {
+        "rc": rc == 0,
+        "has_opengl": has_gl,
+        "no_script_errors": errors == 0,
+        "no_payload_error": "error" not in payload,
+        "layer_ready": payload.get("layer_ready") is True,
+        "four_shots": len(rows) == 4,
+        "all_png_ok": all(r.get("save_error") == 0
+                          and r.get("w") == 1280 and r.get("h") == 720
+                          and Path(r.get("path", "")).is_file() for r in rows),
+        "bones_13": payload.get("bones") == 13,
+        "frames_applied_positive": int(payload.get("frames_applied", 0)) > 0,
+        "tex_drawn": payload.get("tex_drawn") is True,
+        "override_on": payload.get("draw_3d_override") is True,
+        "env_not_preset": payload.get("use_3d_env") == "",
+        "last_frame_is_wave17": payload.get("last_card") == "wave"
+                                and payload.get("last_frame") == 17,
+    }
+    ok = all(checks.values())
+    OUT.write_text(json.dumps({
+        "run": {"seconds": dt, "returncode": rc, "has_opengl": has_gl,
+                "script_errors": errors, "headless": False},
+        "payload": payload,
+        "checks": checks, "failed": [k for k, v in checks.items() if not v],
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"RUN {dt}s rc={rc} gl={has_gl} errors={errors}")
+    print(f"LAYER ready={payload.get('layer_ready')} "
+          f"bones={payload.get('bones')} "
+          f"frames_applied={payload.get('frames_applied')} "
+          f"tex_drawn={payload.get('tex_drawn')}")
+    for r in rows:
+        print(f"SHOT {r['name']:<12} {r['w']}x{r['h']} err={r['save_error']} "
+              f"prims={r['prims_mean']:.0f} calls={r['draw_calls_mean']:.1f}")
+    for k, v in checks.items():
+        if not v:
+            print("  FAIL", k)
+    print("THREE_D_AB_OK" if ok else "THREE_D_AB_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/compare_same_tree_g.py =====
+"""G 路线：同树同状态 3D A/B 的像素判据（跨运行噪声为零的硬证据）。
+
+用法：python compare_same_tree_g.py
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from PIL import Image, ImageChops, ImageDraw, ImageFont
+
+HERE = Path(__file__).resolve().parent
+SHOTS = HERE / "shots" / "ab_same_tree"
+BOARDS = HERE / "boards"
+DATA = HERE / "data"
+OUT = DATA / "same_tree_ab_g.json"
+ROI = (290, 270, 580, 535)
+FONT_PATH = Path(r"C:\Windows\Fonts\msyh.ttc")
+
+NAMES = ["off", "on-stance", "on-jab6", "on-wave17"]
+
+
+def diff(a: Image.Image, b: Image.Image, box=None) -> int:
+    x = a.convert("RGB") if box is None else a.convert("RGB").crop(box)
+    y = b.convert("RGB") if box is None else b.convert("RGB").crop(box)
+    return sum(1 for p in ImageChops.difference(x, y).get_flattened_data()
+               if p != (0, 0, 0))
+
+
+def font(sz: int):
+    if FONT_PATH.is_file():
+        return ImageFont.truetype(str(FONT_PATH), sz)
+    return ImageFont.load_default()
+
+
+def make_board(ims: dict, out: Path) -> None:
+    w, h, pad, label_h = 470, 265, 14, 28
+    canvas = Image.new("RGB", (2 * (w + pad) + pad,
+                              2 * (h + label_h + pad) + pad), (20, 24, 34))
+    d = ImageDraw.Draw(canvas)
+    f = font(18)
+    for i, name in enumerate(NAMES):
+        r, c = divmod(i, 2)
+        x, y = pad + c * (w + pad), pad + r * (h + label_h + pad)
+        canvas.paste(ims[name].resize((w, h)), (x, y))
+        d.text((x + 4, y + h + 2), name, font=f, fill=(150, 220, 200))
+    canvas.save(out)
+
+
+def main() -> int:
+    BOARDS.mkdir(parents=True, exist_ok=True)
+    DATA.mkdir(parents=True, exist_ok=True)
+    paths = {n: SHOTS / ("ab-%s.png" % n) for n in NAMES}
+    ims = {n: Image.open(p).convert("RGB") for n, p in paths.items()
+           if p.is_file()}
+    if len(ims) != 4:
+        print("MISSING PNG", set(NAMES) - set(ims))
+        return 1
+
+    full = {}
+    roi = {}
+    for a, b in [("off", "on-stance"), ("on-stance", "on-jab6"),
+                 ("on-jab6", "on-wave17"), ("on-stance", "on-wave17")]:
+        full[f"{a}__{b}"] = diff(ims[a], ims[b])
+        roi[f"{a}__{b}"] = diff(ims[a], ims[b], ROI)
+    outside = {k: full[k] - roi[k] for k in full}
+
+    probe = json.loads((DATA / "three_d_ab.json").read_text(encoding="utf-8"))
+    rows = {r["name"]: r for r in probe.get("payload", {}).get("shots", [])}
+    prims_off = rows.get("off", {}).get("prims_mean", 0)
+    prims_on = rows.get("on-stance", {}).get("prims_mean", 0)
+
+    checks = {
+        "all_png_1280x720": all(im.size == (1280, 720) for im in ims.values()),
+        "3d_visible_in_roi": roi["off__on-stance"] > 5000,
+        "outside_roi_clean": all(v < 1500 for v in outside.values()),
+        "stance_vs_jab6_distinct": roi["on-stance__on-jab6"] > 500,
+        "jab6_vs_wave17_distinct": roi["on-jab6__on-wave17"] > 500,
+        "stance_vs_wave17_distinct": roi["on-stance__on-wave17"] > 500,
+        "prims_grew": prims_on > prims_off * 10,
+        "prims_stable_across_frames": all(
+            rows.get(n, {}).get("prims_mean") == prims_on
+            for n in ("on-jab6", "on-wave17")),
+        "probe_ok": probe.get("ok") is True,
+    }
+    failed = [k for k, v in checks.items() if not v]
+    ok = not failed
+    OUT.write_text(json.dumps({
+        "roi": list(ROI), "full_changed_px": full,
+        "roi_changed_px": roi, "outside_roi_changed_px": outside,
+        "prims": {"off": prims_off, "on": prims_on,
+                  "ratio": round(prims_on / prims_off, 3) if prims_off else None},
+        "draw_calls": {n: rows.get(n, {}).get("draw_calls_mean")
+                       for n in NAMES},
+        "checks": checks, "failed": failed, "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    make_board(ims, BOARDS / "G-同树3D双轨AB.png")
+
+    for k in full:
+        print(f"{k:34s} full={full[k]:>7} roi={roi[k]:>7} "
+              f"outside={outside[k]:>7}")
+    print(f"PRIMS off={prims_off:.0f} on={prims_on:.0f} "
+          f"ratio={prims_on / prims_off:.2f}x" if prims_off else "PRIMS n/a")
+    for k in failed:
+        print("  FAIL", k)
+    print("SAME_TREE_AB_G_OK" if ok else "SAME_TREE_AB_G_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/run_side_view_probe.py =====
+"""G 路线：同树同状态扫 8 组侧向视角，落盘 PNG 与结果 JSON。
+
+用法：python run_side_view_probe.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import subprocess
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+OUTDIR = HERE / "shots" / "side_probe"
+LOGS = HERE / "logs"
+OUT = HERE / "data" / "side_view_probe.json"
+VIEWS = 8
+
+
+def main() -> int:
+    assert GODOT.is_file(), GODOT
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    LOGS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    env.pop("CARD_BOXER_3D", None)
+    env.pop("CARD_BOXER_3D_YAW", None)
+    env.pop("CARD_BOXER_3D_FLIP", None)
+    env["G_SIDE_DIR"] = str(OUTDIR)
+    t0 = time.perf_counter()
+    try:
+        proc = subprocess.run(
+            [str(GODOT), "--path", str(GAME), "--resolution", "1280x720",
+             "--quit-after", "1400",
+             "--script", "res://tests/side_view_probe.gd"],
+            env=env, capture_output=True, timeout=300, cwd=str(GAME))
+        rc, text = proc.returncode, (proc.stdout + b"\n--- STDERR ---\n"
+                                     + proc.stderr).decode("utf-8", "replace")
+    except subprocess.TimeoutExpired as exc:
+        rc = -1
+        text = ((exc.stdout or b"") + b"\n--- TIMEOUT ---\n").decode(
+            "utf-8", "replace")
+    dt = round(time.perf_counter() - t0, 3)
+    (LOGS / "godot_side_view_probe.log").write_text(text, encoding="utf-8")
+
+    marker = "G_SIDE_JSON "
+    line = next((l for l in text.splitlines() if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no marker"}
+    rows = payload.get("shots", [])
+    has_gl = "OpenGL API" in text
+    errors = text.count("SCRIPT ERROR") + text.count("Parse Error")
+    checks = {
+        "rc": rc == 0,
+        "has_opengl": has_gl,
+        "no_script_errors": errors == 0,
+        "no_payload_error": "error" not in payload,
+        "layer_ready": payload.get("layer_ready") is True,
+        "eight_views": len(rows) == VIEWS,
+        "all_png_ok": all(r.get("save_error") == 0
+                          and r.get("w") == 1280 and r.get("h") == 720
+                          and Path(r.get("path", "")).is_file() for r in rows),
+        "view_changes_all": payload.get("view_changes") == VIEWS,
+        "bones_13": payload.get("bones") == 13,
+    }
+    ok = all(checks.values())
+    OUT.write_text(json.dumps({
+        "run": {"seconds": dt, "returncode": rc, "has_opengl": has_gl,
+                "script_errors": errors, "headless": False},
+        "views": VIEWS, "payload": payload,
+        "checks": checks, "failed": [k for k, v in checks.items() if not v],
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"RUN {dt}s rc={rc} gl={has_gl} errors={errors}")
+    print(f"LAYER ready={payload.get('layer_ready')} "
+          f"bones={payload.get('bones')} "
+          f"view_changes={payload.get('view_changes')} "
+          f"final={payload.get('final_yaw')}/{payload.get('final_flip')}")
+    for r in rows:
+        print(f"SHOT {r['name']:<12} {r['w']}x{r['h']} err={r['save_error']}")
+    for k, v in checks.items():
+        if not v:
+            print("  FAIL", k)
+    print("SIDE_VIEW_PROBE_OK" if ok else "SIDE_VIEW_PROBE_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/make_side_board.py =====
+"""G 路线：把 8 组侧向视角探针帧裁到玩家侧 ROI 拼成对照板。
+
+用法：python make_side_board.py
+"""
+from __future__ import annotations
+
+from pathlib import Path
+
+from PIL import Image, ImageDraw, ImageFont
+
+HERE = Path(__file__).resolve().parent
+SHOTS = HERE / "shots" / "side_probe"
+BOARDS = HERE / "boards"
+FONT_PATH = Path(r"C:\Windows\Fonts\msyh.ttc")
+
+# 玩家侧 3D 角色 + 一小段地面，保留对手方向参照。
+ROI = (250, 250, 620, 545)
+NAMES = [
+    ("y000-f0", "正视 / 不翻"),
+    ("y000-f1", "正视 / 镜像"),
+    ("ym35-f0", "-35° / 不翻"),
+    ("ym35-f1", "-35° / 镜像"),
+    ("ym55-f0", "-55° / 不翻"),
+    ("ym55-f1", "-55° / 镜像"),
+    ("yp35-f0", "+35° / 不翻"),
+    ("yp55-f0", "+55° / 不翻"),
+]
+
+
+def font(sz: int):
+    if FONT_PATH.is_file():
+        return ImageFont.truetype(str(FONT_PATH), sz)
+    return ImageFont.load_default()
+
+
+def main() -> int:
+    BOARDS.mkdir(parents=True, exist_ok=True)
+    ims = {}
+    for name, _ in NAMES:
+        p = SHOTS / f"side-{name}.png"
+        if not p.is_file():
+            print("MISSING", p)
+            return 1
+        ims[name] = Image.open(p).convert("RGB").crop(ROI)
+
+    cw, ch = ROI[2] - ROI[0], ROI[3] - ROI[1]
+    scale = 0.85
+    w, h = int(cw * scale), int(ch * scale)
+    pad, label_h, cols = 12, 30, 4
+    rows = (len(NAMES) + cols - 1) // cols
+    canvas = Image.new("RGB", (cols * (w + pad) + pad,
+                               rows * (h + label_h + pad) + pad), (20, 24, 34))
+    d = ImageDraw.Draw(canvas)
+    f = font(17)
+    for i, (name, label) in enumerate(NAMES):
+        r, c = divmod(i, cols)
+        x, y = pad + c * (w + pad), pad + r * (h + label_h + pad)
+        canvas.paste(ims[name].resize((w, h)), (x, y))
+        d.text((x + 4, y + h + 3), f"{name}  {label}", font=f,
+               fill=(150, 220, 200))
+    out = BOARDS / "G-侧身角度八宫格.png"
+    canvas.save(out)
+    print(f"BOARD {out} {canvas.width}x{canvas.height}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/run_side_stance_probe.py =====
+"""G 路线：固定 +55° 侧视扫 4 档站架偏置，落盘 PNG 与结果 JSON。
+
+用法：python run_side_stance_probe.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import subprocess
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+OUTDIR = HERE / "shots" / "side_stance"
+LOGS = HERE / "logs"
+OUT = HERE / "data" / "side_stance_probe.json"
+CASES = 4
+
+
+def main() -> int:
+    assert GODOT.is_file(), GODOT
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    LOGS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    for k in ("CARD_BOXER_3D", "CARD_BOXER_3D_YAW", "CARD_BOXER_3D_FLIP"):
+        env.pop(k, None)
+    env["G_STANCE_DIR"] = str(OUTDIR)
+    t0 = time.perf_counter()
+    try:
+        proc = subprocess.run(
+            [str(GODOT), "--path", str(GAME), "--resolution", "1280x720",
+             "--quit-after", "1000",
+             "--script", "res://tests/side_stance_probe.gd"],
+            env=env, capture_output=True, timeout=300, cwd=str(GAME))
+        rc, text = proc.returncode, (proc.stdout + b"\n--- STDERR ---\n"
+                                     + proc.stderr).decode("utf-8", "replace")
+    except subprocess.TimeoutExpired as exc:
+        rc = -1
+        text = ((exc.stdout or b"") + b"\n--- TIMEOUT ---\n").decode(
+            "utf-8", "replace")
+    dt = round(time.perf_counter() - t0, 3)
+    (LOGS / "godot_side_stance_probe.log").write_text(text, encoding="utf-8")
+
+    marker = "G_STANCE_JSON "
+    line = next((l for l in text.splitlines() if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no marker"}
+    rows = payload.get("shots", [])
+    has_gl = "OpenGL API" in text
+    errors = text.count("SCRIPT ERROR") + text.count("Parse Error")
+    checks = {
+        "rc": rc == 0,
+        "has_opengl": has_gl,
+        "no_script_errors": errors == 0,
+        "no_payload_error": "error" not in payload,
+        "layer_ready": payload.get("layer_ready") is True,
+        "four_cases": len(rows) == CASES,
+        "all_png_ok": all(r.get("save_error") == 0
+                          and r.get("w") == 1280 and r.get("h") == 720
+                          and Path(r.get("path", "")).is_file() for r in rows),
+        "fixed_yaw_55": payload.get("fixed_yaw") == 55.0,
+        "bones_13": payload.get("bones") == 13,
+        "final_bias_nonempty": len(payload.get("final_bias_keys", [])) > 0,
+    }
+    ok = all(checks.values())
+    OUT.write_text(json.dumps({
+        "run": {"seconds": dt, "returncode": rc, "has_opengl": has_gl,
+                "script_errors": errors, "headless": False},
+        "payload": payload,
+        "checks": checks, "failed": [k for k, v in checks.items() if not v],
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"RUN {dt}s rc={rc} gl={has_gl} errors={errors}")
+    print(f"LAYER ready={payload.get('layer_ready')} "
+          f"bones={payload.get('bones')} "
+          f"final_bias_keys={payload.get('final_bias_keys')}")
+    for r in rows:
+        print(f"SHOT {r['name']:<12} {r['w']}x{r['h']} err={r['save_error']}")
+    for k, v in checks.items():
+        if not v:
+            print("  FAIL", k)
+    print("SIDE_STANCE_PROBE_OK" if ok else "SIDE_STANCE_PROBE_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/make_stance_board.py =====
+"""G 路线：4 档站架偏置对照板（全帧缩小 + 玩家侧放大两行）。"""
+from __future__ import annotations
+
+from pathlib import Path
+
+from PIL import Image, ImageDraw, ImageFont
+
+HERE = Path(__file__).resolve().parent
+SHOTS = HERE / "shots" / "side_stance"
+BOARDS = HERE / "boards"
+FONT_PATH = Path(r"C:\Windows\Fonts\msyh.ttc")
+ROI = (270, 265, 570, 545)
+NAMES = [("b0-none", "无偏置 A-pose"), ("b1-light", "轻"),
+         ("b2-mid", "中"), ("b3-heavy", "重")]
+
+
+def font(sz: int):
+    if FONT_PATH.is_file():
+        return ImageFont.truetype(str(FONT_PATH), sz)
+    return ImageFont.load_default()
+
+
+def main() -> int:
+    BOARDS.mkdir(parents=True, exist_ok=True)
+    ims = {}
+    for name, _ in NAMES:
+        p = SHOTS / f"stance-{name}.png"
+        if not p.is_file():
+            print("MISSING", p)
+            return 1
+        ims[name] = Image.open(p).convert("RGB")
+
+    cw, ch = ROI[2] - ROI[0], ROI[3] - ROI[1]
+    w, h = 320, int(ch * 320 / cw)
+    pad, label_h = 14, 32
+    canvas = Image.new("RGB", (4 * (w + pad) + pad,
+                               2 * (h + label_h + pad) + pad), (20, 24, 34))
+    d = ImageDraw.Draw(canvas)
+    f = font(18)
+    for i, (name, label) in enumerate(NAMES):
+        x = pad + i * (w + pad)
+        # 上排：玩家侧放大
+        y = pad
+        canvas.paste(ims[name].crop(ROI).resize((w, h)), (x, y))
+        d.text((x + 4, y + h + 3), f"{name}  {label}", font=f,
+               fill=(150, 220, 200))
+        # 下排：全帧缩小，看两人相对关系
+        y2 = pad + h + label_h + pad
+        canvas.paste(ims[name].resize((w, int(720 * w / 1280))), (x, y2))
+    out = BOARDS / "G-侧身站架四档对照.png"
+    canvas.save(out)
+    print(f"BOARD {out} {canvas.width}x{canvas.height}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/run_side_stance_scan.py =====
+"""G 路线：反向/混合符号的站架偏置扫描，候选从 JSON 注入，不覆盖首轮证据。
+
+用法：python run_side_stance_scan.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import subprocess
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+OUTDIR = HERE / "shots" / "side_stance_scan"
+LOGS = HERE / "logs"
+OUT = HERE / "data" / "side_stance_scan.json"
+
+# 首轮 b1/b2/b3 把双臂收了但拳落在腰前；这里扫反号与拆分组合，
+# 目标是「拳到下颌前」且网格不撕裂。f=前手(画面右)，b=后手。
+CASES = [
+    {"name": "r0-flip-all", "bias": {
+        "upperarm_f": 26.0, "forearm_f": -50.0,
+        "upperarm_b": -26.0, "forearm_b": 50.0,
+        "spine": 4.0, "head": -2.4,
+        "thigh_f": 10.0, "shin_f": -6.0,
+        "thigh_b": -12.0, "shin_b": 7.0}},
+    {"name": "r1-flip-fore", "bias": {
+        "upperarm_f": -26.0, "forearm_f": -50.0,
+        "upperarm_b": 26.0, "forearm_b": 50.0,
+        "thigh_f": 10.0, "shin_f": -6.0,
+        "thigh_b": -12.0, "shin_b": 7.0}},
+    {"name": "r2-flip-upper", "bias": {
+        "upperarm_f": 26.0, "forearm_f": 50.0,
+        "upperarm_b": -26.0, "forearm_b": -50.0,
+        "thigh_f": 10.0, "shin_f": -6.0,
+        "thigh_b": -12.0, "shin_b": 7.0}},
+    {"name": "r3-fonly-neg", "bias": {
+        "upperarm_f": -26.0, "forearm_f": -50.0,
+        "upperarm_b": 26.0, "forearm_b": -50.0,
+        "thigh_f": 10.0, "shin_f": -6.0,
+        "thigh_b": -12.0, "shin_b": 7.0}},
+    {"name": "r4-both-neg", "bias": {
+        "upperarm_f": -26.0, "forearm_f": -50.0,
+        "upperarm_b": -26.0, "forearm_b": -50.0,
+        "thigh_f": 10.0, "shin_f": -6.0,
+        "thigh_b": -12.0, "shin_b": 7.0}},
+    {"name": "r5-guard-high", "bias": {
+        "upperarm_f": -34.0, "forearm_f": -62.0,
+        "upperarm_b": -34.0, "forearm_b": -62.0,
+        "spine": 4.0, "head": -2.4,
+        "thigh_f": 10.0, "shin_f": -6.0,
+        "thigh_b": -12.0, "shin_b": 7.0}},
+]
+
+
+def main() -> int:
+    assert GODOT.is_file(), GODOT
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    LOGS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    for k in ("CARD_BOXER_3D", "CARD_BOXER_3D_YAW", "CARD_BOXER_3D_FLIP"):
+        env.pop(k, None)
+    env["G_STANCE_DIR"] = str(OUTDIR)
+    env["G_STANCE_CASES"] = json.dumps(CASES, ensure_ascii=False)
+    t0 = time.perf_counter()
+    try:
+        proc = subprocess.run(
+            [str(GODOT), "--path", str(GAME), "--resolution", "1280x720",
+             "--quit-after", "1400",
+             "--script", "res://tests/side_stance_probe.gd"],
+            env=env, capture_output=True, timeout=300, cwd=str(GAME))
+        rc, text = proc.returncode, (proc.stdout + b"\n--- STDERR ---\n"
+                                     + proc.stderr).decode("utf-8", "replace")
+    except subprocess.TimeoutExpired as exc:
+        rc = -1
+        text = ((exc.stdout or b"") + b"\n--- TIMEOUT ---\n").decode(
+            "utf-8", "replace")
+    dt = round(time.perf_counter() - t0, 3)
+    (LOGS / "godot_side_stance_scan.log").write_text(text, encoding="utf-8")
+
+    marker = "G_STANCE_JSON "
+    line = next((l for l in text.splitlines() if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no marker"}
+    rows = payload.get("shots", [])
+    has_gl = "OpenGL API" in text
+    errors = text.count("SCRIPT ERROR") + text.count("Parse Error")
+    checks = {
+        "rc": rc == 0, "has_opengl": has_gl,
+        "no_script_errors": errors == 0,
+        "no_payload_error": "error" not in payload,
+        "layer_ready": payload.get("layer_ready") is True,
+        "six_cases": len(rows) == len(CASES),
+        "all_png_ok": all(r.get("save_error") == 0
+                          and r.get("w") == 1280 and r.get("h") == 720
+                          and Path(r.get("path", "")).is_file() for r in rows),
+        "cases_injected": payload.get("cases_count") == len(CASES),
+        "bones_13": payload.get("bones") == 13,
+    }
+    ok = all(checks.values())
+    OUT.write_text(json.dumps({
+        "run": {"seconds": dt, "returncode": rc, "has_opengl": has_gl,
+                "script_errors": errors, "headless": False},
+        "cases": CASES, "payload": payload,
+        "checks": checks, "failed": [k for k, v in checks.items() if not v],
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"RUN {dt}s rc={rc} gl={has_gl} errors={errors}")
+    print(f"LAYER ready={payload.get('layer_ready')} "
+          f"cases={payload.get('cases_count')} bones={payload.get('bones')}")
+    for r in rows:
+        print(f"SHOT {r['name']:<16} {r['w']}x{r['h']} err={r['save_error']}")
+    for k, v in checks.items():
+        if not v:
+            print("  FAIL", k)
+    print("SIDE_STANCE_SCAN_OK" if ok else "SIDE_STANCE_SCAN_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/make_stance_scan_board.py =====
+"""G 路线：6 组反向站架偏置对照板（玩家侧放大）。"""
+from __future__ import annotations
+
+from pathlib import Path
+
+from PIL import Image, ImageDraw, ImageFont
+
+HERE = Path(__file__).resolve().parent
+SHOTS = HERE / "shots" / "side_stance_scan"
+BOARDS = HERE / "boards"
+FONT_PATH = Path(r"C:\Windows\Fonts\msyh.ttc")
+ROI = (270, 265, 570, 545)
+NAMES = ["r0-flip-all", "r1-flip-fore", "r2-flip-upper",
+         "r3-fonly-neg", "r4-both-neg", "r5-guard-high"]
+
+
+def font(sz: int):
+    if FONT_PATH.is_file():
+        return ImageFont.truetype(str(FONT_PATH), sz)
+    return ImageFont.load_default()
+
+
+def main() -> int:
+    BOARDS.mkdir(parents=True, exist_ok=True)
+    cw, ch = ROI[2] - ROI[0], ROI[3] - ROI[1]
+    w, h = 330, int(ch * 330 / cw)
+    pad, label_h, cols = 12, 30, 3
+    rows = (len(NAMES) + cols - 1) // cols
+    canvas = Image.new("RGB", (cols * (w + pad) + pad,
+                               rows * (h + label_h + pad) + pad), (20, 24, 34))
+    d = ImageDraw.Draw(canvas)
+    f = font(17)
+    for i, name in enumerate(NAMES):
+        p = SHOTS / f"stance-{name}.png"
+        if not p.is_file():
+            print("MISSING", p)
+            return 1
+        r, c = divmod(i, cols)
+        x, y = pad + c * (w + pad), pad + r * (h + label_h + pad)
+        canvas.paste(Image.open(p).convert("RGB").crop(ROI).resize((w, h)),
+                     (x, y))
+        d.text((x + 4, y + h + 3), name, font=f, fill=(150, 220, 200))
+    out = BOARDS / "G-侧身站架反向扫描.png"
+    canvas.save(out)
+    print(f"BOARD {out} {canvas.width}x{canvas.height}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/verify_g.py =====
+"""G 路线承重判据：游戏内 3D 接线 + 侧面战斗表现层。
+
+七层，任一 FAIL 即整体验证失败：
+  A 源码形状   —— 双轨开关默认关、侧身定稿常量、站架偏置、表现层不改驱动链
+  B 源码漂移   —— 基线 105 文件中只允 2 个（arena.gd / fighter.gd）被改，
+                  其余逐 sha256 与改动前一致；新增文件按形状白名单
+  C 资产       —— GLB / 3 张 PBR / motion_input.json / rig_driver.gd 与
+                  F 路线原件逐字节同 sha
+  D 判定零变化 —— 六模式 RHYTHM_SHOT marker 三组逐字相同
+  E 表现       —— 默认关静态像素等价 / 同树 A/B / 节奏帧 / 侧身探针全绿
+  F 全量自检   —— 15 套引擎内自检 before/after 全绿
+  G 交付清单   —— 文件清单逐项 sha 自洽、覆盖全部交付文件、diff 非空
+
+【判据口径】跨 Godot 进程的整帧逐像素等价不成立（全局 RNG 每次启动
+随机化），已由 diag_ab.py 量化并退役；默认关零污染改由
+run_static_ab_g.py 的「同冻结状态」口径证明。详见 compare_g.py docstring。
+
+用法：python verify_g.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import re
+from pathlib import Path
+
+from PIL import Image
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+GAME = BAKE.parent / "牌拳-CardBoxer"
+F_ROUTE = BAKE / "F路线-Godot驱动层"
+DATA = HERE / "data"
+LOGS = HERE / "logs"
+BOARDS = HERE / "boards"
+OUT = LOGS / "verify_g.json"
+
+# 改动前 105 个文件中，允许被 G 路线改的只有这两个（且必须有备份）。
+ALLOWED_CHANGED = {"scripts/arena.gd", "scripts/fighter.gd"}
+# 新增文件按形状分族，逐族给规则，不按名字死列。
+ADDED_RULES = {
+    "glb": lambda r: r == "assets/3d/player-rigged.glb",
+    "glb_import": lambda r: r == "assets/3d/player-rigged.glb.import",
+    "pbr": lambda r: (r.startswith("assets/3d/player-rigged_texture_pbr_")
+                      and r.endswith(".png")),
+    "pbr_import": lambda r: (r.startswith("assets/3d/player-rigged_texture_pbr_")
+                             and r.endswith(".png.import")),
+    "motion": lambda r: r == "data/motion_input.json",
+    "layer": lambda r: r == "scripts/fighter_3d_layer.gd",
+    "driver": lambda r: r in ("scripts/rig_driver.gd",
+                              "scripts/rig_driver.gd.uid"),
+    "probe": lambda r: (r.startswith("tests/")
+                        and r.endswith(".gd")
+                        and r in {
+                            "tests/three_d_probe.gd",
+                            "tests/side_view_probe.gd",
+                            "tests/side_stance_probe.gd"}),
+    # Godot 编辑器自动生成的 .uid，属导入副产物，规则限定在 tests/scripts 下。
+    "uid": lambda r: (r.endswith(".gd.uid")
+                      and (r.startswith("tests/") or r.startswith("scripts/"))),
+}
+
+EXPECTED_BIAS = {
+    "upperarm_f": 26.0, "forearm_f": -50.0,
+    "upperarm_b": -26.0, "forearm_b": 50.0,
+    "spine": 4.0, "head": -2.4,
+    "thigh_f": 10.0, "shin_f": -6.0,
+    "thigh_b": -12.0, "shin_b": 7.0,
+}
+
+
+def read(p: Path) -> str:
+    return p.read_text(encoding="utf-8")
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def js(name: str) -> dict:
+    p = DATA / name
+    return json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}
+
+
+def game_files() -> dict:
+    out = {}
+    for p in GAME.rglob("*"):
+        if not p.is_file() or ".godot" in p.parts:
+            continue
+        out[str(p.relative_to(GAME)).replace("\\", "/")] = sha256(p)
+    return out
+
+
+def main() -> int:
+    checks, notes = {}, {}
+    layer_path = GAME / "scripts" / "fighter_3d_layer.gd"
+    arena_src = read(GAME / "scripts" / "arena.gd")
+    fighter_src = read(GAME / "scripts" / "fighter.gd")
+    layer_src = read(layer_path)
+
+    # ── A 源码形状 ────────────────────────────────────────────
+    checks["A01_switch_default_off"] = (
+        'use_3d = OS.get_environment("CARD_BOXER_3D") != ""' in arena_src)
+    checks["A02_override_default_false"] = (
+        "var draw_3d_override := false" in fighter_src)
+    checks["A03_layer_preload_present"] = (
+        'preload("res://scripts/fighter_3d_layer.gd")' in arena_src)
+    checks["A04_sync_hook_present"] = arena_src.count("_sync_3d_layer()") >= 2
+    # 判据写赋值形态，不写裸常量：注释里也会提到 55.0。
+    # [ \t\r]* 而非 \s*$：本仓工作树 CRLF/LF 混合，\s 会跨行吞掉下一行。
+    yaw = re.search(r"^const DEFAULT_SIDE_YAW := ([0-9.]+)[ \t\r]*$",
+                    layer_src, re.M)
+    checks["A05_side_yaw_is_55"] = yaw is not None and float(yaw.group(1)) == 55.0
+    notes["side_yaw"] = float(yaw.group(1)) if yaw else None
+    flip = re.search(r"^const DEFAULT_SIDE_FLIP := (true|false)[ \t\r]*$",
+                     layer_src, re.M)
+    checks["A06_side_flip_false"] = flip is not None and flip.group(1) == "false"
+    checks["A07_no_90deg_view"] = (
+        "const DEFAULT_SIDE_YAW := 90.0" not in layer_src)
+    # 站架偏置逐项解析，钉具体值 + 名单长度（防「删几项还算通过」）。
+    block = re.search(r"const DEFAULT_STANCE_BIAS := \{(.*?)\n\}",
+                      layer_src, re.S)
+    bias = {}
+    if block:
+        for k, v in re.findall(r'"([a-z_]+)":\s*(-?[0-9.]+)', block.group(1)):
+            bias[k] = float(v)
+    checks["A08_stance_bias_exact"] = (bias == EXPECTED_BIAS
+                                       and len(bias) == 10)
+    notes["stance_bias"] = bias
+    checks["A09_stance_bias_default_applied"] = (
+        "var stance_bias_deg: Dictionary = DEFAULT_STANCE_BIAS.duplicate()"
+        in layer_src)
+    # 只在 apply() 函数体内判顺序：源码里还有 func _apply_stance_bias()
+    # 的定义，全文件 index() 会命中定义行（更早），造成假红。
+    apply_body = re.search(
+        r"func apply\(card: String, frame: int\) -> void:(.*?)"
+        r"(?=\nfunc |\Z)", layer_src, re.S)
+    body = apply_body.group(1) if apply_body else ""
+    checks["A10_bias_is_postprocess_only"] = (
+        bool(apply_body)
+        and "drv.apply_frame(c, f)" in body
+        and "_apply_stance_bias()" in body
+        and body.index("drv.apply_frame(c, f)")
+        < body.index("_apply_stance_bias()"))
+    checks["A11_bias_uses_bone_pose_rotation"] = (
+        "drv.skel.set_bone_pose_rotation(i, cur * q)" in layer_src)
+    checks["A12_camera_uses_yaw"] = (
+        "CAM_RADIUS * sin(a)" in layer_src
+        and "CAM_RADIUS * cos(a)" in layer_src
+        and "cam.look_at(Vector3(0.0, CAM_TARGET_Y, 0.0), Vector3.UP)"
+        in layer_src)
+    # 表现层不得碰判定字段：源码里不出现 HP / 伤害 / 牌型写入。
+    checks["A13_layer_no_gameplay_writes"] = not any(
+        s in layer_src for s in ("hp -=", "hp =", "damage =",
+                                 "tk_player_rage", "tk_enemy_rage"))
+
+    # ── B 源码漂移 ────────────────────────────────────────────
+    baseline = json.loads((HERE / "baseline_g.json").read_text(
+        encoding="utf-8"))
+    base = {x["rel"]: x["sha256"] for x in baseline["files"]}
+    cur = game_files()
+    changed = {k for k in base if k in cur and base[k] != cur[k]}
+    missing = {k for k in base if k not in cur}
+    added = {k for k in cur if k not in base}
+    checks["B01_no_baseline_file_deleted"] = not missing
+    checks["B02_only_allowed_changed"] = changed == ALLOWED_CHANGED
+    checks["B03_added_all_whitelisted"] = all(
+        any(rule(r) for rule in ADDED_RULES.values()) for r in added)
+    # 按形状分族断言每族齐全，不写死总数（.uid 是编辑器副产物，会增减）。
+    for fam, rule in ADDED_RULES.items():
+        if fam in ("uid",):
+            continue
+        checks[f"B04_family_present_{fam}"] = any(rule(r) for r in added)
+    checks["B05_no_unclassified_added"] = checks["B03_added_all_whitelisted"]
+    notes["changed"] = sorted(changed)
+    notes["missing"] = sorted(missing)
+    notes["added_count"] = len(added)
+    for f in ALLOWED_CHANGED:
+        b = HERE / "orig" / "pre-3d" / f
+        checks[f"B06_backup_exists_{f.replace('/', '_')}"] = b.is_file()
+    # 侧身版 3D 层自身也要有改动前备份，便于一键回退。
+    checks["B07_pre_side_backup"] = (
+        (HERE / "orig/pre-side/fighter_3d_layer.gd").is_file())
+
+    # ── C 资产 ───────────────────────────────────────────────
+    inst = js("install_assets_g.json")
+    copies = {x["rel"]: x["sha256"] for x in inst.get("copies", [])}
+    for rel, expected in copies.items():
+        p = GAME / rel
+        checks[f"C01_copy_{rel.replace('/', '_')}"] = (
+            p.is_file() and sha256(p) == expected)
+    checks["C02_three_copies"] = len(copies) == 3
+    checks["C03_glb_matches_F_route"] = (
+        (GAME / "assets/3d/player-rigged.glb").is_file()
+        and (F_ROUTE / "player-rigged.glb").is_file()
+        and sha256(GAME / "assets/3d/player-rigged.glb")
+        == sha256(F_ROUTE / "player-rigged.glb"))
+    checks["C04_driver_matches_F_route"] = (
+        sha256(GAME / "scripts/rig_driver.gd")
+        == sha256(F_ROUTE / "probe_project_f/scenes/rig_driver.gd"))
+    checks["C05_motion_matches_F_route"] = (
+        sha256(GAME / "data/motion_input.json")
+        == sha256(F_ROUTE / "data/motion_input.json"))
+    checks["C06_glb_bytes"] = (
+        (GAME / "assets/3d/player-rigged.glb").stat().st_size > 30_000_000)
+    pbr = [r for r in added if ADDED_RULES["pbr"](r)]
+    for r in pbr:
+        im_path = GAME / r
+        with Image.open(im_path) as im:
+            checks[f"C07_pbr_4096_{r.split('/')[-1][:14]}"] = (
+                im.size == (4096, 4096))
+    checks["C08_three_pbr"] = len(pbr) == 3
+
+    # ── D 判定零变化 ──────────────────────────────────────────
+    ab = js("ab_g.json")
+    per_mode = ab.get("per_mode", {})
+    checks["D01_six_modes_present"] = len(per_mode) == 6
+    checks["D02_all_markers_identical"] = all(
+        v.get("marker_all_same") is True for v in per_mode.values())
+    checks["D03_ab_ok"] = ab.get("ok") is True
+    checks["D04_retired_claim_absent"] = all(
+        not k.startswith("off_pixel_identical") for k in ab.get("checks", {}))
+    checks["D05_all_groups_restored"] = all(
+        js(f"capture_{g}.json").get("restore_ok") is True
+        for g in ("baseline", "off", "on"))
+
+    # ── E 表现证据 ────────────────────────────────────────────
+    static = js("static_ab_g.json")
+    checks["E01_static_pixel_identical"] = (
+        static.get("changed_pixels") == 0 and static.get("ok") is True)
+    same = js("same_tree_ab_g.json")
+    checks["E02_same_tree_ok"] = same.get("ok") is True
+    checks["E03_3d_visible_in_roi"] = bool(
+        same.get("checks", {}).get("3d_visible_in_roi"))
+    checks["E04_three_motions_distinct"] = all(
+        same.get("checks", {}).get(k) for k in (
+            "stance_vs_jab6_distinct", "jab6_vs_wave17_distinct",
+            "stance_vs_wave17_distinct"))
+    three = js("three_d_ab.json")
+    checks["E05_three_d_ab_ok"] = three.get("ok") is True
+    checks["E06_bones13_frames_positive"] = (
+        three.get("payload", {}).get("bones") == 13
+        and int(three.get("payload", {}).get("frames_applied", 0)) > 0)
+    side = js("side_view_probe.json")
+    checks["E07_side_view_probe_ok"] = (
+        side.get("ok") is True and side.get("views") == 8)
+    stance_p = js("side_stance_probe.json")
+    checks["E08_stance_probe_ok"] = stance_p.get("ok") is True
+    scan = js("side_stance_scan.json")
+    checks["E09_stance_scan_ok"] = scan.get("ok") is True
+    checks["E10_scan_six_cases"] = len(scan.get("cases", [])) == 6
+    sub = js("subviewport_probe.json")
+    checks["E11_subviewport_probe_ok"] = sub.get("ok") is True
+    for name in ("G-同树3D双轨AB.png", "G-侧身角度八宫格.png",
+                 "G-侧身站架四档对照.png", "G-侧身站架反向扫描.png",
+                 "G-双轨AB对照.png", "G-3D动作三帧.png"):
+        p = BOARDS / name
+        checks[f"E12_board_{name}"] = p.is_file() and p.stat().st_size > 10000
+    for group in ("off", "on"):
+        pngs = sorted((HERE / "shots" / group).glob("*.png"))
+        checks[f"E13_six_shots_{group}"] = len(pngs) == 6
+        checks[f"E14_shots_nontrivial_{group}"] = all(
+            x.stat().st_size > 200000 for x in pngs)
+
+    # ── F 全量自检 ────────────────────────────────────────────
+    for tag in ("before", "after"):
+        d = js(f"all_checks_{tag}.json")
+        checks[f"F01_all_green_{tag}"] = (
+            d.get("total") == 15 and d.get("failed") == []
+            and d.get("result") == "ALL GREEN"
+            and len(d.get("checks", [])) == 15
+            and all(x.get("ok") is True for x in d.get("checks", [])))
+    txt = (LOGS / "run_checks_after.out").read_text(encoding="utf-8") \
+        if (LOGS / "run_checks_after.out").is_file() else ""
+    checks["F02_after_output_all_green"] = (
+        "TOTAL 15 checks, 0 failed" in txt and "ALL_GREEN" in txt)
+
+    # ── G 交付清单 ────────────────────────────────────────────
+    fl = HERE / "文件清单.txt"
+    if fl.is_file():
+        rows = [l for l in fl.read_text(encoding="utf-8").splitlines()
+                if l.strip() and not l.startswith("#")]
+        data_rows = [l for l in rows if "\t" in l]
+        bad = 0
+        listed = set()
+        for l in data_rows:
+            parts = l.split("\t")
+            rel, size, sha = parts[0], parts[1], parts[2]
+            listed.add(rel)
+            p = HERE / rel
+            if not p.is_file() or p.stat().st_size != int(size) \
+                    or sha256(p) != sha:
+                bad += 1
+        checks["G01_filelist_nonempty"] = len(data_rows) > 20
+        checks["G02_filelist_sha_selfconsistent"] = bad == 0
+        notes["filelist_rows"] = len(data_rows)
+        notes["filelist_bad"] = bad
+        # 复用清单生成器的 entries()，不在这里另写一套排除规则：
+        # 两套口径不一致会造出「两套互相打架的数字」，比一套坏数字更坏。
+        from make_filelist_g import entries as _entries
+        actual = {str(p.relative_to(HERE)).replace("\\", "/")
+                  for p in _entries()}
+        notes["filelist_missing"] = sorted(actual - listed)[:10]
+        notes["filelist_extra"] = sorted(listed - actual)[:10]
+        checks["G03_filelist_covers_all"] = not (actual - listed) \
+            and not (listed - actual)
+    else:
+        for k in ("G01_filelist_nonempty", "G02_filelist_sha_selfconsistent",
+                  "G03_filelist_covers_all"):
+            checks[k] = False
+    diff = HERE / "new-files.diff"
+    checks["G04_diff_nonempty"] = diff.is_file() and diff.stat().st_size > 10000
+    notes["diff_bytes"] = diff.stat().st_size if diff.is_file() else 0
+
+    failed = [k for k, v in checks.items() if not v]
+    ok = not failed
+    LOGS.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps({
+        "checks": checks, "failed": failed, "total": len(checks),
+        "passed": len(checks) - len(failed), "notes": notes, "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    for k in failed:
+        print("  FAIL", k)
+    print(f"VERIFY_G {len(checks) - len(failed)}/{len(checks)} "
+          f"failed={len(failed)}")
+    print("G_VERIFIED" if ok else "G_VERIFY_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/mutation_g.py =====
+"""G 路线变异验证：逐条改坏被测物，确认 verify_g.py 真的报红。
+
+纪律（本机踩过的坑，全部落进实现）：
+  · needle / mutant 只能是 ASCII bytes；含中文会 SyntaxError。
+  · 锚点出现 0 次或 >1 次 = DID NOT RUN，计入未证明，不崩、不跳过 clean。
+  · 还原必须逐字节 + sha256 证明（read_text/write_text 会转换换行）。
+  · 守卫跑禁字节码（PYTHONDONTWRITEBYTECODE=1）。
+  · 负对照选清单外且 verify 不读的文件（logs/），否则会被清单判据抓到，
+    负对照就假了。
+  · 每条变异必须点到「被点名的那条判据」红，别的判据连带红不算证明。
+
+用法：python mutation_g.py [--selftest]
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = HERE.parent.parent / "牌拳-CardBoxer"
+LOGS = HERE / "logs"
+OUT_MAIN = LOGS / "mutation_g_result.json"
+OUT_SELFTEST = LOGS / "mutation_g_selftest_result.json"
+PY = sys.executable
+GUARD = HERE / "verify_g.py"
+VERIFY_JSON = LOGS / "verify_g.json"
+
+# id, 目标根(HERE / GAME), 相对路径, needle(bytes ASCII), mutant, 期望红的判据
+CASES = [
+    ("M01", "HERE", "data/side_view_probe.json",
+     b'"views": 8', b'"views": 7', "E07_side_view_probe_ok"),
+    ("M02", "HERE", "data/static_ab_g.json",
+     b'"changed_pixels": 0,', b'"changed_pixels": 9,',
+     "E01_static_pixel_identical"),
+    ("M03", "HERE", "data/same_tree_ab_g.json",
+     b'"ok": true', b'"ok": false', "E02_same_tree_ok"),
+    ("M04", "HERE", "data/ab_g.json",
+     b'"ok": true', b'"ok": false', "D03_ab_ok"),
+    # GLB 的 sha 在 copies 与 generated 各出现一次，改用 motion 的唯一 sha。
+    ("M05", "HERE", "data/install_assets_g.json",
+     b'"sha256": "c3ff4f76f5582b59d8706a611eb0bbbba4f8a8ee28bcf61a3cd801acd06f5cd2"',
+     b'"sha256": "03ff4f76f5582b59d8706a611eb0bbbba4f8a8ee28bcf61a3cd801acd06f5cd2"',
+     "C01_copy_data_motion_input.json"),
+    # E05 读的是顶层 ok，不是 checks.bones_13；改后者守卫不会红。
+    ("M06", "HERE", "data/three_d_ab.json",
+     b'"ok": true', b'"ok": false', "E05_three_d_ab_ok"),
+    ("M07", "HERE", "verify_g.py",
+     b'ALLOWED_CHANGED = {"scripts/arena.gd", "scripts/fighter.gd"}',
+     b'ALLOWED_CHANGED = {"scripts/arena.gd"}',
+     "B02_only_allowed_changed"),
+    # 把已退役的跨进程等价判据塞回 ab_g.json 的 checks，D04 应报红。
+    ("M08", "HERE", "data/ab_g.json",
+     b'"checks": {',
+     b'"checks": {\n    "off_pixel_identical_t000": true,',
+     "D04_retired_claim_absent"),
+    ("M09", "HERE", "data/all_checks_after.json",
+     b'"total": 15', b'"total": 14', "F01_all_green_after"),
+    ("M10", "GAME", "scripts/fighter_3d_layer.gd",
+     b"const DEFAULT_SIDE_YAW := 55.0", b"const DEFAULT_SIDE_YAW := 0.0",
+     "A05_side_yaw_is_55"),
+    ("M11", "GAME", "scripts/fighter_3d_layer.gd",
+     b"const DEFAULT_SIDE_FLIP := false", b"const DEFAULT_SIDE_FLIP := true",
+     "A06_side_flip_false"),
+    ("M12", "GAME", "scripts/fighter_3d_layer.gd",
+     b'"upperarm_f": 26.0', b'"upperarm_f": -26.0',
+     "A08_stance_bias_exact"),
+    ("M13", "GAME", "scripts/fighter_3d_layer.gd",
+     b"var stance_bias_deg: Dictionary = DEFAULT_STANCE_BIAS.duplicate()",
+     b"var stance_bias_deg: Dictionary = {}",
+     "A09_stance_bias_default_applied"),
+    ("M14", "GAME", "scripts/fighter_3d_layer.gd",
+     b"drv.skel.set_bone_pose_rotation(i, cur * q)",
+     b"drv.skel.set_bone_pose_rotation(i, cur)",
+     "A11_bias_uses_bone_pose_rotation"),
+    ("M15", "GAME", "scripts/arena.gd",
+     b'use_3d = OS.get_environment("CARD_BOXER_3D") != ""',
+     b'use_3d = OS.get_environment("CARD_BOXER_3D") == ""',
+     "A01_switch_default_off"),
+    ("M16", "GAME", "scripts/fighter.gd",
+     b"var draw_3d_override := false", b"var draw_3d_override := true",
+     "A02_override_default_false"),
+    # 负对照：logs/ 在清单外且 verify 不读，改它一条判据都不该红。
+    ("N01", "HERE", "logs/run_compare_g.out",
+     b"AB_G_OK", b"AB_G_OK\nNEGATIVE_CONTROL", None),
+]
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def guard_env() -> dict:
+    env = os.environ.copy()
+    # 陈旧 pyc 会让「改完立刻跑」导入上一例字节码，误报 GREEN(MISSED)。
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    return env
+
+
+def run_guard() -> tuple[int, set]:
+    if VERIFY_JSON.is_file():
+        VERIFY_JSON.unlink()
+    p = subprocess.run([PY, str(GUARD)], cwd=str(HERE),
+                       env=guard_env(), capture_output=True, timeout=240)
+    failed = set()
+    if VERIFY_JSON.is_file():
+        d = json.loads(VERIFY_JSON.read_text(encoding="utf-8"))
+        failed = set(d.get("failed", []))
+    return p.returncode, failed
+
+
+def target(root: str, rel: str) -> Path:
+    return (HERE if root == "HERE" else GAME) / rel
+
+
+def main() -> int:
+    selftest = "--selftest" in sys.argv
+    cases = list(CASES)
+    if selftest:
+        # 故意把 M10 的锚点改成不存在，证明 DID NOT RUN 分支有牙。
+        i = next(k for k, c in enumerate(cases) if c[0] == "M10")
+        c = cases[i]
+        cases[i] = (c[0], c[1], c[2], b"NO_SUCH_ANCHOR_999", c[4], c[5])
+        out_path = OUT_SELFTEST
+    else:
+        out_path = OUT_MAIN
+
+    LOGS.mkdir(parents=True, exist_ok=True)
+    results, restore_ok = [], []
+    for cid, root, rel, needle, mutant, expect in cases:
+        p = target(root, rel)
+        if not p.is_file():
+            results.append({"id": cid, "status": "DID NOT RUN",
+                            "reason": "target missing", "expect": expect})
+            continue
+        raw = p.read_bytes()
+        before_sha = sha256(p)
+        count = raw.count(needle)
+        if count != 1:
+            results.append({"id": cid, "status": "DID NOT RUN",
+                            "reason": f"anchor_count={count}", "expect": expect,
+                            "path": rel})
+            continue
+        mutated = raw.replace(needle, mutant, 1)
+        p.write_bytes(mutated)
+        try:
+            rc, failed = run_guard()
+            if expect is None:
+                status = "MISSED (expected)" if not failed else "UNEXPECTED_RED"
+            else:
+                status = "CAUGHT" if expect in failed else (
+                    "MISSED" if not failed else "OTHER")
+        finally:
+            p.write_bytes(raw)
+            ok = sha256(p) == before_sha
+            restore_ok.append(ok)
+            if not ok:
+                print(f"RESTORE FAILED {cid} {rel}", file=sys.stderr)
+        results.append({"id": cid, "status": status, "expect": expect,
+                        "failed_sample": sorted(failed)[:6],
+                        "guard_rc": rc})
+
+    rc_clean, failed_clean = run_guard()
+    clean_green = rc_clean == 0 and not failed_clean
+    caught = [r for r in results if r["status"] == "CAUGHT"]
+    neg = [r for r in results if r["expect"] is None]
+    dnr = [r for r in results if r["status"] == "DID NOT RUN"]
+    positive = [r for r in results if r["expect"] is not None]
+    unproven = (len(positive) - len(caught)) + any(
+        r["status"] == "UNEXPECTED_RED" for r in neg)
+    ok = (not selftest and unproven == 0 and clean_green
+          and all(restore_ok) and len(restore_ok) == len(results))
+    selftest_ok = (selftest and len(dnr) >= 1
+                   and any(r["status"] == "CAUGHT" for r in results)
+                   and clean_green and all(restore_ok))
+    payload = {
+        "selftest": selftest, "cases": results,
+        "total": len(results), "caught": len(caught),
+        "did_not_run": len(dnr),
+        "negative_controls": len(neg),
+        "unproven_positive": unproven,
+        "restore_ok": sum(1 for x in restore_ok if x),
+        "restore_total": len(restore_ok),
+        "clean_rerun": "GREEN" if clean_green else "RED",
+        "clean_failed": sorted(failed_clean)[:10],
+        "ok": ok, "selftest_ok": selftest_ok,
+    }
+    out_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2)
+                        + "\n", encoding="utf-8")
+    for r in results:
+        print(f"{r['id']:<4} {r['status']:<20} "
+              f"expect={r.get('expect')}")
+    print(f"CAUGHT={len(caught)}/{len(positive)} "
+          f"DID_NOT_RUN={len(dnr)} restore={sum(restore_ok)}/{len(restore_ok)} "
+          f"clean={payload['clean_rerun']}")
+    if selftest:
+        print("SELFTEST_DID_NOT_RUN_OK" if selftest_ok
+              else "SELFTEST_DID_NOT_RUN_FAILED")
+        return 0 if selftest_ok else 1
+    print("MUTATION_G_OK" if ok else "MUTATION_G_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/selftest_did_not_run_g.py =====
+"""G 路线：证明 mutation_g.py 的「锚点失配 = 未证明」分支真的有牙。
+
+做法：把 mutation_g.py 复制到**工作区外**（%TEMP%），三处改写：
+  ① HERE 固定指向真实工作区（副本不在工作区，__file__ 会指错）；
+  ② 结果文件改名，不覆盖主变异证据；
+  ③ 把 M10 的 needle 改成一个不存在的字面量。
+然后跑**正常模式**（不带 --selftest），期望：
+  · 该 case 报 DID NOT RUN 且 reason 是 anchor_count=0
+  · 其余 case 仍有 CAUGHT（不是整批崩掉）
+  · unproven_positive > 0、ok=False、退出码非 0
+  · clean re-run GREEN、还原全部成功
+副本放在工作区外，避免「清单覆盖全部文件」判据在守卫运行期间
+看到临时文件而连锁报红，把 clean re-run 弄成假红。
+
+用法：python selftest_did_not_run_g.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+PY = sys.executable
+SRC = HERE / "mutation_g.py"
+OUT = HERE / "logs" / "selftest_did_not_run_g.json"
+NEGATIVE_RESULT = HERE / "logs" / "mutation_g_selftest_negative.json"
+NEGATIVE_LOG = HERE / "logs" / "run_selftest_did_not_run_g.out"
+
+
+def main() -> int:
+    assert SRC.is_file(), SRC
+    text = SRC.read_text(encoding="utf-8")
+    a = "HERE = Path(__file__).resolve().parent"
+    b = f'HERE = Path(r"{HERE}")'
+    assert text.count(a) == 1, f"HERE anchor: {text.count(a)}"
+    text = text.replace(a, b, 1)
+    a2 = 'OUT_MAIN = LOGS / "mutation_g_result.json"'
+    b2 = 'OUT_MAIN = LOGS / "mutation_g_selftest_negative.json"'
+    assert text.count(a2) == 1, f"OUT anchor: {text.count(a2)}"
+    text = text.replace(a2, b2, 1)
+    a3 = 'b"const DEFAULT_SIDE_YAW := 55.0"'
+    b3 = 'b"const DEFAULT_SIDE_YAW := 999.0_NO_SUCH"'
+    assert text.count(a3) == 1, f"needle anchor: {text.count(a3)}"
+    text = text.replace(a3, b3, 1)
+
+    tmp = Path(tempfile.mkdtemp(prefix="fa-g-selftest-"))
+    script = tmp / "mutation_g_negative.py"
+    script.write_bytes(text.encode("utf-8"))
+    env = os.environ.copy()
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    if NEGATIVE_RESULT.is_file():
+        NEGATIVE_RESULT.unlink()
+    p = subprocess.run([PY, str(script)], cwd=str(HERE), env=env,
+                       capture_output=True, timeout=300)
+    out = (p.stdout + b"\n--- STDERR ---\n" + p.stderr).decode(
+        "utf-8", "replace")
+    NEGATIVE_LOG.write_text(out, encoding="utf-8")
+
+    d = json.loads(NEGATIVE_RESULT.read_text(encoding="utf-8")) \
+        if NEGATIVE_RESULT.is_file() else {}
+    dnr = [r for r in d.get("cases", []) if r.get("status") == "DID NOT RUN"]
+    caught = [r for r in d.get("cases", []) if r.get("status") == "CAUGHT"]
+    checks = {
+        "exit_nonzero": p.returncode != 0,
+        "not_selftest_mode": d.get("selftest") is False,
+        "has_did_not_run": len(dnr) == 1,
+        "dnr_is_m10": any(r.get("id") == "M10" for r in dnr),
+        "dnr_reason_anchor": any("anchor_count=0" in r.get("reason", "")
+                                 for r in dnr),
+        "other_cases_still_caught": len(caught) >= 10,
+        "did_not_run_counted_unproven": d.get("unproven_positive", 0) >= 1,
+        "overall_not_ok": d.get("ok") is False,
+        "clean_rerun_green": d.get("clean_rerun") == "GREEN",
+        "restore_all_ok": d.get("restore_ok") == d.get("restore_total")
+                          and d.get("restore_total", 0) > 0,
+        "output_marker": "MUTATION_G_FAILED" in out,
+    }
+    failed = [k for k, v in checks.items() if not v]
+    ok = not failed
+    OUT.write_text(json.dumps({
+        "checks": checks, "failed": failed,
+        "did_not_run": len(dnr), "caught": len(caught),
+        "unproven_positive": d.get("unproven_positive"),
+        "clean_rerun": d.get("clean_rerun"),
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    for k in failed:
+        print("  FAIL", k)
+    print(f"SELFTEST {len(checks) - len(failed)}/{len(checks)} "
+          f"dnr={len(dnr)} caught={len(caught)}")
+    print("DID_NOT_RUN_BRANCH_OK" if ok else "DID_NOT_RUN_BRANCH_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/make_filelist_g.py =====
+"""生成 G 路线交付文件清单与新增脚本 diff。
+
+自指纪律：清单 / diff / logs / __pycache__ / .godot / orig / baseline_project
+一律排除，否则「清单写好后重跑」会把自己算进去，清单永远不稳定。
+另排除 probe_project_g/.godot 这类引擎缓存目录（按目录名，不按路径列）。
+
+用法：python make_filelist_g.py
+"""
+from __future__ import annotations
+
+import hashlib
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = HERE.parent / "牌拳-CardBoxer"
+LIST = HERE / "文件清单.txt"
+DIFF = HERE / "new-files.diff"
+EXCLUDE_NAMES = {"文件清单.txt", "new-files.diff"}
+EXCLUDE_DIRS = {"logs", ".godot", "__pycache__", "orig", "baseline_project"}
+EXCLUDE_PREFIX = ("logs/", "orig/", "baseline_project/")
+
+# 本轮新增/改动的脚本与 GDScript，拼成可复算的 diff。
+DIFF_SCRIPTS = [
+    "make_baseline_g.py", "run_all_checks_g.py", "run_probe_subviewport.py",
+    "install_assets_g.py", "make_baseline_project_g.py", "capture_g.py",
+    "compare_g.py", "diag_ab.py", "run_static_ab_g.py",
+    "run_three_d_probe.py", "compare_same_tree_g.py",
+    "run_side_view_probe.py", "make_side_board.py",
+    "run_side_stance_probe.py", "make_stance_board.py",
+    "run_side_stance_scan.py", "make_stance_scan_board.py",
+    "verify_g.py", "mutation_g.py", "selftest_did_not_run_g.py",
+    "make_filelist_g.py", "crosscheck_filelist_g.py",
+]
+DIFF_GAME_GD = [
+    "scripts/fighter_3d_layer.gd",
+    "tests/three_d_probe.gd",
+    "tests/side_view_probe.gd",
+    "tests/side_stance_probe.gd",
+]
+DIFF_PROBE_GD = [
+    "probe_project_g/project.godot",
+    "probe_project_g/probes/probe_subviewport.gd",
+]
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def entries() -> list[Path]:
+    out = []
+    for p in sorted(HERE.rglob("*")):
+        if not p.is_file() or p.name in EXCLUDE_NAMES:
+            continue
+        rel = p.relative_to(HERE)
+        if any(part in EXCLUDE_DIRS for part in rel.parts):
+            continue
+        if str(rel).replace("\\", "/").startswith(EXCLUDE_PREFIX):
+            continue
+        out.append(p)
+    return out
+
+
+def main() -> int:
+    rows = []
+    for p in entries():
+        rel = str(p.relative_to(HERE)).replace("\\", "/")
+        rows.append(f"{rel}\t{p.stat().st_size}\t{sha256(p)}")
+    header = [
+        "# G 路线 · 游戏内 3D 接线与侧面战斗 · 交付文件清单",
+        "# 格式: 相对路径<TAB>字节<TAB>sha256",
+        "# 排除: 本清单 / new-files.diff / logs / orig / baseline_project /",
+        "#       .godot / __pycache__",
+        "",
+    ]
+    # 二进制写：write_text 在 Windows 下会转 CRLF，清单稳定性判据用
+    # bytes 逐字节比对，两种换行口径不一致会永远假红。
+    LIST.write_bytes(("\n".join(header + rows) + "\n").encode("utf-8"))
+
+    parts = []
+    for name in DIFF_SCRIPTS:
+        p = HERE / name
+        if p.is_file():
+            parts.append(f"===== G/{name} =====\n"
+                         + p.read_text(encoding="utf-8"))
+    for rel in DIFF_GAME_GD:
+        p = GAME / rel
+        if p.is_file():
+            parts.append(f"===== GAME/{rel} =====\n"
+                         + p.read_text(encoding="utf-8"))
+    for rel in DIFF_PROBE_GD:
+        p = HERE / rel
+        if p.is_file():
+            parts.append(f"===== G/{rel} =====\n"
+                         + p.read_text(encoding="utf-8"))
+    DIFF.write_bytes(("\n\n".join(parts) + "\n").encode("utf-8"))
+
+    # 稳定性：立刻按同一口径重算一遍，与刚写出的清单逐字节比。
+    again = ("\n".join(header + [
+        f"{str(p.relative_to(HERE)).replace(chr(92), '/')}\t"
+        f"{p.stat().st_size}\t{sha256(p)}" for p in entries()
+    ]) + "\n").encode("utf-8")
+    stable = LIST.read_bytes() == again
+    print(f"FILELIST_ENTRIES={len(rows)} DIFF_BYTES={DIFF.stat().st_size}")
+    print(f"STABLE={stable}")
+    print("FILELIST_STABLE_OK" if stable else "FILELIST_UNSTABLE")
+    return 0 if stable else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/crosscheck_filelist_g.py =====
+"""G 路线：不经 make_filelist_g.py 的代码，独立复核清单每一行。
+
+目的：清单生成脚本自己写自己验，逻辑错了会自洽地假绿。这里从
+文件系统重新枚举，按同一口径独立算 size/sha256，逐行比对。
+
+用法：python crosscheck_filelist_g.py
+"""
+from __future__ import annotations
+
+import hashlib
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+LIST = HERE / "文件清单.txt"
+EXCLUDE_NAMES = {"文件清单.txt", "new-files.diff"}
+EXCLUDE_DIRS = {"logs", ".godot", "__pycache__", "orig", "baseline_project"}
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def main() -> int:
+    assert LIST.is_file(), LIST
+    rows = {}
+    for line in LIST.read_bytes().decode("utf-8").splitlines():
+        if not line.strip() or line.startswith("#"):
+            continue
+        rel, size, sha = line.split("\t")
+        rows[rel] = (int(size), sha)
+    actual = {}
+    for p in HERE.rglob("*"):
+        if not p.is_file() or p.name in EXCLUDE_NAMES:
+            continue
+        rel = p.relative_to(HERE)
+        if any(part in EXCLUDE_DIRS for part in rel.parts):
+            continue
+        key = str(rel).replace("\\", "/")
+        actual[key] = (p.stat().st_size, sha256(p))
+    bad = [k for k, v in rows.items()
+           if k not in actual or actual[k] != v]
+    extra = sorted(set(actual) - set(rows))
+    missing = sorted(set(rows) - set(actual))
+    ok = not bad and not extra and not missing
+    print(f"ROWS={len(rows)} ACTUAL={len(actual)} BAD={len(bad)} "
+          f"EXTRA={len(extra)} MISSING={len(missing)}")
+    for k in bad[:5]:
+        print("  BAD", k)
+    for k in extra[:5]:
+        print("  EXTRA", k)
+    print("CROSSCHECK_OK" if ok else "CROSSCHECK_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== G/probe_project_g/project.godot =====
+; G 路线 P0 技术探针：gl_compatibility 下 2D 主视口叠 3D SubViewport。
+; 与可运行游戏工程同渲染器、同画布尺寸；只验证渲染通道，不碰游戏源码。
+
+config_version=5
+
+[application]
+
+config/name="G Route SubViewport Probe"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+run/main_scene=""
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.04, 0.05, 0.09, 1)
+
+
+===== G/probe_project_g/probes/probe_subviewport.gd =====
+extends SceneTree
+## G 路线 P0 技术探针：GL Compatibility 下，2D 主视口能否显示 3D SubViewport。
+##
+## 跑法（必须带窗口，headless dummy driver 不发 frame_post_draw）：
+##   G_SHOT_DIR=<abs> godot --path <probe_project_g> --resolution 1280x720 \
+##     --script res://probes/probe_subviewport.gd --quit-after 6000
+##
+## 验证三件事：① 2D 绘制链正常（背景 + 网格 + 左侧色块）；
+## ② SubViewport 里 3D GLB 能被 ViewportTexture 取到并画进 2D；
+## ③ 整张 1280x720 能截下来且 3D 区域非空白。
+## 不写工程内任何文件，不碰可运行游戏工程。
+
+const GLB_PATH := "res://assets/player-rigged.glb"
+
+
+class Canvas2D:
+	extends Node2D
+
+	const VIEW_POS := Vector2(340.0, 80.0)
+	const VIEW_SIZE := Vector2(600.0, 560.0)
+	const BG := Color(0.075, 0.090, 0.125)
+
+	var sv: SubViewport = null
+	var draw_count := 0
+	var tex_ok := false
+
+	func _draw() -> void:
+		draw_count += 1
+		draw_rect(Rect2(0.0, 0.0, 1280.0, 720.0), BG)
+		for x in range(0, 1281, 160):
+			draw_line(Vector2(x, 0), Vector2(x, 720),
+					Color(0.18, 0.24, 0.33), 1.0)
+		for y in range(0, 721, 120):
+			draw_line(Vector2(0, y), Vector2(1280, y),
+					Color(0.18, 0.24, 0.33), 1.0)
+		# 左侧色块：2D 绘制链的可见锚点，与 3D 区域分开。
+		draw_rect(Rect2(40.0, 120.0, 180.0, 420.0), Color(0.55, 0.18, 0.22))
+		if sv != null:
+			var t := sv.get_texture()
+			if t != null:
+				draw_texture_rect(t, Rect2(VIEW_POS, VIEW_SIZE), false)
+				tex_ok = true
+
+	func _process(_d: float) -> void:
+		queue_redraw()
+
+
+class Shot:
+	extends Node
+
+	const SETTLE := 10
+
+	var canvas: Node2D
+	var sv: SubViewport
+	var out_dir := ""
+	var done := false
+
+	func _process(_d: float) -> void:
+		if done:
+			return
+		done = true
+		# 4096² 贴图首帧可能还没上传完，多等几帧再抓。
+		for _i in range(SETTLE):
+			await RenderingServer.frame_post_draw
+		var img := get_viewport().get_texture().get_image()
+		var path := out_dir + "/sv-probe.png"
+		var err := img.save_png(path)
+		var info := {
+			"path": path,
+			"w": img.get_width(), "h": img.get_height(),
+			"save_error": int(err),
+			"draw_count": int(canvas.get("draw_count")),
+			"tex_ok": bool(canvas.get("tex_ok")),
+			"sv_size": [sv.size.x, sv.size.y],
+			"sv_transparent": sv.transparent_bg,
+			"sv_children": sv.get_child_count(),
+		}
+		print("SV_JSON " + JSON.stringify(info))
+		get_tree().quit(0)
+
+
+func _add_light(sv: SubViewport, rot: Vector3, energy: float,
+		col: Color, shadow: bool) -> void:
+	var l := DirectionalLight3D.new()
+	l.rotation_degrees = rot
+	l.light_energy = energy
+	l.light_color = col
+	l.shadow_enabled = shadow
+	sv.add_child(l)
+
+
+func _init() -> void:
+	var out_dir := OS.get_environment("G_SHOT_DIR")
+	if out_dir == "":
+		print("SV_JSON " + JSON.stringify({"error": "G_SHOT_DIR missing"}))
+		quit(1)
+		return
+	DirAccess.make_dir_recursive_absolute(out_dir)
+
+	var canvas := Canvas2D.new()
+	root.add_child(canvas)
+
+	var sv := SubViewport.new()
+	sv.size = Vector2i(600, 560)
+	sv.transparent_bg = true
+	sv.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	sv.disable_3d = false
+	canvas.add_child(sv)
+	canvas.set("sv", sv)
+
+	var res := load(GLB_PATH)
+	if res == null or not (res is PackedScene):
+		print("SV_JSON " + JSON.stringify(
+				{"error": "glb load failed", "path": GLB_PATH}))
+		quit(1)
+		return
+	var inst: Node3D = (res as PackedScene).instantiate()
+	sv.add_child(inst)
+
+	var cam := Camera3D.new()
+	cam.current = true
+	cam.fov = 33.0
+	cam.near = 0.05
+	cam.far = 100.0
+	cam.position = Vector3(0.0, 1.12, 3.55)
+	sv.add_child(cam)
+	cam.look_at(Vector3(0.0, 0.86, 0.0), Vector3.UP)
+
+	_add_light(sv, Vector3(-38.0, -32.0, 0.0), 1.9,
+			Color(1.00, 0.96, 0.90), true)
+	_add_light(sv, Vector3(-20.0, 145.0, 0.0), 0.75,
+			Color(0.68, 0.79, 1.00), false)
+	_add_light(sv, Vector3(-12.0, 75.0, 0.0), 0.55,
+			Color(1.00, 0.85, 0.70), false)
+	_add_light(sv, Vector3(-25.0, 200.0, 0.0), 0.95,
+			Color(0.76, 0.85, 1.00), false)
+
+	var s := Shot.new()
+	s.canvas = canvas
+	s.sv = sv
+	s.out_dir = out_dir
+	root.add_child(s)
+	print("SV_START glb=%s sv=%dx%d" % [GLB_PATH, sv.size.x, sv.size.y])
+

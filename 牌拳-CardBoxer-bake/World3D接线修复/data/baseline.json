@@ -1,0 +1,148 @@
+{
+  "files": {
+    "scripts/fighter_3d_layer.gd": {
+      "exists": true,
+      "size": 12626,
+      "sha256": "6504139c6c81bd607379739b956dea90293e2f84cc5266e8bf4d44b02917a402",
+      "mtime": 1794632587
+    },
+    "scripts/arena.gd": {
+      "exists": true,
+      "size": 50263,
+      "sha256": "c5dd4a3056a52e77f2269832bd898d8fbd03f2a61b81cc97b01d38e4c057e38e",
+      "mtime": 1794632587
+    },
+    "scripts/fighter.gd": {
+      "exists": true,
+      "size": 41208,
+      "sha256": "0ad8b0c3d94e0f0bd02ac9b2566bbbcd9d3bf7ee9a0c0e82333651e9659fe1c8",
+      "mtime": 1794385229
+    },
+    "scripts/hud.gd": {
+      "exists": true,
+      "size": 32962,
+      "sha256": "d7220e8b8aedf0fe99fc194e79a61dd55ab70f26821f33c1d934d28e64d72a68",
+      "mtime": 1794203521
+    },
+    "scripts/rig_driver.gd": {
+      "exists": true,
+      "size": 7827,
+      "sha256": "f287bf80a92962374201eb99d197aa32cc9ad7865486998fff9146cd76f1b933",
+      "mtime": 1794312941
+    },
+    "project.godot": {
+      "exists": true,
+      "size": 1290,
+      "sha256": "a4bb56358694fc1dcb83babd4603866a8c541906859cab8b6ef5db64bfa27522",
+      "mtime": 1794152107
+    },
+    "assets/3d/player-rigged.glb": {
+      "exists": true,
+      "size": 38478140,
+      "sha256": "80e5a1a03f446dd8a080e69524d4e78d97191fe56fcb30f86ed7e8c945fcab28",
+      "mtime": 1794312941
+    },
+    "assets/3d/foe-rigged.glb": {
+      "exists": true,
+      "size": 42914328,
+      "sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+      "mtime": 1794626404
+    },
+    "assets/3d/foe-rigged.glb.import": {
+      "exists": true,
+      "size": 1046,
+      "sha256": "63132d5c5f857641c969fd9bb0a5fee3cda97983be13036ff6b7db64e17e208f",
+      "mtime": 1794626167
+    },
+    "assets/3d/foe-rigged_texture_pbr_20250901.png": {
+      "exists": true,
+      "size": 15782150,
+      "sha256": "3c1076596ef22f2e45c6509e459f7e262053724ce05b803874ed53a927473d6a",
+      "mtime": 1794387117
+    },
+    "assets/3d/foe-rigged_texture_pbr_20250901.png.import": {
+      "exists": true,
+      "size": 1073,
+      "sha256": "88d0192d784341f0cd825108af09bbf56493c372ef42ca7d71ce5509f65b4d62",
+      "mtime": 1794626164
+    },
+    "assets/3d/foe-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png": {
+      "exists": true,
+      "size": 14380706,
+      "sha256": "c87454eacff12946de4b70254b0dbe0fe822fd93d8896efa79af5663f2cdff7e",
+      "mtime": 1794387124
+    },
+    "assets/3d/foe-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png.import": {
+      "exists": true,
+      "size": 1193,
+      "sha256": "1715757126e05d5d58e8ee84ac4b73effe10d65c3489188fd5998396b65c96e2",
+      "mtime": 1794626165
+    },
+    "assets/3d/foe-rigged_texture_pbr_20250901_normal.png": {
+      "exists": true,
+      "size": 8934769,
+      "sha256": "ed4d58cd90dd1419746a26926e80e0912f23ed83fdae8a9d881629e7e848cd9f",
+      "mtime": 1794387113
+    },
+    "assets/3d/foe-rigged_texture_pbr_20250901_normal.png.import": {
+      "exists": true,
+      "size": 1094,
+      "sha256": "236a5aa2f01d47813631a4019f8bc50c02b9e0f8aa165d3c35061224df3c5a40",
+      "mtime": 1794626163
+    },
+    "assets/3d/player-rigged.glb.import": {
+      "exists": true,
+      "size": 1055,
+      "sha256": "7bd4d6b53cf967f7b40d664bfaeb2c25e719cd2ad219470aae0aa90a48be4a7d",
+      "mtime": 1794312961
+    },
+    "assets/3d/player-rigged_texture_pbr_20250901.png": {
+      "exists": true,
+      "size": 16637843,
+      "sha256": "9fc25cf63871573f4e80686c3a178f2cf93c733538a8df1b7ee84dbc3537fdb3",
+      "mtime": 1794312948
+    },
+    "assets/3d/player-rigged_texture_pbr_20250901.png.import": {
+      "exists": true,
+      "size": 1081,
+      "sha256": "24e7f71a2442242463f55b0298a78777861ba3e19a112192cc23c9adcae59071",
+      "mtime": 1794312954
+    },
+    "assets/3d/player-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png": {
+      "exists": true,
+      "size": 12703501,
+      "sha256": "ee2ab849bba394baf31b3eeca9203f0efc7a1cd057491645e8755031be45b258",
+      "mtime": 1794312955
+    },
+    "assets/3d/player-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png.import": {
+      "exists": true,
+      "size": 1202,
+      "sha256": "1c96a476aeed10f986562dc07fb4d20392bb9e2cb82e0553fae0a75e34d918f0",
+      "mtime": 1794312961
+    },
+    "assets/3d/player-rigged_texture_pbr_20250901_normal.png": {
+      "exists": true,
+      "size": 5638722,
+      "sha256": "cce269cfbcd6c32a459bd2aa147fe447d6d2f8c5f67666543e8bf13408fb2dc0",
+      "mtime": 1794312944
+    },
+    "assets/3d/player-rigged_texture_pbr_20250901_normal.png.import": {
+      "exists": true,
+      "size": 1103,
+      "sha256": "82a93a57b9b5442b800ba97ce0c188f653a681d194c2b3bb8f05ecf7856d4966",
+      "mtime": 1794312948
+    }
+  },
+  "file_count": 22,
+  "pre_source_sha256": "6504139c6c81bd607379739b956dea90293e2f84cc5266e8bf4d44b02917a402",
+  "backup_sha256": "6504139c6c81bd607379739b956dea90293e2f84cc5266e8bf4d44b02917a402",
+  "checks": {
+    "all_watch_files_exist": true,
+    "backup_exists": true,
+    "backup_matches_source": true,
+    "two_glbs_present": true,
+    "asset_count_sane": true
+  },
+  "failed": [],
+  "ok": true
+}

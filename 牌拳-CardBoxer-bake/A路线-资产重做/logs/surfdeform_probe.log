@@ -1,0 +1,15 @@
+00:00.593  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\对手怪V1.blend"
+SRC verts=64024 shells=2809 uv=1 tex=3
+SHELL verts=20204 shells=3 auto_weight=20196/20204
+BIND poll=True is_bound=True err=None
+00:03.000  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a2-rest.png'
+00:03.375  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a2-jab06.png'
+FRAME jab06 {"tear_p999_m": 0.01787, "tear_gt5cm": 21, "max_displacement_m": 0.45243, "moved_gt_1mm": 64006, "reach_f_m": 0.41196, "reach_b_m": 0.11983, "reach_max_m": 0.41196, "foot_gap_m": 0.00579, "penetration_pct": 0.0}
+00:03.718  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a2-cross10.png'
+FRAME cross10 {"tear_p999_m": 0.03496, "tear_gt5cm": 25, "max_displacement_m": 0.54553, "moved_gt_1mm": 64006, "reach_f_m": 0.16491, "reach_b_m": 0.49134, "reach_max_m": 0.49134, "foot_gap_m": 0.00404, "penetration_pct": 0.0}
+00:04.062  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a2-wave17.png'
+FRAME wave17 {"tear_p999_m": 0.01698, "tear_gt5cm": 21, "max_displacement_m": 0.24895, "moved_gt_1mm": 64006, "reach_f_m": 0.22671, "reach_b_m": 0.22194, "reach_max_m": 0.22671, "foot_gap_m": 0.01514, "penetration_pct": 0.0}
+00:04.265  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a2-stance-angle55.png'
+ASSETS {"uv_layers": 1, "materials": 1, "textures": [{"image": "texture_pbr_20250901", "size": [4096, 4096]}, {"image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness", "size": [4096, 4096]}, {"image": "texture_pbr_20250901_normal", "size": [4096, 4096]}], "uv_same": true, "textures_same": true}
+SURFACE_DEFORM_PROBE_OK elapsed=3.89s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

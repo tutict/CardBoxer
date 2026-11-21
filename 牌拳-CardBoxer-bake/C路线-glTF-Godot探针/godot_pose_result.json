@@ -1,0 +1,35 @@
+{
+  "after_origin": [
+    0.0,
+    1.36612,
+    0.0
+  ],
+  "before_origin": [
+    0.0,
+    1.36612,
+    0.0
+  ],
+  "bone_count": 14,
+  "bound_mesh_count": 1,
+  "global_pose_changed_in_headless": false,
+  "load_ok": true,
+  "meshes": [
+    {
+      "name": "a_continuous_shell",
+      "skeleton_path": "..",
+      "skin_present": true
+    },
+    {
+      "name": "node_0",
+      "skeleton_path": "",
+      "skin_present": false
+    }
+  ],
+  "path": "res://assets/foe-full.glb",
+  "pose_local_changed": true,
+  "skeleton_found": true,
+  "target_bone_index": 7,
+  "unbound_mesh_count": 1,
+  "seconds": 1.153,
+  "returncode": 0
+}

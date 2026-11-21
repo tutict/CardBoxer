@@ -1,0 +1,13 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\tools\author_player.py:272: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new(name);m.use_nodes=True;bs=m.node_tree.nodes.get('Principled BSDF');bs.inputs['Base Color'].default_value=(*color,1);bs.inputs['Roughness'].default_value=rough;return m
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\tools\author_player.py:336: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  newmat=bpy.data.materials.new('Player_Retopology_PBR_4K');newmat.use_nodes=True
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\tools\author_player.py", line 407, in <module>
+    normal,normal_provenance=normal_module.bake(low,source,high,highhand,body_count,OUT+'/textures/player-normal-4k.png')
+                             ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑/authoring/player/normal_reprojection.py", line 36, in bake
+    size=4096;me=low.data;me.calc_loop_triangles();me.calc_tangents(uvmap='Retopology_4K_Atlas')
+                                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Error: Tangent space can only be computed for tris/quads, aborting
+

@@ -1,0 +1,50 @@
+== card_motion.json ==
+root keys: ['cards', 'motions', 'rhythm', 'stance', 'units', 'warnings']
+units: game px; origin at the feet; +x forward; -y up
+rhythm: hold=CONSTANT, snap=LINEAR, ease=BEZIER
+stance: {"hip": [0.0, -80.0], "shoulder": [2.0, -148.0], "head": [4.0, -172.0], "f_elbow": [30.0, -132.0], "f_hand": [44.0, -156.0], "b_elbow": [-18.0, -130.0], "b_hand": [-24.0, -152.0], "f_knee": [34.0, -40.0], "f_foot": [36.0, -0.0], "b_knee": [-24.2, -42.1], "b_foot": [-44.0, -0.0]}
+cards: 12 tracks -> ['backstep', 'cross', 'focus', 'guard', 'jab', 'recover', 'rush', 'sidestep', 'sweep', 'throw', 'uppercut', 'wave']
+  jab        n= 14 phases=[['windup', 4], ['active', 3], ['recover', 7]]
+  cross      n= 22 phases=[['windup', 6], ['active', 4], ['recover', 12]]
+  uppercut   n= 24 phases=[['windup', 7], ['active', 4], ['recover', 13]]
+  sweep      n= 28 phases=[['windup', 8], ['active', 5], ['recover', 15]]
+  rush       n= 13 phases=[['windup', 4], ['recover', 9]]
+  backstep   n= 11 phases=[['windup', 3], ['recover', 8]]
+  guard      n= 14 phases=[['windup', 2], ['recover', 12]]
+  sidestep   n= 10 phases=[['windup', 2], ['recover', 8]]
+  focus      n= 22 phases=[['windup', 10], ['recover', 12]]
+  recover    n= 14 phases=[['windup', 4], ['recover', 10]]
+  wave       n= 36 phases=[['windup', 10], ['active', 8], ['recover', 18]]
+  throw      n= 20 phases=[['windup', 5], ['active', 4], ['recover', 11]]
+motions: 3 tracks -> ['block', 'hit_heavy', 'hit_light']
+  hit_light  n= 16 phases=[['?', 16]]
+  hit_heavy  n= 30 phases=[['?', 30]]
+  block      n= 10 phases=[['?', 10]]
+== motion_input*.json ==
+player root keys: ['apose_points', 'bones', 'cards', 'chain', 'joint_names', 'mapping', 'px_to_m', 'source', 'stance']
+foe    root keys: ['apose_points', 'bones', 'cards', 'chain', 'joint_names', 'mapping', 'px_to_m', 'source', 'stance']
+player mapping: {"torso_gain": 0.35, "torso_cap_deg": 8.0, "head_compensation": 0.6, "reach_norm_px": 120.0, "wave_min_norm_px": 60.0, "wave_arm_weight": 0.85, "arm_gain_deg": {"f_upper": 32.0, "f_fore": 26.0, "b_upper": 28.0, "b_fore": 22.0}, "push_scale_gain": 0.3, "push_dx_px": 26.0, "push_dy_px": -8.0, "leg_cap_deg": 12.0, "leg_mode": "atan"}
+player cards: 15
+foe    cards: 15
+== 三表 11 关节同步 ==
+checked=6248 disagreements=0
+== stance ==
+{"hip": [0.0, -80.0], "shoulder": [2.0, -148.0], "head": [4.0, -172.0], "f_elbow": [30.0, -132.0], "f_hand": [44.0, -156.0], "b_elbow": [-18.0, -130.0], "b_hand": [-24.0, -152.0], "f_knee": [34.0, -40.0], "f_foot": [36.0, -0.0], "b_knee": [-24.2, -42.1], "b_foot": [-44.0, -0.0]}
+stance bbox: (-44.0, -172.0, 44.0, -0.0)
+== 每轨几何（reach_gain / hip_drop / hold） ==
+cards/jab                n= 14 reach+  44.014@  6 drop+  2.000 area   15136.0->  27579.6 hold=  0
+cards/cross              n= 22 reach+  18.925@  3 drop+  4.000 area   15136.0->  26404.6 hold=  0
+cards/uppercut           n= 24 reach+  42.498@ 10 drop+ 12.000 area   15136.0->  27765.3 hold=  0
+cards/sweep              n= 28 reach+  14.955@ 12 drop+ 34.000 area   15136.0->  17277.6 hold=  0
+cards/rush               n= 13 reach+   8.560@  1 drop+  5.000 area   15136.0->  21083.5 hold=  0
+cards/backstep           n= 11 reach+  33.695@  4 drop+  6.000 area   15136.0->  15263.1 hold=  0
+cards/guard              n= 14 reach+   0.478@  2 drop+  4.000 area   15136.0->  15136.0 hold=  0
+cards/sidestep           n= 10 reach+  19.598@  3 drop+  6.000 area   15136.0->  15136.0 hold=  0
+cards/focus              n= 22 reach+   0.000@  0 drop+ 14.000 area   15136.0->  15136.0 hold=  0
+cards/recover            n= 14 reach+   0.000@  0 drop+  9.000 area   15136.0->  15254.3 hold=  0
+cards/wave               n= 36 reach+   1.722@ 17 drop+  4.000 area   15136.0->  19113.5 hold=  0
+cards/throw              n= 20 reach+  24.721@  8 drop+  3.000 area   15136.0->  22912.3 hold=  0
+motions/hit_light        n= 16 reach+  16.761@  3 drop+  1.000 area   15136.0->  15399.6 hold=  0
+motions/hit_heavy        n= 30 reach+  29.967@  4 drop+  4.000 area   15136.0->  15415.2 hold=  0
+motions/block            n= 10 reach+   5.994@  1 drop+  1.000 area   15136.0->  15176.9 hold=  0
+WROTE C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\招牌动作P5\data\tables_probe.json

@@ -1,0 +1,85 @@
+{
+  "total": 13,
+  "failed": [],
+  "result": "ALL GREEN",
+  "checks": [
+    {
+      "check": "scripts/combo_check.gd",
+      "rc": 0,
+      "ok": true,
+      "summary": "COMBO CHECK: 8/8 passed"
+    },
+    {
+      "check": "tests/motion_check.gd",
+      "rc": 0,
+      "ok": true,
+      "summary": "MOTION CHECK: PASS"
+    },
+    {
+      "check": "tests/pose_probe.gd",
+      "rc": 0,
+      "ok": true,
+      "summary": "POSE PROBE: PASS"
+    },
+    {
+      "check": "tests/duel_probe.gd",
+      "rc": 0,
+      "ok": true,
+      "summary": "DUEL PROBE: PASS"
+    },
+    {
+      "check": "tests/reach_probe.gd",
+      "rc": 0,
+      "ok": true,
+      "summary": "REACH PROBE: PASS"
+    },
+    {
+      "check": "tests/feet_probe.gd",
+      "rc": 0,
+      "ok": true,
+      "summary": "FEET PROBE: PASS"
+    },
+    {
+      "check": "tests/taikou_rules_check.gd",
+      "rc": 0,
+      "ok": true,
+      "summary": "TAIKOU RULES CHECK: 90/90 passed"
+    },
+    {
+      "check": "tests/taikou_flow_check.gd",
+      "rc": 0,
+      "ok": true,
+      "summary": "TAIKOU FLOW CHECK: 51/51 passed"
+    },
+    {
+      "check": "tests/taikou_rage_check.gd",
+      "rc": 0,
+      "ok": true,
+      "summary": "TAIKOU RAGE CHECK: 1482/1482 passed"
+    },
+    {
+      "check": "tests/fighter_skin_check.gd",
+      "rc": 0,
+      "ok": true,
+      "summary": "FIGHTER SKIN CHECK: PASS"
+    },
+    {
+      "check": "tests/battle_motion_p0_check.gd",
+      "rc": 0,
+      "ok": true,
+      "summary": "BATTLE MOTION P0 CHECK: 93/93 passed"
+    },
+    {
+      "check": "tests/battle_rhythm_check.gd",
+      "rc": 0,
+      "ok": true,
+      "summary": "BATTLE RHYTHM CHECK: 62/62 passed"
+    },
+    {
+      "check": "tests/engine_opt_check.gd",
+      "rc": 0,
+      "ok": true,
+      "summary": "ENGINE OPT CHECK: 37/37 passed"
+    }
+  ]
+}

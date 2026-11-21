@@ -1,0 +1,57 @@
+{
+  "verdict": "MUTATION_CONCEPT_OK",
+  "cases": [
+    {
+      "name": "M1",
+      "caught": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "prompt_ok_and_sha_self_consistent"
+      ],
+      "did_not_run": false,
+      "restore": true,
+      "error": ""
+    },
+    {
+      "name": "M2",
+      "caught": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "quota_429_recorded_no_fake_artifacts"
+      ],
+      "did_not_run": false,
+      "restore": true,
+      "error": ""
+    },
+    {
+      "name": "M3",
+      "caught": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "concept_board_valid"
+      ],
+      "did_not_run": false,
+      "restore": true,
+      "error": ""
+    },
+    {
+      "name": "M4",
+      "caught": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "board_bboxes_are_measured_not_guessed"
+      ],
+      "did_not_run": false,
+      "restore": true,
+      "error": ""
+    }
+  ],
+  "clean": true,
+  "caught": 4,
+  "restored": 4,
+  "did_not_run": 0
+}

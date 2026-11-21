@@ -1,0 +1,26 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+F3D_READY bones=13 cards=15
+F3D_FOE_READY bones=13
+FAIL: player face-1 retains signed travel relative to facing
+FAIL: player face-1 reverses distance gait progression on retreat
+FAIL: player face-1 forward/backward legs differ
+FAIL: player face1 retains signed travel relative to facing
+FAIL: player face1 reverses distance gait progression on retreat
+FAIL: player face1 forward/backward legs differ
+FAIL: foe face-1 retains signed travel relative to facing
+FAIL: foe face-1 reverses distance gait progression on retreat
+FAIL: foe face-1 forward/backward legs differ
+FAIL: foe face1 retains signed travel relative to facing
+FAIL: foe face1 reverses distance gait progression on retreat
+FAIL: foe face1 forward/backward legs differ
+FAIL: player ordinary action starts from last displayed idle
+FAIL: player ordinary transition reaches shortest-path half pose at .03s
+FAIL: player walking stride blends into a new action
+FAIL: foe ordinary action starts from last displayed idle
+FAIL: foe ordinary transition reaches shortest-path half pose at .03s
+FAIL: foe walking stride blends into a new action
+FAIL: deferred native spark follows presented shift and tilt at contact
+BATTLE TRANSITION CHECK: 24/43 passed

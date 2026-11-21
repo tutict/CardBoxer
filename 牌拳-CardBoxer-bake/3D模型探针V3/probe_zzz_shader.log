@@ -1,0 +1,12 @@
+15:50:04 | INFO: Data are loaded, start creating Blender stuff
+15:50:04 | INFO: Blender create Mesh node node_0
+15:50:04 | INFO: glTF import finished in 0.10s
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V3\probe_zzz_shader.py:30: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if not mat or not mat.use_nodes:
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V3\probe_zzz_shader.py:65: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+00:02.843  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V3\probe_zzz_shader.png'
+{"blender": "5.2.3 LTS", "probe_glb": "artifact_03.glb", "base_color_image": "texture_pbr_20250901", "node_types": ["ShaderNodeBsdfDiffuse", "ShaderNodeEmission", "ShaderNodeMixRGB", "ShaderNodeOutputMaterial", "ShaderNodeShaderToRGB", "ShaderNodeTexImage", "ShaderNodeValToRGB"], "has_shader_to_rgb": true, "has_mix_rgb": true, "color_ramp_constant": true, "opaque_pixels": 13534, "quantised_colours": 59, "png_bytes": 67114, "verdict": "TOON_TEX_PROBE_OK"}
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit

@@ -1,0 +1,96 @@
+--- tools/pipeline_review_round1_before/check_retopology_assets.py
++++ tools/check_retopology_assets.py
+@@ -9,33 +9,48 @@
+ from pathlib import Path
+ import numpy as np
+ sys.path.insert(0,str(Path(__file__).resolve().parent))
+-from canonical_glb import GLB, SHAPES, sha256, skin_rest_vertices, transform_points
++from canonical_glb import GLB, SHAPES, sha256, skin_rest_vertices, transform_points,validate_output_paths,atomic_write
+ 
+ 
+ @lru_cache(maxsize=12)
+ def image_dimensions(data):
+     """Check PNG integrity and complete scanline payload, not just its header."""
+     if not data.startswith(b"\x89PNG\r\n\x1a\n"):raise ValueError("PBR atlas must be PNG")
+-    off=8;header=None;compressed=bytearray();ended=False
++    off=8;header=None;compressed=bytearray();ended=False;idat_seen=False;idat_closed=False;palette=False;transparency=False
+     while off<len(data):
+         if off+12>len(data):raise ValueError("Truncated PNG chunk")
+         count=struct.unpack_from(">I",data,off)[0];kind=data[off+4:off+8];end=off+8+count
+         if end+4>len(data):raise ValueError("Truncated PNG payload")
+         payload=data[off+8:end]
++        if any(not (65<=letter<=90 or 97<=letter<=122) for letter in kind) or kind[2]&32:
++            raise ValueError("Invalid PNG chunk type")
+         if zlib.crc32(kind+payload)!=struct.unpack_from(">I",data,end)[0]:raise ValueError("PNG CRC mismatch")
+         if header is None and kind!=b"IHDR":raise ValueError("PNG IHDR must be first")
++        if idat_seen and kind!=b"IDAT":idat_closed=True
+         if kind==b"IHDR":
+             if header is not None or count!=13:raise ValueError("Invalid PNG IHDR")
+             header=struct.unpack(">IIBBBBB",payload)
+-        elif kind==b"IDAT":compressed.extend(payload)
++            if header[3] not in (2,6) or header[2] not in (8,16):
++                raise ValueError("PBR atlas PNG supports RGB/RGBA at 8/16 bits only")
++        elif kind==b"PLTE":
++            if palette or transparency or idat_seen or count<3 or count>768 or count%3:raise ValueError("Invalid PNG palette/order")
++            palette=True
++        elif kind==b"tRNS":
++            if transparency or idat_seen or header[3]!=2 or count!=6:raise ValueError("Invalid PNG transparency/order")
++            if max(struct.unpack(">3H",payload))>2**header[2]-1:raise ValueError("PNG transparent sample out of range")
++            transparency=True
++        elif kind==b"IDAT":
++            if idat_closed:raise ValueError("PNG IDAT chunks must be consecutive")
++            idat_seen=True;compressed.extend(payload)
+         elif kind==b"IEND":
+             if count or end+4!=len(data):raise ValueError("Invalid PNG end")
+             ended=True;break
++        elif not kind[0]&32:raise ValueError("Unsupported critical PNG chunk")
+         off=end+4
+     if not header or not ended or not compressed:raise ValueError("Incomplete PNG")
+     width,height,depth,colour,compression,filtering,interlace=header
+-    channels={0:1,2:3,3:1,4:2,6:4}.get(colour)
+-    allowed={0:(1,2,4,8,16),2:(8,16),3:(1,2,4,8),4:(8,16),6:(8,16)}
++    channels={2:3,6:4}.get(colour)
++    allowed={2:(8,16),6:(8,16)}
+     if not channels or depth not in allowed[colour] or compression or filtering or interlace not in (0,1) or min(width,height)<1 or max(width,height)>4096:
+         raise ValueError("Invalid or oversized PNG encoding")
+     passes=[(0,0,1,1)] if not interlace else [(0,0,8,8),(4,0,8,8),(0,4,4,8),(2,0,4,4),(0,2,2,4),(1,0,2,2),(0,1,1,2)]
+@@ -99,8 +114,11 @@
+     try:
+         pos=g.accessor(a["POSITION"]).astype(float);normal=g.accessor(a["NORMAL"]).astype(float)
+         joints=g.accessor(a["JOINTS_0"]).astype(int);weights=g.accessor(a["WEIGHTS_0"]).astype(float)
+-        indices=g.accessor(p["indices"]).astype(int).ravel()
+     except Exception as exc: error("accessors",exc);return result
++    try:indices=g.triangle_indices(len(pos))
++    except Exception as exc:error("triangle_indices",exc);return result
++    try:source_indices=src.triangle_indices(src.doc["accessors"][sp["attributes"]["POSITION"]]["count"])
++    except Exception as exc:error("triangle_indices",exc);return result
+     metrics=result["metrics"];metrics.update(vertices=len(pos),triangles=len(indices)//3,joints=len(names),surfaces=1,materials=len(d.get("materials",[])))
+     if len(indices)%3 or np.any(indices<0) or np.any(indices>=len(pos)): error("triangle_indices","Invalid triangle indices");return result
+     if len(indices)//3>80000: error("triangle_budget",f"{len(indices)//3} exceeds 80000")
+@@ -134,7 +152,7 @@
+     metrics["rest_bind_error_m"]=float(np.linalg.norm(skin_rest_vertices(g)-world,axis=1).max())
+     if metrics["rest_bind_error_m"]>1e-5: error("rest_deformation",metrics["rest_bind_error_m"])
+     original_pos=src.accessor(sp["attributes"]["POSITION"])
+-    unchanged=(pos.shape==original_pos.shape and np.array_equal(pos.astype(np.float32),original_pos) and np.array_equal(indices,src.accessor(sp["indices"]).ravel()))
++    unchanged=(pos.shape==original_pos.shape and np.array_equal(pos.astype(np.float32),original_pos) and np.array_equal(indices,source_indices))
+     if unchanged: error("new_geometry","Candidate still contains the original indexed geometry")
+     source_world=transform_points(src.globals()[src.mesh_node()],original_pos)
+     metrics["sole_y_deviation_m"]=float(abs(world[:,1].min()-source_world[:,1].min()))
+@@ -244,8 +262,15 @@
+     parser=argparse.ArgumentParser(description=__doc__)
+     parser.add_argument("source_glb",type=Path);parser.add_argument("candidate_glb",type=Path)
+     parser.add_argument("--profile",type=Path);parser.add_argument("--report",type=Path)
+-    args=parser.parse_args();report=check_asset(args.source_glb,args.candidate_glb,args.profile)
+-    if args.report: args.report.write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
++    args=parser.parse_args()
++    if args.report:
++        inputs={args.source_glb,args.candidate_glb,Path(__file__),Path(__file__).with_name("canonical_glb.py")}
++        if args.profile:inputs.add(args.profile)
++        for path in (args.source_glb,args.candidate_glb):
++            inputs|=GLB(path).input_files()
++        validate_output_paths(inputs,(args.report,))
++    report=check_asset(args.source_glb,args.candidate_glb,args.profile)
++    if args.report:atomic_write(args.report,(json.dumps(report,indent=2)+"\n").encode("utf-8"))
+     print(json.dumps(report,indent=2));return 0 if report["ok"] else 1
+ 
+ 

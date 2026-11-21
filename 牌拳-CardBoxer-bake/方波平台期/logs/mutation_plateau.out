@@ -1,0 +1,41 @@
+CAUGHT M01_player_mode_to_hard rc 1 restore True hit ['player_mapping_atan_12'] errors {}
+CAUGHT M02_foe_mode_to_hard rc 1 restore True hit ['foe_mapping_atan_12'] errors {}
+CAUGHT M03_player_cap_back_to_9 rc 1 restore True hit ['player_mapping_atan_12'] errors {}
+CAUGHT M04_foe_cap_back_to_9 rc 1 restore True hit ['foe_mapping_atan_12'] errors {}
+CAUGHT M05_helper_signature_renamed rc 1 restore True hit ['rig_driver_helper_signature'] errors {}
+CAUGHT M06_atan_constant_changed rc 1 restore True hit ['atan_formula_constant_pinned'] errors {}
+CAUGHT M07_hard_fallback_removed rc 1 restore True hit ['legacy_fallback_clampf_present'] errors {}
+CAUGHT M08_legacy_default_flipped rc 1 restore True hit ['legacy_default_is_hard'] errors {}
+CAUGHT M09_one_leg_bone_skips_helper rc 1 restore True hit ['all_four_leg_bones_use_helper', 'no_inline_hard_clamp_left'] errors {}
+CAUGHT M10_apply_single_replace_flipped rc 1 restore True hit ['apply_report_three_single_replaces'] errors {}
+CAUGHT M11_baseline_check_flipped rc 1 restore True hit ['baseline_report_all_checks_true'] errors {}
+CAUGHT M12_watched_sha_tampered rc 1 restore True hit ['other_11_watched_files_unchanged'] errors {}
+CAUGHT M13_diag_check_flipped rc 1 restore True hit ['diag_report_all_checks_true'] errors {}
+CAUGHT M14_tear_check_flipped rc 1 restore True hit ['tear_report_all_checks_true'] errors {}
+CAUGHT M15_probe_check_flipped rc 1 restore True hit ['probe_report_all_checks_true'] errors {}
+CAUGHT M16_boards_check_flipped rc 1 restore True hit ['boards_report_all_checks_true'] errors {}
+CAUGHT M17_all_checks_result_faked rc 1 restore True hit ['all_checks_p3_15_15'] errors {}
+CAUGHT M18_history_gate_check_flipped rc 1 restore True hit ['history_gates_report_all_checks_true'] errors {}
+CAUGHT M19_cause_split_broken rc 1 restore True hit ['cause_split_sums_to_total'] errors {}
+CAUGHT M20_atan12_perceptual_flat_faked rc 1 restore True hit ['atan12_perceptual_flat_below_hard09', 'atan_beats_tanh_on_perceptual_flatness'] errors {}
+CAUGHT M21_live_action_plateau_faked rc 1 restore True hit ['live_action_plateau_reduced'] errors {}
+CAUGHT M39_live_distinct_faked rc 1 restore True hit ['live_distinct_values_increased'] errors {}
+CAUGHT M22_recommendation_swapped rc 1 restore True hit ['recommendation_rule_recomputed_is_atan12', 'recommended_matches_shipped_mapping'] errors {}
+CAUGHT M23_atan12_sampling_gap_injected rc 1 restore True hit ['representative_sampling_gap_all_zero'] errors {}
+CAUGHT M24_atan12_tear_over_anchor rc 1 restore True hit ['all_candidates_within_anchor', 'atan12_worst_p999_below_hard09_baseline'] errors {}
+CAUGHT M25_atan12_leg_peak_mean_tampered rc 1 restore True hit ['atan12_leg_peak_mean_closest_to_baseline'] errors {}
+CAUGHT M26_full_pose_count_dropped rc 1 restore True hit ['full_1420_poses_evaluated'] errors {}
+CAUGHT M27_plan_frame_count_dropped rc 1 restore True hit ['plan_5_cases_284_frames_1420_poses'] errors {}
+CAUGHT M28_baseline_platform_count_tampered rc 1 restore True hit ['hard09_platform_count_matches_tear'] errors {}
+CAUGHT M29_shipped_readback_faked rc 1 restore True hit ['shipped_readback_atan_12_both_sides'] errors {}
+CAUGHT M30_stance_no_longer_zero rc 1 restore True hit ['stance_untouched_pixel_zero'] errors {}
+CAUGHT M31_reapplied_no_longer_identical rc 1 restore True hit ['shipped_reapplied_identical_same_process'] errors {}
+CAUGHT M32_probe_script_out_of_sync rc 1 restore True hit ['probe_script_bytewise_in_game'] errors {}
+CAUGHT M33_sv_png_signature_broken rc 1 restore True hit ['all_96_sv_pngs_valid_signature'] errors {}
+CAUGHT M34_timeline_png_signature_broken rc 1 restore True hit ['four_boards_valid_png_signature'] errors {}
+CAUGHT M35_timeline_flat_stat_tampered rc 1 restore True hit ['timeline_flat_stats_independently_recomputed'] errors {}
+CAUGHT M36_timeline_sample_count_tampered rc 1 restore True hit ['timeline_129_real_samples'] errors {}
+CAUGHT M37_history_red_name_renamed rc 1 restore True hit ['history_reds_exactly_ten_expected_entries'] errors {}
+CAUGHT M38_history_restore_proof_flipped rc 1 restore True hit ['history_gates_report_all_checks_true'] errors {}
+MUTATION_PLATEAU 39/39 CAUGHT / DNR 0 / MISSED 0 / RESTORE 39/39 / clean 80/80 ALL GREEN
+MUTATION_PLATEAU_OK

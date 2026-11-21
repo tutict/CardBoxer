@@ -1,0 +1,158 @@
+{
+  "imports": [
+    {
+      "file": "card_p1.png",
+      "uid": "uid://bromngm40jwsc",
+      "ctex": ".godot/imported/card_p1.png-87ea93028d3a8f465f74d8fd46f47a35.ctex",
+      "ctex_bytes": 14286,
+      "checks": {
+        "png_exists": true,
+        "importer_texture": true,
+        "type_compressed": true,
+        "uid_present": true,
+        "source_file_ok": true,
+        "path_matches_dest": true,
+        "ctex_exists": true,
+        "ctex_nonempty": true,
+        "md5_exists": true
+      },
+      "ok": true
+    },
+    {
+      "file": "card_p55.png",
+      "uid": "uid://plktswpkhwat",
+      "ctex": ".godot/imported/card_p55.png-2a31152f9673707c5bbe72abbb75e96a.ctex",
+      "ctex_bytes": 14586,
+      "checks": {
+        "png_exists": true,
+        "importer_texture": true,
+        "type_compressed": true,
+        "uid_present": true,
+        "source_file_ok": true,
+        "path_matches_dest": true,
+        "ctex_exists": true,
+        "ctex_nonempty": true,
+        "md5_exists": true
+      },
+      "ok": true
+    },
+    {
+      "file": "avatar_player.png",
+      "uid": "uid://bpnc5vwpundi0",
+      "ctex": ".godot/imported/avatar_player.png-36fc4df544564120a0d87e59bce7e3ba.ctex",
+      "ctex_bytes": 3386,
+      "checks": {
+        "png_exists": true,
+        "importer_texture": true,
+        "type_compressed": true,
+        "uid_present": true,
+        "source_file_ok": true,
+        "path_matches_dest": true,
+        "ctex_exists": true,
+        "ctex_nonempty": true,
+        "md5_exists": true
+      },
+      "ok": true
+    },
+    {
+      "file": "avatar_foe.png",
+      "uid": "uid://da2dgjx1xegro",
+      "ctex": ".godot/imported/avatar_foe.png-1b620d1d8cefa614c73639de2c48dc70.ctex",
+      "ctex_bytes": 2978,
+      "checks": {
+        "png_exists": true,
+        "importer_texture": true,
+        "type_compressed": true,
+        "uid_present": true,
+        "source_file_ok": true,
+        "path_matches_dest": true,
+        "ctex_exists": true,
+        "ctex_nonempty": true,
+        "md5_exists": true
+      },
+      "ok": true
+    },
+    {
+      "file": "profile_front.png",
+      "uid": "uid://crsomc5x5f1ml",
+      "ctex": ".godot/imported/profile_front.png-2c7cd65a8bf7646bc2a4db9a5b136dd3.ctex",
+      "ctex_bytes": 119418,
+      "checks": {
+        "png_exists": true,
+        "importer_texture": true,
+        "type_compressed": true,
+        "uid_present": true,
+        "source_file_ok": true,
+        "path_matches_dest": true,
+        "ctex_exists": true,
+        "ctex_nonempty": true,
+        "md5_exists": true
+      },
+      "ok": true
+    },
+    {
+      "file": "profile_25.png",
+      "uid": "uid://dj6radg7kp17u",
+      "ctex": ".godot/imported/profile_25.png-2ca4d6751434329fbb0c152d05b586bc.ctex",
+      "ctex_bytes": 53580,
+      "checks": {
+        "png_exists": true,
+        "importer_texture": true,
+        "type_compressed": true,
+        "uid_present": true,
+        "source_file_ok": true,
+        "path_matches_dest": true,
+        "ctex_exists": true,
+        "ctex_nonempty": true,
+        "md5_exists": true
+      },
+      "ok": true
+    },
+    {
+      "file": "profile_55.png",
+      "uid": "uid://du2lqcy8y42lk",
+      "ctex": ".godot/imported/profile_55.png-96d3f967c692aa91e0f96c46dc06b2b6.ctex",
+      "ctex_bytes": 51402,
+      "checks": {
+        "png_exists": true,
+        "importer_texture": true,
+        "type_compressed": true,
+        "uid_present": true,
+        "source_file_ok": true,
+        "path_matches_dest": true,
+        "ctex_exists": true,
+        "ctex_nonempty": true,
+        "md5_exists": true
+      },
+      "ok": true
+    },
+    {
+      "file": "profile_back35.png",
+      "uid": "uid://bfi3p3p54anot",
+      "ctex": ".godot/imported/profile_back35.png-4a02e64c064514a543094c080f732c77.ctex",
+      "ctex_bytes": 46622,
+      "checks": {
+        "png_exists": true,
+        "importer_texture": true,
+        "type_compressed": true,
+        "uid_present": true,
+        "source_file_ok": true,
+        "path_matches_dest": true,
+        "ctex_exists": true,
+        "ctex_nonempty": true,
+        "md5_exists": true
+      },
+      "ok": true
+    }
+  ],
+  "all_imports_ok": true,
+  "uid_unique": true,
+  "uid_count": 13,
+  "existing_import_count": 5,
+  "baseline_drift": [],
+  "baseline_clean": true,
+  "intentional_changes": [
+    "scripts/hud.gd",
+    "tests/redraw_gate_check.gd"
+  ]
+}

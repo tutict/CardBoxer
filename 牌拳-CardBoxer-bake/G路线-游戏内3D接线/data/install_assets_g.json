@@ -1,0 +1,99 @@
+{
+  "import": {
+    "seconds": 21.218,
+    "returncode": 0,
+    "errors": 0
+  },
+  "copies": [
+    {
+      "src": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\F路线-Godot驱动层\\player-rigged.glb",
+      "dst": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\assets\\3d\\player-rigged.glb",
+      "rel": "assets/3d/player-rigged.glb",
+      "bytes": 38478140,
+      "sha256": "80e5a1a03f446dd8a080e69524d4e78d97191fe56fcb30f86ed7e8c945fcab28",
+      "identical": true
+    },
+    {
+      "src": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\F路线-Godot驱动层\\data\\motion_input.json",
+      "dst": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input.json",
+      "rel": "data/motion_input.json",
+      "bytes": 19771,
+      "sha256": "c3ff4f76f5582b59d8706a611eb0bbbba4f8a8ee28bcf61a3cd801acd06f5cd2",
+      "identical": true
+    },
+    {
+      "src": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\F路线-Godot驱动层\\probe_project_f\\scenes\\rig_driver.gd",
+      "dst": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\scripts\\rig_driver.gd",
+      "rel": "scripts/rig_driver.gd",
+      "bytes": 7827,
+      "sha256": "f287bf80a92962374201eb99d197aa32cc9ad7865486998fff9146cd76f1b933",
+      "identical": true
+    }
+  ],
+  "generated": [
+    {
+      "rel": "assets/3d/player-rigged.glb",
+      "bytes": 38478140,
+      "sha256": "80e5a1a03f446dd8a080e69524d4e78d97191fe56fcb30f86ed7e8c945fcab28"
+    },
+    {
+      "rel": "assets/3d/player-rigged.glb.import",
+      "bytes": 1055,
+      "sha256": "7bd4d6b53cf967f7b40d664bfaeb2c25e719cd2ad219470aae0aa90a48be4a7d"
+    },
+    {
+      "rel": "assets/3d/player-rigged_texture_pbr_20250901.png",
+      "bytes": 16637843,
+      "sha256": "9fc25cf63871573f4e80686c3a178f2cf93c733538a8df1b7ee84dbc3537fdb3",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "rel": "assets/3d/player-rigged_texture_pbr_20250901.png.import",
+      "bytes": 1081,
+      "sha256": "24e7f71a2442242463f55b0298a78777861ba3e19a112192cc23c9adcae59071"
+    },
+    {
+      "rel": "assets/3d/player-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png",
+      "bytes": 12703501,
+      "sha256": "ee2ab849bba394baf31b3eeca9203f0efc7a1cd057491645e8755031be45b258",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "rel": "assets/3d/player-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png.import",
+      "bytes": 1202,
+      "sha256": "1c96a476aeed10f986562dc07fb4d20392bb9e2cb82e0553fae0a75e34d918f0"
+    },
+    {
+      "rel": "assets/3d/player-rigged_texture_pbr_20250901_normal.png",
+      "bytes": 5638722,
+      "sha256": "cce269cfbcd6c32a459bd2aa147fe447d6d2f8c5f67666543e8bf13408fb2dc0",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "rel": "assets/3d/player-rigged_texture_pbr_20250901_normal.png.import",
+      "bytes": 1103,
+      "sha256": "82a93a57b9b5442b800ba97ce0c188f653a681d194c2b3bb8f05ecf7856d4966"
+    }
+  ],
+  "checks": {
+    "three_copies_identical": true,
+    "import_rc": true,
+    "import_no_parse_errors": true,
+    "glb_import_stamp": true,
+    "three_pbr_extracted": true,
+    "pbr_all_4096": true,
+    "motion_input_in_game": true,
+    "rig_driver_in_game": true
+  },
+  "failed": [],
+  "ok": true
+}

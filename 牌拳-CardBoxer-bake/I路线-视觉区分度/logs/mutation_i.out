@@ -1,0 +1,14 @@
+M01_source_scale_reverted CAUGHT rc=1
+M02_source_tint_changed CAUGHT rc=1
+M03_retired_constant_reintroduced CAUGHT rc=1
+M04_off_switch_renamed CAUGHT rc=1
+M05_spec_width_target_relaxed CAUGHT rc=1
+M06_r1_negative_flipped CAUGHT rc=1
+M07_diag_player_check_flipped CAUGHT rc=1
+M08_off_player_check_flipped CAUGHT rc=1
+M09_all_checks_not_green CAUGHT rc=1
+M10_static_ab_pixels_changed CAUGHT rc=1
+M11_baseline_sha_tampered CAUGHT rc=1
+M12_final_patch_ok_flipped CAUGHT rc=1
+CAUGHT=12/12 DID_NOT_RUN=0 restore=12/12 clean=GREEN
+MUTATION_I_OK

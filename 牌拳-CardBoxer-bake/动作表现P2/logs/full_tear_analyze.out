@@ -1,0 +1,16 @@
+CASE cap03_hard_g100 frames 284 worst_p999 0.040791 at ['throw', 8] over_anchor 0 over_baseline 1.0 gt5cm 44
+CASE cap09_hard_g100 frames 284 worst_p999 0.043694 at ['throw', 8] over_anchor 0 over_baseline 1.0712 gt5cm 71
+CASE cap12_hard_g100 frames 284 worst_p999 0.044522 at ['throw', 8] over_anchor 0 over_baseline 1.0915 gt5cm 83
+SAMPLING_GAP {'cap03_hard_g100': 0.0, 'cap09_hard_g100': 0.0, 'cap12_hard_g100': 0.0}
+CHECK all_852_poses_evaluated True
+CHECK three_cases True
+CHECK each_case_284_frames True
+CHECK all_frame_pairs_covered True
+CHECK full_frame_pairs_count True
+CHECK pose_matrices_readback_accurate True
+CHECK shipped_baseline_within_anchor True
+CHECK cap09_all_frames_within_anchor True
+CHECK cap12_all_frames_within_anchor True
+CHECK cap09_worse_than_baseline_only_mildly True
+CHECK cap12_worse_than_baseline_only_mildly True
+FULL_TEAR_OK

@@ -1,0 +1,10 @@
+M1 CAUGHT expect pix_s1_all_zero restore True 
+M2 CAUGHT expect pix_s4_white_668_cyan_449 restore True 
+M3 CAUGHT expect diag_cyan_on_deleted_258 restore True 
+M4 CAUGHT expect pair_report_ok restore True 
+M5 CAUGHT expect historical_sv_labels_swapped restore True 
+M6 CAUGHT expect single_report_ok restore True 
+M7 CAUGHT expect w3d_report_ok restore True 
+M8 CAUGHT expect w3d_after_foe_white_937 restore True 
+CAUGHT 8/8  DID_NOT_RUN 0  RESTORE 8/8  CLEAN_GREEN True
+MUTATION_STACK_OK

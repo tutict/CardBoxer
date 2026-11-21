@@ -1,0 +1,10 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+COLD SAMPLE player us=1654
+COLD SAMPLE foe us=1755
+CPU SAMPLE player {"count":480,"max_us":1726,"mean_us":1185.62708333333,"p50_us":1251,"p95_us":1430}
+CPU PRESERVE SUPPORT player {"count":480,"max_us":1661,"mean_us":1138.07708333333,"p50_us":1121,"p95_us":1244}
+CPU SAMPLE foe {"count":480,"max_us":2070,"mean_us":1222.91875,"p50_us":1286,"p95_us":1531}
+CPU PRESERVE SUPPORT foe {"count":480,"max_us":1984,"mean_us":1175.14583333333,"p50_us":1153,"p95_us":1347}

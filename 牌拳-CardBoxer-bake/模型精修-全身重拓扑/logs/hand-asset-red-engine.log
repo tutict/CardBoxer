@@ -1,0 +1,10 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+FAIL: canonical model profile exists
+FAIL: player one actual mesh exposes four hand morphs
+FAIL: player actual canonical socket profile valid
+FAIL: foe one actual mesh exposes four hand morphs
+FAIL: foe actual canonical socket profile valid
+HAND ASSET CHECK: 5/10 passed socket_max_m=0.000000

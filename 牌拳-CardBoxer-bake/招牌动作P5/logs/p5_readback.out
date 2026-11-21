@@ -1,0 +1,29 @@
+JOINT_VALUES 6248 DISAGREE 0
+DIFFS 230 SCOPE_BAD 0 CHANGED_FRAMES 42 MAX_2D 40.0
+JAB_EQUAL True ENDPOINT 0.0 none
+MF_PEAK wave 60.823 cross 36.0 jab 80.2247 (baseline jab 80.2247 )
+MF_DIRECT {'wave': 60.823, 'cross': 36.0, 'jab': 80.2247, 'sweep': 78.6384, 'throw': 54.9181, 'uppercut': 71.4703}
+DELTA_BONES {'upperarm_f': 42, 'forearm_f': 42, 'upperarm_b': 27, 'forearm_b': 27}
+DELTA_NON_ARM_BAD 0 FRAMES 284
+OTHER_WATCHED 11 BAD 0
+CHECK three_tables_have_same_joint_keys True
+CHECK three_tables_6248_joint_values_in_sync True
+CHECK diffs_exist True
+CHECK diffs_confined_to_wave_cross_four_arm_joints True
+CHECK jab_track_byte_for_byte_equivalent_to_baseline True
+CHECK endpoints_zero_drift True
+CHECK changed_frame_set_matches_recommended_scan True
+CHECK changed_frame_count_matches_scan True
+CHECK max_2d_joint_delta_is_design_amplitude True
+CHECK card_motion_metadata_unchanged True
+CHECK motion_input_mapping_and_meta_unchanged True
+CHECK card_entry_shape_unchanged True
+CHECK wave_mf_peak_at_least_55px True
+CHECK cross_mf_peak_at_least_25px True
+CHECK wave_at_least_5px_stronger_than_cross True
+CHECK jab_mf_peak_unchanged_from_baseline True
+CHECK all_attack_mf_peaks_in_active True
+CHECK delta_changes_only_in_four_arm_bones True
+CHECK delta_frames_cover_all_3d_frames True
+CHECK other_11_watched_files_sha_unchanged True
+P5_READBACK_OK

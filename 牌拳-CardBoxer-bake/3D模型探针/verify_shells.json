@@ -1,0 +1,36 @@
+{
+  "glb_sha256": "2c85462c79e41f36cb0d61f4de7ebdeb047bace161902ec9f4ff85705972ecb1",
+  "gltf_version": 2,
+  "declared_length": 30197712,
+  "file_bytes": 30197712,
+  "vertices": 51587,
+  "indices": 239988,
+  "triangles": 79996,
+  "connected_shells_unionfind": 861,
+  "shell_sizes_top10": [
+    1281,
+    1106,
+    1102,
+    951,
+    875,
+    735,
+    712,
+    674,
+    615,
+    605
+  ],
+  "bmesh_connected_components": 861,
+  "bmesh_sizes_top10": [
+    1281,
+    1106,
+    1102,
+    951,
+    875,
+    735,
+    712,
+    674,
+    615,
+    605
+  ],
+  "verdict": "SHELLS_CROSSCHECK_OK"
+}

@@ -1,0 +1,107 @@
+{
+  "blender": "5.2.3 LTS",
+  "source_blend": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\A路线-资产重做\\对手怪-可变形连续壳.blend",
+  "source_blend_sha256": "88dca6d28aa36caeda9f5af5564bf553aa8a9ee618846457b036fe3b1bd54239",
+  "source": {
+    "object": "node_0",
+    "verts": 64024,
+    "polygons": 79998,
+    "uv_layers": 1,
+    "textures": [
+      {
+        "image": "texture_pbr_20250901",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_normal",
+        "size": [
+          4096,
+          4096
+        ]
+      }
+    ]
+  },
+  "rig": {
+    "bones": [
+      "hips",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "upperarm_f",
+      "forearm_f",
+      "upperarm_b",
+      "forearm_b",
+      "thigh_f",
+      "shin_f",
+      "thigh_b",
+      "shin_b"
+    ]
+  },
+  "shells": 2809,
+  "surgery": {
+    "params": {
+      "SKIRT": [
+        0.95,
+        0.45,
+        0.72
+      ],
+      "CAPE": [
+        0.85,
+        0.5,
+        0.55,
+        0.6
+      ],
+      "HEAD": [
+        200,
+        0.45,
+        0.12
+      ],
+      "uv_patch": [
+        0.1,
+        0.88
+      ],
+      "uv_span": 0.018
+    },
+    "target_verts": {
+      "SKIRT": 1684,
+      "HEAD_ORNAMENT": 3532,
+      "CAPE_OR_PANEL": 2122
+    },
+    "moved_verts": 7338,
+    "uv_loops_rewritten": 31461,
+    "uv_patch_linear_rgb": [
+      0.1387,
+      0.1313,
+      0.1259
+    ]
+  },
+  "integrity": {
+    "verts_before": 64024,
+    "verts_after": 64024,
+    "polygons_before": 79998,
+    "polygons_after": 79998,
+    "uv_layers": 1,
+    "materials": 1,
+    "textures_same": true,
+    "weighted_before": 64006,
+    "weighted_after": 64006
+  },
+  "export": {
+    "file": "foe-rigged-v2.glb",
+    "bytes": 42917240,
+    "sha256": "f30c31a1b90234f6c9b77600c272f6c9c9b4c8304f88659cd528ad87c1394b92",
+    "export_apply": false,
+    "export_skins": true
+  }
+}

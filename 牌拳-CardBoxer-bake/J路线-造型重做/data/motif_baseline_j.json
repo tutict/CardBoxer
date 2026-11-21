@@ -1,0 +1,174 @@
+{
+  "texture": {
+    "player": {
+      "file": "player-rigged_texture_pbr_20250901.png",
+      "orig_size": [
+        4096,
+        4096
+      ],
+      "sha256": "9fc25cf63871573f4e80686c3a178f2cf93c733538a8df1b7ee84dbc3537fdb3",
+      "analyzed_size": [
+        1024,
+        1024
+      ],
+      "counts": {
+        "near_white": 157078,
+        "cyan": 17432,
+        "hot_red": 12832
+      },
+      "ratios": {
+        "near_white": 0.149801,
+        "cyan": 0.016624,
+        "hot_red": 0.012238
+      },
+      "motif_grid": [
+        [
+          52972,
+          18190,
+          3218,
+          9402
+        ],
+        [
+          30854,
+          20715,
+          3884,
+          4093
+        ],
+        [
+          1866,
+          5135,
+          3449,
+          4881
+        ],
+        [
+          9873,
+          8782,
+          5114,
+          4889
+        ]
+      ],
+      "grid_max": 52972
+    },
+    "foe": {
+      "file": "foe-rigged_texture_pbr_20250901.png",
+      "orig_size": [
+        4096,
+        4096
+      ],
+      "sha256": "3c1076596ef22f2e45c6509e459f7e262053724ce05b803874ed53a927473d6a",
+      "analyzed_size": [
+        1024,
+        1024
+      ],
+      "counts": {
+        "near_white": 0,
+        "cyan": 1473,
+        "hot_red": 10
+      },
+      "ratios": {
+        "near_white": 0.0,
+        "cyan": 0.001405,
+        "hot_red": 1e-05
+      },
+      "motif_grid": [
+        [
+          7,
+          20,
+          25,
+          86
+        ],
+        [
+          29,
+          53,
+          30,
+          155
+        ],
+        [
+          28,
+          38,
+          171,
+          29
+        ],
+        [
+          28,
+          108,
+          480,
+          196
+        ]
+      ],
+      "grid_max": 480
+    }
+  },
+  "subviewport_v1": {
+    "player": {
+      "size": [
+        420,
+        520
+      ],
+      "mask_kind": "alpha>127",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "mask_px": 74953,
+      "bbox": [
+        48,
+        39,
+        345,
+        507
+      ],
+      "height_px": 468,
+      "shoulder_px": 239,
+      "shoulder_over_height": 0.51068,
+      "near_white_ratio": 0.170427,
+      "cyan_ratio": 0.030086,
+      "hot_red_ratio": 0.006204,
+      "near_white_px": 12774,
+      "cyan_px": 2255,
+      "hot_red_px": 465
+    },
+    "foe": {
+      "size": [
+        420,
+        520
+      ],
+      "mask_kind": "alpha>127",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "mask_px": 71959,
+      "bbox": [
+        107,
+        43,
+        375,
+        506
+      ],
+      "height_px": 463,
+      "shoulder_px": 205,
+      "shoulder_over_height": 0.44276,
+      "near_white_ratio": 0.208647,
+      "cyan_ratio": 0.034256,
+      "hot_red_ratio": 0.003919,
+      "near_white_px": 15014,
+      "cyan_px": 2465,
+      "hot_red_px": 282
+    }
+  },
+  "silhouette": {
+    "bbox_iou_upper_bound": 0.90236,
+    "shoulder_delta": 0.06792,
+    "j01_already_satisfied": false
+  },
+  "board": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\boards\\J-同源元素定位.png",
+  "board_bytes": 290322,
+  "checks": {
+    "both_textures_4096": true,
+    "both_sv_masks_nonempty": true,
+    "foe_texture_has_no_large_white": true,
+    "player_texture_has_large_white": true,
+    "board_written": true
+  },
+  "failed": [],
+  "ok": true
+}

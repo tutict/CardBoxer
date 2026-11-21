@@ -1,0 +1,11628 @@
+{
+  "ok": true,
+  "images": 830,
+  "failed": 0,
+  "padding": 4,
+  "rows": [
+    {
+      "file": "cross-f000-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f000-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f001-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f001-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f002-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        172,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f002-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f003-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        172,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f003-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f004-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        173,
+        410,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f004-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        168,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f005-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        173,
+        410,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f005-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        168,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f006-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        202,
+        173,
+        410,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f006-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        167,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f007-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        174,
+        410,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f007-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        169,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f008-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        204,
+        178,
+        411,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f008-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        172,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f009-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        205,
+        179,
+        411,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f009-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        173,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f010-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        177,
+        411,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f010-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        310,
+        170,
+        506,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f011-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        208,
+        180,
+        412,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f011-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        173,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f012-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        209,
+        180,
+        412,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f012-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        173,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f013-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        180,
+        412,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f013-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        172,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f014-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        185,
+        412,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f014-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        177,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f015-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        181,
+        412,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f015-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        310,
+        173,
+        506,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f016-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        183,
+        412,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f016-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        175,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f017-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        207,
+        181,
+        411,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f017-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        174,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f018-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        202,
+        180,
+        409,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f018-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        174,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f019-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        184,
+        407,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f019-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        178,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f020-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        205,
+        182,
+        407,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f020-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        298,
+        176,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f021-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        181,
+        406,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f021-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        304,
+        174,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f022-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        194,
+        184,
+        405,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f022-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        176,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f023-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        183,
+        186,
+        404,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f023-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f024-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        178,
+        187,
+        403,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f024-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        176,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f025-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        166,
+        187,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f025-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        176,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f026-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        157,
+        189,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f026-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        176,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f027-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        150,
+        190,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f027-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f028-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        145,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f028-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f029-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f029-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f030-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f030-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f031-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f031-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f032-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f032-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f033-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f033-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f034-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f034-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f035-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f035-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f036-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f036-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f037-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f037-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f038-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f038-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f039-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f039-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f040-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f040-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f041-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f041-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f042-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f042-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f043-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f043-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f044-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f044-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f045-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        149,
+        191,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f045-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f046-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        155,
+        190,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f046-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f047-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        163,
+        189,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f047-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f048-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        172,
+        189,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f048-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f049-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        177,
+        188,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f049-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f050-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        189,
+        187,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f050-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f051-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        205,
+        186,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f051-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        176,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f052-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        186,
+        401,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f052-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        176,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f053-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        194,
+        185,
+        401,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f053-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        176,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f054-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        196,
+        184,
+        401,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f054-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        175,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f055-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        183,
+        401,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f055-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        298,
+        175,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f056-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        182,
+        401,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f056-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        301,
+        174,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f057-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        184,
+        401,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f057-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        176,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f058-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        185,
+        402,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f058-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        178,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f059-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        183,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f059-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        175,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f060-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        196,
+        180,
+        403,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f060-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        172,
+        517,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f061-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        182,
+        403,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f061-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        174,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f062-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        194,
+        182,
+        404,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f062-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        173,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f063-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        194,
+        180,
+        404,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f063-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        308,
+        171,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f064-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        194,
+        183,
+        404,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f064-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        175,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f065-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        194,
+        181,
+        405,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f065-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        173,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f066-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        194,
+        178,
+        405,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f066-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        169,
+        516,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f067-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        181,
+        405,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f067-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f068-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        179,
+        406,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f068-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        300,
+        170,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f069-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        178,
+        406,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f069-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        307,
+        169,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f070-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        181,
+        406,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f070-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        173,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f071-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        179,
+        406,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f071-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        171,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f072-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        176,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f072-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f073-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        176,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f073-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f074-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        196,
+        177,
+        407,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f074-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        168,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f075-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        196,
+        177,
+        407,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f075-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        168,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f076-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        176,
+        407,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f076-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        168,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f077-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        174,
+        408,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f077-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        167,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f078-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        173,
+        408,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f078-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        167,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f079-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        199,
+        172,
+        408,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f079-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        167,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f080-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        172,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f080-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f081-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f081-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f082-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "cross-f082-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f000-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f000-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f001-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f001-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f002-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f002-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f003-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f003-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f004-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        410,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f004-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        166,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f005-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        170,
+        409,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f005-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        166,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f006-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        169,
+        410,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f006-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        164,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f007-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        169,
+        410,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f007-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        165,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f008-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        172,
+        410,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f008-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        168,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f009-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        172,
+        410,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f009-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        294,
+        168,
+        506,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f010-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        169,
+        410,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f010-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        313,
+        165,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f011-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        202,
+        171,
+        411,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f011-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        295,
+        166,
+        506,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f012-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        202,
+        170,
+        411,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f012-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        165,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f013-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        202,
+        169,
+        411,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f013-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        165,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f014-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        202,
+        173,
+        411,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f014-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        169,
+        506,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f015-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        170,
+        411,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f015-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        313,
+        165,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f016-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        173,
+        410,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f016-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        294,
+        167,
+        506,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f017-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        173,
+        409,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f017-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        167,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f018-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        196,
+        175,
+        407,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f018-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        168,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f019-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        181,
+        406,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f019-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        172,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f020-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        193,
+        178,
+        406,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f020-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        301,
+        170,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f021-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        193,
+        178,
+        405,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f021-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        307,
+        169,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f022-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        191,
+        178,
+        405,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f022-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        170,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f023-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        190,
+        179,
+        404,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f023-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        171,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f024-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        189,
+        179,
+        403,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f024-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        171,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f025-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        188,
+        181,
+        403,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f025-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        171,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f026-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        188,
+        182,
+        403,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f026-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        171,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f027-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        183,
+        402,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f027-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        172,
+        518,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f028-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f028-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        172,
+        524,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f029-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f029-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f030-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f030-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f031-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f031-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f032-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f032-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f033-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f033-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f034-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f034-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f035-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f035-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f036-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f036-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f037-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f037-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f038-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f038-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f039-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f039-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f040-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f040-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f041-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f041-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f042-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f042-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f043-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f043-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f044-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        184,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f044-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f045-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        183,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f045-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f046-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        183,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f046-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        172,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f047-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        182,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f047-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        172,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f048-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        188,
+        181,
+        403,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f048-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        171,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f049-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        188,
+        180,
+        403,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f049-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        171,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f050-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        189,
+        180,
+        403,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f050-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        171,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f051-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        189,
+        179,
+        403,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f051-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        170,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f052-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        190,
+        178,
+        404,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f052-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        170,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f053-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        190,
+        178,
+        404,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f053-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        170,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f054-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        191,
+        177,
+        404,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f054-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        294,
+        169,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f055-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        191,
+        176,
+        404,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f055-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        302,
+        168,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f056-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        191,
+        176,
+        404,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f056-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        304,
+        168,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f057-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        192,
+        177,
+        404,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f057-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        295,
+        170,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f058-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        192,
+        179,
+        405,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f058-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        172,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f059-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        192,
+        177,
+        405,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f059-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        169,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f060-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        193,
+        174,
+        405,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f060-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        166,
+        517,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f061-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        193,
+        177,
+        405,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f061-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        169,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f062-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        193,
+        176,
+        406,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f062-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        295,
+        168,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f063-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        194,
+        175,
+        406,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f063-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        311,
+        167,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f064-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        194,
+        178,
+        406,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f064-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        171,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f065-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        177,
+        406,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f065-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        169,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f066-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        174,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f066-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        166,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f067-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        177,
+        407,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f067-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        168,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f068-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        196,
+        175,
+        407,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f068-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        302,
+        167,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f069-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        196,
+        175,
+        407,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f069-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        308,
+        166,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f070-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        196,
+        178,
+        407,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f070-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        170,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f071-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        176,
+        407,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f071-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        169,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f072-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        173,
+        407,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f072-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        165,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f073-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        173,
+        408,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f073-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        165,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f074-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        174,
+        408,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f074-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f075-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        174,
+        408,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f075-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f076-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        199,
+        173,
+        408,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f076-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        167,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f077-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        199,
+        172,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f077-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f078-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        199,
+        172,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f078-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        166,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f079-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f079-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        166,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f080-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f080-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f081-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f081-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f082-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "jab-f082-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f000-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f000-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f001-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        172,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f001-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f002-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        199,
+        173,
+        409,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f002-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        169,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f003-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        174,
+        410,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f003-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        173,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f004-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        196,
+        176,
+        410,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f004-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        176,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f005-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        194,
+        178,
+        410,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f005-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        181,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f006-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        192,
+        180,
+        412,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f006-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        185,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f007-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        189,
+        183,
+        413,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f007-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        192,
+        504,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f008-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        186,
+        191,
+        423,
+        557
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f008-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        202,
+        498,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f009-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        197,
+        441,
+        564
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f009-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        211,
+        492,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f010-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        181,
+        197,
+        457,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f010-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        296,
+        213,
+        486,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f011-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        178,
+        205,
+        471,
+        565
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f011-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        223,
+        480,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f012-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        176,
+        205,
+        480,
+        562
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f012-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        274,
+        225,
+        477,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f013-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        174,
+        203,
+        488,
+        555
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f013-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        273,
+        228,
+        475,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f014-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        172,
+        215,
+        500,
+        562
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f014-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        272,
+        240,
+        469,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f015-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        170,
+        217,
+        507,
+        559
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f015-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        242,
+        467,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f016-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        169,
+        219,
+        513,
+        557
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f016-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        275,
+        245,
+        464,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f017-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        168,
+        216,
+        512,
+        553
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f017-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        271,
+        242,
+        470,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f018-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        168,
+        215,
+        503,
+        551
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f018-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        271,
+        242,
+        482,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f019-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        169,
+        220,
+        489,
+        558
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f019-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        271,
+        247,
+        498,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f020-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        170,
+        224,
+        458,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f020-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        281,
+        250,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f021-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        172,
+        224,
+        429,
+        564
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f021-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        250,
+        522,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f022-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        173,
+        221,
+        417,
+        560
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f022-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        274,
+        248,
+        544,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f023-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        174,
+        219,
+        416,
+        556
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f023-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        246,
+        562,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f024-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        175,
+        219,
+        416,
+        557
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f024-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        245,
+        578,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f025-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        177,
+        218,
+        414,
+        556
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f025-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        244,
+        590,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f026-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        179,
+        218,
+        414,
+        558
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f026-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        244,
+        594,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f027-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        182,
+        219,
+        413,
+        560
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f027-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        244,
+        592,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f028-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        183,
+        219,
+        412,
+        562
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f028-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        586,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f029-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f029-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f030-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f030-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f031-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f031-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f032-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f032-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f033-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f033-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f034-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f034-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f035-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f035-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f036-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f036-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f037-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f037-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f038-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f038-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f039-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f039-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f040-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f040-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f041-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f041-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f042-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f042-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f043-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f043-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f044-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        219,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f044-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f045-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        186,
+        219,
+        411,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f045-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        573,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f046-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        183,
+        219,
+        410,
+        561
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f046-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        245,
+        568,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f047-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        180,
+        220,
+        409,
+        561
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f047-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        246,
+        562,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f048-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        176,
+        220,
+        409,
+        560
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f048-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        246,
+        556,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f049-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        173,
+        220,
+        409,
+        561
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f049-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        247,
+        549,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f050-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        171,
+        221,
+        408,
+        561
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f050-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        247,
+        542,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f051-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        168,
+        221,
+        407,
+        561
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f051-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        247,
+        536,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f052-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        167,
+        221,
+        407,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f052-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        248,
+        529,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f053-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        165,
+        222,
+        407,
+        564
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f053-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        249,
+        523,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f054-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        165,
+        223,
+        406,
+        565
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f054-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        274,
+        250,
+        517,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f055-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        164,
+        224,
+        406,
+        567
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f055-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        278,
+        250,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f056-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        165,
+        224,
+        406,
+        568
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f056-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        250,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f057-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        167,
+        223,
+        406,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f057-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        275,
+        250,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f058-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        171,
+        220,
+        406,
+        558
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f058-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        246,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f059-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        175,
+        217,
+        406,
+        554
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f059-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        240,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f060-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        181,
+        213,
+        406,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f060-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        233,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f061-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        192,
+        215,
+        407,
+        550
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f061-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        231,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f062-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        192,
+        217,
+        407,
+        554
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f062-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        278,
+        229,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f063-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        192,
+        215,
+        407,
+        553
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f063-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        223,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f064-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        191,
+        214,
+        408,
+        551
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f064-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        277,
+        219,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f065-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        191,
+        210,
+        408,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f065-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        276,
+        211,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f066-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        191,
+        206,
+        409,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f066-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        279,
+        202,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f067-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        192,
+        207,
+        409,
+        550
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f067-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        279,
+        201,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f068-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        192,
+        205,
+        409,
+        551
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f068-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        196,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f069-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        193,
+        203,
+        409,
+        550
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f069-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        299,
+        193,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f070-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        193,
+        204,
+        409,
+        550
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f070-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        195,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f071-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        201,
+        409,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f071-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        191,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f072-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        196,
+        196,
+        409,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f072-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        186,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f073-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        194,
+        409,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f073-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        184,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f074-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        199,
+        193,
+        409,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f074-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        184,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f075-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        192,
+        409,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f075-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        183,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f076-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        189,
+        409,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f076-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        181,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f077-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        187,
+        409,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f077-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        179,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f078-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        183,
+        409,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f078-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        176,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f079-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        179,
+        409,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f079-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        172,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f080-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        174,
+        409,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f080-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        169,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f081-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        172,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f081-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f082-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        172,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "sweep-f082-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f000-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f000-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f001-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        172,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f001-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f002-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        199,
+        173,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f002-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        168,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f003-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        175,
+        409,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f003-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        170,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f004-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        177,
+        409,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f004-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        172,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f005-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        196,
+        180,
+        409,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f005-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        174,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f006-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        194,
+        182,
+        409,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f006-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        176,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f007-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        192,
+        187,
+        409,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f007-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        181,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f008-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        190,
+        194,
+        409,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f008-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        187,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f009-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        188,
+        198,
+        409,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f009-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        191,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f010-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        186,
+        199,
+        409,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f010-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        303,
+        191,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f011-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        205,
+        409,
+        550
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f011-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        197,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f012-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        182,
+        209,
+        409,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f012-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        281,
+        199,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f013-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        181,
+        212,
+        409,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f013-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        202,
+        516,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f014-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        180,
+        219,
+        409,
+        555
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f014-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        279,
+        210,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f015-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        178,
+        217,
+        409,
+        553
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f015-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        299,
+        206,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f016-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        178,
+        221,
+        409,
+        554
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f016-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        210,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f017-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        177,
+        220,
+        409,
+        551
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f017-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        278,
+        209,
+        515,
+        536
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f018-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        179,
+        217,
+        409,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f018-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        279,
+        206,
+        516,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f019-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        182,
+        213,
+        409,
+        551
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f019-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        202,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f020-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        186,
+        201,
+        408,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f020-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        296,
+        189,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f021-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        189,
+        194,
+        407,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f021-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        303,
+        181,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f022-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        193,
+        190,
+        407,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f022-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        177,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f023-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        196,
+        177,
+        407,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f023-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        173,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f024-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        151,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f024-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        168,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f025-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        126,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f025-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        158,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f026-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        102,
+        405,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f026-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        135,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f027-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        209,
+        83,
+        405,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f027-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        113,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f028-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        72,
+        405,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f028-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        100,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f029-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f029-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f030-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f030-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f031-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f031-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f032-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f032-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f033-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f033-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f034-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f034-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f035-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f035-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f036-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f036-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f037-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f037-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f038-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f038-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f039-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f039-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f040-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f040-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f041-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f041-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f042-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f042-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f043-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f043-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f044-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        68,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f044-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f045-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        69,
+        408,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f045-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        99,
+        504,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f046-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        71,
+        410,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f046-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        103,
+        504,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f047-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        73,
+        411,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f047-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        107,
+        503,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f048-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        76,
+        412,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f048-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        112,
+        503,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f049-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        80,
+        413,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f049-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        117,
+        503,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f050-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        82,
+        414,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f050-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        122,
+        503,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f051-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        85,
+        414,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f051-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        127,
+        502,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f052-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        92,
+        414,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f052-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        294,
+        131,
+        502,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f053-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        97,
+        415,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f053-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        296,
+        135,
+        502,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f054-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        102,
+        414,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f054-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        301,
+        138,
+        502,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f055-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        107,
+        415,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f055-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        308,
+        141,
+        501,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f056-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        113,
+        415,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f056-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        311,
+        145,
+        501,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f057-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        123,
+        414,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f057-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        301,
+        148,
+        502,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f058-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        135,
+        414,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f058-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        150,
+        503,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f059-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        144,
+        413,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f059-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        149,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f060-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        153,
+        412,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f060-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        295,
+        147,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f061-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        158,
+        410,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f061-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        151,
+        506,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f062-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        159,
+        409,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f062-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        299,
+        152,
+        504,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f063-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        210,
+        158,
+        407,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f063-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        315,
+        152,
+        504,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f064-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        209,
+        163,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f064-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        157,
+        506,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f065-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        208,
+        162,
+        405,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f065-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        157,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f066-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        208,
+        161,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f066-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        155,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f067-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        207,
+        165,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f067-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        159,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f068-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        165,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f068-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        303,
+        159,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f069-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        205,
+        166,
+        406,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f069-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        310,
+        160,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f070-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        171,
+        406,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f070-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        164,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f071-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        172,
+        406,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f071-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f072-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f072-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        163,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f073-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        172,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f073-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        165,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f074-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        175,
+        407,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f074-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f075-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        176,
+        407,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f075-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        168,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f076-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        176,
+        407,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f076-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        168,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f077-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        175,
+        408,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f077-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        168,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f078-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        174,
+        408,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f078-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        167,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f079-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        199,
+        173,
+        409,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f079-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        167,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f080-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        199,
+        172,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f080-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f081-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f081-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f082-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "uppercut-f082-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f000-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f000-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f001-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f001-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f002-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f002-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f003-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        171,
+        410,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f003-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        168,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f004-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        171,
+        410,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f004-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        169,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f005-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        209,
+        171,
+        410,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f005-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        170,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f006-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        170,
+        410,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f006-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        170,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f007-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        216,
+        172,
+        411,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f007-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        172,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f008-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        221,
+        175,
+        411,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f008-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        177,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f009-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        223,
+        176,
+        412,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f009-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        179,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f010-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        227,
+        174,
+        412,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f010-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        306,
+        177,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f011-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        229,
+        178,
+        412,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f011-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        181,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f012-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        233,
+        178,
+        413,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f012-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        182,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f013-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        238,
+        179,
+        413,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f013-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        182,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f014-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        242,
+        184,
+        413,
+        553
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f014-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        188,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f015-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        244,
+        181,
+        415,
+        551
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f015-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        305,
+        183,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f016-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        246,
+        182,
+        411,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f016-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        184,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f017-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        182,
+        407,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f017-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        181,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f018-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        181,
+        406,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f018-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        180,
+        518,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f019-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        189,
+        185,
+        405,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f019-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        185,
+        524,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f020-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        182,
+        183,
+        404,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f020-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        296,
+        181,
+        528,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f021-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        175,
+        182,
+        404,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f021-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        301,
+        179,
+        532,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f022-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        169,
+        184,
+        403,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f022-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        181,
+        536,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f023-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        165,
+        185,
+        403,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f023-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        538,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f024-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        161,
+        184,
+        402,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f024-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        181,
+        540,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f025-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        158,
+        184,
+        402,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f025-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        180,
+        542,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f026-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        156,
+        185,
+        402,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f026-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        181,
+        543,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f027-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        154,
+        185,
+        401,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f027-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        181,
+        544,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f028-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f028-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        181,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f029-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f029-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f030-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f030-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f031-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f031-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f032-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f032-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f033-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f033-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f034-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f034-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f035-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f035-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f036-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f036-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f037-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f037-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f038-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f038-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f039-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f039-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f040-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f040-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f041-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f041-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f042-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f042-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f043-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f043-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f044-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f044-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f045-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        187,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f045-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        182,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f046-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        153,
+        187,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f046-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        183,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f047-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        154,
+        188,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f047-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        184,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f048-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        156,
+        189,
+        401,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f048-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        185,
+        544,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f049-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        157,
+        190,
+        401,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f049-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        281,
+        186,
+        543,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f050-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        159,
+        191,
+        401,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f050-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        281,
+        187,
+        543,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f051-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        160,
+        192,
+        401,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f051-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        281,
+        188,
+        542,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f052-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        162,
+        193,
+        401,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f052-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        281,
+        189,
+        541,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f053-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        165,
+        193,
+        401,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f053-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        190,
+        540,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f054-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        167,
+        193,
+        402,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f054-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        190,
+        539,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f055-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        169,
+        193,
+        402,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f055-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        189,
+        538,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f056-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        171,
+        192,
+        402,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f056-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        296,
+        189,
+        536,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f057-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        176,
+        194,
+        402,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f057-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        191,
+        534,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f058-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        194,
+        402,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f058-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        193,
+        530,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f059-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        196,
+        190,
+        402,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f059-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        281,
+        189,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f060-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        208,
+        186,
+        402,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f060-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        185,
+        520,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f061-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        205,
+        187,
+        403,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f061-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        186,
+        518,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f062-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        185,
+        404,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f062-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        184,
+        516,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f063-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        183,
+        404,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f063-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        304,
+        181,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f064-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        187,
+        404,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f064-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        184,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f065-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        185,
+        404,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f065-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        181,
+        516,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f066-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        194,
+        183,
+        405,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f066-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        176,
+        518,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f067-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        192,
+        186,
+        405,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f067-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        178,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f068-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        192,
+        184,
+        405,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f068-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        298,
+        175,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f069-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        193,
+        182,
+        406,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f069-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        305,
+        174,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f070-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        193,
+        185,
+        406,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f070-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        176,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f071-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        194,
+        182,
+        406,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f071-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        174,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f072-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        179,
+        406,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f072-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        170,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f073-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        196,
+        178,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f073-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        169,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f074-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        178,
+        407,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f074-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        170,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f075-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        178,
+        407,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f075-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        169,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f076-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        177,
+        407,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f076-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        168,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f077-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        176,
+        407,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f077-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        168,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f078-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        199,
+        175,
+        407,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f078-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        167,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f079-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        199,
+        173,
+        408,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f079-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        167,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f080-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        199,
+        172,
+        409,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f080-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        167,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f081-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f081-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f082-foe.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        171,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "wave-f082-player.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    }
+  ]
+}

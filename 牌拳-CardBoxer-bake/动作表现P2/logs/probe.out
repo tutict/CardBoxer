@@ -1,0 +1,57 @@
+SCENE cap03-stance00 leg_peak 0.0
+SCENE cap03-jab01 leg_peak 3.0
+SCENE cap03-sweep07 leg_peak 3.0
+SCENE cap03-hit_heavy01 leg_peak 3.0
+SCENE cap06-stance00 leg_peak 0.0
+SCENE cap06-jab01 leg_peak 6.0
+SCENE cap06-sweep07 leg_peak 6.0
+SCENE cap06-hit_heavy01 leg_peak 6.0
+SCENE cap09-stance00 leg_peak 0.0
+SCENE cap09-jab01 leg_peak 9.0
+SCENE cap09-sweep07 leg_peak 9.0
+SCENE cap09-hit_heavy01 leg_peak 9.0
+SCENE cap12-stance00 leg_peak 0.0
+SCENE cap12-jab01 leg_peak 12.0
+SCENE cap12-sweep07 leg_peak 12.0
+SCENE cap12-hit_heavy01 leg_peak 12.0
+LEG_MEAN {'3': 2.25, '6': 4.5, '9': 6.75, '12': 9.0}
+DIFF cap06-stance00_player 0
+DIFF cap06-stance00_foe 0
+DIFF cap06-jab01_player 17198
+DIFF cap06-jab01_foe 14774
+DIFF cap06-sweep07_player 17080
+DIFF cap06-sweep07_foe 19391
+DIFF cap06-hit_heavy01_player 20055
+DIFF cap06-hit_heavy01_foe 19825
+DIFF cap09-stance00_player 0
+DIFF cap09-stance00_foe 0
+DIFF cap09-jab01_player 22468
+DIFF cap09-jab01_foe 17206
+DIFF cap09-sweep07_player 22028
+DIFF cap09-sweep07_foe 24139
+DIFF cap09-hit_heavy01_player 24732
+DIFF cap09-hit_heavy01_foe 21365
+DIFF cap12-stance00_player 0
+DIFF cap12-stance00_foe 0
+DIFF cap12-jab01_player 26397
+DIFF cap12-jab01_foe 18604
+DIFF cap12-sweep07_player 25621
+DIFF cap12-sweep07_foe 26720
+DIFF cap12-hit_heavy01_player 29362
+DIFF cap12-hit_heavy01_foe 24140
+CHECK main_marker_parsed True
+CHECK main_no_script_errors True
+CHECK main_no_scenario_errors True
+CHECK use_3d_and_15_cards True
+CHECK hp_unchanged True
+CHECK delta_matches_python_formula True
+CHECK leg_delta_never_exceeds_cap True
+CHECK leg_amplitude_monotonic_in_cap True
+CHECK cap09_changes_pixels True
+CHECK cap12_changes_pixels True
+CHECK stance_unchanged_by_cap True
+CHECK all_sv_pngs_nonempty True
+CHECK default_zero_pollution True
+CHECK default_no_script_errors True
+CHECK default_two_pngs True
+AMPLITUDE_P2_PROBE_OK

@@ -1,0 +1,72 @@
+{
+  "verdict": "BATTLE_MOTION_SPEC_VERIFIED",
+  "passed": 13,
+  "total": 13,
+  "checks": [
+    {
+      "name": "spec_structure_complete",
+      "ok": true,
+      "detail": "missing=[]"
+    },
+    {
+      "name": "constants_match_arena_source",
+      "ok": true,
+      "detail": "source={'tk_max_turns': 3, 'tk_play': 3, 'tk_discard_max': 3, 'reveal_seconds': 1.5, 'resolve_seconds': 1.9} FRAME_ok=True"
+    },
+    {
+      "name": "frame_math_consistent",
+      "ok": true,
+      "detail": "reveal=90帧 resolve=114帧 合计=204帧"
+    },
+    {
+      "name": "phases_all_covered",
+      "ok": true,
+      "detail": "phases=['discard', 'resolve', 'reveal', 'select'] missing=[]"
+    },
+    {
+      "name": "outcomes_all_covered",
+      "ok": true,
+      "detail": "outcomes=['ko', 'round_draw', 'round_enemy_win', 'round_player_win', 'three_turns_end']"
+    },
+    {
+      "name": "reuse_assets_exist",
+      "ok": true,
+      "detail": "reuse=7 bad=[]"
+    },
+    {
+      "name": "new_assets_declared_and_blocker_honest",
+      "ok": true,
+      "detail": "refs=10 declared=10 undeclared=[]"
+    },
+    {
+      "name": "timeline_within_phase",
+      "ok": true,
+      "detail": "timed=10 waiting=2 bad=[]"
+    },
+    {
+      "name": "timeline_fully_covers_phases",
+      "ok": true,
+      "detail": "cover={'reveal': 1.5, 'resolve': 1.9} stats_pct=100.0"
+    },
+    {
+      "name": "winner_attack_only_in_resolve",
+      "ok": true,
+      "detail": "winner_events=1 phases=['resolve'] g2=True"
+    },
+    {
+      "name": "card_type_binding_and_damage_tiers_match_rules",
+      "ok": true,
+      "detail": "recomputed={'triple': (15, 23), 'sequence': (12, 18), 'scatter': (6, 13)} combos=165 bind_ok=True draw_ok=True"
+    },
+    {
+      "name": "game_sources_untouched",
+      "ok": true,
+      "detail": "files=7 mismatch=[] engine_files=[]"
+    },
+    {
+      "name": "timeline_render_valid",
+      "ok": true,
+      "detail": "size=(1800, 1000) bytes=168142 colors=1351 pct=100.0"
+    }
+  ]
+}

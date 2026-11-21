@@ -1,0 +1,357 @@
+{
+  "cases": {
+    "cap03_hard_g100": {
+      "id": "cap03_hard_g100",
+      "leg_cap_deg": 3.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.0,
+      "purpose": "baseline",
+      "arm_gain_deg": {
+        "f_upper": 32.0,
+        "f_fore": 26.0,
+        "b_upper": 28.0,
+        "b_fore": 22.0
+      }
+    },
+    "cap06_hard_g100": {
+      "id": "cap06_hard_g100",
+      "leg_cap_deg": 6.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.0,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 32.0,
+        "f_fore": 26.0,
+        "b_upper": 28.0,
+        "b_fore": 22.0
+      }
+    },
+    "cap09_hard_g100": {
+      "id": "cap09_hard_g100",
+      "leg_cap_deg": 9.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.0,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 32.0,
+        "f_fore": 26.0,
+        "b_upper": 28.0,
+        "b_fore": 22.0
+      }
+    },
+    "cap12_hard_g100": {
+      "id": "cap12_hard_g100",
+      "leg_cap_deg": 12.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.0,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 32.0,
+        "f_fore": 26.0,
+        "b_upper": 28.0,
+        "b_fore": 22.0
+      }
+    },
+    "cap09_hard_g125": {
+      "id": "cap09_hard_g125",
+      "leg_cap_deg": 9.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.25,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 40.0,
+        "f_fore": 32.5,
+        "b_upper": 35.0,
+        "b_fore": 27.5
+      }
+    },
+    "cap09_hard_g150": {
+      "id": "cap09_hard_g150",
+      "leg_cap_deg": 9.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.5,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 48.0,
+        "f_fore": 39.0,
+        "b_upper": 42.0,
+        "b_fore": 33.0
+      }
+    },
+    "cap12_hard_g125": {
+      "id": "cap12_hard_g125",
+      "leg_cap_deg": 12.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.25,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 40.0,
+        "f_fore": 32.5,
+        "b_upper": 35.0,
+        "b_fore": 27.5
+      }
+    },
+    "cap09_soft_g125": {
+      "id": "cap09_soft_g125",
+      "leg_cap_deg": 9.0,
+      "leg_mode": "soft",
+      "arm_gain_multiplier": 1.25,
+      "purpose": "research",
+      "arm_gain_deg": {
+        "f_upper": 40.0,
+        "f_fore": 32.5,
+        "b_upper": 35.0,
+        "b_fore": 27.5
+      }
+    },
+    "cap09_soft_g150": {
+      "id": "cap09_soft_g150",
+      "leg_cap_deg": 9.0,
+      "leg_mode": "soft",
+      "arm_gain_multiplier": 1.5,
+      "purpose": "research",
+      "arm_gain_deg": {
+        "f_upper": 48.0,
+        "f_fore": 39.0,
+        "b_upper": 42.0,
+        "b_fore": 33.0
+      }
+    },
+    "cap12_soft_g150": {
+      "id": "cap12_soft_g150",
+      "leg_cap_deg": 12.0,
+      "leg_mode": "soft",
+      "arm_gain_multiplier": 1.5,
+      "purpose": "research",
+      "arm_gain_deg": {
+        "f_upper": 48.0,
+        "f_fore": 39.0,
+        "b_upper": 42.0,
+        "b_fore": 33.0
+      }
+    }
+  },
+  "per_case": {
+    "cap03_hard_g100": {
+      "rows": 26,
+      "worst_p999_m": 0.040791,
+      "mean_p999_m": 0.021132,
+      "worst_max_edge_m": 0.367047,
+      "worst_edges_gt_5cm": 44,
+      "total_edges_gt_5cm": 951,
+      "worst_displacement_m": 0.583787,
+      "leg_peak_mean_deg": 3.0,
+      "leg_peak_max_deg": 3.0,
+      "arm_peak_mean_deg": 11.6026,
+      "arm_peak_max_deg": 28.0,
+      "max_pose_err": 2.38e-07,
+      "leg_amplitude_gain": 1.0,
+      "p999_over_baseline": 1.0,
+      "tear_within_external_anchor": true,
+      "measurement_valid": true
+    },
+    "cap06_hard_g100": {
+      "rows": 26,
+      "worst_p999_m": 0.042073,
+      "mean_p999_m": 0.023351,
+      "worst_max_edge_m": 0.367047,
+      "worst_edges_gt_5cm": 53,
+      "total_edges_gt_5cm": 978,
+      "worst_displacement_m": 0.583787,
+      "leg_peak_mean_deg": 6.0,
+      "leg_peak_max_deg": 6.0,
+      "arm_peak_mean_deg": 11.6026,
+      "arm_peak_max_deg": 28.0,
+      "max_pose_err": 2.98e-07,
+      "leg_amplitude_gain": 2.0,
+      "p999_over_baseline": 1.0314,
+      "tear_within_external_anchor": true,
+      "measurement_valid": true
+    },
+    "cap09_hard_g100": {
+      "rows": 26,
+      "worst_p999_m": 0.043694,
+      "mean_p999_m": 0.025786,
+      "worst_max_edge_m": 0.367047,
+      "worst_edges_gt_5cm": 71,
+      "total_edges_gt_5cm": 1014,
+      "worst_displacement_m": 0.583787,
+      "leg_peak_mean_deg": 9.0,
+      "leg_peak_max_deg": 9.0,
+      "arm_peak_mean_deg": 11.6026,
+      "arm_peak_max_deg": 28.0,
+      "max_pose_err": 3.58e-07,
+      "leg_amplitude_gain": 3.0,
+      "p999_over_baseline": 1.0712,
+      "tear_within_external_anchor": true,
+      "measurement_valid": true
+    },
+    "cap12_hard_g100": {
+      "rows": 26,
+      "worst_p999_m": 0.044522,
+      "mean_p999_m": 0.028555,
+      "worst_max_edge_m": 0.367047,
+      "worst_edges_gt_5cm": 83,
+      "total_edges_gt_5cm": 1064,
+      "worst_displacement_m": 0.583787,
+      "leg_peak_mean_deg": 11.7674,
+      "leg_peak_max_deg": 12.0,
+      "arm_peak_mean_deg": 11.6026,
+      "arm_peak_max_deg": 28.0,
+      "max_pose_err": 4.17e-07,
+      "leg_amplitude_gain": 3.9225,
+      "p999_over_baseline": 1.0915,
+      "tear_within_external_anchor": true,
+      "measurement_valid": true
+    },
+    "cap09_hard_g125": {
+      "rows": 26,
+      "worst_p999_m": 0.054293,
+      "mean_p999_m": 0.029664,
+      "worst_max_edge_m": 0.367047,
+      "worst_edges_gt_5cm": 214,
+      "total_edges_gt_5cm": 1449,
+      "worst_displacement_m": 0.706363,
+      "leg_peak_mean_deg": 9.0,
+      "leg_peak_max_deg": 9.0,
+      "arm_peak_mean_deg": 14.5033,
+      "arm_peak_max_deg": 35.0,
+      "max_pose_err": 3.58e-07,
+      "leg_amplitude_gain": 3.0,
+      "p999_over_baseline": 1.331,
+      "tear_within_external_anchor": true,
+      "measurement_valid": true
+    },
+    "cap09_hard_g150": {
+      "rows": 26,
+      "worst_p999_m": 0.064582,
+      "mean_p999_m": 0.033686,
+      "worst_max_edge_m": 0.367047,
+      "worst_edges_gt_5cm": 289,
+      "total_edges_gt_5cm": 2167,
+      "worst_displacement_m": 0.824135,
+      "leg_peak_mean_deg": 9.0,
+      "leg_peak_max_deg": 9.0,
+      "arm_peak_mean_deg": 17.4039,
+      "arm_peak_max_deg": 42.0,
+      "max_pose_err": 3.58e-07,
+      "leg_amplitude_gain": 3.0,
+      "p999_over_baseline": 1.5832,
+      "tear_within_external_anchor": true,
+      "measurement_valid": true
+    },
+    "cap12_hard_g125": {
+      "rows": 26,
+      "worst_p999_m": 0.055423,
+      "mean_p999_m": 0.0322,
+      "worst_max_edge_m": 0.367047,
+      "worst_edges_gt_5cm": 221,
+      "total_edges_gt_5cm": 1520,
+      "worst_displacement_m": 0.706363,
+      "leg_peak_mean_deg": 11.7674,
+      "leg_peak_max_deg": 12.0,
+      "arm_peak_mean_deg": 14.5033,
+      "arm_peak_max_deg": 35.0,
+      "max_pose_err": 4.17e-07,
+      "leg_amplitude_gain": 3.9225,
+      "p999_over_baseline": 1.3587,
+      "tear_within_external_anchor": true,
+      "measurement_valid": true
+    },
+    "cap09_soft_g125": {
+      "rows": 26,
+      "worst_p999_m": 0.053426,
+      "mean_p999_m": 0.029019,
+      "worst_max_edge_m": 0.367047,
+      "worst_edges_gt_5cm": 209,
+      "total_edges_gt_5cm": 1413,
+      "worst_displacement_m": 0.706363,
+      "leg_peak_mean_deg": 8.6348,
+      "leg_peak_max_deg": 9.0,
+      "arm_peak_mean_deg": 14.5033,
+      "arm_peak_max_deg": 35.0,
+      "max_pose_err": 3.58e-07,
+      "leg_amplitude_gain": 2.8783,
+      "p999_over_baseline": 1.3097,
+      "tear_within_external_anchor": true,
+      "measurement_valid": true
+    },
+    "cap09_soft_g150": {
+      "rows": 26,
+      "worst_p999_m": 0.063677,
+      "mean_p999_m": 0.033105,
+      "worst_max_edge_m": 0.367047,
+      "worst_edges_gt_5cm": 286,
+      "total_edges_gt_5cm": 2151,
+      "worst_displacement_m": 0.824135,
+      "leg_peak_mean_deg": 8.6348,
+      "leg_peak_max_deg": 9.0,
+      "arm_peak_mean_deg": 17.4039,
+      "arm_peak_max_deg": 42.0,
+      "max_pose_err": 3.58e-07,
+      "leg_amplitude_gain": 2.8783,
+      "p999_over_baseline": 1.5611,
+      "tear_within_external_anchor": true,
+      "measurement_valid": true
+    },
+    "cap12_soft_g150": {
+      "rows": 26,
+      "worst_p999_m": 0.064519,
+      "mean_p999_m": 0.034699,
+      "worst_max_edge_m": 0.367047,
+      "worst_edges_gt_5cm": 289,
+      "total_edges_gt_5cm": 2215,
+      "worst_displacement_m": 0.824135,
+      "leg_peak_mean_deg": 10.98,
+      "leg_peak_max_deg": 12.0,
+      "arm_peak_mean_deg": 17.4039,
+      "arm_peak_max_deg": 42.0,
+      "max_pose_err": 4.77e-07,
+      "leg_amplitude_gain": 3.66,
+      "p999_over_baseline": 1.5817,
+      "tear_within_external_anchor": true,
+      "measurement_valid": true
+    }
+  },
+  "verdict": {
+    "primary_amplitude_metric": "leg_peak_mean_deg / arm_peak_mean_deg",
+    "primary_tear_metric": "p999_edge_tear_m on evaluated player-rigged.glb",
+    "external_anchors": {
+      "p999_limit_m": 0.09365,
+      "rigid_baseline_p999_m_for_reference_only": 0.28048,
+      "historical_worst_over_rigid": 0.3339
+    },
+    "baseline_case": "cap03_hard_g100",
+    "cases_passing_tear_gate": [
+      "cap03_hard_g100",
+      "cap06_hard_g100",
+      "cap09_hard_g100",
+      "cap09_hard_g125",
+      "cap09_hard_g150",
+      "cap12_hard_g100",
+      "cap12_hard_g125"
+    ],
+    "max_edge_diagnostic_only": {
+      "value_m": 0.367047,
+      "constant_across_all_cases": true,
+      "reason": "单条最大边与增益无关、连线上基线也相同，判为既有单边伪影（根位移主导）；只作诊断，不作放行判据。"
+    },
+    "note": "达标只说明撕裂不是瓶颈；腿部姿态是否可读、是否出现「被削平的平台期」，必须靠引擎内 A/B 截帧看图决定。"
+  },
+  "checks": {
+    "all_poses_evaluated": true,
+    "all_ten_cases_present": true,
+    "all_cases_have_26_rows": true,
+    "edges_match_glb": true,
+    "vertices_match_glb": true,
+    "no_missing_bones": true,
+    "pose_matrices_readback_accurate": true,
+    "max_edge_artifact_is_preexisting": true,
+    "shipped_baseline_within_anchor": true,
+    "baseline_is_current_shipped_mapping": true,
+    "higher_leg_cap_raises_leg_amplitude": true,
+    "monotonic_leg_gain": true,
+    "at_least_one_candidate_passes": true
+  },
+  "ok": true
+}

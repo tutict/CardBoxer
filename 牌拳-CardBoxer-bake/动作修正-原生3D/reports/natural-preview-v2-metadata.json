@@ -1,0 +1,92 @@
+{
+  "source_sha256": {
+    "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+    "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+    "data/combat_motion_3d.json": "083c84e3e24bdb4bea6d3e4b92855322caea97d675cae19a06df36acefd5a703",
+    "scripts/battle_presentation.gd": "2e8edb3f07ebdb99a78c4c1906b2570185b129e4b9af20d590d28ade81243171",
+    "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+    "scripts/native_motion.gd": "cbc9a3eee51c4d5e55f46365ef636c87bd3b0fd48f21d1a5f964d4a26164515f"
+  },
+  "capture_images": 3004,
+  "timeline_images": 830,
+  "source_frames": 415,
+  "crop_constant_all_frames": [
+    114,
+    44,
+    624,
+    592
+  ],
+  "tile_size": [
+    440,
+    473
+  ],
+  "normal": {
+    "frames": 335,
+    "size": [
+      880,
+      547
+    ],
+    "duration_ms": 6920,
+    "loop": 0,
+    "frame_durations_ms": [
+      10,
+      20,
+      30,
+      40,
+      260,
+      270
+    ]
+  },
+  "slow": {
+    "frames": 335,
+    "size": [
+      880,
+      547
+    ],
+    "duration_ms": 20750,
+    "loop": 0,
+    "frame_durations_ms": [
+      50,
+      100,
+      800
+    ]
+  },
+  "historical_v1": {
+    "frames": 152,
+    "duration_ms": 7600,
+    "size": [
+      720,
+      360
+    ]
+  },
+  "limitations": "Isolated simultaneous actor previews sampled by production Presentation.advance/sample. Local boot gait is shown; viewport framing omits canvas translation. Actual translated gameplay is covered separately by live scenarios and root normal match.",
+  "live_scenarios": [
+    {
+      "scenario": "foe-card-sweep",
+      "role_images": 300,
+      "clipped_or_empty": [],
+      "full_scene_images": 25,
+      "source_motion_sha256": "083c84e3e24bdb4bea6d3e4b92855322caea97d675cae19a06df36acefd5a703",
+      "config_distance_px": 85,
+      "hits": 0
+    },
+    {
+      "scenario": "player-card-cross",
+      "role_images": 300,
+      "clipped_or_empty": [],
+      "full_scene_images": 25,
+      "source_motion_sha256": "083c84e3e24bdb4bea6d3e4b92855322caea97d675cae19a06df36acefd5a703",
+      "config_distance_px": 85,
+      "hits": 1
+    },
+    {
+      "scenario": "taikou-player",
+      "role_images": 340,
+      "clipped_or_empty": [],
+      "full_scene_images": 29,
+      "source_motion_sha256": "083c84e3e24bdb4bea6d3e4b92855322caea97d675cae19a06df36acefd5a703",
+      "config_distance_px": 85,
+      "hits": 1
+    }
+  ]
+}

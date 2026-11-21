@@ -1,0 +1,31 @@
+00:00.562  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\对手怪-可变形连续壳.blend"
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\H路线-双方3D侧面战斗\probe_blends_h.py:42: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if mat and mat.use_nodes:
+00:01.781  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\玩家V4b-可变形连续壳.blend"
+BLEND foe 对手怪-可变形连续壳.blend 88dca6d28aa3 objects= 6
+  MESH node_0 64024 verts groups= 13 weighted= 64024 mods= ['SURFACE_DEFORM'] uv= 1 tex= 3
+  MESH a_continuous_shell 20204 verts groups= 13 weighted= 20196 mods= ['ARMATURE'] uv= 1 tex= 3
+  RIG a_apose_rig 13 bones ['hips', 'spine', 'chest', 'neck'] ...
+BLEND player 玩家V4b-可变形连续壳.blend daf02b5ebc62 objects= 6
+  MESH node_0 57901 verts groups= 0 weighted= 0 mods= ['SURFACE_DEFORM'] uv= 1 tex= 3
+  MESH e_continuous_shell 14070 verts groups= 13 weighted= 14062 mods= ['ARMATURE'] uv= 1 tex= 3
+  RIG e_apose_rig 13 bones ['hips', 'spine', 'chest', 'neck'] ...
+CHECK bone_names_identical True
+CHECK bone_count_13 True
+CHECK rig_transform_identical True
+CHECK foe_has_surfdeform True
+CHECK foe_has_armature_shell True
+CHECK player_has_surfdeform True
+CHECK foe_one_uv True
+CHECK foe_three_textures True
+CHECK foe_4096_pbr True
+CHECK foe_textures_packed True
+CHECK player_one_uv True
+CHECK player_three_textures True
+CHECK player_4096_pbr True
+CHECK player_textures_packed True
+FACT rest_matrix_identical False
+FACT max_bone_head_delta_m 0.209636
+FACT consequence foe needs its own apose_points; see make_foe_motion_h.py
+BLEND_PROBE_OK
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

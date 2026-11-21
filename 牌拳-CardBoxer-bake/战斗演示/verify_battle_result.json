@@ -1,0 +1,87 @@
+{
+  "checks": [
+    {
+      "name": "B01_card_type_binding",
+      "ok": true,
+      "detail": "rounds=3 spec_violations=[]"
+    },
+    {
+      "name": "B02_hp_rage_track_recomputed",
+      "ok": true,
+      "detail": "recomputed={'after_round': 3, 'player': 86, 'foe': 81, 'rage_player': 34, 'rage_foe': 68} recorded={'after_round': 3, 'player': 86, 'foe': 81, 'rage_player': 34, 'rage_foe': 68}"
+    },
+    {
+      "name": "B03_outcome_derived",
+      "ok": true,
+      "detail": "derived=player declared=player hp=86:81"
+    },
+    {
+      "name": "B04_gif_hashes",
+      "ok": true,
+      "detail": "modes=['puppet', 'c3d'] bad=[]"
+    },
+    {
+      "name": "B05_duration_conservation",
+      "ok": true,
+      "detail": "total_frames=140 frame_ms=80 bad=[]"
+    },
+    {
+      "name": "B06_frame_ms_10ms_multiple",
+      "ok": true,
+      "detail": "frame_ms=80 fps=12.5"
+    },
+    {
+      "name": "B07_gif_frames_readable",
+      "ok": true,
+      "detail": "canvas=880x500 bad=[]"
+    },
+    {
+      "name": "B08_keyframes_complete",
+      "ok": true,
+      "detail": "expected=12 per mode bad=[]"
+    },
+    {
+      "name": "B09_foe_differs_between_versions",
+      "ok": true,
+      "detail": "frame=69 foe_diff_px=7826 threshold>3000"
+    },
+    {
+      "name": "B10_player_identical_between_versions",
+      "ok": true,
+      "detail": "frame=69 player_diff_px=0 threshold<200"
+    },
+    {
+      "name": "B11_boards_nonempty",
+      "ok": true,
+      "detail": "boards=2 bad=[]"
+    },
+    {
+      "name": "B12_source_wiring",
+      "ok": true,
+      "detail": "needles=8 missing=[]"
+    },
+    {
+      "name": "B13_source_fingerprints",
+      "ok": true,
+      "detail": "spec/table/script all_match=True"
+    },
+    {
+      "name": "B14_not_claimed_is_explicit",
+      "ok": true,
+      "detail": "compare='type_rank: triple=3 / sequence=2 / scatter=1; ti'"
+    },
+    {
+      "name": "B15_game_sources_untouched",
+      "ok": true,
+      "detail": "files=7 changed=[]"
+    }
+  ],
+  "passed": 15,
+  "total": 15,
+  "verified": true,
+  "diagnostics": {
+    "foe_diff_px": 7826,
+    "player_diff_px": 0,
+    "compared_frame": 69
+  }
+}

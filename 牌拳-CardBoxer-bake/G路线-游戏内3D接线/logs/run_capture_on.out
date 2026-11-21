@@ -1,0 +1,15 @@
+t000: rc=0 shots=1 gl=True errors=0 marker=['[RHYTHM_SHOT] mode=t000 t=0.0 p_shift=0.0 e_shift=40.0 p_tilt=0.0 e_tilt=0.15707963267949 hit=false hp=100/77']
+  saved 节奏帧-t000-起手.png (1073845 B)
+t048: rc=0 shots=1 gl=True errors=0 marker=['[RHYTHM_SHOT] mode=t048 t=0.48 p_shift=102.142860412598 e_shift=9.43987655639648 p_tilt=0.0 e_tilt=0.0628318530718 hit=true hp=100/77']
+  saved 节奏帧-t048-命中HIT.png (1069616 B)
+t112: rc=0 shots=1 gl=True errors=0 marker=['[RHYTHM_SHOT] mode=t112 t=1.12 p_shift=0.0 e_shift=0.30215129256248 p_tilt=0.0 e_tilt=0.0 hit=true hp=100/77']
+  saved 节奏帧-t112-攻击窗末.png (1092733 B)
+t140: rc=0 shots=1 gl=True errors=0 marker=['[RHYTHM_SHOT] mode=t140 t=1.36 p_shift=0.0 e_shift=1.61216390132904 p_tilt=0.0 e_tilt=0.0 hit=true hp=100/77']
+  saved 节奏帧-t140-淡出.png (1075708 B)
+draw: rc=0 shots=1 gl=True errors=0 marker=['[RHYTHM_SHOT] mode=draw t=-1.0 p_shift=0.0 e_shift=0.0 p_tilt=0.0 e_tilt=0.0 hit=false hp=97/97']
+  saved 节奏帧-平局无节奏.png (1058784 B)
+foewin: rc=0 shots=1 gl=True errors=0 marker=['[RHYTHM_SHOT] mode=foewin t=0.48 p_shift=-12.2744083404541 e_shift=-102.142860412598 p_tilt=-0.0628318530718 e_tilt=0.0 hit=true hp=77/100']
+  saved 节奏帧-对手赢反向.png (1076699 B)
+RESTORE OK sha256=a0964e2ec6431e0b92980f0e3dc578c8aa5b24010e3d9038c9b1c70b05c1d09e
+RESULT: OK t000 | OK t048 | OK t112 | OK t140 | OK draw | OK foewin | OK RESTORE
+GROUP on rc=0 restore=True pngs=6

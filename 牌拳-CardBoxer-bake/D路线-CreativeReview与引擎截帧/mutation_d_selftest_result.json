@@ -1,0 +1,164 @@
+{
+  "selftest": true,
+  "total": 12,
+  "caught": 11,
+  "did_not_run": 1,
+  "missed": 0,
+  "write_failed": 0,
+  "restore": {
+    "godot_render_result.json": true,
+    "shots/godot-front.png": true,
+    "shots/godot-back.png": true,
+    "scale_metrics.json": true,
+    "boards/D-侧视退化诊断.png": true,
+    "review_conclusion.json": true,
+    "make_review_boards.py": true,
+    "board_stats.json": true,
+    "probe_project_d/assets/foe-full.glb": true,
+    "run_godot_render.py": true,
+    "measure_scale.py": true
+  },
+  "restore_all_ok": true,
+  "clean_rerun": {
+    "passed": 18,
+    "total": 18,
+    "green": true
+  },
+  "all_proven": false,
+  "selftest_assertion_ok": true,
+  "rows": [
+    {
+      "id": "M1",
+      "status": "DID NOT RUN",
+      "red": [],
+      "expected": [
+        "D-01_baseline_inputs_intact"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M2",
+      "status": "CAUGHT",
+      "red": [
+        "D-03_render_channel_windowed_opengl"
+      ],
+      "expected": [
+        "D-03_render_channel_windowed_opengl"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M3",
+      "status": "CAUGHT",
+      "red": [
+        "D-05_frames_nonblank_and_textured",
+        "D-09_pbr_materials_visible",
+        "D-11_scale_loss_monotonic"
+      ],
+      "expected": [
+        "D-05_frames_nonblank_and_textured"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M4",
+      "status": "CAUGHT",
+      "red": [
+        "D-06_views_are_distinct",
+        "D-14_side_view_evidence_triplet"
+      ],
+      "expected": [
+        "D-06_views_are_distinct"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M5",
+      "status": "CAUGHT",
+      "red": [
+        "D-11_scale_loss_monotonic"
+      ],
+      "expected": [
+        "D-11_scale_loss_monotonic"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M6",
+      "status": "CAUGHT",
+      "red": [
+        "D-12_four_boards_nonblank"
+      ],
+      "expected": [
+        "D-12_four_boards_nonblank"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M7",
+      "status": "CAUGHT",
+      "red": [
+        "D-13_review_conclusion_recomputable"
+      ],
+      "expected": [
+        "D-13_review_conclusion_recomputable"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M8",
+      "status": "CAUGHT",
+      "red": [
+        "D-16_source_wiring"
+      ],
+      "expected": [
+        "D-16_source_wiring"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M9",
+      "status": "CAUGHT",
+      "red": [
+        "D-10_game_scale_from_baked2"
+      ],
+      "expected": [
+        "D-10_game_scale_from_baked2"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M10",
+      "status": "CAUGHT",
+      "red": [
+        "D-15_isolation_and_clean_logs"
+      ],
+      "expected": [
+        "D-15_isolation_and_clean_logs"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M11",
+      "status": "CAUGHT",
+      "red": [
+        "D-07_capture_wiring_no_headless"
+      ],
+      "expected": [
+        "D-07_capture_wiring_no_headless"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M12",
+      "status": "CAUGHT",
+      "red": [
+        "D-16_source_wiring"
+      ],
+      "expected": [
+        "D-16_source_wiring"
+      ],
+      "restored": true
+    }
+  ]
+}

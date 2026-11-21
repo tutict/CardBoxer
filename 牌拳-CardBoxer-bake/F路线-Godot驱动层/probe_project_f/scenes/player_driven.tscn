@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/player-rigged.glb" id="1_glb"]
+[ext_resource type="Script" path="res://scenes/player_driven.gd" id="2_drive"]
+
+[node name="PlayerDriven" type="Node3D"]
+script = ExtResource("2_drive")
+
+[node name="Player" parent="." instance=ExtResource("1_glb")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12, 3.55)
+fov = 33.0
+near = 0.05
+far = 100.0
+current = true
+
+[node name="Key" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-38, -32, 0)
+light_color = Color(1, 0.96, 0.9, 1)
+light_energy = 1.9
+shadow_enabled = true
+
+[node name="Fill" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-20, 145, 0)
+light_color = Color(0.68, 0.79, 1, 1)
+light_energy = 0.75
+
+[node name="Warm" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-12, 75, 0)
+light_color = Color(1, 0.85, 0.7, 1)
+light_energy = 0.55
+
+[node name="Rim" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-25, 200, 0)
+light_color = Color(0.76, 0.85, 1, 1)
+light_energy = 0.95
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.012, 0)

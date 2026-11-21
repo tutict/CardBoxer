@@ -1,0 +1,912 @@
+{
+  "cases": 39,
+  "caught": 39,
+  "dnr": 0,
+  "missed": 0,
+  "restored": 39,
+  "files_restored": {
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input_foe.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\scripts\\rig_driver.gd": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\apply_p3.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\baseline_p3.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\plateau_diagnosis.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\plateau_tear.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\p3_probe.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\p3_boards.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\all_checks_p3.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\history_gates_p3.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\full_tear_blender.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\plateau_plan.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\tests\\p3_plateau_probe.gd": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\shots\\p3\\p3-shipped-stance00-sv-player.png": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\boards\\P3-时间线方波.png": true
+  },
+  "clean_green": true,
+  "clean_verify": 80,
+  "clean_verify_total": 80,
+  "selftest_dnr": false,
+  "rows": [
+    {
+      "name": "M01_player_mode_to_hard",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "player_mapping_atan_12"
+      ],
+      "expect_hit": [
+        "player_mapping_atan_12"
+      ],
+      "failed": [
+        "player_mapping_atan_12",
+        "two_mappings_identical"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 78/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M02_foe_mode_to_hard",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input_foe.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "foe_mapping_atan_12"
+      ],
+      "expect_hit": [
+        "foe_mapping_atan_12"
+      ],
+      "failed": [
+        "foe_mapping_atan_12",
+        "two_mappings_identical"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 78/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M03_player_cap_back_to_9",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "player_mapping_atan_12"
+      ],
+      "expect_hit": [
+        "player_mapping_atan_12"
+      ],
+      "failed": [
+        "player_mapping_atan_12",
+        "two_mappings_identical",
+        "only_two_diff_paths_player"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 77/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M04_foe_cap_back_to_9",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input_foe.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "foe_mapping_atan_12"
+      ],
+      "expect_hit": [
+        "foe_mapping_atan_12"
+      ],
+      "failed": [
+        "foe_mapping_atan_12",
+        "two_mappings_identical",
+        "only_two_diff_paths_foe"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 77/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M05_helper_signature_renamed",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\scripts\\rig_driver.gd",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "rig_driver_helper_signature"
+      ],
+      "expect_hit": [
+        "rig_driver_helper_signature"
+      ],
+      "failed": [
+        "rig_driver_helper_signature"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M06_atan_constant_changed",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\scripts\\rig_driver.gd",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "atan_formula_constant_pinned"
+      ],
+      "expect_hit": [
+        "atan_formula_constant_pinned"
+      ],
+      "failed": [
+        "atan_formula_constant_pinned"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M07_hard_fallback_removed",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\scripts\\rig_driver.gd",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "legacy_fallback_clampf_present"
+      ],
+      "expect_hit": [
+        "legacy_fallback_clampf_present"
+      ],
+      "failed": [
+        "legacy_fallback_clampf_present"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M08_legacy_default_flipped",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\scripts\\rig_driver.gd",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "legacy_default_is_hard"
+      ],
+      "expect_hit": [
+        "legacy_default_is_hard"
+      ],
+      "failed": [
+        "legacy_default_is_hard"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M09_one_leg_bone_skips_helper",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\scripts\\rig_driver.gd",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "all_four_leg_bones_use_helper",
+        "no_inline_hard_clamp_left"
+      ],
+      "expect_hit": [
+        "all_four_leg_bones_use_helper",
+        "no_inline_hard_clamp_left"
+      ],
+      "failed": [
+        "all_four_leg_bones_use_helper",
+        "no_inline_hard_clamp_left"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 78/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M10_apply_single_replace_flipped",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\apply_p3.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "apply_report_three_single_replaces"
+      ],
+      "expect_hit": [
+        "apply_report_three_single_replaces"
+      ],
+      "failed": [
+        "apply_report_three_single_replaces"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M11_baseline_check_flipped",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\baseline_p3.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "baseline_report_all_checks_true"
+      ],
+      "expect_hit": [
+        "baseline_report_all_checks_true"
+      ],
+      "failed": [
+        "baseline_report_all_checks_true"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M12_watched_sha_tampered",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\baseline_p3.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "other_11_watched_files_unchanged"
+      ],
+      "expect_hit": [
+        "other_11_watched_files_unchanged"
+      ],
+      "failed": [
+        "other_11_watched_files_unchanged"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M13_diag_check_flipped",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\plateau_diagnosis.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "diag_report_all_checks_true"
+      ],
+      "expect_hit": [
+        "diag_report_all_checks_true"
+      ],
+      "failed": [
+        "diag_report_all_checks_true"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M14_tear_check_flipped",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\plateau_tear.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "tear_report_all_checks_true"
+      ],
+      "expect_hit": [
+        "tear_report_all_checks_true"
+      ],
+      "failed": [
+        "tear_report_all_checks_true"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M15_probe_check_flipped",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\p3_probe.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "probe_report_all_checks_true"
+      ],
+      "expect_hit": [
+        "probe_report_all_checks_true"
+      ],
+      "failed": [
+        "probe_report_all_checks_true"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M16_boards_check_flipped",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\p3_boards.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "boards_report_all_checks_true"
+      ],
+      "expect_hit": [
+        "boards_report_all_checks_true"
+      ],
+      "failed": [
+        "boards_report_all_checks_true"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M17_all_checks_result_faked",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\all_checks_p3.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "all_checks_p3_15_15"
+      ],
+      "expect_hit": [
+        "all_checks_p3_15_15"
+      ],
+      "failed": [
+        "all_checks_p3_15_15"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M18_history_gate_check_flipped",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\history_gates_p3.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "history_gates_report_all_checks_true"
+      ],
+      "expect_hit": [
+        "history_gates_report_all_checks_true"
+      ],
+      "failed": [
+        "history_gates_report_all_checks_true"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M19_cause_split_broken",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\plateau_diagnosis.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "cause_split_sums_to_total"
+      ],
+      "expect_hit": [
+        "cause_split_sums_to_total"
+      ],
+      "failed": [
+        "cause_split_sums_to_total"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M20_atan12_perceptual_flat_faked",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\plateau_diagnosis.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "atan12_perceptual_flat_below_hard09",
+        "atan_beats_tanh_on_perceptual_flatness"
+      ],
+      "expect_hit": [
+        "atan12_perceptual_flat_below_hard09",
+        "atan_beats_tanh_on_perceptual_flatness"
+      ],
+      "failed": [
+        "atan12_perceptual_flat_below_hard09",
+        "atan_beats_tanh_on_perceptual_flatness",
+        "contextual_norm_cannot_beat_stateless"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 77/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M21_live_action_plateau_faked",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\plateau_diagnosis.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "live_action_plateau_reduced"
+      ],
+      "expect_hit": [
+        "live_action_plateau_reduced"
+      ],
+      "failed": [
+        "live_action_plateau_reduced"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M39_live_distinct_faked",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\plateau_diagnosis.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "live_distinct_values_increased"
+      ],
+      "expect_hit": [
+        "live_distinct_values_increased"
+      ],
+      "failed": [
+        "live_distinct_values_increased"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M22_recommendation_swapped",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\plateau_tear.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "recommendation_rule_recomputed_is_atan12",
+        "recommended_matches_shipped_mapping"
+      ],
+      "expect_hit": [
+        "recommendation_rule_recomputed_is_atan12",
+        "recommended_matches_shipped_mapping"
+      ],
+      "failed": [
+        "recommendation_rule_recomputed_is_atan12",
+        "recommended_matches_shipped_mapping"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 78/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M23_atan12_sampling_gap_injected",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\plateau_tear.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "representative_sampling_gap_all_zero"
+      ],
+      "expect_hit": [
+        "representative_sampling_gap_all_zero"
+      ],
+      "failed": [
+        "representative_sampling_gap_all_zero"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M24_atan12_tear_over_anchor",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\plateau_tear.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "all_candidates_within_anchor",
+        "atan12_worst_p999_below_hard09_baseline"
+      ],
+      "expect_hit": [
+        "all_candidates_within_anchor",
+        "atan12_worst_p999_below_hard09_baseline"
+      ],
+      "failed": [
+        "all_candidates_within_anchor",
+        "atan12_worst_p999_below_hard09_baseline",
+        "recommendation_rule_recomputed_is_atan12"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 77/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M25_atan12_leg_peak_mean_tampered",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\plateau_tear.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "atan12_leg_peak_mean_closest_to_baseline"
+      ],
+      "expect_hit": [
+        "atan12_leg_peak_mean_closest_to_baseline"
+      ],
+      "failed": [
+        "atan12_leg_peak_mean_closest_to_baseline",
+        "recommendation_rule_recomputed_is_atan12"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 78/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M26_full_pose_count_dropped",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\full_tear_blender.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "full_1420_poses_evaluated"
+      ],
+      "expect_hit": [
+        "full_1420_poses_evaluated"
+      ],
+      "failed": [
+        "full_1420_poses_evaluated"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M27_plan_frame_count_dropped",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\plateau_plan.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "plan_5_cases_284_frames_1420_poses"
+      ],
+      "expect_hit": [
+        "plan_5_cases_284_frames_1420_poses"
+      ],
+      "failed": [
+        "plan_5_cases_284_frames_1420_poses"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M28_baseline_platform_count_tampered",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\plateau_tear.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "hard09_platform_count_matches_tear"
+      ],
+      "expect_hit": [
+        "hard09_platform_count_matches_tear"
+      ],
+      "failed": [
+        "hard09_platform_count_matches_tear"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M29_shipped_readback_faked",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\p3_probe.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "shipped_readback_atan_12_both_sides"
+      ],
+      "expect_hit": [
+        "shipped_readback_atan_12_both_sides"
+      ],
+      "failed": [
+        "shipped_readback_atan_12_both_sides"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M30_stance_no_longer_zero",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\p3_probe.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "stance_untouched_pixel_zero"
+      ],
+      "expect_hit": [
+        "stance_untouched_pixel_zero"
+      ],
+      "failed": [
+        "stance_untouched_pixel_zero",
+        "legacy_compat_equals_rollback"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 78/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M31_reapplied_no_longer_identical",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\p3_probe.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "shipped_reapplied_identical_same_process"
+      ],
+      "expect_hit": [
+        "shipped_reapplied_identical_same_process"
+      ],
+      "failed": [
+        "shipped_reapplied_identical_same_process"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M32_probe_script_out_of_sync",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\tests\\p3_plateau_probe.gd",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "probe_script_bytewise_in_game"
+      ],
+      "expect_hit": [
+        "probe_script_bytewise_in_game"
+      ],
+      "failed": [
+        "probe_script_bytewise_in_game"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M33_sv_png_signature_broken",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\shots\\p3\\p3-shipped-stance00-sv-player.png",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "all_96_sv_pngs_valid_signature"
+      ],
+      "expect_hit": [
+        "all_96_sv_pngs_valid_signature"
+      ],
+      "failed": [
+        "all_96_sv_pngs_valid_signature"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M34_timeline_png_signature_broken",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\boards\\P3-时间线方波.png",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "four_boards_valid_png_signature"
+      ],
+      "expect_hit": [
+        "four_boards_valid_png_signature"
+      ],
+      "failed": [
+        "four_boards_valid_png_signature"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M35_timeline_flat_stat_tampered",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\p3_boards.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "timeline_flat_stats_independently_recomputed"
+      ],
+      "expect_hit": [
+        "timeline_flat_stats_independently_recomputed"
+      ],
+      "failed": [
+        "timeline_flat_stats_independently_recomputed"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M36_timeline_sample_count_tampered",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\p3_boards.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "timeline_129_real_samples"
+      ],
+      "expect_hit": [
+        "timeline_129_real_samples"
+      ],
+      "failed": [
+        "timeline_129_real_samples"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M37_history_red_name_renamed",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\history_gates_p3.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "history_reds_exactly_ten_expected_entries"
+      ],
+      "expect_hit": [
+        "history_reds_exactly_ten_expected_entries"
+      ],
+      "failed": [
+        "history_reds_exactly_ten_expected_entries"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M38_history_restore_proof_flipped",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\data\\history_gates_p3.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "history_gates_report_all_checks_true"
+      ],
+      "expect_hit": [
+        "history_gates_report_all_checks_true"
+      ],
+      "failed": [
+        "history_gates_report_all_checks_true"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "PLATEAU_VERIFY 79/80 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    }
+  ],
+  "ok": true
+}

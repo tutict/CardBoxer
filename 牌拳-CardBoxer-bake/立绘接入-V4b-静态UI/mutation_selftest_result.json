@@ -1,0 +1,90 @@
+{
+  "selftest": true,
+  "total": 6,
+  "caught": 5,
+  "did_not_run": 1,
+  "restore": {
+    ".godot\\imported\\card_p1.png-87ea93028d3a8f465f74d8fd46f47a35.ctex": true,
+    "tests\\redraw_gate_check.gd": true,
+    "scripts\\hud.gd": true
+  },
+  "restore_all_ok": true,
+  "clean_rerun": {
+    "exit": 0,
+    "passed": 157,
+    "failures": [],
+    "green": true
+  },
+  "all_proven": false,
+  "rows": [
+    {
+      "id": "M1",
+      "status": "DID NOT RUN",
+      "reason": "anchor count=0 (need 1)",
+      "label": "删掉 _visual_key() 的两个新 token"
+    },
+    {
+      "id": "M2",
+      "label": "注释掉一张头像的 draw_texture_rect",
+      "status": "CAUGHT",
+      "guard_exit": 1,
+      "guard_failures": [
+        "texture draw calls present"
+      ],
+      "expected_failure_present": true,
+      "sentinel_green": true,
+      "sentinel": "png sha256 matches: card_p55.png"
+    },
+    {
+      "id": "M3",
+      "label": "把 card_p1 的 .ctex 清空（贴图真空）",
+      "status": "CAUGHT",
+      "guard_exit": 1,
+      "guard_failures": [
+        "texture loads: card_p1.png",
+        "ctex exists and nonempty: card_p1.png"
+      ],
+      "expected_failure_present": true,
+      "sentinel_green": true,
+      "sentinel": "png sha256 matches: card_p1.png"
+    },
+    {
+      "id": "M4",
+      "label": "把插画卡位从第 1/5 张改到第 2/4 张",
+      "status": "CAUGHT",
+      "guard_exit": 1,
+      "guard_failures": [
+        "only card 1/5 get portrait background"
+      ],
+      "expected_failure_present": true,
+      "sentinel_green": true,
+      "sentinel": "png sha256 matches: card_p55.png"
+    },
+    {
+      "id": "M5",
+      "label": "把已修好的抖动手牌断言退回硬写 wave",
+      "status": "CAUGHT",
+      "guard_exit": 1,
+      "guard_failures": [
+        "flaky hand-change assertion stays deterministic"
+      ],
+      "expected_failure_present": true,
+      "sentinel_green": true,
+      "sentinel": "png sha256 matches: card_p55.png"
+    },
+    {
+      "id": "M6",
+      "label": "让 TAB 边沿不翻页",
+      "status": "CAUGHT",
+      "guard_exit": 1,
+      "guard_failures": [
+        "TAB down advances profile page once",
+        "holding TAB does not repeat",
+        "second TAB press advances to page 2"
+      ],
+      "expected_failure_present": true,
+      "sentinel_green": true,
+      "sentinel": "png sha256 matches: card_p55.png"
+    }
+  ]
+}

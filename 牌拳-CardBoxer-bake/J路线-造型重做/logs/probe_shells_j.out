@@ -1,0 +1,17 @@
+00:00.985  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\对手怪-可变形连续壳.blend"
+00:02.407  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\boards\J-壳分类上色.png'
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+SHELLS 2809 VERTS 64024
+REGION BODY {'shells': 1744, 'verts': 38133}
+REGION SKIRT {'shells': 19, 'verts': 1684}
+REGION BOOTS {'shells': 465, 'verts': 9143}
+REGION HEAD_TOP {'shells': 174, 'verts': 4947}
+REGION HEAD {'shells': 405, 'verts': 7995}
+REGION CAPE_OR_PANEL {'shells': 2, 'verts': 2122}
+CHECK opened True
+CHECK shell_count_matches_2809 True
+CHECK has_head_region True
+CHECK has_skirt_region True
+CHECK has_cape_region True
+CHECK board_written True
+SHELLS_J_OK

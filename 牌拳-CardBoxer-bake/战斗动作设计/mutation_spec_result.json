@@ -1,0 +1,65 @@
+{
+  "verdict": "MUTATION_SPEC_OK",
+  "cases": [
+    {
+      "tag": "M1",
+      "caught": true,
+      "did_not_run": false,
+      "restore": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "constants_match_arena_source",
+        "frame_math_consistent",
+        "timeline_fully_covers_phases"
+      ],
+      "error": "",
+      "desc": "把亮牌阶段时长改成与 arena.gd 不符的 2.5s"
+    },
+    {
+      "tag": "M2",
+      "caught": true,
+      "did_not_run": false,
+      "restore": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "card_type_binding_and_damage_tiers_match_rules",
+        "reuse_assets_exist"
+      ],
+      "error": "",
+      "desc": "把三同赢家动作指向不存在的卡轨道"
+    },
+    {
+      "tag": "M3",
+      "caught": true,
+      "did_not_run": false,
+      "restore": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "winner_attack_only_in_resolve"
+      ],
+      "error": "",
+      "desc": "删掉唯一的赢家事件，试探空集真空通过"
+    },
+    {
+      "tag": "M4",
+      "caught": true,
+      "did_not_run": false,
+      "restore": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "game_sources_untouched"
+      ],
+      "error": "",
+      "desc": "篡改源码基线指纹，假装源码没动"
+    }
+  ],
+  "clean": true,
+  "caught": 4,
+  "restored": 4,
+  "did_not_run": 0,
+  "all_restored": true
+}

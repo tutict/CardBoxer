@@ -1,0 +1,7 @@
+CMD C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe --path C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer --quit-after 120 --script res://tests/window_probe.gd
+
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 621.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5080 Laptop GPU
+
+WINDOW_PROBE_DONE physical=1600x900 logical=1280x720 scale=1.2500/1.2500 mode=canvas_items aspect=keep match=true
+

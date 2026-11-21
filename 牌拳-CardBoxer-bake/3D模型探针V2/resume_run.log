@@ -1,0 +1,8 @@
+QUERY 1 status=RUN elapsed=1s
+QUERY 2 status=DONE elapsed=7s
+RESULT_URLS 4 transient_queries=0
+DOWNLOADED artifact_01.png 61777 B
+DOWNLOADED artifact_02.zip 26208537 B
+DOWNLOADED artifact_03.glb 30790380 B
+DOWNLOADED artifact_04.fbx 31265868 B
+RESUME_OK artifacts=4 glb=artifact_03.glb viewer=generated_model_20261107-153706_viewer.html elapsed=9s

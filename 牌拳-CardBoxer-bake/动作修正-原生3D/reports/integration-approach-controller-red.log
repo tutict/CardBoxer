@@ -1,0 +1,6 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+FAIL: native approach adds calibrated offset to retained pulse at contact
+BATTLE PRESENTATION CHECK: 39/40 passed

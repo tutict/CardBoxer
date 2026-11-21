@@ -1,0 +1,9 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+GEOMETRY player guard_z=0.55902695655823/0.49055832624435 jab_z=0.78306484222412 cross_z=0.77973175048828 sweep_z=0.78999990224838
+GUARD player hand_above_shoulder=0.21386611461639/0.22557926177979 elbow_x=0.27827402949333/-0.30892309546471
+GEOMETRY foe guard_z=0.62535852193832/0.54778987169266 jab_z=0.90378153324127 cross_z=0.91803354024887 sweep_z=0.67000007629395
+GUARD foe hand_above_shoulder=0.21391773223877/0.2307755947113 elbow_x=0.3508865237236/-0.40652978420258
+NATIVE MOTION CHECK: PASS failures=0 sampled=1502 support_max_m=0.01580134130859
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)

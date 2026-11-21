@@ -1,0 +1,171 @@
+--- check-retopology-assets-resume.py
++++ check_retopology_assets.py
+@@ -4,15 +4,54 @@
+ import json
+ import struct
+ import sys
++import zlib
++from functools import lru_cache
+ from pathlib import Path
+ import numpy as np
+ sys.path.insert(0,str(Path(__file__).resolve().parent))
+ from canonical_glb import GLB, SHAPES, sha256, skin_rest_vertices, transform_points
+ 
+ 
++@lru_cache(maxsize=12)
+ def image_dimensions(data):
+-    if data.startswith(b"\x89PNG\r\n\x1a\n") and data[12:16]==b"IHDR": return list(struct.unpack_from(">II",data,16))
+-    raise ValueError("PBR atlas must be a PNG with IHDR")
++    """Check PNG integrity and complete scanline payload, not just its header."""
++    if not data.startswith(b"\x89PNG\r\n\x1a\n"):raise ValueError("PBR atlas must be PNG")
++    off=8;header=None;compressed=bytearray();ended=False
++    while off<len(data):
++        if off+12>len(data):raise ValueError("Truncated PNG chunk")
++        count=struct.unpack_from(">I",data,off)[0];kind=data[off+4:off+8];end=off+8+count
++        if end+4>len(data):raise ValueError("Truncated PNG payload")
++        payload=data[off+8:end]
++        if zlib.crc32(kind+payload)!=struct.unpack_from(">I",data,end)[0]:raise ValueError("PNG CRC mismatch")
++        if header is None and kind!=b"IHDR":raise ValueError("PNG IHDR must be first")
++        if kind==b"IHDR":
++            if header is not None or count!=13:raise ValueError("Invalid PNG IHDR")
++            header=struct.unpack(">IIBBBBB",payload)
++        elif kind==b"IDAT":compressed.extend(payload)
++        elif kind==b"IEND":
++            if count or end+4!=len(data):raise ValueError("Invalid PNG end")
++            ended=True;break
++        off=end+4
++    if not header or not ended or not compressed:raise ValueError("Incomplete PNG")
++    width,height,depth,colour,compression,filtering,interlace=header
++    channels={0:1,2:3,3:1,4:2,6:4}.get(colour)
++    allowed={0:(1,2,4,8,16),2:(8,16),3:(1,2,4,8),4:(8,16),6:(8,16)}
++    if not channels or depth not in allowed[colour] or compression or filtering or interlace not in (0,1) or min(width,height)<1 or max(width,height)>4096:
++        raise ValueError("Invalid or oversized PNG encoding")
++    passes=[(0,0,1,1)] if not interlace else [(0,0,8,8),(4,0,8,8),(0,4,4,8),(2,0,4,4),(0,2,2,4),(1,0,2,2),(0,1,1,2)]
++    rows=[]
++    for x,y,dx,dy in passes:
++        pw=max(0,(width-x+dx-1)//dx);ph=max(0,(height-y+dy-1)//dy)
++        if pw and ph:rows.extend([1+(pw*channels*depth+7)//8]*ph)
++    expected=sum(rows);decoder=zlib.decompressobj()
++    try:decoded=decoder.decompress(bytes(compressed),expected+1)
++    except zlib.error as exc:raise ValueError("Invalid PNG compression") from exc
++    if len(decoded)!=expected or not decoder.eof or decoder.unused_data:raise ValueError("PNG scanline payload mismatch")
++    cursor=0
++    for stride in rows:
++        if decoded[cursor]>4:raise ValueError("Invalid PNG row filter")
++        cursor+=stride
++    return [width,height]
+ 
+ 
+ def point_surface_distance(point, triangles):
+@@ -34,7 +73,7 @@
+     return float(np.sqrt(best.min()))
+ 
+ 
+-def check_asset(source_glb: Path, candidate_glb: Path, profile_json: Path|None=None) -> dict:
++def _check_asset(source_glb: Path, candidate_glb: Path, profile_json: Path|None=None) -> dict:
+     result={"version":1,"source":str(Path(source_glb).resolve()),"candidate":str(Path(candidate_glb).resolve()),"ok":False,"errors":[],"warnings":[],"metrics":{}}
+     def error(code,detail): result["errors"].append({"code":code,"detail":str(detail)})
+     def warning(code,detail): result["warnings"].append({"code":code,"detail":str(detail)})
+@@ -67,15 +106,27 @@
+     if len(indices)//3>80000: error("triangle_budget",f"{len(indices)//3} exceeds 80000")
+     if len(pos)==0: error("empty_geometry","No vertices");return result
+     if normal.shape!=pos.shape or np.max(np.abs(np.linalg.norm(normal,axis=1)-1))>.01: error("normal_length","Vertex normals must be finite unit vectors")
++    try:
++        uv=g.accessor(a["TEXCOORD_0"])
++        if uv.shape!=(len(pos),2) or np.any(uv < -1e-6) or np.any(uv > 1+1e-6):error("atlas_uv","UV0 must be finite VEC2 per vertex within the 0..1 atlas")
++        if "TANGENT" not in a:error("tangent_basis","Tangent normal atlas requires an exported UV0 tangent basis")
++        else:
++            tangent=g.accessor(a["TANGENT"])
++            if tangent.shape!=(len(pos),4) or np.max(np.abs(np.linalg.norm(tangent[:,:3],axis=1)-1))>.01 or np.max(np.abs(np.sum(tangent[:,:3]*normal,axis=1)))>.01 or np.any(np.abs(np.abs(tangent[:,3])-1)>1e-5):
++                error("tangent_basis","Tangents must be finite unit XYZ perpendicular to normal, W +/-1")
++    except Exception as exc:error("tangent_basis",exc)
+     tri=pos[indices.reshape(-1,3)];areas=np.linalg.norm(np.cross(tri[:,1]-tri[:,0],tri[:,2]-tri[:,0]),axis=1)*.5
+     metrics["degenerate_triangles"]=int(np.sum(areas<1e-12))
+     if metrics["degenerate_triangles"]: error("degenerate_triangles",metrics["degenerate_triangles"])
+     if joints.shape!=(len(pos),4) or weights.shape!=(len(pos),4): error("four_influences","Exactly JOINTS_0/WEIGHTS_0 VEC4 required");return result
++    joint_accessor=d["accessors"][a["JOINTS_0"]]
++    if joint_accessor["componentType"] not in (5121,5123) or joint_accessor.get("normalized",False) or joint_accessor["type"]!="VEC4":
++        error("joint_format","JOINTS_0 requires unnormalized unsigned byte/short VEC4")
+     if np.any(joints<0) or np.any(joints>=len(names)): error("joint_range","Out of range JOINTS_0");return result
+     weights_error=float(np.max(np.abs(weights.sum(axis=1)-1)));metrics["weight_sum_error"]=weights_error
+     if np.any(weights<0) or weights_error>1e-5: error("normalized_weights",weights_error)
+     for key,value in a.items():
+-        if key.startswith("WEIGHTS_") and key!="WEIGHTS_0" and np.any(g.accessor(value)>1e-7): error("four_influences",key)
++        if key.startswith("WEIGHTS_") and key!="WEIGHTS_0" and np.any(np.abs(g.accessor(value))>1e-7): error("four_influences",key)
+     neutral=names.index("neutral_bone") if "neutral_bone" in names else -1
+     neutral_max=float(np.max(np.where(joints==neutral,weights,0)));metrics["neutral_max_weight"]=neutral_max
+     if neutral_max>1e-7: error("neutral_influence",neutral_max)
+@@ -92,14 +143,28 @@
+     # This excludes every boot/body vertex and the opposing hand, while allowing
+     # new fingers/UV seams and changed vertex counts without authored index masks.
+     hand_masks={};globals_=g.globals();source_globals=src.globals();source_joints=src.skin()["joints"]
++    source_weights=src.accessor(sp["attributes"]["WEIGHTS_0"]);source_indices=src.accessor(sp["attributes"]["JOINTS_0"])
+     for side,bone in (("front","forearm_f"),("rear","forearm_b")):
+         if bone not in names: continue
+         idx=names.index(bone);own=np.sum(weights*(joints==idx),axis=1)
+         local=transform_points(np.linalg.inv(globals_[g.skin()["joints"][idx]]),world)
+         source_i=source_joints[original_names.index(bone)]
+-        parent_name=bone.replace("forearm","upperarm");parent_i=source_joints[original_names.index(parent_name)]
+-        upper_length=np.linalg.norm(source_globals[source_i][:3,3]-source_globals[parent_i][:3,3])
+-        hand_masks[side]=(own>=.25)&(local[:,1]>=upper_length*.55)
++        source_local=transform_points(np.linalg.inv(source_globals[source_i]),source_world)
++        source_own=np.sum(source_weights*(source_indices==original_names.index(bone)),axis=1)
++        weighted=source_own>=.25
++        # Original forearm geometry determines its distal region. Upperarm length
++        # is unrelated to the wrist and falsely rejects the foe's shorter hands.
++        distal_start=float(source_local[weighted,1].max())*.5 if weighted.any() else float("inf")
++        source_hand=weighted&(source_local[:,1]>=distal_start)
++        hand_masks[side]=(own>=.25)&(local[:,1]>=distal_start)
++        metrics[side+"_hand_distal_start_local_m"]=distal_start if np.isfinite(distal_start) else None
++        if source_hand.any():
++            lo=source_local[source_hand].min(axis=0)-.02;hi=source_local[source_hand].max(axis=0)+.02
++            hand_masks[side]&=np.all((local>=lo)&(local<=hi),axis=1)
++            metrics[side+"_source_hand_bounds_local_m"]=[lo.tolist(),hi.tolist()]
++        else:
++            hand_masks[side][:]=False
++            error("source_hand_bounds",f"No original distal {bone} vertices")
+         metrics[side+"_hand_envelope_vertices"]=int(hand_masks[side].sum())
+     mesh=d["meshes"][d["nodes"][g.mesh_node()]["mesh"]]
+     shape_names=mesh.get("extras",{}).get("targetNames",[]);targets=p.get("targets",[])
+@@ -110,12 +175,15 @@
+     morphs={}
+     for name,target in zip(shape_names,targets):
+         if "POSITION" not in target: error("morph_position",name);continue
+-        delta=g.accessor(target["POSITION"]).astype(float)
++        try:delta=g.accessor(target["POSITION"]).astype(float)
++        except Exception as exc:error("morph_accessor",f"{name}.POSITION: {exc}");continue
+         if delta.shape!=pos.shape: error("morph_count",name);continue
+         morphs[name]=delta;active=np.linalg.norm(delta,axis=1)>1e-8
+         side="front" if name.endswith("_f") else "rear";mask=hand_masks.get(side,np.zeros(len(pos),bool))
+         for semantic,accessor in target.items():
+-            values=g.accessor(accessor)
++            try:values=g.accessor(accessor)
++            except Exception as exc:error("morph_accessor",f"{name}.{semantic}: {exc}");continue
++            if values.shape!=pos.shape:error("morph_count",f"{name}.{semantic}");continue
+             affected=np.any(np.abs(values)>1e-8,axis=1)
+             if np.any(affected & ~mask): error("morph_hand_only",f"{name}.{semantic}: {int(np.sum(affected & ~mask))} vertices outside its own distal forearm/hand")
+         metrics[name+"_active_vertices"]=int(active.sum())
+@@ -136,6 +204,8 @@
+         if any(x is None for x in texture_refs): error("pbr_channels","Base color, tangent normal and metallic/roughness textures required")
+         else:
+             try:
++                if any(x.get("texCoord",0)!=0 or x.get("extensions",{}).get("KHR_texture_transform") for x in texture_refs+[m.get("occlusionTexture",{})]):
++                    error("pbr_texcoord","All PBR roles must use the authored UV0 atlas without extra texture transforms")
+                 image_indices=[d["textures"][x["index"]]["source"] for x in texture_refs]
+                 if len(set(image_indices))!=3: error("pbr_channels","PBR roles must reference three distinct images")
+                 ao=m.get("occlusionTexture")
+@@ -162,6 +232,14 @@
+     return result
+ 
+ 
++def check_asset(source_glb: Path, candidate_glb: Path, profile_json: Path|None=None) -> dict:
++    """Malformed input is a failed gate with diagnostics, never an uncaught crash."""
++    try:return _check_asset(source_glb,candidate_glb,profile_json)
++    except (ValueError,KeyError,IndexError,TypeError,OSError,struct.error,np.linalg.LinAlgError) as exc:
++        return {"version":1,"source":str(Path(source_glb).resolve()),"candidate":str(Path(candidate_glb).resolve()),
++                "ok":False,"errors":[{"code":"malformed_asset","detail":str(exc)}],"warnings":[],"metrics":{}}
++
++
+ def main():
+     parser=argparse.ArgumentParser(description=__doc__)
+     parser.add_argument("source_glb",type=Path);parser.add_argument("candidate_glb",type=Path)

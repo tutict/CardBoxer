@@ -1,0 +1,164 @@
+00:00.844  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\对手怪V1.blend"
+OPEN src=node_0 verts=64024 old_rig=foe_rig removed
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\c_build.py:213: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if mat and mat.use_nodes:
+APOSE_RIG bones=13 head_top_z=1.7105 hip_z=0.8420
+PROXY verts=20204 faces=20198
+PROXY auto_weight 20196/20204
+FINAL covered=64006/64024 multi_bone_verts=57967 assets=True/True
+RIGID buckets={'hips': 1608, 'spine': 2010, 'chest': 398, 'neck': 4533, 'head': 1382, 'upperarm_f': 9937, 'forearm_f': 5174, 'upperarm_b': 10661, 'forearm_b': 5497, 'thigh_f': 6397, 'shin_f': 5097, 'thigh_b': 6345, 'shin_b': 4985}
+00:03.438  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-rest-unposed.png'
+00:03.750  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-stance-driven.png'
+STANCE_IDENTITY delta0=0.000000000 root0=(0.0, -0.0) max_vertex_delta_m=0.000000643 mean=0.000000062 tol=1e-05 identical=True
+TEAR_SMOOTH {"edges": 141529, "max_edge_tear_m": 0.10377, "p999_edge_tear_m": 0.01806, "p99_edge_tear_m": 0.01062, "mean_edge_tear_m": 0.00182, "edges_gt_2cm": 77, "edges_gt_5cm": 21}
+TEAR_RIGID  {"edges": 141529, "max_edge_tear_m": 0.39292, "p999_edge_tear_m": 0.28048, "p99_edge_tear_m": 0.02535, "mean_edge_tear_m": 0.00317, "edges_gt_2cm": 1732, "edges_gt_5cm": 916}
+00:04.250  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-smooth.png'
+00:04.453  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-rigid.png'
+00:04.641  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-f000.png'
+SHOT c-jab-f000 card=jab f=0 deg=0.0 maxdeg=0.0 bytes=451805
+00:04.844  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-f001.png'
+SHOT c-jab-f001 card=jab f=1 deg=0.0 maxdeg=3.0 bytes=454899
+00:05.031  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-f002.png'
+SHOT c-jab-f002 card=jab f=2 deg=0.0 maxdeg=3.0 bytes=454896
+00:05.234  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-f003.png'
+SHOT c-jab-f003 card=jab f=3 deg=0.0 maxdeg=3.0 bytes=454899
+00:05.438  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-f004.png'
+SHOT c-jab-f004 card=jab f=4 deg=0.0 maxdeg=14.439 bytes=455333
+00:05.641  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-f005.png'
+SHOT c-jab-f005 card=jab f=5 deg=0.0 maxdeg=17.916 bytes=455110
+00:05.844  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-f006.png'
+SHOT c-jab-f006 card=jab f=6 deg=0.0 maxdeg=21.393 bytes=456620
+00:06.063  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-f007.png'
+SHOT c-jab-f007 card=jab f=7 deg=0.0 maxdeg=21.393 bytes=456635
+00:06.266  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-f008.png'
+SHOT c-jab-f008 card=jab f=8 deg=0.0 maxdeg=17.632 bytes=455680
+00:06.469  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-f009.png'
+SHOT c-jab-f009 card=jab f=9 deg=0.0 maxdeg=13.539 bytes=456312
+00:06.672  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-f010.png'
+SHOT c-jab-f010 card=jab f=10 deg=0.0 maxdeg=8.89 bytes=456405
+00:06.875  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-f011.png'
+SHOT c-jab-f011 card=jab f=11 deg=0.0 maxdeg=4.511 bytes=453760
+00:07.078  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-f012.png'
+SHOT c-jab-f012 card=jab f=12 deg=0.0 maxdeg=1.287 bytes=451390
+00:07.297  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-f013.png'
+SHOT c-jab-f013 card=jab f=13 deg=0.0 maxdeg=1.424 bytes=453167
+00:07.500  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f000.png'
+SHOT c-cross-f000 card=cross f=0 deg=0.0 maxdeg=0.0 bytes=451805
+00:07.703  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f001.png'
+SHOT c-cross-f001 card=cross f=1 deg=0.0 maxdeg=3.0 bytes=455307
+00:07.922  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f002.png'
+SHOT c-cross-f002 card=cross f=2 deg=0.0 maxdeg=3.0 bytes=454729
+00:08.125  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f003.png'
+SHOT c-cross-f003 card=cross f=3 deg=0.0 maxdeg=3.072 bytes=454793
+00:08.328  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f004.png'
+SHOT c-cross-f004 card=cross f=4 deg=0.0 maxdeg=3.072 bytes=454797
+00:08.531  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f005.png'
+SHOT c-cross-f005 card=cross f=5 deg=0.0 maxdeg=3.072 bytes=454785
+00:08.750  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f006.png'
+SHOT c-cross-f006 card=cross f=6 deg=0.0 maxdeg=27.537 bytes=457637
+00:08.969  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f007.png'
+SHOT c-cross-f007 card=cross f=7 deg=0.0 maxdeg=28.0 bytes=458575
+00:09.172  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f008.png'
+SHOT c-cross-f008 card=cross f=8 deg=0.0 maxdeg=28.0 bytes=457858
+00:09.375  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f009.png'
+SHOT c-cross-f009 card=cross f=9 deg=0.0 maxdeg=28.0 bytes=457993
+00:09.594  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f010.png'
+SHOT c-cross-f010 card=cross f=10 deg=0.0 maxdeg=28.0 bytes=457994
+00:09.797  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f011.png'
+SHOT c-cross-f011 card=cross f=11 deg=0.0 maxdeg=28.0 bytes=457993
+00:10.016  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f012.png'
+SHOT c-cross-f012 card=cross f=12 deg=0.0 maxdeg=28.0 bytes=458792
+00:10.219  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f013.png'
+SHOT c-cross-f013 card=cross f=13 deg=0.0 maxdeg=27.769 bytes=458767
+00:10.438  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f014.png'
+SHOT c-cross-f014 card=cross f=14 deg=0.0 maxdeg=23.871 bytes=457925
+00:10.656  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f015.png'
+SHOT c-cross-f015 card=cross f=15 deg=0.0 maxdeg=19.461 bytes=457837
+00:10.859  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f016.png'
+SHOT c-cross-f016 card=cross f=16 deg=0.0 maxdeg=14.863 bytes=458184
+00:11.063  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f017.png'
+SHOT c-cross-f017 card=cross f=17 deg=0.0 maxdeg=10.36 bytes=456501
+00:11.281  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f018.png'
+SHOT c-cross-f018 card=cross f=18 deg=0.0 maxdeg=6.323 bytes=455831
+00:11.484  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f019.png'
+SHOT c-cross-f019 card=cross f=19 deg=0.0 maxdeg=3.01 bytes=453033
+00:11.688  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f020.png'
+SHOT c-cross-f020 card=cross f=20 deg=0.0 maxdeg=0.817 bytes=451878
+00:11.891  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f021.png'
+SHOT c-cross-f021 card=cross f=21 deg=0.0 maxdeg=0.428 bytes=452023
+00:12.109  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f000.png'
+SHOT c-wave-f000 card=wave f=0 deg=0.0 maxdeg=0.0 bytes=451804
+00:12.328  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f001.png'
+SHOT c-wave-f001 card=wave f=1 deg=0.0 maxdeg=3.0 bytes=454126
+00:12.531  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f002.png'
+SHOT c-wave-f002 card=wave f=2 deg=0.0 maxdeg=3.0 bytes=454844
+00:12.734  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f003.png'
+SHOT c-wave-f003 card=wave f=3 deg=0.0 maxdeg=4.533 bytes=455300
+00:12.938  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f004.png'
+SHOT c-wave-f004 card=wave f=4 deg=0.0 maxdeg=6.229 bytes=454432
+00:13.156  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f005.png'
+SHOT c-wave-f005 card=wave f=5 deg=0.0 maxdeg=7.373 bytes=455248
+00:13.359  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f006.png'
+SHOT c-wave-f006 card=wave f=6 deg=0.0 maxdeg=7.31 bytes=456396
+00:13.563  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f007.png'
+SHOT c-wave-f007 card=wave f=7 deg=0.0 maxdeg=7.31 bytes=456396
+00:13.781  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f008.png'
+SHOT c-wave-f008 card=wave f=8 deg=0.0 maxdeg=7.31 bytes=456396
+00:13.984  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f009.png'
+SHOT c-wave-f009 card=wave f=9 deg=0.0 maxdeg=7.31 bytes=456402
+00:14.203  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f010.png'
+SHOT c-wave-f010 card=wave f=10 deg=0.0 maxdeg=7.31 bytes=456394
+00:14.438  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f011.png'
+SHOT c-wave-f011 card=wave f=11 deg=0.0 maxdeg=7.31 bytes=456401
+00:14.641  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f012.png'
+SHOT c-wave-f012 card=wave f=12 deg=0.0 maxdeg=9.0 bytes=456037
+00:14.844  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f013.png'
+SHOT c-wave-f013 card=wave f=13 deg=0.0 maxdeg=9.887 bytes=455886
+00:15.047  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f014.png'
+SHOT c-wave-f014 card=wave f=14 deg=0.0 maxdeg=10.802 bytes=456868
+00:15.250  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f015.png'
+SHOT c-wave-f015 card=wave f=15 deg=0.0 maxdeg=11.72 bytes=456369
+00:15.453  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f016.png'
+SHOT c-wave-f016 card=wave f=16 deg=0.0 maxdeg=12.642 bytes=456941
+00:15.656  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f017.png'
+SHOT c-wave-f017 card=wave f=17 deg=0.0 maxdeg=13.565 bytes=456504
+00:15.875  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f018.png'
+SHOT c-wave-f018 card=wave f=18 deg=0.0 maxdeg=13.565 bytes=456496
+00:16.063  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f019.png'
+SHOT c-wave-f019 card=wave f=19 deg=0.0 maxdeg=13.565 bytes=456495
+00:16.266  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f020.png'
+SHOT c-wave-f020 card=wave f=20 deg=0.0 maxdeg=13.565 bytes=456485
+00:16.469  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f021.png'
+SHOT c-wave-f021 card=wave f=21 deg=0.0 maxdeg=12.214 bytes=457020
+00:16.672  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f022.png'
+SHOT c-wave-f022 card=wave f=22 deg=0.0 maxdeg=11.446 bytes=456822
+00:16.875  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f023.png'
+SHOT c-wave-f023 card=wave f=23 deg=0.0 maxdeg=10.514 bytes=456704
+00:17.078  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f024.png'
+SHOT c-wave-f024 card=wave f=24 deg=0.0 maxdeg=9.507 bytes=455480
+00:17.281  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f025.png'
+SHOT c-wave-f025 card=wave f=25 deg=0.0 maxdeg=9.027 bytes=455812
+00:17.500  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f026.png'
+SHOT c-wave-f026 card=wave f=26 deg=0.0 maxdeg=6.841 bytes=454919
+00:17.703  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f027.png'
+SHOT c-wave-f027 card=wave f=27 deg=0.0 maxdeg=6.055 bytes=455319
+00:17.906  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f028.png'
+SHOT c-wave-f028 card=wave f=28 deg=0.0 maxdeg=4.904 bytes=454308
+00:18.109  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f029.png'
+SHOT c-wave-f029 card=wave f=29 deg=0.0 maxdeg=3.798 bytes=453142
+00:18.328  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f030.png'
+SHOT c-wave-f030 card=wave f=30 deg=0.0 maxdeg=2.759 bytes=452608
+00:18.531  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f031.png'
+SHOT c-wave-f031 card=wave f=31 deg=0.0 maxdeg=1.864 bytes=452797
+00:18.734  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f032.png'
+SHOT c-wave-f032 card=wave f=32 deg=0.0 maxdeg=1.086 bytes=452968
+00:18.953  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f033.png'
+SHOT c-wave-f033 card=wave f=33 deg=0.0 maxdeg=0.715 bytes=452437
+00:19.156  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f034.png'
+SHOT c-wave-f034 card=wave f=34 deg=0.0 maxdeg=0.429 bytes=451606
+00:19.375  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f035.png'
+SHOT c-wave-f035 card=wave f=35 deg=0.0 maxdeg=0.286 bytes=451886
+00:19.563  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-stance-angle55.png'
+SHOT c-stance-angle55 card=None f=0 deg=55.0 maxdeg=0.0 bytes=410742
+C_BUILD_OK shots=77 elapsed=18.95s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

@@ -1,0 +1,53 @@
+{
+  "schema": "visual_diff_v1",
+  "revision": 2,
+  "revision_note": "r1 的 draw_scale_x=1.16 实测宽 ROI 轮廓比 1.0889 < 目标 1.1；r2 把实现提到 1.22 并重跑同进程 A/B。r1 负结果见 data/visual_diag_r1_failed.json 与 boards/I-V1失败-全局变暗.png 同族的口径说明，不放宽阈值。",
+  "role": "foe",
+  "off_switch": "CARD_BOXER_FOE_VISUAL=none",
+  "on_switch": "configure(\"foe\", ...) 自动启用；玩家层与未配置层不启用",
+  "rationale": "rootcause_i.json：贴图 UV 岛亮度差 70.99 被渲染链吃成 -11.18；改渲染链而非重做模型",
+  "material": {
+    "policy": "v3 3D 材质完全不动",
+    "reason": "v2 实测改 foe 层 surface override 会让玩家层角色整体变暗 7940 px；纯 2D 合成 shader 才是零串扰的落点",
+    "retired_v1_v2_values": {
+      "albedo_tint": [0.46, 0.34, 0.30],
+      "metallic_multiplier": 0.35
+    },
+    "retired_constants_absent": [
+      "FOE_TINT", "FOE_METALLIC_MULT", "FOE_CANVAS_TINT"
+    ]
+  },
+  "lights": {
+    "policy": "v2 完全不改灯",
+    "reason": "GL Compatibility 下多个 SubViewport 的平行光串扰；v1 实测玩家层灯能量恒定但玩家 ROI 暗 20.08，负结果见 data/v1-failed/ 与 boards/I-V1失败-全局变暗.png",
+    "retired_v1_values": {"energy_scale": 0.58, "color_shift": [0.78, 0.86, 1.0]}
+  },
+  "canvas_tint": [0.42, 0.30, 0.28],
+  "canvas_tint_source": "FOE_CANVAS_SHADER_CODE 是唯一真相来源；不再另设数组常量，避免两份数值漂移",
+  "canvas_tint_scope": "CanvasItem.material 上的 canvas_item shader，只作用于 foe 层最终贴回 2D 的 ViewportTexture，透明像素 alpha=0 不盖方块",
+  "silhouette": {
+    "draw_scale_x": 1.22,
+    "draw_scale_y": 0.94
+  },
+  "baseline_from_h": {
+    "player_subject_luma": 95.02,
+    "foe_subject_luma": 106.2,
+    "gap_player_minus_foe": -11.18
+  },
+  "targets": {
+    "min_luma_gap_player_minus_foe": 25.0,
+    "min_abs_red_blue_shift": 8.0,
+    "min_subject_width_ratio": 1.1,
+    "player_roi_changed_px": 0,
+    "off_switch_disables_visual_layer": true,
+    "off_state_same_process_pixel_identical": true,
+    "default_off_pixel_identical": true
+  },
+  "hard_rules": [
+    "只改 fighter_3d_layer.gd 的 foe 分支；arena.gd / fighter.gd 零改动",
+    "判定 / HP / 伤害 / 牌型 / 硬直 / 阶段时长零改动",
+    "玩家层绘制路径逐像素不变（同进程 A/B 证明）",
+    "set_foe_visual(false) 必须能完整还原材质 / 灯光 / 绘制尺寸",
+    "不新增资产、不改 GLB、不重做模型"
+  ]
+}

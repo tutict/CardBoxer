@@ -1,0 +1,21 @@
+[PASS] V01_backup_manifest_intact: files=30 hashes_match=True
+[PASS] V02_only_two_existing_files_changed: changed=['project.godot', 'scripts/arena.gd']
+[PASS] V03_four_probe_scripts_present: sizes=[3301, 2114, 4488, 795]
+[PASS] V04_backdrop_is_opaque_and_unmodified: mode=RGB bands=('R', 'G', 'B') sha_match=True
+[PASS] V05_texture_rect_covers_whole_viewport: rect=('-40', '-40', '1360', '800') covers=True
+[PASS] V06_dead_draw_forms_retired: left=[]
+[PASS] V07_texture_and_overlay_kept_exactly_once: texture=1 overlay=1
+[PASS] V08_dynamic_backdrop_layers_kept: body=1549B lines9=1 lines13=1
+[PASS] V09_damage_and_phase_lines_untouched: lines=14 identical=True
+[PASS] V10_p0_and_rhythm_wiring_not_regressed: {"MotionP0.binding_for(winner_type)": 1, "MotionP0.REVEAL_CARD": 2, "_draw_rhythm_fx(canvas)": 1, "func _apply_rhythm_visuals() -> void:": 1, "tk_damage = Rules.damage_of(tk_player_result)": 1}
+[PASS] V11_static_backdrop_pixels_recomputed_identical: recalc=0 json=0 bytes_equal=True
+[PASS] V12_engine_frame_stats_all_dropped_and_comparable: deltas={'primitives': -294.0, 'draw_calls': -4.0, 'process_ms': -1.6659833333333398}
+[PASS] V13_thirteen_engine_checks_green: result=ALL GREEN opt_check=ENGINE OPT CHECK: 37/37 passed
+[PASS] V14_window_enlarged_1_25_without_layout_change: physical=[1600, 900] logical=[1280, 720] scale=1.25
+[PASS] V15_large_window_full_game_frame_rendered: size=(1600, 900) bytes=999384
+[PASS] V16_rng_root_cause_logged: runs=3 distinct_unseeded=3
+[PASS] V17_regression_evidence_and_restore_ok: rows=8 result=REGRESSION_EVIDENCE_OK
+[PASS] V18_previous_archive_untouched: entries=60 all_match=True
+[PASS] V19_project_godot_only_added_window_override: original_lines_kept=True overrides_present=True
+[PASS] V20_source_fingerprints_written: files=10
+RESULT: 20/20 ENGINE_OPT_VERIFIED

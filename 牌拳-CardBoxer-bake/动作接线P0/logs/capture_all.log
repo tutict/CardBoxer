@@ -1,0 +1,12 @@
+reveal: rc=0 shots=1 gl=True engine_errors=0 marker=['[P0_SHOT] mode=reveal tk_phase=reveal p_action=focus e_action=focus hp=100/100']
+  saved 引擎帧-亮牌focus.png (665235 B)
+triple: rc=0 shots=1 gl=True engine_errors=0 marker=['[P0_SHOT] mode=triple tk_phase=resolve motion=wave label=气功波 winner=player hp=100/77']
+  saved 引擎帧-三同气功波.png (693305 B)
+sequence: rc=0 shots=1 gl=True engine_errors=0 marker=['[P0_SHOT] mode=sequence tk_phase=resolve motion=cross label=交叉反击 winner=player hp=100/85']
+  saved 引擎帧-三连交叉反击.png (697981 B)
+scatter: rc=0 shots=1 gl=True engine_errors=0 marker=['[P0_SHOT] mode=scatter tk_phase=resolve motion=jab label=刺拳 winner=player hp=100/90']
+  saved 引擎帧-散牌刺拳.png (699661 B)
+draw: rc=0 shots=1 gl=True engine_errors=0 marker=['[P0_SHOT] mode=draw tk_phase=resolve motion= label=对峙 winner=draw hp=97/97']
+  saved 引擎帧-平局对峙.png (680094 B)
+RESTORE OK sha256=5c4c393b7b26c6de6aab40be3a57ebfec39845d6b73f651b17d30bb7e53ac8e3
+RESULT: OK reveal | OK triple | OK sequence | OK scatter | OK draw | OK RESTORE

@@ -1,0 +1,3611 @@
+--- baseline/README.md
++++ project/README.md
+@@ -1,6 +1,18 @@
+ # 牌拳 / CARD BOXER
++
++## 3D 战斗版本
++
++双击 `运行游戏-3D.bat` 进入默认回合制，双击 `运行游戏-3D-实时.bat`
++进入实时格斗。双方使用独立的原生骨骼动作，包含出拳、扫腿、发波、
++投技、移动、防守、受击和倒地。`R` 重开；实时格斗中 `空格` 暂停。
++
++手动启动时，`CARD_BOXER_3D=1` 打开 3D，
++`CARD_BOXER_BATTLE_MODE=taikou|realtime` 选择玩法，默认 `taikou`。
++不设置 3D 开关仍运行原来的 2D 版本。
++
++以下是原始实时格斗版本的玩法说明。
+ 
+ 卡牌驱动的 2D 横版格斗。角色不出招式指令，而是打出手牌：每张牌是一个动作，
+ 牌序接上了就是连招，三张特定的牌加 3 点气就是大招。三局两胜，每回合 60 秒。
+ 
+ Godot 4.5（GL Compatibility）。**没有任何贴图资产**——角色、场景、界面全部由 GDScript 绘制。
+--- baseline/scripts/arena.gd
++++ project/scripts/arena.gd
+@@ -19,10 +19,11 @@
+ const TaikouAI = preload("res://scripts/taikou_ai.gd")
+ const Rage = preload("res://scripts/taikou_rage.gd")
+ const MotionP0 = preload("res://scripts/battle_motion_p0.gd")
+ const Rhythm = preload("res://scripts/battle_rhythm.gd")
+ const Fighter3DLayerScript = preload("res://scripts/fighter_3d_layer.gd")
++const BattlePresentationScript = preload("res://scripts/battle_presentation.gd")
+ 
+ ## 玩法骨架："taikou" = 太阁 IV 回合制比牌（默认）；"realtime" = 原实时格斗兜底。
+ ## 改成 realtime 即可完整回到改造前的玩法，不需要回滚任何代码。
+ const BATTLE_MODE := "taikou"
+ const TK_PLAY := 3
+@@ -52,10 +53,19 @@
+ var use_3d := false
+ var layer_3d = null
+ var layer_3d_foe = null
+ var motion_3d: Dictionary = {}
+ var motion_3d_foe: Dictionary = {}
++var native_library = null
++var presentation = null
++var last_visuals: Dictionary = {}
++var _round_serial := 0
++var _visual_random := RandomNumberGenerator.new()
++var _defer_taikou_impacts := false
++var _taikou_impacts: Array[Dictionary] = []
++var _current_projectile_impact: Dictionary = {}
++var _contact_fx := false
+ 
+ var hand: Array = []
+ var cooldowns: Array = []
+ var enemy_hand: Array = []
+ var enemy_cooldowns: Array = []
+@@ -155,10 +165,14 @@
+ var _last_arena_key := ""
+ var _force_redraw := true     # 第一帧 + 外部 force_redraw() 必须真刷
+ 
+ 
+ func _ready() -> void:
++	_visual_random.randomize()
++	var selected_mode := OS.get_environment("CARD_BOXER_BATTLE_MODE")
++	if selected_mode in ["taikou", "realtime"]:
++		battle_mode = selected_mode
+ 	world = Node2D.new()
+ 	world.name = "World"
+ 	add_child(world)
+ 
+ 	player = FighterScript.new()
+@@ -218,10 +232,22 @@
+ 
+ 	# G 路线双轨：默认关。打开时只替换玩家侧绘制，
+ 	# 判定 / position / HP / 伤害 / 牌型 / 阶段时长一概不碰。
+ 	use_3d = OS.get_environment("CARD_BOXER_3D") != ""
+ 	if use_3d:
++		if ResourceLoader.exists("res://scripts/native_motion.gd"):
++			native_library = load("res://scripts/native_motion.gd").new()
++			if not native_library.load_data():
++				push_error("Native 3D motion unavailable; keeping 2D fighters active.")
++				return
++		else:
++			push_error("Native 3D motion script missing; keeping 2D fighters active.")
++			return
++		presentation = BattlePresentationScript.new()
++		presentation.setup(native_library)
++		presentation.reset(_round_serial)
++		presentation.cue_ready.connect(_on_presentation_cue)
+ 		var mf3 := FileAccess.open("res://data/motion_input.json", FileAccess.READ)
+ 		if mf3 != null:
+ 			var parsed3: Variant = JSON.parse_string(mf3.get_as_text())
+ 			mf3.close()
+ 			if parsed3 is Dictionary:
+@@ -236,11 +262,10 @@
+ 		if not motion_3d.is_empty() and not motion_3d_foe.is_empty():
+ 			var l3 := Fighter3DLayerScript.new()
+ 			world.add_child(l3)
+ 			if l3.setup(motion_3d):
+ 				layer_3d = l3
+-				player.draw_3d_override = true
+ 				print("F3D_READY bones=%d cards=%d" % [
+ 					l3.drv.bone_names.size(), motion_3d["cards"].size()])
+ 			else:
+ 				world.remove_child(l3)
+ 				l3.queue_free()
+@@ -248,16 +273,22 @@
+ 			lf.configure("foe", Fighter3DLayerScript.FOE_GLB_PATH,
+ 					Fighter3DLayerScript.DEFAULT_FOE_YAW, false)
+ 			world.add_child(lf)
+ 			if lf.setup(motion_3d_foe):
+ 				layer_3d_foe = lf
+-				enemy.draw_3d_override = true
+ 				print("F3D_FOE_READY bones=%d" % [
+ 					lf.drv.bone_names.size()])
+ 			else:
+ 				world.remove_child(lf)
+ 				lf.queue_free()
++		if layer_3d != null and layer_3d_foe != null:
++			player.draw_3d_override = true
++			enemy.draw_3d_override = true
++		else:
++			push_error("Native 3D model setup failed; keeping 2D fighters active.")
++			if layer_3d != null: layer_3d.visible = false
++			if layer_3d_foe != null: layer_3d_foe.visible = false
+ 
+ 
+ # ── P1 动作覆盖：3D 侧亮牌 / 输家受击 / 平局对峙 ───────────────
+ # 受击轨道与 fighter.gd:1044-1053 同口径：按硬直倾角绝对值 >=0.6
+ # 选 hit_heavy，否则 hit_light；只有 BLOCKSTUN 才用 block。回合制的
+@@ -283,11 +314,11 @@
+ func _3d_frame_of(card: String, t01: float) -> int:
+ 	var n := int(motion_3d["cards"][card]["frames"])
+ 	return clampi(int(clampf(t01, 0.0, 1.0) * float(n - 1)), 0, n - 1)
+ 
+ 
+-func _sync_3d_layer() -> void:
++func _sync_3d_layer_legacy() -> void:
+ 	# 默认关时立刻返回：节奏时钟仍在跑，但 motion_3d 是空的，
+ 	# 继续往下算帧数会撞空字典。G 路线的早退语义必须保留。
+ 	if (layer_3d == null and layer_3d_foe == null) or motion_3d.is_empty():
+ 		return
+ 	var card := "stance"
+@@ -346,10 +377,89 @@
+ 	if layer_3d_foe != null:
+ 		layer_3d_foe.position = enemy.position + enemy.visual_shift
+ 		layer_3d_foe.apply(foe_card, foe_frame)
+ 
+ 
++func _native_active() -> bool:
++	return presentation != null and native_library != null and native_library.available() and layer_3d != null and layer_3d_foe != null and player.draw_3d_override and enemy.draw_3d_override
++
++
++func _presentation_context() -> Dictionary:
++	return {"mode":battle_mode,"round_phase":round_phase,"global_hitstop":maxf(_global_hitstop,0.0),"pause":paused,"terminal":round_phase in ["over","match_over"],"taikou_phase":tk_phase,"taikou_time":tk_phase_time,"snapshots":{"player":player.presentation_snapshot(),"foe":enemy.presentation_snapshot()}}
++
++
++func _advance_presentation(dt: float) -> void:
++	if not _native_active(): return
++	presentation.advance(dt, _presentation_context())
++	if battle_mode == "taikou" and not presentation.exchange.is_empty():
++		if String(presentation.exchange.get("winner", "")) != "draw":
++			tk_rhythm_t = presentation.exchange_time
++			tk_rhythm_hit = presentation.contact_emitted
++			tk_rhythm_winner = "player" if String(presentation.exchange.get("actor", "")) == "player" else "enemy"
++
++
++func _sync_3d_layer() -> void:
++	if not _native_active(): return
++	var context := _presentation_context()
++	for role: String in ["player","foe"]:
++		var fighter = player if role == "player" else enemy
++		var layer = layer_3d if role == "player" else layer_3d_foe
++		var visual: Dictionary = presentation.sample(role, fighter.presentation_snapshot(), context)
++		if visual.is_empty(): continue
++		last_visuals[role] = visual
++		if fighter.visual_shift != visual.canvas_shift or not is_equal_approx(fighter.visual_tilt,float(visual.canvas_tilt)):
++			fighter.queue_redraw()
++		fighter.visual_shift = visual.canvas_shift
++		fighter.visual_tilt = visual.canvas_tilt
++		layer.position = fighter.position + visual.canvas_shift
++		layer.apply_visual(visual)
++
++
++func _impact_event(attacker_is_player: bool, damage: int, blocked: bool, dodged: bool) -> Dictionary:
++	var attacker = player if attacker_is_player else enemy
++	var victim = enemy if attacker_is_player else player
++	var attack: Dictionary = attacker.presentation_snapshot()
++	var struck: Dictionary = victim.presentation_snapshot()
++	var event := {"round_id":_round_serial,"actor":"player" if attacker_is_player else "foe","target":"foe" if attacker_is_player else "player","action_seq":attack.action_seq,"clip_id":attack.card_id,"damage":damage,"blocked":blocked,"dodged":dodged,"terminal":victim.hp <= 0,"local_hitstop":struck.local_hitstop,"stun_duration":struck.stun_duration,"source_kind":"taikou" if _defer_taikou_impacts else "melee","attacker_is_player":attacker_is_player}
++	if not _current_projectile_impact.is_empty():
++		event.merge(_current_projectile_impact, true)
++	return event
++
++
++func _on_presentation_cue(impact: Dictionary) -> void:
++	_contact_fx = true
++	_emit_hit_fx(bool(impact.get("attacker_is_player", impact.get("actor", "player") == "player")), int(impact.get("damage", 0)), bool(impact.get("blocked", false)), bool(impact.get("dodged", false)),impact.get("contact_point",null))
++	_contact_fx = false
++	if tk_winner != "draw":
++		_global_hitstop = maxf(_global_hitstop, Rhythm.HITSTOP_S)
++
++
++## Pure visual calibration against the imported native rig and camera. Damage,
++## reach and gameplay position remain owned by the existing rule path.
++func _calibrate_taikou_contact(actor_role: String,target_role: String,clip: String,terminal: bool) -> Dictionary:
++	var attacker = player if actor_role == "player" else enemy
++	var target = player if target_role == "player" else enemy
++	var attack_layer = layer_3d if actor_role == "player" else layer_3d_foe
++	var target_layer = layer_3d if target_role == "player" else layer_3d_foe
++	if not attack_layer.has_method("anchor_offset") or not target_layer.has_method("anchor_offset"): return {}
++	var contact: float = native_library.contact_frame(actor_role,clip)
++	var attack_pose: Dictionary = native_library.sample(actor_role,clip,contact)
++	var reaction := "ko" if terminal else _3d_react_track()
++	var target_pose: Dictionary = native_library.sample(target_role,reaction,0.0)
++	var hand := "rear_hand" if clip == "cross" else ("palms" if clip == "wave" else "lead_hand")
++	var direction := 1.0 if actor_role == "player" else -1.0
++	var press := Rhythm.press_px(Rhythm.attack_t(Rhythm.HIT_AT_S)) * direction
++	var recoil := Vector2(40.0*direction,0.0)
++	var tilt := deg_to_rad(9.0)*direction
++	var fist: Vector2 = attacker.position+Vector2(press,0.0)+attack_layer.anchor_offset(attack_pose,hand,attacker.facing,0.0)
++	var head: Vector2 = target.position+recoil+target_layer.anchor_offset(target_pose,"head",target.facing,tilt)
++	var chest: Vector2 = target.position+recoil+target_layer.anchor_offset(target_pose,"chest",target.facing,tilt)
++	var height_progress := clampf((fist.y-head.y)/(chest.y-head.y),0.0,1.0) if absf(chest.y-head.y)>0.0001 else 0.5
++	var body: Vector2 = head.lerp(chest,height_progress)
++	return {"approach_extra_x":body.x-fist.x,"contact_point":body,"contact_hand":hand}
++
++
+ # ── 对局流程 ────────────────────────────────────────────────
+ 
+ func _start_match() -> void:
+ 	round_wins = [0, 0]
+ 	round_index = 1
+@@ -359,10 +469,17 @@
+ 	_enemy_deck = _shuffled_deck()
+ 	_start_round()
+ 
+ 
+ func _start_round() -> void:
++	_round_serial += 1
++	if presentation != null: presentation.reset(_round_serial)
++	last_visuals.clear()
++	_taikou_impacts.clear()
++	_current_projectile_impact.clear()
++	_defer_taikou_impacts = false
++	_contact_fx = false
+ 	player.reset_for_round(430, 1)
+ 	enemy.reset_for_round(850, -1)
+ 	_clear_round_effects()
+ 	round_time_left = ROUND_SECONDS
+ 	round_phase = "intro"
+@@ -464,15 +581,19 @@
+ 	combo_count = 0
+ 	combo_shown = 0.0
+ 	_combo_timer = 0.0
+ 	_shake = 0.0
+ 	_flash = 0.0
++	_global_hitstop = 0.0
++	_slowmo = 0.0
+ 
+ 
+ func _end_round(winner: String, reason: String) -> void:
+ 	if round_phase != "fight":
+ 		return
++	if _native_active() and battle_mode == "realtime":
++		presentation.capture_terminal({"player":player.presentation_snapshot(),"foe":enemy.presentation_snapshot()})
+ 	round_phase = "over"
+ 	phase_time = 0.0
+ 	player.freeze()
+ 	enemy.freeze()
+ 	if winner == "player":
+@@ -560,10 +681,11 @@
+ 	if paused:
+ 		_request_redraw()
+ 		return
+ 
+ 	if _global_hitstop > 0.0:
++		_advance_presentation(delta)
+ 		_global_hitstop -= delta
+ 		_tick_effects(delta * 0.25)
+ 		world.position = _shake_offset()
+ 		fx_layer.position = world.position
+ 		# 停顿冻结帧也要同步 3D 层：注入式节奏截帧正落在这一段。
+@@ -576,10 +698,12 @@
+ 
+ 	var dt := delta
+ 	if _slowmo > 0.0:
+ 		_slowmo -= delta
+ 		dt = delta * 0.35
++	if _native_active() and (battle_mode != "taikou" or round_phase != "fight"):
++		_advance_presentation(dt)
+ 
+ 	phase_time += dt
+ 	_shake = move_toward(_shake, 0.0, dt * 70.0)
+ 	_flash = move_toward(_flash, 0.0, dt * 3.2)
+ 	banner_time = maxf(0.0, banner_time - dt)
+@@ -599,11 +723,12 @@
+ 				_advance_after_round()
+ 		"match_over":
+ 			player.tick(dt, 0.0, false)
+ 			enemy.tick(dt, 0.0, false)
+ 
+-	_tick_projectiles(dt)
++	if round_phase == "fight":
++		_tick_projectiles(dt)
+ 	_tick_effects(dt)
+ 	world.position = _shake_offset()
+ 	fx_layer.position = world.position
+ 	_sync_3d_layer()
+ 	_request_redraw()
+@@ -728,10 +853,13 @@
+ # 实时格斗那套（前摇 / 距离 / 气 / 读牌 AI）在这条分支里一步都不跑，
+ # 角色只借 perform_visual() 播动画，伤害统一由 apply_hit() 结算。
+ # 把 BATTLE_MODE 改回 "realtime" 就完整回到原玩法，不需要回滚代码。
+ 
+ func _reset_taikou_turn(new_round: bool) -> void:
++	if presentation != null: presentation.reset(_round_serial)
++	last_visuals.clear()
++	_taikou_impacts.clear()
+ 	if new_round:
+ 		tk_turn = 1
+ 	tk_phase = "discard"
+ 	tk_phase_time = 0.0
+ 	tk_marks.clear()
+@@ -762,12 +890,15 @@
+ 	)
+ 
+ 
+ func _tick_taikou(dt: float) -> void:
+ 	tk_phase_time += dt
+-	_tick_rhythm(dt)
+-	_apply_rhythm_visuals()
++	if _native_active():
++		_advance_presentation(dt)
++	else:
++		_tick_rhythm(dt)
++		_apply_rhythm_visuals()
+ 	# 动画照常驱动；回合制不允许移动，也不跑实时 AI / 实时出牌 / 冷却补牌。
+ 	player.tick(dt, 0.0, false)
+ 	enemy.tick(dt, 0.0, false)
+ 	player.face_toward(enemy.position.x)
+ 	enemy.face_toward(player.position.x)
+@@ -958,10 +1089,12 @@
+ 		Color(0.92, 0.92, 0.98), 1.4
+ 	)
+ 
+ 
+ func _resolve_taikou() -> void:
++	_defer_taikou_impacts = _native_active()
++	_taikou_impacts.clear()
+ 	var cmp: int = Rules.compare(tk_player_result, tk_enemy_result)
+ 	# P2/P3：动作强度由**赢家牌型**决定，退役 tk_*_ids[0]；只有赢家播
+ 	# 攻击、输家只播受击，平局两边都不播攻击。extra 交给 fighter.gd 的
+ 	# apply_hit()，对应已有 0.26 / 0.42 / 0.75s 硬直四档（G4）。
+ 	# 伤害公式仍走 Rules.damage_of()，接线不改数值。
+@@ -1004,10 +1137,22 @@
+ 		enemy.apply_hit(3, "taikou", tk_motion_extra, false)
+ 		tk_player_rage = Rage.gain(tk_player_rage, 3)
+ 		tk_enemy_rage = Rage.gain(tk_enemy_rage, 3)
+ 		_banner("平局", "双方各受 3 点 · %s" % tk_motion_label, Color(0.86, 0.88, 0.95), 1.6)
+ 	# 验收钩子：只有无输入自动对战才打，正常游玩不产生日志噪音。
++	_defer_taikou_impacts = false
++	if _native_active():
++		var actor := "player" if tk_winner == "player" else "foe"
++		var attacker = player if actor == "player" else enemy
++		var target_role := "foe" if actor == "player" else "player"
++		var terminal: bool = player.hp <= 0 or enemy.hp <= 0
++		var exchange := {"round_id":_round_serial,"winner":tk_winner,"actor":actor if tk_winner != "draw" else "","target":target_role,"clip_id":tk_motion_id,"action_seq":attacker.presentation_snapshot().action_seq,"terminal":terminal,"extra":tk_motion_extra,"impacts":_taikou_impacts}
++		if tk_winner != "draw":
++			var calibration := _calibrate_taikou_contact(actor,target_role,tk_motion_id,terminal)
++			exchange.merge(calibration,true)
++			for impact: Dictionary in _taikou_impacts: impact.merge(calibration,true)
++		presentation.begin_exchange(exchange)
+ 	if tk_bot:
+ 		print("[TAIKOU] turn=%d hp=%d/%d rage=%d/%d ex=%s/%s | 你 %s %s vs 青岚 %s %s | winner=%s dmg=%d motion=%s react=%s extra=%s" % [
+ 			tk_turn, player.hp, enemy.hp,
+ 			int(tk_player_rage), int(tk_enemy_rage),
+ 			"EX" if tk_player_ex else "-", "EX" if tk_enemy_ex else "-",
+@@ -1104,13 +1249,30 @@
+ 
+ 
+ # ── 命中表现 ────────────────────────────────────────────────
+ 
+ func _on_hit_confirmed(attacker_is_player: bool, damage: int, blocked: bool, dodged: bool) -> void:
++	if _native_active():
++		var impact := _impact_event(attacker_is_player, damage, blocked, dodged)
++		if _defer_taikou_impacts:
++			_taikou_impacts.append(impact)
++			return
++		presentation.record_impact(impact)
++	_emit_hit_fx(attacker_is_player, damage, blocked, dodged)
++
++
++func _emit_hit_fx(attacker_is_player: bool, damage: int, blocked: bool, dodged: bool,contact_point: Variant = null) -> void:
+ 	var victim = enemy if attacker_is_player else player
+ 	var attacker = player if attacker_is_player else enemy
+ 	var at: Vector2 = victim.position + Vector2(0, -112)
++	if _native_active():
++		var role := "foe" if attacker_is_player else "player"
++		var visual: Dictionary = presentation.sample(role,victim.presentation_snapshot(),_presentation_context())
++		if not visual.is_empty():
++			var layer = layer_3d_foe if attacker_is_player else layer_3d
++			at = victim.position + visual.canvas_shift + layer.anchor_offset(visual.pose,"chest",visual.facing,visual.canvas_tilt)
++		if contact_point is Vector2: at = contact_point
+ 
+ 	if dodged:
+ 		_push_ring(at, Color(0.72, 0.92, 1.0), 0.22)
+ 		_push_float_text(at + Vector2(0, -26), "闪避", Color(0.72, 0.92, 1.0))
+ 		if victim == player:
+@@ -1118,11 +1280,11 @@
+ 		return
+ 
+ 	if blocked:
+ 		_push_ring(at, Color(0.58, 0.74, 0.98), 0.2)
+ 		_push_float_text(at + Vector2(0, -20), "格挡 %d" % damage, Color(0.68, 0.82, 1.0))
+-		_global_hitstop = 0.045
++		if not _contact_fx: _global_hitstop = 0.045
+ 		_shake = maxf(_shake, 3.5)
+ 		return
+ 
+ 	# 命中
+ 	_push_spark(at, attacker_is_player)
+@@ -1133,21 +1295,21 @@
+ 	)
+ 	if _capture_on_hit and not _hit_shot_taken:
+ 		_hit_shot_taken = true
+ 		_capture_hit_shot()
+ 	_push_ring(at, Color(1.0, 0.92, 0.72) if attacker_is_player else Color(0.72, 0.9, 1.0), 0.26)
+-	_global_hitstop = 0.07
++	if not _contact_fx: _global_hitstop = 0.07
+ 	_shake = maxf(_shake, 5.0 + minf(6.0, float(damage) * 0.35))
+ 
+ 	if attacker_is_player:
+ 		combo_count += 1
+ 		combo_shown = 1.1
+ 		_combo_timer = 1.4
+ 		var name: String = player.combo_name()
+ 		if name != "":
+ 			_banner(name, "+%d 伤害" % player.combo_bonus(), Color(1.0, 0.78, 0.38), 0.7)
+-		if player.combo_bonus() > 0:
++		if player.combo_bonus() > 0 and not _contact_fx:
+ 			_global_hitstop = 0.12
+ 	else:
+ 		combo_count = 0
+ 		combo_shown = 0.0
+ 
+@@ -1167,20 +1329,27 @@
+ 
+ 
+ # ── 投射物 ──────────────────────────────────────────────────
+ 
+ func _on_projectile_requested(origin: Vector2, damage: int, direction: int, owner_name: String) -> void:
++	var owner = player if owner_name == player.display_name else enemy
++	var snapshot: Dictionary = owner.presentation_snapshot()
++	if _native_active():
++		presentation.record_impact({"round_id":_round_serial,"actor":"player" if owner.is_player else "foe","target":"foe" if owner.is_player else "player","action_seq":snapshot.action_seq,"clip_id":"wave","source_kind":"release"})
+ 	projectiles.append({
+ 		"pos": origin,
+ 		"dir": direction,
+ 		"damage": damage,
+ 		"owner_is_player": owner_name == player.display_name,
+ 		"t": 0.0,
++		"round_id":_round_serial,
++		"action_seq":snapshot.action_seq,
+ 	})
+ 
+ 
+ func _tick_projectiles(dt: float) -> void:
++	if round_phase != "fight": return
+ 	var speed := 640.0
+ 	for i in range(projectiles.size() - 1, -1, -1):
+ 		var p: Dictionary = projectiles[i]
+ 		p["t"] = float(p["t"]) + dt
+ 		p["pos"] = (p["pos"] as Vector2) + Vector2(speed * float(p["dir"]) * dt, 0)
+@@ -1188,31 +1357,36 @@
+ 		var is_player_shot: bool = bool(p["owner_is_player"])
+ 		var target = enemy if is_player_shot else player
+ 		# 只看水平距离：横版格斗里没有纵向判定，加一条 y 条件只会让波从胸口
+ 		# 飞过去打不中（第一版就是这么写的，波永远穿身而过）。
+ 		if absf(target.position.x - pos.x) < 46.0:
++			_current_projectile_impact = {"round_id":p.get("round_id", _round_serial),"action_seq":p.get("action_seq", 0),"clip_id":"wave","source_kind":"projectile"}
+ 			target.apply_hit(int(p["damage"]), "wave", "", false)
++			_current_projectile_impact.clear()
+ 			_push_ring(pos, Color(0.62, 0.9, 1.0), 0.3)
+ 			projectiles.remove_at(i)
++			if player.hp <= 0 or enemy.hp <= 0:
++				_end_round("player" if enemy.hp <= 0 else "enemy", "K.O.")
++				return
+ 			continue
+ 		if pos.x < -60.0 or pos.x > 1340.0 or float(p["t"]) > 2.6:
+ 			projectiles.remove_at(i)
+ 
+ 
+ # ── 特效 ────────────────────────────────────────────────────
+ 
+ func _push_spark(at: Vector2, from_player: bool) -> void:
+ 	var color := Color(1.0, 0.86, 0.52) if from_player else Color(0.62, 0.9, 1.0)
+ 	for i in range(9):
+-		var angle := randf_range(-PI, PI)
+-		var speed := randf_range(90.0, 320.0)
++		var angle := _visual_random.randf_range(-PI, PI)
++		var speed := _visual_random.randf_range(90.0, 320.0)
+ 		effects.append({
+ 			"kind": "spark",
+ 			"pos": at,
+ 			"vel": Vector2(cos(angle), sin(angle)) * speed,
+ 			"t": 0.0,
+-			"life": randf_range(0.18, 0.34),
++			"life": _visual_random.randf_range(0.18, 0.34),
+ 			"color": color,
+ 		})
+ 
+ 
+ func _push_ring(at: Vector2, color: Color, life: float) -> void:
+@@ -1225,11 +1399,11 @@
+ 	for e: Dictionary in effects:
+ 		if String(e["kind"]) != "text":
+ 			continue
+ 		if String(e["text"]) == text and float(e["t"]) < 0.3:
+ 			return
+-	var jitter := Vector2(randf_range(-22.0, 22.0), randf_range(-6.0, 6.0))
++	var jitter := Vector2(_visual_random.randf_range(-22.0, 22.0), _visual_random.randf_range(-6.0, 6.0))
+ 	effects.append({"kind": "text", "pos": at + jitter, "text": text, "t": 0.0, "life": 0.72, "color": color})
+ 
+ 
+ func _tick_effects(dt: float) -> void:
+ 	for i in range(effects.size() - 1, -1, -1):
+@@ -1250,11 +1424,11 @@
+ 
+ 
+ func _shake_offset() -> Vector2:
+ 	if _shake <= 0.05:
+ 		return Vector2.ZERO
+-	return Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0)) * _shake
++	return Vector2(_visual_random.randf_range(-1.0, 1.0), _visual_random.randf_range(-1.0, 1.0)) * _shake
+ 
+ 
+ # ── 输入 ────────────────────────────────────────────────────
+ 
+ func _unhandled_input(event: InputEvent) -> void:
+@@ -1301,10 +1475,17 @@
+ ## 由 fx_layer 在自己的 _draw 里回调。画在角色之上，跟着震屏一起抖。
+ func paint_fx(canvas: CanvasItem) -> void:
+ 	for e: Dictionary in effects:
+ 		_draw_effect(canvas, e)
+ 	_draw_rhythm_fx(canvas)
++
++
++func _rhythm_contact_point() -> Vector2:
++	if _native_active() and presentation.exchange.get("contact_point",null) is Vector2:
++		return presentation.exchange["contact_point"]
++	var loser: Fighter = enemy if tk_rhythm_winner == "player" else player
++	return Vector2(loser.position.x+loser.visual_shift.x,Rhythm.GAME_GROUND_Y+Rhythm.GAME_SPARK_Y_OFFSET)
+ 
+ 
+ ## 节奏层的三种纯绘制特效，画在 fx_layer（角色之后、HUD 之前）。
+ ## 不进 effects 队列：它们由节奏时钟解析式决定，重复帧必须完全一致。
+ func _draw_rhythm_fx(canvas: CanvasItem) -> void:
+@@ -1328,13 +1509,13 @@
+ 		var st := clampf(
+ 			(tk_rhythm_t - Rhythm.HIT_AT_S) / (Rhythm.FRAME_S * Rhythm.SPARK_TAIL_FRAMES),
+ 			0.0, 1.0)
+ 		var a := Rhythm.spark_alpha01(st)
+ 		# 必须显式标注：untyped Variant 上的 .position 推不出 := 的类型。
+-		var loser: Fighter = enemy if tk_rhythm_winner == "player" else player
+-		var hx: float = loser.position.x + loser.visual_shift.x
+-		var hy := Rhythm.GAME_GROUND_Y + Rhythm.GAME_SPARK_Y_OFFSET
++		var contact := _rhythm_contact_point()
++		var hx := contact.x
++		var hy := contact.y
+ 		var r := Rhythm.SPARK_RADIUS_BASE_PX + Rhythm.SPARK_RADIUS_GROWTH_PX * st
+ 		canvas.draw_circle(Vector2(hx, hy), Rhythm.SPARK_CORE_PX,
+ 			Color(1.0, 0.988, 0.91, a))
+ 		for k in range(int(Rhythm.SPARK_RAYS)):
+ 			var ang := TAU * float(k) / Rhythm.SPARK_RAYS + Rhythm.SPARK_RAY_PHASE
+--- baseline/scripts/battle_presentation.gd
++++ project/scripts/battle_presentation.gd
+@@ -0,0 +1,325 @@
++extends RefCounted
++## Independent visual clocks. No rule, meter, collision or RNG changes occur here.
++signal cue_ready(impact: Dictionary)
++const Defs = preload("res://scripts/card_data.gd")
++const CONTACT_S := 0.48
++const ATTACK_S := 1.12
++const CONTACT_HOLD_S := 0.24
++const KO_S := 0.45
++const BLEND_S := 0.06
++const RETREAT_START_S := 0.56
++const GAIT_STRIDE_PX := 120.0
++var library = null
++var round_id := 0
++var exchange: Dictionary = {}
++var exchange_time := 0.0
++var contact_emitted := false
++var _hold_left := 0.0
++var _remainder := 0.0
++var _seen: Dictionary = {}
++var _latches: Dictionary = {}
++var _reactions: Dictionary = {}
++var _terminal: Dictionary = {}
++var _terminal_attacks: Dictionary = {}
++var _fresh_latches: Dictionary = {}
++var _idle_time := 0.0
++var _last_poses: Dictionary = {}
++var _last_pose_keys: Dictionary = {}
++var _transitions: Dictionary = {}
++
++func setup(p_library) -> void:
++	library = p_library
++	if library != null and library.available(): library.prepare_support()
++
++func reset(p_round_id: int) -> void:
++	round_id = p_round_id
++	exchange.clear()
++	exchange_time = 0.0
++	contact_emitted = false
++	_hold_left = 0.0
++	_remainder = 0.0
++	_seen.clear()
++	_latches.clear()
++	_reactions.clear()
++	_terminal.clear()
++	_terminal_attacks.clear()
++	_fresh_latches.clear()
++	_idle_time = 0.0
++	_last_poses.clear()
++	_last_pose_keys.clear()
++	_transitions.clear()
++
++func begin_exchange(event: Dictionary) -> void:
++	if int(event.get("round_id", round_id)) != round_id: return
++	var identity := str(["exchange", round_id, event.get("actor", ""), event.get("action_seq", 0), event.get("winner", "")])
++	if _seen.has(identity): return
++	_seen[identity] = true
++	exchange = event.duplicate(true)
++	exchange_time = 0.0
++	contact_emitted = false
++	_hold_left = 0.0
++	_remainder = 0.0
++	_reactions.clear()
++	if String(exchange.get("winner", "")) == "draw":
++		contact_emitted = true
++		for impact: Dictionary in exchange.get("impacts", []):
++			_start_reaction(impact)
++			cue_ready.emit(impact.duplicate(true))
++
++func record_impact(impact: Dictionary) -> void:
++	if int(impact.get("round_id", round_id)) != round_id: return
++	var key := str([round_id, impact.get("actor", ""), impact.get("target", ""), impact.get("action_seq", 0), impact.get("source_kind", "melee")])
++	if _seen.has(key): return
++	_seen[key] = true
++	if String(impact.get("source_kind", "")) != "release": _start_reaction(impact)
++	if not bool(impact.get("dodged", false)) and String(impact.get("source_kind", "")) != "projectile":
++		_latches[String(impact.get("actor", "player"))] = impact.duplicate(true)
++		_fresh_latches[String(impact.get("actor", "player"))] = true
++	if bool(impact.get("terminal", false)) and String(impact.get("source_kind", "")) != "projectile":
++		var card: Dictionary = Defs.card(String(impact.get("clip_id", "")))
++		_terminal_attacks[String(impact.get("actor", "player"))] = {"time":0.0,"duration":float(card.get("recover",1)) * Defs.FRAME,"hold_left":float(impact.get("local_hitstop",0.0)),"impact":impact.duplicate(true)}
++
++func _start_reaction(impact: Dictionary) -> void:
++	if bool(impact.get("dodged", false)): return
++	var role := String(impact.get("target", "foe"))
++	var duration := float(impact.get("stun_duration", 0.26))
++	var clip := "block" if bool(impact.get("blocked", false)) else ("hit_heavy" if duration > 0.26 else "hit_light")
++	_reactions[role] = {"clip_id":clip,"time":0.0,"duration":duration,"impact":impact.duplicate(true)}
++	if bool(impact.get("terminal", false)):
++		_terminal[role] = {"time":0.0,"hold_left":float(impact.get("local_hitstop",0.0)) if String(impact.get("source_kind","")) != "taikou" else 0.0,"impact":impact.duplicate(true)}
++
++## Save currently playing winner actions before Arena freezes its rule state.
++## A late fatal projectile may belong to an older action; keep the current clip.
++func capture_terminal(snapshots: Dictionary) -> void:
++	for role: String in snapshots:
++		var snapshot: Dictionary = snapshots[role]
++		if _terminal.has(role) or _terminal_attacks.has(role) or int(snapshot.get("state",0)) != 1: continue
++		var clip := String(snapshot.get("card_id",""))
++		var card: Dictionary = Defs.card(clip)
++		if card.is_empty(): continue
++		var phases := ["windup","active","recover"]
++		var phase_index := phases.find(String(snapshot.get("phase","windup")))
++		var duration := -float(snapshot.get("phase_time",0.0))
++		for index in range(maxi(phase_index,0),3): duration += float(card[phases[index]]) * Defs.FRAME
++		_terminal_attacks[role] = {"time":0.0,"duration":maxf(duration,0.001),"hold_left":float(snapshot.get("local_hitstop",0.0)),"impact":{"clip_id":clip},"snapshot":snapshot.duplicate(true)}
++
++func advance(dt: float, context: Dictionary) -> void:
++	if bool(context.get("pause", false)): return
++	_fresh_latches.clear()
++	dt = maxf(dt, 0.0)
++	var global_hold := float(context.get("global_hitstop", 0.0)) > 0.0
++	if _hold_left > 0.0:
++		_remainder += maxf(0.0, dt - _hold_left)
++		_hold_left = maxf(0.0, _hold_left - dt)
++		return
++	if global_hold: return
++	_idle_time += dt
++	if String(context.get("mode", "realtime")) == "taikou" and not exchange.is_empty():
++		dt += _remainder
++		_remainder = 0.0
++		var next := exchange_time + dt
++		if not contact_emitted and String(exchange.get("winner", "")) != "draw" and next >= CONTACT_S - 0.0000001:
++			_remainder = maxf(0.0, next - CONTACT_S)
++			exchange_time = CONTACT_S
++			contact_emitted = true
++			_hold_left = CONTACT_HOLD_S
++			for impact: Dictionary in exchange.get("impacts", []):
++				_start_reaction(impact)
++				cue_ready.emit(impact.duplicate(true))
++			return
++		exchange_time = next
++	var snapshots: Dictionary = context.get("snapshots", {})
++	var taikou := String(context.get("mode", "realtime")) == "taikou"
++	for role: String in _transitions:
++		if float(snapshots.get(role, {}).get("local_hitstop", 0.0)) > 0.0: continue
++		_transitions[role]["time"] = minf(BLEND_S, float(_transitions[role]["time"]) + dt)
++	for role: String in _reactions:
++		var snap: Dictionary = snapshots.get(role, {})
++		if not taikou and not bool(context.get("terminal",false)) and float(snap.get("local_hitstop", 0.0)) > 0.0: continue
++		_reactions[role]["time"] = float(_reactions[role]["time"]) + dt
++	for role: String in _terminal:
++		var snap: Dictionary = snapshots.get(role, {})
++		if not taikou and not bool(context.get("terminal",false)) and float(snap.get("local_hitstop", 0.0)) > 0.0: continue
++		var consumed := minf(dt, float(_terminal[role]["hold_left"]))
++		_terminal[role]["hold_left"] = maxf(0.0, float(_terminal[role]["hold_left"]) - consumed)
++		_terminal[role]["time"] = minf(KO_S, float(_terminal[role]["time"]) + dt - consumed)
++	for role: String in _terminal_attacks:
++		var consumed := minf(dt, float(_terminal_attacks[role]["hold_left"]))
++		_terminal_attacks[role]["hold_left"] = maxf(0.0, float(_terminal_attacks[role]["hold_left"]) - consumed)
++		_terminal_attacks[role]["time"] = float(_terminal_attacks[role]["time"]) + dt - consumed
++
++func sample(role: String, snapshot: Dictionary, context: Dictionary) -> Dictionary:
++	if library == null or not library.available(): return {}
++	var clip := "idle"
++	var frame := 0.0
++	var facing := int(snapshot.get("facing", 1 if role == "player" else -1))
++	var shift := Vector2.ZERO
++	var tilt := 0.0
++	var frozen := bool(context.get("pause", false)) or float(context.get("global_hitstop", 0.0)) > 0.0 or float(snapshot.get("local_hitstop", 0.0)) > 0.0 or _hold_left > 0.0
++	var taikou := String(context.get("mode", "realtime")) == "taikou"
++	if _terminal.has(role):
++		clip = "ko"
++		frame = float(_terminal[role]["time"]) / KO_S * float(library.clip_frames(role, clip) - 1)
++		frozen = bool(context.get("pause",false)) or float(context.get("global_hitstop",0.0)) > 0.0 or _hold_left > 0.0 or float(_terminal[role]["hold_left"]) > 0.0 or float(_terminal[role]["time"]) >= KO_S
++	elif _terminal_attacks.has(role):
++		var attack: Dictionary = _terminal_attacks[role]
++		if float(attack["time"]) < float(attack["duration"]):
++			clip = String(attack.impact.get("clip_id","stance"))
++			if attack.has("snapshot"):
++				frame = _terminal_action_frame(role,clip,attack)
++			else:
++				frame = lerpf(maxf(0.0,library.contact_frame(role,clip)),float(library.clip_frames(role,clip) - 1),clampf(float(attack["time"]) / float(attack["duration"]),0.0,1.0))
++			frozen = frozen or float(attack["hold_left"]) > 0.0
++		else:
++			clip = "stance"
++	elif _reactions.has(role) and (taikou or int(snapshot.get("state",0)) in [2,3]) and float(_reactions[role]["time"]) <= float(_reactions[role]["duration"]):
++		var reaction: Dictionary = _reactions[role]
++		clip = String(reaction["clip_id"])
++		var at := float(reaction["time"])
++		if not taikou and int(snapshot.get("state", 0)) in [2, 3]: at = float(snapshot.get("state_time", 0.0))
++		frame = clampf(at / float(reaction["duration"]), 0.0, 1.0) * float(library.clip_frames(role, clip) - 1)
++	elif taikou and not exchange.is_empty():
++		if String(exchange.get("actor", "")) == role and exchange_time <= ATTACK_S:
++			clip = String(exchange.get("clip_id", "stance"))
++			var contact: float = library.contact_frame(role, clip)
++			if exchange_time <= CONTACT_S:
++				frame = maxf(contact, 0.0) * clampf(exchange_time / CONTACT_S, 0.0, 1.0)
++			else:
++				frame = lerpf(maxf(contact, 0.0), float(library.clip_frames(role, clip) - 1), clampf((exchange_time - CONTACT_S) / (ATTACK_S - CONTACT_S), 0.0, 1.0))
++		else:
++			clip = "stance"
++	elif taikou and String(context.get("taikou_phase", "")) == "reveal":
++		clip = "focus"
++		frame = clampf(float(context.get("taikou_time", 0.0)) / 1.5, 0.0, 1.0) * float(library.clip_frames(role, clip) - 1)
++	elif _latches.has(role) and int(_latches[role].get("action_seq", -1)) == int(snapshot.get("action_seq", 0)) and (_fresh_latches.has(role) or _impact_holding(_latches[role], context)):
++		clip = String(_latches[role].get("clip_id", "stance"))
++		frame = maxf(0.0, library.contact_frame(role, clip))
++		frozen = true
++	elif int(snapshot.get("state", 0)) == 1 and String(snapshot.get("card_id", "")) != "":
++		clip = String(snapshot["card_id"])
++		frame = library.phase_frame(role, clip, String(snapshot.get("phase", "windup")), float(snapshot.get("phase_progress", 0.0)))
++	elif int(snapshot.get("state", 0)) == 5:
++		clip = "ko"
++		frame = minf(1.0, float(snapshot.get("state_time", 0.0)) / KO_S) * float(library.clip_frames(role, clip) - 1)
++	elif int(snapshot.get("state", 0)) in [2, 3]:
++		clip = "block" if int(snapshot["state"]) == 3 else ("hit_heavy" if float(snapshot.get("stun_duration", 0.26)) > 0.26 else "hit_light")
++		frame = clampf(float(snapshot.get("state_time", 0.0)) / maxf(0.001, float(snapshot.get("stun_duration", 0.26))), 0.0, 1.0) * float(library.clip_frames(role, clip) - 1)
++	elif bool(snapshot.get("guarding", false)):
++		clip = "guard"
++		frame = float(library.clip_frames(role, clip) - 1)
++	elif bool(snapshot.get("dodging", false)):
++		clip = "sidestep"
++		frame = float(library.clip_frames(role, clip) - 1)
++	elif float(snapshot.get("walk_blend", 0.0)) > 0.001:
++		clip = "walk"
++		var phase := float(snapshot.get("walk_phase", 0.0))
++		if int(snapshot.get("walk_direction",1)) < 0: phase = fposmod(-phase,1.0)
++		frame = phase * float(library.clip_frames(role, clip) - 1)
++	else:
++		frame = fposmod(_idle_time * 60.0, float(maxi(library.clip_frames(role, clip) - 1, 1)))
++	if taikou and not exchange.is_empty():
++		var direction := 1.0 if String(exchange.get("actor", "")) == "player" else -1.0
++		var after := maxf(0.0, exchange_time - CONTACT_S)
++		if role == String(exchange.get("actor", "")) and exchange_time <= ATTACK_S:
++			shift.x = _contact_shift(direction)*_travel_weight(exchange_time)
++		elif contact_emitted and String(exchange.get("winner", "")) != "draw":
++			var fade := maxf(0.0, 1.0 - after / 0.56)
++			shift.x = 40.0 * direction * fade
++			tilt = deg_to_rad(9.0) * direction * fade
++	var pose: Dictionary = library.sample(role, clip, frame)
++	if clip == "walk": pose = _blend_stance(role, pose, float(snapshot.get("walk_blend", 0.0)))
++	if taikou and role == String(exchange.get("actor","")) and absf(float(exchange.get("approach_extra_x",0.0))) > 20.0 and exchange_time > 0.0 and exchange_time < ATTACK_S:
++		var direction := 1.0 if role == "player" else -1.0
++		var travel := absf(_contact_shift(direction))
++		var returning := exchange_time > RETREAT_START_S
++		var progress := clampf((exchange_time-RETREAT_START_S)/(ATTACK_S-RETREAT_START_S),0.0,1.0) if returning else clampf(exchange_time/CONTACT_S,0.0,1.0)
++		var duration := ATTACK_S-RETREAT_START_S if returning else CONTACT_S
++		var velocity := travel*30.0*progress*progress*(1.0-progress)*(1.0-progress)/duration
++		var signed_travel := -travel*(1.0-_travel_weight(exchange_time)) if returning else travel*_travel_weight(exchange_time)
++		# Smooth saturation keeps fast dashes readable without a velocity corner
++		# when an arbitrary gait-strength cap is reached.
++		pose = _travel_legs(role,pose,signed_travel,.55*(1.0-exp(-velocity/600.0)))
++	var contact: float = library.contact_frame(role,clip)
++	var immediate := clip in ["hit_light","hit_heavy","block","ko"] or (contact >= 0.0 and is_equal_approx(frame,contact) and frozen)
++	var identity := str([context.get("mode","realtime"),clip,snapshot.get("action_seq",0),snapshot.get("state",0),snapshot.get("walk_direction",1) if clip == "walk" else 0])
++	pose = _transition_pose(role,pose,identity,immediate)
++	return {"pose":pose,"facing":facing,"canvas_shift":shift,"canvas_tilt":tilt,"clip_id":clip,"frame":frame,"frozen":frozen}
++
++func _transition_pose(role: String, target: Dictionary, identity: String, immediate: bool) -> Dictionary:
++	if immediate:
++		_transitions.erase(role)
++	elif _last_poses.has(role) and String(_last_pose_keys.get(role,"")) != identity:
++		_transitions[role] = {"from":_last_poses[role].duplicate(true),"time":0.0}
++	_last_pose_keys[role] = identity
++	var displayed := target
++	if _transitions.has(role):
++		var transition: Dictionary = _transitions[role]
++		var weight := clampf(float(transition["time"]) / BLEND_S,0.0,1.0)
++		displayed = _mix_pose(transition["from"],target,weight)
++		if weight >= 1.0: _transitions.erase(role)
++	_last_poses[role] = displayed.duplicate(true)
++	return displayed
++
++func _contact_shift(direction: float) -> float:
++	# Keep the existing calibration's exact .48s pulse contribution.
++	var peak := 110.0*maxf(0.0,1.0-absf(CONTACT_S/ATTACK_S-.45)/.3)
++	return peak*direction+float(exchange.get("approach_extra_x",0.0))
++
++func _smootherstep(progress: float) -> float:
++	var p := clampf(progress,0.0,1.0)
++	return p*p*p*(p*(p*6.0-15.0)+10.0)
++
++func _travel_weight(time: float) -> float:
++	if time <= CONTACT_S: return _smootherstep(time/CONTACT_S)
++	# The glove recoils while the torso still owns the contact space, then the
++	# feet carry the return. This uses visual world time, so holds freeze it.
++	return 1.0-_smootherstep((time-RETREAT_START_S)/(ATTACK_S-RETREAT_START_S))
++
++## Distance, signed relative to facing, drives both approach and retreat. A
++## zero velocity produces the authored pose exactly, including contact/guard.
++func _travel_legs(role: String, pose: Dictionary, signed_travel: float, weight: float) -> Dictionary:
++	if weight <= .000001: return pose
++	var phase := fposmod(signed_travel/GAIT_STRIDE_PX,1.0)
++	var walk: Dictionary = library.sample(role,"walk",phase*float(library.clip_frames(role,"walk")-1))
++	var stance: Dictionary = library.sample(role,"stance",0.0)
++	var out: Dictionary = pose.duplicate(true)
++	for bone: String in ["thigh_f","shin_f","thigh_b","shin_b"]:
++		var a: Array = pose.rotations[bone]
++		var b: Array = walk.rotations[bone]
++		var s: Array = stance.rotations[bone]
++		var delta := Quaternion(s[0],s[1],s[2],s[3]).inverse()*Quaternion(b[0],b[1],b[2],b[3])
++		var q := (Quaternion(a[0],a[1],a[2],a[3])*Quaternion.IDENTITY.slerp(delta,clampf(weight,0.0,1.0))).normalized()
++		out.rotations[bone] = [q.x,q.y,q.z,q.w]
++	return library.preserve_support(role,out,pose)
++
++func _impact_holding(impact: Dictionary, context: Dictionary) -> bool:
++	if float(context.get("global_hitstop", 0.0)) > 0.0: return true
++	var snapshots: Dictionary = context.get("snapshots", {})
++	return float(snapshots.get(String(impact.get("target", "foe")), {}).get("local_hitstop", 0.0)) > 0.0
++
++func _terminal_action_frame(role: String, clip: String, attack: Dictionary) -> float:
++	var card: Dictionary = Defs.card(clip)
++	var phases := ["windup","active","recover"]
++	var index := maxi(0,phases.find(String(attack.snapshot.get("phase","windup"))))
++	var elapsed := float(attack.snapshot.get("phase_time",0.0)) + float(attack["time"])
++	while index < 3:
++		var duration := float(card[phases[index]]) * Defs.FRAME
++		if elapsed <= duration and duration > 0.0:
++			return library.phase_frame(role,clip,phases[index],clampf(elapsed / duration,0.0,1.0))
++		elapsed -= duration
++		index += 1
++	return float(library.clip_frames(role,clip) - 1)
++
++func _blend_stance(role: String, pose: Dictionary, weight: float) -> Dictionary:
++	var stance: Dictionary = library.sample(role, "stance", 0.0)
++	return _mix_pose(stance,pose,weight)
++
++func _mix_pose(from: Dictionary, pose: Dictionary, weight: float) -> Dictionary:
++	var out: Dictionary = pose.duplicate(true)
++	for bone: String in out.get("rotations", {}):
++		var a: Array = from.rotations[bone]
++		var b: Array = out.rotations[bone]
++		var q := Quaternion(a[0],a[1],a[2],a[3]).slerp(Quaternion(b[0],b[1],b[2],b[3]), clampf(weight,0.0,1.0))
++		out.rotations[bone] = [q.x,q.y,q.z,q.w]
++	for axis in range(3): out.root_offset[axis] = lerpf(float(from.root_offset[axis]), float(pose.root_offset[axis]), clampf(weight,0.0,1.0))
++	return out
+--- baseline/scripts/fighter.gd
++++ project/scripts/fighter.gd
+@@ -72,10 +72,15 @@
+ var state_time := 0.0
+ var opponent: Fighter = null
+ var display_name := "拳手"
+ 
+ var _action: Dictionary = {}
++var _action_seq := 0
++var _terminal_snapshot: Dictionary = {}
++var _presentation_moving := false
++var _presentation_walk_blend := 0.0
++var _presentation_walk_direction := 1
+ var _action_phase := ""
+ var _phase_time := 0.0
+ var _has_hit := false
+ ## 回合制合战：只播招式动画，不跑实时命中结算（伤害由 arena 统一结算）。
+ var _visual_only := false
+@@ -139,10 +144,22 @@
+ 	_dodge_bonus = false
+ 	_flash = 0.0
+ 	_stun_tilt = 0.0
+ 	_guard_hold = 0.0
+ 	_ko_time = 0.0
++	_action_seq = 0
++	_terminal_snapshot.clear()
++	_hitstop = 0.0
++	_walk_time = 0.0
++	_walk_blend = 0.0
++	_moving = 0.0
++	_presentation_moving = false
++	_presentation_walk_blend = 0.0
++	_presentation_walk_direction = 1
++	_sidestep_time = 0.0
++	visual_shift = Vector2.ZERO
++	visual_tilt = 0.0
+ 	_clear_slide()
+ 	queue_redraw()
+ 
+ 
+ func can_act() -> bool:
+@@ -161,10 +178,28 @@
+ 	meter = clampf(meter + amount, 0.0, float(MAX_METER))
+ 
+ 
+ func active_card() -> Dictionary:
+ 	return _action
++
++
++## Read-only bridge: action clocks belong to gameplay; the native controller samples them.
++func presentation_snapshot() -> Dictionary:
++	var duration := float(_action.get(_action_phase, 0)) * Defs.FRAME
++	var snapshot := {
++		"state": state, "card_id": String(_action.get("id", "")),
++		"action_seq": _action_seq, "phase": _action_phase,
++		"phase_progress": clampf(_phase_time / duration, 0.0, 1.0) if duration > 0.0 else 1.0,
++		"phase_time": _phase_time, "state_time": state_time,
++		"stun_duration": _stun_duration, "local_hitstop": maxf(0.0, _hitstop),
++		"facing": facing, "walk_phase": fposmod(_walk_time * WALK_SPEED / WALK_STRIDE, 1.0),
++		"walk_blend": _presentation_walk_blend, "moving": _presentation_moving,
++		"walk_direction": _presentation_walk_direction,
++		"guarding": _guard_hold > 0.0, "dodging": is_invulnerable(),
++		"is_super": _is_super, "hp": hp,
++	}
++	return snapshot
+ 
+ 
+ ## 打出 id 指定的牌。返回是否真的出招（气不够/不可行动时返回 false）。
+ func play_card(id: String) -> bool:
+ 	if not can_act():
+@@ -183,10 +218,12 @@
+ 	_history.append({"id": id, "at": _clock})
+ 	_resolve_combo(id, cost)
+ 
+ 	_action = card.duplicate()
+ 	_action["id"] = id
++	_action_seq += 1
++	_terminal_snapshot.clear()
+ 	_is_super = _combo_extra == "super"
+ 	_action_phase = "windup"
+ 	_phase_time = 0.0
+ 	_has_hit = false
+ 	state = State.ACTION
+@@ -216,10 +253,12 @@
+ 	_guard_hold = 0.0
+ 	_sidestep_time = 0.0
+ 	_clear_slide()
+ 	_action = card.duplicate()
+ 	_action["id"] = id
++	_action_seq += 1
++	_terminal_snapshot.clear()
+ 	_action_phase = "windup"
+ 	_phase_time = 0.0
+ 	_has_hit = false
+ 	state = State.ACTION
+ 	state_time = 0.0
+@@ -280,10 +319,11 @@
+ 		_guard_hold = maxf(0.0, _guard_hold - delta)
+ 	if _sidestep_time > 0.0:
+ 		_sidestep_time = maxf(0.0, _sidestep_time - delta)
+ 
+ 	state_time += delta
++	_presentation_moving = false
+ 
+ 	match state:
+ 		State.KO:
+ 			_ko_time += delta
+ 		State.HITSTUN, State.BLOCKSTUN:
+@@ -301,14 +341,18 @@
+ 					position.x + _moving * WALK_SPEED * delta, ARENA_MIN, ARENA_MAX
+ 				)
+ 				# 相位按**真的走了多远**推进，不按时间。贴住擂台边时身体一步没动，
+ 				# 按时间推进的话步态照转，脚就在原地滑了。
+ 				_walk_time += absf(position.x - before) / WALK_SPEED
++				_presentation_moving = absf(position.x - before) > 0.0001
++				if _presentation_moving:
++					_presentation_walk_direction = 1 if (position.x - before) * float(facing) > 0.0 else -1
+ 			if state == State.DODGE and state_time > 0.25:
+ 				state = State.IDLE
+ 
+ 	var walking := _moving != 0.0 and (state == State.IDLE or state == State.DODGE)
++	_presentation_walk_blend = move_toward(_presentation_walk_blend, 1.0 if _presentation_moving else 0.0, WALK_BLEND_RATE * delta)
+ 	_walk_blend = move_toward(_walk_blend, 1.0 if walking else 0.0, WALK_BLEND_RATE * delta)
+ 	# 完全停下之后把相位归零，这样每次起步都从同一只脚开始。
+ 	if _walk_blend == 0.0:
+ 		_walk_time = 0.0
+ 
+@@ -535,10 +579,11 @@
+ 	state_time = 0.0
+ 
+ 
+ ## 让 arena 在回合结束时停手。
+ func freeze() -> void:
++	_terminal_snapshot = presentation_snapshot()
+ 	_action = {}
+ 	_action_phase = ""
+ 	_visual_only = false
+ 	_clear_slide()
+ 	state = State.IDLE if hp > 0 else State.KO
+--- baseline/scripts/fighter_3d_layer.gd
++++ project/scripts/fighter_3d_layer.gd
+@@ -11,14 +11,14 @@
+ const RigDriverScript := preload("res://scripts/rig_driver.gd")
+ const GLB_PATH := "res://assets/3d/player-rigged.glb"
+ # H 路线：对手怪是另一份带 skin 的 GLB（13 骨同名、rest 更矮更宽）。
+ const FOE_GLB_PATH := "res://assets/3d/foe-rigged.glb"
+ 
+-const SV_W := 420
+-const SV_H := 520
+-# SubViewport 内部按 420x520 渲染保证清晰，贴回 2D 时按 2D 角色身高缩放。
+-# 2D 角色 head=-172 / foot=0，3D 人物在视口里约占 450/560 高。
++const SV_W := 720
++const SV_H := 680
++# Fixed framing includes extended punches, low sweeps and a prone body. The
++# orthographic 3/4 camera keeps planted feet on the 2D arena's flat ground line.
+ const DRAW_SCALE := 0.45
+ const DRAW_OFFSET_X := 0.0
+ # 3D 人物脚在 SubViewport 里略高于底边；照原样贴会离 2D 影子约 27px，
+ # 看图后把整块下移，让脚落到擂台地面上。
+ const DRAW_OFFSET_Y := 18.0
+@@ -27,12 +27,16 @@
+ # 只改观察方向，不改 rig_driver 的任何一根骨头 / 任何一条公式。
+ # 相机绕 +Y 转 yaw（3/4 侧身）；贴图可选水平镜像让脸朝对手。
+ # D 路线实测 yaw=90° 时零厚度披风壳退化成一条细线，且骨架动作平面
+ # (XY) 与视线平行会让出拳幅度被压成 0，所以定稿角度必须 < 70°。
+ const CAM_RADIUS := 3.55
+-const CAM_HEIGHT := 1.12
+-const CAM_TARGET_Y := 0.86
++const CAM_HEIGHT := 0.84
++const CAM_TARGET_Y := 0.84
++const CAM_ORTHO_SIZE := 2.9
++# The imported boot sole sits just below the shin's authored foot endpoint.
++# This only anchors the rendered texture; fighter.position remains authoritative.
++const NATIVE_GROUND_Y := 0.0
+ # 2026-11-14 订正：G/H 路线原注释把方向写反了。
+ # 原话「+55° = 相机在角色左前方，脸朝画面右」与实测相反：
+ # 同进程扫描（朝向修复/shots/o-*.png）逐格看图，+55° 看到的是角色
+ # 左后侧，脸朝画面左、黑披风在右；-55° 才脸朝画面右、披风在左后。
+ # 玩家站左侧、对手站右侧，要面对面就必须：玩家 -55°（朝右）、
+@@ -75,10 +79,15 @@
+ var motion: Dictionary = {}
+ # H 路线：同一个层类服务两个角色；默认仍是 G 的玩家形态。
+ var glb_path := GLB_PATH
+ var role_id := "player"
+ var ready_ok := false
++var model_root: Node3D = null
++var imported_model_transform := Transform3D.IDENTITY
++var current_facing := 0
++var native_active := false
++var last_native_visual: Dictionary = {}
+ var tex_drawn := false
+ var frames_applied := 0
+ var last_card := "stance"
+ var last_frame := 0
+ var view_yaw_deg := DEFAULT_SIDE_YAW
+@@ -190,10 +199,12 @@
+ 
+ 	var res := load(glb_path)
+ 	if res == null or not (res is PackedScene):
+ 		return false
+ 	var inst: Node3D = (res as PackedScene).instantiate()
++	model_root = inst
++	imported_model_transform = inst.transform
+ 	sv.add_child(inst)
+ 	# I 路线：收集 mesh / 灯初值，仅供 visual_state() 读回诊断；
+ 	# v3 不复制、不改写任何 3D 材质。
+ 	_collect_meshes(inst)
+ 
+@@ -204,11 +215,12 @@
+ 	if not drv.setup(skel, motion):
+ 		return false
+ 
+ 	cam = Camera3D.new()
+ 	cam.current = true
+-	cam.fov = 33.0
++	cam.projection = Camera3D.PROJECTION_ORTHOGONAL
++	cam.size = CAM_ORTHO_SIZE
+ 	cam.near = 0.05
+ 	cam.far = 100.0
+ 	sv.add_child(cam)
+ 	_place_camera()
+ 
+@@ -294,16 +306,104 @@
+ ## 探针读回状态，避免靠画面猜开关有没有生效。
+ func visual_state() -> Dictionary:
+ 	return {"role": role_id, "foe_visual": foe_visual,
+ 			"mesh_rows": _mesh_rows.size(),
+ 			"light_rows": _light_rows.size(),
+-			"foe_materials": _foe_materials.size()}
++			"foe_materials": _foe_materials.size(),
++			"native_active": native_active, "facing": current_facing}
++
++
++## A native clip already contains its guard, rotations and recoil. Do not add
++## DEFAULT_STANCE_BIAS again. The model rotates as a whole for facing; local
++## anatomical quaternions retain their handedness and independently bent elbows.
++func apply_visual(visual: Dictionary) -> void:
++	if drv == null:
++		return
++	var raw_pose: Variant = visual.get("pose")
++	if typeof(raw_pose) != TYPE_DICTIONARY:
++		return
++	var pose: Dictionary = raw_pose
++	var applied: Dictionary = drv.apply_pose(pose)
++	if applied.has("error"):
++		push_error(String(applied["error"]))
++		return
++	native_active = true
++	last_native_visual = visual.duplicate(true)
++	last_card = String(pose.get("clip_id", "stance"))
++	last_frame = int(float(pose.get("frame", 0.0)))
++	rotation = float(visual.get("canvas_tilt", 0.0))
++	set_facing(int(visual.get("facing", 1 if role_id == "player" else -1)))
++	frames_applied += 1
++	queue_redraw()
++
++
++func set_facing(facing: int) -> void:
++	var wanted := 1 if facing >= 0 else -1
++	if model_root == null or current_facing == wanted:
++		return
++	current_facing = wanted
++	var base_face := 1 if role_id == "player" else -1
++	var angle := 0.0 if wanted == base_face else PI
++	model_root.transform = Transform3D(Basis(Vector3.UP, angle), Vector3.ZERO) \
++		* imported_model_transform
++	queue_redraw()
++
++
++## Canvas-local contact socket for a valid NativePose. Prediction is read-only:
++## it includes the actual imported rig, model facing, camera and canvas scales.
++## Callers add fighter.position and canvas_shift exactly once.
++func anchor_offset(pose: Dictionary, anchor: String, facing: int,
++		canvas_tilt: float = 0.0) -> Vector2:
++	if drv == null or cam == null or model_root == null:
++		return Vector2.ZERO
++	var transforms: Dictionary = drv.pose_global_transforms(pose)
++	if transforms.is_empty():
++		return Vector2.ZERO
++	var point := Vector3.ZERO
++	if anchor == "lead_hand" or anchor == "rear_hand":
++		var front := anchor == "lead_hand"
++		var bone := "forearm_f" if front else "forearm_b"
++		var joint := "f_hand" if front else "b_hand"
++		var endpoint: Array = motion.apose_points[joint]
++		var rest_point := Vector3(float(endpoint[0]),float(endpoint[1]),0.0)
++		var local_point: Vector3 = (drv.global_rest[bone] as Transform3D).affine_inverse() * rest_point
++		point = (transforms[bone] as Transform3D) * local_point
++	elif anchor == "palms":
++		return (anchor_offset(pose,"lead_hand",facing,canvas_tilt)
++			+anchor_offset(pose,"rear_hand",facing,canvas_tilt))*.5
++	elif anchor == "head" or anchor == "chest":
++		var bone := "head" if anchor == "head" else "chest"
++		var rest: Transform3D = drv.global_rest[bone]
++		var forward := Vector3(0.0,0.0,0.08 if anchor == "head" else 0.16)
++		var local_front := rest.basis.inverse() * forward
++		point = (transforms[bone] as Transform3D) * local_front
++	else:
++		return Vector2.ZERO
++	var base_face := 1 if role_id == "player" else -1
++	var wanted := 1 if facing >= 0 else -1
++	var angle := 0.0 if wanted == base_face else PI
++	var desired_model := Transform3D(Basis(Vector3.UP,angle),Vector3.ZERO) * imported_model_transform
++	var skeleton_in_model: Transform3D = model_root.global_transform.affine_inverse() * drv.skel.global_transform
++	var world_point: Vector3 = desired_model * skeleton_in_model * point
++	var pixel := cam.unproject_position(world_point)
++	var ground_pixel := cam.unproject_position(Vector3(0.0,NATIVE_GROUND_Y,0.0))
++	var sx := FOE_DRAW_SCALE_X if foe_visual else 1.0
++	var sy := FOE_DRAW_SCALE_Y if foe_visual else 1.0
++	var offset := Vector2((pixel.x-float(SV_W)*.5)*DRAW_SCALE*sx,
++		(pixel.y-ground_pixel.y)*DRAW_SCALE*sy)
++	if view_flip:
++		offset.x = -offset.x
++	return offset.rotated(canvas_tilt)
+ 
+ 
+ func apply(card: String, frame: int) -> void:
+ 	if drv == null:
+ 		return
++	native_active = false
++	last_native_visual = {}
++	rotation = 0.0
++	set_facing(1 if role_id == "player" else -1)
+ 	var c := card
+ 	if c != "stance" and not motion["cards"].has(c):
+ 		c = "stance"
+ 	var f := 0
+ 	if c != "stance":
+@@ -328,14 +428,18 @@
+ 	var w := float(SV_W) * DRAW_SCALE * sx
+ 	var h := float(SV_H) * DRAW_SCALE * sy
+ 	# 水平镜像用负宽度 Rect2（不能碰 draw_set_transform：它会覆盖节点
+ 	# 自身 transform，把 arena 设的 position 吃掉，层就画到 (0,0) 了）。
+ 	var x0 := DRAW_OFFSET_X - w * 0.5
++	var y0 := -h + DRAW_OFFSET_Y
++	if native_active and cam != null:
++		var ground_pixel := cam.unproject_position(Vector3(0.0, NATIVE_GROUND_Y, 0.0))
++		y0 = -ground_pixel.y * DRAW_SCALE * sy
+ 	if view_flip:
+-		draw_texture_rect(t, Rect2(x0 + w, -h + DRAW_OFFSET_Y, -w, h), false)
++		draw_texture_rect(t, Rect2(x0 + w, y0, -w, h), false)
+ 	else:
+-		draw_texture_rect(t, Rect2(x0, -h + DRAW_OFFSET_Y, w, h), false)
++		draw_texture_rect(t, Rect2(x0, y0, w, h), false)
+ 	tex_drawn = true
+ 
+ 
+ func _process(_d: float) -> void:
+ 	if ready_ok:
+--- baseline/scripts/native_motion.gd
++++ project/scripts/native_motion.gd
+@@ -0,0 +1,344 @@
++extends RefCounted
++## Authored Skeleton3D local rest-relative poses. Coordinates: +Y up, +Z forward.
++const Defs = preload("res://scripts/card_data.gd")
++const BONES := ["hips", "spine", "chest", "neck", "head", "upperarm_f", "forearm_f", "upperarm_b", "forearm_b", "thigh_f", "shin_f", "thigh_b", "shin_b"]
++var last_error := ""
++var _data: Dictionary = {}
++var _support_cache: Dictionary = {}
++
++func _fail(message: String) -> bool:
++	last_error = "NativeMotion: " + message
++	_data.clear()
++	return false
++
++func _finite_array(value: Variant, count: int) -> bool:
++	if not value is Array or value.size() != count:
++		return false
++	for number in value:
++		if not (number is float or number is int) or not is_finite(float(number)):
++			return false
++	return true
++
++func _quat(value: Array) -> Quaternion:
++	return Quaternion(float(value[0]), float(value[1]), float(value[2]), float(value[3]))
++
++func _same_pose(a: Dictionary, b: Dictionary) -> bool:
++	for index in range(3):
++		if absf(float(a.root_offset[index]) - float(b.root_offset[index])) > .000001:
++			return false
++	for bone in BONES:
++		if absf(_quat(a.rotations[bone]).dot(_quat(b.rotations[bone]))) < .999999:
++			return false
++	return true
++
++func load_data(path: String = "res://data/combat_motion_3d.json") -> bool:
++	_data.clear()
++	_support_cache.clear()
++	last_error = ""
++	if not FileAccess.file_exists(path):
++		return _fail("file missing: " + path)
++	var parser := JSON.new()
++	if parser.parse(FileAccess.get_file_as_string(path)) != OK:
++		return _fail("invalid JSON: " + parser.get_error_message())
++	var parsed: Variant = parser.data
++	if not parsed is Dictionary:
++		return _fail("root must be a dictionary")
++	if parsed.get("version") != 1 or parsed.get("coordinate_system") != "godot_y_up_z_forward":
++		return _fail("unsupported version or coordinates")
++	if parsed.get("bones", []) != BONES:
++		return _fail("13 bone names/order must match native contract")
++	var roles: Variant = parsed.get("roles", {})
++	if not roles is Dictionary:
++		return _fail("roles must be a dictionary")
++	for role in ["player", "foe"]:
++		if not roles.has(role) or not roles[role] is Dictionary:
++			return _fail("missing role: " + role)
++		var clips: Variant = roles[role].get("clips", {})
++		if not clips is Dictionary:
++			return _fail(role + ": clips must be a dictionary")
++		for required in Array(Defs.CARDS.keys()) + ["stance", "idle", "walk", "ko", "hit_light", "hit_heavy", "block"]:
++			if not clips.has(required):
++				return _fail(role + ": missing clip " + required)
++		for id in clips:
++			var prefix: String = role + "/" + String(id)
++			var clip: Variant = clips[id]
++			if not clip is Dictionary:
++				return _fail(prefix + ": clip must be a dictionary")
++			var frame_value: Variant = clip.get("frames", 0)
++			if not (frame_value is int or frame_value is float) or not is_finite(float(frame_value)) or float(frame_value) != floor(float(frame_value)) or int(frame_value) < 1:
++				return _fail(prefix + ": frames must be a positive integer")
++			var frames := int(frame_value)
++			if (id == "stance" and frames != 1) or (id == "ko" and frames != 28):
++				return _fail(prefix + ": required duration differs from native contract")
++			var split: Variant = clip.get("split")
++			if not _finite_array(split, 3):
++				return _fail(prefix + ": invalid phase split")
++			var total := 0
++			for count in split:
++				if float(count) < 0 or float(count) != floor(float(count)):
++					return _fail(prefix + ": phase lengths must be nonnegative integers")
++				total += int(count)
++			if total != frames:
++				return _fail(prefix + ": phase split does not sum to frames")
++			var contact: Variant = clip.get("contact_frame")
++			if not (contact is int or contact is float) or not is_finite(float(contact)) or float(contact) != floor(float(contact)):
++				return _fail(prefix + ": invalid contact frame")
++			if float(contact) < -1 or float(contact) >= frames:
++				return _fail(prefix + ": contact frame out of range")
++			if not Defs.CARDS.has(id) and int(contact) != -1:
++				return _fail(prefix + ": only attack cards have a contact frame")
++			if Defs.CARDS.has(id):
++				var card: Dictionary = Defs.CARDS[id]
++				var expected := [int(card.windup), int(card.active), int(card.recover)]
++				if int(split[0]) != expected[0] or int(split[1]) != expected[1] or int(split[2]) != expected[2]:
++					return _fail(prefix + ": split differs from gameplay card")
++				var expected_contact := int(card.windup + card.active - 1) if card.kind == Defs.KIND_ATTACK else -1
++				if int(contact) != expected_contact:
++					return _fail(prefix + ": contact must be final active frame")
++			var keys: Variant = clip.get("keys", [])
++			if not keys is Array or keys.is_empty():
++				return _fail(prefix + ": missing keys")
++			var previous := -1.0
++			for key in keys:
++				if not key is Dictionary:
++					return _fail(prefix + ": key must be a dictionary")
++				var frame: Variant = key.get("frame", -1)
++				if not (frame is float or frame is int) or not is_finite(float(frame)) or float(frame) <= previous or float(frame) >= frames:
++					return _fail(prefix + ": keys must increase within frame range")
++				previous = float(frame)
++				if not _finite_array(key.get("root_offset"), 3):
++					return _fail(prefix + ": invalid root offset")
++				var rotations: Variant = key.get("rotations", {})
++				if not rotations is Dictionary or rotations.size() != BONES.size():
++					return _fail(prefix + ": key must contain exactly 13 rotations")
++				for bone in BONES:
++					if not _finite_array(rotations.get(bone), 4):
++						return _fail(prefix + ": invalid quaternion for " + bone)
++					if absf(_quat(rotations[bone]).length_squared() - 1.0) > 0.0001:
++						return _fail(prefix + ": non-unit quaternion for " + bone)
++			if float(keys[0].frame) != 0.0 or float(keys[-1].frame) != frames - 1.0:
++				return _fail(prefix + ": keys must cover first and final frame")
++			if int(contact) >= 0:
++				var contact_authored := false
++				for key in keys:
++					if float(key.frame) == float(contact):
++						contact_authored = true
++				if not contact_authored:
++					return _fail(prefix + ": final active contact must have an authored key")
++		# Cross-clip validation runs after every quaternion/root has been validated.
++		var stance_key: Dictionary = clips.stance["keys"][0]
++		for id in clips:
++			var keys: Array = clips[id]["keys"]
++			if Defs.CARDS.has(id):
++				if not _same_pose(keys[0], stance_key) or not _same_pose(keys[-1], stance_key):
++					return _fail(role + "/" + String(id) + ": card endpoints must return to guard")
++			if id in ["idle", "walk"] and not _same_pose(keys[0], keys[-1]):
++				return _fail(role + "/" + String(id) + ": loop endpoints differ")
++			if id in ["hit_light", "hit_heavy", "block"] and not _same_pose(keys[-1], stance_key):
++				return _fail(role + "/" + String(id) + ": reaction must end at guard")
++	_data = parsed
++	return true
++
++func available() -> bool:
++	return not _data.is_empty()
++
++func prepare_support() -> void:
++	for role: String in ["player","foe"]: _boot_support(role)
++
++func _clip(role: String, clip_id: String) -> Dictionary:
++	if not available():
++		last_error = "NativeMotion: library unavailable"
++		return {}
++	if not _data.roles.has(role) or not _data.roles[role].clips.has(clip_id):
++		last_error = "NativeMotion: missing clip " + role + "/" + clip_id
++		return {}
++	return _data.roles[role].clips[clip_id]
++
++func clip_frames(role: String, clip_id: String) -> int:
++	var clip := _clip(role, clip_id)
++	return int(clip.get("frames", 0))
++
++func contact_frame(role: String, clip_id: String) -> float:
++	var clip := _clip(role, clip_id)
++	return float(clip.get("contact_frame", -1.0))
++
++func phase_frame(role: String, clip_id: String, phase: String, progress: float) -> float:
++	var clip := _clip(role, clip_id)
++	if clip.is_empty():
++		return -1.0
++	if not is_finite(progress):
++		last_error = "NativeMotion: phase progress must be finite"
++		return -1.0
++	var index := ["windup", "active", "recover"].find(phase)
++	if index < 0:
++		last_error = "NativeMotion: unknown phase " + phase
++		return -1.0
++	var start := 0
++	for previous in range(index):
++		start += int(clip.split[previous])
++	var count := int(clip.split[index])
++	if count == 0:
++		return float(maxi(0, start - 1))
++	return float(start) + float(count - 1) * clampf(progress, 0.0, 1.0)
++
++func sample(role: String, clip_id: String, frame_float: float) -> Dictionary:
++	var clip := _clip(role, clip_id)
++	if clip.is_empty():
++		return {"error": last_error, "clip_id": clip_id}
++	if not is_finite(frame_float):
++		last_error = "NativeMotion: sample frame must be finite"
++		return {"error": last_error, "clip_id": clip_id}
++	var frame := clampf(frame_float, 0.0, float(clip.frames - 1))
++	var keys: Array = clip["keys"]
++	var right_index := 0
++	while right_index < keys.size()-1 and float(keys[right_index].frame) < frame:
++		right_index += 1
++	var right: Dictionary = keys[right_index]
++	if frame == float(right.frame):
++		return {"clip_id":clip_id,"frame":frame,"rotations":right.rotations.duplicate(true),"root_offset":right.root_offset.duplicate()}
++	var left_index := maxi(0,right_index-1)
++	var left: Dictionary = keys[left_index]
++	var span := float(right.frame) - float(left.frame)
++	var t := (frame - float(left.frame)) / span if span > 0.0 else 0.0
++	var previous: Dictionary = keys[maxi(0,left_index-1)]
++	var following: Dictionary = keys[mini(keys.size()-1,right_index+1)]
++	var pre_time := float(previous.frame)-float(left.frame)
++	var post_time := float(following.frame)-float(left.frame)
++	# Cyclic neighbours retain velocity across the walk/idle seam. Clamped card
++	# neighbours keep the exact guard endpoints, without stopping at breakdowns.
++	if clip_id in ["idle","walk"] and keys.size() > 2:
++		var period := float(clip.frames-1)
++		if left_index == 0:
++			previous = keys[-2]
++			pre_time = float(previous.frame)-period
++		if right_index == keys.size()-1:
++			following = keys[1]
++			post_time = period+float(following.frame)-float(left.frame)
++	var rotations := {}
++	for bone in BONES:
++		var a := _quat(left.rotations[bone])
++		var b := _quat(right.rotations[bone])
++		var pre := _quat(previous.rotations[bone])
++		var post := _quat(following.rotations[bone])
++		if a.dot(b) < 0.0: b = -b
++		if a.dot(pre) < 0.0: pre = -pre
++		if b.dot(post) < 0.0: post = -post
++		var q := a.spherical_cubic_interpolate_in_time(b,pre,post,t,span,pre_time,post_time).normalized()
++		rotations[bone] = [q.x, q.y, q.z, q.w]
++	var a_root: Array = left.root_offset
++	var b_root: Array = right.root_offset
++	var root := []
++	for axis in range(3):
++		root.append(_monotone_component(float(previous.root_offset[axis]),float(a_root[axis]),float(b_root[axis]),float(following.root_offset[axis]),pre_time,span,post_time,t))
++	return {"clip_id": clip_id, "frame": frame, "rotations": rotations,
++		"root_offset": root}
++
++## A shared time-aware slope at each key, bounded to avoid lifting planted soles
++## through cubic root overshoot. Interior monotone keys retain nonzero velocity.
++func _slope(before: float, after: float, before_span: float, after_span: float) -> float:
++	if before_span <= 0.0 or after_span <= 0.0 or before*after <= 0.0: return 0.0
++	var w1 := 2.0*after_span+before_span
++	var w2 := after_span+2.0*before_span
++	return (w1+w2)/(w1/before+w2/after)
++
++func _monotone_component(pre: float,a: float,b: float,post: float,pre_time: float,span: float,post_time: float,t: float) -> float:
++	var slope := (b-a)/span
++	var before_span := -pre_time
++	var after_span := post_time-span
++	var before := (a-pre)/before_span if before_span>0.0 else 0.0
++	var after := (post-b)/after_span if after_span>0.0 else 0.0
++	var m0 := _slope(before,slope,before_span,span)*span
++	var m1 := _slope(slope,after,span,after_span)*span
++	var t2 := t*t
++	var t3 := t2*t
++	return (2.0*t3-3.0*t2+1.0)*a+(t3-2.0*t2+t)*m0+(-2.0*t3+3.0*t2)*b+(t3-t2)*m1
++
++func _find_rig(node: Node, skeleton: bool) -> Node:
++	if (skeleton and node is Skeleton3D) or (not skeleton and node is MeshInstance3D and node.skin != null): return node
++	for child: Node in node.get_children():
++		var found := _find_rig(child,skeleton)
++		if found != null: return found
++	return null
++
++## Cache read-only imported bind data once. Footwork overlays use real weighted
++## boot vertices, since a shin endpoint is not the visible sole of either model.
++func _boot_support(role: String) -> Dictionary:
++	if _support_cache.has(role): return _support_cache[role]
++	var resource := load("res://assets/3d/"+role+"-rigged.glb") as PackedScene
++	if resource == null: return {}
++	var model := resource.instantiate()
++	var skeleton := _find_rig(model,true) as Skeleton3D
++	var instance := _find_rig(model,false) as MeshInstance3D
++	if skeleton == null or instance == null:
++		model.free()
++		return {}
++	var rests := {}
++	var parents := {}
++	for bone: String in BONES:
++		var index := skeleton.find_bone(bone)
++		rests[bone] = skeleton.get_bone_rest(index)
++		var parent := skeleton.get_bone_parent(index)
++		parents[bone] = skeleton.get_bone_name(parent) if parent >= 0 else ""
++	var surface := instance.mesh.surface_get_arrays(0)
++	var vertices: PackedVector3Array = surface[Mesh.ARRAY_VERTEX]
++	var joints: PackedInt32Array = surface[Mesh.ARRAY_BONES]
++	var weights: PackedFloat32Array = surface[Mesh.ARRAY_WEIGHTS]
++	var count := int(joints.size()/vertices.size())
++	var groups := {}
++	for vertex in range(vertices.size()):
++		if vertices[vertex].y >= .24: continue
++		var influences := []
++		var signature := ""
++		var shin_weight := 0.0
++		for influence in range(count):
++			var slot := int(joints[vertex*count+influence])
++			var weight := float(weights[vertex*count+influence])
++			if weight <= .000001: continue
++			var name := String(instance.skin.get_bind_name(slot))
++			if name.is_empty(): name = skeleton.get_bone_name(instance.skin.get_bind_bone(slot))
++			if name in ["shin_f","shin_b"]: shin_weight += weight
++			signature += str(slot)+":"+String.num(weight,9)+";"
++			influences.append([name,instance.skin.get_bind_pose(slot),weight])
++		if shin_weight <= .65: continue
++		if not groups.has(signature): groups[signature] = {"influences":influences,"points":PackedVector3Array()}
++		groups[signature].points.append(vertices[vertex])
++	model.free()
++	_support_cache[role] = {"rests":rests,"parents":parents,"groups":groups.values()}
++	return _support_cache[role]
++
++func support_height(role: String,pose: Dictionary) -> float:
++	var cache := _boot_support(role)
++	if cache.is_empty(): return 0.0
++	var transforms := {}
++	# Native BONES follows parent order for both imported rigs.
++	for bone: String in BONES:
++		var rest: Transform3D = cache.rests[bone]
++		var local := Transform3D(Basis(rest.basis.get_rotation_quaternion()*_quat(pose.rotations[bone])).scaled(rest.basis.get_scale()),rest.origin)
++		var global_pose: Transform3D = transforms.get(cache.parents[bone],Transform3D.IDENTITY)*local
++		if bone == "hips": global_pose.origin += Vector3(pose.root_offset[0],pose.root_offset[1],pose.root_offset[2])
++		transforms[bone] = global_pose
++	var lowest := INF
++	for group: Dictionary in cache.groups:
++		var axis_x := Vector3.ZERO
++		var axis_y := Vector3.ZERO
++		var axis_z := Vector3.ZERO
++		var origin := Vector3.ZERO
++		for influence: Array in group.influences:
++			if not transforms.has(influence[0]): continue
++			var matrix: Transform3D = transforms[influence[0]]*influence[1]
++			var weight := float(influence[2])
++			axis_x += matrix.basis.x*weight
++			axis_y += matrix.basis.y*weight
++			axis_z += matrix.basis.z*weight
++			origin += matrix.origin*weight
++		# Native packed-array multiplication evaluates exactly the same weighted
++		# affine transform for every vertex in a skin-weight group. No proxy or
++		# dropped boot vertex is used; the hot loop avoids Variant influences.
++		var points: PackedVector3Array = Transform3D(Basis(axis_x,axis_y,axis_z),origin)*group.points
++		for point: Vector3 in points: lowest = minf(lowest,point.y)
++	return lowest if is_finite(lowest) else 0.0
++
++func preserve_support(role: String,pose: Dictionary,reference: Dictionary) -> Dictionary:
++	var out := pose.duplicate(true)
++	out.root_offset[1] = float(out.root_offset[1])+support_height(role,reference)-support_height(role,pose)
++	return out
+--- baseline/scripts/rig_driver.gd
++++ project/scripts/rig_driver.gd
+@@ -35,15 +35,17 @@
+ var stance: Dictionary = {}
+ var stance_points: Dictionary = {}
+ var apose: Dictionary = {}
+ var px_to_m: float = 0.01
+ var global_rest: Dictionary = {}
++var local_rest: Dictionary = {}
+ var bone_idx: Dictionary = {}
+ 
+ var frame_count_applied: int = 0
+ var last_delta_deg: Dictionary = {}
+ var last_root_m: Array = [0.0, 0.0]
++var last_native_pose: Dictionary = {}
+ 
+ 
+ func _v2(a: Array) -> Vector2:
+ 	return Vector2(float(a[0]), float(a[1]))
+ 
+@@ -66,10 +68,11 @@
+ 		var i := skel.find_bone(key)
+ 		if i < 0:
+ 			return false
+ 		bone_idx[key] = i
+ 		global_rest[key] = skel.get_bone_global_rest(i)
++		local_rest[key] = skel.get_bone_rest(i)
+ 	return bone_names.size() == 13 and chain.size() == 13
+ 
+ 
+ func _lerp2(a: Vector2, b: Vector2, t: float) -> Vector2:
+ 	return a.lerp(b, t)
+@@ -171,10 +174,11 @@
+ 			round(v.z * 1000000.0) / 1000000.0]
+ 
+ 
+ ## 驱动一帧；返回可供数值对账的 13 骨 global pose 与 delta。
+ func apply_frame(card: String, frame: int) -> Dictionary:
++	last_native_pose = {}
+ 	var frame_j := _joints_of(card, frame)
+ 	var delta_deg := retarget_delta(frame_j)
+ 	var dx: float = (frame_j["hip"].x - stance["hip"].x) * px_to_m
+ 	var dz: float = -(frame_j["hip"].y - stance["hip"].y) * px_to_m
+ 	last_delta_deg = delta_deg
+@@ -228,5 +232,124 @@
+ 				   round(dz * 1000000.0) / 1000000.0],
+ 		"delta_deg": delta_rows,
+ 		"calc_global_origin": out_global,
+ 		"bones_driven": chain.size(),
+ 	}
++
++
++## Native clips contain local-rest-relative quaternions, never retarget amplitudes.
++## Validate the entire pose before writing any bone so a bad clip cannot leave a
++## partially updated skeleton. Imported rest translations/scales stay intact.
++func apply_pose(pose: Dictionary) -> Dictionary:
++	if skel == null or local_rest.size() != 13:
++		return {"error": "Native rig is not initialized"}
++	var raw_rotations: Variant = pose.get("rotations")
++	var raw_root: Variant = pose.get("root_offset")
++	if typeof(raw_rotations) != TYPE_DICTIONARY:
++		return {"error": "Native pose rotations must be a dictionary"}
++	if typeof(raw_root) != TYPE_ARRAY or (raw_root as Array).size() != 3:
++		return {"error": "Native root offset must have three components"}
++	var offset: Array = raw_root
++	for value in offset:
++		if typeof(value) != TYPE_INT and typeof(value) != TYPE_FLOAT:
++			return {"error": "Native root offset must be numeric"}
++		if not is_finite(float(value)):
++			return {"error": "Native root offset must be finite"}
++	var root_delta := Vector3(float(offset[0]), float(offset[1]), float(offset[2]))
++	var rotations: Dictionary = raw_rotations
++	var validated := {}
++	for raw_name in bone_names:
++		var name := String(raw_name)
++		var raw: Variant = rotations.get(name)
++		if typeof(raw) != TYPE_ARRAY or (raw as Array).size() != 4:
++			return {"error": "Missing native quaternion for " + name}
++		var components: Array = raw
++		for value in components:
++			if typeof(value) != TYPE_INT and typeof(value) != TYPE_FLOAT:
++				return {"error": "Native quaternion must be numeric: " + name}
++			if not is_finite(float(value)):
++				return {"error": "Native quaternion must be finite: " + name}
++		var q := Quaternion(float(components[0]), float(components[1]),
++			float(components[2]), float(components[3]))
++		if absf(q.length_squared() - 1.0) > 0.01:
++			return {"error": "Native quaternion must be normalized: " + name}
++		validated[name] = q.normalized()
++
++	var delta_rows := {}
++	for raw_name in bone_names:
++		var name := String(raw_name)
++		var idx: int = int(bone_idx[name])
++		var rest: Transform3D = local_rest[name]
++		var q_delta: Quaternion = validated[name]
++		var q_rest := rest.basis.get_rotation_quaternion()
++		var position := rest.origin
++		if name == "hips":
++			position += root_delta
++		skel.set_bone_pose_position(idx, position)
++		skel.set_bone_pose_rotation(idx, (q_rest * q_delta).normalized())
++		skel.set_bone_pose_scale(idx, rest.basis.get_scale())
++		delta_rows[name] = rad_to_deg(q_delta.get_euler().z)
++	last_delta_deg = delta_rows
++	last_root_m = [root_delta.x, root_delta.y]
++	last_native_pose = pose.duplicate(true)
++	frame_count_applied += 1
++	# Useful for captures and independent geometry checks. This does not drive the
++	# neutral import bone; only the 13 named anatomical bones were written above.
++	if skel.has_method("force_update_all_bone_transforms"):
++		skel.call("force_update_all_bone_transforms")
++	var origins := {}
++	for raw_name in bone_names:
++		var name := String(raw_name)
++		origins[name] = _v3(skel.get_bone_global_pose(int(bone_idx[name])).origin)
++	return {"native": true, "clip_id": String(pose.get("clip_id", "")),
++		"frame": float(pose.get("frame", 0.0)), "bones_driven": 13,
++		"root_offset": [root_delta.x, root_delta.y, root_delta.z],
++		"global_origin": origins}
++
++
++## Predict skeleton-space globals without changing live bones. Native exchange
++## choreography uses this to align visible hands instead of arbitrary lunge pixels.
++func pose_global_transforms(pose: Dictionary) -> Dictionary:
++	if skel == null or typeof(pose.get("rotations")) != TYPE_DICTIONARY \
++		or typeof(pose.get("root_offset")) != TYPE_ARRAY:
++		return {}
++	var offset: Array = pose.root_offset
++	if offset.size() != 3:
++		return {}
++	var root_delta := Vector3(float(offset[0]),float(offset[1]),float(offset[2]))
++	if not root_delta.is_finite():
++		return {}
++	var rotations := {}
++	for raw_name in bone_names:
++		var name := String(raw_name)
++		var row: Variant = pose.rotations.get(name)
++		if typeof(row) != TYPE_ARRAY or (row as Array).size() != 4:
++			return {}
++		var a: Array = row
++		var q := Quaternion(float(a[0]),float(a[1]),float(a[2]),float(a[3]))
++		if not q.is_finite() or absf(q.length_squared()-1.0) > 0.01:
++			return {}
++		rotations[name] = q.normalized()
++	var globals := {}
++	var pending: Array = bone_names.duplicate()
++	while not pending.is_empty():
++		var progressed := false
++		for raw_name in pending.duplicate():
++			var name := String(raw_name)
++			var idx: int = int(bone_idx[name])
++			var parent := skel.get_bone_parent(idx)
++			var parent_name := skel.get_bone_name(parent) if parent >= 0 else ""
++			if bone_idx.has(parent_name) and not globals.has(parent_name):
++				continue
++			var rest: Transform3D = local_rest[name]
++			var q: Quaternion = rest.basis.get_rotation_quaternion() * rotations[name]
++			var local := Transform3D(Basis(q).scaled(rest.basis.get_scale()),rest.origin)
++			if name == "hips":
++				local.origin += root_delta
++			var parent_pose: Transform3D = globals.get(parent_name,
++				skel.get_bone_global_rest(parent) if parent >= 0 else Transform3D.IDENTITY)
++			globals[name] = parent_pose * local
++			pending.erase(raw_name)
++			progressed = true
++		if not progressed:
++			return {}
++	return globals
+--- baseline/tests/battle_contact_spacing_check.gd
++++ project/tests/battle_contact_spacing_check.gd
+@@ -0,0 +1,90 @@
++extends SceneTree
++const ArenaScript = preload("res://scripts/arena.gd")
++const Rules = preload("res://scripts/taikou_rules.gd")
++var failures: Array[String] = []
++var total := 0
++
++func expect(ok: bool,label: String) -> void:
++	total += 1
++	if not ok: failures.append(label)
++
++func _initialize() -> void:
++	OS.set_environment("CARD_BOXER_3D","1")
++	OS.set_environment("CARD_BOXER_BATTLE_MODE","taikou")
++	call_deferred("_run")
++
++func _run() -> void:
++	var a = ArenaScript.new()
++	root.add_child(a)
++	a.set_process(false)
++	a.battle_mode = "taikou"
++	expect(a._native_active(),"real native layers active")
++	if a._native_active():
++		expect(a.layer_3d.has_method("anchor_offset") and a.layer_3d_foe.has_method("anchor_offset"),"native layer supplies pure projected anchors")
++		if a.layer_3d.has_method("anchor_offset") and a.layer_3d_foe.has_method("anchor_offset"):
++			for winner: String in ["player","foe"]:
++				for fixture: Array in [[6,7,9],[6,7,8],[8,8,8]]:
++					check_contact(a,winner,fixture)
++		check_calibrated_shift(a)
++	for failure in failures: print("FAIL: ",failure)
++	print("BATTLE CONTACT SPACING CHECK: %d/%d passed" % [total-failures.size(),total])
++	quit(0 if failures.is_empty() else 1)
++
++func check_calibrated_shift(a) -> void:
++	a._start_round()
++	a.round_phase = "fight"
++	a.presentation.begin_exchange({"round_id":a._round_serial,"winner":"player","actor":"player","target":"foe","clip_id":"jab","action_seq":1,"approach_extra_x":280.0})
++	a._advance_presentation(0.48)
++	a._sync_3d_layer()
++	expect(is_equal_approx(a.last_visuals.player.canvas_shift.x,382.1428571429),"controller adds calibrated lunge to existing contact pulse")
++	expect(a.last_visuals.player.frame == 6.0,"calibrated dash does not change authored hand contact frame")
++
++func check_contact(a,winner: String,fixture: Array) -> void:
++	a._start_round()
++	a.round_phase = "fight"
++	a._sync_3d_layer()
++	var player_start: Vector2 = a.player.position
++	var foe_start: Vector2 = a.enemy.position
++	expect(player_start.x == 430.0 and foe_start.x == 850.0,"normal logical spawn preserved")
++	expect(a.last_visuals.player.canvas_shift == Vector2.ZERO and a.last_visuals.foe.canvas_shift == Vector2.ZERO,"normal idle has no preapproach shift")
++	a.tk_player_result = Rules.evaluate(fixture if winner == "player" else [1,2,4])
++	a.tk_enemy_result = Rules.evaluate(fixture if winner == "foe" else [1,2,4])
++	a._resolve_taikou()
++	var actor = a.player if winner == "player" else a.enemy
++	var target = a.enemy if winner == "player" else a.player
++	var actor_layer = a.layer_3d if winner == "player" else a.layer_3d_foe
++	var target_layer = a.layer_3d_foe if winner == "player" else a.layer_3d
++	var clip: String = a.tk_motion_id
++	var hand := "rear_hand" if clip == "cross" else ("palms" if clip == "wave" else "lead_hand")
++	a._advance_presentation(0.48)
++	a._sync_3d_layer()
++	var attacker: Dictionary = a.last_visuals[winner]
++	var defender: Dictionary = a.last_visuals["foe" if winner == "player" else "player"]
++	var fist: Vector2 = actor.position+attacker.canvas_shift+actor_layer.anchor_offset(attacker.pose,hand,attacker.facing,attacker.canvas_tilt)
++	var head: Vector2 = target.position+defender.canvas_shift+target_layer.anchor_offset(defender.pose,"head",defender.facing,defender.canvas_tilt)
++	var chest: Vector2 = target.position+defender.canvas_shift+target_layer.anchor_offset(defender.pose,"chest",defender.facing,defender.canvas_tilt)
++	var weight := clampf((fist.y-head.y)/(chest.y-head.y),0.0,1.0) if absf(chest.y-head.y)>0.0001 else 0.5
++	var body: Vector2 = head.lerp(chest,weight)
++	print("CONTACT %s/%s hand=%s gap=%.3f positions=%s/%s shifts=%s/%s" % [winner,clip,hand,absf(fist.x-body.x),str(actor.position),str(target.position),str(attacker.canvas_shift),str(defender.canvas_shift)])
++	expect(absf(fist.x-body.x)<20.0,"%s/%s normal-spawn fist reaches presented body" % [winner,clip])
++	expect(a.player.position == player_start and a.enemy.position == foe_start,"%s/%s lunge never moves gameplay positions" % [winner,clip])
++	expect(attacker.frame == a.native_library.contact_frame(winner,clip) and attacker.frozen,"%s/%s keeps exact authored contact and hold" % [winner,clip])
++	var spark_found := false
++	for effect: Dictionary in a.effects:
++		if effect.kind == "spark":
++			spark_found = true
++			expect((effect.pos as Vector2).distance_to(body)<0.0001,"%s/%s spark shares presented body contact anchor" % [winner,clip])
++			break
++	expect(spark_found,"%s/%s deferred contact spark exists" % [winner,clip])
++	expect(a.has_method("_rhythm_contact_point"),"rhythm spark has a shared native contact anchor")
++	if a.has_method("_rhythm_contact_point"):
++		expect(a._rhythm_contact_point().distance_to(body)<0.0001,"%s/%s rhythm spark shares hand/body contact anchor" % [winner,clip])
++	var held: Vector2 = attacker.canvas_shift
++	a._advance_presentation(0.12)
++	a._sync_3d_layer()
++	expect(a.last_visuals[winner].canvas_shift == held,"%s/%s hitstop freezes calibrated lunge" % [winner,clip])
++	a._advance_presentation(0.12)
++	a._global_hitstop = 0.0
++	a._advance_presentation(1.5)
++	a._sync_3d_layer()
++	expect(a.last_visuals[winner].canvas_shift == Vector2.ZERO,"%s/%s calibrated lunge returns to logical base" % [winner,clip])
+--- baseline/tests/battle_integration_check.gd
++++ project/tests/battle_integration_check.gd
+@@ -0,0 +1,89 @@
++extends SceneTree
++const ArenaScript = preload("res://scripts/arena.gd")
++const Rules = preload("res://scripts/taikou_rules.gd")
++var failures: Array[String] = []
++var total := 0
++
++func expect(ok: bool, label: String) -> void:
++	total += 1
++	if not ok: failures.append(label)
++
++func _initialize() -> void:
++	call_deferred("_run")
++
++func _run() -> void:
++	var a = ArenaScript.new()
++	root.add_child(a)
++	if a.player == null: a._ready()
++	a.set_process(false)
++	var configured := OS.get_environment("CARD_BOXER_BATTLE_MODE")
++	expect(a.battle_mode == configured if configured in ["taikou","realtime"] else a.battle_mode == "taikou", "startup battle mode follows environment with taikou default")
++	seed(9819)
++	var expected := randi()
++	seed(9819)
++	a._push_spark(Vector2.ZERO, true)
++	a._push_float_text(Vector2.ZERO, "rng-check", Color.WHITE)
++	a._shake = 5.0
++	a._shake_offset()
++	expect(randi() == expected, "spark/text/shake do not consume gameplay RNG")
++	if a.has_method("_native_active") and a._native_active():
++		a.battle_mode = "taikou"
++		a._start_round()
++		a.round_phase = "fight"
++		a.tk_player_result = Rules.evaluate([9,9,9])
++		a.tk_enemy_result = Rules.evaluate([1,2,4])
++		a.enemy.hp = 1
++		var settled: int = a.enemy.hp
++		a._resolve_taikou()
++		expect(a.enemy.hp == 0 and settled == 1, "fatal taikou HP settles immediately")
++		expect(a.effects.is_empty() and a._global_hitstop == 0.0, "taikou contact FX and hold are deferred")
++		a._end_taikou_round()
++		a._process(0.479)
++		expect(a.last_visuals.player.clip_id != "stance" and a.effects.is_empty(), "fatal action continues after gameplay over before contact")
++		a._process(0.002)
++		expect(a._global_hitstop > 0.0 and a.effects.size() > 0, "fatal contact emits cues once during over")
++		var effect_count: int = a.effects.size()
++		a._process(0.1)
++		expect(a.effects.size() <= effect_count and a.enemy.hp == 0, "contact hold does not replay gameplay or effects")
++		a._process(0.14)
++		a._process(0.46)
++		expect(a.last_visuals.foe.clip_id == "ko" and is_equal_approx(a.last_visuals.foe.frame,27.0), "fatal KO finishes at down pose")
++		a._start_round()
++		expect(a.presentation.exchange.is_empty() and a._global_hitstop == 0.0 and a.last_visuals.is_empty(), "reset clears terminal queue/visuals/global hold")
++		a.battle_mode = "realtime"
++		a.round_phase = "fight"
++		a.player.meter = 5.0
++		a.hand = ["wave","jab","guard","focus","rush"]
++		a._try_play(0)
++		for step in range(60):
++			a.player.tick(1.0/60.0,0.0,false)
++			a._sync_3d_layer()
++			if not a.projectiles.is_empty(): break
++		expect(a.projectiles.size() == 1 and is_equal_approx(a.last_visuals.player.frame,17.0), "live wave emits once on final active pose")
++		for step in range(60):
++			a.player.tick(1.0/60.0,0.0,false)
++			if a.player.can_act(): break
++		a._try_play(1)
++		if not a.projectiles.is_empty():
++			a.projectiles[0].pos = a.enemy.position + Vector2(0,-150)
++			a._tick_projectiles(0.0)
++			a._sync_3d_layer()
++		expect(a.enemy.hp == 90 and a.projectiles.is_empty(), "live late projectile settles damage once")
++		expect(a.last_visuals.player.clip_id == "jab" and a.player.active_card().id == "jab", "late wave collision preserves current jab action")
++		a._start_round()
++		a.battle_mode = "realtime"
++		a.round_phase = "fight"
++		a.player.meter = 5.0
++		a.hand = ["jab","guard","focus","rush","retreat"]
++		a._try_play(0)
++		a.enemy.hp = 1
++		a.projectiles = [{"pos":a.enemy.position + Vector2(0,-150),"dir":1,"damage":10,"owner_is_player":true,"t":0.0,"round_id":a._round_serial,"action_seq":0}]
++		a._tick_projectiles(0.0)
++		a._sync_3d_layer()
++		expect(a.round_phase == "over" and a.last_visuals.player.clip_id == "jab", "fatal late wave preserves winner current action before freeze")
++		a._process(0.08)
++		a._process(0.7)
++		expect(a.last_visuals.player.clip_id == "stance" and a.last_visuals.foe.frame == 27.0, "fatal late wave finishes current action and KO without further settling")
++	for failure in failures: print("FAIL: ", failure)
++	print("BATTLE INTEGRATION CHECK: %d/%d passed" % [total - failures.size(),total])
++	quit(0 if failures.is_empty() else 1)
+--- baseline/tests/battle_presentation_check.gd
++++ project/tests/battle_presentation_check.gd
+@@ -0,0 +1,151 @@
++extends SceneTree
++const FighterScript = preload("res://scripts/fighter.gd")
++var failures: Array[String] = []
++var total := 0
++
++func expect(ok: bool, label: String) -> void:
++	total += 1
++	if not ok: failures.append(label)
++
++func _initialize() -> void:
++	var fighter = FighterScript.new()
++	expect(fighter.has_method("presentation_snapshot"), "Fighter exposes read-only presentation snapshot")
++	if fighter.has_method("presentation_snapshot"):
++		fighter.reset_for_round(430, 1)
++		var before: Dictionary = fighter.presentation_snapshot()
++		fighter.play_card("jab")
++		var action: Dictionary = fighter.presentation_snapshot()
++		expect(action.action_seq == before.action_seq + 1, "new action has unique sequence")
++		expect(action.card_id == "jab" and action.phase == "windup", "snapshot retains action clocks")
++		fighter.freeze()
++		expect(fighter.presentation_snapshot().action_seq == action.action_seq, "freeze preserves action identity")
++		fighter.reset_for_round(430, 1)
++		fighter.tick(0.05, 1.0, true)
++		expect(fighter.presentation_snapshot().walk_phase > 0.0, "walk phase follows traveled distance")
++		fighter.position.x = 1130
++		var phase: float = fighter.presentation_snapshot().walk_phase
++		fighter.tick(0.05, 1.0, true)
++		expect(is_equal_approx(fighter.presentation_snapshot().walk_phase, phase), "wall does not advance walk phase")
++		fighter.tick(0.2,1.0,true)
++		expect(fighter.presentation_snapshot().walk_blend == 0.0 and not fighter.presentation_snapshot().moving, "wall settles into idle without moving legs")
++		fighter.reset_for_round(430, 1)
++		expect(fighter.presentation_snapshot().walk_blend == 0.0 and fighter.presentation_snapshot().local_hitstop == 0.0, "reset removes walk and hitstop")
++	fighter.free()
++	expect(ResourceLoader.exists("res://scripts/battle_presentation.gd"), "native battle controller exists")
++	if ResourceLoader.exists("res://scripts/battle_presentation.gd") and ResourceLoader.exists("res://scripts/native_motion.gd"):
++		check_controller()
++	for failure in failures: print("FAIL: ", failure)
++	print("BATTLE PRESENTATION CHECK: %d/%d passed" % [total - failures.size(), total])
++	quit(0 if failures.is_empty() else 1)
++
++func check_controller() -> void:
++	var library = load("res://scripts/native_motion.gd").new()
++	expect(library.load_data(), "native data loads")
++	if not library.available(): return
++	var controller = load("res://scripts/battle_presentation.gd").new()
++	controller.setup(library)
++	var cues: Array = []
++	controller.cue_ready.connect(func(cue: Dictionary): cues.append(cue))
++	var snapshot := {"state":0,"card_id":"","action_seq":1,"facing":1,"hp":100}
++	var context := {"mode":"taikou","pause":false,"global_hitstop":0.0}
++	for crossing in [0.479, 0.480, 0.481]:
++		controller.reset(1)
++		cues.clear()
++		controller.begin_exchange({"round_id":1,"winner":"player","actor":"player","target":"foe","clip_id":"jab","action_seq":1,"impacts":[{"round_id":1,"actor":"player","target":"foe","action_seq":1,"damage":4,"stun_duration":0.26}]})
++		controller.advance(crossing, context)
++		var visual: Dictionary = controller.sample("player", snapshot, context)
++		expect(cues.size() == (0 if crossing < 0.48 else 1), "contact cue boundary %.3f" % crossing)
++		if crossing >= 0.48:
++			expect(is_equal_approx(visual.frame, 6.0) and visual.frozen, "contact clamps exact jab peak %.3f" % crossing)
++			controller.advance(0.1, context)
++			expect(cues.size() == 1, "contact cue is emitted once")
++	for fps in [30, 60, 120]:
++		controller.reset(2)
++		cues.clear()
++		controller.begin_exchange({"round_id":2,"winner":"player","actor":"player","target":"foe","clip_id":"jab","action_seq":1,"impacts":[{"round_id":2,"actor":"player","target":"foe","action_seq":1,"damage":4,"stun_duration":0.26}]})
++		for step in range(ceil(0.48 * fps)):
++			controller.advance(1.0 / fps, context)
++		expect(cues.size() == 1, "%d fps crossing emits once" % fps)
++		expect(is_equal_approx(controller.sample("player", snapshot, context).frame, 6.0), "%d fps crossing stops at contact" % fps)
++	controller.reset(3)
++	controller.begin_exchange({"round_id":3,"winner":"draw","impacts":[{"round_id":3,"actor":"foe","target":"player","action_seq":1,"stun_duration":0.26},{"round_id":3,"actor":"player","target":"foe","action_seq":1,"stun_duration":0.26}]})
++	expect(controller.sample("player", snapshot, context).clip_id == "hit_light", "draw begins both light reactions immediately")
++	controller.reset(4)
++	controller.begin_exchange({"round_id":4,"winner":"player","actor":"player","target":"foe","clip_id":"jab","action_seq":1,"terminal":true,"impacts":[{"round_id":4,"actor":"player","target":"foe","action_seq":1,"terminal":true,"stun_duration":0.26}]})
++	controller.advance(0.48, context)
++	controller.advance(0.24, context)
++	controller.advance(0.46, context)
++	var down: Dictionary = controller.sample("foe", snapshot, context)
++	expect(down.clip_id == "ko" and is_equal_approx(down.frame, 27.0), "terminal KO completes and holds independently")
++	controller.reset(5)
++	expect(controller.sample("foe", snapshot, context).clip_id == "idle", "new round clears terminal visual")
++	var realtime := {"mode":"realtime","pause":false,"global_hitstop":0.0,"snapshots":{"player":snapshot,"foe":{"local_hitstop":0.085}}}
++	controller.record_impact({"round_id":5,"actor":"player","target":"foe","action_seq":1,"clip_id":"wave","source_kind":"projectile","stun_duration":0.26,"local_hitstop":0.085})
++	var new_action := {"state":1,"card_id":"jab","action_seq":2,"phase":"windup","phase_progress":0.5,"facing":1,"hp":100}
++	expect(controller.sample("player", new_action, realtime).clip_id == "jab", "late wave collision cannot restore old attack")
++	controller.begin_exchange({"round_id":5,"winner":"player","actor":"player","target":"foe","clip_id":"jab","action_seq":2})
++	controller.advance(0.2, context)
++	var paused_context: Dictionary = context.duplicate()
++	paused_context.pause = true
++	controller.advance(1.0, paused_context)
++	expect(is_equal_approx(controller.exchange_time, 0.2), "pause freezes presentation clock")
++	controller.advance(0.035, context)
++	expect(is_equal_approx(controller.exchange_time, 0.235), "presentation uses supplied slowed world delta")
++	controller.reset(6)
++	var recover := {"state":1,"card_id":"wave","action_seq":3,"phase":"recover","phase_progress":0.0,"facing":1,"hp":100}
++	var realtime_clear := {"mode":"realtime","pause":false,"global_hitstop":0.0,"snapshots":{"player":recover,"foe":{"local_hitstop":0.0}}}
++	controller.record_impact({"round_id":6,"actor":"player","target":"foe","action_seq":3,"clip_id":"wave","source_kind":"release"})
++	expect(is_equal_approx(controller.sample("player",recover,realtime_clear).frame,17.0), "wave release displays final active peak before recovery")
++	expect(controller.sample("foe",snapshot,realtime_clear).clip_id == "idle", "wave release does not create victim reaction")
++	controller.advance(1.0/60.0,realtime_clear)
++	expect(controller.sample("player",recover,realtime_clear).frame >= 18.0, "wave release latch lasts only contact frame without hitstop")
++	controller.reset(7)
++	var dead := {"state":5,"action_seq":1,"facing":-1,"hp":0,"local_hitstop":0.085}
++	var over := {"mode":"realtime","terminal":true,"global_hitstop":0.0,"snapshots":{"player":snapshot,"foe":dead}}
++	controller.record_impact({"round_id":7,"actor":"player","target":"foe","action_seq":1,"clip_id":"jab","source_kind":"melee","terminal":true,"local_hitstop":0.085,"stun_duration":0.26})
++	controller.advance(0.6,over)
++	expect(controller.sample("player",snapshot,over).clip_id == "stance", "fatal realtime winner finishes attack and returns to guard")
++	expect(controller.sample("foe",dead,over).clip_id == "ko" and is_equal_approx(controller.sample("foe",dead,over).frame,27.0), "fatal realtime victim finishes KO despite frozen gameplay hitstop")
++	controller.reset(8)
++	controller.record_impact({"round_id":8,"actor":"foe","target":"player","action_seq":1,"clip_id":"jab","source_kind":"melee","local_hitstop":0.085,"stun_duration":0.26})
++	expect(controller.sample("player",new_action,realtime_clear).clip_id == "jab", "new action clears old realtime reaction priority")
++	controller.reset(9)
++	cues.clear()
++	var once := {"round_id":9,"winner":"player","actor":"player","target":"foe","clip_id":"jab","action_seq":9,"impacts":[{"round_id":9,"actor":"player","target":"foe","action_seq":9,"source_kind":"taikou","damage":4,"stun_duration":0.26}]}
++	controller.begin_exchange(once)
++	controller.advance(0.48,context)
++	controller.begin_exchange(once)
++	controller.advance(0.48,context)
++	expect(cues.size() == 1,"duplicate exchange identity cannot re-emit contact")
++	controller.reset(10)
++	controller.begin_exchange(once)
++	controller.record_impact({"round_id":9,"actor":"player","target":"foe","action_seq":9,"source_kind":"melee","clip_id":"jab","terminal":true})
++	expect(controller.exchange.is_empty() and controller.sample("foe",snapshot,context).clip_id == "idle","new round rejects stale exchange and impact events")
++	controller.reset(11)
++	controller.begin_exchange({"round_id":11,"winner":"player","actor":"player","target":"foe","clip_id":"jab","action_seq":1})
++	controller.advance(0.5,context)
++	controller.advance(0.25,context)
++	controller.advance(0.01,context)
++	expect(is_equal_approx(controller.exchange_time,0.52),"contact crossing and hold overshoot preserve remaining visual time")
++	controller.reset(12)
++	controller.begin_exchange({"round_id":12,"winner":"player","actor":"player","target":"foe","clip_id":"jab","action_seq":1,"approach_extra_x":280.0})
++	controller.advance(0.48,context)
++	var reached: Dictionary = controller.sample("player",snapshot,context)
++	expect(is_equal_approx(reached.canvas_shift.x,382.1428571429),"native approach adds calibrated offset to retained pulse at contact")
++	expect(reached.frame == 6.0,"native approach retains exact authored contact frame")
++	for role: String in ["player","foe"]:
++		controller.reset(13)
++		controller.begin_exchange({"round_id":13,"winner":role,"actor":role,"target":"foe" if role == "player" else "player","clip_id":"jab","action_seq":1,"approach_extra_x":280.0 if role == "player" else -280.0})
++		controller.advance(0.24,context)
++		var dashing: Dictionary = controller.sample(role,snapshot,context).pose
++		var authored: Dictionary = library.sample(role,"jab",3.0)
++		var legs_changed := false
++		for bone: String in ["thigh_f","shin_f","thigh_b","shin_b"]:
++			var a: Array = dashing.rotations[bone]
++			var b: Array = authored.rotations[bone]
++			if absf(Quaternion(a[0],a[1],a[2],a[3]).dot(Quaternion(b[0],b[1],b[2],b[3]))) < 0.999999: legs_changed = true
++		expect(legs_changed,role+" long approach animates lower legs during dash")
++		var upper_exact := true
++		for bone: String in ["hips","spine","chest","neck","head","upperarm_f","forearm_f","upperarm_b","forearm_b"]:
++			upper_exact = upper_exact and dashing.rotations[bone] == authored.rotations[bone]
++		expect(upper_exact and dashing.root_offset[0] == authored.root_offset[0] and dashing.root_offset[2] == authored.root_offset[2] and absf(library.support_height(role,dashing)-library.support_height(role,authored)) < .00001,role+" dash retains exact upper/hand rotations and rootXZ while preserving actual sole support")
+--- baseline/tests/battle_shadow_check.gd
++++ project/tests/battle_shadow_check.gd
+@@ -0,0 +1,24 @@
++extends SceneTree
++const ArenaScript = preload("res://scripts/arena.gd")
++var draws := 0
++
++func _initialize() -> void:
++	OS.set_environment("CARD_BOXER_3D","1")
++	OS.set_environment("CARD_BOXER_BATTLE_MODE","taikou")
++	call_deferred("_run")
++
++func _run() -> void:
++	var a = ArenaScript.new()
++	root.add_child(a)
++	a.set_process(false)
++	a.battle_mode = "taikou"
++	a.player.draw.connect(func(): draws += 1)
++	for frame in range(3): await process_frame
++	var initial_draws := draws
++	a.presentation.begin_exchange({"round_id":a._round_serial,"winner":"player","actor":"player","target":"foe","clip_id":"jab","action_seq":1})
++	a._advance_presentation(0.24)
++	a._sync_3d_layer()
++	for frame in range(3): await process_frame
++	var ok: bool = initial_draws > 0 and draws > initial_draws and a.player.visual_shift.x > 0.0 and a.player.position.x == 430.0
++	print("BATTLE SHADOW CHECK: %s draws=%d -> %d shift=%s pos=%s" % ["PASS" if ok else "FAIL",initial_draws,draws,str(a.player.visual_shift),str(a.player.position)])
++	quit(0 if ok else 1)
+--- baseline/tests/battle_transition_check.gd
++++ project/tests/battle_transition_check.gd
+@@ -0,0 +1,164 @@
++extends SceneTree
++const FighterScript = preload("res://scripts/fighter.gd")
++const Presentation = preload("res://scripts/battle_presentation.gd")
++const NativeMotion = preload("res://scripts/native_motion.gd")
++const ArenaScript = preload("res://scripts/arena.gd")
++var failures: Array[String] = []
++var total := 0
++
++func expect(ok: bool, label: String) -> void:
++	total += 1
++	if not ok: failures.append(label)
++
++func _initialize() -> void:
++	call_deferred("_run")
++
++func quaternion(values: Array) -> Quaternion:
++	return Quaternion(values[0],values[1],values[2],values[3])
++
++func same_pose(a: Dictionary, b: Dictionary) -> bool:
++	for bone: String in a.rotations:
++		if absf(quaternion(a.rotations[bone]).dot(quaternion(b.rotations[bone]))) < 0.999999: return false
++	for axis in range(3):
++		if absf(float(a.root_offset[axis]) - float(b.root_offset[axis])) > 0.000001: return false
++	return true
++
++func half_pose(from: Dictionary, to: Dictionary) -> Dictionary:
++	var out: Dictionary = to.duplicate(true)
++	for bone: String in out.rotations:
++		var q := quaternion(from.rotations[bone]).slerp(quaternion(to.rotations[bone]),0.5)
++		out.rotations[bone] = [q.x,q.y,q.z,q.w]
++	for axis in range(3): out.root_offset[axis] = (float(from.root_offset[axis]) + float(to.root_offset[axis])) * 0.5
++	return out
++
++func _run() -> void:
++	var library = NativeMotion.new()
++	expect(library.load_data(),"real authored native motion loads")
++	if library.available():
++		check_direction(library)
++		check_blends(library)
++	if OS.get_environment("CARD_BOXER_3D") != "": check_fx()
++	for failure in failures: print("FAIL: ",failure)
++	print("BATTLE TRANSITION CHECK: %d/%d passed" % [total-failures.size(),total])
++	quit(0 if failures.is_empty() else 1)
++
++func check_direction(library) -> void:
++	for role: String in ["player","foe"]:
++		for facing in [-1,1]:
++			var forward = FighterScript.new()
++			var backward = FighterScript.new()
++			forward.is_player = role == "player"
++			backward.is_player = role == "player"
++			forward.reset_for_round(640,facing)
++			backward.reset_for_round(640,facing)
++			forward.tick(0.05,float(facing),true)
++			backward.tick(0.05,float(-facing),true)
++			var toward: Dictionary = forward.presentation_snapshot()
++			var away: Dictionary = backward.presentation_snapshot()
++			expect(int(toward.get("walk_direction",0)) == 1 and int(away.get("walk_direction",0)) == -1,"%s face%d retains signed travel relative to facing" % [role,facing])
++			expect(is_equal_approx(forward.position.x,640.0+10.75*facing) and is_equal_approx(backward.position.x,640.0-10.75*facing),"%s face%d keeps exact gameplay displacement" % [role,facing])
++			var controller = Presentation.new()
++			controller.setup(library)
++			controller.reset(1)
++			var context := {"mode":"realtime"}
++			var ahead: Dictionary = controller.sample(role,toward,context)
++			controller.reset(1)
++			var behind: Dictionary = controller.sample(role,away,context)
++			var last: float = library.clip_frames(role,"walk")-1
++			expect(is_equal_approx(ahead.frame/last,0.0895833333) and is_equal_approx(behind.frame/last,0.9104166667),"%s face%d reverses distance gait progression on retreat" % [role,facing])
++			expect(not same_pose(ahead.pose,behind.pose),"%s face%d forward/backward legs differ" % [role,facing])
++			forward.free()
++			backward.free()
++
++func check_blends(library) -> void:
++	for role: String in ["player","foe"]:
++		var controller = Presentation.new()
++		controller.setup(library)
++		var idle := {"state":0,"action_seq":0,"facing":1,"hp":100,"local_hitstop":0.0}
++		var action := {"state":1,"card_id":"jab","action_seq":1,"phase":"windup","phase_progress":0.0,"facing":1,"hp":100,"local_hitstop":0.0}
++		var context := {"mode":"realtime","pause":false,"global_hitstop":0.0,"snapshots":{role:action}}
++		controller.reset(2)
++		controller.advance(0.15,context)
++		var outgoing: Dictionary = controller.sample(role,idle,context).pose
++		var target: Dictionary = library.sample(role,"jab",0.0)
++		expect(not same_pose(outgoing,target),role+" fixture idle breathing differs from guard")
++		var start: Dictionary = controller.sample(role,action,context)
++		expect(start.clip_id == "jab" and start.frame == 0.0,role+" transition retains native frame diagnostics")
++		expect(same_pose(start.pose,outgoing),role+" ordinary action starts from last displayed idle")
++		controller.advance(0.03,context)
++		var middle: Dictionary = controller.sample(role,action,context).pose
++		expect(same_pose(middle,half_pose(outgoing,target)),role+" ordinary transition reaches shortest-path half pose at .03s")
++		var paused: Dictionary = context.duplicate(true)
++		paused.pause = true
++		controller.advance(0.2,paused)
++		expect(same_pose(controller.sample(role,action,paused).pose,middle),role+" pause freezes transition time")
++		var held: Dictionary = context.duplicate(true)
++		held.global_hitstop = 0.2
++		controller.advance(0.2,held)
++		expect(same_pose(controller.sample(role,action,held).pose,middle),role+" global hitstop freezes transition time")
++		held.global_hitstop = 0.0
++		held.snapshots[role].local_hitstop = 0.2
++		controller.advance(0.2,held)
++		expect(same_pose(controller.sample(role,action,held).pose,middle),role+" local hitstop freezes transition time")
++		controller.advance(0.03,context)
++		expect(same_pose(controller.sample(role,action,context).pose,target),role+" ordinary transition finishes at .06s")
++		controller.reset(3)
++		expect(same_pose(controller.sample(role,action,context).pose,target),role+" reset removes outgoing blend pose")
++		var walking: Dictionary = idle.duplicate()
++		walking.walk_blend = 1.0
++		walking.walk_phase = 0.25
++		walking.walk_direction = 1
++		controller.reset(4)
++		var stride: Dictionary = controller.sample(role,walking,context).pose
++		expect(same_pose(controller.sample(role,action,context).pose,stride),role+" walking stride blends into a new action")
++		var struck := {"state":2,"action_seq":1,"facing":1,"hp":96,"stun_duration":0.26,"state_time":0.0,"local_hitstop":0.085}
++		controller.record_impact({"round_id":4,"actor":"foe" if role == "player" else "player","target":role,"action_seq":1,"clip_id":"jab","source_kind":"melee","stun_duration":0.26})
++		expect(same_pose(controller.sample(role,struck,context).pose,library.sample(role,"hit_light",0.0)),role+" reaction bypasses active blend immediately")
++		controller.reset(5)
++		controller.sample(role,walking,context)
++		controller.sample(role,action,context)
++		controller.begin_exchange({"round_id":5,"winner":role,"actor":role,"target":"foe" if role == "player" else "player","clip_id":"jab","action_seq":2})
++		var taikou := {"mode":"taikou","pause":false,"global_hitstop":0.0}
++		controller.advance(0.481,taikou)
++		var contact: Dictionary = controller.sample(role,action,taikou)
++		expect(contact.frame == 6.0 and same_pose(contact.pose,library.sample(role,"jab",6.0)),role+" contact bypasses active blend at exact native peak")
++		controller.reset(6)
++		var forward_stride: Dictionary = controller.sample(role,walking,context).pose
++		var retreat: Dictionary = walking.duplicate()
++		retreat.walk_direction = -1
++		var backward_target: Dictionary = library.sample(role,"walk",0.75*float(library.clip_frames(role,"walk")-1))
++		var reversal: Dictionary = controller.sample(role,retreat,context)
++		expect(same_pose(reversal.pose,forward_stride),role+" direction reversal while walking starts from displayed stride")
++		expect(is_equal_approx(reversal.frame,0.75*float(library.clip_frames(role,"walk")-1)),role+" reversal keeps reversed native gait diagnostics")
++		controller.advance(0.03,context)
++		expect(same_pose(controller.sample(role,retreat,context).pose,half_pose(forward_stride,backward_target)),role+" walking reversal reaches blend midpoint at .03s")
++		controller.advance(0.03,context)
++		expect(same_pose(controller.sample(role,retreat,context).pose,backward_target),role+" walking reversal completes at .06s")
++
++func check_fx() -> void:
++	var a = ArenaScript.new()
++	root.add_child(a)
++	a.set_process(false)
++	a.battle_mode = "taikou"
++	a._start_round()
++	a.round_phase = "fight"
++	a.tk_player_result = preload("res://scripts/taikou_rules.gd").evaluate([1,2,4])
++	a.tk_enemy_result = preload("res://scripts/taikou_rules.gd").evaluate([1,1,2])
++	a._resolve_taikou()
++	a._advance_presentation(0.48)
++	a._sync_3d_layer()
++	var visual: Dictionary = a.last_visuals.foe
++	var attack: Dictionary = a.last_visuals.player
++	var fist: Vector2 = a.player.position+attack.canvas_shift+a.layer_3d.anchor_offset(attack.pose,"lead_hand",attack.facing,attack.canvas_tilt)
++	var head: Vector2 = a.enemy.position+visual.canvas_shift+a.layer_3d_foe.anchor_offset(visual.pose,"head",visual.facing,visual.canvas_tilt)
++	var chest: Vector2 = a.enemy.position+visual.canvas_shift+a.layer_3d_foe.anchor_offset(visual.pose,"chest",visual.facing,visual.canvas_tilt)
++	var weight := clampf((fist.y-head.y)/(chest.y-head.y),0.0,1.0) if absf(chest.y-head.y)>0.0001 else 0.5
++	var expected: Vector2 = head.lerp(chest,weight)
++	var found := false
++	for effect: Dictionary in a.effects:
++		if effect.kind == "spark":
++			found = true
++			expect((effect.pos as Vector2).distance_to(expected) < 0.0001,"deferred native spark follows presented shift and tilt at contact")
++			break
++	expect(found,"real deferred contact emits a spark")
++	a.queue_free()
+--- baseline/tests/native_live_check.gd
++++ project/tests/native_live_check.gd
+@@ -0,0 +1,308 @@
++extends SceneTree
++## Fixed input through production arena._process / play_card / apply_hit.
++## Run the identical harness against baseline and current res:// to compare gameplay.
++const ArenaScript = preload("res://scripts/arena.gd")
++const Defs = preload("res://scripts/card_data.gd")
++const DT := 1.0 / 60.0
++
++class QuietAI:
++	extends RefCounted
++	var movement := 0.0
++	func update(_dt: float, _opponent, _hand: Array) -> Dictionary:
++		return {"move": movement, "play": -1}
++	func note_played(_id: String) -> void:
++		pass
++
++var out_dir: String
++var scenarios: Array = []
++var failures: Array = []
++var event_rows: Array = []
++var tick_index := 0
++var current_scenario := ""
++var captures := false
++
++func _initialize() -> void:
++	call_deferred("_run")
++
++func _has_property(object: Object, key: String) -> bool:
++	for property in object.get_property_list():
++		if String(property.name) == key:
++			return true
++	return false
++
++func _expect(value: bool, label: String) -> void:
++	if not value:
++		failures.append(current_scenario + ": " + label)
++
++func _hit(player: bool, damage: int, blocked: bool, dodged: bool) -> void:
++	event_rows.append({"tick": tick_index, "kind": "hit", "player_attacker": player,
++		"damage": damage, "blocked": blocked, "dodged": dodged})
++
++func _card(id: String, player: bool) -> void:
++	event_rows.append({"tick": tick_index, "kind": "card", "id": id, "player": player})
++
++func _super(id: String, player: bool) -> void:
++	event_rows.append({"tick": tick_index, "kind": "super", "id": id, "player": player})
++
++func _fighter(f) -> Dictionary:
++	return {"hp": f.hp, "meter": snappedf(float(f.meter), 0.000001), "state": int(f.state),
++		"phase": f._action_phase, "phase_time": snappedf(float(f._phase_time), 0.000001),
++		"state_time": snappedf(float(f.state_time), 0.000001), "card": String(f._action.get("id", "")),
++		"position": [snappedf(f.position.x, 0.000001), snappedf(f.position.y, 0.000001)],
++		"facing": f.facing, "local_hitstop": snappedf(float(f._hitstop), 0.000001),
++		"combo": f.combo_name(), "combo_bonus": f.combo_bonus(), "super": f._is_super,
++		"guarding": f.is_guarding(), "dodging": f.is_invulnerable(), "visual_only": f._visual_only}
++
++func _gameplay(a) -> Dictionary:
++	var projectiles: Array = []
++	for p in a.projectiles:
++		projectiles.append({"position": [snappedf(p.pos.x, 0.000001), snappedf(p.pos.y, 0.000001)],
++			"damage": p.damage, "player": p.owner_is_player, "t": snappedf(float(p.t), 0.000001)})
++	return {"tick": tick_index, "player": _fighter(a.player), "foe": _fighter(a.enemy),
++		"round_phase": a.round_phase, "round_wins": a.round_wins.duplicate(), "tk_phase": a.tk_phase,
++		"tk_turn": a.tk_turn, "tk_winner": a.tk_winner, "tk_damage": a.tk_damage,
++		"tk_rage": [a.tk_player_rage, a.tk_enemy_rage], "tk_ex": [a.tk_player_ex, a.tk_enemy_ex],
++		"reveal": [a.tk_player_reveal.duplicate(), a.tk_enemy_reveal.duplicate()],
++		"hand": a.hand.duplicate(), "enemy_hand": a.enemy_hand.duplicate(),
++		"cooldowns": a.cooldowns.duplicate(), "enemy_cooldowns": a.enemy_cooldowns.duplicate(),
++		"round_time": snappedf(float(a.round_time_left), 0.000001),
++		"global_hitstop": snappedf(float(a._global_hitstop), 0.000001),
++		"combo_count": a.combo_count, "projectiles": projectiles}
++
++func _visuals(a) -> Dictionary:
++	if _has_property(a, "last_visuals"):
++		return a.last_visuals.duplicate(true)
++	return {"unavailable": "baseline has no NativeMotion presentation"}
++
++func _capture(a, name: String, frame: int) -> Dictionary:
++	var result: Dictionary = {}
++	var prefix := out_dir + "/" + name + "-f%04d" % frame
++	for role in ["player", "foe"]:
++		var layer = a.layer_3d if role == "player" else a.layer_3d_foe
++		if layer != null and layer.sv != null:
++			var image: Image = layer.sv.get_texture().get_image()
++			var path: String = prefix + "-" + String(role) + ".png"
++			result[role] = {"path": path, "png_error": image.save_png(path)}
++	if frame % 6 == 0:
++		var live: Image = root.get_texture().get_image()
++		result["live"] = {"path": prefix + "-live.png", "png_error": live.save_png(prefix + "-live.png")}
++	return result
++
++func _new_arena(config: Dictionary):
++	seed(20261119)
++	var a = ArenaScript.new()
++	a.battle_mode = config.get("mode", "realtime")
++	root.add_child(a)
++	a.set_process(false)
++	a.set_physics_process(false)
++	a.round_phase = "fight"
++	a.phase_time = 0.0
++	a.tk_bot = false
++	a._capture_dir = ""
++	a.ai = QuietAI.new()
++	a.demo_ai = null
++	a._deck = ["jab", "cross", "uppercut", "sweep", "wave", "throw", "rush", "backstep", "guard", "sidestep", "focus", "recover"]
++	a._enemy_deck = a._deck.duplicate()
++	var distance: float = float(config.get("distance", 85.0))
++	var swapped: bool = bool(config.get("swapped", false))
++	a.player.reset_for_round(640.0 + distance * 0.5 if swapped else 640.0 - distance * 0.5, -1 if swapped else 1)
++	a.enemy.reset_for_round(640.0 - distance * 0.5 if swapped else 640.0 + distance * 0.5, 1 if swapped else -1)
++	a.player.meter = 5.0
++	a.enemy.meter = 5.0
++	a.hand = config.get("hand", ["jab", "uppercut", "wave", "cross", "guard"]).duplicate()
++	a.enemy_hand = config.get("enemy_hand", ["jab", "uppercut", "wave", "cross", "guard"]).duplicate()
++	a.cooldowns = [0.0, 0.0, 0.0, 0.0, 0.0]
++	a.enemy_cooldowns = a.cooldowns.duplicate()
++	if bool(config.get("fatal", false)):
++		if config.get("actor", "player") == "player":
++			a.enemy.hp = 1
++		else:
++			a.player.hp = 1
++	if bool(config.get("ex", false)):
++		a.tk_player_rage = 100.0
++		a.tk_enemy_rage = 100.0
++	for f in [a.player, a.enemy]:
++		f.hit_confirmed.connect(_hit)
++		f.card_played.connect(_card)
++		f.super_confirmed.connect(_super)
++	return a
++
++func _input(a, config: Dictionary, sequence_index: int) -> bool:
++	var actor = a.player if config.get("actor", "player") == "player" else a.enemy
++	var sequence: Array = config.get("sequence", ["jab"])
++	if sequence_index >= sequence.size() or not actor.can_act():
++		return false
++	var id: String = sequence[sequence_index]
++	var hand: Array = a.hand if actor == a.player else a.enemy_hand
++	var slot := hand.find(id)
++	if slot < 0:
++		_expect(false, "fixed input card missing " + id)
++		return false
++	if actor == a.player:
++		a._try_play(slot)
++	else:
++		a._try_enemy_play(slot)
++	return String(actor._action.get("id", "")) == id and not actor.can_act()
++
++func _scenario(config: Dictionary) -> void:
++	current_scenario = String(config.name)
++	event_rows = []
++	tick_index = 0
++	var motion_source_sha256 := FileAccess.get_sha256("res://data/combat_motion_3d.json") if FileAccess.file_exists("res://data/combat_motion_3d.json") else ""
++	var source_sha256: Dictionary = {}
++	for source in ["data/combat_motion_3d.json", "scripts/native_motion.gd", "scripts/rig_driver.gd",
++		"scripts/fighter_3d_layer.gd", "scripts/battle_presentation.gd", "scripts/arena.gd", "scripts/fighter.gd",
++		"assets/3d/player-rigged.glb", "assets/3d/foe-rigged.glb"]:
++		if FileAccess.file_exists("res://" + String(source)):
++			source_sha256[source] = FileAccess.get_sha256("res://" + String(source))
++	var a = _new_arena(config)
++	await process_frame
++	var traces: Array = []
++	var images: Array = []
++	var visual_rows: Array = []
++	var sequence_index := 0
++	var fatal_reached := false
++	var hp_at_reveal: Array = []
++	if a.battle_mode == "taikou":
++		# Production discard, select and reveal inputs; supplied hands are immutable setup.
++		a._taikou_confirm()
++		for i in [0, 1, 2]:
++			a._taikou_toggle(i)
++		a._taikou_confirm()
++		hp_at_reveal = [a.player.hp, a.enemy.hp]
++	var max_ticks: int = int(config.get("ticks", 150))
++	var capture_stride := maxi(1, int(OS.get_environment("NATIVE_LIVE_STRIDE")))
++	for frame in range(max_ticks):
++		tick_index = frame
++		if a.battle_mode == "realtime":
++			if not fatal_reached and _input(a, config, sequence_index):
++				sequence_index += 1
++			if frame == int(config.get("defender_tick", -1)):
++				var defender = a.enemy if config.get("actor", "player") == "player" else a.player
++				defender.play_card(String(config.get("defender_card", "guard")))
++		if a.round_phase == "fight":
++			a._process(DT)
++		else:
++			fatal_reached = true
++			# The production terminal branch stops fighter/projectile physics while
++			# allowing visual hitstop and terminal presentation clocks to finish.
++			a._process(DT)
++		traces.append(_gameplay(a))
++		var visual_row := {"tick": frame, "visuals": _visuals(a), "round_phase": a.round_phase}
++		if a.player.has_method("presentation_snapshot"):
++			visual_row["snapshots"] = {"player": a.player.presentation_snapshot(), "foe": a.enemy.presentation_snapshot()}
++			visual_row["context"] = a._presentation_context()
++		visual_rows.append(visual_row)
++		if captures and frame % capture_stride == 0:
++			await process_frame
++			await RenderingServer.frame_post_draw
++			images.append({"tick": frame, "capture": _capture(a, current_scenario, frame)})
++		if a.battle_mode == "taikou" and a.tk_phase == "reveal":
++			_expect([a.player.hp, a.enemy.hp] == hp_at_reveal, "reveal must not apply damage")
++	var hits: Array = event_rows.filter(func(e): return e.kind == "hit")
++	if config.get("expect", "") == "block":
++		_expect(hits.any(func(e): return e.blocked), "actual block event required")
++	if config.get("expect", "") == "dodge":
++		_expect(hits.any(func(e): return e.dodged), "actual dodge event required")
++	if config.get("expect", "") == "combo":
++		_expect(traces.any(func(t): return t.player.combo != "" or t.foe.combo != ""), "actual combo required")
++	if config.get("expect", "") == "super":
++		_expect(traces.any(func(t): return t.player.super or t.foe.super), "actual super action required")
++		_expect(hits.any(func(e): return e.damage >= 20), "actual super bonus damage required")
++	if config.get("expect", "") == "melee_super":
++		_expect(event_rows.any(func(e): return e.kind == "super"), "actual melee super confirmed event required")
++	if config.has("winner"):
++		_expect(a.tk_winner == config.winner, "taikou winner " + str(config.winner) + " actual " + a.tk_winner)
++	if bool(config.get("fatal", false)):
++		_expect(fatal_reached, "fatal strike must end round")
++		var over_rows: Array = traces.filter(func(t): return t.round_phase in ["over", "match_over"])
++		if over_rows.size() > 1:
++			for role in ["player", "foe"]:
++				_expect(over_rows[0][role].position == over_rows[-1][role].position,
++					"terminal branch stops fighter movement " + role)
++		if bool(a.use_3d) and _has_property(a, "last_visuals") and not a.last_visuals.is_empty():
++			var victim: String = "foe" if config.get("actor", "player") == "player" else "player"
++			_expect(a.last_visuals.get(victim, {}).get("clip_id", "") == "ko", "fatal target shows native KO")
++			_expect(float(a.last_visuals.get(victim, {}).get("frame", -1)) >= 26.99, "native terminal KO reaches final authored frame")
++		var before: Dictionary = _gameplay(a)
++		a._start_round()
++		_expect(a.player.hp == 100 and a.enemy.hp == 100, "reset restores HP")
++		_expect(a.projectiles.is_empty(), "reset clears projectiles")
++		if _has_property(a, "last_visuals"):
++			a._sync_3d_layer()
++			for role in ["player", "foe"]:
++				_expect(a.last_visuals.get(role, {}).get("clip_id", "") != "ko", "reset clears stale KO " + role)
++			visual_rows.append({"tick": max_ticks, "visuals": _visuals(a), "reset": true, "before": before})
++			if captures:
++				await process_frame
++				await RenderingServer.frame_post_draw
++				images.append({"tick": max_ticks, "capture": _capture(a, current_scenario, max_ticks), "reset": true})
++	var result := {"config": config, "gameplay": traces, "events": event_rows.duplicate(true),
++		"visuals": visual_rows, "images": images, "use_3d": a.use_3d, "rendered": captures,
++		"motion_source_sha256": motion_source_sha256, "source_sha256": source_sha256}
++	scenarios.append(result)
++	var file := FileAccess.open(out_dir + "/" + current_scenario + ".json", FileAccess.WRITE)
++	file.store_string(JSON.stringify(result))
++	file.close()
++	a.free()
++	print("NATIVE_LIVE_SCENARIO " + current_scenario + " hits=" + str(hits.size()))
++
++func _configs() -> Array:
++	var configs: Array = []
++	for role in ["player", "foe"]:
++		var actor: String = "player" if role == "player" else "foe"
++		for card in Defs.CARDS.keys():
++			configs.append({"name": actor + "-card-" + String(card), "actor": actor,
++				"sequence": [card], "hand": [card, "jab", "uppercut", "wave", "guard"],
++				"enemy_hand": [card, "jab", "uppercut", "wave", "guard"]})
++		configs.append({"name": actor + "-block", "actor": actor, "sequence": ["jab"], "defender_tick": 0,
++			"defender_card": "guard", "expect": "block"})
++		configs.append({"name": actor + "-dodge", "actor": actor, "sequence": ["jab"], "defender_tick": 5,
++			"defender_card": "sidestep", "expect": "dodge"})
++		configs.append({"name": actor + "-combo-super", "actor": actor, "sequence": ["jab", "uppercut", "wave"],
++			"expect": "super", "ticks": 210})
++		configs.append({"name": actor + "-melee-super", "actor": actor, "sequence": ["rush", "throw", "uppercut"],
++			"hand": ["rush", "throw", "uppercut", "jab", "guard"],
++			"enemy_hand": ["rush", "throw", "uppercut", "jab", "guard"], "distance": 255.0,
++			"expect": "melee_super", "ticks": 210})
++		configs.append({"name": actor + "-wave-new-action", "actor": actor, "sequence": ["wave", "jab", "jab", "jab"],
++			"hand": ["wave", "jab", "jab", "jab", "jab"], "enemy_hand": ["wave", "jab", "jab", "jab", "jab"],
++			"distance": 700, "ticks": 180})
++		configs.append({"name": actor + "-late-wave-fatal", "actor": actor, "sequence": ["wave", "jab", "jab", "jab"],
++			"hand": ["wave", "jab", "jab", "jab", "jab"], "enemy_hand": ["wave", "jab", "jab", "jab", "jab"],
++			"distance": 700, "fatal": true, "ticks": 140})
++		configs.append({"name": actor + "-fatal-facing-reset", "actor": actor, "sequence": ["jab"],
++			"swapped": true, "fatal": true, "ticks": 80})
++	var strong: Array = ["jab", "jab", "jab", "jab", "jab"]
++	var weak: Array = ["cross", "sweep", "throw", "cross", "sweep"]
++	for winner in ["player", "enemy", "draw"]:
++		configs.append({"name": "taikou-" + String(winner), "mode": "taikou", "winner": winner,
++			"hand": weak if winner == "enemy" else strong, "enemy_hand": weak if winner == "player" else strong,
++			"ticks": 170})
++	configs.append({"name": "taikou-ex-fatal", "mode": "taikou", "hand": strong, "enemy_hand": weak,
++		"ex": true, "fatal": true, "ticks": 170})
++	return configs
++
++func _run() -> void:
++	out_dir = OS.get_environment("NATIVE_LIVE_OUT")
++	if out_dir.is_empty():
++		out_dir = ProjectSettings.globalize_path("res://../reports/live")
++	DirAccess.make_dir_recursive_absolute(out_dir)
++	captures = OS.get_environment("NATIVE_LIVE_CAPTURE") == "1"
++	if captures and DisplayServer.get_name() == "headless":
++		push_error("Live image evidence requires real renderer")
++		quit(2)
++		return
++	var only := OS.get_environment("NATIVE_LIVE_SCENARIOS")
++	for config in _configs():
++		if only.is_empty() or Array(only.split(",")).has(config.name):
++			await _scenario(config)
++	_expect(not scenarios.is_empty(), "at least one scenario must execute")
++	var payload := {"failures": failures, "scenario_count": scenarios.size(),
++		"source_project": ProjectSettings.globalize_path("res://"), "fixed_dt": DT,
++		"rendered": captures, "evidence": "Production state machine, fixed input, no direct sampled-pose injection"}
++	var file := FileAccess.open(out_dir + "/summary.json", FileAccess.WRITE)
++	file.store_string(JSON.stringify(payload, "\t"))
++	file.close()
++	print("NATIVE_LIVE_RESULT " + JSON.stringify(payload))
++	quit(0 if failures.is_empty() else 1)
+--- baseline/tests/native_match_capture.gd
++++ project/tests/native_match_capture.gd
+@@ -0,0 +1,78 @@
++extends SceneTree
++## Normal automatic match: original spawns, hands, rules and engine tick.
++## The observer reads after drawing; it never injects poses or freezes gameplay.
++const ArenaScript = preload("res://scripts/arena.gd")
++var arena
++var directory := ""
++var frames := 0
++var shot_count := 0
++var last_key := ""
++var last_hold := false
++var rows: Array = []
++var contact_only := false
++var continuous := false
++
++func _initialize() -> void:
++	seed(20261119)
++	OS.set_environment("CARD_BOXER_3D", "1")
++	OS.set_environment("CARD_BOXER_BATTLE_MODE", "taikou")
++	OS.set_environment("CARD_BOXER_TAIKOU_BOT", "1")
++	OS.set_environment("CARD_BOXER_CAPTURE", "")
++	directory = OS.get_environment("NATIVE_MATCH_OUT")
++	contact_only = OS.get_environment("NATIVE_MATCH_CONTACT_ONLY") == "1"
++	continuous = OS.get_environment("NATIVE_MATCH_CONTINUOUS") == "1"
++	if directory == "":
++		print("FAIL: NATIVE_MATCH_OUT is required")
++		quit(1)
++		return
++	DirAccess.make_dir_recursive_absolute(directory)
++	call_deferred("_run")
++
++func _v2(value: Vector2) -> Array:
++	return [value.x, value.y]
++
++func _save(key: String) -> void:
++	var image := root.get_texture().get_image()
++	var path := directory.path_join("match-%04d-%s.png" % [shot_count, key])
++	image.save_png(path)
++	var visuals: Dictionary = arena.last_visuals
++	var row := {"file":path,"frame":frames,"round":arena.round_index,
++		"phase":arena.round_phase,"turn":arena.tk_turn,"taikou":arena.tk_phase,
++		"hp":[arena.player.hp,arena.enemy.hp],
++		"positions":[_v2(arena.player.position),_v2(arena.enemy.position)],
++		"hold":arena._global_hitstop,"exchange_time":arena.presentation.exchange_time,
++		"visuals":{}}
++	for role in ["player","foe"]:
++		var visual: Dictionary = visuals.get(role,{})
++		row.visuals[role] = {"clip":visual.get("clip_id",""),"frame":visual.get("frame",0.0),
++			"shift":_v2(visual.get("canvas_shift",Vector2.ZERO)),"frozen":visual.get("frozen",false)}
++	rows.append(row)
++	shot_count += 1
++	print("MATCH_CAPTURE ", key, " hp=", arena.player.hp, "/", arena.enemy.hp)
++
++func _run() -> void:
++	arena = ArenaScript.new()
++	root.add_child(arena)
++	while frames < 16000:
++		await process_frame
++		await RenderingServer.frame_post_draw
++		frames += 1
++		var hold: bool = arena._global_hitstop > 0.0
++		var key := "%d-%d-%s-%s" % [arena.round_index,arena.tk_turn,arena.round_phase,arena.tk_phase]
++		var periodic: bool = continuous and arena.round_index == 1 and arena.tk_turn <= 2 \
++			and arena.tk_phase == "resolve" and frames % 3 == 0
++		if frames == 5 or key != last_key or (hold and not last_hold) or periodic:
++			_save(key + ("-contact" if hold and not last_hold else "") + ("-f%05d" % frames if periodic else ""))
++		last_key = key
++		last_hold = hold
++		if contact_only and hold and arena.tk_phase == "resolve":
++			break
++		if arena.round_phase == "match_over" and frames > 120:
++			_save("match-over")
++			break
++	var file := FileAccess.open(directory.path_join("match.json"),FileAccess.WRITE)
++	file.store_string(JSON.stringify({"frames":frames,"shots":shot_count,"phase":arena.round_phase,"rows":rows}))
++	file.close()
++	print("NORMAL_MATCH_CAPTURE: ", arena.round_phase, " frames=",frames," shots=",shot_count)
++	arena.free()
++	quit(0 if contact_only or frames < 16000 else 1)
+--- baseline/tests/native_motion_capture.gd
++++ project/tests/native_motion_capture.gd
+@@ -0,0 +1,109 @@
++extends SceneTree
++## Native library -> production Fighter3DLayer, real GL only. No gameplay claims.
++const LayerScript = preload("res://scripts/fighter_3d_layer.gd")
++var out_dir: String
++var rows: Array = []
++var motion_source_sha256 := ""
++var source_sha256: Dictionary = {}
++
++func _initialize() -> void:
++	call_deferred("_run")
++
++func _write(payload: Dictionary) -> void:
++	payload["motion_source_sha256"] = motion_source_sha256
++	payload["source_sha256"] = source_sha256
++	var file := FileAccess.open(out_dir + "/manifest.json", FileAccess.WRITE)
++	file.store_string(JSON.stringify(payload, "\t"))
++	file.close()
++
++func _run() -> void:
++	out_dir = OS.get_environment("NATIVE_CAPTURE_OUT")
++	if out_dir.is_empty():
++		out_dir = ProjectSettings.globalize_path("res://../shots/native-motion")
++	DirAccess.make_dir_recursive_absolute(out_dir)
++	if DisplayServer.get_name() == "headless":
++		_write({"error": "A real GL Compatibility renderer is required; headless/dummy images are invalid"})
++		quit(2)
++		return
++	if not FileAccess.file_exists("res://scripts/native_motion.gd"):
++		_write({"error": "NativeMotion is not ready"})
++		quit(2)
++		return
++	for source in ["data/combat_motion_3d.json", "scripts/native_motion.gd", "scripts/rig_driver.gd",
++		"scripts/fighter_3d_layer.gd", "assets/3d/player-rigged.glb", "assets/3d/foe-rigged.glb"]:
++		source_sha256[source] = FileAccess.get_sha256("res://" + String(source))
++	var library = load("res://scripts/native_motion.gd").new()
++	motion_source_sha256 = FileAccess.get_sha256("res://data/combat_motion_3d.json")
++	if not library.load_data():
++		_write({"error": "NativeMotion data is not ready"})
++		quit(2)
++		return
++	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/combat_motion_3d.json"))
++	var layers: Dictionary = {}
++	for role in ["player", "foe"]:
++		var layer = LayerScript.new()
++		root.add_child(layer)
++		layer.configure(role, "res://assets/3d/" + String(role) + "-rigged.glb",
++			LayerScript.DEFAULT_SIDE_YAW if role == "player" else LayerScript.DEFAULT_FOE_YAW, false)
++		var legacy_path: String = "res://data/motion_input.json" if role == "player" else "res://data/motion_input_foe.json"
++		var legacy: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(legacy_path))
++		if not layer.setup(legacy) or not layer.has_method("apply_visual"):
++			_write({"error": "Fighter3DLayer native apply_visual/setup is not ready", "role": role})
++			quit(2)
++			return
++		layers[role] = layer
++	await process_frame
++	await RenderingServer.frame_post_draw
++	var requested := OS.get_environment("NATIVE_CAPTURE_CLIPS")
++	var clips: Array = Array(requested.split(",")) if not requested.is_empty() else ["stance", "jab", "cross", "sweep"]
++	if requested == "all":
++		clips = data.roles.player.clips.keys()
++	var swaps := OS.get_environment("NATIVE_CAPTURE_FACING") == "both"
++	var facings: Array = [1, -1] if swaps else [1]
++	for clip_value in clips:
++		var clip: String = String(clip_value).strip_edges()
++		for relative_facing in facings:
++			var frames := maxi(int(library.clip_frames("player", clip)), int(library.clip_frames("foe", clip)))
++			var samples: Array = []
++			for frame in range(frames):
++				samples.append(float(frame))
++			# Fractional samples at authored keys and contact boundaries expose interpolation.
++			for role in ["player", "foe"]:
++				if not data.roles[role].clips.has(clip):
++					continue
++				for key in data.roles[role].clips[clip]["keys"]:
++					var f := float(key.frame)
++					for offset in [-0.5, 0.0, 0.5]:
++						var value := clampf(f + float(offset), 0, frames - 1)
++						if not samples.has(value):
++							samples.append(value)
++				samples.sort()
++			for sample_value in samples:
++				var f := float(sample_value)
++				for role in ["player", "foe"]:
++					var facing: int = int(relative_facing) * (1 if role == "player" else -1)
++					layers[role].apply_visual({"pose": library.sample(role, clip, f), "facing": facing, "canvas_tilt": 0.0})
++				await process_frame
++				await RenderingServer.frame_post_draw
++				for role in ["player", "foe"]:
++					var layer = layers[role]
++					var file_name := "%s-%s-facing%d-f%05.1f.png" % [role, clip, int(relative_facing), f]
++					var path := out_dir + "/" + file_name
++					var image: Image = layer.sv.get_texture().get_image()
++					var error := image.save_png(path)
++					var key_frames: Array = []
++					for key in data.roles[role].clips[clip]["keys"]:
++						key_frames.append(float(key.frame))
++					rows.append({"role": role, "clip": clip, "frame": f, "path": path, "png_error": error,
++						"facing": int(relative_facing) * (1 if role == "player" else -1),
++						"relative_facing": relative_facing, "authored_key": key_frames.has(f),
++						"contact_frame": library.contact_frame(role, clip),
++						"camera_yaw": layer.view_yaw_deg, "geometry_origin": "current imported GLB",
++						"native_pose": library.sample(role, clip, f)})
++			_write({"renderer": RenderingServer.get_video_adapter_name(), "display_server": DisplayServer.get_name(),
++				"clips": clips, "rows": rows, "completed": false})
++		print("NATIVE_CAPTURE_CLIP " + clip)
++	_write({"renderer": RenderingServer.get_video_adapter_name(), "display_server": DisplayServer.get_name(),
++		"clips": clips, "rows": rows, "completed": true, "evidence": "Direct native pose capture; excludes gameplay integration"})
++	print("NATIVE_CAPTURE_READY " + out_dir + " count=" + str(rows.size()))
++	quit(0)
+--- baseline/tests/native_motion_check.gd
++++ project/tests/native_motion_check.gd
+@@ -0,0 +1,319 @@
++extends SceneTree
++## Catches absent native data, transverse punches and phase/contact drift.
++const Defs = preload("res://scripts/card_data.gd")
++var failures := 0
++var sampled_poses := 0
++var max_support_error := 0.0
++const BONES := ["hips", "spine", "chest", "neck", "head", "upperarm_f", "forearm_f", "upperarm_b", "forearm_b", "thigh_f", "shin_f", "thigh_b", "shin_b"]
++const AUX := ["stance", "idle", "walk", "ko", "hit_light", "hit_heavy", "block"]
++
++func check(ok: bool, message: String) -> void:
++	if not ok:
++		failures += 1
++		print("FAIL: " + message)
++
++func _init() -> void:
++	if not FileAccess.file_exists("res://scripts/native_motion.gd"):
++		check(false, "NativeMotion sampler missing: cannot render native guard/jab/cross/sweep")
++		quit(1)
++		return
++	var script = load("res://scripts/native_motion.gd")
++	if script == null:
++		check(false, "NativeMotion script failed to load")
++		quit(1)
++		return
++	var lib = script.new()
++	check(lib.load_data(), "Native library must load: " + lib.last_error)
++	if not lib.available():
++		print(lib.last_error)
++	if not lib.available():
++		quit(1)
++		return
++	for role in ["player", "foe"]:
++		for id in Array(Defs.CARDS.keys()) + AUX:
++			check(lib.clip_frames(role, id) > 0, role + "/" + id + " full required coverage")
++		for id in ["stance", "jab", "cross", "sweep"]:
++			var pose: Dictionary = lib.sample(role, id, 0.0)
++			check(pose.get("rotations", {}).size() == 13, role + "/" + id + " must drive all 13 bones")
++		for id in ["jab", "cross", "sweep"]:
++			var card: Dictionary = Defs.CARDS[id]
++			var contact := float(card.windup + card.active - 1)
++			check(is_equal_approx(lib.contact_frame(role, id), contact), role + "/" + id + " contact is final active frame")
++			check(is_equal_approx(lib.phase_frame(role, id, "active", 1.0), contact), "active endpoint must not wrap")
++			var first: Dictionary = lib.sample(role, id, 0.0)
++			var last: Dictionary = lib.sample(role, id, lib.clip_frames(role, id) - 1.0)
++			check(first.rotations == last.rotations and first.root_offset == last.root_offset, id + " returns exactly to guard")
++		_geometry(lib, role)
++		_all_endpoints(lib, role)
++	_sampling_contract(script, lib)
++	_invalid_data(script)
++	print("NATIVE MOTION CHECK: " + ("PASS" if failures == 0 else "FAIL") + " failures=" + str(failures) + " sampled=" + str(sampled_poses) + " support_max_m=" + str(max_support_error))
++	quit(0 if failures == 0 else 1)
++
++func _find_skeleton(node: Node) -> Skeleton3D:
++	if node is Skeleton3D:
++		return node
++	for child in node.get_children():
++		var result := _find_skeleton(child)
++		if result != null:
++			return result
++	return null
++
++func _endpoint_pose(skel: Skeleton3D, source: Dictionary, pose: Dictionary) -> Dictionary:
++	var transforms := {}
++	var pending := BONES.duplicate()
++	while not pending.is_empty():
++		for bone in pending.duplicate():
++			var index := skel.find_bone(bone)
++			var parent_index := skel.get_bone_parent(index)
++			var parent_name := skel.get_bone_name(parent_index) if parent_index >= 0 else ""
++			if not parent_name.is_empty() and not transforms.has(parent_name):
++				continue
++			var rest := skel.get_bone_rest(index)
++			var values: Array = pose.rotations[bone]
++			var delta := Quaternion(values[0], values[1], values[2], values[3])
++			var local := Transform3D(Basis(rest.basis.get_rotation_quaternion() * delta).scaled(rest.basis.get_scale()), rest.origin)
++			var global_pose: Transform3D = transforms.get(parent_name, Transform3D.IDENTITY) * local
++			if bone == "hips":
++				var offset: Array = pose.root_offset
++				global_pose.origin += Vector3(offset[0], offset[1], offset[2])
++			transforms[bone] = global_pose
++			pending.erase(bone)
++	var endpoints := {"hip": transforms.hips.origin, "head": transforms.head.origin, "shoulder": transforms.upperarm_f.origin,
++		"f_elbow": transforms.forearm_f.origin, "b_elbow": transforms.forearm_b.origin, "transforms": transforms}
++	for pair in [["forearm_f", "f_hand"], ["forearm_b", "b_hand"], ["shin_f", "f_foot"], ["shin_b", "b_foot"]]:
++		var rest_global := skel.get_bone_global_rest(skel.find_bone(pair[0]))
++		var point: Array = source.apose_points[pair[1]]
++		var tail := rest_global.affine_inverse() * Vector3(point[0], point[1], 0.0)
++		endpoints[pair[1]] = transforms[pair[0]] * tail
++	return endpoints
++
++func _find_mesh(node: Node) -> MeshInstance3D:
++	if node is MeshInstance3D and node.skin != null:
++		return node
++	for child in node.get_children():
++		var result := _find_mesh(child)
++		if result != null:
++			return result
++	return null
++
++func _boot_cache(model: Node, skel: Skeleton3D) -> Dictionary:
++	var instance := _find_mesh(model)
++	check(instance != null, "actual imported skinned mesh available")
++	var result := {"f": [], "b": []}
++	if instance == null:
++		return result
++	var surface := instance.mesh.surface_get_arrays(0)
++	var vertices: PackedVector3Array = surface[Mesh.ARRAY_VERTEX]
++	var joints: PackedInt32Array = surface[Mesh.ARRAY_BONES]
++	var weights: PackedFloat32Array = surface[Mesh.ARRAY_WEIGHTS]
++	var count := joints.size() / vertices.size()
++	for vertex in range(vertices.size()):
++		if vertices[vertex].y >= .24:
++			continue
++		var influences: Array = []
++		var shin_f_weight := 0.0
++		var shin_b_weight := 0.0
++		for influence in range(count):
++			var slot := int(joints[vertex * count + influence])
++			var weight := weights[vertex * count + influence]
++			if weight <= .000001:
++				continue
++			var name := String(instance.skin.get_bind_name(slot))
++			if name.is_empty():
++				name = skel.get_bone_name(instance.skin.get_bind_bone(slot))
++			if name == "shin_f": shin_f_weight += weight
++			if name == "shin_b": shin_b_weight += weight
++			influences.append([name, instance.skin.get_bind_pose(slot) * vertices[vertex], weight])
++		if shin_f_weight > .65: result.f.append(influences)
++		if shin_b_weight > .65: result.b.append(influences)
++	check(result.f.size() > 50 and result.b.size() > 50, "actual boot vertices classified on both shins")
++	print("IMPORTED BOOT VERTICES " + str(result.f.size()) + "/" + str(result.b.size()))
++	return result
++
++func _sole(cache: Dictionary, transforms: Dictionary, suffix: String) -> float:
++	var lowest := INF
++	for vertex in cache[suffix]:
++		var height := 0.0
++		for influence in vertex:
++			if not transforms.has(influence[0]):
++				continue
++			var matrix: Transform3D = transforms[influence[0]]
++			var rest_point: Vector3 = influence[1]
++			height += (matrix * rest_point).y * float(influence[2])
++		lowest = minf(lowest, height)
++	return lowest
++
++func _geometry(lib: RefCounted, role: String) -> void:
++	var model: Node = load("res://assets/3d/" + role + "-rigged.glb").instantiate()
++	var skel := _find_skeleton(model)
++	check(skel != null, "actual imported Skeleton3D available for " + role)
++	if skel == null:
++		model.free()
++		return
++	var path := "res://data/motion_input.json" if role == "player" else "res://data/motion_input_foe.json"
++	var source: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(path))
++	var boot_cache := _boot_cache(model, skel)
++	var guard := _endpoint_pose(skel, source, lib.sample(role, "stance", 0.0))
++	check(guard.f_hand.z - guard.shoulder.z > .2 and guard.b_hand.z - guard.shoulder.z > .2, role + " both guard hands in +Z")
++	# Chin protection uses a bent elbow, rather than holding both hands far out.
++	for side in ["f", "b"]:
++		var shoulder: Vector3 = guard.transforms["upperarm_" + side].origin
++		var elbow: Vector3 = guard[side + "_elbow"]
++		var hand: Vector3 = guard[side + "_hand"]
++		var reach := shoulder.distance_to(hand) / (shoulder.distance_to(elbow) + elbow.distance_to(hand))
++		var elbow_angle := rad_to_deg((shoulder - elbow).angle_to(hand - elbow))
++		check(reach < .64 and elbow_angle < 85.0, role + " " + side + " guard has compact bent elbow")
++		check(elbow.y < shoulder.y, role + " " + side + " guard elbow protects ribs below shoulder")
++	check(guard.f_hand.y - guard.head.y > -.095 and guard.f_hand.y - guard.head.y < -.01 and guard.b_hand.y - guard.head.y > -.095 and guard.b_hand.y - guard.head.y < -.01, role + " guard wrists beside cheek/chin below head origin")
++	check(guard.f_elbow.x > .06 and guard.b_elbow.x < -.06, role + " guard elbows stay independently separated")
++	var jab := _endpoint_pose(skel, source, lib.sample(role, "jab", lib.contact_frame(role, "jab")))
++	check(jab.f_hand.z > (.77 if role == "player" else .89) and jab.f_hand.z - guard.f_hand.z > .18, role + " jab retains full reach beyond refined guard")
++	var cross_pose := _endpoint_pose(skel, source, lib.sample(role, "cross", lib.contact_frame(role, "cross")))
++	check(cross_pose.b_hand.z > (.77 if role == "player" else .90) and cross_pose.b_hand.z - guard.b_hand.z > .25, role + " cross retains full independent rear reach")
++	var sweep := _endpoint_pose(skel, source, lib.sample(role, "sweep", lib.contact_frame(role, "sweep")))
++	check(sweep.f_foot.z > .55 and sweep.f_foot.y < .25, role + " sweep goes forward and stays low")
++	var sweep_knee := rad_to_deg((sweep.transforms.thigh_f.origin - sweep.transforms.shin_f.origin).angle_to(sweep.f_foot - sweep.transforms.shin_f.origin))
++	check(sweep_knee > 132.0, role + " sweep reaches with extended leg rather than raised knee")
++	check(_sole(boot_cache, sweep.transforms, "f") >= .015 and _sole(boot_cache, sweep.transforms, "f") <= .075, role + " sweep striking boot stays close to floor")
++	check(absf(_sole(boot_cache, sweep.transforms, "b")) < .001, role + " actual sweep supporting boot sole grounded")
++	check(absf(_sole(boot_cache, guard.transforms, "f")) < .001 and absf(_sole(boot_cache, guard.transforms, "b")) < .001, role + " actual guard boot soles grounded")
++	for id in ["uppercut", "wave", "throw", "hit_light", "hit_heavy", "block", "ko", "idle", "walk"]:
++		if lib.clip_frames(role, id) == 0:
++			continue
++		var frame: float = lib.contact_frame(role, id) if lib.contact_frame(role, id) >= 0 else 0.0
++		var peak := _endpoint_pose(skel, source, lib.sample(role, id, frame))
++		if id == "uppercut":
++			check(peak.f_hand.y - guard.f_hand.y > .25, role + " uppercut has distinct upward strike")
++		if id == "wave":
++			check(peak.f_hand.z > guard.f_hand.z + .2 and peak.b_hand.z > guard.b_hand.z + .2, role + " wave extends both palms")
++		if id == "ko":
++			var down := _endpoint_pose(skel, source, lib.sample(role, id, 27.0))
++			check(down.head.y < .55 and down.hip.y < .5, role + " KO ends down")
++	for id in Array(Defs.CARDS.keys()) + AUX:
++		# Quarter frames include every midpoint between the dense half-frame IK
++		# solutions, so cubic sampling must preserve real sole support as well.
++		for quarter_frame in range(lib.clip_frames(role, id) * 4 - 3):
++			var sampled: Dictionary = lib.sample(role, id, quarter_frame * .25)
++			sampled_poses += 1
++			check(sampled.rotations.size() == 13, role + "/" + id + " sampled bone coverage")
++			for bone in BONES:
++				var values: Array = sampled.rotations[bone]
++				var q := Quaternion(values[0], values[1], values[2], values[3])
++				check(q.is_finite() and absf(q.length_squared() - 1.0) < .00001, role + "/" + id + " finite unit sample")
++			if id in ["stance", "jab", "cross", "uppercut", "wave", "throw", "sweep", "guard", "sidestep", "focus", "recover", "idle", "walk", "hit_light", "hit_heavy", "block", "ko"]:
++				var sampled_endpoints := _endpoint_pose(skel, source, sampled)
++				var support_sides: Array = ["b"] if id in ["sweep", "ko"] else ["f", "b"]
++				if id == "walk":
++					support_sides = ["b"] if quarter_frame * .25 <= 17.0 else ["f"]
++				for suffix in support_sides:
++					var support_error := absf(_sole(boot_cache, sampled_endpoints.transforms, suffix))
++					max_support_error = maxf(max_support_error, support_error)
++					check(support_error < .020, role + "/" + id + " actual " + suffix + " boot support stays within two centimeters at " + str(quarter_frame * .25))
++	print("GEOMETRY " + role + " guard_z=" + str(guard.f_hand.z) + "/" + str(guard.b_hand.z) + " jab_z=" + str(jab.f_hand.z) + " cross_z=" + str(cross_pose.b_hand.z) + " sweep_z=" + str(sweep.f_foot.z))
++	print("GUARD " + role + " hand_above_shoulder=" + str(guard.f_hand.y - guard.shoulder.y) + "/" + str(guard.b_hand.y - guard.shoulder.y) + " elbow_x=" + str(guard.f_elbow.x) + "/" + str(guard.b_elbow.x))
++	model.free()
++
++func _all_endpoints(lib: RefCounted, role: String) -> void:
++	var stance: Dictionary = lib.sample(role, "stance", 0.0)
++	check(lib.clip_frames(role, "stance") == 1 and lib.clip_frames(role, "ko") == 28, role + " required stance and KO durations")
++	for id in Array(Defs.CARDS.keys()) + ["hit_light", "hit_heavy", "block", "idle", "walk"]:
++		var first: Dictionary = lib.sample(role, id, 0.0)
++		var last: Dictionary = lib.sample(role, id, lib.clip_frames(role, id) - 1.0)
++		check(last.rotations == stance.rotations and last.root_offset == stance.root_offset, role + "/" + id + " closes on guard")
++		if Defs.CARDS.has(id) or id in ["idle", "walk"]:
++			check(first.rotations == last.rotations and first.root_offset == last.root_offset, role + "/" + id + " starts/ends at guard")
++		else:
++			check(first.rotations != stance.rotations, role + "/" + id + " reaction starts at impact")
++	for id in Defs.CARDS:
++		var card: Dictionary = Defs.CARDS[id]
++		check(lib.clip_frames(role, id) == card.windup + card.active + card.recover, id + " native timing follows gameplay")
++		check(is_equal_approx(lib.phase_frame(role, id, "windup", 1.0), float(card.windup - 1)), id + " windup endpoint")
++		check(is_equal_approx(lib.phase_frame(role, id, "recover", 1.0), float(lib.clip_frames(role, id) - 1)), id + " recovery endpoint")
++		if card.active == 0:
++			check(is_equal_approx(lib.phase_frame(role, id, "active", 1.0), float(card.windup - 1)), id + " absent active phase does not enter recovery")
++		check(lib.contact_frame(role, id) == -1.0 if card.kind != Defs.KIND_ATTACK else lib.contact_frame(role, id) == float(card.windup + card.active - 1), id + " attack-only contact")
++
++func _write_fixture(data: Dictionary) -> String:
++	var path := "res://tests/native-motion-invalid-fixture.json"
++	var file := FileAccess.open(path, FileAccess.WRITE)
++	file.store_string(JSON.stringify(data))
++	file.close()
++	return path
++
++func _sampling_contract(script: Script, lib: RefCounted) -> void:
++	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/combat_motion_3d.json"))
++	var key0: Dictionary = data.roles.player.clips.stance["keys"][0].duplicate(true)
++	var key2: Dictionary = key0.duplicate(true)
++	key0.frame = 0
++	key0.rotations.hips = [0.0, 0.0, 0.0, 1.0]
++	key0.root_offset = [0.0, 0.0, 0.0]
++	key2.frame = 2
++	# Negative quaternion hemisphere deliberately exercises short-path interpolation.
++	key2.rotations.hips = [0.0, -0.707106781186548, 0.0, -0.707106781186548]
++	key2.root_offset = [.2, .1, -.3]
++	data.roles.player.clips.interpolation_probe = {"frames":3, "split":[0,0,3], "contact_frame":-1, "keys":[key0,key2]}
++	var probe = script.new()
++	check(probe.load_data(_write_fixture(data)), "hand-derived interpolation fixture loads")
++	var mid: Dictionary = probe.sample("player", "interpolation_probe", 1.0)
++	var values: Array = mid.rotations.hips
++	var q := Quaternion(values[0], values[1], values[2], values[3])
++	check((q * Vector3.RIGHT).distance_to(Vector3(.707106781186548, 0.0, -.707106781186548)) < .00001, "fractional midpoint uses short-path 45 degree yaw")
++	check(absf(mid.root_offset[0] - .1) < .00001 and absf(mid.root_offset[1] - .05) < .00001 and absf(mid.root_offset[2] + .15) < .00001, "fractional root midpoint interpolates once")
++	var quarter: Dictionary = probe.sample("player", "interpolation_probe", .5)
++	values = quarter.rotations.hips
++	q = Quaternion(values[0], values[1], values[2], values[3])
++	check(absf(q.dot(Quaternion(Vector3.UP, deg_to_rad(14.0625)))) > .99999, "sparse interval has smooth eased fractional rotation")
++	check(probe.sample("player", "interpolation_probe", -3.0).frame == 0.0 and probe.sample("player", "interpolation_probe", 8.0).frame == 2.0, "sample clamps both clip endpoints")
++	check(lib.sample("player", "missing", 0.0).has("error") and not lib.sample("missing", "jab", 0.0).has("rotations"), "missing native clip gives explicit diagnostic")
++	check(lib.sample("player", "jab", NAN).has("error"), "nonfinite frame rejected")
++	var original: Dictionary = lib.sample("player", "stance", 0.0)
++	original.rotations.hips[0] = 123.0
++	check(lib.sample("player", "stance", 0.0).rotations.hips[0] != 123.0, "sample output cannot mutate library")
++	DirAccess.remove_absolute(ProjectSettings.globalize_path("res://tests/native-motion-invalid-fixture.json"))
++
++func _reject(script: Script, data: Dictionary, label: String) -> void:
++	var probe = script.new()
++	var result: bool = probe.load_data(_write_fixture(data))
++	check(not result and not probe.available() and not probe.last_error.is_empty(), "reject invalid " + label + " with diagnostic")
++
++func _invalid_data(script: Script) -> void:
++	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/combat_motion_3d.json"))
++	var broken := data.duplicate(true)
++	broken.roles.foe.clips.erase("focus")
++	_reject(script, broken, "missing full-set clip")
++	broken = data.duplicate(true)
++	broken.roles.player.clips.stance.frames = 2
++	broken.roles.player.clips.stance.split = [0,0,2]
++	broken.roles.player.clips.stance["keys"].append(broken.roles.player.clips.stance["keys"][0].duplicate(true))
++	broken.roles.player.clips.stance["keys"][-1].frame = 1
++	_reject(script, broken, "stance duration")
++	broken = data.duplicate(true)
++	broken.roles.player.clips.jab["keys"][0].rotations.hips = [0.,0.,0.,2.]
++	_reject(script, broken, "non-unit quaternion")
++	broken = data.duplicate(true)
++	broken.roles.player.clips.jab["keys"][0].rotations.erase("head")
++	_reject(script, broken, "missing bone quaternion")
++	broken = data.duplicate(true)
++	broken.roles.player.clips.jab["keys"][1].frame = 0
++	_reject(script, broken, "nonincreasing keys")
++	broken = data.duplicate(true)
++	broken.roles.player.clips.jab["keys"][0].root_offset = [0.,0.]
++	_reject(script, broken, "root dimensionality")
++	broken = data.duplicate(true)
++	broken.roles.player.clips.jab.contact_frame = 5
++	_reject(script, broken, "contact drift")
++	broken = data.duplicate(true)
++	broken.roles.player.clips.jab["keys"][-1].root_offset[0] += .1
++	_reject(script, broken, "open card endpoint")
++	broken = data.duplicate(true)
++	broken.roles.foe.clips.walk["keys"][-1].root_offset[0] += .1
++	_reject(script, broken, "open looping walk endpoint")
++	broken = data.duplicate(true)
++	var contact_keys: Array = broken.roles.foe.clips.jab["keys"]
++	for i in range(contact_keys.size()):
++		if contact_keys[i].frame == broken.roles.foe.clips.jab.contact_frame:
++			contact_keys.remove_at(i)
++			break
++	_reject(script, broken, "missing authored contact key")
++	DirAccess.remove_absolute(ProjectSettings.globalize_path("res://tests/native-motion-invalid-fixture.json"))
+--- baseline/tests/native_rig_check.gd
++++ project/tests/native_rig_check.gd
+@@ -0,0 +1,172 @@
++extends SceneTree
++## Native deltas must use each imported bone's local rest exactly once.
++const RigScript = preload("res://scripts/rig_driver.gd")
++const LayerScript = preload("res://scripts/fighter_3d_layer.gd")
++var failures: Array[String] = []
++var checks := 0
++
++func _initialize() -> void:
++	call_deferred("_run")
++
++func _expect(ok: bool, message: String) -> void:
++	checks += 1
++	if not ok:
++		failures.append(message)
++
++func _find_skel(node: Node) -> Skeleton3D:
++	if node is Skeleton3D:
++		return node as Skeleton3D
++	for child in node.get_children():
++		var found := _find_skel(child)
++		if found != null:
++			return found
++	return null
++
++func _pose(bones: Array) -> Dictionary:
++	var rotations := {}
++	for bone in bones:
++		rotations[String(bone)] = [0.0, 0.0, 0.0, 1.0]
++	return {"clip_id": "fixture", "frame": 0.5,
++		"rotations": rotations, "root_offset": [0.0, 0.0, 0.0]}
++
++func _check_role(role: String, glb: String, input: String) -> void:
++	var packed: PackedScene = load(glb)
++	_expect(packed != null, role + " GLB must load")
++	if packed == null:
++		return
++	var model := packed.instantiate()
++	root.add_child(model)
++	var skel := _find_skel(model)
++	_expect(skel != null, role + " must have a skeleton")
++	if skel == null:
++		model.free()
++		return
++	var motion: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(input))
++	var driver: RefCounted = RigScript.new()
++	_expect(driver.call("setup", skel, motion), role + " rig setup")
++	_expect(driver.has_method("apply_pose"), role + " lacks native pose application")
++	if not driver.has_method("apply_pose"):
++		model.free()
++		return
++	var bones: Array = motion["bones"]
++	var neutral := skel.find_bone("neutral_bone")
++	var neutral_position := skel.get_bone_pose_position(neutral)
++	var neutral_rotation := skel.get_bone_pose_rotation(neutral)
++	var neutral_scale := skel.get_bone_pose_scale(neutral)
++	var pose := _pose(bones)
++	var result: Dictionary = driver.call("apply_pose", pose)
++	_expect(int(result.get("bones_driven", 0)) == 13, role + " applies all 13 bones")
++	for name in bones:
++		var idx := skel.find_bone(String(name))
++		var rest := skel.get_bone_rest(idx)
++		_expect(skel.get_bone_pose_position(idx).is_equal_approx(rest.origin),
++			role + " rest translation " + String(name))
++		_expect(absf(skel.get_bone_pose_rotation(idx).dot(
++			rest.basis.get_rotation_quaternion())) > 0.99999,
++			role + " rest rotation " + String(name))
++		_expect(skel.get_bone_pose_scale(idx).is_equal_approx(rest.basis.get_scale()),
++			role + " rest scale " + String(name))
++
++	# Local X on this measured bone is not a fixed skeleton/global Z axis.
++	var delta := Quaternion(Vector3.RIGHT, 0.25)
++	pose["rotations"]["upperarm_f"] = [delta.x, delta.y, delta.z, delta.w]
++	pose["root_offset"] = [0.125, -0.05, 0.2]
++	var arm_idx := skel.find_bone("upperarm_f")
++	var hips_idx := skel.find_bone("hips")
++	var arm_rest := skel.get_bone_rest(arm_idx)
++	var hips_rest := skel.get_bone_rest(hips_idx)
++	var want_rotation := arm_rest.basis.get_rotation_quaternion() * delta
++	for _iteration in range(50):
++		driver.call("apply_pose", pose)
++	_expect(absf(skel.get_bone_pose_rotation(arm_idx).dot(want_rotation)) > 0.99999,
++		role + " rotations cannot accumulate or use the wrong multiplication order")
++	_expect(skel.get_bone_pose_position(hips_idx).is_equal_approx(
++		hips_rest.origin + Vector3(0.125, -0.05, 0.2)),
++		role + " root offset must be applied exactly once")
++	_expect(skel.get_bone_pose_position(arm_idx).is_equal_approx(arm_rest.origin),
++		role + " non-root translation cannot stretch bone lengths")
++	_expect(skel.get_bone_pose_position(neutral).is_equal_approx(neutral_position)
++		and absf(skel.get_bone_pose_rotation(neutral).dot(neutral_rotation)) > 0.99999
++		and skel.get_bone_pose_scale(neutral).is_equal_approx(neutral_scale),
++		role + " neutral import bone must not be overwritten")
++
++	var before := skel.get_bone_pose_rotation(arm_idx)
++	var bad := pose.duplicate(true)
++	bad["rotations"].erase("head")
++	var rejected: Dictionary = driver.call("apply_pose", bad)
++	_expect(not rejected.get("error", "").is_empty(), role + " incomplete native pose is rejected")
++	_expect(absf(skel.get_bone_pose_rotation(arm_idx).dot(before)) > 0.99999,
++		role + " invalid native pose cannot partially write a skeleton")
++	model.free()
++
++func _check_layer(role: String, glb: String, input: String, face: int, yaw: float) -> void:
++	var motion: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(input))
++	var layer: Node2D = LayerScript.new()
++	root.add_child(layer)
++	layer.call("configure", role, glb, yaw, false)
++	_expect(layer.call("setup", motion), role + " presentation layer loads")
++	_expect(layer.has_method("apply_visual") and layer.has_method("set_facing"),
++		role + " layer lacks native pose/facing interface")
++	if not layer.has_method("apply_visual") or not layer.has_method("set_facing"):
++		layer.free()
++		return
++	var pose := _pose(motion["bones"])
++	layer.call("apply_visual", {"pose": pose, "facing": face, "canvas_tilt": 0.12})
++	var driver: RefCounted = layer.get("drv")
++	var skel: Skeleton3D = driver.get("skel")
++	var arm := skel.find_bone("forearm_f")
++	_expect(layer.has_method("anchor_offset"), role + " lacks a pure presented contact anchor")
++	if layer.has_method("anchor_offset"):
++		var next_pose := pose.duplicate(true)
++		var bend := Quaternion(Vector3.RIGHT, 0.25)
++		next_pose.rotations.forearm_f = [bend.x,bend.y,bend.z,bend.w]
++		next_pose.root_offset = [0.12,-0.05,0.2]
++		var before := skel.get_bone_pose_rotation(arm)
++		var predicted: Vector2 = layer.call("anchor_offset",next_pose,"lead_hand",face,0.12)
++		_expect(absf(skel.get_bone_pose_rotation(arm).dot(before)) > 0.99999,
++			role + " contact prediction cannot overwrite the displayed pose")
++		layer.call("apply_visual",{"pose":next_pose,"facing":face,"canvas_tilt":0.12})
++		var endpoint: Array = motion.apose_points.f_hand
++		var rest_point := Vector3(endpoint[0],endpoint[1],0.0)
++		var in_bone := skel.get_bone_global_rest(arm).affine_inverse() * rest_point
++		var world_point := skel.global_transform * (skel.get_bone_global_pose(arm) * in_bone)
++		var camera: Camera3D = layer.get("cam")
++		var viewport: SubViewport = layer.get("sv")
++		var pixel := camera.unproject_position(world_point)
++		var floor_pixel := camera.unproject_position(Vector3.ZERO)
++		var sx := 1.22 if bool(layer.get("foe_visual")) else 1.0
++		var sy := 0.94 if bool(layer.get("foe_visual")) else 1.0
++		var actual := Vector2((pixel.x-viewport.size.x*.5)*.45*sx,
++			(pixel.y-floor_pixel.y)*.45*sy).rotated(.12)
++		_expect(predicted.distance_to(actual) < 0.01,
++			role + " predicted anchor must match real posed skeleton/camera/scale/root")
++		_expect(predicted.length() > 20.0, role + " anchor cannot silently collapse to origin")
++		layer.call("apply_visual",{"pose":pose,"facing":face,"canvas_tilt":.12})
++	_expect(absf(skel.get_bone_pose_rotation(arm).dot(
++		skel.get_bone_rest(arm).basis.get_rotation_quaternion())) > 0.99999,
++		role + " native pose cannot receive the old +/-50 degree guard twice")
++	_expect(is_equal_approx(layer.rotation, 0.12), role + " 3D canvas recoil tilt is applied")
++	var model: Node3D = layer.get("model_root")
++	_expect(model != null, role + " facing must operate on the imported model")
++	if model != null:
++		var initial := model.transform
++		layer.call("set_facing", -face)
++		_expect(model.transform.basis.is_equal_approx(Basis(Vector3.UP, PI) * initial.basis),
++			role + " reversing facing rotates the model 180 degrees around Y")
++		layer.call("set_facing", face)
++		_expect(model.transform.is_equal_approx(initial), role + " facing switches must not accumulate")
++		_expect(absf(skel.get_bone_pose_rotation(arm).dot(
++			skel.get_bone_rest(arm).basis.get_rotation_quaternion())) > 0.99999,
++			role + " facing cannot mirror or overwrite bone-local quaternions")
++	layer.free()
++
++func _run() -> void:
++	_check_role("player", "res://assets/3d/player-rigged.glb", "res://data/motion_input.json")
++	_check_role("foe", "res://assets/3d/foe-rigged.glb", "res://data/motion_input_foe.json")
++	_check_layer("player", "res://assets/3d/player-rigged.glb", "res://data/motion_input.json", 1, -55.0)
++	_check_layer("foe", "res://assets/3d/foe-rigged.glb", "res://data/motion_input_foe.json", -1, 55.0)
++	for failure in failures:
++		print("FAIL: ", failure)
++	print("NATIVE_RIG_CHECK: %s (%d checks, %d failures)" % [
++		"PASS" if failures.is_empty() else "FAIL", checks, failures.size()])
++	quit(0 if failures.is_empty() else 1)
+--- baseline/tests/natural_runtime_benchmark.gd
++++ project/tests/natural_runtime_benchmark.gd
+@@ -0,0 +1,92 @@
++extends SceneTree
++const Motion = preload("res://scripts/native_motion.gd")
++const Flow = preload("res://scripts/battle_presentation.gd")
++const Arena = preload("res://scripts/arena.gd")
++var library
++var flows := {}
++var snapshots := {}
++var context := {"mode":"taikou"}
++var arena
++var render_start := 0
++var measured_start := 0
++var last_frame := 0
++var frame_intervals := []
++var role_times := {"player":[],"foe":[]}
++
++func _initialize() -> void:
++	call_deferred("_run")
++
++func stats(values: Array) -> Dictionary:
++	var sorted := values.duplicate()
++	sorted.sort()
++	var sum := 0.0
++	for value in values: sum += float(value)
++	return {"count":values.size(),"mean_us":sum/maxi(values.size(),1),"p50_us":sorted[int(sorted.size()*.5)],"p95_us":sorted[mini(sorted.size()-1,int(sorted.size()*.95))],"max_us":sorted[-1]}
++
++func _run() -> void:
++	library = Motion.new()
++	if not library.load_data():
++		push_error(library.last_error)
++		quit(1)
++		return
++	for role: String in ["player","foe"]:
++		var flow = Flow.new()
++		var setup_start := Time.get_ticks_usec()
++		flow.setup(library)
++		print("SETUP PREPARE SUPPORT ",role," us=",Time.get_ticks_usec()-setup_start)
++		flow.reset(1)
++		flow.begin_exchange({"round_id":1,"actor":role,"winner":role,"clip_id":"jab","action_seq":1,"approach_extra_x":280.0 if role=="player" else -280.0})
++		flows[role] = flow
++		snapshots[role] = {"state":0,"action_seq":1,"facing":1 if role=="player" else -1}
++		flow.exchange_time = .2
++		var cold_start := Time.get_ticks_usec()
++		flow.sample(role,snapshots[role],context)
++		print("COLD SAMPLE ",role," us=",Time.get_ticks_usec()-cold_start)
++	var timings := {"player":[],"foe":[]}
++	var support_times := {"player":[],"foe":[]}
++	for step in range(480):
++		var time := fposmod(float(step)/60.0,Flow.ATTACK_S)
++		for role: String in ["player","foe"]:
++			flows[role].exchange_time = time
++			var start := Time.get_ticks_usec()
++			var pose: Dictionary = flows[role].sample(role,snapshots[role],context).pose
++			timings[role].append(Time.get_ticks_usec()-start)
++			start = Time.get_ticks_usec()
++			library.preserve_support(role,pose,pose)
++			support_times[role].append(Time.get_ticks_usec()-start)
++	for role: String in ["player","foe"]:
++		print("CPU SAMPLE ",role," ",JSON.stringify(stats(timings[role])))
++		print("CPU PRESERVE SUPPORT ",role," ",JSON.stringify(stats(support_times[role])))
++	if DisplayServer.get_name()=="headless":
++		quit(0)
++		return
++	arena = Arena.new()
++	root.add_child(arena)
++	arena.set_process(false)
++	Engine.max_fps = 60 if OS.get_environment("NATURAL_BENCH_CAP")=="60" else 0
++	render_start = Time.get_ticks_usec()
++	last_frame = render_start
++	process_frame.connect(_render_frame)
++	print("RENDER START driver=",RenderingServer.get_current_rendering_driver_name()," display=",DisplayServer.get_name()," cap=",Engine.max_fps)
++
++func _render_frame() -> void:
++	var now := Time.get_ticks_usec()
++	var elapsed := float(now-render_start)/1000000.0
++	if elapsed>1.0:
++		if measured_start==0: measured_start = now
++		else: frame_intervals.append(now-last_frame)
++	last_frame = now
++	for role: String in ["player","foe"]:
++		flows[role].exchange_time = fposmod(elapsed,Flow.ATTACK_S)
++		var start := Time.get_ticks_usec()
++		var visual: Dictionary = flows[role].sample(role,snapshots[role],context)
++		if measured_start>0: role_times[role].append(Time.get_ticks_usec()-start)
++		var fighter = arena.player if role=="player" else arena.enemy
++		var layer = arena.layer_3d if role=="player" else arena.layer_3d_foe
++		layer.position = fighter.position+visual.canvas_shift
++		layer.apply_visual(visual)
++	if elapsed>=8.0:
++		var seconds := float(now-measured_start)/1000000.0
++		print("REAL RENDER FPS ",JSON.stringify({"frames":frame_intervals.size(),"seconds":seconds,"fps":float(frame_intervals.size())/seconds,"frame_intervals":stats(frame_intervals)}))
++		for role: String in ["player","foe"]: print("RENDER SAMPLE ",role," ",JSON.stringify(stats(role_times[role])))
++		quit(0)
+--- baseline/tests/natural_runtime_check.gd
++++ project/tests/natural_runtime_check.gd
+@@ -0,0 +1,189 @@
++extends SceneTree
++const Motion = preload("res://scripts/native_motion.gd")
++const Flow = preload("res://scripts/battle_presentation.gd")
++var failures: Array[String] = []
++var total := 0
++
++func expect(ok: bool, label: String) -> void:
++	total += 1
++	if not ok: failures.append(label)
++
++func quat(values: Array) -> Quaternion:
++	return Quaternion(values[0],values[1],values[2],values[3])
++
++func rotation_step(a: Dictionary, b: Dictionary) -> float:
++	var delta := quat(a.rotations.chest).inverse() * quat(b.rotations.chest)
++	return 2.0 * atan2(Vector3(delta.x,delta.y,delta.z).length(),absf(delta.w))
++
++func same_pose(a: Dictionary,b: Dictionary) -> bool:
++	for bone: String in a.rotations:
++		if absf(quat(a.rotations[bone]).dot(quat(b.rotations[bone]))) < .999999: return false
++	return Vector3(a.root_offset[0],a.root_offset[1],a.root_offset[2]).distance_to(Vector3(b.root_offset[0],b.root_offset[1],b.root_offset[2])) < .000001
++
++func fixture() -> Dictionary:
++	var keys := []
++	for item: Array in [[0.0,0.0],[2.0,.3],[5.0,.9],[9.0,1.5]]:
++		var rotations := {}
++		var q := Quaternion(Vector3.UP,float(item[1]))
++		for bone: String in Motion.BONES: rotations[bone] = [q.x,q.y,q.z,q.w]
++		keys.append({"frame":item[0],"rotations":rotations,"root_offset":[item[1],.1*item[1],0.0]})
++	return {"roles":{"player":{"clips":{"curve":{"frames":10,"contact_frame":-1,"keys":keys}}}}}
++
++func _initialize() -> void:
++	call_deferred("_run")
++
++func _run() -> void:
++	var lib = Motion.new()
++	lib.set("_data",fixture())
++	for frame in [2.0,5.0]:
++		var before: Dictionary = lib.sample("player","curve",frame-.01)
++		var center: Dictionary = lib.sample("player","curve",frame)
++		var after: Dictionary = lib.sample("player","curve",frame+.01)
++		var left := rotation_step(before,center)/.01
++		var right := rotation_step(center,after)/.01
++		expect((left+right)*.5 > .09,"non-contact intermediate quaternion keeps moving at frame"+str(frame))
++		expect(absf(left-right) < .003,"nonuniform key times have continuous angular velocity at frame"+str(frame))
++		var left_root := (float(center.root_offset[0])-float(before.root_offset[0]))/.01
++		var right_root := (float(after.root_offset[0])-float(center.root_offset[0]))/.01
++		expect((left_root+right_root)*.5 > .09 and absf(left_root-right_root)<.003,"root has continuous nonzero velocity at frame"+str(frame))
++	for key: Dictionary in fixture().roles.player.clips.curve.keys:
++		var pose: Dictionary = lib.sample("player","curve",key.frame)
++		expect(pose.rotations == key.rotations and pose.root_offset == key.root_offset,"authored key remains exact "+str(key.frame))
++	for frame in range(180):
++		var pose: Dictionary = lib.sample("player","curve",frame/20.0)
++		expect(absf(quat(pose.rotations.chest).length_squared()-1.0)<.000001,"interpolated rotation stays unit")
++	expect(lib.load_data(),"production motion loads")
++	if lib.available():
++		for role: String in ["player","foe"]:
++			check_flow(lib,role)
++			check_support(lib,role)
++	for failure: String in failures: print("FAIL: ",failure)
++	print("NATURAL RUNTIME CHECK: %d/%d passed" % [total-failures.size(),total])
++	quit(0 if failures.is_empty() else 1)
++
++func check_flow(lib,role: String) -> void:
++	var flow = Flow.new()
++	flow.setup(lib)
++	flow.reset(1)
++	var context := {"mode":"taikou","pause":false,"global_hitstop":0.0}
++	var snapshot := {"state":0,"action_seq":1,"facing":1 if role=="player" else -1}
++	var distance := 280.0 if role=="player" else -280.0
++	flow.begin_exchange({"round_id":1,"actor":role,"winner":role,"target":"foe" if role=="player" else "player","clip_id":"jab","action_seq":1,"approach_extra_x":distance})
++	flow.advance(.20,context)
++	var ahead: Dictionary = flow.sample(role,snapshot,context)
++	var authored: Dictionary = lib.sample(role,"jab",ahead.frame)
++	expect(ahead.pose.rotations.thigh_f != authored.rotations.thigh_f,role+" approach steps")
++	var paused: Dictionary = context.duplicate(true)
++	paused.pause = true
++	flow.advance(.2,paused)
++	expect(same_pose(flow.sample(role,snapshot,paused).pose,ahead.pose),role+" pause freezes approach footwork")
++	flow.advance(.28,context)
++	var contact: Dictionary = flow.sample(role,snapshot,context)
++	expect(contact.frame==lib.contact_frame(role,"jab") and same_pose(contact.pose,lib.sample(role,"jab",contact.frame)),role+" exact calibrated contact untouched by stepping")
++	expect(is_equal_approx(absf(contact.canvas_shift.x),382.1428571429),role+" exact calibrated contact shift retained")
++	flow.advance(.20,context)
++	expect(same_pose(flow.sample(role,snapshot,context).pose,contact.pose),role+" contact hold freezes pose")
++	flow.advance(.04,context)
++	flow.advance(.04,context)
++	var retract: Dictionary = flow.sample(role,snapshot,context)
++	expect(is_equal_approx(retract.canvas_shift.x,contact.canvas_shift.x),role+" hand retracts before torso retreat")
++	flow.advance(.24,context)
++	var retreat: Dictionary = flow.sample(role,snapshot,context)
++	var recovery: Dictionary = lib.sample(role,"jab",retreat.frame)
++	expect(retreat.pose.rotations.thigh_f != recovery.rotations.thigh_f,role+" return has backward stepping")
++	if flow.has_method("_travel_legs"):
++		var forward: Dictionary = flow._travel_legs(role,recovery,30.0,1.0)
++		var backward: Dictionary = flow._travel_legs(role,recovery,-30.0,1.0)
++		expect(forward.rotations.thigh_f != backward.rotations.thigh_f,role+" signed travel reverses gait")
++	else: expect(false,role+" footwork follows signed visual travel")
++	flow.advance(.36,context)
++	var end: Dictionary = flow.sample(role,snapshot,context)
++	expect(end.canvas_shift==Vector2.ZERO and same_pose(end.pose,lib.sample(role,"jab",lib.clip_frames(role,"jab")-1)),role+" recovery ends exactly at zero shift and guard")
++
++func check_support(lib,role: String) -> void:
++	if not lib.has_method("support_height"):
++		expect(false,"real imported sole support measurement available")
++		return
++	var flow = Flow.new()
++	flow.setup(lib)
++	flow.reset(2)
++	var context := {"mode":"taikou"}
++	var snapshot := {"state":0,"action_seq":2,"facing":1 if role=="player" else -1}
++	flow.begin_exchange({"round_id":2,"actor":role,"winner":role,"clip_id":"jab","action_seq":2,"approach_extra_x":280.0 if role=="player" else -280.0})
++	var greatest := 0.0
++	var full := full_boot_cache(role)
++	var start := Time.get_ticks_usec()
++	for step in range(41):
++		flow.exchange_time = Flow.ATTACK_S*float(step)/40.0
++		flow.sample(role,snapshot,context)
++		flow._transitions.clear()
++		var visual: Dictionary = flow.sample(role,snapshot,context)
++		var authored: Dictionary = lib.sample(role,"jab",visual.frame)
++		var sole := full_sole(full,visual.pose)
++		greatest = maxf(greatest,absf(sole))
++		expect(absf(sole-lib.support_height(role,authored))<.00001,role+" mixed gait retains actual skinned sole support")
++		expect(absf(sole-lib.support_height(role,visual.pose))<.000001,role+" packed support equals independently posed full imported Skeleton/Skin")
++		for bone: String in ["hips","spine","chest","upperarm_f","forearm_f","upperarm_b","forearm_b"]:
++			expect(visual.pose.rotations[bone]==authored.rotations[bone],role+" gait retains authored upper-body rotation")
++		expect(greatest<.02,role+" complete approach/return soles remain within2cm")
++	print("TRAVEL SUPPORT ",role," max_m=",greatest," verify_ms=",(Time.get_ticks_usec()-start)/1000.0)
++	full.model.free()
++
++func find_rig(node: Node,skeleton: bool) -> Node:
++	if (skeleton and node is Skeleton3D) or (not skeleton and node is MeshInstance3D and node.skin!=null): return node
++	for child: Node in node.get_children():
++		var found := find_rig(child,skeleton)
++		if found!=null: return found
++	return null
++
++func full_boot_cache(role: String) -> Dictionary:
++	var model: Node = load("res://assets/3d/"+role+"-rigged.glb").instantiate()
++	root.add_child(model)
++	var skeleton := find_rig(model,true) as Skeleton3D
++	var mesh := find_rig(model,false) as MeshInstance3D
++	var surface := mesh.mesh.surface_get_arrays(0)
++	var vertices: PackedVector3Array = surface[Mesh.ARRAY_VERTEX]
++	var joints: PackedInt32Array = surface[Mesh.ARRAY_BONES]
++	var weights: PackedFloat32Array = surface[Mesh.ARRAY_WEIGHTS]
++	var count := int(joints.size()/vertices.size())
++	var boots := []
++	for vertex in range(vertices.size()):
++		if vertices[vertex].y >= .24: continue
++		var influences := []
++		var front := 0.0
++		var rear := 0.0
++		for index in range(count):
++			var slot := joints[vertex*count+index]
++			var weight := float(weights[vertex*count+index])
++			if weight<=.000001: continue
++			var name := String(mesh.skin.get_bind_name(slot))
++			var bone := skeleton.find_bone(name) if not name.is_empty() else mesh.skin.get_bind_bone(slot)
++			name = skeleton.get_bone_name(bone)
++			if name=="shin_f": front += weight
++			if name=="shin_b": rear += weight
++			influences.append([bone,mesh.skin.get_bind_pose(slot)*vertices[vertex],weight])
++		if front>.65 or rear>.65: boots.append(influences)
++	expect(boots.size()>5000,role+" independent cache measures full imported boot mesh")
++	return {"model":model,"skeleton":skeleton,"boots":boots}
++
++func full_sole(cache: Dictionary,pose: Dictionary) -> float:
++	var skeleton: Skeleton3D = cache.skeleton
++	for bone: String in Motion.BONES:
++		var index := skeleton.find_bone(bone)
++		var rest := skeleton.get_bone_rest(index)
++		var position := rest.origin
++		if bone=="hips": position += Vector3(pose.root_offset[0],pose.root_offset[1],pose.root_offset[2])
++		skeleton.set_bone_pose_position(index,position)
++		skeleton.set_bone_pose_rotation(index,(rest.basis.get_rotation_quaternion()*quat(pose.rotations[bone])).normalized())
++		skeleton.set_bone_pose_scale(index,rest.basis.get_scale())
++	skeleton.force_update_all_bone_transforms()
++	var matrices := {}
++	for bone: String in Motion.BONES:
++		var index := skeleton.find_bone(bone)
++		matrices[index] = skeleton.get_bone_global_pose(index)
++	var lowest := INF
++	for vertex: Array in cache.boots:
++		var height := 0.0
++		for influence: Array in vertex: height += (matrices[influence[0]]*influence[1]).y*float(influence[2])
++		lowest = minf(lowest,height)
++	return lowest
+--- baseline/运行游戏-3D-实时.bat
++++ project/运行游戏-3D-实时.bat
+@@ -0,0 +1,5 @@
++@echo off
++setlocal
++chcp 65001 >nul
++set "CARD_BOXER_BATTLE_MODE=realtime"
++call "%~dp0运行游戏-3D.bat"
+--- baseline/运行游戏-3D.bat
++++ project/运行游戏-3D.bat
+@@ -19,7 +19,11 @@
+   echo Open project.godot in this folder with your Godot editor instead.
+   pause
+   exit /b 1
+ )
+ 
+-start "" "%GODOT%" --path "%~dp0"
++rem Explicit writable, unique log: Godot 4.5 can crash if default logging fails.
++set "CARD_BOXER_LOG_DIR=%TEMP%\CardBoxerLogs"
++if not exist "%CARD_BOXER_LOG_DIR%" mkdir "%CARD_BOXER_LOG_DIR%"
++set "CARD_BOXER_LOG_FILE=%CARD_BOXER_LOG_DIR%\3d-%RANDOM%-%RANDOM%.log"
++start "" "%GODOT%" --path "%~dp0" --log-file "%CARD_BOXER_LOG_FILE%"
+ exit /b 0

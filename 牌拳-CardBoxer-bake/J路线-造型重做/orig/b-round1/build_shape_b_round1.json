@@ -1,0 +1,97 @@
+{
+  "blender": "5.2.3 LTS",
+  "source_blend": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\A路线-资产重做\\对手怪-可变形连续壳.blend",
+  "source_blend_sha256": "88dca6d28aa36caeda9f5af5564bf553aa8a9ee618846457b036fe3b1bd54239",
+  "target_spec": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\data\\shell_targets_b.json",
+  "target_spec_sha256": "a57e08077e35d52d265c37cd4ae8073f5dd2eb892e4829abb4419c7e32c1fe42",
+  "method": "目标壳所有顶点塌缩到该壳自身质心（+1e-5 微抖动保法线），面退化成零面积不可见；不是 r1 的轴向压缩，不撕面。顶点/面/UV 层/材质/权重数组数量逐项守恒。",
+  "jitter": 1e-05,
+  "rig": {
+    "bones": [
+      "hips",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "upperarm_f",
+      "forearm_f",
+      "upperarm_b",
+      "forearm_b",
+      "thigh_f",
+      "shin_f",
+      "thigh_b",
+      "shin_b"
+    ]
+  },
+  "targets": {
+    "shells": 195,
+    "verts": 8753,
+    "verts_ratio": 0.136714,
+    "by_group": {
+      "G0_CAPE": 2122,
+      "G1_SKIRT": 1684,
+      "G2_HEAD_SMALL": 4947
+    }
+  },
+  "integrity": {
+    "verts_before": 64024,
+    "verts_after": 64024,
+    "polygons_before": 79998,
+    "polygons_after": 79998,
+    "uv_layers": 1,
+    "materials": 1,
+    "textures_same": true,
+    "weighted_before": 64006,
+    "weighted_after": 64006,
+    "non_target_vertices_bytewise_unchanged": true,
+    "target_verts_collapsed": 8753,
+    "max_distance_to_centroid": 1.4185e-05
+  },
+  "preview_shots": [
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\shots\\after_b\\b-after-front.png",
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\shots\\after_b\\b-after-back.png",
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\shots\\after_b\\b-after-side.png",
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\shots\\after_b\\b-after-angle45.png"
+  ],
+  "hidden_for_preview": [
+    {
+      "name": "node_0",
+      "type": "MESH"
+    },
+    {
+      "name": "a_apose_rig",
+      "type": "ARMATURE"
+    },
+    {
+      "name": "a_continuous_shell",
+      "type": "MESH"
+    },
+    {
+      "name": "foe_HI_skinned_B",
+      "type": "MESH"
+    }
+  ],
+  "export": {
+    "file": "foe-rigged-b.glb",
+    "bytes": 42917292,
+    "sha256": "71eef6bf258e04777a8278f9f6ebbc8d0fd09f7aaeb3e476538f4866c5d6c062",
+    "export_apply": false,
+    "export_skins": true
+  },
+  "checks": {
+    "p0_targets_verified": true,
+    "shell_ids_match_p0": true,
+    "shell_count_2809": true,
+    "verts_conserved": true,
+    "polygons_conserved": true,
+    "uv_and_textures_conserved": true,
+    "weights_conserved": true,
+    "non_target_unchanged": true,
+    "targets_collapsed_tightly": true,
+    "target_verts_match_p0": true,
+    "preview_shots_written": true,
+    "glb_exported": true
+  },
+  "failed": [],
+  "ok": true
+}

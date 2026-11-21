@@ -1,0 +1,9 @@
+[M1] CAUGHT rc=1 failed=['S02_stance_frame_equals_selected_probe', 'S11_source_fingerprints']
+[M2] CAUGHT rc=1 failed=['S03_side_view_semantics', 'S11_source_fingerprints']
+[M3] DID NOT RUN anchor_count=0 in side_action.json
+[M4] CAUGHT rc=1 failed=['S04_local_relative_angle_and_caps']
+[M5] CAUGHT rc=1 failed=['S05_facing_rule']
+[M6] CAUGHT rc=1 failed=['S07_duration_conservation']
+[M7] CAUGHT rc=1 failed=['S12_source_wiring']
+[M8] CAUGHT rc=1 failed=['S09_hitstop_is_three_frames']
+MUTATION_SIDE 7/8 CAUGHT did_not_run=1 escaped=0 restore=7/8 clean=GREEN MUTATION_SIDE_FAILED

@@ -1,0 +1,3 @@
+DNR_SELFTEST                           DID NOT RUN  restore=None red=-
+MUTATION_LIVE_P4 0/1 CAUGHT / DNR 1 / BROKEN 0 / MISSED 0 / RESTORE 0/1 / clean 60/60
+SELFTEST_DNR_EFFECTIVE

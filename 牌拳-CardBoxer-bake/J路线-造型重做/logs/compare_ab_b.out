@@ -1,0 +1,8 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\compare_ab_b.py:33: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  pa, pb = list(ia.getdata()), list(ib.getdata())
+DIFF both_full {'changed_px': 5746, 'total_px': 921600, 'ratio': 0.006235, 'mae': 1.6927}
+DIFF both_player_roi {'changed_px': 2873, 'total_px': 33390, 'ratio': 0.086044, 'mae': 26.9811}
+DIFF both_foe_roi {'changed_px': 2873, 'total_px': 33920, 'ratio': 0.084699, 'mae': 19.4297}
+DIFF sv_foe_full {'changed_px': 11557, 'total_px': 218400, 'ratio': 0.052917, 'mae': 10.8055}
+VERDICT B GLB 在 foe ROI 有显著变化，需进一步看具体部件
+COMPARE_AB_B_OK

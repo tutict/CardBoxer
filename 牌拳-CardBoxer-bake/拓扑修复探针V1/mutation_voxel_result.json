@@ -1,0 +1,62 @@
+{
+  "verdict": "MUTATION_VOXEL_OK",
+  "cases": [
+    {
+      "tag": "M1",
+      "caught": true,
+      "did_not_run": false,
+      "restore": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "baseline_bone_heat_really_zero"
+      ],
+      "error": "",
+      "desc": "把基线的 Bone Heat 0 覆盖伪装成 1.0"
+    },
+    {
+      "tag": "M2",
+      "caught": true,
+      "did_not_run": false,
+      "restore": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "transfer_keeps_original_assets"
+      ],
+      "error": "",
+      "desc": "把 PBR 贴图保住伪装成丢失"
+    },
+    {
+      "tag": "M3",
+      "caught": true,
+      "did_not_run": false,
+      "restore": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "transfer_reduces_max_displacement"
+      ],
+      "error": "",
+      "desc": "把 B 的最大位移改到比 A 还大"
+    },
+    {
+      "tag": "M4",
+      "caught": true,
+      "did_not_run": false,
+      "restore": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "negative_result_not_hidden"
+      ],
+      "error": "",
+      "desc": "把看图负结果改写成通过"
+    }
+  ],
+  "clean": true,
+  "caught": 4,
+  "restored": 4,
+  "did_not_run": 0,
+  "all_restored": true
+}

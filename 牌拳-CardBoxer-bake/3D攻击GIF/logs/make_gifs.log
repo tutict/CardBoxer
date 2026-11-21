@@ -1,0 +1,13 @@
+BOX player: (86, 63, 736, 713) alpha_union=(125, 93, 697, 683) src=768x768
+GIF 玩家V4b-攻击-jab.gif src=14 enc=11 duration=840ms bytes=632737
+GIF 玩家V4b-攻击-cross.gif src=22 enc=18 duration=1320ms bytes=1042347
+GIF 玩家V4b-攻击-wave.gif src=36 enc=28 duration=2160ms bytes=1616601
+BOX foe: (84, 55, 743, 714) alpha_union=(127, 85, 700, 684) src=768x768
+GIF 对手怪V1-攻击-jab.gif src=14 enc=11 duration=840ms bytes=1294262
+GIF 对手怪V1-攻击-cross.gif src=22 enc=18 duration=1320ms bytes=2115898
+GIF 对手怪V1-攻击-wave.gif src=36 enc=28 duration=2160ms bytes=3319095
+BOX mesh: (17, 0, 512, 495) alpha_union=(57, 0, 512, 475) src=512x512
+GIF 证伪-网格-攻击-jab.gif src=14 enc=14 duration=840ms bytes=769912
+GIF 证伪-网格-攻击-cross.gif src=22 enc=22 duration=1320ms bytes=1154675
+GIF 证伪-网格-攻击-wave.gif src=36 enc=33 duration=2160ms bytes=1685966
+ATTACK_3D_GIF_OK

@@ -1,0 +1,3 @@
+player stance {'f': -6.6468533809205255e-06, 'b': -5.507768191970186e-06} boot_vertices {'f': 3001, 'b': 2956} ko_min -0.010572283642900549 authored_keys 751 max_support_error 1.9975111568870663e-05
+foe stance {'f': -1.3026288401052355e-05, 'b': -3.254467116076132e-06} boot_vertices {'f': 3204, 'b': 3146} ko_min 6.177896183512388e-06 authored_keys 751 max_support_error 1.996780173940671e-05
+ACTUAL SOLE CHECK: PASS failures= 0

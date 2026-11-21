@@ -1,0 +1,13 @@
+{
+  "triangles": 73575,
+  "boundary_edges": 2,
+  "nonmanifold_edges": 71,
+  "normal_face_samples": 6174,
+  "normal_face_negative_z_fraction": 0.4096209912536443,
+  "normal_face_dark_fraction": 0.0,
+  "export_tangent": false,
+  "export_occlusion": false,
+  "texture_uv_layers": [
+    "Retopology_4K_Atlas"
+  ]
+}

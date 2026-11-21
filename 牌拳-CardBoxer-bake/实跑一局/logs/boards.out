@@ -1,0 +1,13 @@
+MADE timeline {'size': (1400, 780), 'bytes': 78143, 'fight_samples': 129}
+MADE keyframes {'size': (1360, 610), 'bytes': 296818, 'frames': ['C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\实跑一局\\shots\\cap9/lm-0000-live.png', 'C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\实跑一局\\shots\\cap9/lm-0018-live.png', 'C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\实跑一局\\shots\\cap9/lm-0030-live.png', 'C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\实跑一局\\shots\\cap9/lm-0060-live.png', 'C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\实跑一局\\shots\\cap9/lm-0072-live.png', 'C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\实跑一局\\shots\\cap9/lm-0102-live.png', 'C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\实跑一局\\shots\\cap9/lm-0114-live.png', 'C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\实跑一局\\shots\\cap9/lm-0126-live.png'], 'count': 8}
+MADE player_gif {'frames': 88, 'bytes': 640730, 'duration_ms': 120, 'loop': 0}
+MADE foe_gif {'frames': 88, 'bytes': 1155699, 'duration_ms': 120, 'loop': 0}
+CHECK timeline_written True
+CHECK keyframes_written True
+CHECK keyframes_count True
+CHECK player_gif_frames True
+CHECK foe_gif_frames True
+CHECK both_gifs_same_frame_count True
+CHECK all_keyframe_sources_exist True
+CHECK analysis_all_green True
+LIVE_BOARDS_OK

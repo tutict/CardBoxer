@@ -1,0 +1,75 @@
+{
+  "near_black_threshold_sum_rgb": 30,
+  "textures": {
+    "player": {
+      "file": "player-rigged_texture_pbr_20250901.png",
+      "orig_size": [
+        4096,
+        4096
+      ],
+      "bytes": 16637843,
+      "sample": [
+        256,
+        256
+      ],
+      "mean_all_rgb": [
+        109.89,
+        103.51,
+        95.4
+      ],
+      "mean_all_luma": 102.93,
+      "near_black_px": 1070,
+      "lit_px": 64466,
+      "lit_ratio": 0.9837,
+      "mean_lit_rgb": [
+        111.62,
+        105.12,
+        96.86
+      ],
+      "mean_lit_luma": 104.53,
+      "red_minus_blue": 14.49
+    },
+    "foe": {
+      "file": "foe-rigged_texture_pbr_20250901.png",
+      "orig_size": [
+        4096,
+        4096
+      ],
+      "bytes": 15782150,
+      "sample": [
+        256,
+        256
+      ],
+      "mean_all_rgb": [
+        33.18,
+        32.23,
+        31.4
+      ],
+      "mean_all_luma": 32.27,
+      "near_black_px": 3103,
+      "lit_px": 62433,
+      "lit_ratio": 0.9527,
+      "mean_lit_rgb": [
+        34.48,
+        33.51,
+        32.63
+      ],
+      "mean_lit_luma": 33.54,
+      "red_minus_blue": 1.78
+    }
+  },
+  "deltas": {
+    "mean_all_luma_player_minus_foe": 70.66,
+    "mean_lit_luma_player_minus_foe": 70.99,
+    "lit_ratio_player_minus_foe": 0.031
+  },
+  "hypothesis_falsified": true,
+  "checks": {
+    "full_image_luma_gap_is_large": true,
+    "uv_island_gap_same_order": true,
+    "black_fill_not_the_cause": true,
+    "both_are_4096": true
+  },
+  "root_cause": "贴图确实整体暗（UV 岛亮度差 70.99），黑填充只差 3.1%；渲染亮度差被抹平的原因不在贴图，转查材质/光照",
+  "ok": true
+}

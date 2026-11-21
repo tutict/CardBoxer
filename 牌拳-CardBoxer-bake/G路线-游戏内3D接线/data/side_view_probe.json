@@ -1,0 +1,89 @@
+{
+  "run": {
+    "seconds": 7.661,
+    "returncode": 0,
+    "has_opengl": true,
+    "script_errors": 0,
+    "headless": false
+  },
+  "views": 8,
+  "payload": {
+    "bones": 13,
+    "final_flip": false,
+    "final_yaw": 55.0,
+    "layer_ready": true,
+    "shots": [
+      {
+        "h": 720,
+        "name": "y000-f0",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\G路线-游戏内3D接线\\shots\\side_probe/side-y000-f0.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "y000-f1",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\G路线-游戏内3D接线\\shots\\side_probe/side-y000-f1.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "ym35-f0",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\G路线-游戏内3D接线\\shots\\side_probe/side-ym35-f0.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "ym35-f1",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\G路线-游戏内3D接线\\shots\\side_probe/side-ym35-f1.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "ym55-f0",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\G路线-游戏内3D接线\\shots\\side_probe/side-ym55-f0.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "ym55-f1",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\G路线-游戏内3D接线\\shots\\side_probe/side-ym55-f1.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "yp35-f0",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\G路线-游戏内3D接线\\shots\\side_probe/side-yp35-f0.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "yp55-f0",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\G路线-游戏内3D接线\\shots\\side_probe/side-yp55-f0.png",
+        "save_error": 0,
+        "w": 1280
+      }
+    ],
+    "view_changes": 8,
+    "views_count": 8
+  },
+  "checks": {
+    "rc": true,
+    "has_opengl": true,
+    "no_script_errors": true,
+    "no_payload_error": true,
+    "layer_ready": true,
+    "eight_views": true,
+    "all_png_ok": true,
+    "view_changes_all": true,
+    "bones_13": true
+  },
+  "failed": [],
+  "ok": true
+}

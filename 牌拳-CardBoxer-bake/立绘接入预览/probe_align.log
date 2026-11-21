@@ -1,0 +1,15 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\立绘接入预览\probe_align.py:76: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  for v in d.convert("L").getdata():
+SHOT 背景图候选\怒火槽\怒火槽-满槽.png size=(1280, 720)
+PLAYER orange bbox=(383, 325, 482, 527) px=7077
+ENEMY  cyan   bbox=(712, 325, 938, 514) px=6129
+BG arena.png @ background size=(1024, 640)
+  (resized to shot size for comparison)
+  bg-vs-shot mean_abs_diff=27.659 max=228 exact_equal=294/172000 (0.0017)
+BG mcp_template_sdxl.png @ 背景图候选 size=(1024, 640)
+  (resized to shot size for comparison)
+  bg-vs-shot mean_abs_diff=27.659 max=228 exact_equal=294/172000 (0.0017)
+BG arena_bg_sdxl_dark_01.png @ 背景图候选 size=(896, 504)
+  (resized to shot size for comparison)
+  bg-vs-shot mean_abs_diff=100.272 max=228 exact_equal=8/172000 (0.0000)
+

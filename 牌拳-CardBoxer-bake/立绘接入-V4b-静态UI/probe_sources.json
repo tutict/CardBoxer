@@ -1,0 +1,364 @@
+{
+  "v4b": [
+    {
+      "file": "v4b-front.png",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "sha256": "4fac706982c7a763c653a1f8ae6eb63b26726d0587fa5c371dccc6c959c4c079",
+      "bytes": 365239,
+      "alpha_bbox": [
+        173,
+        96,
+        595,
+        672
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_0_pct": 0.8394,
+      "alpha_255_pct": 0.1463
+    },
+    {
+      "file": "v4b-angle25.png",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "sha256": "9f3d23b40d0a99db0116a9da283a593bf0cba9ab6715d40ac1a0c4d1e1228bf0",
+      "bytes": 365517,
+      "alpha_bbox": [
+        155,
+        96,
+        569,
+        672
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_0_pct": 0.8391,
+      "alpha_255_pct": 0.1459
+    },
+    {
+      "file": "v4b-angle55.png",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "sha256": "caa7afb1a1f3e07bdb442090c1c0efad402d650d7e5bfcdf6e56fc2f722d28f8",
+      "bytes": 344638,
+      "alpha_bbox": [
+        187,
+        96,
+        570,
+        672
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_0_pct": 0.8588,
+      "alpha_255_pct": 0.1268
+    },
+    {
+      "file": "v4b-back35.png",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "sha256": "8bd61ea07ed081ee327f8e6603f2dc1801c7ecf6a334f2d368dc570637a57f34",
+      "bytes": 338781,
+      "alpha_bbox": [
+        255,
+        96,
+        608,
+        672
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_0_pct": 0.8573,
+      "alpha_255_pct": 0.1328
+    },
+    {
+      "file": "v4b-face-front.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "b03a66235e80883ef25e793dd09918aa9fbacd18508c8d87f121077092fe13ce",
+      "bytes": 976469,
+      "alpha_bbox": [
+        45,
+        132,
+        1024,
+        1024
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_0_pct": 0.4891,
+      "alpha_255_pct": 0.4983
+    },
+    {
+      "file": "v4b-face-25.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "f8757bf0ea1ce18b5350ec2b1757787313e587b02fe36286eb857461b9e37da8",
+      "bytes": 989077,
+      "alpha_bbox": [
+        0,
+        132,
+        1024,
+        1024
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "alpha_0_pct": 0.4702,
+      "alpha_255_pct": 0.5158
+    },
+    {
+      "file": "v4b-upper.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "2abbd99dfff63161a8667055c9bc0f13b0f679689e652020917f0df45bf0f8f7",
+      "bytes": 992463,
+      "alpha_bbox": [
+        0,
+        19,
+        1024,
+        1024
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_0_pct": 0.5607,
+      "alpha_255_pct": 0.4216
+    }
+  ],
+  "foe": [
+    {
+      "file": "foe-front.png",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "sha256": "e695093959c39cfc6a66da933044ba75f0472cbe448f3a5b3c0556397d673f8f",
+      "bytes": 451628,
+      "alpha_bbox": [
+        180,
+        96,
+        588,
+        672
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_0_pct": 0.7553,
+      "alpha_255_pct": 0.2304
+    },
+    {
+      "file": "foe-angle25.png",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "sha256": "e7f80dc3a25484a88866d421c1647512e1cd0b1b7a1b4fbc8fd570d8841260d2",
+      "bytes": 445436,
+      "alpha_bbox": [
+        170,
+        96,
+        554,
+        672
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_0_pct": 0.756,
+      "alpha_255_pct": 0.2313
+    },
+    {
+      "file": "foe-angle55.png",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "sha256": "0ccb7f9f90ca3e4d6430939e0b1884b878c6914b23d26f4f34a944513a83065f",
+      "bytes": 410501,
+      "alpha_bbox": [
+        194,
+        96,
+        530,
+        672
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_0_pct": 0.7836,
+      "alpha_255_pct": 0.2054
+    },
+    {
+      "file": "foe-back35.png",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "sha256": "6c9dd2027c3956023978de7cdb9dc5a755415c95cd13cd05211bdc91b8441381",
+      "bytes": 443552,
+      "alpha_bbox": [
+        232,
+        96,
+        596,
+        672
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alpha_0_pct": 0.7625,
+      "alpha_255_pct": 0.2241
+    },
+    {
+      "file": "foe-upper.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "6f3e5c71bed4b2a7970729124c45cf9978a8f52f8fc6f8cf92ae407192dac3ed",
+      "bytes": 1407579,
+      "alpha_bbox": [
+        0,
+        19,
+        1024,
+        1024
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        255
+      ],
+      "alpha_0_pct": 0.3069,
+      "alpha_255_pct": 0.6809
+    }
+  ],
+  "silhouette_stats": {
+    "note": "同相机 / 同归一化身高 1.72m 下的正面剪影与明度实测",
+    "design_goals": {
+      "max_luminance_ratio": 0.75,
+      "min_aspect_ratio": 1.15,
+      "min_shoulder_ratio": 1.15
+    },
+    "player_v4b": {
+      "file": "v4b-front.png",
+      "canvas": [
+        768,
+        768
+      ],
+      "alpha_bbox": [
+        174,
+        96,
+        594,
+        672
+      ],
+      "body_wh": [
+        420,
+        576
+      ],
+      "aspect_wh": 0.7292,
+      "mean_luminance": 0.5667,
+      "shoulder_max_span_px": 346,
+      "opaque_sample_px": 23316
+    },
+    "foe_v1": {
+      "file": "foe-front.png",
+      "canvas": [
+        768,
+        768
+      ],
+      "alpha_bbox": [
+        180,
+        96,
+        588,
+        672
+      ],
+      "body_wh": [
+        408,
+        576
+      ],
+      "aspect_wh": 0.7083,
+      "mean_luminance": 0.3256,
+      "shoulder_max_span_px": 400,
+      "opaque_sample_px": 35679
+    },
+    "ratios": {
+      "luminance_foe_over_player": 0.5746,
+      "aspect_foe_over_player": 0.9713,
+      "shoulder_foe_over_player": 1.1561
+    },
+    "goals": {
+      "luminance_dark_enough": true,
+      "aspect_bulky_enough": false,
+      "shoulder_broad_enough": true
+    },
+    "verdict": "SILHOUETTE_CONTRAST_SHORT"
+  },
+  "v4b_source_match_preview": {
+    "v4b-front.png": true,
+    "v4b-angle25.png": true,
+    "v4b-angle55.png": true,
+    "v4b-back35.png": true,
+    "v4b-face-25.png": true,
+    "v4b-face-front.png": true
+  },
+  "v4b_source_all_match": true
+}

@@ -1,0 +1,41 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\boxer_2d5.py:113: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\boxer_2d5.py:153: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+PARTS_OK spec=12 meshes=50
+  white_outer: white_outer,white_outer_outline
+  ink_collar: ink_collar,ink_collar_l,ink_collar_r
+  red_sash: red_sash
+  gold_clasp: gold_clasp_a,gold_clasp_b
+  chinese_knot: chinese_knot,chinese_knot_loop,chinese_knot_tassel_l,chinese_knot_tassel_r
+  double_bun: double_bun_l,double_bun_r
+  pom_pom: pom_pom_l,pom_pom_r
+  hair_clip: hair_clip
+  half_lidded_eye: half_lidded_eye_l,half_lidded_eye_r
+  glove: glove_b,glove_f
+  platform_shoe: platform_shoe_b,platform_shoe_f,platform_shoe_sole_b,platform_shoe_sole_f
+  ring_blade: ring_blade_l,ring_blade_r
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\boxer_2d5.py:561: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+00:01.375  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\2d5-stance.png'
+SHOT_OK stance card=None frame=0 palette=player angle=0.0
+00:01.515  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\2d5-jab_impact.png'
+SHOT_OK jab_impact card=jab frame=7 palette=player angle=0.0
+00:01.640  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\2d5-sweep_impact.png'
+SHOT_OK sweep_impact card=sweep frame=13 palette=player angle=0.0
+00:01.781  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\2d5-throw_impact.png'
+SHOT_OK throw_impact card=throw frame=9 palette=player angle=0.0
+00:01.922  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\2d5-hit_heavy_mid.png'
+SHOT_OK hit_heavy_mid card=hit_heavy frame=15 palette=player angle=0.0
+00:02.047  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\2d5-stance_enemy.png'
+SHOT_OK stance_enemy card=None frame=0 palette=enemy angle=0.0
+00:02.187  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\2d5-stance_angle12.png'
+SHOT_OK stance_angle12 card=None frame=0 palette=player angle=12.0
+00:02.312  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\2d5-stance_repeat.png'
+SHOT_OK stance_repeat card=None frame=0 palette=player angle=0.0
+00:02.312  reports          | WARNING Path 'D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\5.2\datafiles\assets\brushes\essentials_brushes-gp_draw.blend' cannot be made relative for Material 'Dots Stroke'
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+00:02.312  reports          | WARNING Path 'D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\5.2\datafiles\assets\brushes\essentials_brushes-gp_draw.blend' cannot be made relative for Material 'Material'
+Info: Saved as "boxer_2d5.blend"
+BLEND_OK C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\boxer_2d5.blend
+MODEL_OK

@@ -1,0 +1,9 @@
+00:00.563  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\对手怪V1.blend"
+BASE verts=64024 edges=141529 adj_mean=4.42
+CFG lam=0.0 iters=0 tear=0.03656 max=0.05411 reach=0.55084 arm_f=0.83376 elapsed=2.3s
+CFG lam=0.25 iters=1 tear=0.03533 max=0.05241 reach=0.55084 arm_f=0.83362 elapsed=4.4s
+CFG lam=0.5 iters=1 tear=0.03848 max=0.05913 reach=0.55084 arm_f=0.83348 elapsed=6.6s
+CFG lam=0.5 iters=2 tear=0.03678 max=0.05605 reach=0.55083 arm_f=0.83328 elapsed=8.7s
+CFG lam=0.75 iters=2 tear=0.03453 max=0.05137 reach=0.55083 arm_f=0.83308 elapsed=10.8s
+SMOOTH_SWEEP_OK
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

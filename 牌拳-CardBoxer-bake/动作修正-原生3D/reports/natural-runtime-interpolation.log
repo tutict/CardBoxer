@@ -1,0 +1,11 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+FAIL: player hand retracts before torso retreat
+FAIL: player return has backward stepping
+FAIL: player footwork follows signed visual travel
+FAIL: foe hand retracts before torso retreat
+FAIL: foe return has backward stepping
+FAIL: foe footwork follows signed visual travel
+NATURAL RUNTIME CHECK: 203/209 passed

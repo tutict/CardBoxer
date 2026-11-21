@@ -1,0 +1,46 @@
+00:01.047  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\对手怪V1.blend"
+OPEN src=node_0 verts=64024 old_rig=foe_rig removed
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\c_build.py:213: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if mat and mat.use_nodes:
+APOSE_RIG bones=13 head_top_z=1.7105 hip_z=0.8420
+PROXY verts=20204 faces=20198
+PROXY auto_weight 20196/20204
+FINAL covered=64006/64024 multi_bone_verts=57967 assets=True/True
+RIGID buckets={'hips': 1608, 'spine': 2010, 'chest': 398, 'neck': 4533, 'head': 1382, 'upperarm_f': 9937, 'forearm_f': 5174, 'upperarm_b': 10661, 'forearm_b': 5497, 'thigh_f': 6397, 'shin_f': 5097, 'thigh_b': 6345, 'shin_b': 4985}
+00:03.875  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-rest-unposed.png'
+00:04.172  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-stance-driven.png'
+STANCE_IDENTITY delta0=0.000000000 root0=(0.0, -0.0) max_vertex_delta_m=0.000000643 mean=0.000000062 tol=1e-05 identical=True
+TEAR_SMOOTH {"edges": 141529, "max_edge_tear_m": 0.10377, "p999_edge_tear_m": 0.01806, "p99_edge_tear_m": 0.01062, "mean_edge_tear_m": 0.00182, "edges_gt_2cm": 77, "edges_gt_5cm": 21}
+TEAR_RIGID  {"edges": 141529, "max_edge_tear_m": 0.39292, "p999_edge_tear_m": 0.28048, "p99_edge_tear_m": 0.02535, "mean_edge_tear_m": 0.00317, "edges_gt_2cm": 1732, "edges_gt_5cm": 916}
+00:04.641  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-smooth.png'
+00:04.828  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-rigid.png'
+00:05.156  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-g1.0-jab07.png'
+00:05.500  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-g1.0-cross11.png'
+00:05.844  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-g1.0-wave18.png'
+SWEEP all gain=1.0 jab7:p999=0.01806 gt5cm=21 cross11:p999=0.04000 gt5cm=103 wave18:p999=0.01950 gt5cm=98
+00:06.203  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-g1.5-jab07.png'
+00:06.547  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-g1.5-cross11.png'
+00:06.891  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-g1.5-wave18.png'
+SWEEP all gain=1.5 jab7:p999=0.02708 gt5cm=21 cross11:p999=0.05718 gt5cm=223 wave18:p999=0.02868 gt5cm=98
+00:07.234  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-g2.0-jab07.png'
+00:07.578  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-g2.0-cross11.png'
+00:07.922  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-g2.0-wave18.png'
+SWEEP all gain=2.0 jab7:p999=0.03573 gt5cm=35 cross11:p999=0.07179 gt5cm=566 wave18:p999=0.03758 gt5cm=101
+00:08.297  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-g3.0-jab07.png'
+00:08.656  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-g3.0-cross11.png'
+00:09.031  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-g3.0-wave18.png'
+SWEEP all gain=3.0 jab7:p999=0.05121 gt5cm=163 cross11:p999=0.09365 gt5cm=1568 wave18:p999=0.05284 gt5cm=177
+00:09.391  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-arm-g1.5-jab07.png'
+00:09.750  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-arm-g1.5-cross11.png'
+00:10.109  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-arm-g1.5-wave18.png'
+SWEEP arm_only gain=1.5 jab7:p999=0.02808 gt5cm=21 cross11:p999=0.05411 gt5cm=186 wave18:p999=0.02749 gt5cm=98
+00:10.453  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-arm-g2.0-jab07.png'
+00:10.781  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-arm-g2.0-cross11.png'
+00:11.109  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-arm-g2.0-wave18.png'
+SWEEP arm_only gain=2.0 jab7:p999=0.03793 gt5cm=40 cross11:p999=0.06625 gt5cm=380 wave18:p999=0.03519 gt5cm=100
+00:11.453  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-arm-g3.0-jab07.png'
+00:11.813  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-arm-g3.0-cross11.png'
+00:12.172  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\sweep-arm-g3.0-wave18.png'
+SWEEP arm_only gain=3.0 jab7:p999=0.05482 gt5cm=222 cross11:p999=0.08422 gt5cm=1070 wave18:p999=0.04972 gt5cm=140
+C_SWEEP_OK
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

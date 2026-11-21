@@ -1,0 +1,11 @@
+[PASS] E01_frame_reveal: size=(1280, 720) bytes=665235 colors>64=True
+[PASS] E01_frame_triple: size=(1280, 720) bytes=693305 colors>64=True
+[PASS] E01_frame_sequence: size=(1280, 720) bytes=697981 colors>64=True
+[PASS] E01_frame_scatter: size=(1280, 720) bytes=699661 colors>64=True
+[PASS] E01_frame_draw: size=(1280, 720) bytes=680094 colors>64=True
+[PASS] E02_hint_strip_differs: min=1248 pairs={"triple_vs_sequence": 1360, "triple_vs_scatter": 1248, "triple_vs_draw": 1417, "sequence_vs_scatter": 1377, "sequence_vs_draw": 1533, "scatter_vs_draw": 1356}
+[PASS] E03_banner_reveal_vs_resolve: diff_px=5767
+[PASS] E04_fighter_band_differs: min=17077 pairs={"triple_vs_scatter": 27423, "triple_vs_sequence": 17077, "sequence_vs_scatter": 33146, "triple_vs_draw": 26850}
+[PASS] E05_reveal_is_distinct_stage: {"triple": 71378, "sequence": 73137, "scatter": 53037, "draw": 43112}
+saved 引擎帧-五态对照板.png (885120 B)
+RESULT: 9/9 EVIDENCE_P0_OK

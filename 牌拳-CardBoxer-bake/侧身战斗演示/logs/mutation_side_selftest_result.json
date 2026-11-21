@@ -1,0 +1,93 @@
+{
+  "cases": [
+    {
+      "case": "M1",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "S02_stance_frame_equals_selected_probe",
+      "failed_checks": [
+        "S02_stance_frame_equals_selected_probe",
+        "S11_source_fingerprints"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M2",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "S03_side_view_semantics",
+      "failed_checks": [
+        "S03_side_view_semantics",
+        "S11_source_fingerprints"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M3",
+      "status": "DID NOT RUN",
+      "reason": "anchor_count=0 in side_action.json",
+      "target": "S04_local_relative_angle_and_caps"
+    },
+    {
+      "case": "M4",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "S04_local_relative_angle_and_caps",
+      "failed_checks": [
+        "S04_local_relative_angle_and_caps"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M5",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "S05_facing_rule",
+      "failed_checks": [
+        "S05_facing_rule"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M6",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "S07_duration_conservation",
+      "failed_checks": [
+        "S07_duration_conservation"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M7",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "S12_source_wiring",
+      "failed_checks": [
+        "S12_source_wiring"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M8",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "S09_hitstop_is_three_frames",
+      "failed_checks": [
+        "S09_hitstop_is_three_frames"
+      ],
+      "restored_sha256_ok": true
+    }
+  ],
+  "caught": 7,
+  "total": 8,
+  "did_not_run": 1,
+  "escaped": 0,
+  "restored": 7,
+  "restore_all_ok": true,
+  "clean_rerun": "GREEN",
+  "clean_passed": 18,
+  "clean_total": 18,
+  "selftest": true,
+  "verdict": "MUTATION_SIDE_FAILED"
+}

@@ -1,0 +1,11 @@
+RUN 7.661s rc=0 gl=True errors=0
+LAYER ready=True bones=13 view_changes=8 final=55.0/False
+SHOT y000-f0      1280x720 err=0
+SHOT y000-f1      1280x720 err=0
+SHOT ym35-f0      1280x720 err=0
+SHOT ym35-f1      1280x720 err=0
+SHOT ym55-f0      1280x720 err=0
+SHOT ym55-f1      1280x720 err=0
+SHOT yp35-f0      1280x720 err=0
+SHOT yp55-f0      1280x720 err=0
+SIDE_VIEW_PROBE_OK

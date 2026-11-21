@@ -1,0 +1,19 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 621.24 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5080 Laptop GPU
+
+ERROR: Unable to open file: res://.godot/imported/hidden_card_back.png-49777a368ad0ac1fd16818d7e17c3b7f.ctex.
+   at: _load_data (scene/resources/compressed_texture.cpp:41)
+ERROR: Failed loading resource: res://.godot/imported/hidden_card_back.png-49777a368ad0ac1fd16818d7e17c3b7f.ctex.
+   at: _load (core/io/resource_loader.cpp:343)
+ERROR: Failed loading resource: res://assets/tactical/hidden_card_back.png.
+   at: _load (core/io/resource_loader.cpp:343)
+SCRIPT ERROR: Parse Error: Could not preload resource file "res://assets/tactical/hidden_card_back.png".
+   at: GDScript::reload (res://scripts/tactical_hud.gd:4)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/arena.gd:0)
+ERROR: Failed to load script "res://scripts/arena.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript.cpp:3041)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: _ready (res://scripts/arena.gd:224)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://scripts/arena.gd:224)

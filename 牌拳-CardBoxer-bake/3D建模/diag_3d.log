@@ -1,0 +1,105 @@
+=== stance: bone pose readback (game px) ===
+BONE stance hips         OK  d_head=0.0 d_tail=0.0 scale_y=0.983
+BONE stance spine        OK  d_head=0.0 d_tail=0.0 scale_y=0.723
+BONE stance chest        OK  d_head=0.0 d_tail=0.0 scale_y=1.044
+BONE stance neck         OK  d_head=0.0 d_tail=0.0 scale_y=0.988
+BONE stance head         OK  d_head=0.0 d_tail=0.1 scale_y=1.000
+BONE stance upperarm_f   OK  d_head=0.0 d_tail=0.0 scale_y=1.000
+BONE stance forearm_f    OK  d_head=0.0 d_tail=0.0 scale_y=1.000
+BONE stance upperarm_b   OK  d_head=0.0 d_tail=0.0 scale_y=1.000
+BONE stance forearm_b    OK  d_head=0.0 d_tail=0.0 scale_y=1.000
+BONE stance thigh_f      OK  d_head=0.0 d_tail=0.0 scale_y=1.000
+BONE stance shin_f       OK  d_head=0.0 d_tail=0.0 scale_y=1.000
+BONE stance thigh_b      OK  d_head=0.0 d_tail=0.0 scale_y=1.000
+BONE stance shin_b       OK  d_head=0.0 d_tail=0.0 scale_y=1.000
+WORST_BONE_ERROR stance 0.10
+=== stance: skinned mesh centre vs bone midpoint ===
+MESH stance hips         centre=(    0.3,  -88.8) bone_mid=(    0.3,  -88.8) d=   0.0 depth=[ -20.0,  20.0] ok
+MESH stance spine        centre=(    0.9, -109.2) bone_mid=(    0.9, -109.2) d=   0.0 depth=[ -21.0,  21.0] ok
+MESH stance chest        centre=(    1.6, -134.4) bone_mid=(    1.6, -134.4) d=   0.0 depth=[ -26.9,  26.9] ok
+MESH stance neck         centre=(    2.6, -155.0) bone_mid=(    2.6, -155.0) d=   0.0 depth=[  -7.4,   7.4] ok
+MESH stance head         centre=(    3.6, -166.9) bone_mid=(    3.6, -167.0) d=   0.1 depth=[  -9.0,   9.0] ok
+MESH stance upperarm_f   centre=(   11.3, -131.8) bone_mid=(   16.0, -140.0) d=   9.4 depth=[ -26.5,  -6.5] ok
+MESH stance forearm_f    centre=(   22.8, -152.3) bone_mid=(   37.0, -144.0) d=  16.4 depth=[ -18.1,  -1.1] ok
+MESH stance upperarm_b   centre=(  -17.4, -149.5) bone_mid=(   -8.0, -139.0) d=  14.1 depth=[   3.9,  21.5] ok
+MESH stance forearm_b    centre=(  -35.5, -137.1) bone_mid=(  -21.0, -141.0) d=  15.0 depth=[ -19.1,  -4.2] ok
+MESH stance thigh_f      centre=(   15.2,  -57.1) bone_mid=(   19.0,  -60.0) d=   4.8 depth=[ -16.5,   9.3] ok
+MESH stance shin_f       centre=(   29.0,  -19.7) bone_mid=(   35.0,  -20.0) d=   6.0 depth=[ -10.8,  10.2] ok
+MESH stance thigh_b      centre=(  -18.8,  -63.5) bone_mid=(  -14.1,  -61.0) d=   5.3 depth=[ -10.2,  15.8] ok
+MESH stance shin_b       centre=(  -39.0,  -23.4) bone_mid=(  -34.1,  -21.1) d=   5.4 depth=[  -7.9,  13.0] ok
+ORPHANS stance []
+00:01.438  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\diag3d-stance-all.png'
+DIAG_OK stance all
+00:01.594  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\diag3d-stance-skin_only.png'
+DIAG_OK stance skin_only
+=== jab: bone pose readback (game px) ===
+BONE jab hips         OK  d_head=0.0 d_tail=0.0 scale_y=0.963
+BONE jab spine        OK  d_head=0.0 d_tail=0.0 scale_y=0.709
+BONE jab chest        OK  d_head=0.0 d_tail=0.0 scale_y=1.023
+BONE jab neck         OK  d_head=0.0 d_tail=0.1 scale_y=0.993
+BONE jab head         OK  d_head=0.1 d_tail=0.1 scale_y=1.000
+BONE jab upperarm_f   OK  d_head=0.0 d_tail=0.0 scale_y=1.445
+BONE jab forearm_f    OK  d_head=0.0 d_tail=0.0 scale_y=1.446
+BONE jab upperarm_b   OK  d_head=0.0 d_tail=0.0 scale_y=1.257
+BONE jab forearm_b    OK  d_head=0.0 d_tail=0.0 scale_y=1.255
+BONE jab thigh_f      OK  d_head=0.0 d_tail=0.0 scale_y=1.000
+BONE jab shin_f       OK  d_head=0.0 d_tail=0.0 scale_y=1.000
+BONE jab thigh_b      OK  d_head=0.0 d_tail=0.0 scale_y=1.073
+BONE jab shin_b       OK  d_head=0.0 d_tail=0.0 scale_y=1.073
+WORST_BONE_ERROR jab 0.14
+=== jab: skinned mesh centre vs bone midpoint ===
+MESH jab hips         centre=(   16.2,  -88.1) bone_mid=(   16.2,  -88.1) d=   0.0 depth=[ -20.0,  20.0] ok
+MESH jab spine        centre=(   23.6, -106.7) bone_mid=(   23.6, -106.7) d=   0.0 depth=[ -21.0,  21.0] ok
+MESH jab chest        centre=(   32.7, -129.6) bone_mid=(   32.7, -129.6) d=   0.0 depth=[ -26.9,  26.9] ok
+MESH jab neck         centre=(   41.5, -147.8) bone_mid=(   41.5, -147.8) d=   0.0 depth=[  -7.4,   7.4] ok
+MESH jab head         centre=(   48.2, -157.8) bone_mid=(   48.3, -157.9) d=   0.1 depth=[  -9.0,   9.0] ok
+MESH jab upperarm_f   centre=(   61.5, -134.2) bone_mid=(   60.8, -143.6) d=   9.4 depth=[ -26.5,  -6.5] ok
+MESH jab forearm_f    centre=(  102.1, -163.9) bone_mid=(  104.0, -147.6) d=  16.4 depth=[ -18.1,  -1.1] ok
+MESH jab upperarm_b   centre=(   22.8, -158.3) bone_mid=(   20.9, -144.3) d=  14.1 depth=[   3.9,  21.5] ok
+MESH jab forearm_b    centre=(  -12.8, -134.6) bone_mid=(   -9.9, -149.3) d=  15.0 depth=[ -19.1,  -4.2] ok
+MESH jab thigh_f      centre=(   27.3,  -56.7) bone_mid=(   31.2,  -59.5) d=   4.8 depth=[ -16.5,   9.3] ok
+MESH jab shin_f       centre=(   46.6,  -18.0) bone_mid=(   40.8,  -19.4) d=   6.0 depth=[ -10.2,  10.8] ok
+MESH jab thigh_b      centre=(   -8.6,  -64.2) bone_mid=(   -4.2,  -61.1) d=   5.3 depth=[ -10.2,  15.8] ok
+MESH jab shin_b       centre=(  -35.3,  -24.0) bone_mid=(  -30.8,  -21.1) d=   5.4 depth=[  -7.9,  13.0] ok
+ORPHANS jab []
+00:01.734  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\diag3d-jab-all.png'
+DIAG_OK jab all
+00:01.891  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\diag3d-jab-skin_only.png'
+DIAG_OK jab skin_only
+=== sweep: bone pose readback (game px) ===
+BONE sweep hips         OK  d_head=0.0 d_tail=0.1 scale_y=0.985
+BONE sweep spine        OK  d_head=0.1 d_tail=0.0 scale_y=0.724
+BONE sweep chest        OK  d_head=0.0 d_tail=0.0 scale_y=1.046
+BONE sweep neck         OK  d_head=0.0 d_tail=0.0 scale_y=0.980
+BONE sweep head         OK  d_head=0.0 d_tail=0.0 scale_y=1.000
+BONE sweep upperarm_f   OK  d_head=0.0 d_tail=0.0 scale_y=1.000
+BONE sweep forearm_f    OK  d_head=0.0 d_tail=0.0 scale_y=1.000
+BONE sweep upperarm_b   OK  d_head=0.0 d_tail=0.0 scale_y=0.999
+BONE sweep forearm_b    OK  d_head=0.0 d_tail=0.0 scale_y=1.000
+BONE sweep thigh_f      OK  d_head=0.0 d_tail=0.0 scale_y=0.998
+BONE sweep shin_f       OK  d_head=0.0 d_tail=0.0 scale_y=1.000
+BONE sweep thigh_b      OK  d_head=0.0 d_tail=0.0 scale_y=1.002
+BONE sweep shin_b       OK  d_head=0.0 d_tail=0.0 scale_y=0.999
+WORST_BONE_ERROR sweep 0.06
+=== sweep: skinned mesh centre vs bone midpoint ===
+MESH sweep hips         centre=(   16.8,  -54.8) bone_mid=(   16.8,  -54.8) d=   0.0 depth=[ -20.0,  20.0] ok
+MESH sweep spine        centre=(   13.9,  -75.0) bone_mid=(   13.9,  -75.0) d=   0.0 depth=[ -21.0,  21.0] ok
+MESH sweep chest        centre=(   10.4, -100.0) bone_mid=(   10.4, -100.0) d=   0.0 depth=[ -26.9,  26.9] ok
+MESH sweep neck         centre=(    7.4, -120.3) bone_mid=(    7.4, -120.3) d=   0.0 depth=[  -7.4,   7.4] ok
+MESH sweep head         centre=(    5.6, -132.1) bone_mid=(    5.6, -132.1) d=   0.0 depth=[  -9.0,   9.0] ok
+MESH sweep upperarm_f   centre=(   10.7,  -95.0) bone_mid=(   18.2, -100.7) d=   9.4 depth=[ -26.5,  -6.5] ok
+MESH sweep forearm_f    centre=(   46.8,  -98.3) bone_mid=(   41.0,  -82.9) d=  16.4 depth=[ -18.1,  -1.1] ok
+MESH sweep upperarm_b   centre=(   -9.1, -105.2) bone_mid=(    4.2, -100.8) d=  14.1 depth=[   3.9,  21.5] ok
+MESH sweep forearm_b    centre=(  -18.8,  -87.8) bone_mid=(   -7.0,  -97.0) d=  15.0 depth=[ -19.1,  -4.2] ok
+MESH sweep thigh_f      centre=(   47.0,  -41.4) bone_mid=(   47.0,  -46.2) d=   4.8 depth=[ -16.5,   9.3] ok
+MESH sweep shin_f       centre=(   80.4,  -27.3) bone_mid=(   85.0,  -31.2) d=   6.0 depth=[ -10.8,  10.2] ok
+MESH sweep thigh_b      centre=(   -7.8,  -41.8) bone_mid=(   -5.6,  -37.0) d=   5.3 depth=[ -10.2,  15.8] ok
+MESH sweep shin_b       centre=(   -3.3,  -18.3) bone_mid=(   -6.6,  -14.0) d=   5.4 depth=[ -13.0,   7.9] ok
+ORPHANS sweep []
+00:02.047  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\diag3d-sweep-all.png'
+DIAG_OK sweep all
+00:02.188  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\diag3d-sweep-skin_only.png'
+DIAG_OK sweep skin_only
+DIAG_SUMMARY {"stance": [], "jab": [], "sweep": []}
+DIAG_DONE
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

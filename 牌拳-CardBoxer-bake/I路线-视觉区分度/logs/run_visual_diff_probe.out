@@ -1,0 +1,11 @@
+RUN 6.915s rc=0 errors=0
+STATE {'foe_materials': 0, 'foe_visual': True, 'light_rows': 4, 'mesh_rows': 1, 'role': 'foe', 'tag': 'on'}
+STATE {'foe_materials': 0, 'foe_visual': False, 'light_rows': 4, 'mesh_rows': 1, 'role': 'foe', 'tag': 'plain'}
+STATE {'foe_materials': 0, 'foe_visual': True, 'light_rows': 4, 'mesh_rows': 1, 'role': 'foe', 'tag': 'again'}
+PLAYER {'foe_materials': 0, 'foe_visual': False, 'light_rows': 4, 'mesh_rows': 1, 'role': 'player'}
+SHOT base     1280x720 err=0 prims=5136 calls=117
+SHOT on       1280x720 err=0 prims=1104816 calls=33
+SHOT on-repeat 1280x720 err=0 prims=1104816 calls=33
+SHOT plain    1280x720 err=0 prims=1104816 calls=33
+SHOT again    1280x720 err=0 prims=1104816 calls=33
+VISUAL_AB_I_OK

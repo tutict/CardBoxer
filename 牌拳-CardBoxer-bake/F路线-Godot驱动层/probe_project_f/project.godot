@@ -1,0 +1,21 @@
+; F 路线：Godot 4.5 运行时 14 骨驱动层专用隔离工程。
+; 与可运行游戏工程、C/D/E 路线探针工程完全分离；
+; 只放一份带 skin 的 player-rigged.glb 与一份 motion_input.json。
+
+config_version=5
+
+[application]
+
+config/name="F Route Godot Rig Driver"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+run/main_scene="res://scenes/player_driven.tscn"
+
+[display]
+
+window/size/viewport_width=900
+window/size/viewport_height=1100
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

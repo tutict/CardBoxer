@@ -1,0 +1,264 @@
+--- tools/pipeline_review_round1_before/canonical_glb.py
++++ tools/canonical_glb.py
+@@ -12,8 +12,11 @@
+ import hashlib
+ import json
+ import math
++import os
+ import struct
++import tempfile
+ from pathlib import Path
++from urllib.parse import unquote,urlsplit
+ import numpy as np
+ 
+ DTYPES = {5120:"i1",5121:"u1",5122:"<i2",5123:"<u2",5125:"<u4",5126:"<f4"}
+@@ -23,6 +26,35 @@
+ 
+ def sha256(path: Path) -> str:
+     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
++
++
++def integer(value, label, minimum=0):
++    if not isinstance(value,int) or isinstance(value,bool) or value<minimum:
++        raise ValueError(f"{label} must be an integer >= {minimum}")
++    return value
++
++
++def validate_output_paths(inputs,outputs):
++    inputs={Path(p).resolve() for p in inputs};outputs=[Path(p).resolve() for p in outputs]
++    baseline=Path(__file__).resolve().parent.parent/"baseline"
++    def same(a,b):
++        return a==b or (a.exists() and b.exists() and os.path.samefile(a,b))
++    for i,path in enumerate(outputs):
++        if path.is_relative_to(baseline):raise ValueError("Frozen baseline write prohibited")
++        if any(same(path,p) for p in inputs) or any(same(path,p) for p in outputs[:i]):
++            raise ValueError("Input/dependency/output overwrite is prohibited")
++
++
++def atomic_write(path,payload):
++    path=Path(path).resolve();path.parent.mkdir(parents=True,exist_ok=True)
++    descriptor,name=tempfile.mkstemp(prefix="."+path.name+".",suffix=".tmp",dir=path.parent)
++    temporary=Path(name)
++    try:
++        with os.fdopen(descriptor,"wb") as stream:
++            stream.write(payload);stream.flush();os.fsync(stream.fileno())
++        os.replace(temporary,path)
++    finally:
++        if temporary.exists():temporary.unlink()
+ 
+ 
+ class GLB:
+@@ -43,27 +75,83 @@
+         for i,buf in enumerate(self.doc.get("buffers",[])):
+             uri=buf.get("uri")
+             if uri:
+-                b=base64.b64decode(uri.split(",",1)[1]) if uri.startswith("data:") else (self.path.parent/uri).read_bytes()
++                b=self.resource_bytes(uri)
+             elif i==0 and bins: b=bins[0]
+             else: raise ValueError("Missing buffer payload")
+-            if len(b)<buf["byteLength"]: raise ValueError("Truncated buffer")
+-            self.buffers.append(b[:buf["byteLength"]])
+-
+-    def view(self, index: int) -> bytes:
+-        v=self.doc["bufferViews"][index];start=v.get("byteOffset",0)
+-        return self.buffers[v["buffer"]][start:start+v["byteLength"]]
++            length=integer(buf["byteLength"],"buffer byteLength",1)
++            if len(b)<length: raise ValueError("Truncated buffer")
++            self.buffers.append(b[:length])
++
++    def resource_path(self,uri):
++        if not isinstance(uri,str):raise ValueError("Resource URI must be a string")
++        if uri.startswith("data:"):return None
++        if Path(uri).is_absolute():return Path(uri).resolve()
++        parsed=urlsplit(uri)
++        if parsed.scheme or parsed.netloc or parsed.query or parsed.fragment:raise ValueError("Only local file or data resource URIs are supported")
++        return (self.path.parent/unquote(parsed.path)).resolve()
++
++    def resource_bytes(self,uri):
++        path=self.resource_path(uri)
++        if path is not None:return path.read_bytes()
++        try:
++            header,payload=uri.split(",",1)
++            if not header.endswith(";base64"):raise ValueError("Embedded resources must use base64")
++            return base64.b64decode(payload,validate=True)
++        except (ValueError,base64.binascii.Error) as exc:raise ValueError("Invalid data resource") from exc
++
++    def input_files(self):
++        paths={self.path}
++        for item in self.doc.get("buffers",[])+self.doc.get("images",[]):
++            if "uri" in item:
++                path=self.resource_path(item["uri"])
++                if path is not None:paths.add(path)
++        return paths
++
++    def _view_layout(self,index):
++        index=integer(index,"bufferView index")
++        if index>=len(self.doc.get("bufferViews",[])):raise ValueError("bufferView index out of range")
++        v=self.doc["bufferViews"][index];buffer=integer(v["buffer"],"bufferView buffer index")
++        if buffer>=len(self.buffers):raise ValueError("bufferView buffer index out of range")
++        start=integer(v.get("byteOffset",0),"bufferView byteOffset");length=integer(v["byteLength"],"bufferView byteLength",1)
++        if start+length>len(self.buffers[buffer]):raise ValueError("bufferView crosses buffer boundary")
++        return v,self.buffers[buffer],start,length
++
++    def view(self,index):
++        v,buffer,start,length=self._view_layout(index)
++        return buffer[start:start+length]
++
++    def _read_view(self,index,offset,count,kind,dtype,sparse=False):
++        v,buffer,start,length=self._view_layout(index);offset=integer(offset,"accessor byteOffset")
++        rows=int(kind[-1]) if kind.startswith("MAT") else WIDTH[kind];columns=rows if kind.startswith("MAT") else 1
++        column_stride=((rows*dtype.itemsize+3)//4)*4 if columns>1 else rows*dtype.itemsize
++        element_size=columns*column_stride;extent=(columns-1)*column_stride+rows*dtype.itemsize
++        if sparse and ("byteStride" in v or "target" in v):raise ValueError("Sparse bufferView cannot declare stride or target")
++        stride=integer(v.get("byteStride",element_size),"accessor stride",1)
++        if "byteStride" in v and (stride<4 or stride>252 or stride%4 or stride<element_size):
++            raise ValueError("Invalid bufferView byteStride")
++        if offset%dtype.itemsize or (start+offset)%dtype.itemsize or (columns>1 and (start+offset)%4):
++            raise ValueError("Accessor component/matrix alignment violated")
++        if offset+(count-1)*stride+extent>length:raise ValueError("Accessor crosses its declared bufferView boundary")
++        return np.ndarray((count,columns,rows),dtype=dtype,buffer=buffer,offset=start+offset,
++                          strides=(stride,column_stride,dtype.itemsize)).reshape(count,-1).copy()
+ 
+     def accessor(self, index: int) -> np.ndarray:
+-        a=self.doc["accessors"][index];w=WIDTH[a["type"]];dtype=np.dtype(DTYPES[a["componentType"]])
++        index=integer(index,"accessor index")
++        if index>=len(self.doc.get("accessors",[])):raise ValueError("Accessor index out of range")
++        a=self.doc["accessors"][index];kind=a["type"];w=WIDTH[kind];dtype=np.dtype(DTYPES[a["componentType"]])
++        count=integer(a["count"],"accessor count",1)
+         if "bufferView" in a:
+-            v=self.doc["bufferViews"][a["bufferView"]]
+-            off=v.get("byteOffset",0)+a.get("byteOffset",0);stride=v.get("byteStride",w*dtype.itemsize)
+-            out=np.ndarray((a["count"],w),dtype=dtype,buffer=self.buffers[v["buffer"]],offset=off,strides=(stride,dtype.itemsize)).copy()
+-        else: out=np.zeros((a["count"],w),dtype=dtype)
++            out=self._read_view(a["bufferView"],a.get("byteOffset",0),count,kind,dtype)
++        else:
++            if a.get("byteOffset",0)!=0:raise ValueError("Accessor without bufferView cannot have byteOffset")
++            out=np.zeros((count,w),dtype=dtype)
+         if "sparse" in a:
+             s=a["sparse"];ia=s["indices"];va=s["values"]
+-            indices=np.frombuffer(self.view(ia["bufferView"]),dtype=DTYPES[ia["componentType"]],count=s["count"],offset=ia.get("byteOffset",0))
+-            values=np.frombuffer(self.view(va["bufferView"]),dtype=dtype,count=s["count"]*w,offset=va.get("byteOffset",0)).reshape(-1,w)
++            sparse_count=integer(s["count"],"sparse count",1)
++            if sparse_count>count or ia["componentType"] not in (5121,5123,5125):raise ValueError("Invalid sparse count/index storage")
++            indices=self._read_view(ia["bufferView"],ia.get("byteOffset",0),sparse_count,"SCALAR",np.dtype(DTYPES[ia["componentType"]]),sparse=True).ravel()
++            if np.any(indices>=count) or np.any(indices[1:]<=indices[:-1]):raise ValueError("Sparse indices must be ordered unique and in range")
++            values=self._read_view(va["bufferView"],va.get("byteOffset",0),sparse_count,kind,dtype,sparse=True)
+             out[indices]=values
+         if a.get("normalized") and a["componentType"] != 5126:
+             info=np.iinfo(dtype);out=np.maximum(out.astype(np.float64)/info.max,-1.) if info.min<0 else out.astype(np.float64)/info.max
+@@ -83,6 +171,18 @@
+         if any(x in p.get("extensions",{}) for x in ("KHR_draco_mesh_compression","EXT_meshopt_compression")):
+             raise ValueError("Compressed geometry must be decoded before canonicalization")
+         return p
++
++    def triangle_indices(self, vertex_count):
++        index=self.mesh_primitive().get("indices")
++        if not isinstance(index,int) or isinstance(index,bool) or not 0<=index<len(self.doc["accessors"]):
++            raise ValueError("Invalid triangle index accessor")
++        a=self.doc["accessors"][index]
++        if a["type"]!="SCALAR" or a["componentType"] not in (5121,5123,5125) or a.get("normalized",False) is not False:
++            raise ValueError("Invalid triangle storage: unnormalized unsigned SCALAR required")
++        values=self.accessor(index).reshape(-1).astype(np.int64)
++        if not len(values) or len(values)%3 or np.any(values>=vertex_count):
++            raise ValueError("Invalid triangle count or vertex range")
++        return values
+ 
+     def skin(self):
+         return self.doc["skins"][self.doc["nodes"][self.mesh_node()]["skin"]]
+@@ -155,8 +255,7 @@
+         j=json.dumps(self.doc,ensure_ascii=True,separators=(",",":"),allow_nan=False).encode();j+=b" "*((-len(j))%4)
+         b=bytes(self.bin);b+=b"\0"*((-len(b))%4)
+         payload=struct.pack("<III",0x46546c67,2,28+len(j)+len(b))+struct.pack("<II",len(j),0x4e4f534a)+j+struct.pack("<II",len(b),0x004e4942)+b
+-        path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
+-        tmp=path.with_suffix(path.suffix+".tmp");tmp.write_bytes(payload);tmp.replace(path)
++        atomic_write(path,payload)
+ 
+ 
+ def skin_rest_vertices(glb: GLB):
+@@ -174,11 +273,12 @@
+                  sockets_json: Path, profile_json: Path) -> dict:
+     paths=[Path(p).resolve() for p in (source_glb,raw_glb,output_glb,sockets_json,profile_json)]
+     source_glb,raw_glb,output_glb,sockets_json,profile_json=paths
+-    if output_glb in (source_glb,raw_glb,sockets_json) or profile_json in (source_glb,raw_glb,sockets_json,output_glb):
+-        raise ValueError("Input/baseline overwrite is prohibited")
+-    baseline=Path(__file__).resolve().parent.parent/"baseline"
+-    if output_glb.is_relative_to(baseline) or profile_json.is_relative_to(baseline): raise ValueError("Frozen baseline write prohibited")
++    validate_output_paths((source_glb,raw_glb,sockets_json,Path(__file__)),(output_glb,profile_json))
+     src=GLB(source_glb);raw=GLB(raw_glb);src_prim=src.mesh_primitive();prim=raw.mesh_primitive()
++    src.triangle_indices(src.doc["accessors"][src_prim["attributes"]["POSITION"]]["count"])
++    input_files=src.input_files()|raw.input_files()|{sockets_json,Path(__file__).resolve()}
++    validate_output_paths(input_files,(output_glb,profile_json))
++    input_hashes={str(path):sha256(path) for path in sorted(input_files)}
+     if len(src.doc["meshes"])!=1 or len(raw.doc["meshes"])!=1 or len(src.doc["skins"])!=1 or len(raw.doc["skins"])!=1:
+         raise ValueError("Only a single body mesh and skin may be exported")
+     if raw.doc.get("animations"): raise ValueError("Raw animations must not be exported")
+@@ -194,6 +294,7 @@
+         raise ValueError("JOINTS_0 must use unnormalized unsigned byte/short VEC4 indices")
+     joints=raw.accessor(attrs["JOINTS_0"]).astype(np.int64);weights=raw.accessor(attrs["WEIGHTS_0"]).astype(float)
+     count=raw.doc["accessors"][attrs["POSITION"]]["count"]
++    raw_indices=raw.triangle_indices(count)
+     if joints.shape!=(count,4) or weights.shape!=(count,4): raise ValueError("Expected four influences per vertex")
+     if np.any(joints<0) or np.any(joints>=len(raw_names)): raise ValueError("Joint index out of range")
+     if np.any(weights<0) or np.max(np.abs(weights.sum(axis=1)-1))>0.005: raise ValueError("Raw weights must be normalized and nonnegative")
+@@ -236,7 +337,7 @@
+             morphed_tangent-=target_normals*np.sum(target_normals*morphed_tangent,axis=1,keepdims=True)
+             target["TANGENT"]=b.accessor(normalized(morphed_tangent)-new_tangents,"VEC3")
+     if np.linalg.det(linear)<0:
+-        indices=raw.accessor(prim["indices"]).ravel().reshape(-1,3)[:,[0,2,1]].ravel()
++        indices=raw_indices.reshape(-1,3)[:,[0,2,1]].ravel()
+         out_prim["indices"]=b.accessor(indices,"SCALAR",5125)
+     b.doc["nodes"]=copy.deepcopy(src.doc["nodes"])
+     b.doc["skins"]=copy.deepcopy(src.doc["skins"])
+@@ -248,7 +349,7 @@
+     # Source nodes reference mesh 0. New raw body is required to be the sole mesh.
+     for image in b.doc.get("images",[]):
+         if "uri" in image:
+-            uri=image.pop("uri");data=base64.b64decode(uri.split(",",1)[1]) if uri.startswith("data:") else (raw.path.parent/uri).read_bytes()
++            uri=image.pop("uri");data=raw.resource_bytes(uri)
+             image["bufferView"]=b.view(data);image["mimeType"]="image/png" if data.startswith(b"\x89PNG") else "image/jpeg"
+     sockets=json.loads(sockets_json.read_text(encoding="utf-8"))
+     if sockets.get("version")!=1 or sockets.get("role") not in ("player","foe") or sockets.get("space")!="blender_world_z_up":
+@@ -265,23 +366,22 @@
+     profile={"version":1,"role":sockets["role"],"hand_sockets":hand_sockets}
+     b.doc.setdefault("asset",{})["generator"]="CardBoxer canonical GLB bridge v1 (original node/skin basis)"
+     b.write(output_glb)
+-    profile_json.parent.mkdir(parents=True,exist_ok=True)
+-    profile_json.write_text(json.dumps(profile,indent=2,allow_nan=False)+"\n",encoding="utf-8")
++    atomic_write(profile_json,(json.dumps(profile,indent=2,allow_nan=False)+"\n").encode("utf-8"))
+     final=GLB(output_glb)
+     final_rest=skin_rest_vertices(final)
+     final_bind=transform_points(ms,positions)
+     report={"version":1,"source":str(source_glb),"raw":str(raw_glb),"output":str(output_glb),
+-        "source_sha256":sha256(source_glb),"raw_sha256":sha256(raw_glb),"output_sha256":sha256(output_glb),
++        "source_sha256":input_hashes[str(source_glb)],"raw_sha256":input_hashes[str(raw_glb)],"output_sha256":sha256(output_glb),
+         "profile_sha256":sha256(profile_json),"vertices":count,
+-        "triangles":int(raw.doc["accessors"][prim["indices"]]["count"]//3),"skin_joints":len(source_names),
++        "triangles":int(len(raw_indices)//3),"skin_joints":len(source_names),
+         "source_mesh_global":ms.tolist(),"raw_mesh_global":mr.tolist(),"raw_to_source_bind":frame.tolist(),
+         "raw_rest_bind_error_m":float(np.linalg.norm(raw_rest-raw_bind,axis=1).max()),
+         "canonical_rest_bind_error_m":float(np.linalg.norm(final_rest-final_bind,axis=1).max()),
+         "world_rest_transfer_error_m":float(np.linalg.norm(final_rest-raw_rest,axis=1).max()),
+         "original_nodes_exact":final.doc["nodes"]==src.doc["nodes"],
+         "original_ibms_exact":bool(np.array_equal(final.ibms(),src.ibms())),
+-        "sockets_source":str(sockets_json),"sockets_source_sha256":sha256(sockets_json),
+-        "pipeline_sha256":sha256(Path(__file__)),
++        "sockets_source":str(sockets_json),"sockets_source_sha256":input_hashes[str(sockets_json)],
++        "pipeline_sha256":input_hashes[str(Path(__file__).resolve())],"immutable_input_sha256":input_hashes,
+         "joint_remap":{name:source_names.index(name) for name in raw_names},
+         "image_sha256":[hashlib.sha256(final.view(im["bufferView"])).hexdigest() for im in final.doc.get("images",[])]}
+     return report
+@@ -291,8 +391,12 @@
+     parser=argparse.ArgumentParser(description=__doc__)
+     for name in ("source_glb","raw_glb","output_glb","sockets_json","profile_json"): parser.add_argument(name,type=Path)
+     parser.add_argument("--report",type=Path)
+-    args=parser.parse_args();report=canonicalize(args.source_glb,args.raw_glb,args.output_glb,args.sockets_json,args.profile_json)
+-    if args.report: args.report.write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
++    args=parser.parse_args()
++    if args.report:
++        inputs=GLB(args.source_glb).input_files()|GLB(args.raw_glb).input_files()|{args.sockets_json,Path(__file__)}
++        validate_output_paths(inputs,(args.output_glb,args.profile_json,args.report))
++    report=canonicalize(args.source_glb,args.raw_glb,args.output_glb,args.sockets_json,args.profile_json)
++    if args.report:atomic_write(args.report,(json.dumps(report,indent=2)+"\n").encode("utf-8"))
+     print(json.dumps(report,indent=2))
+ 
+ 

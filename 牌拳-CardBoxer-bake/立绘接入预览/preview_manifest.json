@@ -1,0 +1,95 @@
+{
+  "note": "离线合成效果预览，非引擎实渲；游戏源码零改动",
+  "source_shot": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\背景图候选\\怒火槽\\怒火槽-满槽.png",
+  "source_shot_sha256": "2a149a2e7b91f21328d8054f7c77b8ff65ef6e64fbcd63e25283de6fc7f5de20",
+  "sources": {
+    "zzz-front.png": "9ede8d3bd7a299438f940e7db7fe5bb88bd22d0a0877e6c85ed7ba60521ace17",
+    "zzz-angle25.png": "7306dc48603fe61a6fe68da879f7ee887eb7d51ba65a3d4cda30ebee183e9aeb",
+    "zzz-angle55.png": "cd30d6ae120598b1dd71d2d6e9913882b751083b4a70240467238489c19947c2",
+    "zzz-back35.png": "69da145a845e95007af919a32ceaa7ffc96ba806a70223449264f50bea9a0c91"
+  },
+  "geometry_from_source": {
+    "arena.gd": {
+      "GROUND_Y": 520,
+      "player_x": 430,
+      "enemy_x": 850
+    },
+    "hud.gd": {
+      "CARD_W": 148,
+      "CARD_H": 150,
+      "CARD_GAP": 16,
+      "HAND_Y": 552
+    }
+  },
+  "composite": {
+    "subject_height_px": 240,
+    "original_silhouette_height_px": 195,
+    "erase_boxes": [
+      [
+        370,
+        310,
+        490,
+        518
+      ],
+      [
+        790,
+        310,
+        910,
+        518
+      ]
+    ],
+    "card_slots_x": [
+      238,
+      402,
+      566,
+      730,
+      894
+    ],
+    "replaced_card_indices": [
+      0,
+      4
+    ]
+  },
+  "outputs": {
+    "A": {
+      "file": "预览-A-战斗区替换.png",
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "d384eb3c90e4bab61559542cc8ca8dbbb186b9cda3a33def06557968bee82ec0"
+    },
+    "B": {
+      "file": "预览-B-卡牌插画与头像.png",
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "23af1495904bd6c5464bc7dbe706069d5f4f3d24d212e546f7a1f12c5aafa23c"
+    },
+    "C": {
+      "file": "预览-C-角色档案板.png",
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "4f74f212e6e7d1330d34ba47b06103d5f6f770c4301757e647dd2a3c30c5d2ce"
+    },
+    "D": {
+      "file": "预览-D-部件尺寸样张.png",
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "44fea0499ea3fd31fe09eb87b9c77c94ee47b4a2bb09f96d336e62b106db7491"
+    },
+    "E": {
+      "file": "预览-总览.png",
+      "size": [
+        1280,
+        720
+      ],
+      "sha256": "d6c10b28376d8306feee53a0c772a09fa58f6e591d272b378292b28cae25e19a"
+    }
+  }
+}

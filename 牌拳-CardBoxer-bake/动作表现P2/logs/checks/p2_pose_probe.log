@@ -1,0 +1,19 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+OK  站架: 待机 vs 表 0.000 px（<=0.5）；与 v1 旧站架 12.0 px（>=5）；表内起收招最大漂移 1.100 px @sweep 末帧（<=1.5）
+OK jab       14 帧，最大误差 0.000015 px
+OK cross     22 帧，最大误差 0.000015 px
+OK uppercut  24 帧，最大误差 0.000015 px
+OK sweep     28 帧，最大误差 0.000015 px
+OK wave      35 帧，最大误差 0.000015 px
+OK throw     19 帧，最大误差 0.000015 px
+OK rush      13 帧，最大误差 0.000015 px
+OK backstep  11 帧，最大误差 0.000015 px
+OK guard     14 帧，最大误差 0.000015 px
+OK sidestep  10 帧，最大误差 0.000015 px
+OK focus     22 帧，最大误差 0.000015 px
+OK recover   14 帧，最大误差 0.000015 px
+
+逐帧对照 226 帧 / 2486 个关节值，失败 0 项
+POSE PROBE: PASS
+

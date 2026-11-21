@@ -1,0 +1,18 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\B路线-资产层去重\analyze_stack.py:53: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  px = list(im.getdata())
+0-orig opaque 70249 white 725 cyan 424 bright 1077 mean [51.74, 45.82, 42.4]
+1-lights0 opaque 70249 white 0 cyan 0 bright 0 mean [0.0, 0.0, 0.0]
+2-nometal opaque 70249 white 73 cyan 250 bright 239 mean [55.39, 47.91, 43.01]
+3-redalbedo opaque 70249 white 468 cyan 0 bright 26029 mean [166.13, 32.31, 31.53]
+4-neg55 opaque 69224 white 668 cyan 449 bright 1436 mean [60.96, 55.49, 51.56]
+CHECK five_states_measured True
+CHECK lights_off_kills_bright True
+CHECK nometal_reduces_white True
+CHECK red_albedo_kills_cyan True
+CHECK red_albedo_reduces_white True
+CHECK s0_white_is_low True
+CHECK yaw_does_not_create_white True
+CHECK yaw_does_not_create_cyan True
+CHECK same_geometry_both_yaws True
+CHECK board_written True
+STACK_PIXELS_OK []

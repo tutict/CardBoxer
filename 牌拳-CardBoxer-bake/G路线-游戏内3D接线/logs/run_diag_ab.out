@@ -1,0 +1,15 @@
+baseline_vs_off    mae=12.11346  max=236  gt6=493812   buckets={'eq0': 459870, '1to2': 240156, '3to6': 246162, '7to16': 217483, 'gt16': 276329}
+    top_bg       mae=6.51961   gt6=67270    max=150
+    mid          mae=14.0331   gt6=169595   max=236
+    bottom_hud   mae=22.58703  gt6=135015   max=233
+    player       mae=12.83729  gt6=36581    max=162
+on_vs_off          mae=10.37116  max=253  gt6=450730   buckets={'eq0': 459223, '1to2': 288565, '3to6': 241482, '7to16': 214145, 'gt16': 236585}
+    top_bg       mae=5.51699   gt6=57332    max=152
+    mid          mae=12.38683  gt6=157092   max=253
+    bottom_hud   mae=16.07978  gt6=118405   max=240
+    player       mae=10.42947  gt6=34785    max=219
+baseline_vs_on     mae=12.9891   max=251  gt6=451359   buckets={'eq0': 450637, '1to2': 304075, '3to6': 233929, '7to16': 176015, 'gt16': 275344}
+    top_bg       mae=5.56579   gt6=59357    max=136
+    mid          mae=14.75607  gt6=157386   max=251
+    bottom_hud   mae=24.57588  gt6=124430   max=240
+    player       mae=13.82826  gt6=35393    max=220

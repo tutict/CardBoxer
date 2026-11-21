@@ -1,0 +1,14 @@
+on player_energy [1.9, 0.75, 0.55, 0.95] foe_energy [1.9, 0.75, 0.55, 0.95] overrides 0 0
+plain player_energy [1.9, 0.75, 0.55, 0.95] foe_energy [1.9, 0.75, 0.55, 0.95] overrides 0 0
+again player_energy [1.9, 0.75, 0.55, 0.95] foe_energy [1.9, 0.75, 0.55, 0.95] overrides 0 0
+CHECK rc0 True
+CHECK marker True
+CHECK no_errors True
+CHECK three_states True
+CHECK four_lights_each True
+CHECK player_lights_unchanged True
+CHECK foe_lights_unchanged True
+CHECK all_lights_identical_across_states True
+CHECK player_no_override True
+CHECK no_3d_override_any_state True
+LIGHT_ISOLATION_I_OK

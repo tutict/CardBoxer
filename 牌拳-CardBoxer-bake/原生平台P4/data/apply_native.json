@@ -1,0 +1,125 @@
+{
+  "mode": "apply",
+  "game": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer",
+  "case": "micro_2",
+  "amplitude_px": 2.0,
+  "edit_count_per_file": 436,
+  "changed_frame_total": 109,
+  "leg_joints": [
+    "f_knee",
+    "f_foot",
+    "b_knee",
+    "b_foot"
+  ],
+  "micro2_worst_p999_m": 0.042681,
+  "baseline_worst_p999_m": 0.042737,
+  "rows": {
+    "data/card_motion.json": {
+      "roundtrip_identity_before": true,
+      "edits_applied": 436,
+      "diff_path_count": 872,
+      "diff_paths_all_leg_joints": true,
+      "diff_paths_sample": [
+        "cards.backstep.track[2].b_foot[0]",
+        "cards.backstep.track[2].b_foot[1]",
+        "cards.backstep.track[2].b_knee[0]",
+        "cards.backstep.track[2].b_knee[1]",
+        "cards.backstep.track[2].f_foot[0]",
+        "cards.backstep.track[2].f_foot[1]"
+      ],
+      "unexpected_diff_paths": [],
+      "readback_matches_edits": true,
+      "before_sha256": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55",
+      "after_sha256": "ca4060d75ccc4621dc00ccae85c4eaab8751de50a016f1ca4ab43cf5ad3a2f93",
+      "before_bytes": 226918,
+      "after_bytes": 228610,
+      "cards": 15,
+      "frames": 284
+    },
+    "data/motion_input.json": {
+      "roundtrip_identity_before": true,
+      "edits_applied": 436,
+      "diff_path_count": 872,
+      "diff_paths_all_leg_joints": true,
+      "diff_paths_sample": [
+        "cards.backstep.track[2].b_foot[0]",
+        "cards.backstep.track[2].b_foot[1]",
+        "cards.backstep.track[2].b_knee[0]",
+        "cards.backstep.track[2].b_knee[1]",
+        "cards.backstep.track[2].f_foot[0]",
+        "cards.backstep.track[2].f_foot[1]"
+      ],
+      "unexpected_diff_paths": [],
+      "readback_matches_edits": true,
+      "before_sha256": "ae617c8b88423352ed05aa5d151c05586fa2f24326d1da594de0dc027bf100a2",
+      "after_sha256": "61f8a14ea7b9ec60ff44d0d57f520357d03e258219d94bf7d9512a980dd244be",
+      "before_bytes": 72940,
+      "after_bytes": 74632,
+      "cards": 15,
+      "frames": 284
+    },
+    "data/motion_input_foe.json": {
+      "roundtrip_identity_before": true,
+      "edits_applied": 436,
+      "diff_path_count": 872,
+      "diff_paths_all_leg_joints": true,
+      "diff_paths_sample": [
+        "cards.backstep.track[2].b_foot[0]",
+        "cards.backstep.track[2].b_foot[1]",
+        "cards.backstep.track[2].b_knee[0]",
+        "cards.backstep.track[2].b_knee[1]",
+        "cards.backstep.track[2].f_foot[0]",
+        "cards.backstep.track[2].f_foot[1]"
+      ],
+      "unexpected_diff_paths": [],
+      "readback_matches_edits": true,
+      "before_sha256": "e8191ccd966fad7b1ad9a3e85bf69fad1bce5629cc668dc5a03349cb54784372",
+      "after_sha256": "fa5960b79faf26b3f2dd2f6f0dfea493a6c2f2ed0f6856656df37737fcb65aae",
+      "before_bytes": 72938,
+      "after_bytes": 74630,
+      "cards": 15,
+      "frames": 284
+    }
+  },
+  "sync": {
+    "mi_vs_cm": true,
+    "mi_vs_mif": true
+  },
+  "untouched": {
+    "scripts/arena.gd": true,
+    "scripts/fighter_3d_layer.gd": true,
+    "scripts/fighter.gd": true,
+    "scripts/rig_driver.gd": true,
+    "scripts/battle_motion_p0.gd": true,
+    "scripts/battle_rhythm.gd": true,
+    "scripts/card_motion.gd": true,
+    "scripts/hud.gd": true,
+    "project.godot": true,
+    "assets/3d/player-rigged.glb": true,
+    "assets/3d/foe-rigged.glb": true
+  },
+  "checks": {
+    "landing_decision_ok": true,
+    "landing_case_is_micro2": true,
+    "roundtrip_identity_all_three": true,
+    "micro2_full_tear_ok": true,
+    "micro2_tear_284_poses": true,
+    "micro2_no_frame_over_anchor": true,
+    "micro2_within_external_anchor": true,
+    "baseline_ok": true,
+    "three_roundtrip_identity_before": true,
+    "three_edits_applied_all": true,
+    "three_diff_only_four_leg_joints": true,
+    "three_diff_bounded_by_edits": true,
+    "three_readback_matches_edits": true,
+    "three_still_15_cards_284_frames": true,
+    "three_sha_changed": true,
+    "non_joint_metadata_unchanged": true,
+    "three_tables_11joints_still_synchronized": true,
+    "mapping_unchanged_all_three": true,
+    "other_watched_files_unchanged": true,
+    "backup_bytes_match_pre_apply": true
+  },
+  "failed": [],
+  "ok": true
+}

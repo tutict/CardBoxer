@@ -1,0 +1,135 @@
+{
+  "blender": "5.2.3 LTS",
+  "glb": "artifact_03.glb",
+  "import": {
+    "mesh_objects": 1,
+    "mesh_names": [
+      "node_0"
+    ],
+    "vertices_raw": 51587,
+    "bbox_raw_min": [
+      -0.26612,
+      -0.11426,
+      -0.0
+    ],
+    "bbox_raw_max": [
+      0.26419,
+      0.13186,
+      1.12777
+    ],
+    "uv_layers": 1,
+    "textures": [
+      {
+        "material": "Material.001",
+        "image": "texture_pbr_20250901",
+        "size": [
+          4096,
+          4096
+        ],
+        "filepath": "",
+        "linked_to": [
+          "Base Color"
+        ]
+      },
+      {
+        "material": "Material.001",
+        "image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+        "size": [
+          4096,
+          4096
+        ],
+        "filepath": "",
+        "linked_to": [
+          "Color"
+        ]
+      },
+      {
+        "material": "Material.001",
+        "image": "texture_pbr_20250901_normal",
+        "size": [
+          4096,
+          4096
+        ],
+        "filepath": "",
+        "linked_to": [
+          "Color"
+        ]
+      }
+    ]
+  },
+  "normalization": {
+    "target_height_m": 1.72,
+    "scale": 1.525134,
+    "bbox_min": [
+      -0.4044,
+      -0.18768,
+      0.0
+    ],
+    "bbox_max": [
+      0.4044,
+      0.18768,
+      1.72
+    ]
+  },
+  "pose_mismatch": {
+    "rest_joint_nearest_vertex_m": {
+      "hip": 0.0042,
+      "shoulder": 0.0374,
+      "head": 0.0284,
+      "f_elbow": 0.1145,
+      "f_hand": 0.2723,
+      "b_elbow": 0.0181,
+      "b_hand": 0.027,
+      "f_knee": 0.041,
+      "f_foot": 0.0821,
+      "b_knee": 0.0101,
+      "b_foot": 0.1553
+    },
+    "joints_outside_0_12m": [
+      "f_hand",
+      "b_foot"
+    ],
+    "outside_count": 2,
+    "x_width_by_z": {
+      "at_rest_f_hand_z": {
+        "z": 1.56,
+        "xmin": -0.1717,
+        "xmax": 0.171,
+        "vertices": 3172
+      },
+      "at_rest_head_z": {
+        "z": 1.72,
+        "xmin": -0.1628,
+        "xmax": 0.1629,
+        "vertices": 1234
+      },
+      "at_rest_hip_z": {
+        "z": 0.8,
+        "xmin": -0.4044,
+        "xmax": 0.4044,
+        "vertices": 5857
+      },
+      "at_rest_foot_z": {
+        "z": 0.0,
+        "xmin": -0.2994,
+        "xmax": 0.2994,
+        "vertices": 2092
+      }
+    },
+    "model_max_abs_x": 0.4044,
+    "model_max_abs_x_at_z": 0.821,
+    "rest_f_hand_x": 0.44,
+    "rest_f_hand_z": 1.56
+  },
+  "automatic_weights": {
+    "seconds": 0.28,
+    "error": null,
+    "vertex_groups": 0,
+    "group_counts": {},
+    "covered_vertices": 0,
+    "total_vertices": 51587,
+    "coverage": 0.0
+  },
+  "overlay_png": "rigfit_overlay.png",
+  "elapsed_seconds": 3.43
+}

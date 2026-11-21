@@ -1,0 +1,32 @@
+00:00.688  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\对手怪-可变形连续壳.blend"
+00:02.469  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\shell_isolate\b-groups-front.png'
+00:02.500  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\shell_isolate\b-groups-back.png'
+00:02.531  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\shell_isolate\b-groups-side.png'
+00:02.563  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\shell_isolate\b-groups-angle45.png'
+00:02.594  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\shell_isolate\b-texture-front.png'
+00:02.688  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\shell_isolate\b-only-G0_CAPE.png'
+00:02.766  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\shell_isolate\b-only-G1_SKIRT.png'
+00:02.860  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\shell_isolate\b-only-G2_HEAD_SMALL.png'
+00:02.953  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\shell_isolate\b-only-G3_HEAD_LARGE.png'
+00:03.110  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\shell_isolate\b-shells-front.png'
+00:03.141  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\shell_isolate\b-shells-side.png'
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+SHELLS 2809 VERTS 64024 POLYGONS 79998
+GROUP G0_CAPE {'shells': 2, 'verts': 2122}
+GROUP G1_SKIRT {'shells': 19, 'verts': 1684}
+GROUP G2_HEAD_SMALL {'shells': 174, 'verts': 4947}
+GROUP G4_BODY {'shells': 2614, 'verts': 55271}
+GROUP G3_HEAD_LARGE {'shells': 0, 'verts': 0}
+SHOTS 11
+CHECK opened True
+CHECK shell_count_matches_2809 True
+CHECK polygon_count_matches True
+CHECK uv_layer_present True
+CHECK groups_cover_all_shells True
+CHECK cape_skirt_head_small_present True
+CHECK head_top_has_no_large_shell True
+CHECK all_shots_written True
+CHECK all_other_meshes_hidden True
+CHECK tex_array_loaded True
+CHECK vertices_restored True
+SHELL_ISOLATE_B_OK

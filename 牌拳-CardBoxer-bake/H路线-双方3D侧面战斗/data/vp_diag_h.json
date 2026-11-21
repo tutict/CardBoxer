@@ -1,0 +1,102 @@
+{
+  "run": {
+    "seconds": 6.117,
+    "returncode": 0,
+    "has_opengl": true,
+    "script_errors": 0
+  },
+  "payload": {
+    "foe_glb": "res://assets/3d/foe-rigged.glb",
+    "foe_layer_ready": true,
+    "player_glb": "res://assets/3d/player-rigged.glb",
+    "player_layer_ready": true,
+    "shots": [
+      {
+        "h": 720,
+        "name": "off",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\H路线-双方3D侧面战斗\\shots\\vp_diag/vp-off.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "both",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\H路线-双方3D侧面战斗\\shots\\vp_diag/vp-both.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "player-hidden",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\H路线-双方3D侧面战斗\\shots\\vp_diag/vp-player-hidden.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "foe-hidden",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\H路线-双方3D侧面战斗\\shots\\vp_diag/vp-foe-hidden.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "neither",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\H路线-双方3D侧面战斗\\shots\\vp_diag/vp-neither.png",
+        "save_error": 0,
+        "w": 1280
+      }
+    ]
+  },
+  "roi": {
+    "left": [
+      361,
+      280,
+      487,
+      545
+    ],
+    "right": [
+      793,
+      280,
+      921,
+      545
+    ]
+  },
+  "diffs": {
+    "player-hidden_untouched": {
+      "changed_px": 0,
+      "total_px": 33920,
+      "ratio": 0.0
+    },
+    "player-hidden_changed": {
+      "changed_px": 15022,
+      "total_px": 33390,
+      "ratio": 0.4499
+    },
+    "foe-hidden_untouched": {
+      "changed_px": 0,
+      "total_px": 33390,
+      "ratio": 0.0
+    },
+    "foe-hidden_changed": {
+      "changed_px": 14574,
+      "total_px": 33920,
+      "ratio": 0.4297
+    }
+  },
+  "checks": {
+    "rc": true,
+    "has_opengl": true,
+    "no_errors": true,
+    "no_payload_error": true,
+    "five_frames": true,
+    "all_png_ok": true,
+    "both_layers_ready": true,
+    "hide_player_right_untouched": true,
+    "hide_player_left_changed": true,
+    "hide_foe_left_untouched": true,
+    "hide_foe_right_changed": true
+  },
+  "failed": [],
+  "ok": true
+}

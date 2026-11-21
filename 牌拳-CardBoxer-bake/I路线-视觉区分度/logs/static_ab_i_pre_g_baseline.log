@@ -1,0 +1,7 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 621.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5080 Laptop GPU
+
+PERF_PROBE_START samples=120
+PERF_PROBE_DONE out=C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\I路线-视觉区分度\shots\static_ab_i\pre_g_baseline\背景基线.png json=C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\I路线-视觉区分度\shots\static_ab_i\pre_g_baseline\perf.json prims_mean=188.00 calls_mean=9.00 proc_ms=2.89500
+
+--- STDERR ---

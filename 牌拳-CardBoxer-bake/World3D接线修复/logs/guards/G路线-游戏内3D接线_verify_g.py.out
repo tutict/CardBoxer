@@ -1,0 +1,7 @@
+  FAIL A05_side_yaw_is_55
+  FAIL B03_added_all_whitelisted
+  FAIL B05_no_unclassified_added
+VERIFY_G 68/71 failed=3
+G_VERIFY_FAILED
+
+--- STDERR ---

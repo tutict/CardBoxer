@@ -1,0 +1,21 @@
+CAUGHT M01_player_cap_9_to_3 rc 1 restore True hit ['player_cap_is_9', 'only_one_diff_path_player'] errors {}
+CAUGHT M02_foe_cap_9_to_3 rc 1 restore True hit ['foe_cap_is_9', 'only_one_diff_path_foe'] errors {}
+CAUGHT M03_arm_gain_changed rc 1 restore True hit ['player_arm_gains_untouched', 'only_one_diff_path_player'] errors {}
+CAUGHT M04_torso_cap_changed rc 1 restore True hit ['torso_caps_untouched', 'only_one_diff_path_player'] errors {}
+CAUGHT M05_jab_frames_14_to_13 rc 1 restore True hit ['frames_284_both'] errors {}
+CAUGHT M06_backup_cap_3_to_4 rc 1 restore True hit ['backup_bytewise_matches_baseline_player'] errors {}
+CAUGHT M07_baseline_sha_corrupted rc 1 restore True hit ['backup_bytewise_matches_baseline_player'] errors {}
+CAUGHT M08_apply_check_flipped rc 1 restore True hit ['apply_report_all_checks_true'] errors {}
+CAUGHT M09_anchor_raised rc 1 restore True hit ['anchor_pinned_at_0_09365'] errors {}
+CAUGHT M10_full_poses_852_to_851 rc 1 restore True hit ['full_852_poses_evaluated'] errors {}
+CAUGHT M11_plan_284_to_283 rc 1 restore True hit ['full_plan_284_frame_pairs'] errors {}
+CAUGHT M12_shipped_readback_to_3 rc 1 restore True hit ['shipped_cap_readback_9_both_sides'] errors {}
+CAUGHT M13_shipped_diff_to_zero rc 1 restore True hit ['shipped_action_frames_all_changed_both_sides'] errors {}
+CAUGHT M14_all_checks_result_failed rc 1 restore True hit ['all_checks_p2_15_15'] errors {}
+CAUGHT M15_p1_log_summary_faked rc 1 restore True hit ['p1_guard_other_50_still_green'] errors {}
+CAUGHT M16_probe_gd_changed rc 1 restore True hit ['shipped_probe_script_in_game_bytewise'] errors {}
+CAUGHT M17_board_png_signature_broken rc 1 restore True hit ['five_boards_valid_png_signature'] errors {}
+CAUGHT M18_rig_driver_source_changed rc 1 restore True hit ['other_12_watched_files_unchanged', 'three_core_scripts_sha_unchanged'] errors {}
+CAUGHT M19_amp_monotonic_broken rc 1 restore True hit ['amp_probe_four_caps_monotonic'] errors {}
+MUTATION_P2 19/19 CAUGHT / DNR 0 / MISSED 0 / RESTORE 19/19 / clean 59/59 ALL GREEN
+MUTATION_P2_OK

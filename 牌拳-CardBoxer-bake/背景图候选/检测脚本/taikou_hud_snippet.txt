@@ -1,0 +1,49 @@
+# ── 太阁 IV 合战：亮牌区 ─────────────────────────────────────
+
+func _draw_taikou_reveal() -> void:
+	if arena.battle_mode != "taikou":
+		return
+	if arena.tk_phase != "reveal" and arena.tk_phase != "resolve":
+		return
+	var y := 132.0
+	_draw_reveal_side(Vector2(44, y), arena.tk_player_reveal, arena.tk_player_result, "你", Color(0.98, 0.76, 0.36), false)
+	_draw_reveal_side(Vector2(1236, y), arena.tk_enemy_reveal, arena.tk_enemy_result, "青岚", Color(0.42, 0.80, 0.98), true)
+
+
+func _draw_reveal_side(pos: Vector2, ranks: Array, result: Dictionary, who: String, accent: Color, mirrored: bool) -> void:
+	if ranks.is_empty():
+		return
+	var box_w := 70.0
+	var gap := 8.0
+	var total := float(ranks.size()) * box_w + float(ranks.size() - 1) * gap
+	var x0 := (pos.x - total) if mirrored else pos.x
+	draw_string(font, Vector2(x0, pos.y - 8), who, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, accent)
+
+	# 赢的一侧给亮边，输的一侧压暗；平局两边保持中性。
+	var own := "player" if not mirrored else "enemy"
+	var won := arena.tk_winner == own
+	var lost := arena.tk_phase == "resolve" and not won and arena.tk_winner != "draw"
+	for i in range(ranks.size()):
+		var x := x0 + float(i) * (box_w + gap)
+		var rect := Rect2(x, pos.y, box_w, 62.0)
+		draw_rect(rect, Color(0.09, 0.10, 0.15, 0.95))
+		var edge := accent
+		if lost:
+			edge = Color(0.36, 0.38, 0.46)
+		elif won and arena.tk_phase == "resolve":
+			edge = Color(1.0, 0.92, 0.62)
+		draw_rect(rect, edge, false, 2.0)
+		var num := str(int(ranks[i]))
+		var nw := font.get_string_size(num, HORIZONTAL_ALIGNMENT_LEFT, -1, 38).x
+		draw_string(
+			font, Vector2(x + box_w * 0.5 - nw * 0.5, pos.y + 45), num,
+			HORIZONTAL_ALIGNMENT_LEFT, -1, 38,
+			Color(0.55, 0.57, 0.65) if lost else Color(0.97, 0.97, 1.0)
+		)
+
+	var label := String(result.get("name", ""))
+	var lw := font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 18).x
+	var lx := (x0 + total - lw) if mirrored else x0
+	draw_string(font, Vector2(lx, pos.y + 84), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, accent)
+
+

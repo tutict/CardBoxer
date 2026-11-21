@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "exit_nonzero": true,
+    "not_selftest_mode": true,
+    "has_did_not_run": true,
+    "dnr_is_m10": true,
+    "dnr_reason_anchor": true,
+    "other_cases_still_caught": true,
+    "did_not_run_counted_unproven": true,
+    "overall_not_ok": true,
+    "clean_rerun_green": true,
+    "restore_all_ok": true,
+    "output_marker": true
+  },
+  "failed": [],
+  "did_not_run": 1,
+  "caught": 15,
+  "unproven_positive": 1,
+  "clean_rerun": "GREEN",
+  "ok": true
+}

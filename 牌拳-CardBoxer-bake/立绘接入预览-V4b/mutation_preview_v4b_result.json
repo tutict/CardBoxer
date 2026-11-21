@@ -1,0 +1,48 @@
+{
+  "verdict": "MUTATION_V4B_OK",
+  "cases": [
+    {
+      "name": "M1",
+      "caught": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "erase_fill_uses_clean_center_patch"
+      ],
+      "restore": true
+    },
+    {
+      "name": "M2",
+      "caught": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "b_card_matches_recomputed_asset",
+        "subject_bbox_matches_measured_probe"
+      ],
+      "restore": true
+    },
+    {
+      "name": "M3",
+      "caught": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "output_sha_matches_manifest",
+        "not_a_copy_of_v3_preview"
+      ],
+      "restore": true
+    },
+    {
+      "name": "M4",
+      "caught": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "face_source_sha_matches_manifest"
+      ],
+      "restore": true
+    }
+  ],
+  "clean": true
+}

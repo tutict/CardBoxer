@@ -1,0 +1,15 @@
+; glTF -> Godot 4.5 导入成本量测用隔离工程
+; 与可运行游戏工程 C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer 完全分离。
+; 这里只做资源导入可行性探针，不是生产导入，无玩法代码。
+
+config_version=5
+
+[application]
+
+config/name="glTF Import Cost Probe"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

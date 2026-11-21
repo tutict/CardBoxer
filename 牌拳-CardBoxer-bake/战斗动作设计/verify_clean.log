@@ -1,0 +1,15 @@
+PASS  spec_structure_complete  missing=[]
+PASS  constants_match_arena_source  source={'tk_max_turns': 3, 'tk_play': 3, 'tk_discard_max': 3, 'reveal_seconds': 1.5, 'resolve_seconds': 1.9} FRAME_ok=True
+PASS  frame_math_consistent  reveal=90帧 resolve=114帧 合计=204帧
+PASS  phases_all_covered  phases=['discard', 'resolve', 'reveal', 'select'] missing=[]
+PASS  outcomes_all_covered  outcomes=['ko', 'round_draw', 'round_enemy_win', 'round_player_win', 'three_turns_end']
+PASS  reuse_assets_exist  reuse=7 bad=[]
+PASS  new_assets_declared_and_blocker_honest  refs=10 declared=10 undeclared=[]
+PASS  timeline_within_phase  timed=10 waiting=2 bad=[]
+PASS  timeline_fully_covers_phases  cover={'reveal': 1.5, 'resolve': 1.9} stats_pct=100.0
+PASS  winner_attack_only_in_resolve  winner_events=1 phases=['resolve'] g2=True
+PASS  card_type_binding_and_damage_tiers_match_rules  recomputed={'triple': (15, 23), 'sequence': (12, 18), 'scatter': (6, 13)} combos=165 bind_ok=True draw_ok=True
+PASS  game_sources_untouched  files=7 mismatch=[] engine_files=[]
+PASS  timeline_render_valid  size=(1800, 1000) bytes=168142 colors=1351 pct=100.0
+
+13/13 PASS  BATTLE_MOTION_SPEC_VERIFIED

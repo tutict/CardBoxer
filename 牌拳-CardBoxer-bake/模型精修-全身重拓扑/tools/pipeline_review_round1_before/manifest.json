@@ -1,0 +1,37 @@
+[
+  {
+    "path": "tools/pipeline_author_audit.py",
+    "snapshot": "tools/pipeline_review_round1_before/pipeline_author_audit.py",
+    "sha256": "8d6fed4bfeea84f109acede995fa1e13e6d67f06d63002c21640a641c3865f87"
+  },
+  {
+    "path": "tools/pipeline_blender_roundtrip.py",
+    "snapshot": "tools/pipeline_review_round1_before/pipeline_blender_roundtrip.py",
+    "sha256": "c291fbf6ff8621204501805c7087231ec77f4fa50ecb5d487ddd516b800f034c"
+  },
+  {
+    "path": "tools/pipeline_roundtrip_test.py",
+    "snapshot": "tools/pipeline_review_round1_before/pipeline_roundtrip_test.py",
+    "sha256": "53aa71fb388ca3992492b75b9c507558375388bfbe29ca6ad2640c0f65e40c01"
+  },
+  {
+    "path": "tools/pipeline_test.py",
+    "snapshot": "tools/pipeline_review_round1_before/pipeline_test.py",
+    "sha256": "c5b02e824385c7db85de8f3e2db082262c74ac5726a95e172cd64a6b97b31c86"
+  },
+  {
+    "path": "tools/canonical_glb.py",
+    "snapshot": "tools/pipeline_review_round1_before/canonical_glb.py",
+    "sha256": "d5d7b5f4aa9c540144ee225e954757ebb6fc4e266846b909ddff81c6d63b0634"
+  },
+  {
+    "path": "tools/check_retopology_assets.py",
+    "snapshot": "tools/pipeline_review_round1_before/check_retopology_assets.py",
+    "sha256": "ea2cc1f1e696a44a082918fbfc15aef7cc2ebe6d20d7f32995099f7ba0531384"
+  },
+  {
+    "path": "reports/pipeline-report.md",
+    "snapshot": "tools/pipeline_review_round1_before/pipeline-report.md",
+    "sha256": "bc78bd9c340928a997a2ad0fb74bb2f7d6f2f5ffadc0fe0d367e543a369f7078"
+  }
+]

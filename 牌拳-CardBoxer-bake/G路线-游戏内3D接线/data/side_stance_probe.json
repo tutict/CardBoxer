@@ -1,0 +1,71 @@
+{
+  "run": {
+    "seconds": 5.305,
+    "returncode": 0,
+    "has_opengl": true,
+    "script_errors": 0,
+    "headless": false
+  },
+  "payload": {
+    "bones": 13,
+    "cases_count": 4,
+    "final_bias_keys": [
+      "upperarm_f",
+      "forearm_f",
+      "upperarm_b",
+      "forearm_b",
+      "spine",
+      "head",
+      "thigh_f",
+      "shin_f",
+      "thigh_b",
+      "shin_b"
+    ],
+    "fixed_yaw": 55.0,
+    "layer_ready": true,
+    "shots": [
+      {
+        "h": 720,
+        "name": "b0-none",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\G路线-游戏内3D接线\\shots\\side_stance/stance-b0-none.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "b1-light",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\G路线-游戏内3D接线\\shots\\side_stance/stance-b1-light.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "b2-mid",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\G路线-游戏内3D接线\\shots\\side_stance/stance-b2-mid.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "b3-heavy",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\G路线-游戏内3D接线\\shots\\side_stance/stance-b3-heavy.png",
+        "save_error": 0,
+        "w": 1280
+      }
+    ]
+  },
+  "checks": {
+    "rc": true,
+    "has_opengl": true,
+    "no_script_errors": true,
+    "no_payload_error": true,
+    "layer_ready": true,
+    "four_cases": true,
+    "all_png_ok": true,
+    "fixed_yaw_55": true,
+    "bones_13": true,
+    "final_bias_nonempty": true
+  },
+  "failed": [],
+  "ok": true
+}

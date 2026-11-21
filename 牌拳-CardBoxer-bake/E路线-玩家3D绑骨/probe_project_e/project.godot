@@ -1,0 +1,16 @@
+; E 路线：玩家 V4b glTF -> Godot 4.5 导入读回用隔离工程
+; 与可运行游戏工程、C/D 路线探针工程四者完全分离。
+; 只做结构读回，不是生产导入，无玩法代码。
+
+config_version=5
+
+[application]
+
+config/name="E Route Player glTF Import Probe"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+run/main_scene=""
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

@@ -1,0 +1,103 @@
+{
+  "run": {
+    "seconds": 4.848,
+    "returncode": 0,
+    "script_errors": 0
+  },
+  "out_dir": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\B路线-资产层去重\\shots\\stack_probe",
+  "payload": {
+    "glb_path": "res://assets/3d/foe-rigged.glb",
+    "light_energy0": [
+      1.89999997615814,
+      0.75,
+      0.550000011920929,
+      0.949999988079071
+    ],
+    "lights": 4,
+    "material_slots": [
+      {
+        "albedo_color": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "albedo_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901.png",
+        "class": "StandardMaterial3D",
+        "emission_texture": "",
+        "mesh": "foe_HI_skinned",
+        "metallic": 1.0,
+        "metallic_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png",
+        "normal_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901_normal.png",
+        "roughness": 1.0,
+        "roughness_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png",
+        "surface": 0
+      }
+    ],
+    "mesh_rows": 1,
+    "role": "foe",
+    "shots": [
+      {
+        "h": 520,
+        "name": "0-orig",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\B路线-资产层去重\\shots\\stack_probe/s-0-orig.png",
+        "save_error": 0,
+        "w": 420
+      },
+      {
+        "h": 520,
+        "name": "1-lights0",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\B路线-资产层去重\\shots\\stack_probe/s-1-lights0.png",
+        "save_error": 0,
+        "w": 420
+      },
+      {
+        "h": 520,
+        "name": "2-nometal",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\B路线-资产层去重\\shots\\stack_probe/s-2-nometal.png",
+        "save_error": 0,
+        "w": 420
+      },
+      {
+        "h": 520,
+        "name": "3-redalbedo",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\B路线-资产层去重\\shots\\stack_probe/s-3-redalbedo.png",
+        "save_error": 0,
+        "w": 420
+      },
+      {
+        "h": 520,
+        "name": "4-neg55",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\B路线-资产层去重\\shots\\stack_probe/s-4-neg55.png",
+        "save_error": 0,
+        "w": 420
+      }
+    ],
+    "sv_size": [
+      420,
+      520
+    ],
+    "visual_state": {
+      "foe_materials": 0,
+      "foe_visual": false,
+      "light_rows": 4,
+      "mesh_rows": 1,
+      "role": "foe"
+    },
+    "yaw": -55.0
+  },
+  "checks": {
+    "rc": true,
+    "no_script_errors": true,
+    "no_payload_error": true,
+    "five_states": true,
+    "final_yaw_is_neg55": true,
+    "all_png_ok": true,
+    "glb_is_foe": true,
+    "role_is_foe": true,
+    "four_lights": true,
+    "one_mesh": true,
+    "slots_readback": true
+  },
+  "failed": [],
+  "ok": true
+}

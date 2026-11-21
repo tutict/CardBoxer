@@ -1,0 +1,98 @@
+{
+  "rows": [
+    {
+      "name": "节奏帧-t000-起手.png",
+      "ok": true,
+      "changed_px_full_frame": 620993,
+      "size": [
+        1280,
+        720
+      ],
+      "old_bytes": 703999,
+      "new_bytes": 685508
+    },
+    {
+      "name": "节奏帧-t048-命中HIT.png",
+      "ok": true,
+      "changed_px_full_frame": 580585,
+      "size": [
+        1280,
+        720
+      ],
+      "old_bytes": 698556,
+      "new_bytes": 705563
+    },
+    {
+      "name": "节奏帧-t072-停顿后.png",
+      "ok": true,
+      "changed_px_full_frame": 561916,
+      "size": [
+        1280,
+        720
+      ],
+      "old_bytes": 706700,
+      "new_bytes": 700135
+    },
+    {
+      "name": "节奏帧-t112-攻击窗末.png",
+      "ok": true,
+      "changed_px_full_frame": 610400,
+      "size": [
+        1280,
+        720
+      ],
+      "old_bytes": 701624,
+      "new_bytes": 686962
+    },
+    {
+      "name": "节奏帧-t140-淡出.png",
+      "ok": true,
+      "changed_px_full_frame": 536771,
+      "size": [
+        1280,
+        720
+      ],
+      "old_bytes": 685534,
+      "new_bytes": 694820
+    },
+    {
+      "name": "节奏帧-t180-归零.png",
+      "ok": true,
+      "changed_px_full_frame": 642324,
+      "size": [
+        1280,
+        720
+      ],
+      "old_bytes": 701531,
+      "new_bytes": 690369
+    },
+    {
+      "name": "节奏帧-平局无节奏.png",
+      "ok": true,
+      "changed_px_full_frame": 574831,
+      "size": [
+        1280,
+        720
+      ],
+      "old_bytes": 684674,
+      "new_bytes": 683152
+    },
+    {
+      "name": "节奏帧-对手赢反向.png",
+      "ok": true,
+      "changed_px_full_frame": 580596,
+      "size": [
+        1280,
+        720
+      ],
+      "old_bytes": 706189,
+      "new_bytes": 709690
+    }
+  ],
+  "frames_ok": true,
+  "engine_ok": true,
+  "restore_ok": true,
+  "static_ab_pixel_identical": true,
+  "note": "full-frame diff is EXPECTED: global RNG is randomized per Godot run (see tests/rng_probe.gd); hand cards are random. Static same-state A/B is the zero-visual-change evidence.",
+  "result": "REGRESSION_EVIDENCE_OK"
+}

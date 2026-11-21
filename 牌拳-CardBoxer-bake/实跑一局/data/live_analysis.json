@@ -1,0 +1,704 @@
+{
+  "source": "data/live_match.json",
+  "reproducibility": {
+    "seed": 20261114,
+    "runs_compared": 3,
+    "distinct_match_outcomes": 3,
+    "seed_makes_match_reproducible": false,
+    "framewise_pixel_ab_applicable": false,
+    "note": "即使 seed() 固定，跨进程整局牌局仍漂移；逐帧像素 A/B 前提不成立，改用同源帧序列的公式复算 A/B。",
+    "fingerprints": {
+      "first_solo_cap9": {
+        "1": {
+          "motion_ids": [
+            ""
+          ],
+          "winners": [
+            "draw"
+          ],
+          "extras": [
+            ""
+          ],
+          "hp_end": [
+            97,
+            97
+          ]
+        },
+        "2": {
+          "motion_ids": [
+            "cross"
+          ],
+          "winners": [
+            "enemy"
+          ],
+          "extras": [
+            "launch"
+          ],
+          "hp_end": [
+            84,
+            97
+          ]
+        },
+        "3": {
+          "motion_ids": [
+            "jab"
+          ],
+          "winners": [
+            "player"
+          ],
+          "extras": [
+            ""
+          ],
+          "hp_end": [
+            84,
+            85
+          ]
+        }
+      },
+      "ab_cap9": {
+        "1": {
+          "motion_ids": [
+            ""
+          ],
+          "winners": [
+            "draw"
+          ],
+          "extras": [
+            ""
+          ],
+          "hp_end": [
+            97,
+            97
+          ]
+        },
+        "2": {
+          "motion_ids": [
+            "wave"
+          ],
+          "winners": [
+            "enemy"
+          ],
+          "extras": [
+            "super"
+          ],
+          "hp_end": [
+            82,
+            97
+          ]
+        },
+        "3": {
+          "motion_ids": [
+            "cross"
+          ],
+          "winners": [
+            "enemy"
+          ],
+          "extras": [
+            "launch"
+          ],
+          "hp_end": [
+            70,
+            97
+          ]
+        }
+      },
+      "ab_cap3": {
+        "1": {
+          "motion_ids": [
+            ""
+          ],
+          "winners": [
+            "draw"
+          ],
+          "extras": [
+            ""
+          ],
+          "hp_end": [
+            97,
+            97
+          ]
+        },
+        "2": {
+          "motion_ids": [
+            "cross"
+          ],
+          "winners": [
+            "enemy"
+          ],
+          "extras": [
+            "launch"
+          ],
+          "hp_end": [
+            84,
+            97
+          ]
+        },
+        "3": {
+          "motion_ids": [
+            "cross"
+          ],
+          "winners": [
+            "enemy"
+          ],
+          "extras": [
+            "launch"
+          ],
+          "hp_end": [
+            71,
+            97
+          ]
+        }
+      }
+    }
+  },
+  "phase_durations": {
+    "cap9": {
+      "1": {
+        "discard": 4.342,
+        "select": 0.803,
+        "reveal": 1.502,
+        "resolve": 2.007
+      },
+      "2": {
+        "discard": 0.937,
+        "select": 0.802,
+        "reveal": 1.502,
+        "resolve": 2.221
+      },
+      "3": {
+        "discard": 0.804,
+        "select": 0.804,
+        "reveal": 1.501,
+        "resolve": 2.229
+      }
+    },
+    "cap3": {
+      "1": {
+        "discard": 4.366,
+        "select": 0.8,
+        "reveal": 1.504,
+        "resolve": 1.972
+      },
+      "2": {
+        "discard": 0.803,
+        "select": 0.937,
+        "reveal": 1.534,
+        "resolve": 2.237
+      },
+      "3": {
+        "discard": 0.803,
+        "select": 0.804,
+        "reveal": 1.522,
+        "resolve": 2.226
+      }
+    }
+  },
+  "phase_spec_s": {
+    "discard": 0.8,
+    "select": 0.8,
+    "reveal": 1.5,
+    "resolve": 1.9
+  },
+  "phase_tol_s": 0.25,
+  "effective_phase_spec": {
+    "cap9": {
+      "1": {
+        "winner": "draw",
+        "hitstop_s": 0.0,
+        "resolve_spec_s": 1.9
+      },
+      "2": {
+        "winner": "enemy",
+        "hitstop_s": 0.24,
+        "resolve_spec_s": 2.14
+      },
+      "3": {
+        "winner": "enemy",
+        "hitstop_s": 0.24,
+        "resolve_spec_s": 2.14
+      }
+    },
+    "cap3": {
+      "1": {
+        "winner": "draw",
+        "hitstop_s": 0.0,
+        "resolve_spec_s": 1.9
+      },
+      "2": {
+        "winner": "enemy",
+        "hitstop_s": 0.24,
+        "resolve_spec_s": 2.14
+      },
+      "3": {
+        "winner": "enemy",
+        "hitstop_s": 0.24,
+        "resolve_spec_s": 2.14
+      }
+    }
+  },
+  "phase_duration_exclusions": [
+    "turn 1 discard: phase_change recorded during intro (contains 3.75 s intro, not the 0.8 s bot-driven phase)"
+  ],
+  "phase_duration_violations": [],
+  "motion_states": {
+    "reveal_focus": true,
+    "winner_attack": true,
+    "loser_react": true,
+    "draw_both_react": true
+  },
+  "react_rows_sample": [
+    [
+      26,
+      1,
+      "hit_light",
+      "hit_light"
+    ],
+    [
+      27,
+      1,
+      "hit_light",
+      "hit_light"
+    ],
+    [
+      28,
+      1,
+      "hit_light",
+      "hit_light"
+    ],
+    [
+      73,
+      2,
+      "hit_heavy",
+      "wave"
+    ],
+    [
+      74,
+      2,
+      "hit_heavy",
+      "wave"
+    ],
+    [
+      75,
+      2,
+      "hit_heavy",
+      "wave"
+    ],
+    [
+      76,
+      2,
+      "hit_heavy",
+      "wave"
+    ],
+    [
+      77,
+      2,
+      "hit_heavy",
+      "wave"
+    ],
+    [
+      78,
+      2,
+      "hit_heavy",
+      "wave"
+    ],
+    [
+      79,
+      2,
+      "hit_heavy",
+      "wave"
+    ],
+    [
+      115,
+      3,
+      "hit_heavy",
+      "cross"
+    ],
+    [
+      116,
+      3,
+      "hit_heavy",
+      "cross"
+    ],
+    [
+      117,
+      3,
+      "hit_heavy",
+      "cross"
+    ],
+    [
+      118,
+      3,
+      "hit_heavy",
+      "cross"
+    ],
+    [
+      119,
+      3,
+      "hit_heavy",
+      "cross"
+    ],
+    [
+      120,
+      3,
+      "hit_heavy",
+      "cross"
+    ]
+  ],
+  "react_row_count": 16,
+  "homologous_framewise_ab": {
+    "frame_source": "cap9 live run (same card/frame for both caps)",
+    "sample_count": 129,
+    "jump_stats": {
+      "player": {
+        "cap3": {
+          "intra_count": 117,
+          "intra_max_deg": 6.0,
+          "intra_p95_deg": 3.0,
+          "intra_mean_deg": 0.4302,
+          "boundary_count": 11,
+          "boundary_max_deg": 3.0,
+          "return_to_stance_events": 5,
+          "max_leg_peak_before_zero_deg": 3.0,
+          "worst_intra": {
+            "idx": 76,
+            "t": 12.941,
+            "jump_deg": 6.0,
+            "from": [
+              2,
+              "resolve",
+              "hit_heavy",
+              4
+            ],
+            "to": [
+              2,
+              "resolve",
+              "hit_heavy",
+              9
+            ]
+          },
+          "worst_boundary": {
+            "idx": 56,
+            "t": 10.47,
+            "jump_deg": 3.0,
+            "from": [
+              2,
+              "select",
+              "stance",
+              0
+            ],
+            "to": [
+              2,
+              "reveal",
+              "focus",
+              1
+            ]
+          },
+          "residual_samples": [
+            {
+              "idx": 28,
+              "t": 6.958,
+              "card": "hit_light",
+              "frame": 11,
+              "leg_peak_before_zero": 1.2872
+            },
+            {
+              "idx": 67,
+              "t": 11.829,
+              "card": "focus",
+              "frame": 20,
+              "leg_peak_before_zero": 1.4897
+            },
+            {
+              "idx": 79,
+              "t": 13.327,
+              "card": "hit_heavy",
+              "frame": 24,
+              "leg_peak_before_zero": 3.0
+            },
+            {
+              "idx": 110,
+              "t": 17.195,
+              "card": "focus",
+              "frame": 20,
+              "leg_peak_before_zero": 1.4897
+            },
+            {
+              "idx": 120,
+              "t": 18.427,
+              "card": "hit_heavy",
+              "frame": 27,
+              "leg_peak_before_zero": 1.6715
+            }
+          ],
+          "peak_mean_deg": 1.1041,
+          "peak_max_deg": 3.0
+        },
+        "cap9": {
+          "intra_count": 117,
+          "intra_max_deg": 10.5535,
+          "intra_p95_deg": 9.0,
+          "intra_mean_deg": 1.2565,
+          "boundary_count": 11,
+          "boundary_max_deg": 9.0,
+          "return_to_stance_events": 5,
+          "max_leg_peak_before_zero_deg": 5.2634,
+          "worst_intra": {
+            "idx": 118,
+            "t": 18.186,
+            "jump_deg": 10.5535,
+            "from": [
+              3,
+              "resolve",
+              "hit_heavy",
+              2
+            ],
+            "to": [
+              3,
+              "resolve",
+              "hit_heavy",
+              11
+            ]
+          },
+          "worst_boundary": {
+            "idx": 56,
+            "t": 10.47,
+            "jump_deg": 9.0,
+            "from": [
+              2,
+              "select",
+              "stance",
+              0
+            ],
+            "to": [
+              2,
+              "reveal",
+              "focus",
+              1
+            ]
+          },
+          "residual_samples": [
+            {
+              "idx": 28,
+              "t": 6.958,
+              "card": "hit_light",
+              "frame": 11,
+              "leg_peak_before_zero": 1.2872
+            },
+            {
+              "idx": 67,
+              "t": 11.829,
+              "card": "focus",
+              "frame": 20,
+              "leg_peak_before_zero": 1.4897
+            },
+            {
+              "idx": 79,
+              "t": 13.327,
+              "card": "hit_heavy",
+              "frame": 24,
+              "leg_peak_before_zero": 5.2634
+            },
+            {
+              "idx": 110,
+              "t": 17.195,
+              "card": "focus",
+              "frame": 20,
+              "leg_peak_before_zero": 1.4897
+            },
+            {
+              "idx": 120,
+              "t": 18.427,
+              "card": "hit_heavy",
+              "frame": 27,
+              "leg_peak_before_zero": 1.6715
+            }
+          ],
+          "peak_mean_deg": 3.1209,
+          "peak_max_deg": 9.0,
+          "intra_max_over_cap3": 1.7589,
+          "peak_mean_over_cap3": 2.8266
+        }
+      },
+      "foe": {
+        "cap3": {
+          "intra_count": 117,
+          "intra_max_deg": 6.0,
+          "intra_p95_deg": 3.0,
+          "intra_mean_deg": 0.4666,
+          "boundary_count": 11,
+          "boundary_max_deg": 3.0,
+          "return_to_stance_events": 3,
+          "max_leg_peak_before_zero_deg": 1.7166,
+          "worst_intra": {
+            "idx": 72,
+            "t": 12.441,
+            "jump_deg": 6.0,
+            "from": [
+              2,
+              "resolve",
+              "wave",
+              10
+            ],
+            "to": [
+              2,
+              "resolve",
+              "wave",
+              14
+            ]
+          },
+          "worst_boundary": {
+            "idx": 56,
+            "t": 10.47,
+            "jump_deg": 3.0,
+            "from": [
+              2,
+              "select",
+              "stance",
+              0
+            ],
+            "to": [
+              2,
+              "reveal",
+              "focus",
+              1
+            ]
+          },
+          "residual_samples": [
+            {
+              "idx": 28,
+              "t": 6.958,
+              "card": "hit_light",
+              "frame": 11,
+              "leg_peak_before_zero": 1.2872
+            },
+            {
+              "idx": 79,
+              "t": 13.327,
+              "card": "wave",
+              "frame": 34,
+              "leg_peak_before_zero": 0.4288
+            },
+            {
+              "idx": 121,
+              "t": 18.562,
+              "card": "cross",
+              "frame": 19,
+              "leg_peak_before_zero": 1.7166
+            }
+          ],
+          "peak_mean_deg": 1.2639,
+          "peak_max_deg": 3.0
+        },
+        "cap9": {
+          "intra_count": 117,
+          "intra_max_deg": 14.8585,
+          "intra_p95_deg": 9.0,
+          "intra_mean_deg": 1.3945,
+          "boundary_count": 11,
+          "boundary_max_deg": 9.0,
+          "return_to_stance_events": 3,
+          "max_leg_peak_before_zero_deg": 1.7166,
+          "worst_intra": {
+            "idx": 114,
+            "t": 17.679,
+            "jump_deg": 14.8585,
+            "from": [
+              3,
+              "resolve",
+              "cross",
+              4
+            ],
+            "to": [
+              3,
+              "resolve",
+              "cross",
+              7
+            ]
+          },
+          "worst_boundary": {
+            "idx": 56,
+            "t": 10.47,
+            "jump_deg": 9.0,
+            "from": [
+              2,
+              "select",
+              "stance",
+              0
+            ],
+            "to": [
+              2,
+              "reveal",
+              "focus",
+              1
+            ]
+          },
+          "residual_samples": [
+            {
+              "idx": 28,
+              "t": 6.958,
+              "card": "hit_light",
+              "frame": 11,
+              "leg_peak_before_zero": 1.2872
+            },
+            {
+              "idx": 79,
+              "t": 13.327,
+              "card": "wave",
+              "frame": 34,
+              "leg_peak_before_zero": 0.4288
+            },
+            {
+              "idx": 121,
+              "t": 18.562,
+              "card": "cross",
+              "frame": 19,
+              "leg_peak_before_zero": 1.7166
+            }
+          ],
+          "peak_mean_deg": 3.5483,
+          "peak_max_deg": 9.0,
+          "intra_max_over_cap3": 2.4764,
+          "peak_mean_over_cap3": 2.8074
+        }
+      }
+    },
+    "threshold_policy": "首次量化，无历史外部锚；只报告分布，不做放行线，结论结合看图给出。"
+  },
+  "capture_channel": {
+    "live_frames": {
+      "cap9": {
+        "total": 24,
+        "unique": 24
+      },
+      "cap3": {
+        "total": 24,
+        "unique": 24
+      }
+    },
+    "sv_frames": {
+      "cap9": {
+        "total": 88,
+        "unique_sha": 23,
+        "groups_with_mixed_delta": [],
+        "largest_group": 38
+      },
+      "cap3": {
+        "total": 89,
+        "unique_sha": 22,
+        "groups_with_mixed_delta": [],
+        "largest_group": 41
+      }
+    }
+  },
+  "checks": {
+    "three_turns_each": true,
+    "phase_durations_within_spec": true,
+    "four_motion_states_covered": true,
+    "delta_formula_recomputed_for_both_caps": true,
+    "live_frames_all_unique": true,
+    "sv_duplicates_all_explained_by_delta": true,
+    "reproducibility_recorded": true
+  },
+  "failed": [],
+  "ok": true
+}

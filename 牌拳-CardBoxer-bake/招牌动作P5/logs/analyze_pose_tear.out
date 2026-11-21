@@ -1,0 +1,16 @@
+baseline worst_p999=0.042681 mean=0.015717 over=0
+pose_p5  worst_p999=0.047884 mean=0.016817 over=0
+delta=0.005203 ratio=1.1219  pose_err=3.87e-07  elapsed=93.6s
+CHECK poses_568 True
+CHECK two_cases True
+CHECK each_case_284 True
+CHECK frame_pairs_match True
+CHECK glb_mesh_shape True
+CHECK pose_matrices_readback_accurate True
+CHECK candidate_within_external_anchor True
+CHECK no_frame_over_anchor True
+CHECK cost_is_measured_not_hidden True
+CHECK anchor_headroom_at_least_twice_cost True
+CHECK recommended_case_matches_scan True
+CHECK max_edge_artifact_diagnostic_only True
+POSE_TEAR_OK

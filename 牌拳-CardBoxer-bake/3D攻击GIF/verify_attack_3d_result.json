@@ -1,0 +1,83 @@
+{
+  "verdict": "ATTACK_3D_VERIFIED",
+  "passed": 15,
+  "total": 15,
+  "red": [],
+  "checks": [
+    {
+      "name": "frame_counts_exact",
+      "ok": true,
+      "detail": "3 routes x (1 stance + 14 + 22 + 36) = 219 PNG, all on disk"
+    },
+    {
+      "name": "png_bytes_and_hash",
+      "ok": true,
+      "detail": "219 PNG: magic + >10KB + sha256 + size all match manifest"
+    },
+    {
+      "name": "gifs_timeline_conserved",
+      "ok": true,
+      "detail": "9 attack GIFs + 3 combos: duration conserved exactly (840/1320/2160 ms), 33 duplicate frames merged with duration carried forward"
+    },
+    {
+      "name": "gifs_animated",
+      "ok": true,
+      "detail": "9 GIFs: is_animated, loop=0, duration>0"
+    },
+    {
+      "name": "boards_nonempty",
+      "ok": true,
+      "detail": "6 boards >=50KB and >=600x400"
+    },
+    {
+      "name": "joint_hashes_recomputed",
+      "ok": true,
+      "detail": "219 frames independently recomputed from baked2.json"
+    },
+    {
+      "name": "stance_is_untouched_portrait",
+      "ok": true,
+      "detail": "both stance PNGs are byte-identical RGBA to the 3D portraits"
+    },
+    {
+      "name": "stance_matrices_identity",
+      "ok": true,
+      "detail": "26 affine matrices (2 tags x 13 bones) all identity at stance"
+    },
+    {
+      "name": "single_arm_semantics",
+      "ok": true,
+      "detail": "jab=front only, cross=back only, wave=both (both characters)"
+    },
+    {
+      "name": "push_only_on_active_forearm",
+      "ok": true,
+      "detail": "punch perspective applied only to the active forearm"
+    },
+    {
+      "name": "angle_wrap_wired_and_bounded",
+      "ok": true,
+      "detail": "wrap_pi wired in source; worst mapped rotation 28.0 deg <= 40"
+    },
+    {
+      "name": "mesh_deform_falsified",
+      "ok": true,
+      "detail": "64,024/64,024 verts moved, mean=0.26873 m, max=0.88084 m -> rigid-weight route falsified"
+    },
+    {
+      "name": "sources_are_distinct_3d_assets",
+      "ok": true,
+      "detail": "player V4b + foe V1: distinct 3D-render portraits, sha256 verified"
+    },
+    {
+      "name": "game_sources_untouched",
+      "ok": true,
+      "detail": "7 game sources byte-identical to baseline"
+    },
+    {
+      "name": "spec_mapping_table_consistency",
+      "ok": true,
+      "detail": "spec/mapping/table/chain hashes and values all match live files"
+    }
+  ]
+}

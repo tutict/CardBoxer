@@ -1,0 +1,3954 @@
+===== J/build_foe_shape_j.py =====
+"""J 路线 P2：壳级「去同源」手术 + 重导带 skin 的 foe GLB。
+
+关键决策（比 A 候选里预估的全链重跑更省，且有实证支撑）：
+  * 不增删顶点、不改拓扑、不改材质槽、不改 UV 层数、不改骨架 rest。
+  * 权重先按 H 路线 DATA_TRANSFER 回传并 apply；**之后**才对 final 的
+    顶点坐标与 UV 做手术。权重数组已固定，改坐标不会再影响
+    POLYINTERP_NEAREST 的空间映射。
+  * 因此 Voxel 连续壳 / 13 骨绑定 / SURFACE_DEFORM / motion_input_foe
+    全都不用重跑，只需重导 GLB + 替换工程资产 + Godot 重新导入。
+
+手术对象（来自 probe_shells_j.py 的区域规则，2,809 壳）：
+  SKIRT          长衫下摆  → 缩短 + 收窄成工装围裙，UV 改到暗钢区
+  CAPE_OR_PANEL  黑披风    → 收窄 + 缩短成破损背布，UV 改到暗钢区
+  HEAD_TOP 小壳  头冠/结晶/红花 → 向头盔中心收拢，UV 改到暗钢区
+大壳（头盔本体 / 躯干 / 靴子）一律不动，避免「没头」。
+
+只读 A 路线 .blend；产物全落 J 目录，不回写任何归档、不动游戏工程。
+用法：blender.exe -b --python build_foe_shape_j.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import sys
+from collections import defaultdict
+from pathlib import Path
+
+sys.dont_write_bytecode = True
+import bpy
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+BLEND = BAKE / "A路线-资产重做" / "对手怪-可变形连续壳.blend"
+OUT_GLB = HERE / "foe-rigged-v2.glb"
+OUT_JSON = HERE / "data" / "build_shape_j.json"
+
+UV_PATCH = (0.10, 0.88)     # foe 贴图左上均匀深灰区（v=1 为图像顶）
+UV_SPAN = 0.018
+SKIRT_Z, SKIRT_SQUEEZE, SKIRT_NARROW = 0.95, 0.45, 0.72
+CAPE_Z, CAPE_SQUEEZE, CAPE_NARROW, CAPE_FLATTEN = 0.85, 0.50, 0.55, 0.60
+HEAD_SMALL_SHELL_MAX = 200
+HEAD_PULL_X, HEAD_DROP_Z = 0.45, 0.12
+
+
+def log(*a):
+    print(*a, flush=True)
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def textures(obj) -> list[dict]:
+    out = []
+    for slot in obj.material_slots:
+        mat = slot.material
+        if mat and mat.use_nodes:
+            for n in mat.node_tree.nodes:
+                if n.type == "TEX_IMAGE" and n.image:
+                    out.append({"image": n.image.name,
+                                "size": list(n.image.size)})
+    return sorted(out, key=lambda d: d["image"])
+
+
+def fresh_copy(src, name):
+    obj = src.copy()
+    obj.data = src.data.copy()
+    bpy.context.scene.collection.objects.link(obj)
+    obj.name = name
+    for m in list(obj.modifiers):
+        obj.modifiers.remove(m)
+    obj.vertex_groups.clear()
+    obj.parent = None
+    obj.hide_render = True
+    return obj
+
+
+def classify(c, lo, hi) -> str:
+    cx, cy, cz = c
+    zx, zy, zz = (hi[i] - lo[i] for i in range(3))
+    if cz > 1.48:
+        return "HEAD_TOP"
+    if cz > 1.30:
+        return "HEAD"
+    if zz > 0.55 and (zy > 0.35 or zx > 0.55) and cz < 1.35:
+        return "CAPE_OR_PANEL"
+    if cz < 0.95 and zz > 0.25 and abs(cx) < 0.40:
+        return "SKIRT"
+    if cz < 0.42:
+        return "BOOTS"
+    return "BODY"
+
+
+def shell_map(mesh) -> dict[int, dict]:
+    """按面连通分组；返回 root -> {verts, region, ...}。"""
+    nv = len(mesh.vertices)
+    parent = list(range(nv))
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[rb] = ra
+
+    for p in mesh.polygons:
+        vs = p.vertices
+        for v in vs[1:]:
+            union(vs[0], v)
+    groups = defaultdict(list)
+    co = [tuple(v.co) for v in mesh.vertices]
+    for v in mesh.vertices:
+        groups[find(v.index)].append(v.index)
+    out = {}
+    for root, ids in groups.items():
+        xs = [co[i][0] for i in ids]
+        ys = [co[i][1] for i in ids]
+        zs = [co[i][2] for i in ids]
+        lo = [min(xs), min(ys), min(zs)]
+        hi = [max(xs), max(ys), max(zs)]
+        c = [sum(xs) / len(xs), sum(ys) / len(ys), sum(zs) / len(zs)]
+        out[root] = {"ids": ids, "verts": len(ids),
+                     "region": classify(c, lo, hi),
+                     "centroid": c}
+    return out, find
+
+
+def patch_uv_sample(image) -> list[float]:
+    """读回 UV patch 区域的线性均值，证明目标色块确实是暗钢区。"""
+    w, h = image.size
+    acc = [0.0, 0.0, 0.0]
+    n = 0
+    for i in range(8):
+        for k in range(8):
+            u = UV_PATCH[0] + UV_SPAN * (i + 0.5) / 8.0
+            v = UV_PATCH[1] + UV_SPAN * (k + 0.5) / 8.0
+            x = min(w - 1, int(u * w))
+            y = min(h - 1, int((1.0 - v) * h))
+            idx = (y * w + x) * 4
+            for c in range(3):
+                acc[c] += image.pixels[idx + c]
+            n += 1
+    return [round(a / n, 4) for a in acc]
+
+
+def main() -> int:
+    assert BLEND.is_file(), BLEND
+    blend_sha = sha256(BLEND)
+    bpy.ops.wm.open_mainfile(filepath=str(BLEND))
+    scene = bpy.context.scene
+
+    src = next(o for o in scene.objects
+               if o.type == "MESH"
+               and any(m.type == "SURFACE_DEFORM" for m in o.modifiers))
+    shell = next(m for m in src.modifiers
+                 if m.type == "SURFACE_DEFORM").target
+    rig = next(o for o in scene.objects if o.type == "ARMATURE")
+    bone_names = [b.name for b in rig.data.bones]
+    shell_groups = [g.name for g in shell.vertex_groups]
+    assert set(bone_names) == set(shell_groups)
+    src_uv = len(src.data.uv_layers)
+    src_tex = textures(src)
+
+    # ── 1. 权重先回传并 apply（此时坐标仍是 H 原样）────────────
+    final = fresh_copy(src, "foe_HI_skinned_V2")
+    for name in bone_names:
+        final.vertex_groups.new(name=name)
+    mod = final.modifiers.new("weights_from_continuous_shell",
+                              "DATA_TRANSFER")
+    mod.object = shell
+    mod.use_vert_data = True
+    mod.data_types_verts = {"VGROUP_WEIGHTS"}
+    mod.vert_mapping = "POLYINTERP_NEAREST"
+    mod.layers_vgroup_select_src = "ALL"
+    mod.layers_vgroup_select_dst = "NAME"
+    bpy.ops.object.select_all(action="DESELECT")
+    final.select_set(True)
+    bpy.context.view_layer.objects.active = final
+    bpy.ops.object.modifier_apply(modifier=mod.name)
+    covered_before = sum(1 for v in final.data.vertices
+                         if any(g.weight > 1e-6 for g in v.groups))
+    total = len(final.data.vertices)
+
+    # ── 2. 顶点 / UV 手术（权重已固定，改坐标不再影响映射）──────
+    groups, find = shell_map(final.data)
+    targets: dict[str, list[int]] = defaultdict(list)
+    for root, info in groups.items():
+        reg = info["region"]
+        if reg in ("SKIRT", "CAPE_OR_PANEL"):
+            targets[reg].extend(info["ids"])
+        elif (reg == "HEAD_TOP"
+              and info["verts"] <= HEAD_SMALL_SHELL_MAX
+              and info["centroid"][2] > 1.50):
+            targets["HEAD_ORNAMENT"].extend(info["ids"])
+    target_ids = set()
+    for ids in targets.values():
+        target_ids.update(ids)
+
+    moved = 0
+    for v in final.data.vertices:
+        if v.index not in target_ids:
+            continue
+        root = find(v.index)
+        reg = groups[root]["region"]
+        x, y, z = v.co
+        if reg == "SKIRT":
+            v.co = (x * SKIRT_NARROW, y,
+                    SKIRT_Z + (z - SKIRT_Z) * SKIRT_SQUEEZE)
+        elif reg == "CAPE_OR_PANEL":
+            v.co = (x * CAPE_NARROW, y * CAPE_FLATTEN,
+                    CAPE_Z + (z - CAPE_Z) * CAPE_SQUEEZE)
+        elif reg == "HEAD_TOP":
+            v.co = (x * HEAD_PULL_X, y, z - HEAD_DROP_Z)
+        moved += 1
+
+    uv_layer = final.data.uv_layers.active
+    assert uv_layer is not None, "no UV layer"
+    uv_fixed = 0
+    for p in final.data.polygons:
+        if p.vertices[0] not in target_ids:
+            continue
+        for li in p.loop_indices:
+            uv_layer.data[li].uv = (
+                UV_PATCH[0] + UV_SPAN * 0.5,
+                UV_PATCH[1] + UV_SPAN * 0.5)
+            uv_fixed += 1
+
+    # ── 3. 校验：结构一件没变 ──────────────────────────────────
+    covered_after = sum(1 for v in final.data.vertices
+                        if any(g.weight > 1e-6 for g in v.groups))
+    arm_mod = final.modifiers.new("foe_rig", "ARMATURE")
+    arm_mod.object = rig
+    assets = {"uv_layers": len(final.data.uv_layers),
+              "materials": len(final.data.materials),
+              "textures": textures(final),
+              "uv_same": len(final.data.uv_layers) == src_uv,
+              "textures_same": textures(final) == src_tex}
+    assert assets["uv_same"] and assets["textures_same"]
+    # A 路线记录的就是 64,006/64,024 = 99.9719%（18 个顶点在代理壳
+    # 外拿不到权重），不是 100%。关键 invariants 是「手术前后覆盖数
+    # 逐字节相同」与「覆盖 > 99%」，不是覆盖到每一个顶点。
+    assert covered_before == covered_after, \
+        (covered_before, covered_after)
+    assert covered_before > 0.99 * total, (covered_before, total)
+    assert len(final.data.vertices) == len(src.data.vertices) == total
+    assert len(final.data.polygons) == len(src.data.polygons)
+
+    base_img = next(n.image for n in
+                    final.material_slots[0].material.node_tree.nodes
+                    if n.type == "TEX_IMAGE" and n.image
+                    and "normal" not in n.image.name.lower()
+                    and "roughness" not in n.image.name.lower())
+    patch_rgb = patch_uv_sample(base_img)
+    assert max(patch_rgb) < 0.35, patch_rgb
+
+    # ── 4. 导出 ────────────────────────────────────────────────
+    bpy.ops.object.select_all(action="DESELECT")
+    final.select_set(True)
+    rig.select_set(True)
+    bpy.context.view_layer.objects.active = final
+    result = bpy.ops.export_scene.gltf(
+        filepath=str(OUT_GLB), export_format="GLB",
+        use_selection=True, export_apply=False,
+        export_skins=True, export_animations=False,
+        export_materials="EXPORT", export_yup=True,
+        export_cameras=False, export_lights=False)
+    assert list(result) == ["FINISHED"]
+    assert OUT_GLB.is_file() and OUT_GLB.stat().st_size > 1_000_000
+
+    report = {
+        "blender": bpy.app.version_string,
+        "source_blend": str(BLEND), "source_blend_sha256": blend_sha,
+        "source": {"object": src.name, "verts": len(src.data.vertices),
+                   "polygons": len(src.data.polygons),
+                   "uv_layers": src_uv, "textures": src_tex},
+        "rig": {"bones": bone_names},
+        "shells": len(groups),
+        "surgery": {
+            "params": {
+                "SKIRT": [SKIRT_Z, SKIRT_SQUEEZE, SKIRT_NARROW],
+                "CAPE": [CAPE_Z, CAPE_SQUEEZE, CAPE_NARROW,
+                         CAPE_FLATTEN],
+                "HEAD": [HEAD_SMALL_SHELL_MAX, HEAD_PULL_X,
+                         HEAD_DROP_Z],
+                "uv_patch": list(UV_PATCH), "uv_span": UV_SPAN},
+            "target_verts": {k: len(v) for k, v in targets.items()},
+            "moved_verts": moved, "uv_loops_rewritten": uv_fixed,
+            "uv_patch_linear_rgb": patch_rgb},
+        "integrity": {
+            "verts_before": total, "verts_after": len(final.data.vertices),
+            "polygons_before": len(src.data.polygons),
+            "polygons_after": len(final.data.polygons),
+            "uv_layers": assets["uv_layers"],
+            "materials": assets["materials"],
+            "textures_same": assets["textures_same"],
+            "weighted_before": covered_before,
+            "weighted_after": covered_after},
+        "export": {"file": OUT_GLB.name,
+                   "bytes": OUT_GLB.stat().st_size,
+                   "sha256": sha256(OUT_GLB),
+                   "export_apply": False, "export_skins": True},
+    }
+    OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
+    OUT_JSON.write_text(json.dumps(report, ensure_ascii=False, indent=2)
+                        + "\n", encoding="utf-8")
+    log("SURGERY", report["surgery"]["target_verts"],
+        "moved", moved, "uv_loops", uv_fixed)
+    log("INTEGRITY", report["integrity"])
+    log("EXPORT", OUT_GLB.stat().st_size, "B", sha256(OUT_GLB)[:16])
+    log("FOE_SHAPE_J_OK")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== J/diag_motif_j.py =====
+"""J 路线 r2：定位「同源观感」在贴图还是在几何，并量化 J-01~J-04 基线。
+
+背景（r1 负结果后必须重新问的问题）：
+  * r1 用壳级顶点压缩做「去同源」手术，把黑披风撕成尖刺碎片，
+    白衫下摆 / 青云纹 / 青结晶头冠 / 红花一个都没消掉。已回滚。
+  * diag_texture_pair_j.py 已经预警过：foe baseColor 整体是暗灰重装，
+    512 缩略近白占比 0.0%，player 才是大面积白衫青云纹。
+    若渲染里 foe 侧仍有纯白长条 + 亮青云纹，则同源不是「造型整体同源」。
+
+本脚本只读，回答三件事：
+  A. 4096² 贴图上，近白 / 青 / 高饱和暖红特征像素有多少、聚在哪几个 UV 区。
+  B. v1 引擎内 SubViewport 角色掩膜里，这些特征占多少（J-02/J-03 基线）。
+  C. 两侧正视剪影 IoU 与肩宽/身高比（J-01 基线），确定剪影本来是否已可分。
+
+输出：data/motif_baseline_j.json、boards/J-同源元素定位.png。
+用法：python diag_motif_j.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+from PIL import Image, ImageDraw, ImageFont
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+V1 = HERE / "shots" / "asset_v1"
+BOARD = HERE / "boards" / "J-同源元素定位.png"
+OUT = HERE / "data" / "motif_baseline_j.json"
+FONT = Path(r"C:\Windows\Fonts\msyh.ttc")
+
+TEX = {
+    "player": "player-rigged_texture_pbr_20250901.png",
+    "foe": "foe-rigged_texture_pbr_20250901.png",
+}
+SV = {"player": "j-sv-player.png", "foe": "j-sv-foe.png"}
+GRID = 4
+TILE = 1024
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def is_near_white(r, g, b):
+    return r > 200 and g > 200 and b > 200
+
+
+def is_cyan(r, g, b):
+    return b > 120 and g > 120 and r < g - 20
+
+
+def is_hot_red(r, g, b):
+    return r > 140 and g < r * 0.62 and b < r * 0.62
+
+
+def texture_features(path: Path) -> dict:
+    im = Image.open(path).convert("RGB")
+    small = im.resize((TILE, TILE), Image.LANCZOS)
+    px = list(small.getdata())
+    n = len(px)
+    counts = {"near_white": 0, "cyan": 0, "hot_red": 0}
+    grid = [[0] * GRID for _ in range(GRID)]
+    cell_px = TILE // GRID
+    for i, (r, g, b) in enumerate(px):
+        hit = (is_near_white(r, g, b) or is_cyan(r, g, b)
+               or is_hot_red(r, g, b))
+        if is_near_white(r, g, b):
+            counts["near_white"] += 1
+        if is_cyan(r, g, b):
+            counts["cyan"] += 1
+        if is_hot_red(r, g, b):
+            counts["hot_red"] += 1
+        if hit:
+            grid[(i // TILE) // cell_px][(i % TILE) // cell_px] += 1
+    return {
+        "file": path.name, "orig_size": list(im.size),
+        "sha256": sha256(path), "analyzed_size": [TILE, TILE],
+        "counts": counts,
+        "ratios": {k: round(v / n, 6) for k, v in counts.items()},
+        "motif_grid": grid,
+        "grid_max": max(max(row) for row in grid),
+    }
+
+
+def character_mask(im: Image.Image) -> list[bool]:
+    """从 SubViewport PNG 提取角色掩膜：优先 alpha，否则按非近白背景。"""
+    w, h = im.size
+    if im.mode == "RGBA":
+        a = list(im.getchannel("A").getdata())
+        alpha_min, alpha_max = min(a), max(a)
+        if alpha_max - alpha_min > 32:
+            return [v > 127 for v in a], "alpha>127", [alpha_min, alpha_max]
+    rgb = list(im.convert("RGB").getdata())
+    # 背景是纯白（或近白）；角色像素取「明显偏离白」的。
+    out = [not (r > 246 and g > 246 and b > 246) for r, g, b in rgb]
+    return out, "not_near_white_bg", None
+
+
+def silhouette_stats(im: Image.Image) -> dict:
+    w, h = im.size
+    mask, mask_kind, alpha_range = character_mask(im)
+    rows = [mask[y * w:(y + 1) * w] for y in range(h)]
+    ys = [y for y, row in enumerate(rows) if any(row)]
+    xs = [x for row in rows for x, v in enumerate(row) if v]
+    if not ys or not xs:
+        return {"mask_kind": mask_kind, "error": "empty mask"}
+    x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
+    height = y1 - y0 + 1
+    # 肩宽：顶部 15%~32% 区间内的最大行宽（避开头部与手臂下垂）。
+    band = [sum(row) for row in rows[y0 + int(height * 0.15):
+                                     y0 + int(height * 0.32)]]
+    shoulder = max(band) if band else 0
+    rgb = list(im.convert("RGB").getdata())
+    inner = [rgb[i] for i, m in enumerate(mask) if m]
+    nw = sum(1 for r, g, b in inner if is_near_white(r, g, b))
+    cy = sum(1 for r, g, b in inner if is_cyan(r, g, b))
+    hr = sum(1 for r, g, b in inner if is_hot_red(r, g, b))
+    return {
+        "size": [w, h], "mask_kind": mask_kind,
+        "alpha_range": alpha_range, "mask_px": len(inner),
+        "bbox": [x0, y0, x1 + 1, y1 + 1], "height_px": height,
+        "shoulder_px": shoulder,
+        "shoulder_over_height": round(shoulder / height, 5),
+        "near_white_ratio": round(nw / len(inner), 6),
+        "cyan_ratio": round(cy / len(inner), 6),
+        "hot_red_ratio": round(hr / len(inner), 6),
+        "near_white_px": nw, "cyan_px": cy, "hot_red_px": hr,
+    }
+
+
+def iou_from_bbox(a: dict, b: dict) -> float:
+    """按各自 bbox 归一化到 256 高后的外接框 IoU（上界，不是像素 IoU）。"""
+    aw = a["bbox"][2] - a["bbox"][0]
+    ah = a["bbox"][3] - a["bbox"][1]
+    bw = b["bbox"][2] - b["bbox"][0]
+    bh = b["bbox"][3] - b["bbox"][1]
+    s = 256 / max(ah, bh)
+    ia = aw * s * 256
+    ib = bw * s * 256
+    inter = min(aw, bw) * s * 256
+    return round(inter / (ia + ib - inter), 5)
+
+
+def main() -> int:
+    tex = {k: texture_features(GAME / "assets" / "3d" / name)
+           for k, name in TEX.items()}
+    sv = {k: silhouette_stats(Image.open(V1 / name))
+          for k, name in SV.items()}
+    iou = iou_from_bbox(sv["player"], sv["foe"])
+    shoulder_delta = abs(sv["player"]["shoulder_over_height"]
+                         - sv["foe"]["shoulder_over_height"])
+    silhouette_separable = (iou <= 0.60 or shoulder_delta >= 0.15)
+
+    # 板：贴图上把 motif 网格画出来 + 两侧 SV 缩略并排。
+    pad, cell, label = 20, 256, 44
+    W = pad * 3 + 2 * cell
+    H = pad * 3 + cell + 2 * label + 260
+    canvas = Image.new("RGB", (W, H), (24, 28, 38))
+    d = ImageDraw.Draw(canvas)
+    f = ImageFont.truetype(str(FONT), 16) if FONT.is_file() \
+        else ImageFont.load_default()
+    for i, k in enumerate(("player", "foe")):
+        x = pad + i * (cell + pad)
+        im = Image.open(GAME / "assets" / "3d" / TEX[k]).convert("RGB")
+        canvas.paste(im.resize((cell, cell), Image.LANCZOS), (x, pad))
+        g = tex[k]["motif_grid"]
+        gmax = max(1, tex[k]["grid_max"])
+        for gy in range(GRID):
+            for gx in range(GRID):
+                v = g[gy][gx] / gmax
+                d.rectangle(
+                    [x + gx * cell / GRID, pad + gy * cell / GRID,
+                     x + (gx + 1) * cell / GRID - 2,
+                     pad + (gy + 1) * cell / GRID - 2],
+                    outline=(int(60 + 195 * v), int(210 - 130 * v), 90),
+                    width=2)
+        d.text((x + 4, pad + cell + 6),
+               f"{k} · near_white={tex[k]['ratios']['near_white']} "
+               f"cyan={tex[k]['ratios']['cyan']}", font=f,
+               fill=(200, 210, 230))
+        sv_im = Image.open(V1 / SV[k]).convert("RGB")
+        sy = pad + cell + label + 8
+        canvas.paste(sv_im.resize((130, 160), Image.LANCZOS), (x, sy))
+        d.text((x + 136, sy + 6),
+               f"mask white={sv[k]['near_white_ratio']}", font=f,
+               fill=(200, 210, 230))
+        d.text((x + 136, sy + 28),
+               f"mask cyan={sv[k]['cyan_ratio']}", font=f,
+               fill=(200, 210, 230))
+        d.text((x + 136, sy + 50),
+               f"shoulder/h={sv[k]['shoulder_over_height']}", font=f,
+               fill=(200, 210, 230))
+    d.text((pad, H - 34),
+           f"bbox-normalized silhouette IoU(upper bound)={iou}  "
+           f"shoulder_delta={round(shoulder_delta, 5)}  "
+           f"J-01 already satisfied={silhouette_separable}",
+           font=f, fill=(230, 200, 130))
+    BOARD.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(BOARD)
+
+    checks = {
+        "both_textures_4096": all(v["orig_size"] == [4096, 4096]
+                                  for v in tex.values()),
+        "both_sv_masks_nonempty": all("error" not in v for v in sv.values()),
+        "foe_texture_has_no_large_white": (
+            tex["foe"]["ratios"]["near_white"] < 0.01),
+        "player_texture_has_large_white": (
+            tex["player"]["ratios"]["near_white"] > 0.05),
+        "board_written": BOARD.is_file() and BOARD.stat().st_size > 50000,
+    }
+    report = {
+        "texture": tex, "subviewport_v1": sv,
+        "silhouette": {"bbox_iou_upper_bound": iou,
+                       "shoulder_delta": round(shoulder_delta, 5),
+                       "j01_already_satisfied": silhouette_separable},
+        "board": str(BOARD), "board_bytes": BOARD.stat().st_size,
+        "checks": checks,
+        "failed": [k for k, v in checks.items() if not v],
+        "ok": all(checks.values()),
+    }
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for k, v in tex.items():
+        print("TEX", k, v["ratios"], "grid_max", v["grid_max"])
+        print("  grid", v["motif_grid"])
+    for k, v in sv.items():
+        print("SV", k, v["mask_kind"], "mask_px", v["mask_px"],
+              "white", v["near_white_ratio"], "cyan", v["cyan_ratio"],
+              "hot_red", v["hot_red_ratio"],
+              "shoulder/h", v["shoulder_over_height"])
+    print("SILHOUETTE iou_upper", iou, "shoulder_delta",
+          round(shoulder_delta, 5), "J01", silhouette_separable)
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("MOTIF_BASELINE_J_OK" if report["ok"]
+          else "MOTIF_BASELINE_J_FAILED")
+    return 0 if report["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== J/diag_shape_root.py =====
+"""J 路线 P0：先查清「两人看起来同源」到底同源在哪，不先动任何资产。
+
+三件事：
+  1. 把 I 路线同进程 A/B 的左右角色 ROI 裁出来放大，肉眼看清敌我造型。
+  2. 纯 Python 解析三份 GLB 的 JSON chunk：顶点数 / POSITION bbox /
+     skin / node 名 / 贴图引用，确认游戏里 foe 用的是哪份几何。
+  3. 对照 11-08 图生 3D 原始产物与 A/H 路线导出记录，判定
+     「造型雷同」是几何同源、贴图同源，还是渲染把细节吃掉了。
+
+只读，不写游戏工程、不改任何归档。用法：python diag_shape_root.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import struct
+from pathlib import Path
+
+from PIL import Image, ImageDraw, ImageFont
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+I = BAKE / "I路线-视觉区分度"
+H = BAKE / "H路线-双方3D侧面战斗"
+FOE_V1 = BAKE / "对手怪Blender建模V1"
+SHOTS = I / "shots" / "visual_ab"
+BOARD = HERE / "boards" / "J-现状左右特写.png"
+OUT = HERE / "data" / "shape_root_j.json"
+FONT = Path(r"C:\Windows\Fonts\msyh.ttc")
+
+
+def glb_json(path: Path) -> dict:
+    raw = path.read_bytes()
+    magic, version, length = struct.unpack_from("<4sII", raw, 0)
+    assert magic == b"glTF" and version == 2 and length == len(raw)
+    off = 12
+    while off < len(raw):
+        clen, ctype = struct.unpack_from("<I4s", raw, off)
+        off += 8
+        if ctype == b"JSON":
+            return json.loads(raw[off:off + clen].decode("utf-8"))
+        off += clen
+    raise ValueError(f"no JSON chunk in {path}")
+
+
+def shape(path: Path) -> dict:
+    g = glb_json(path)
+    prim = g["meshes"][0]["primitives"][0]
+    pos = g["accessors"][prim["attributes"]["POSITION"]]
+    return {
+        "file": path.name,
+        "bytes": path.stat().st_size,
+        "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        "verts": pos["count"],
+        "pos_min": pos.get("min"),
+        "pos_max": pos.get("max"),
+        "bbox_xyz": [round(pos["max"][i] - pos["min"][i], 6)
+                     for i in range(3)],
+        "attributes": sorted(prim["attributes"].keys()),
+        "skins": len(g.get("skins", [])),
+        "animations": len(g.get("animations", [])),
+        "nodes": len(g.get("nodes", [])),
+        "node_names": [n.get("name", "") for n in g.get("nodes", [])][:20],
+        "images": [im.get("name", "") for im in g.get("images", [])],
+        "materials": len(g.get("materials", [])),
+    }
+
+
+def main() -> int:
+    roi = json.loads((H / "data" / "roi_h.json").read_text(
+        encoding="utf-8"))["boxes"]
+    plain = Image.open(SHOTS / "vis-plain.png").convert("RGB")
+    on = Image.open(SHOTS / "vis-on.png").convert("RGB")
+    z, pad, label = 3, 20, 36
+    w, h = (roi[0][2] - roi[0][0]) * z, (roi[0][3] - roi[0][1]) * z
+    cw, ch = 2 * w + 3 * pad, 2 * (h + label) + 3 * pad
+    canvas = Image.new("RGB", (cw, ch), (24, 28, 38))
+    d = ImageDraw.Draw(canvas)
+    f = ImageFont.truetype(str(FONT), 20) if FONT.is_file() \
+        else ImageFont.load_default()
+    cells = [
+        (plain, roi[0], "玩家 · plain（未调色）", pad, pad),
+        (plain, roi[1], "对手 · plain（未调色 / H 原样）", 2 * pad + w, pad),
+        (on, roi[0], "玩家 · on", pad, 2 * pad + h + label),
+        (on, roi[1], "对手 · on（I 调色后）", 2 * pad + w,
+         2 * pad + h + label),
+    ]
+    for im, box, text, x, y in cells:
+        crop = im.crop(box).resize((w, h), Image.LANCZOS)
+        canvas.paste(crop, (x, y))
+        d.text((x + 4, y + h + 4), text, font=f, fill=(190, 200, 220))
+    BOARD.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(BOARD)
+
+    glbs = {
+        "game_player": GAME / "assets/3d/player-rigged.glb",
+        "game_foe": GAME / "assets/3d/foe-rigged.glb",
+        "foe_v1_source": FOE_V1 / "artifact_03.glb",
+    }
+    shapes = {k: shape(p) for k, p in glbs.items()}
+    h_inspect = json.loads((H / "data" / "foe_gltf_inspection.json").read_text(
+        encoding="utf-8"))
+    v1_inspect = json.loads((FOE_V1 / "model_inspection.json").read_text(
+        encoding="utf-8"))
+    base_png = GAME / "assets/3d/foe-rigged_texture_pbr_20250901.png"
+
+    checks = {
+        "three_glbs_parsed": len(shapes) == 3,
+        "game_foe_has_skin": shapes["game_foe"]["skins"] == 1,
+        "game_foe_verts_match_v1_source": (
+            shapes["game_foe"]["verts"]
+            == v1_inspect["vertices_total"] + 35),
+        "source_model_is_unskinned": (
+            shapes["foe_v1_source"]["skins"] == 0
+            and v1_inspect["has_skin"] is False),
+        "foe_and_player_geometry_differ": (
+            shapes["game_foe"]["verts"] != shapes["game_player"]["verts"]),
+        "foe_basecolor_size_matches_v1_zip": (
+            base_png.stat().st_size
+            == next(e["size"] for e in v1_inspect["zip_entries"]
+                    if e["name"] == "texture_pbr_20250901.png")),
+        "h_export_verts_match_game_glb": (
+            h_inspect["foe"]["primitives"][0]["verts"]
+            == shapes["game_foe"]["verts"]),
+        "board_written": BOARD.is_file() and BOARD.stat().st_size > 100000,
+    }
+    payload = {
+        "roi": roi, "board": str(BOARD),
+        "board_bytes": BOARD.stat().st_size,
+        "shapes": shapes,
+        "h_inspect_foe": h_inspect["foe"],
+        "v1_source_inspect": {
+            "vertices_total": v1_inspect["vertices_total"],
+            "connected_shells_unionfind":
+                v1_inspect["connected_shells_unionfind"],
+            "has_skin": v1_inspect["has_skin"],
+        },
+        "foe_basecolor_png_bytes": base_png.stat().st_size,
+        "checks": checks,
+        "failed": [k for k, v in checks.items() if not v],
+        "ok": all(checks.values()),
+    }
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for k, v in shapes.items():
+        print("GLB", k, "verts", v["verts"], "bbox", v["bbox_xyz"],
+              "skins", v["skins"], "images", v["images"])
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("SHAPE_ROOT_J_OK" if payload["ok"] else "SHAPE_ROOT_J_FAILED")
+    return 0 if payload["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== J/diag_texture_pair_j.py =====
+"""J 路线 P0b：把两侧 baseColor 贴图缩略并排，判断画面里的白衫青云纹
+到底来自哪张贴图。
+
+若 foe 贴图整体是暗灰重装、没有大面积纯白下摆，而游戏截帧里 foe 侧
+却有纯白长条 + 青色云纹，则「两人看起来同源」不是造型同源，而是
+渲染/贴图串了——这时重做造型完全不对症。
+
+只读，输出 boards/J-两侧baseColor对照.png 与 data/texture_pair_j.json。
+用法：python diag_texture_pair_j.py
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from PIL import Image, ImageDraw, ImageFont, ImageStat
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+BOARD = HERE / "boards" / "J-两侧baseColor对照.png"
+OUT = HERE / "data" / "texture_pair_j.json"
+FONT = Path(r"C:\Windows\Fonts\msyh.ttc")
+NAMES = {
+    "player": "player-rigged_texture_pbr_20250901.png",
+    "foe": "foe-rigged_texture_pbr_20250901.png",
+}
+
+
+def main() -> int:
+    imgs = {}
+    for k, name in NAMES.items():
+        p = GAME / "assets" / "3d" / name
+        imgs[k] = Image.open(p).convert("RGB")
+
+    size = (512, 512)
+    pad, label = 20, 40
+    canvas = Image.new("RGB", (2 * size[0] + 3 * pad,
+                               size[1] + 2 * pad + label), (24, 28, 38))
+    d = ImageDraw.Draw(canvas)
+    f = ImageFont.truetype(str(FONT), 20) if FONT.is_file() \
+        else ImageFont.load_default()
+    stats = {}
+    for i, k in enumerate(("player", "foe")):
+        im = imgs[k]
+        small = im.resize(size, Image.LANCZOS)
+        x = pad + i * (size[0] + pad)
+        canvas.paste(small, (x, pad))
+        d.text((x + 4, pad + size[1] + 6),
+               f"{k} · {NAMES[k]} · {im.size}", font=f,
+               fill=(190, 200, 220))
+        # 贴图里的近白像素占比：白衫下摆是否存在于这张贴图里。
+        px = list(small.get_flattened_data())
+        near_white = sum(1 for r, g, b in px
+                         if r > 200 and g > 200 and b > 200)
+        cyan = sum(1 for r, g, b in px
+                   if b > 120 and g > 120 and r < g - 20)
+        stats[k] = {
+            "orig_size": list(im.size),
+            "mean_rgb": [round(v, 2) for v in ImageStat.Stat(small).mean],
+            "near_white_ratio_512": round(near_white / len(px), 5),
+            "cyan_ratio_512": round(cyan / len(px), 5),
+        }
+    BOARD.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(BOARD)
+    checks = {
+        "both_4096": all(v["orig_size"] == [4096, 4096]
+                         for v in stats.values()),
+        "foe_darker_than_player": (
+            sum(stats["foe"]["mean_rgb"])
+            < sum(stats["player"]["mean_rgb"]) - 150),
+        "board_written": BOARD.is_file()
+                         and BOARD.stat().st_size > 100000,
+    }
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps({
+        "board": str(BOARD), "board_bytes": BOARD.stat().st_size,
+        "stats": stats, "checks": checks,
+        "failed": [k for k, v in checks.items() if not v],
+        "ok": all(checks.values()),
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    for k, v in stats.items():
+        print("TEX", k, v)
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("TEXTURE_PAIR_J_OK" if all(checks.values())
+          else "TEXTURE_PAIR_J_FAILED")
+    return 0 if all(checks.values()) else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== J/install_foe_v2_j.py =====
+"""J 路线 P3：把新造型 GLB 装进可运行工程，先逐字节备份再替换。
+
+产物：
+  orig/pre-shape/        旧 foe-rigged.glb + .import 逐字节备份
+  data/install_j.json    size + sha256 前后对账
+  logs/godot_reimport_j.log
+
+不删任何工程文件；回滚只需把 orig/pre-shape/ 两件复制回去。
+用法：python install_foe_v2_j.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+SRC = HERE / "foe-rigged-v2.glb"
+DST = GAME / "assets" / "3d" / "foe-rigged.glb"
+IMPORT = DST.with_suffix(".glb.import")
+ORIG = HERE / "orig" / "pre-shape"
+OUT = HERE / "data" / "install_j.json"
+LOG = HERE / "logs" / "godot_reimport_j.log"
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def main() -> int:
+    assert SRC.is_file() and DST.is_file() and IMPORT.is_file()
+    ORIG.mkdir(parents=True, exist_ok=True)
+    before = {"glb_bytes": DST.stat().st_size,
+              "glb_sha256": sha256(DST),
+              "import_bytes": IMPORT.stat().st_size,
+              "import_sha256": sha256(IMPORT)}
+    for p in (DST, IMPORT):
+        q = ORIG / p.name
+        shutil.copy2(p, q)
+        assert sha256(q) == sha256(p), f"backup mismatch: {p.name}"
+
+    shutil.copyfile(SRC, DST)
+    after = {"glb_bytes": DST.stat().st_size,
+             "glb_sha256": sha256(DST),
+             "import_bytes": IMPORT.stat().st_size,
+             "import_sha256": sha256(IMPORT)}
+
+    env = os.environ.copy()
+    env.pop("CARD_BOXER_3D", None)
+    env.pop("CARD_BOXER_FOE_VISUAL", None)
+    t0 = time.perf_counter()
+    try:
+        proc = subprocess.run(
+            [str(GODOT), "--headless", "--path", str(GAME), "--import"],
+            env=env, capture_output=True, timeout=300, cwd=str(GAME))
+        rc = proc.returncode
+        text = (proc.stdout + b"\n--- STDERR ---\n"
+                + proc.stderr).decode("utf-8", "replace")
+    except subprocess.TimeoutExpired as exc:
+        rc = -1
+        text = ((exc.stdout or b"") + b"\n--- TIMEOUT ---\n").decode(
+            "utf-8", "replace")
+    LOG.parent.mkdir(parents=True, exist_ok=True)
+    LOG.write_text(text, encoding="utf-8")
+    errors = text.count("SCRIPT ERROR") + text.count("Parse Error")
+
+    checks = {
+        "backup_verified": all(
+            (ORIG / p.name).is_file()
+            and sha256(ORIG / p.name) == before[
+                "glb_sha256" if p == DST else "import_sha256"]
+            for p in (DST, IMPORT)),
+        "glb_replaced": after["glb_sha256"] == sha256(SRC)
+                        and after["glb_sha256"] != before["glb_sha256"],
+        "import_file_untouched": (
+            after["import_sha256"] == before["import_sha256"]),
+        "reimport_rc0": rc == 0,
+        "no_script_errors": errors == 0,
+        "has_opengl_marker_or_clean": (
+            "OpenGL API" in text or "Godot Engine" in text
+            or len(text.strip()) > 20),
+    }
+    ok = all(checks.values())
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps({
+        "source": str(SRC), "source_sha256": sha256(SRC),
+        "destination": str(DST), "backup_dir": str(ORIG),
+        "before": before, "after": after,
+        "reimport": {"seconds": round(time.perf_counter() - t0, 3),
+                     "returncode": rc, "script_errors": errors},
+        "checks": checks, "failed": [k for k, v in checks.items()
+                                     if not v], "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print("BEFORE", before["glb_bytes"], before["glb_sha256"][:16])
+    print("AFTER ", after["glb_bytes"], after["glb_sha256"][:16])
+    print("REIMPORT", rc, f"{round(time.perf_counter() - t0, 3)}s",
+          "errors", errors)
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("INSTALL_J_OK" if ok else "INSTALL_J_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== J/make_filelist_j.py =====
+"""生成 J 路线交付文件清单与新增脚本文本 diff。
+
+与 I 路线不同：J 路线**没有任何游戏源码改动落地**（r1 手术已回滚），
+所以 new-files.diff 里必须显式给出「源码零改动 + GLB 已还原」的 sha256
+对账，而不是伪造一份源码 unified diff。
+
+自指纪律：清单 / diff / logs / orig / .godot / __pycache__ 排除。
+用法：python make_filelist_j.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+LIST = HERE / "文件清单.txt"
+DIFF = HERE / "new-files.diff"
+EXCLUDE_NAMES = {"文件清单.txt", "new-files.diff"}
+EXCLUDE_DIRS = {"logs", ".godot", "__pycache__", "orig", "shots",
+                "boards", "data"}
+DATA_FILES = [
+    "data/asset_probe_j.json", "data/build_shape_j.json",
+    "data/install_j.json", "data/motif_baseline_j.json",
+    "data/recolor_probe_j.json", "data/rollback_j.json",
+    "data/shape_root_j.json", "data/shells_j.json",
+    "data/texture_pair_j.json", "data/all_checks_j.json",
+]
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def entries() -> list[Path]:
+    out = []
+    for p in sorted(HERE.rglob("*")):
+        if not p.is_file() or p.name in EXCLUDE_NAMES:
+            continue
+        rel = p.relative_to(HERE)
+        if any(part in EXCLUDE_DIRS for part in rel.parts):
+            continue
+        out.append(p)
+    return out
+
+
+def main() -> int:
+    scripts = sorted(HERE.glob("*.py"))
+    tests = sorted((HERE / "tests").glob("*.gd"))
+    assert len(scripts) >= 10, f"too few scripts: {len(scripts)}"
+    assert len(tests) >= 1, f"too few probe scripts: {len(tests)}"
+
+    header = [
+        "# J 路线 · 造型重做（r1 负结果 + r2 方向订正）· 交付文件清单",
+        "# 格式: 相对路径<TAB>字节<TAB>sha256",
+        "# 排除: 本清单 / new-files.diff / logs / orig / shots / boards / data",
+        "# shots / boards / data 的 sha256 见 new-files.diff 末尾对账段",
+        "",
+    ]
+    rows = []
+    for p in entries():
+        rel = str(p.relative_to(HERE)).replace("\\", "/")
+        rows.append(f"{rel}\t{p.stat().st_size}\t{sha256(p)}")
+    LIST.write_bytes(("\n".join(header + rows) + "\n").encode("utf-8"))
+
+    parts = []
+    for p in scripts:
+        parts.append(f"===== J/{p.name} =====\n"
+                     + p.read_text(encoding="utf-8"))
+    for p in tests:
+        parts.append(f"===== J/tests/{p.name} =====\n"
+                     + p.read_text(encoding="utf-8"))
+    parts.append("===== J/J路线-造型规格.txt =====\n"
+                 + (HERE / "J路线-造型规格.txt").read_text(
+                     encoding="utf-8"))
+    parts.append("===== J/J路线-负结果与方向订正.txt =====\n"
+                 + (HERE / "J路线-负结果与方向订正.txt").read_text(
+                     encoding="utf-8"))
+    for rel in DATA_FILES:
+        p = HERE / rel
+        if p.is_file():
+            parts.append(f"===== J/{rel} =====\n"
+                         + p.read_text(encoding="utf-8"))
+
+    # ── 工程状态对账：证明 r1 手术没有留在可运行工程里 ──────────
+    install = json.loads((HERE / "data" / "install_j.json").read_text(
+        encoding="utf-8"))
+    rollback = json.loads((HERE / "data" / "rollback_j.json").read_text(
+        encoding="utf-8"))
+    glb = GAME / "assets" / "3d" / "foe-rigged.glb"
+    layer = GAME / "scripts" / "fighter_3d_layer.gd"
+    arena = GAME / "scripts" / "arena.gd"
+    fighter = GAME / "scripts" / "fighter.gd"
+    backup_glb = HERE / "orig" / "pre-shape" / "foe-rigged.glb"
+    state = {
+        "game_glb_sha256": sha256(glb),
+        "i_baseline_glb_sha256": install["before"]["glb_sha256"],
+        "r1_surgery_glb_sha256": install["after"]["glb_sha256"],
+        "backup_glb_sha256": sha256(backup_glb),
+        "game_glb_equals_i_baseline": (
+            sha256(glb) == install["before"]["glb_sha256"]),
+        "game_glb_differs_from_r1": (
+            sha256(glb) != install["after"]["glb_sha256"]),
+        "rollback_ok": rollback["ok"],
+        "rollback_checks": rollback["checks"],
+        "source_sha256": {
+            "scripts/fighter_3d_layer.gd": sha256(layer),
+            "scripts/arena.gd": sha256(arena),
+            "scripts/fighter.gd": sha256(fighter),
+        },
+        "j_route_source_diff_count": 0,
+    }
+    parts.append("===== 工程状态 sha256 对账 =====\n"
+                 + json.dumps(state, ensure_ascii=False, indent=2))
+    # 其余静态产物（板子 / 截帧 / 大 GLB）只记大小与哈希，不塞进 diff。
+    assets = []
+    for d in ("boards", "shots", "data", "orig"):
+        for p in sorted((HERE / d).rglob("*")):
+            if p.is_file():
+                assets.append({
+                    "path": str(p.relative_to(HERE)).replace("\\", "/"),
+                    "bytes": p.stat().st_size, "sha256": sha256(p)})
+    parts.append("===== 其余产物 sha256（不含正文） =====\n"
+                 + json.dumps(assets, ensure_ascii=False, indent=2))
+    DIFF.write_bytes(("\n\n".join(parts) + "\n").encode("utf-8"))
+
+    again = ("\n".join(header + [
+        f"{str(p.relative_to(HERE)).replace(chr(92), '/')}\t"
+        f"{p.stat().st_size}\t{sha256(p)}" for p in entries()
+    ]) + "\n").encode("utf-8")
+    stable = LIST.read_bytes() == again
+    assert DIFF.is_file() and DIFF.stat().st_size > 10000, \
+        f"new-files.diff missing or too small: {DIFF}"
+    assert state["game_glb_equals_i_baseline"] and \
+        state["game_glb_differs_from_r1"] and state["rollback_ok"], \
+        "工程未回到 I 基线，禁止收口"
+    print(f"FILELIST_ENTRIES={len(rows)} DIFF_BYTES={DIFF.stat().st_size} "
+          f"SCRIPTS={len(scripts)} TESTS={len(tests)}")
+    print(f"GAME_GLB_RESTORED={state['game_glb_equals_i_baseline']} "
+          f"R1_NOT_PRESENT={state['game_glb_differs_from_r1']}")
+    print(f"STABLE={stable}")
+    print("FILELIST_J_STABLE_OK" if stable else "FILELIST_J_UNSTABLE")
+    return 0 if stable else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== J/probe_recolor_j.py =====
+"""J 路线 r2 探针：离线模拟 foe 层 canvas shader 的「语义重绘」效果。
+
+不改游戏源码、不改资产。只对 v1 已截帧的 foe SubViewport RGBA 图做逐像素
+变换，模拟把 shader 挂到 foe 层本地 material 后会得到什么，用来判断
+「表现层语义重绘」这条链值不值得接线。
+
+三档对照：
+  C0 现状      = I 路线 tint vec3(0.42, 0.30, 0.28)
+  C1 暗钢覆面  = C0 + 近白高光压成炭黑/铁锈红 + 青色压成低饱和暗青
+  C2 工业警示  = C1 + 原近白区域叠加工业橙/黑斜向警示条纹
+
+判据口径沿用 diag_motif_j.py：角色掩膜 = alpha > 127。
+输出：boards/J-语义重绘探针.png、data/recolor_probe_j.json。
+用法：python probe_recolor_j.py
+"""
+from __future__ import annotations
+
+import json
+import math
+from pathlib import Path
+
+from PIL import Image, ImageDraw, ImageFont
+
+HERE = Path(__file__).resolve().parent
+SRC = HERE / "shots" / "asset_v1" / "j-sv-foe.png"
+PLAYER = HERE / "shots" / "asset_v1" / "j-sv-player.png"
+BOARD = HERE / "boards" / "J-语义重绘探针.png"
+OUT = HERE / "data" / "recolor_probe_j.json"
+FONT = Path(r"C:\Windows\Fonts\msyh.ttc")
+
+TINT = (0.42, 0.30, 0.28)          # 与 FOE_CANVAS_SHADER_CODE 一致
+CHARCOAL = (34, 30, 30)
+RUST = (104, 48, 34)
+DARK_CYAN = (26, 62, 70)
+WARN_ORANGE = (196, 122, 32)
+
+
+def near_white(r, g, b):
+    return r > 200 and g > 200 and b > 200
+
+
+def cyan(r, g, b):
+    return b > 120 and g > 120 and r < g - 20
+
+
+def hot_red(r, g, b):
+    return r > 140 and g < r * 0.62 and b < r * 0.62
+
+
+def tint(rgb, mul):
+    return tuple(int(min(255, v * m)) for v, m in zip(rgb, mul))
+
+
+def recolor(mode: str, src: Image.Image) -> Image.Image:
+    im = src.convert("RGBA")
+    px = list(im.getdata())
+    w, h = im.size
+    out = []
+    for i, (r, g, b, a) in enumerate(px):
+        if a <= 127:
+            out.append((r, g, b, a))
+            continue
+        base = tint((r, g, b), TINT)
+        if mode == "C0":
+            out.append((*base, a))
+            continue
+        x, y = i % w, i // w
+        luma = (r * 0.2126 + g * 0.7152 + b * 0.0722) / 255.0
+        is_highlight = near_white(r, g, b) or luma > 0.74
+        if is_highlight:
+            # 高光不再是「白衫」，改写成炭黑 + 铁锈红的斑驳金属。
+            t = 0.5 + 0.5 * math.sin((x + y) * 0.11)
+            c = tuple(int(CHARCOAL[k] * (1 - t) + RUST[k] * t)
+                      for k in range(3))
+            if mode == "C2" and ((x + y) // 14) % 2 == 0:
+                c = WARN_ORANGE
+            out.append((*c, a))
+        elif cyan(r, g, b):
+            # 青云纹不再发光，只留极少量低饱和暗青（以太结晶感）。
+            out.append((*DARK_CYAN, a))
+        elif hot_red(r, g, b):
+            # 红色头花并入铁锈红，不再是高饱和花饰。
+            out.append((*RUST, a))
+        else:
+            out.append((*base, a))
+    res = Image.new("RGBA", (w, h))
+    res.putdata(out)
+    return res
+
+
+def stats(im: Image.Image) -> dict:
+    px = list(im.convert("RGBA").getdata())
+    inner = [(r, g, b) for r, g, b, a in px if a > 127]
+    n = len(inner)
+    nw = sum(1 for c in inner if near_white(*c))
+    cy = sum(1 for c in inner if cyan(*c))
+    hr = sum(1 for c in inner if hot_red(*c))
+    warn = sum(1 for r, g, b in inner
+               if r > 150 and 80 < g < 170 and b < 90)
+    mean = [round(sum(c[k] for c in inner) / n, 2) for k in range(3)]
+    return {
+        "mask_px": n, "near_white_ratio": round(nw / n, 6),
+        "cyan_ratio": round(cy / n, 6), "hot_red_ratio": round(hr / n, 6),
+        "warning_orange_ratio": round(warn / n, 6),
+        "mean_rgb": mean,
+    }
+
+
+def main() -> int:
+    src = Image.open(SRC)
+    modes = ("C0", "C1", "C2")
+    images = {m: recolor(m, src) for m in modes}
+    st = {"source": stats(src)}
+    st.update({m: stats(images[m]) for m in modes})
+    st["player_reference"] = stats(Image.open(PLAYER))
+
+    pad, cell_w, cell_h, label = 18, 300, 375, 56
+    W = pad * 4 + 4 * cell_w
+    H = pad * 2 + cell_h + label
+    canvas = Image.new("RGB", (W, H), (20, 24, 34))
+    d = ImageDraw.Draw(canvas)
+    f = ImageFont.truetype(str(FONT), 15) if FONT.is_file() \
+        else ImageFont.load_default()
+    titles = {
+        "source": ("v1 原图 (无 tint)", st["source"]),
+        "C0": ("C0 现状 tint", st["C0"]),
+        "C1": ("C1 暗钢覆面", st["C1"]),
+        "C2": ("C2 工业警示", st["C2"]),
+    }
+    order = ("source", "C0", "C1", "C2")
+    for i, key in enumerate(order):
+        im = src if key == "source" else images[key]
+        x = pad + i * (cell_w + pad)
+        # 贴到浅底以看清透明区之外的角色轮廓
+        tile = Image.new("RGB", (cell_w, cell_h), (232, 232, 236))
+        shown = im.convert("RGBA").resize((cell_w, cell_h), Image.LANCZOS)
+        tile.paste(shown, (0, 0), shown)
+        canvas.paste(tile, (x, pad))
+        title, s = titles[key]
+        d.text((x + 2, pad + cell_h + 4), title, font=f,
+               fill=(225, 230, 245))
+        d.text((x + 2, pad + cell_h + 22),
+               f"white {s['near_white_ratio']:.4f}  "
+               f"cyan {s['cyan_ratio']:.4f}", font=f,
+               fill=(170, 190, 215))
+        d.text((x + 2, pad + cell_h + 38),
+               f"orange {s['warning_orange_ratio']:.4f}  "
+               f"mean {s['mean_rgb'][0]:.0f}/{s['mean_rgb'][1]:.0f}/"
+               f"{s['mean_rgb'][2]:.0f}", font=f, fill=(170, 190, 215))
+    BOARD.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(BOARD)
+
+    # 订正（实测）：I 路线的 tint 已经把 foe 的近白 / 青特征清零，
+    # 所以「再加一层语义重绘」没有可消除的目标；三档掩膜像素数完全相同，
+    # 说明 canvas 层无论怎么调色都改不了剪影。这是本探针最重要的结论。
+    checks = {
+        "source_is_rgba_with_alpha": src.mode == "RGBA",
+        "source_has_high_white": st["source"]["near_white_ratio"] > 0.10,
+        "i_route_tint_already_removes_white": (
+            st["C0"]["near_white_ratio"] <= 0.02),
+        "i_route_tint_already_removes_cyan": (
+            st["C0"]["cyan_ratio"] <= 0.005),
+        "c1_removes_white": st["C1"]["near_white_ratio"] <= 0.02,
+        "c2_removes_white": st["C2"]["near_white_ratio"] <= 0.02,
+        "c1_removes_cyan": st["C1"]["cyan_ratio"] <= 0.005,
+        "c2_adds_warning_color": (
+            st["C2"]["warning_orange_ratio"]
+            > st["C1"]["warning_orange_ratio"] + 0.01),
+        "c1_darker_than_c0": (sum(st["C1"]["mean_rgb"])
+                              < sum(st["C0"]["mean_rgb"])),
+        "all_modes_keep_identical_silhouette": (
+            len({st[k]["mask_px"] for k in
+                 ("source", "C0", "C1", "C2")}) == 1),
+        "player_reference_unchanged": (
+            st["player_reference"]["mask_px"] > 0),
+        "board_written": BOARD.is_file()
+                         and BOARD.stat().st_size > 50000,
+    }
+    report = {
+        "source": str(SRC), "tint": list(TINT),
+        "stats": st, "board": str(BOARD),
+        "board_bytes": BOARD.stat().st_size,
+        "conclusion": (
+            "I 路线 canvas tint 已把 foe 掩膜内近白/青特征清零；"
+            "C1/C2 相对 C0 只改颜色，角色掩膜像素数逐档相同，"
+            "证明 2D canvas 层无法改变剪影。C2 的橙黑警示条纹能把白衫"
+            "下摆的色彩语义换成工业条幅，观感改善明显，但披风/头饰/"
+            "站姿形状不变：表现层链是低成本观感改进，不是根治。"
+            "要根治几何同源仍需精确删壳或重生成 3D。"),
+        "checks": checks,
+        "failed": [k for k, v in checks.items() if not v],
+        "ok": all(checks.values()),
+    }
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for k, v in st.items():
+        print("STATS", k, v)
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("RECOLOR_PROBE_J_OK" if report["ok"]
+          else "RECOLOR_PROBE_J_FAILED")
+    return 0 if report["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== J/probe_shells_j.py =====
+"""J 路线 P1：壳级剪影手术可行性探针（Blender 5.2.3 headless）。
+
+只读 A 路线 .blend，按面连通把 2,809 个壳分组，算每壳空间位置，
+判断能否按「区域规则」精确筛出 V4b 同源部件（头冠 / 披风 / 长衫下摆）。
+并渲一张按区域上色的分类图，让规则可被看图证伪。
+
+用法：
+  blender.exe -b --python probe_shells_j.py
+"""
+from __future__ import annotations
+
+import json
+import sys
+from collections import defaultdict
+from pathlib import Path
+
+sys.dont_write_bytecode = True
+import bpy
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+BLEND = BAKE / "A路线-资产重做" / "对手怪-可变形连续壳.blend"
+OUT = HERE / "data" / "shells_j.json"
+BOARD = HERE / "boards" / "J-壳分类上色.png"
+
+
+def classify(c, lo, hi) -> str:
+    """c=(cx,cy,cz), lo/hi=bbox。Z-up，模型归一到 z∈[0,1.72]。"""
+    cx, cy, cz = c
+    zx, zy, zz = (hi[i] - lo[i] for i in range(3))
+    if cz > 1.48:
+        return "HEAD_TOP"          # 头冠 / 发髻 / 头盔顶
+    if cz > 1.30:
+        return "HEAD"
+    # 背后大片垂布：用局部 y 极值 + 纵向跨度判定，泛化不依赖固定朝向
+    if zz > 0.55 and (zy > 0.35 or zx > 0.55) and cz < 1.35:
+        return "CAPE_OR_PANEL"    # 披风 / 长条布片
+    if cz < 0.95 and zz > 0.25 and abs(cx) < 0.40:
+        return "SKIRT"            # 长衫下摆 / 腰裙
+    if cz < 0.42:
+        return "BOOTS"
+    return "BODY"
+
+
+def main() -> int:
+    assert BLEND.is_file(), BLEND
+    bpy.ops.wm.open_mainfile(filepath=str(BLEND))
+    obj = next(o for o in bpy.context.scene.objects
+               if o.type == "MESH"
+               and any(m.type == "SURFACE_DEFORM" for m in o.modifiers))
+    mesh = obj.data
+    nv, npoly = len(mesh.vertices), len(mesh.polygons)
+    parent = list(range(nv))
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[rb] = ra
+
+    for p in mesh.polygons:
+        vs = p.vertices
+        v0 = vs[0]
+        for v in vs[1:]:
+            union(v0, v)
+
+    verts = defaultdict(list)
+    for v in mesh.vertices:
+        verts[find(v.index)].append(v.index)
+
+    co = [tuple(v.co) for v in mesh.vertices]
+    rows = []
+    for root, ids in verts.items():
+        xs = [co[i][0] for i in ids]
+        ys = [co[i][1] for i in ids]
+        zs = [co[i][2] for i in ids]
+        lo = [min(xs), min(ys), min(zs)]
+        hi = [max(xs), max(ys), max(zs)]
+        c = [sum(xs) / len(xs), sum(ys) / len(ys), sum(zs) / len(zs)]
+        rows.append({"root": root, "verts": len(ids),
+                     "lo": [round(v, 4) for v in lo],
+                     "hi": [round(v, 4) for v in hi],
+                     "centroid": [round(v, 4) for v in c],
+                     "region": classify(c, lo, hi)})
+
+    by_region = defaultdict(lambda: {"shells": 0, "verts": 0})
+    for r in rows:
+        b = by_region[r["region"]]
+        b["shells"] += 1
+        b["verts"] += r["verts"]
+    top = sorted(rows, key=lambda r: -r["verts"])[:20]
+
+    # 按区域上色：给每个 polygon 指定 material_index，Workbench MATERIAL 着色。
+    palette = {
+        "HEAD_TOP": (1.0, 0.15, 0.15, 1.0),
+        "HEAD": (1.0, 0.55, 0.10, 1.0),
+        "CAPE_OR_PANEL": (0.20, 0.45, 1.0, 1.0),
+        "SKIRT": (0.15, 0.95, 0.35, 1.0),
+        "BOOTS": (0.85, 0.35, 0.95, 1.0),
+        "BODY": (0.75, 0.75, 0.75, 1.0),
+    }
+    names = list(palette)
+    mesh.materials.clear()
+    for n in names:
+        m = bpy.data.materials.new("J_REGION_" + n)
+        m.diffuse_color = palette[n]
+        mesh.materials.append(m)
+    region_of = {r["root"]: r["region"] for r in rows}
+    for p in mesh.polygons:
+        p.material_index = names.index(region_of[find(p.vertices[0])])
+
+    scene = bpy.context.scene
+    scene.render.engine = "BLENDER_WORKBENCH"
+    scene.display.shading.light = "FLAT"
+    scene.display.shading.color_type = "MATERIAL"
+    scene.render.film_transparent = True
+    scene.render.resolution_x = 768
+    scene.render.resolution_y = 768
+    cam_data = bpy.data.cameras.new("J_CAM")
+    cam_data.type = "ORTHO"
+    cam_data.ortho_scale = 2.1
+    cam = bpy.data.objects.new("J_CAM", cam_data)
+    scene.collection.objects.link(cam)
+    cam.location = (0.0, -4.0, 0.95)
+    cam.rotation_euler = (1.5707963, 0.0, 0.0)
+    scene.camera = cam
+    BOARD.parent.mkdir(parents=True, exist_ok=True)
+    scene.render.filepath = str(BOARD)
+    bpy.ops.render.render(write_still=True)
+
+    payload = {
+        "source_blend": str(BLEND),
+        "object": obj.name, "verts": nv, "polygons": npoly,
+        "shells": len(rows),
+        "by_region": dict(by_region),
+        "top20": top,
+        "board": str(BOARD),
+        "board_bytes": BOARD.stat().st_size if BOARD.is_file() else 0,
+        "checks": {
+            "opened": nv > 60000,
+            "shell_count_matches_2809": len(rows) == 2809,
+            "has_head_region": by_region["HEAD_TOP"]["verts"] > 0,
+            "has_skirt_region": by_region["SKIRT"]["verts"] > 0,
+            "has_cape_region": by_region["CAPE_OR_PANEL"]["verts"] > 0,
+            "board_written": BOARD.is_file()
+                             and BOARD.stat().st_size > 10000,
+        },
+    }
+    payload["failed"] = [k for k, v in payload["checks"].items() if not v]
+    payload["ok"] = not payload["failed"]
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    print("SHELLS", len(rows), "VERTS", nv)
+    for k, v in by_region.items():
+        print("REGION", k, v)
+    for k, v in payload["checks"].items():
+        print("CHECK", k, v)
+    print("SHELLS_J_OK" if payload["ok"] else "SHELLS_J_FAILED")
+    return 0 if payload["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== J/rollback_shape_j.py =====
+"""J 路线 r1 负结果后：把工程 foe-rigged.glb 逐字节还原并重新导入。
+
+回滚不是「删掉失败产物」——失败的 GLB / 截帧 / 报告全部留在 J 目录，
+只把可运行工程恢复到 I 路线验收时的状态，并用 sha256 证明。
+
+用法：python rollback_shape_j.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+DST = GAME / "assets" / "3d" / "foe-rigged.glb"
+IMPORT = DST.with_suffix(".glb.import")
+ORIG = HERE / "orig" / "pre-shape"
+OUT = HERE / "data" / "rollback_j.json"
+LOG = HERE / "logs" / "godot_reimport_rollback_j.log"
+INSTALL = HERE / "data" / "install_j.json"
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def main() -> int:
+    before_expected = json.loads(INSTALL.read_text(
+        encoding="utf-8"))["before"]
+    assert (ORIG / "foe-rigged.glb").is_file()
+    shutil.copyfile(ORIG / "foe-rigged.glb", DST)
+    now = {"glb_bytes": DST.stat().st_size,
+           "glb_sha256": sha256(DST),
+           "import_sha256": sha256(IMPORT)}
+    env = os.environ.copy()
+    env.pop("CARD_BOXER_3D", None)
+    env.pop("CARD_BOXER_FOE_VISUAL", None)
+    t0 = time.perf_counter()
+    proc = subprocess.run(
+        [str(GODOT), "--headless", "--path", str(GAME), "--import"],
+        env=env, capture_output=True, timeout=300, cwd=str(GAME))
+    text = (proc.stdout + b"\n--- STDERR ---\n"
+            + proc.stderr).decode("utf-8", "replace")
+    LOG.parent.mkdir(parents=True, exist_ok=True)
+    LOG.write_text(text, encoding="utf-8")
+    errors = text.count("SCRIPT ERROR") + text.count("Parse Error")
+    checks = {
+        "glb_sha_matches_i_baseline": (
+            now["glb_sha256"] == before_expected["glb_sha256"]),
+        "glb_size_matches": (
+            now["glb_bytes"] == before_expected["glb_bytes"]),
+        "import_file_untouched": (
+            now["import_sha256"] == before_expected["import_sha256"]),
+        "backup_still_intact": (
+            sha256(ORIG / "foe-rigged.glb")
+            == before_expected["glb_sha256"]),
+        "reimport_rc0": proc.returncode == 0,
+        "no_script_errors": errors == 0,
+    }
+    ok = all(checks.values())
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps({
+        "restored": str(DST), "from": str(ORIG / "foe-rigged.glb"),
+        "expected": before_expected, "actual": now,
+        "reimport": {"seconds": round(time.perf_counter() - t0, 3),
+                     "returncode": proc.returncode,
+                     "script_errors": errors},
+        "checks": checks, "failed": [k for k, v in checks.items()
+                                     if not v], "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print("RESTORED", now["glb_bytes"], now["glb_sha256"][:16])
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("ROLLBACK_J_OK" if ok else "ROLLBACK_J_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== J/run_all_checks_j.py =====
+"""J 路线：在「r1 手术已回滚」的游戏树上跑 15 套引擎内自检。
+
+目的不是证明 J 的改动可用（J 没有任何源码改动落地），而是证明回滚后
+可运行工程确实回到了 I 路线验收时的状态，没有留下半安装资产。
+输出落 J/logs/checks 与 J/data，不写 I 归档。
+用法：python run_all_checks_j.py
+"""
+from __future__ import annotations
+
+import json
+import subprocess
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+LOGS = HERE / "logs" / "checks"
+OUT = HERE / "data" / "all_checks_j.json"
+
+CHECKS = [
+    ("motion_check", "res://tests/motion_check.gd"),
+    ("pose_probe", "res://tests/pose_probe.gd"),
+    ("duel_probe", "res://tests/duel_probe.gd"),
+    ("reach_probe", "res://tests/reach_probe.gd"),
+    ("feet_probe", "res://tests/feet_probe.gd"),
+    ("fighter_skin_check", "res://tests/fighter_skin_check.gd"),
+    ("battle_motion_p0_check", "res://tests/battle_motion_p0_check.gd"),
+    ("battle_rhythm_check", "res://tests/battle_rhythm_check.gd"),
+    ("engine_opt_check", "res://tests/engine_opt_check.gd"),
+    ("redraw_gate_check", "res://tests/redraw_gate_check.gd"),
+    ("taikou_flow_check", "res://tests/taikou_flow_check.gd"),
+    ("taikou_rage_check", "res://tests/taikou_rage_check.gd"),
+    ("taikou_rules_check", "res://tests/taikou_rules_check.gd"),
+    ("combo_check", "res://scripts/combo_check.gd"),
+    ("portrait_wiring_check", "res://tests/portrait_wiring_check.gd"),
+]
+
+
+def summary(text: str) -> str:
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+    hits = [ln for ln in lines
+            if ("CHECK" in ln.upper() or "PROBE" in ln.upper()
+                or "passed" in ln.lower())
+            and not ln.startswith("at:")]
+    return hits[-1] if hits else (lines[-1] if lines else "<empty output>")
+
+
+def main() -> int:
+    LOGS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    rows, failures = [], []
+    for name, script in CHECKS:
+        p = GAME / script.replace("res://", "")
+        if not p.is_file():
+            failures.append(name)
+            rows.append({"name": name, "rc": -1, "ok": False,
+                         "summary": "MISSING FILE"})
+            print(f"FAIL {name:32s} MISSING FILE")
+            continue
+        try:
+            proc = subprocess.run(
+                [str(GODOT), "--headless", "--path", str(GAME),
+                 "--script", script],
+                capture_output=True, timeout=180, cwd=str(GAME))
+            rc = proc.returncode
+            text = (proc.stdout + b"\n" + proc.stderr).decode(
+                "utf-8", "replace")
+        except subprocess.TimeoutExpired:
+            rc, text = -1, "TIMEOUT"
+        bad = (rc != 0 or "FAIL:" in text or "SCRIPT ERROR" in text
+               or "Parse Error" in text or len(text.strip()) < 20)
+        rows.append({"name": name, "rc": rc, "ok": not bad,
+                     "summary": summary(text)})
+        (LOGS / f"j_{name}.log").write_text(text, encoding="utf-8")
+        if bad:
+            failures.append(name)
+        print(("FAIL " if bad else "OK   ") +
+              f"{name:32s} rc={rc}  {summary(text)}")
+    payload = {"tag": "j", "total": len(CHECKS), "failed": failures,
+               "result": "ALL GREEN" if not failures else "FAILED",
+               "checks": rows}
+    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    print(f"ALL_CHECKS_J {len(CHECKS) - len(failures)}/{len(CHECKS)} "
+          f"{payload['result']}")
+    return 0 if not failures else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== J/run_asset_probe_j.py =====
+"""J 路线 P0c：跑引擎内资产读回探针，把两侧 SubViewport 内容落盘。
+
+用法：python run_asset_probe_j.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import shutil
+import subprocess
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+OUTDIR = HERE / "shots" / "asset_probe"
+SRC = HERE / "tests" / "asset_probe_j.gd"
+DST = GAME / "tests" / "asset_probe_j.gd"
+OUT = HERE / "data" / "asset_probe_j.json"
+LOG = HERE / "logs" / "godot_asset_probe_j.log"
+
+
+def main() -> int:
+    assert GODOT.is_file() and SRC.is_file()
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    DST.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(SRC, DST)
+    env = os.environ.copy()
+    env.pop("CARD_BOXER_3D", None)
+    env.pop("CARD_BOXER_FOE_VISUAL", None)
+    env["J_ASSET_DIR"] = str(OUTDIR)
+    t0 = time.perf_counter()
+    try:
+        proc = subprocess.run(
+            [str(GODOT), "--path", str(GAME), "--resolution", "1280x720",
+             "--quit-after", "900", "--script",
+             "res://tests/asset_probe_j.gd"],
+            env=env, capture_output=True, timeout=300, cwd=str(GAME))
+        rc = proc.returncode
+        text = (proc.stdout + b"\n--- STDERR ---\n"
+                + proc.stderr).decode("utf-8", "replace")
+    except subprocess.TimeoutExpired as exc:
+        rc = -1
+        text = ((exc.stdout or b"") + b"\n--- TIMEOUT ---\n").decode(
+            "utf-8", "replace")
+    dt = round(time.perf_counter() - t0, 3)
+    LOG.parent.mkdir(parents=True, exist_ok=True)
+    LOG.write_text(text, encoding="utf-8")
+    marker = "JASSET_JSON "
+    line = next((l for l in text.splitlines()
+                 if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no marker"}
+    errors = text.count("SCRIPT ERROR") + text.count("Parse Error")
+    foe = payload.get("foe", {})
+    player = payload.get("player", {})
+    fmesh = foe.get("meshes", [{}])
+    pmesh = player.get("meshes", [{}])
+    checks = {
+        "rc": rc == 0,
+        "has_opengl": "OpenGL API" in text,
+        "no_script_errors": errors == 0,
+        "no_payload_error": "error" not in payload,
+        "three_shots": len(payload.get("shots", [])) == 3,
+        "all_png_ok": all(r.get("save_error") == 0
+                          and Path(r.get("path", "")).is_file()
+                          for r in payload.get("shots", [])),
+        "both_sv_png_written": all(
+            (OUTDIR / f"j-sv-{role}.png").is_file()
+            for role in ("foe", "player")),
+        "sv_rids_differ": (
+            foe.get("tex_instance_id") != player.get("tex_instance_id")
+            and foe.get("sv_instance_id") != player.get("sv_instance_id")),
+        "glb_paths_differ": foe.get("glb_path") != player.get("glb_path"),
+        "foe_mesh_verts": fmesh[0].get("verts") if fmesh else 0,
+        "player_mesh_verts": pmesh[0].get("verts") if pmesh else 0,
+        "albedo_paths_differ": (
+            fmesh[0].get("albedo") != pmesh[0].get("albedo")
+            if fmesh and pmesh else False),
+    }
+    # 数值型字段只作事实记录，不参与布尔判据。
+    bool_checks = {k: v for k, v in checks.items() if isinstance(v, bool)}
+    ok = all(bool_checks.values())
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps({
+        "run": {"seconds": dt, "returncode": rc, "script_errors": errors},
+        "payload": payload, "checks": checks,
+        "bool_failed": [k for k, v in bool_checks.items() if not v],
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"RUN {dt}s rc={rc} errors={errors}")
+    for role in ("foe", "player"):
+        d = payload.get(role, {})
+        print("LAYER", role, "glb", d.get("glb_path"),
+              "sv_rid", d.get("sv_rid"), "tex_rid", d.get("tex_rid"),
+              "meshes", d.get("meshes"))
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("ASSET_PROBE_J_OK" if ok else "ASSET_PROBE_J_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== J/tests/asset_probe_j.gd =====
+extends SceneTree
+## J 路线 P0c：引擎内读回两侧 3D 层的真实资产，定位「同源」是资产还是渲染。
+##
+## 同进程三帧：
+##   base      = 无 3D 层
+##   foe-only  = 只挂 foe 层
+##   both      = 再挂 player 层
+## 每帧额外把各层 SubViewport 的 ViewportTexture 单独存成 PNG，
+## 这样「2D 合成后看到什么」与「SubViewport 里到底渲了什么」能分开判。
+##
+## 跑法（必须带窗口）：
+##   J_ASSET_DIR=<abs> godot --path . --resolution 1280x720 \
+##     --quit-after 900 --script res://tests/asset_probe_j.gd
+
+const ArenaScene = preload("res://scenes/main.tscn")
+
+
+class Driver:
+	extends Node
+
+	const LayerScript = preload("res://scripts/fighter_3d_layer.gd")
+	const MOTION_P := "res://data/motion_input.json"
+	const MOTION_F := "res://data/motion_input_foe.json"
+	const WARM := 20
+
+	var arena: Node2D
+	var out_dir := ""
+	var motion_p: Dictionary = {}
+	var motion_f: Dictionary = {}
+	var initialized := false
+	var busy := false
+	var stage := 0
+	var wait := 0
+	var rows: Array = []
+
+	func _snap(name: String) -> void:
+		await RenderingServer.frame_post_draw
+		var img := get_viewport().get_texture().get_image()
+		var path := out_dir + "/j-" + name + ".png"
+		var err := img.save_png(path)
+		rows.append({"name": name, "path": path,
+			"w": img.get_width(), "h": img.get_height(),
+			"save_error": int(err)})
+
+	func _mesh_info(layer) -> Dictionary:
+		var out := {"glb_path": String(layer.glb_path),
+			"role": String(layer.role_id),
+			"sv_instance_id": 0, "tex_instance_id": 0,
+			"sv_size": [0, 0], "meshes": []}
+		if layer.sv == null:
+			return out
+		# Godot 4.5 的 SubViewport / ViewportTexture 都不是 CanvasItem，
+		# 没有 get_rid()；用 Object.get_instance_id() 判「是否同一个对象」。
+		out["sv_instance_id"] = int(layer.sv.get_instance_id())
+		out["sv_size"] = [layer.sv.size.x, layer.sv.size.y]
+		# layer 是无类型参数，:= 推不出 get_texture() 的返回类型；
+		# 用无类型 var，后面判空即可（GDScript Parse Error 实测踩到）。
+		var t = layer.sv.get_texture()
+		if t != null:
+			out["tex_instance_id"] = int(t.get_instance_id())
+			var im = t.get_image()
+			if im != null:
+				var p := out_dir + "/j-sv-" + String(layer.role_id) + ".png"
+				out["sv_png"] = p
+				out["sv_png_error"] = int(im.save_png(p))
+		_collect(layer.sv, out["meshes"], String(layer.role_id))
+		return out
+
+	func _collect(n: Node, rows: Array, role: String) -> void:
+		if n is MeshInstance3D:
+			var mi := n as MeshInstance3D
+			var row := {"name": mi.name, "surfaces": 0,
+				"verts": 0, "albedo": "", "material": ""}
+			if mi.mesh != null:
+				row["surfaces"] = mi.mesh.get_surface_count()
+				var arr = mi.mesh.surface_get_arrays(0)
+				if arr.size() > Mesh.ARRAY_VERTEX and arr[Mesh.ARRAY_VERTEX] != null:
+					row["verts"] = arr[Mesh.ARRAY_VERTEX].size()
+				var m = mi.mesh.surface_get_material(0)
+				if m != null:
+					row["material"] = m.get_class()
+					if m is StandardMaterial3D:
+						var sm := m as StandardMaterial3D
+						if sm.albedo_texture != null:
+							row["albedo"] = sm.albedo_texture.resource_path
+							# 直接读回引擎里这张贴图的像素，排除「磁盘 PNG 是暗的、
+							# 但 .godot 导入缓存串成玩家亮图」这一假设。
+							var ai = sm.albedo_texture.get_image()
+							if ai != null:
+								var p := out_dir + "/j-albedo-" + role + ".png"
+								row["albedo_png"] = p
+								row["albedo_png_error"] = int(ai.save_png(p))
+								var acc := Vector3.ZERO
+								var steps := 16
+								for gy in range(steps):
+									for gx in range(steps):
+										var px := ai.get_pixel(
+											int(float(gx) * ai.get_width() / steps),
+											int(float(gy) * ai.get_height() / steps))
+										acc += Vector3(px.r, px.g, px.b)
+								acc /= float(steps * steps)
+								row["albedo_sample_mean"] = [acc.x, acc.y, acc.z]
+						row["albedo_color"] = [
+							sm.albedo_color.r, sm.albedo_color.g,
+							sm.albedo_color.b]
+			rows.append(row)
+		for c in n.get_children():
+			_collect(c, rows, role)
+
+	func _attach_foe() -> void:
+		var lf := LayerScript.new()
+		lf.configure("foe", LayerScript.FOE_GLB_PATH,
+				LayerScript.DEFAULT_FOE_YAW, false)
+		arena.world.add_child(lf)
+		if lf.setup(motion_f):
+			arena.layer_3d_foe = lf
+			arena.motion_3d_foe = motion_f
+			lf.position = arena.enemy.position + arena.enemy.visual_shift
+			arena.enemy.draw_3d_override = true
+
+	func _attach_player() -> void:
+		var lp := LayerScript.new()
+		arena.world.add_child(lp)
+		if lp.setup(motion_p):
+			arena.layer_3d = lp
+			arena.motion_3d = motion_p
+			lp.position = arena.player.position + arena.player.visual_shift
+			arena.player.draw_3d_override = true
+
+	func _process(_d: float) -> void:
+		if busy:
+			return
+		busy = true
+		if not initialized:
+			initialized = true
+			arena.paused = true
+			for c in arena.get_children():
+				if c.name != "World":
+					c.visible = false
+			var pp: Variant = JSON.parse_string(
+					FileAccess.get_file_as_string(MOTION_P))
+			if pp is Dictionary:
+				motion_p = pp
+			var ff: Variant = JSON.parse_string(
+					FileAccess.get_file_as_string(MOTION_F))
+			if ff is Dictionary:
+				motion_f = ff
+		wait += 1
+		if wait < WARM:
+			busy = false
+			return
+		wait = 0
+		if stage == 0:
+			await _snap("base")
+			_attach_foe()
+		elif stage == 1:
+			await _snap("foe-only")
+			_attach_player()
+		elif stage == 2:
+			await _snap("both")
+			var payload := {
+				"shots": rows,
+				"foe": _mesh_info(arena.layer_3d_foe)
+						if arena.layer_3d_foe != null else {},
+				"player": _mesh_info(arena.layer_3d)
+						if arena.layer_3d != null else {},
+			}
+			var f := FileAccess.open(out_dir + "/j_asset_result.json",
+					FileAccess.WRITE)
+			if f != null:
+				f.store_string(JSON.stringify(payload, "\t"))
+				f.close()
+			print("JASSET_JSON " + JSON.stringify(payload))
+			get_tree().quit(0)
+			return
+		stage += 1
+		busy = false
+
+
+func _init() -> void:
+	var out_dir := OS.get_environment("J_ASSET_DIR")
+	if out_dir == "":
+		print("JASSET_JSON " + JSON.stringify({"error": "J_ASSET_DIR missing"}))
+		quit(1)
+		return
+	DirAccess.make_dir_recursive_absolute(out_dir)
+	var inst: Node2D = (ArenaScene as PackedScene).instantiate()
+	root.add_child(inst)
+	var d := Driver.new()
+	d.arena = inst
+	d.out_dir = out_dir
+	root.add_child(d)
+	print("JASSET_START out=%s" % out_dir)
+
+
+===== J/J路线-造型规格.txt =====
+《牌拳》J 路线 · 对手怪造型重做规格（根治同源观感）
+日期：2026-11-12
+依据：11-07 对手怪造型规格.txt / 2D 概念图 / 11-08 图生 3D 负结果 /
+      I 路线 data/shape_root_j.json 与引擎内资产读回
+
+====================================================================
+0. 诊断先行：同源到底同源在哪（本轮实证，不靠肉眼下结论）
+====================================================================
+
+| 证据 | 数值 / 事实 | 排除什么 |
+|---|---|---|
+| GLB 结构 | game_foe 64,059 顶点 / skin 1 / bbox 1.216869×1.72×0.720506；game_player 57,934 / bbox 1.254475×1.72×0.769385 | 不是同一份几何被复用 |
+| 贴图 | foe baseColor 均值 [33.17,32.22,31.39]、近白占比 **0.0**、青色 0.119%；player 均值 [109.86,103.47,95.37]、近白 14.815%、青色 1.741% | 贴图不是同一张 |
+| 引擎内读回 | foe 层 `foe_HI_skinned` 64,059 顶点、albedo=`foe-rigged_texture_pbr_20250901.png`；player 层 `player_HI_skinned` 57,934、albedo 玩家图；两层 ViewportTexture / SubViewport 对象 ID 都不同 | 不是视口串味、不是资源引用错 |
+| 11-11 只挂 foe 层隔离帧 | 右侧是深灰覆面重装怪（与 11-08 概念图一致） | 3D 链路本身画得出怪人 |
+| 11-12 SubViewport 原图 | 重装怪身上**仍带**白/浅色长衫下摆、青色云纹、黑披风、青结晶头冠与红色头花 | **造型层真同源**：11-08 image-to-3D 把 V4b 的服装元素一起生成进去了 |
+
+结论：I 路线的 `canvas_item` tint 只把颜色拉成「亮银 vs 暗棕」，
+没有动剪影。要根治必须换掉造型部件，重做几何或至少重绘 UV 图案。
+这不是渲染 bug，改灯/材质/Shader 都解决不了。
+
+====================================================================
+1. 必须消除的 V4b 同源元素（逐项可复算）
+====================================================================
+
+1. 白色 / 浅色长衫下摆（两条长条布 + 青色云纹）
+2. 青色云纹 / 浪花图案
+3. 黑色长披风（及明黄披肩）
+4. 双环发髻、青结晶头冠、红色头花、长发飘带
+5. 太极圆牌 / 金绳结 / 红流苏
+6. 纤细四肢与「二游少女」头身比
+
+====================================================================
+2. 必须出现的盗洞暴徒语言（11-07 规格继承，不撤销）
+====================================================================
+
+| 部位 | 要求 |
+|---|---|
+| 头 | 覆面 / 工业全面罩 / 焊接头盔，无露肤、无表情眼、无发饰 |
+| 躯干 | 宽肩厚躯、改装施工辅助动力外骨骼、非制式拼装板甲 |
+| 肩 | 单侧青色以太结晶（小面积，唯一高饱和冷色）、铆钉 / 管线 / 补丁 |
+| 腰腿 | 破损工装围裙或警示条幅（**不是**长衫下摆）、厚底重工靴 |
+| 配色 | 炭黑 / 铁锈红 / 工业橙黄警示条纹为主，青色只作点缀 |
+| 禁令 | 不画武器、不做性化二创、不复刻具体 IP 角色 |
+
+====================================================================
+3. 可复算验收判据（最终引擎内截帧，不写死阈值来源）
+====================================================================
+
+| 编号 | 判据 | 口径 |
+|---|---|---|
+| J-01 | 敌我剪影可分 | 同相机同尺度正视剪影 IoU ≤ 0.60，或肩宽/身高差 ≥ 0.15 |
+| J-02 | 白衫下摆消失 | 对手角色掩膜内近白像素（RGB 均 > 200）占比 ≤ 2% |
+| J-03 | 青云纹消失 | 对手角色掩膜内青色特征像素占比 ≤ 0.5% |
+| J-04 | 覆面成立 | 头部 ROI 内不存在红花/双环/长发高饱和暖色团 |
+| J-05 | 玩家侧零变化 | 同进程 A/B 玩家 ROI changed_px = 0 |
+| J-06 | 可逆 / 零污染 | `CARD_BOXER_FOE_VISUAL=none` 与 H 原样逐像素一致；不设 `CARD_BOXER_3D` 时 `CHANGED_PIXELS=0` |
+| J-07 | 驱动链不断 | 13 骨 + skin、72/73 帧可驱动、`motion_input_foe.json` 按新 rest 重建 |
+| J-08 | 全量回归 | 15 套引擎内自检全绿 |
+
+口径说明：J-02/J-03 的基线来自 data/texture_pair_j.json 的
+`near_white_ratio_512` / `cyan_ratio_512`（贴图级）与 I 路线
+data/visual_diag_i.json 的角色掩膜口径（渲染级），两者不可混用。
+
+====================================================================
+4. 三条候选链与成本账（先算账再动手）
+====================================================================
+
+| 链 | 做法 | 代价 | 主要风险 |
+|---|---|---|---|
+| J1 重生成 3D | 用 2D 概念图重跑 image-to-3D，prompt 明确禁白衫/云纹/头冠 | 生成 1 次 3~5 分钟（**有每日配额 5/5 限制**）＋ Voxel 连续壳、13 骨权重、SURFACE_DEFORM、GLB 导出、rest 重建、Godot 导入、A/B 全链 | 生成结果不可控，可能又带 V4b 元素；配额可能已被占满 |
+| J2 壳级剪影手术 | 在现有高模上按连通壳空间位置删除白衫/披风/头冠，补程序化覆面头盔与工业围裙，再重跑绑定链 | 不需要生成服务 / 不需要配额；但要重跑 Voxel+绑骨+导出+rest | 删顶点会破坏 SURFACE_DEFORM 顶点索引；新部件 UV/材质要另开槽 |
+| J3 只重绘 UV 图案 | 把 foe baseColor 里的白衫/云纹/头冠区域改画成警示涂装 | **零绑定链重跑**，最快 | 剪影不变（下摆/披风/头冠形状还在），只能算半根治 |
+
+工程师选 A 时要的是「根治同源观感」，J3 不满足 J-01。
+优先 J2（可控、可复算、不依赖配额）；J1 作为生成配额可用时的
+造型来源备选。任何一条都必须保留 I 路线已验收的
+玩家侧零变化 / off 开关 / 默认关零污染三条性质。
+
+====================================================================
+5. 硬规则
+====================================================================
+
+- 不改判定 / HP / 伤害 / 牌型 / 硬直 / 阶段时长。
+- 不改 `arena.gd` / `fighter.gd`；`fighter_3d_layer.gd` 只在必要时改开关。
+- 先备份：源 `.blend`、工程 `assets/3d/foe-rigged.glb` 与三张 PBR、
+  `motion_input_foe.json`，逐文件 sha256。
+- 负结果原样留档，不许把「生成失败 / 配额阻塞 / 变形撕裂」包装成通过。
+- 看图判断与像素判据分开写：判据只守能复算的，造型好看与否如实说明。
+
+====================================================================
+6. 订正（2026-11-12 r2，实证推翻 §0 的依据与 §4 的优先链）
+====================================================================
+本节不删原文：§0/§4 是动手前的判断，作为负结果原样留档。以下为
+r1 手术失败 + 回滚后重新量出来的事实。
+
+6.1 §0 第 16 行「造型层真同源」的依据用错了图
+  * `shots/asset_v1/j-sv-foe.png` 是**未经 canvas tint 的 SubViewport
+    原图**，不是玩家最终看到的合成帧。
+  * foe baseColor 4096² 实测（diag_motif_j.py，1024² 分析）：
+    near_white = **0.0%**、cyan = 0.1405%、hot_red = 0.001%；
+    player 近白 14.98%、青 1.66%。foe 贴图里根本没有白色布。
+  * 但 v1 SubViewport 原图的 foe 角色掩膜内 near_white = **20.86%**
+    （比 player 的 17.04% 还高）。这多出来的白不是贴图，是
+    I 路线 `data/rootcause_i.json` 已经证实的渲染链：
+    四盏高强方向灯 + `metallic=1.0` 抑制 albedo 漫反射，
+    镜面高光把暗灰照白；贴图 70.99 的亮度差被吃成渲染 -11.18。
+  * 所以「白衫下摆 + 青云纹」在**最终合成帧**里已被 I 路线 tint
+    (`vec3(0.42,0.30,0.28)`) 清零：C0 掩膜 near_white = 0.0%、
+    cyan = 0.0%（probe_recolor_j.py）。§3 的 J-02 / J-03 判据
+    在动手前就已满足，不能再当作「根治」的证据。
+
+6.2 真正剩下的同源是「几何部件」，不是颜色
+  * 看 `boards/J-语义重绘探针.png`：C0/C1/C2 三档角色掩膜像素数
+    逐档完全相同（71,959），白衫下摆的长条形状、左侧黑披风、
+    头顶青冠/红花形状、站姿一个都没变。
+  * 2D canvas 层无论怎么调色都改不了剪影；改 3D 材质/灯又会串扰
+    玩家侧（I 路线 `player_leak_i.json`：玩家 ROI 变化 23.78%）。
+  * 改 baseColor 贴图同样不对症：metallic=1.0 + 强灯下 albedo
+    基本不参与成像。
+
+6.3 r1 壳级手术（J2）已证伪并回滚
+  * `build_foe_shape_j.py` 对 2,809 个连通壳按 bbox/质心粗分类，
+    对 SKIRT/CAPE/HEAD_TOP 做「顶点压缩 + UV 打补丁」。
+  * 结构 invariants 全过（64,024 顶点 / 79,998 面 / 1 UV /
+    1 材质 / 64,006 权重顶点，前后逐项相同），但看图
+    `shots/asset_probe/j-sv-foe.png`：黑披风被拉成一堆白色尖刺碎片，
+    白衫下摆、青云纹、青结晶头冠、红花**一个都没消掉**。
+  * 根因：① 压缩顶点只变形不删除，薄壳被拉成针状面；
+    ② 按 bbox 粗分类无法对应「青云纹/红花」这类语义部件，
+    而青云纹本质是贴图图案，几何手术碰不到；
+    ③ UV 补丁只覆盖 `p.vertices[0]` 命中的面。
+  * 已用 `rollback_shape_j.py` 逐字节还原工程 GLB 到 I 基线
+    0edcfe9e…（6/6 校验通过），失败产物/截帧/报告全部留在 J 目录。
+
+6.4 修订后的候选链（成本账，等工程师定方向）
+  | 链 | 能不能改剪影 | 代价 | 主要风险 |
+  |---|---|---|---|
+  | A 表现层语义重绘（C2 警示条纹） | 否 | shader 常量 + A/B + 变异；零资产改动 | 只是观感改善，不叫根治 |
+  | B 精确删壳 + 重导 GLB | 是 | 按 UV 岛精确定位目标壳 → 顶点塌缩到质心（不撕面）→ 重导 GLB + Godot 导入 | 分类精度仍需实证；补覆面头盔/围裙要新几何 |
+  | C 重生成 3D（J1） | 是 | 生成 1 次 + Voxel/13 骨/SURFACE_DEFORM/GLB/rest/Godot 全链 | 每日配额 5 次、结果不可控、可能又带 V4b 元素 |
+  | D 维持现状归档 | 否 | 0 | 同源观感留存 |
+
+  备注：J-01 口径也需订正。diag_motif_j.py 实测两侧
+  bbox 归一化外接框 IoU 上界 = 0.90236、肩宽/身高差 = 0.06792，
+  两条都不满足 §3 的 ≤0.60 / ≥0.15。即剪影本来就相近，
+  §4 写「J3 不满足 J-01」这点成立，但 J2 同样没做到。
+
+
+===== J/J路线-负结果与方向订正.txt =====
+《牌拳》J 路线 · r1 负结果与 r2 方向订正
+日期：2026-11-12
+状态：诊断收口，游戏工程已回滚到 I 基线，等待工程师定方向
+
+====================================================================
+0. 结论先行
+====================================================================
+
+用户选 A「重做对手怪造型语言（根治同源观感）」后，第一版壳级剪影手术
+（J2）**失败**：黑披风被撕成尖刺碎片，白衫下摆 / 青云纹 / 青结晶头冠 /
+红花一个都没消掉。已逐字节回滚，工程 15/15 自检全绿。
+
+重新量化后，J 规格的核心前提被证据修正了两次：
+
+| 层 | 原判断 | 实测 | 结论 |
+|---|---|---|---|
+| 颜色 | 「重装怪身上仍带白/浅色长衫下摆、青色云纹」→ 要重做造型 | foe baseColor 近白 **0.0%**；I 路线 tint 后的合成帧掩膜近白 **0.0%**、青 **0.0%** | 颜色层早就不同源了，那句判断看的是**未经 tint 的 SubViewport 原图** |
+| 渲染 | 未纳入 J 规格 | `metallic=1.0` + 四盏高强灯把暗灰照出掩膜近白 20.86% | I 路线 `rootcause_i.json` 已定位，且改 3D 材质会串扰玩家侧 23.78% |
+| 几何 | 「造型层真同源」 | 长衫下摆的长条形状、黑披风、头顶装饰、站姿确实两侧一致；三档调色掩膜像素数逐档相同（71,959） | **这一层才是真同源**，且 canvas 层改不动 |
+
+一句话：**同源的是几何部件，不是颜色；能改几何的 J2 手法被证伪，
+能改颜色的表现层链早在 I 路线就用过了。**
+
+====================================================================
+1. 时间线（每一步都有落盘证据）
+====================================================================
+
+| 步骤 | 动作 | 证据 |
+|---|---|---|
+| 1 | `diag_shape_root.py` / `diag_texture_pair_j.py` / `probe_shells_j.py` 诊断根因，出三张板 | `data/shape_root_j.json`、`data/texture_pair_j.json`、`data/shells_j.json`、`boards/` |
+| 2 | `J路线-造型规格.txt` 定 J-01~J-08 判据与 J1/J2/J3 三条链，优先 J2 | 本目录规格文件 |
+| 3 | `build_foe_shape_j.py` 做 2,809 壳分类 + 顶点压缩 + UV 补丁，重导 `foe-rigged-v2.glb` | `logs/build_foe_shape_j.out`、`data/build_shape_j.json` |
+| 4 | `install_foe_v2_j.py` 把 v2 装进游戏工程并 Godot reimport | `data/install_j.json`、`logs/godot_reimport_j.log` |
+| 5 | `run_asset_probe_j.py` 引擎内读回 + 截帧 | `logs/run_asset_probe_v2_j.out`、`shots/asset_probe/` |
+| 6 | 看图证伪 → 写 `rollback_shape_j.py` | `shots/asset_probe/j-sv-foe.png` |
+| 7 | **本轮**：执行回滚、复跑诊断、量化基线、离线 shader 探针、全量自检 | `data/rollback_j.json`、`data/motif_baseline_j.json`、`data/recolor_probe_j.json`、`data/all_checks_j.json` |
+
+====================================================================
+2. r1 手术为什么失败（不粉饰）
+====================================================================
+
+做法：按连通壳的 bbox / 质心粗分类（`SKIRT` / `CAPE_OR_PANEL` /
+`HEAD_TOP` 小壳），对命中顶点做轴向压缩，并把命中面的 UV 全打到贴图
+左上暗钢 patch。
+
+结构 invariants 全部成立，且当时被当成「成功」打印：
+
+  SURGERY {'SKIRT': 1684, 'HEAD_ORNAMENT': 3532, 'CAPE_OR_PANEL': 2122}
+          moved 7338 / uv_loops 31461
+  INTEGRITY verts 64024→64024, polygons 79998→79998, uv_layers 1,
+            materials 1, textures_same True, weighted 64006→64006
+  EXPORT 42917240 B f30c31a1b90234f6
+
+但看图 `shots/asset_probe/j-sv-foe.png`：
+
+  * 左侧完整黑披风变成一堆白/黑细长尖刺碎片（新增缺陷）；
+  * 前腿的白色长条下摆 + 青云纹仍在；
+  * 头顶青结晶冠 + 红花仍在原位；
+  * 站姿、肩甲、靴子没动。
+
+三条根因：
+
+1. **压缩顶点只变形、不删除**。薄壳跨压缩中心时被拉成针状面，
+   于是「隐藏」变成「撕碎」。正确手法应是塌缩到壳自身质心
+   （零面积面 ≈ 不可见），而不是按外部坐标轴缩放。
+2. **按 bbox/质心分类对不上语义部件**。「青云纹」本质是贴图图案，
+   几何手术碰不到；「红花/头冠」与头盔连成片时会被判进 BODY/HEAD。
+   `boards/J-壳分类上色.png` 可见分区是按区域而非按部件。
+3. **UV 补丁覆盖不全**：`if p.vertices[0] not in target_ids: continue`
+   只按面首顶点判定，且目标集本身就没覆盖白衫对应的 UV 岛。
+
+流程失误也要记：`diag_texture_pair_j.py` 的文件头注释**已经预警**
+「若 foe 贴图整体暗灰、没有大面积纯白下摆，而截帧里 foe 侧却有纯白长条，
+则同源不是造型同源，重做造型完全不对症」。这条预警没被采纳就往下做了 J2。
+
+====================================================================
+3. 回滚证明（可复算）
+====================================================================
+
+`python rollback_shape_j.py`（输出 `logs/rollback_shape_j.out`、
+`data/rollback_j.json`、`logs/godot_reimport_rollback_j.log`）：
+
+  RESTORED 42914328 0edcfe9e455f3c8c
+  CHECK glb_sha_matches_i_baseline True
+  CHECK glb_size_matches True
+  CHECK import_file_untouched True
+  CHECK backup_still_intact True
+  CHECK reimport_rc0 True
+  CHECK no_script_errors True
+  ROLLBACK_J_OK
+
+失败的 GLB / 截帧 / 报告**全部留在 J 目录**，只把可运行工程恢复。
+`orig/pre-shape/foe-rigged.glb` 与 `.glb.import` 是 I 基线备份。
+
+`python run_all_checks_j.py` → `ALL_CHECKS_J 15/15 ALL GREEN`，
+逐套日志在 `logs/checks/`，汇总在 `data/all_checks_j.json`。
+
+游戏源码零改动：J 路线没有落任何 `.gd` / `.tscn` / `project.godot`
+改动；`new-files.diff` 的「工程状态 sha256 对账」段逐文件给哈希。
+
+====================================================================
+4. r2 重新量化（三份新证据）
+====================================================================
+
+4.1 `diag_motif_j.py` → `data/motif_baseline_j.json`
+
+| 量 | player | foe |
+|---|---|---|
+| baseColor 4096² 近白占比（1024² 分析） | 0.149801 | **0.0** |
+| baseColor 青色占比 | 0.016624 | 0.001405 |
+| baseColor 高饱和暖红占比 | 0.012238 | 0.00001 |
+| v1 SubViewport 掩膜近白 | 0.170427 | **0.208647** |
+| v1 SubViewport 掩膜青色 | 0.030086 | 0.034256 |
+| 肩宽 / 身高 | 0.51068 | 0.44276 |
+
+「贴图 0% 白 / 渲染 20.86% 白」的差额就是渲染链高光，不是资产。
+bbox 归一化外接框 IoU 上界 0.90236、肩宽差 0.06792 →
+规格 J-01 的两条口径（IoU ≤ 0.60 或差 ≥ 0.15）**都不满足**：
+两侧剪影本来就相近，此前「J3 不满足 J-01」的推断成立，但 J2 也没做到。
+
+4.2 `probe_recolor_j.py` → `data/recolor_probe_j.json`，12/12 PASS
+
+| 档 | 掩膜像素 | 近白 | 青 | 橙警示 | 平均 RGB |
+|---|---|---|---|---|---|
+| v1 原图（无 tint） | 71,959 | 0.208647 | 0.034256 | 0.005406 | 132/126/121 |
+| C0 现状 tint | 71,959 | **0.0** | **0.0** | 0.0 | 55/37/33 |
+| C1 暗钢覆面 | 71,959 | 0.0 | 0.0 | 0.0 | 46/28/24 |
+| C2 工业警示 | 71,959 | 0.0 | 0.0 | 0.134729 | 63/40/24 |
+
+看 `boards/J-语义重绘探针.png`：C2 的橙黑斜向警示条纹把白衫下摆的
+**色彩语义**换成了工业条幅，观感改善明显；但四档掩膜像素数逐档相同，
+披风 / 头饰 / 站姿形状一个没变。第一版判据里
+`c0_keeps_white` 写错了（假设 tint 后仍有白），实测为 0，
+已订正为 `i_route_tint_already_removes_white/cyan` 并加入
+`all_modes_keep_identical_silhouette` 这条承重断言。
+
+4.3 I 路线既有记录（复用，不重跑）
+
+`I路线-视觉区分度/data/rootcause_i.json`：贴图亮度差 70.99 被
+四盏高强灯 + `metallic=1.0` 吃成渲染 -11.18；
+`material_i.json`：两侧 albedo 路径不同但 metallic/roughness 都是 1.0；
+`player_leak_i.json`：动 3D 材质时玩家 ROI 变化 23.78%（串扰实证）。
+
+====================================================================
+5. 规格订正索引
+====================================================================
+
+`J路线-造型规格.txt` §6 已追加订正（原文不删，负结果原样留档）：
+
+  * §0 第 16 行依据用错图：那是未 tint 的 SubViewport 原图；
+  * §3 的 J-02 / J-03 在动手前已被 I 路线满足，不能再当根治证据；
+  * §4 的 J1/J2/J3 优先链改为 A/B/C/D 四条（见下）；
+  * J-01 剪影口径需重写，现有两条阈值在当前侧面战斗相机下都不成立。
+
+====================================================================
+6. 修订候选链与成本账（等工程师定方向）
+====================================================================
+
+| 链 | 改剪影 | 代价 | 风险 | 能守的性质 |
+|---|---|---|---|---|
+| **A 表现层语义重绘**（接线 C2 警示条纹） | 否 | 只改 `fighter_3d_layer.gd` 的 canvas shader 常量 + 备份 / A/B / 变异；零资产改动、零绑定链重跑 | 只是观感改善，不叫根治；橙条纹随角色动作不会跟着变形 | 玩家侧零变化、off 可逆、默认关零污染（I 路线已验） |
+| **B 精确删壳 + 重导 GLB** | 是 | 按 UV 岛精确定位白衫下摆/披风/头冠 → 顶点**塌缩到壳质心**（不撕面）→ 重导 GLB + Godot 导入；顶点数不变则不必重跑 Voxel/绑骨 | 语义定位精度仍需先做隔离上色实证；补覆面头盔/工装围裙要新几何与 UV 槽 | 驱动链不断、13 骨 skin 保留 |
+| **C 重生成 3D（J1）** | 是 | 生成 1 次 + Voxel 连续壳 / 13 骨 / SURFACE_DEFORM / GLB / rest 重建 / Godot 导入 / A/B 全链 | 每日配额 5 次限制、结果不可控、可能又带 V4b 元素（11-08 就是这样） | 唯一能真换造型语言的路 |
+| **D 维持现状归档** | 否 | 0 | 同源观感留存 | — |
+
+建议：若目标是「看得出来是两个不同角色」，A 已经够且当天可收口；
+若目标是「根治」，只有 B/C，且 B 必须先花一轮做
+「哪些 UV 岛对应哪些部件」的隔离上色实证，否则会重演 r1。
+
+====================================================================
+7. 复算命令
+====================================================================
+
+在工程 venv 下，工作目录切到 `J路线-造型重做/`：
+
+  python diag_shape_root.py        # GLB 结构根因（既有）
+  python diag_texture_pair_j.py    # 两侧 baseColor 对照（既有）
+  python diag_motif_j.py           # 同源特征 + 剪影基线
+  python probe_recolor_j.py        # 三档语义重绘离线探针
+  python rollback_shape_j.py       # 幂等回滚（可重复执行）
+  python run_all_checks_j.py       # 15 套引擎内自检
+  python make_filelist_j.py        # 清单 + 工程状态哈希对账
+
+看图文件：`boards/J-两侧baseColor对照.png`（贴图）、
+`boards/J-壳分类上色.png`（r1 分类）、
+`boards/J-语义重绘探针.png`（四档效果）、
+`shots/asset_v1/j-both.png`（I 路线最终合成帧）、
+`shots/asset_probe/j-sv-foe.png`（r1 手术失败帧）。
+
+====================================================================
+8. 没做的部分（如实交代）
+====================================================================
+
+* 没有把 C2 shader 接进游戏源码 —— A 链只做了离线模拟，未做引擎内 A/B，
+  也未做变异验证；所以「C2 在真实游戏里长什么样」仍是待验证命题。
+* 没有重跑 J1 生成、没有做 B 链的 UV 岛隔离上色，也没有新增任何几何。
+* 没有重跑 I 路线的 `verify_i.py` / `mutation_i.py`；本轮用
+  `run_all_checks_j.py` 的 15/15 证明工程可运行，不等于重验 I 的判据。
+* 没有改 `arena.gd` / `fighter.gd` / `hud.gd` / 判定 / 阶段时长。
+* Task #160 诊断完成；#161~#164 保持 pending，等方向确定后再重排。
+
+
+===== J/data/asset_probe_j.json =====
+{
+  "run": {
+    "seconds": 12.6,
+    "returncode": 0,
+    "script_errors": 0
+  },
+  "payload": {
+    "foe": {
+      "glb_path": "res://assets/3d/foe-rigged.glb",
+      "meshes": [
+        {
+          "albedo": "res://assets/3d/foe-rigged_texture_pbr_20250901.png",
+          "albedo_color": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "albedo_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\shots\\asset_probe/j-albedo-foe.png",
+          "albedo_png_error": 0,
+          "albedo_sample_mean": [
+            0.118244476616383,
+            0.116681955754757,
+            0.114169709384441
+          ],
+          "material": "StandardMaterial3D",
+          "name": "foe_HI_skinned_V2",
+          "surfaces": 1,
+          "verts": 64115
+        }
+      ],
+      "role": "foe",
+      "sv_instance_id": 35416704458,
+      "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\shots\\asset_probe/j-sv-foe.png",
+      "sv_png_error": 0,
+      "sv_size": [
+        420,
+        520
+      ],
+      "tex_instance_id": -9223372001404516916
+    },
+    "player": {
+      "glb_path": "res://assets/3d/player-rigged.glb",
+      "meshes": [
+        {
+          "albedo": "res://assets/3d/player-rigged_texture_pbr_20250901.png",
+          "albedo_color": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "albedo_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\shots\\asset_probe/j-albedo-player.png",
+          "albedo_png_error": 0,
+          "albedo_sample_mean": [
+            0.399555414915085,
+            0.383731245994568,
+            0.359083652496338
+          ],
+          "material": "StandardMaterial3D",
+          "name": "player_HI_skinned",
+          "surfaces": 1,
+          "verts": 57934
+        }
+      ],
+      "role": "player",
+      "sv_instance_id": 37346084309,
+      "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\shots\\asset_probe/j-sv-player.png",
+      "sv_png_error": 0,
+      "sv_size": [
+        420,
+        520
+      ],
+      "tex_instance_id": -9223371999475137050
+    },
+    "shots": [
+      {
+        "h": 720,
+        "name": "base",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\shots\\asset_probe/j-base.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "foe-only",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\shots\\asset_probe/j-foe-only.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "both",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\shots\\asset_probe/j-both.png",
+        "save_error": 0,
+        "w": 1280
+      }
+    ]
+  },
+  "checks": {
+    "rc": true,
+    "has_opengl": true,
+    "no_script_errors": true,
+    "no_payload_error": true,
+    "three_shots": true,
+    "all_png_ok": true,
+    "both_sv_png_written": true,
+    "sv_rids_differ": true,
+    "glb_paths_differ": true,
+    "foe_mesh_verts": 64115,
+    "player_mesh_verts": 57934,
+    "albedo_paths_differ": true
+  },
+  "bool_failed": [],
+  "ok": true
+}
+
+
+===== J/data/build_shape_j.json =====
+{
+  "blender": "5.2.3 LTS",
+  "source_blend": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\A路线-资产重做\\对手怪-可变形连续壳.blend",
+  "source_blend_sha256": "88dca6d28aa36caeda9f5af5564bf553aa8a9ee618846457b036fe3b1bd54239",
+  "source": {
+    "object": "node_0",
+    "verts": 64024,
+    "polygons": 79998,
+    "uv_layers": 1,
+    "textures": [
+      {
+        "image": "texture_pbr_20250901",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_normal",
+        "size": [
+          4096,
+          4096
+        ]
+      }
+    ]
+  },
+  "rig": {
+    "bones": [
+      "hips",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "upperarm_f",
+      "forearm_f",
+      "upperarm_b",
+      "forearm_b",
+      "thigh_f",
+      "shin_f",
+      "thigh_b",
+      "shin_b"
+    ]
+  },
+  "shells": 2809,
+  "surgery": {
+    "params": {
+      "SKIRT": [
+        0.95,
+        0.45,
+        0.72
+      ],
+      "CAPE": [
+        0.85,
+        0.5,
+        0.55,
+        0.6
+      ],
+      "HEAD": [
+        200,
+        0.45,
+        0.12
+      ],
+      "uv_patch": [
+        0.1,
+        0.88
+      ],
+      "uv_span": 0.018
+    },
+    "target_verts": {
+      "SKIRT": 1684,
+      "HEAD_ORNAMENT": 3532,
+      "CAPE_OR_PANEL": 2122
+    },
+    "moved_verts": 7338,
+    "uv_loops_rewritten": 31461,
+    "uv_patch_linear_rgb": [
+      0.1387,
+      0.1313,
+      0.1259
+    ]
+  },
+  "integrity": {
+    "verts_before": 64024,
+    "verts_after": 64024,
+    "polygons_before": 79998,
+    "polygons_after": 79998,
+    "uv_layers": 1,
+    "materials": 1,
+    "textures_same": true,
+    "weighted_before": 64006,
+    "weighted_after": 64006
+  },
+  "export": {
+    "file": "foe-rigged-v2.glb",
+    "bytes": 42917240,
+    "sha256": "f30c31a1b90234f6c9b77600c272f6c9c9b4c8304f88659cd528ad87c1394b92",
+    "export_apply": false,
+    "export_skins": true
+  }
+}
+
+
+===== J/data/install_j.json =====
+{
+  "source": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\foe-rigged-v2.glb",
+  "source_sha256": "f30c31a1b90234f6c9b77600c272f6c9c9b4c8304f88659cd528ad87c1394b92",
+  "destination": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\assets\\3d\\foe-rigged.glb",
+  "backup_dir": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\orig\\pre-shape",
+  "before": {
+    "glb_bytes": 42914328,
+    "glb_sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+    "import_bytes": 1046,
+    "import_sha256": "63132d5c5f857641c969fd9bb0a5fee3cda97983be13036ff6b7db64e17e208f"
+  },
+  "after": {
+    "glb_bytes": 42917240,
+    "glb_sha256": "f30c31a1b90234f6c9b77600c272f6c9c9b4c8304f88659cd528ad87c1394b92",
+    "import_bytes": 1046,
+    "import_sha256": "63132d5c5f857641c969fd9bb0a5fee3cda97983be13036ff6b7db64e17e208f"
+  },
+  "reimport": {
+    "seconds": 11.223,
+    "returncode": 0,
+    "script_errors": 0
+  },
+  "checks": {
+    "backup_verified": true,
+    "glb_replaced": true,
+    "import_file_untouched": true,
+    "reimport_rc0": true,
+    "no_script_errors": true,
+    "has_opengl_marker_or_clean": true
+  },
+  "failed": [],
+  "ok": true
+}
+
+
+===== J/data/motif_baseline_j.json =====
+{
+  "texture": {
+    "player": {
+      "file": "player-rigged_texture_pbr_20250901.png",
+      "orig_size": [
+        4096,
+        4096
+      ],
+      "sha256": "9fc25cf63871573f4e80686c3a178f2cf93c733538a8df1b7ee84dbc3537fdb3",
+      "analyzed_size": [
+        1024,
+        1024
+      ],
+      "counts": {
+        "near_white": 157078,
+        "cyan": 17432,
+        "hot_red": 12832
+      },
+      "ratios": {
+        "near_white": 0.149801,
+        "cyan": 0.016624,
+        "hot_red": 0.012238
+      },
+      "motif_grid": [
+        [
+          52972,
+          18190,
+          3218,
+          9402
+        ],
+        [
+          30854,
+          20715,
+          3884,
+          4093
+        ],
+        [
+          1866,
+          5135,
+          3449,
+          4881
+        ],
+        [
+          9873,
+          8782,
+          5114,
+          4889
+        ]
+      ],
+      "grid_max": 52972
+    },
+    "foe": {
+      "file": "foe-rigged_texture_pbr_20250901.png",
+      "orig_size": [
+        4096,
+        4096
+      ],
+      "sha256": "3c1076596ef22f2e45c6509e459f7e262053724ce05b803874ed53a927473d6a",
+      "analyzed_size": [
+        1024,
+        1024
+      ],
+      "counts": {
+        "near_white": 0,
+        "cyan": 1473,
+        "hot_red": 10
+      },
+      "ratios": {
+        "near_white": 0.0,
+        "cyan": 0.001405,
+        "hot_red": 1e-05
+      },
+      "motif_grid": [
+        [
+          7,
+          20,
+          25,
+          86
+        ],
+        [
+          29,
+          53,
+          30,
+          155
+        ],
+        [
+          28,
+          38,
+          171,
+          29
+        ],
+        [
+          28,
+          108,
+          480,
+          196
+        ]
+      ],
+      "grid_max": 480
+    }
+  },
+  "subviewport_v1": {
+    "player": {
+      "size": [
+        420,
+        520
+      ],
+      "mask_kind": "alpha>127",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "mask_px": 74953,
+      "bbox": [
+        48,
+        39,
+        345,
+        507
+      ],
+      "height_px": 468,
+      "shoulder_px": 239,
+      "shoulder_over_height": 0.51068,
+      "near_white_ratio": 0.170427,
+      "cyan_ratio": 0.030086,
+      "hot_red_ratio": 0.006204,
+      "near_white_px": 12774,
+      "cyan_px": 2255,
+      "hot_red_px": 465
+    },
+    "foe": {
+      "size": [
+        420,
+        520
+      ],
+      "mask_kind": "alpha>127",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "mask_px": 71959,
+      "bbox": [
+        107,
+        43,
+        375,
+        506
+      ],
+      "height_px": 463,
+      "shoulder_px": 205,
+      "shoulder_over_height": 0.44276,
+      "near_white_ratio": 0.208647,
+      "cyan_ratio": 0.034256,
+      "hot_red_ratio": 0.003919,
+      "near_white_px": 15014,
+      "cyan_px": 2465,
+      "hot_red_px": 282
+    }
+  },
+  "silhouette": {
+    "bbox_iou_upper_bound": 0.90236,
+    "shoulder_delta": 0.06792,
+    "j01_already_satisfied": false
+  },
+  "board": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\boards\\J-同源元素定位.png",
+  "board_bytes": 290322,
+  "checks": {
+    "both_textures_4096": true,
+    "both_sv_masks_nonempty": true,
+    "foe_texture_has_no_large_white": true,
+    "player_texture_has_large_white": true,
+    "board_written": true
+  },
+  "failed": [],
+  "ok": true
+}
+
+
+===== J/data/recolor_probe_j.json =====
+{
+  "source": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\shots\\asset_v1\\j-sv-foe.png",
+  "tint": [
+    0.42,
+    0.3,
+    0.28
+  ],
+  "stats": {
+    "source": {
+      "mask_px": 71959,
+      "near_white_ratio": 0.208647,
+      "cyan_ratio": 0.034256,
+      "hot_red_ratio": 0.003919,
+      "warning_orange_ratio": 0.005406,
+      "mean_rgb": [
+        132.26,
+        126.41,
+        120.53
+      ]
+    },
+    "C0": {
+      "mask_px": 71959,
+      "near_white_ratio": 0.0,
+      "cyan_ratio": 0.0,
+      "hot_red_ratio": 0.0,
+      "warning_orange_ratio": 0.0,
+      "mean_rgb": [
+        55.16,
+        37.49,
+        33.3
+      ]
+    },
+    "C1": {
+      "mask_px": 71959,
+      "near_white_ratio": 0.0,
+      "cyan_ratio": 0.0,
+      "hot_red_ratio": 0.0,
+      "warning_orange_ratio": 0.0,
+      "mean_rgb": [
+        45.85,
+        28.28,
+        24.08
+      ]
+    },
+    "C2": {
+      "mask_px": 71959,
+      "near_white_ratio": 0.0,
+      "cyan_ratio": 0.0,
+      "hot_red_ratio": 0.0,
+      "warning_orange_ratio": 0.134729,
+      "mean_rgb": [
+        63.06,
+        39.54,
+        24.15
+      ]
+    },
+    "player_reference": {
+      "mask_px": 74953,
+      "near_white_ratio": 0.170427,
+      "cyan_ratio": 0.030086,
+      "hot_red_ratio": 0.006204,
+      "warning_orange_ratio": 0.005764,
+      "mean_rgb": [
+        112.74,
+        105.59,
+        99.89
+      ]
+    }
+  },
+  "board": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\boards\\J-语义重绘探针.png",
+  "board_bytes": 280124,
+  "conclusion": "I 路线 canvas tint 已把 foe 掩膜内近白/青特征清零；C1/C2 相对 C0 只改颜色，角色掩膜像素数逐档相同，证明 2D canvas 层无法改变剪影。C2 的橙黑警示条纹能把白衫下摆的色彩语义换成工业条幅，观感改善明显，但披风/头饰/站姿形状不变：表现层链是低成本观感改进，不是根治。要根治几何同源仍需精确删壳或重生成 3D。",
+  "checks": {
+    "source_is_rgba_with_alpha": true,
+    "source_has_high_white": true,
+    "i_route_tint_already_removes_white": true,
+    "i_route_tint_already_removes_cyan": true,
+    "c1_removes_white": true,
+    "c2_removes_white": true,
+    "c1_removes_cyan": true,
+    "c2_adds_warning_color": true,
+    "c1_darker_than_c0": true,
+    "all_modes_keep_identical_silhouette": true,
+    "player_reference_unchanged": true,
+    "board_written": true
+  },
+  "failed": [],
+  "ok": true
+}
+
+
+===== J/data/rollback_j.json =====
+{
+  "restored": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\assets\\3d\\foe-rigged.glb",
+  "from": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\orig\\pre-shape\\foe-rigged.glb",
+  "expected": {
+    "glb_bytes": 42914328,
+    "glb_sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+    "import_bytes": 1046,
+    "import_sha256": "63132d5c5f857641c969fd9bb0a5fee3cda97983be13036ff6b7db64e17e208f"
+  },
+  "actual": {
+    "glb_bytes": 42914328,
+    "glb_sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+    "import_sha256": "63132d5c5f857641c969fd9bb0a5fee3cda97983be13036ff6b7db64e17e208f"
+  },
+  "reimport": {
+    "seconds": 10.927,
+    "returncode": 0,
+    "script_errors": 0
+  },
+  "checks": {
+    "glb_sha_matches_i_baseline": true,
+    "glb_size_matches": true,
+    "import_file_untouched": true,
+    "backup_still_intact": true,
+    "reimport_rc0": true,
+    "no_script_errors": true
+  },
+  "failed": [],
+  "ok": true
+}
+
+
+===== J/data/shape_root_j.json =====
+{
+  "roi": [
+    [
+      361,
+      280,
+      487,
+      545
+    ],
+    [
+      793,
+      280,
+      921,
+      545
+    ]
+  ],
+  "board": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\boards\\J-现状左右特写.png",
+  "board_bytes": 1188107,
+  "shapes": {
+    "game_player": {
+      "file": "player-rigged.glb",
+      "bytes": 38478140,
+      "sha256": "80e5a1a03f446dd8a080e69524d4e78d97191fe56fcb30f86ed7e8c945fcab28",
+      "verts": 57934,
+      "pos_min": [
+        -0.6272372603416443,
+        0,
+        -0.384692519903183
+      ],
+      "pos_max": [
+        0.6272372603416443,
+        1.7200000286102295,
+        0.384692519903183
+      ],
+      "bbox_xyz": [
+        1.254475,
+        1.72,
+        0.769385
+      ],
+      "attributes": [
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "skins": 1,
+      "animations": 0,
+      "nodes": 16,
+      "node_names": [
+        "head",
+        "neck",
+        "forearm_b",
+        "upperarm_b",
+        "forearm_f",
+        "upperarm_f",
+        "chest",
+        "spine",
+        "shin_b",
+        "thigh_b",
+        "shin_f",
+        "thigh_f",
+        "hips",
+        "neutral_bone",
+        "e_apose_rig",
+        "player_HI_skinned"
+      ],
+      "images": [
+        "texture_pbr_20250901_normal",
+        "texture_pbr_20250901",
+        "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness"
+      ],
+      "materials": 1
+    },
+    "game_foe": {
+      "file": "foe-rigged.glb",
+      "bytes": 42914328,
+      "sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+      "verts": 64059,
+      "pos_min": [
+        -0.6084343791007996,
+        0,
+        -0.36025306582450867
+      ],
+      "pos_max": [
+        0.6084343791007996,
+        1.7200000286102295,
+        0.36025306582450867
+      ],
+      "bbox_xyz": [
+        1.216869,
+        1.72,
+        0.720506
+      ],
+      "attributes": [
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "skins": 1,
+      "animations": 0,
+      "nodes": 16,
+      "node_names": [
+        "head",
+        "neck",
+        "forearm_b",
+        "upperarm_b",
+        "forearm_f",
+        "upperarm_f",
+        "chest",
+        "spine",
+        "shin_b",
+        "thigh_b",
+        "shin_f",
+        "thigh_f",
+        "hips",
+        "neutral_bone",
+        "a_apose_rig",
+        "foe_HI_skinned"
+      ],
+      "images": [
+        "texture_pbr_20250901_normal",
+        "texture_pbr_20250901",
+        "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness"
+      ],
+      "materials": 1
+    },
+    "foe_v1_source": {
+      "file": "artifact_03.glb",
+      "bytes": 41628356,
+      "sha256": "e3ba93f0d61dace74af7b3fee70214aa96d3477f362f9188152801f77cc26707",
+      "verts": 64024,
+      "pos_min": [
+        -0.35456299781799316,
+        -0.2881680130958557,
+        -1.0145050287246704
+      ],
+      "pos_max": [
+        0.3631809949874878,
+        0.13680699467658997,
+        0
+      ],
+      "bbox_xyz": [
+        0.717744,
+        0.424975,
+        1.014505
+      ],
+      "attributes": [
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0"
+      ],
+      "skins": 0,
+      "animations": 0,
+      "nodes": 1,
+      "node_names": [
+        "node_0"
+      ],
+      "images": [
+        "texture_pbr_20250901_normal",
+        "texture_pbr_20250901",
+        "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness"
+      ],
+      "materials": 1
+    }
+  },
+  "h_inspect_foe": {
+    "file": "foe-rigged.glb",
+    "bytes": 42914328,
+    "sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+    "counts": {
+      "scenes": 1,
+      "nodes": 16,
+      "meshes": 1,
+      "materials": 1,
+      "textures": 3,
+      "images": 3,
+      "skins": 1,
+      "animations": 0,
+      "accessors": 7
+    },
+    "primitives": [
+      {
+        "mesh": 0,
+        "primitive": 0,
+        "attributes": [
+          "JOINTS_0",
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0",
+          "WEIGHTS_0"
+        ],
+        "verts": 64059,
+        "has_joints": true,
+        "has_weights": true,
+        "pos_min": [
+          -0.6084343791007996,
+          0,
+          -0.36025306582450867
+        ],
+        "pos_max": [
+          0.6084343791007996,
+          1.7200000286102295,
+          0.36025306582450867
+        ]
+      }
+    ],
+    "skinned_nodes": [
+      {
+        "node": 15,
+        "name": "foe_HI_skinned",
+        "skin": 0,
+        "mesh": 0
+      }
+    ],
+    "skins": [
+      {
+        "joints": 14,
+        "has_inverse_bind": true
+      }
+    ],
+    "images": [
+      {
+        "index": 0,
+        "bytes": 8934769,
+        "sha256": "ed4d58cd90dd1419746a26926e80e0912f23ed83fdae8a9d881629e7e848cd9f",
+        "name": "texture_pbr_20250901_normal"
+      },
+      {
+        "index": 1,
+        "bytes": 15782150,
+        "sha256": "3c1076596ef22f2e45c6509e459f7e262053724ce05b803874ed53a927473d6a",
+        "name": "texture_pbr_20250901"
+      },
+      {
+        "index": 2,
+        "bytes": 14380706,
+        "sha256": "c87454eacff12946de4b70254b0dbe0fe822fd93d8896efa79af5663f2cdff7e",
+        "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness"
+      }
+    ],
+    "joint_node_names": [
+      "hips",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "upperarm_b",
+      "forearm_b",
+      "upperarm_f",
+      "forearm_f",
+      "thigh_b",
+      "shin_b",
+      "thigh_f",
+      "shin_f",
+      "neutral_bone"
+    ]
+  },
+  "v1_source_inspect": {
+    "vertices_total": 64024,
+    "connected_shells_unionfind": 2809,
+    "has_skin": false
+  },
+  "foe_basecolor_png_bytes": 15782150,
+  "checks": {
+    "three_glbs_parsed": true,
+    "game_foe_has_skin": true,
+    "game_foe_verts_match_v1_source": true,
+    "source_model_is_unskinned": true,
+    "foe_and_player_geometry_differ": true,
+    "foe_basecolor_size_matches_v1_zip": true,
+    "h_export_verts_match_game_glb": true,
+    "board_written": true
+  },
+  "failed": [],
+  "ok": true
+}
+
+
+===== J/data/shells_j.json =====
+{
+  "source_blend": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\A路线-资产重做\\对手怪-可变形连续壳.blend",
+  "object": "node_0",
+  "verts": 64024,
+  "polygons": 79998,
+  "shells": 2809,
+  "by_region": {
+    "BODY": {
+      "shells": 1744,
+      "verts": 38133
+    },
+    "SKIRT": {
+      "shells": 19,
+      "verts": 1684
+    },
+    "BOOTS": {
+      "shells": 465,
+      "verts": 9143
+    },
+    "HEAD_TOP": {
+      "shells": 174,
+      "verts": 4947
+    },
+    "HEAD": {
+      "shells": 405,
+      "verts": 7995
+    },
+    "CAPE_OR_PANEL": {
+      "shells": 2,
+      "verts": 2122
+    }
+  },
+  "top20": [
+    {
+      "root": 52129,
+      "verts": 1134,
+      "lo": [
+        -0.3061,
+        -0.0353,
+        0.1151
+      ],
+      "hi": [
+        0.2933,
+        0.3563,
+        1.5457
+      ],
+      "centroid": [
+        -0.0038,
+        0.1867,
+        0.8783
+      ],
+      "region": "CAPE_OR_PANEL"
+    },
+    {
+      "root": 63424,
+      "verts": 988,
+      "lo": [
+        -0.3055,
+        0.0486,
+        0.1141
+      ],
+      "hi": [
+        0.2905,
+        0.3595,
+        1.426
+      ],
+      "centroid": [
+        0.0036,
+        0.2085,
+        0.7566
+      ],
+      "region": "CAPE_OR_PANEL"
+    },
+    {
+      "root": 33453,
+      "verts": 345,
+      "lo": [
+        -0.2088,
+        -0.0245,
+        1.14
+      ],
+      "hi": [
+        0.2061,
+        0.0734,
+        1.4259
+      ],
+      "centroid": [
+        0.0046,
+        0.0503,
+        1.2948
+      ],
+      "region": "BODY"
+    },
+    {
+      "root": 31714,
+      "verts": 309,
+      "lo": [
+        -0.1385,
+        -0.1505,
+        0.7292
+      ],
+      "hi": [
+        0.2898,
+        0.0074,
+        0.971
+      ],
+      "centroid": [
+        0.1263,
+        -0.0414,
+        0.8519
+      ],
+      "region": "BODY"
+    },
+    {
+      "root": 36529,
+      "verts": 280,
+      "lo": [
+        -0.2332,
+        -0.2728,
+        1.1149
+      ],
+      "hi": [
+        -0.107,
+        0.0613,
+        1.3861
+      ],
+      "centroid": [
+        -0.2005,
+        -0.1255,
+        1.1982
+      ],
+      "region": "BODY"
+    },
+    {
+      "root": 53939,
+      "verts": 261,
+      "lo": [
+        -0.0985,
+        -0.3169,
+        0.6108
+      ],
+      "hi": [
+        0.0987,
+        -0.2686,
+        0.96
+      ],
+      "centroid": [
+        0.0074,
+        -0.2896,
+        0.8273
+      ],
+      "region": "SKIRT"
+    },
+    {
+      "root": 17018,
+      "verts": 232,
+      "lo": [
+        -0.5225,
+        -0.298,
+        0.7164
+      ],
+      "hi": [
+        -0.3652,
+        -0.1399,
+        0.8765
+      ],
+      "centroid": [
+        -0.4598,
+        -0.2195,
+        0.7977
+      ],
+      "region": "BODY"
+    },
+    {
+      "root": 1565,
+      "verts": 227,
+      "lo": [
+        0.3951,
+        -0.3316,
+        0.7057
+      ],
+      "hi": [
+        0.5443,
+        -0.1581,
+        0.8806
+      ],
+      "centroid": [
+        0.4681,
+        -0.2351,
+        0.7924
+      ],
+      "region": "BODY"
+    },
+    {
+      "root": 50777,
+      "verts": 209,
+      "lo": [
+        -0.1411,
+        -0.0907,
+        1.4867
+      ],
+      "hi": [
+        0.1616,
+        0.0283,
+        1.6154
+      ],
+      "centroid": [
+        0.0371,
+        -0.0239,
+        1.5713
+      ],
+      "region": "HEAD_TOP"
+    },
+    {
+      "root": 34757,
+      "verts": 202,
+      "lo": [
+        -0.128,
+        -0.2833,
+        1.4218
+      ],
+      "hi": [
+        -0.0356,
+        -0.0527,
+        1.6829
+      ],
+      "centroid": [
+        -0.0967,
+        -0.1751,
+        1.5588
+      ],
+      "region": "HEAD_TOP"
+    },
+    {
+      "root": 61104,
+      "verts": 199,
+      "lo": [
+        0.0039,
+        -0.3308,
+        1.4422
+      ],
+      "hi": [
+        0.0783,
+        -0.1596,
+        1.6257
+      ],
+      "centroid": [
+        0.0505,
+        -0.2533,
+        1.5226
+      ],
+      "region": "HEAD_TOP"
+    },
+    {
+      "root": 22756,
+      "verts": 190,
+      "lo": [
+        0.174,
+        -0.2572,
+        0.0668
+      ],
+      "hi": [
+        0.3696,
+        -0.1038,
+        0.4501
+      ],
+      "centroid": [
+        0.2338,
+        -0.1782,
+        0.2805
+      ],
+      "region": "SKIRT"
+    },
+    {
+      "root": 35015,
+      "verts": 190,
+      "lo": [
+        0.0585,
+        -0.2963,
+        1.4451
+      ],
+      "hi": [
+        0.1285,
+        -0.0626,
+        1.684
+      ],
+      "centroid": [
+        0.0965,
+        -0.1714,
+        1.5644
+      ],
+      "region": "HEAD_TOP"
+    },
+    {
+      "root": 1841,
+      "verts": 185,
+      "lo": [
+        0.4878,
+        -0.2446,
+        0.8411
+      ],
+      "hi": [
+        0.594,
+        -0.0235,
+        1.121
+      ],
+      "centroid": [
+        0.555,
+        -0.1117,
+        0.9612
+      ],
+      "region": "BODY"
+    },
+    {
+      "root": 21464,
+      "verts": 184,
+      "lo": [
+        0.1774,
+        -0.3317,
+        0.0013
+      ],
+      "hi": [
+        0.4618,
+        0.0338,
+        0.1514
+      ],
+      "centroid": [
+        0.2792,
+        -0.1902,
+        0.0647
+      ],
+      "region": "BOOTS"
+    },
+    {
+      "root": 448,
+      "verts": 182,
+      "lo": [
+        0.4169,
+        -0.3131,
+        0.8929
+      ],
+      "hi": [
+        0.5873,
+        -0.1863,
+        1.1432
+      ],
+      "centroid": [
+        0.5142,
+        -0.2498,
+        1.0172
+      ],
+      "region": "BODY"
+    },
+    {
+      "root": 18776,
+      "verts": 182,
+      "lo": [
+        -0.0607,
+        -0.3038,
+        0.5164
+      ],
+      "hi": [
+        0.0792,
+        -0.2525,
+        0.9291
+      ],
+      "centroid": [
+        0.0142,
+        -0.2754,
+        0.7394
+      ],
+      "region": "SKIRT"
+    },
+    {
+      "root": 57844,
+      "verts": 181,
+      "lo": [
+        -0.1418,
+        -0.2293,
+        1.0682
+      ],
+      "hi": [
+        0.1898,
+        0.0506,
+        1.2201
+      ],
+      "centroid": [
+        0.0543,
+        -0.0425,
+        1.1326
+      ],
+      "region": "BODY"
+    },
+    {
+      "root": 11975,
+      "verts": 178,
+      "lo": [
+        -0.5991,
+        -0.1459,
+        0.8446
+      ],
+      "hi": [
+        -0.4494,
+        0.0054,
+        1.1221
+      ],
+      "centroid": [
+        -0.5401,
+        -0.0613,
+        0.9967
+      ],
+      "region": "BODY"
+    },
+    {
+      "root": 19743,
+      "verts": 174,
+      "lo": [
+        0.3522,
+        -0.2255,
+        0.1588
+      ],
+      "hi": [
+        0.3941,
+        -0.0537,
+        0.4787
+      ],
+      "centroid": [
+        0.3728,
+        -0.1284,
+        0.3417
+      ],
+      "region": "SKIRT"
+    }
+  ],
+  "board": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\boards\\J-壳分类上色.png",
+  "board_bytes": 324533,
+  "checks": {
+    "opened": true,
+    "shell_count_matches_2809": true,
+    "has_head_region": true,
+    "has_skirt_region": true,
+    "has_cape_region": true,
+    "board_written": true
+  },
+  "failed": [],
+  "ok": true
+}
+
+
+===== J/data/texture_pair_j.json =====
+{
+  "board": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\J路线-造型重做\\boards\\J-两侧baseColor对照.png",
+  "board_bytes": 831846,
+  "stats": {
+    "player": {
+      "orig_size": [
+        4096,
+        4096
+      ],
+      "mean_rgb": [
+        109.86,
+        103.47,
+        95.37
+      ],
+      "near_white_ratio_512": 0.14815,
+      "cyan_ratio_512": 0.01741
+    },
+    "foe": {
+      "orig_size": [
+        4096,
+        4096
+      ],
+      "mean_rgb": [
+        33.17,
+        32.22,
+        31.39
+      ],
+      "near_white_ratio_512": 0.0,
+      "cyan_ratio_512": 0.00119
+    }
+  },
+  "checks": {
+    "both_4096": true,
+    "foe_darker_than_player": true,
+    "board_written": true
+  },
+  "failed": [],
+  "ok": true
+}
+
+
+===== J/data/all_checks_j.json =====
+{
+  "tag": "j",
+  "total": 15,
+  "failed": [],
+  "result": "ALL GREEN",
+  "checks": [
+    {
+      "name": "motion_check",
+      "rc": 0,
+      "ok": true,
+      "summary": "MOTION CHECK: PASS"
+    },
+    {
+      "name": "pose_probe",
+      "rc": 0,
+      "ok": true,
+      "summary": "POSE PROBE: PASS"
+    },
+    {
+      "name": "duel_probe",
+      "rc": 0,
+      "ok": true,
+      "summary": "DUEL PROBE: PASS"
+    },
+    {
+      "name": "reach_probe",
+      "rc": 0,
+      "ok": true,
+      "summary": "REACH PROBE: PASS"
+    },
+    {
+      "name": "feet_probe",
+      "rc": 0,
+      "ok": true,
+      "summary": "FEET PROBE: PASS"
+    },
+    {
+      "name": "fighter_skin_check",
+      "rc": 0,
+      "ok": true,
+      "summary": "FIGHTER SKIN CHECK: PASS"
+    },
+    {
+      "name": "battle_motion_p0_check",
+      "rc": 0,
+      "ok": true,
+      "summary": "BATTLE MOTION P0 CHECK: 93/93 passed"
+    },
+    {
+      "name": "battle_rhythm_check",
+      "rc": 0,
+      "ok": true,
+      "summary": "BATTLE RHYTHM CHECK: 62/62 passed"
+    },
+    {
+      "name": "engine_opt_check",
+      "rc": 0,
+      "ok": true,
+      "summary": "ENGINE OPT CHECK: 37/37 passed"
+    },
+    {
+      "name": "redraw_gate_check",
+      "rc": 0,
+      "ok": true,
+      "summary": "REDRAW GATE CHECK: 72/72 passed"
+    },
+    {
+      "name": "taikou_flow_check",
+      "rc": 0,
+      "ok": true,
+      "summary": "TAIKOU FLOW CHECK: 51/51 passed"
+    },
+    {
+      "name": "taikou_rage_check",
+      "rc": 0,
+      "ok": true,
+      "summary": "TAIKOU RAGE CHECK: 1482/1482 passed"
+    },
+    {
+      "name": "taikou_rules_check",
+      "rc": 0,
+      "ok": true,
+      "summary": "TAIKOU RULES CHECK: 90/90 passed"
+    },
+    {
+      "name": "combo_check",
+      "rc": 0,
+      "ok": true,
+      "summary": "COMBO CHECK: 8/8 passed"
+    },
+    {
+      "name": "portrait_wiring_check",
+      "rc": 0,
+      "ok": true,
+      "summary": "PORTRAIT WIRING CHECK: 157/157 passed"
+    }
+  ]
+}
+
+
+===== 工程状态 sha256 对账 =====
+{
+  "game_glb_sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+  "i_baseline_glb_sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+  "r1_surgery_glb_sha256": "f30c31a1b90234f6c9b77600c272f6c9c9b4c8304f88659cd528ad87c1394b92",
+  "backup_glb_sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+  "game_glb_equals_i_baseline": true,
+  "game_glb_differs_from_r1": true,
+  "rollback_ok": true,
+  "rollback_checks": {
+    "glb_sha_matches_i_baseline": true,
+    "glb_size_matches": true,
+    "import_file_untouched": true,
+    "backup_still_intact": true,
+    "reimport_rc0": true,
+    "no_script_errors": true
+  },
+  "source_sha256": {
+    "scripts/fighter_3d_layer.gd": "4a68dd7b72bb351cec30d1724ed08de7e101e4bf5ca23aad50eecb0dcba9ee6b",
+    "scripts/arena.gd": "c5dd4a3056a52e77f2269832bd898d8fbd03f2a61b81cc97b01d38e4c057e38e",
+    "scripts/fighter.gd": "0ad8b0c3d94e0f0bd02ac9b2566bbbcd9d3bf7ee9a0c0e82333651e9659fe1c8"
+  },
+  "j_route_source_diff_count": 0
+}
+
+===== 其余产物 sha256（不含正文） =====
+[
+  {
+    "path": "boards/J-两侧baseColor对照.png",
+    "bytes": 831846,
+    "sha256": "92c3ddba50ef8d915afbfc2188f2b763b29045907fd732e1d143ba13e2e98b9a"
+  },
+  {
+    "path": "boards/J-同源元素定位.png",
+    "bytes": 290322,
+    "sha256": "12fe605162d1352d0127afe706d632171cd5f34a640648caa5e6b5fa760c42a5"
+  },
+  {
+    "path": "boards/J-壳分类上色.png",
+    "bytes": 324533,
+    "sha256": "46a80e3c75b450b6f502ccfef0b585539da044d351ddf3ad59e1da1905066d39"
+  },
+  {
+    "path": "boards/J-现状左右特写.png",
+    "bytes": 1188107,
+    "sha256": "6818fbefdecc6e83539e805cf23fc9cdb50fa34e726121bcf5aff503bfdd115d"
+  },
+  {
+    "path": "boards/J-语义重绘探针.png",
+    "bytes": 280124,
+    "sha256": "9965f1dc89a0668ea8df884a71444ebd663da4bf68fe1e967d5119f714462540"
+  },
+  {
+    "path": "shots/asset_probe/j-albedo-foe.png",
+    "bytes": 13766967,
+    "sha256": "b04fdca222938808562a36be3935ebd1e09e1dd0460292679a3c3f9cd947cd5e"
+  },
+  {
+    "path": "shots/asset_probe/j-albedo-player.png",
+    "bytes": 12898091,
+    "sha256": "2697bb2a226cae509190935a167f0aa22b33bca37f9037b98cecb9c6e8ba36c8"
+  },
+  {
+    "path": "shots/asset_probe/j-base.png",
+    "bytes": 660226,
+    "sha256": "c27bd5b7323b282f77b9f3010479b7b12beb06656cd344d87ca20f7722486ff3"
+  },
+  {
+    "path": "shots/asset_probe/j-both.png",
+    "bytes": 723523,
+    "sha256": "428968c08f9f80243faeae69001404c3b943140969d8d22ab47740b369f192e7"
+  },
+  {
+    "path": "shots/asset_probe/j-foe-only.png",
+    "bytes": 686424,
+    "sha256": "fe28b00d4ef6c74986b1cd4056bb74bf399de44c13ec1c419dd2263ab0966aa3"
+  },
+  {
+    "path": "shots/asset_probe/j-sv-foe.png",
+    "bytes": 154584,
+    "sha256": "c1face8388b5d4bb95c9e64ce44146a214b2673d1a3b3e4558819a905a53edfa"
+  },
+  {
+    "path": "shots/asset_probe/j-sv-player.png",
+    "bytes": 169228,
+    "sha256": "709c78811b13bf47ce1f175f49d4c3d8f98b822af613a263d7db9aeee2b112ea"
+  },
+  {
+    "path": "shots/asset_probe/j_asset_result.json",
+    "bytes": 2423,
+    "sha256": "150dd6c88a36cabf4343244cc717160730e040f0b4708ad42c959bc27e4c7c9d"
+  },
+  {
+    "path": "shots/asset_v1/j-albedo-foe.png",
+    "bytes": 13766967,
+    "sha256": "b04fdca222938808562a36be3935ebd1e09e1dd0460292679a3c3f9cd947cd5e"
+  },
+  {
+    "path": "shots/asset_v1/j-albedo-player.png",
+    "bytes": 12898091,
+    "sha256": "2697bb2a226cae509190935a167f0aa22b33bca37f9037b98cecb9c6e8ba36c8"
+  },
+  {
+    "path": "shots/asset_v1/j-base.png",
+    "bytes": 660226,
+    "sha256": "c27bd5b7323b282f77b9f3010479b7b12beb06656cd344d87ca20f7722486ff3"
+  },
+  {
+    "path": "shots/asset_v1/j-both.png",
+    "bytes": 720412,
+    "sha256": "b3d882e040d1b72d5db0da784316c465784df33357351cc8ab2dbc07490310cf"
+  },
+  {
+    "path": "shots/asset_v1/j-foe-only.png",
+    "bytes": 683356,
+    "sha256": "71ce2b15950fd22f91727fa472e6079304a2779107ca719d8d1e6e7e1173193b"
+  },
+  {
+    "path": "shots/asset_v1/j-sv-foe.png",
+    "bytes": 159928,
+    "sha256": "582d5c6dd61ef78429475f9620daff1584240d696ba136a31d1091774aa49739"
+  },
+  {
+    "path": "shots/asset_v1/j-sv-player.png",
+    "bytes": 172277,
+    "sha256": "b0d5cdd0639e1351ee94c71dbaeed561d20866e0894729b37ef23512b09399c7"
+  },
+  {
+    "path": "data/all_checks_j.json",
+    "bytes": 2073,
+    "sha256": "9a1eafdf30c2fe6519648b0e415e1a6cd1f82c2a8e5c6f3d56a230c76f5c23ba"
+  },
+  {
+    "path": "data/asset_probe_j.json",
+    "bytes": 3478,
+    "sha256": "ee7f5f5d19e781faae9a82deab742c17e6fa1e556a982a915ab7027c7d517331"
+  },
+  {
+    "path": "data/build_shape_j.json",
+    "bytes": 2208,
+    "sha256": "831404679a4e314eeb6a6e9f3992b90efcf7d0fcc518e22f20b48891e26f1abf"
+  },
+  {
+    "path": "data/install_j.json",
+    "bytes": 1282,
+    "sha256": "c33659f557f547b08d1bf5d8e2bd59150c1bf77cccb01316ec2d879c7a377b98"
+  },
+  {
+    "path": "data/motif_baseline_j.json",
+    "bytes": 3510,
+    "sha256": "b2ad66132db400ed82b4b4c7c1de82d6079296f2ae3e42bee5c4d26b6de82d74"
+  },
+  {
+    "path": "data/recolor_probe_j.json",
+    "bytes": 2610,
+    "sha256": "33698cbc76baf08b66a1ed87d1288dd8cf337e6c3cdad228dade2e68d3bb4c57"
+  },
+  {
+    "path": "data/rollback_j.json",
+    "bytes": 1065,
+    "sha256": "ac5e630775857438232c0a04055aa7568fda909e2032209ed1380d6fa3a8e5a5"
+  },
+  {
+    "path": "data/shape_root_j.json",
+    "bytes": 6418,
+    "sha256": "c7f9995500992276c60b821117fc074b8db16f6a837f72aeb98f08d52874c06d"
+  },
+  {
+    "path": "data/shells_j.json",
+    "bytes": 7421,
+    "sha256": "07d4e533f34883ebe7749bae6bfad6fb0436b7ef89d5582dd6755cfc72cdc069"
+  },
+  {
+    "path": "data/texture_pair_j.json",
+    "bytes": 797,
+    "sha256": "ce2a8b55c8501303c15861a995c06b73e1a538d5083397077ac7585e166ce41c"
+  },
+  {
+    "path": "orig/pre-shape/foe-rigged.glb",
+    "bytes": 42914328,
+    "sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88"
+  },
+  {
+    "path": "orig/pre-shape/foe-rigged.glb.import",
+    "bytes": 1046,
+    "sha256": "63132d5c5f857641c969fd9bb0a5fee3cda97983be13036ff6b7db64e17e208f"
+  }
+]

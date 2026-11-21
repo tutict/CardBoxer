@@ -1,0 +1,6 @@
+off__on-stance                     full=  16314 roi=  16314 outside=      0
+on-stance__on-jab6                 full=  13015 roi=  12968 outside=     47
+on-jab6__on-wave17                 full=  12045 roi=  11998 outside=     47
+on-stance__on-wave17               full=  12441 roi=  12441 outside=      0
+PRIMS off=5136 on=118856 ratio=23.14x
+SAME_TREE_AB_G_OK

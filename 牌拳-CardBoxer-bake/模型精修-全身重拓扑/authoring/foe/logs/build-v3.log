@@ -1,0 +1,56 @@
+16:38:50 | INFO: Data are loaded, start creating Blender stuff
+16:38:50 | INFO: Blender create Mesh node node_0.002
+16:38:50 | INFO: glTF import finished in 0.33s
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\tools\author_foe.py:30: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new(name);m.use_nodes=True;n=m.node_tree.nodes.get('Principled BSDF');n.inputs['Base Color'].default_value=(*color,1);n.inputs['Metallic'].default_value=metal;n.inputs['Roughness'].default_value=rough
+FOE base {'vertices': 27391, 'edges': 54863, 'polygons': 27400, 'triangles': 54800, 'quads': 27400, 'boundary_edges': 126, 'nonmanifold_edges': 126, 'component_count': 3, 'components': [27379, 6, 6]}
+FOE project samples [[0.06574678421020508, 0.08958443999290466, 1.2858598232269287], [0.40143057703971863, -0.035967398434877396, 1.367158055305481], [0.07021185755729675, -0.013305469416081905, 1.5656377077102661], [0.4804370403289795, -0.16659557819366455, 0.0177938099950552]] source [[0.5699386596679688, -0.17532481253147125, 1.0371589660644531], [0.5814014077186584, -0.20120351016521454, 0.9551538825035095], [0.40976494550704956, -0.20822249352931976, 0.8614419102668762]]
+FOE clean {'vertices': 27379, 'edges': 54849, 'polygons': 27426, 'triangles': 54846, 'quads': 27396, 'boundary_edges': 0, 'nonmanifold_edges': 0, 'component_count': 1, 'components': [27379]}
+FOE cut {'vertices': 25499, 'edges': 50994, 'polygons': 25446, 'triangles': 50881, 'quads': 25418, 'boundary_edges': 213, 'nonmanifold_edges': 214, 'component_count': 1, 'components': [25499]}
+FOE fragment {'vertices': 25499, 'edges': 50994, 'polygons': 25446, 'triangles': 50881, 'quads': 25418, 'boundary_edges': 213, 'nonmanifold_edges': 214, 'component_count': 1, 'components': [25499]}
+FOE detail {'vertices': 26219, 'edges': 52433, 'polygons': 26166, 'triangles': 52321, 'quads': 26138, 'boundary_edges': 213, 'nonmanifold_edges': 213, 'component_count': 4, 'components': [25499, 240, 240, 240]}
+FOE loops [(74, [0.4996285337854076, -0.2052270111602706, 0.9126680839706112]), (65, [-0.5159267929884104, -0.19772639240209872, 0.9099488625159631]), (18, [-0.33510540425777435, -0.26562416387928856, 0.6234892474280463]), (24, [0.32956693693995476, -0.1907483854641517, 0.6713083783785502]), (22, [-0.32938418740575964, -0.1905158277262341, 0.6691283068873666]), (10, [0.33599011301994325, -0.2754789352416992, 0.6244308650493622])]
+FOE f wrist loop 74 center (0.49962854385375977, -0.20522700250148773, 0.9126681089401245)
+FOE b wrist loop 65 center (-0.5159267783164978, -0.19772641360759735, 0.9099487066268921)
+00:05.843  image.write      | ERROR OpenImageIO write failed: Could not open file "C:\Users\tutic\.thumbnails\large\blender_36160_d96dfedabaa122bde0a8b703489bfd43.png.png"
+Info: Saved as "foe-prebake.blend"
+FOE bake base-color
+Info: Baking map saved to internal image, save it externally or pack it
+FOE bake normal
+Info: Baking map saved to internal image, save it externally or pack it
+FOE bake orm
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\tools\author_foe.py:319: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  s=bpy.context.scene;s.render.engine='CYCLES';s.cycles.samples=20;s.render.resolution_x=900;s.render.resolution_y=1000;s.render.resolution_percentage=100;s.world=bpy.data.worlds.new('FoeSameLightStudio');s.world.use_nodes=True;s.world.node_tree.nodes['Background'].inputs[0].default_value=(.17,.17,.17,1)
+00:47.297  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\source-full.png'
+00:54.172  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\source-armor.png'
+00:58.453  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\source-hands.png'
+01:03.031  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\candidate-full.png'
+01:09.578  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\candidate-armor.png'
+01:12.875  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\candidate-hands.png'
+01:16.172  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-f-0.00.png'
+01:19.437  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-f-0.25.png'
+01:22.625  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-f-0.50.png'
+01:25.687  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-f-0.75.png'
+01:28.718  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-f-1.00.png'
+01:32.062  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-b-0.00.png'
+01:35.359  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-b-0.25.png'
+01:38.593  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-b-0.50.png'
+01:41.734  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-b-0.75.png'
+01:44.812  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-b-1.00.png'
+01:48.843  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\candidate-wireframe.png'
+01:51.781  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\candidate-hand-wireframe.png'
+01:51.875  image.write      | ERROR OpenImageIO write failed: Could not open file "C:\Users\tutic\.thumbnails\large\blender_36160_92fed151cfbb8b0638395c3fbd42d86a.png.png"
+Info: Baking map saved to internal image, save it externally or pack it
+Info: Saved as "foe-retopology.blend"
+INFO Draco is available, use library at C:\Program Files\Blender Foundation\Blender 5.2\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at C:\Program Files\Blender Foundation\Blender 5.2\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+16:40:39 | INFO: Starting glTF 2.0 export
+16:40:39 | INFO: Extracting primitive: Foe_Editable_QuadBody_and_GloveLoops
+16:40:40 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+16:40:40 | INFO: Primitives created: 1
+16:40:40 | INFO: Finished glTF 2.0 export in 0.7945709228515625 s
+
+FOE {"vertices": 27575, "edges": 55249, "polygons": 27632, "triangles": 55160, "quads": 27409, "boundary_edges": 74, "nonmanifold_edges": 74, "component_count": 6, "components": [26759, 240, 240, 240, 48, 48], "quad_fraction": 0.9919296467863347}
+Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:35:40)
+
+Blender quit

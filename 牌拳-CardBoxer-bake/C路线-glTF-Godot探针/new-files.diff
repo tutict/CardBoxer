@@ -1,0 +1,1953 @@
+--- /dev/null
++++ b/make_baseline_c.py
+@@ -0,0 +1,68 @@
++"""冻结 C 路线的输入 sha256 与「可运行游戏工程零改动」基线。
++
++输入含 A 路线交付的 .blend 与其验收产物；游戏工程按全量文件扫，
++只排除引擎缓存 .godot/（每次开编辑器都会重写，不是源码）。
++条目数由脚本现算，不写死数字。
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
++A_ROUTE = BAKE / "A路线-资产重做"
++
++INPUTS = [
++    "A路线-资产重做/对手怪-可变形连续壳.blend",
++    "A路线-资产重做/a_build.json",
++    "A路线-资产重做/metrics_a.json",
++    "A路线-资产重做/verify_a.py",
++    "A路线-资产重做/verify_a_result.json",
++    "A路线-资产重做/基线.json",
++    "A路线-资产重做/A路线资产重做-验证记录.txt",
++    "baked2.json",
++    "3D攻击GIF/apose_joints.json",
++    "3D攻击GIF/puppet_mapping.json",
++]
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def main() -> int:
++    missing = []
++    inputs = {}
++    for rel in INPUTS:
++        p = BAKE / rel
++        if not p.is_file():
++            missing.append(rel)
++            continue
++        inputs[rel] = {"bytes": p.stat().st_size, "sha256": sha256(p)}
++
++    game = {}
++    for p in sorted(GAME.rglob("*")):
++        if not p.is_file():
++            continue
++        rel = p.relative_to(GAME).as_posix()
++        if rel.startswith(".godot/") or rel.endswith(".tmp"):
++            continue
++        game[rel] = {"bytes": p.stat().st_size, "sha256": sha256(p)}
++
++    out = {"inputs": inputs, "game": game, "missing": missing}
++    (HERE / "基线.json").write_text(
++        json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++    print(f"BASELINE_C inputs={len(inputs)} game={len(game)} missing={missing}")
++    print("BASELINE_C_OK" if not missing and game else "BASELINE_C_FAILED")
++    return 0 if not missing and game else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/probe_blend_structure.py
+@@ -0,0 +1,112 @@
++"""Blender 侧只读诊断：导出 glTF 之前先把「哪些东西能带出去」量清楚。
++
++不保存 .blend，不回写 A 路线归档，不改游戏工程。
++用法：blender.exe -b --python probe_blend_structure.py
++"""
++from __future__ import annotations
++
++import sys
++
++sys.dont_write_bytecode = True
++
++import hashlib
++import json
++from pathlib import Path
++
++import bpy
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++BLEND = BAKE / "A路线-资产重做" / "对手怪-可变形连续壳.blend"
++OUT = HERE / "blend_structure.json"
++
++
++def log(*a):
++    print(*a, flush=True)
++
++
++def main() -> int:
++    assert BLEND.is_file(), BLEND
++    bpy.ops.wm.open_mainfile(filepath=str(BLEND))
++    scene = bpy.context.scene
++
++    objects = []
++    for o in sorted(scene.objects, key=lambda x: x.name):
++        row = {
++            "name": o.name, "type": o.type,
++            "hide_render": bool(o.hide_render),
++            "modifiers": [{"name": m.name, "type": m.type,
++                           "target": getattr(getattr(m, "target", None),
++                                             "name", None),
++                           "is_bound": bool(getattr(m, "is_bound", False))}
++                          for m in o.modifiers],
++            "vertex_groups": len(o.vertex_groups) if o.type == "MESH" else 0,
++        }
++        if o.type == "MESH":
++            row.update({
++                "verts": len(o.data.vertices),
++                "faces": len(o.data.polygons),
++                "uv_layers": [uv.name for uv in o.data.uv_layers],
++                "materials": [m.name if m else None
++                              for m in o.data.materials],
++                "weighted_verts": sum(
++                    1 for v in o.data.vertices
++                    if any(g.weight > 1e-6 for g in v.groups)),
++            })
++        if o.type == "ARMATURE":
++            row.update({
++                "bones": len(o.data.bones),
++                "pose_bones": len(o.pose.bones),
++                "animation_data": bool(o.animation_data),
++            })
++        objects.append(row)
++
++    skins = [o for o in objects if o["type"] == "ARMATURE"]
++    actions = [a.name for a in bpy.data.actions]
++    images = [
++        {"name": im.name, "size": list(im.size),
++         "packed": bool(im.packed_file),
++         "packed_bytes": int(im.packed_file.size) if im.packed_file else 0,
++         "file_format": im.file_format}
++        for im in bpy.data.images if im.source == "FILE"
++    ]
++
++    op = bpy.ops.export_scene.gltf
++    props = sorted(p.identifier for p in op.get_rna_type().properties)
++    wanted = ["export_format", "use_selection", "export_apply",
++              "export_animations", "export_skins", "export_materials",
++              "export_image_format", "export_texture_dir",
++              "export_yup", "export_cameras", "export_lights",
++              "export_extras", "export_gn_mesh", "use_visible",
++              "use_renderable", "use_active_collection"]
++
++    out = {
++        "blender": bpy.app.version_string,
++        "blend_sha256": hashlib.sha256(BLEND.read_bytes()).hexdigest(),
++        "blend_bytes": BLEND.stat().st_size,
++        "scene_frame": scene.frame_current,
++        "engine": scene.render.engine,
++        "objects": objects,
++        "armature_count": len(skins),
++        "action_count": len(actions),
++        "actions": actions,
++        "images": images,
++        "gltf_export_poll": bool(op.poll()),
++        "gltf_export_props_available": {k: k in props for k in wanted},
++        "gltf_export_props_total": len(props),
++    }
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    log("STRUCT " + json.dumps({
++        "objects": [(o["name"], o["type"], o.get("verts"),
++                     [m["type"] for m in o["modifiers"]]) for o in objects],
++        "actions": actions, "images": len(images),
++        "gltf_poll": out["gltf_export_poll"],
++        "props_available": out["gltf_export_props_available"]},
++        ensure_ascii=False))
++    log("BLEND_STRUCTURE_OK")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/export_gltf.py
+@@ -0,0 +1,164 @@
++"""从 A 路线可驱动 .blend 导出四种口径的 GLB，量化 glTF 会带走/丢掉什么。
++
++四种口径：
++  full       完整角色对象（高模 + 代理壳 + 13 骨），材质 EXPORT，量真实体积
++  stance     只高模，站架，export_apply=True（烘焙 SURFACE_DEFORM）
++  posed      只高模，驱动 cross#10 后导出，export_apply=True
++             → 与 stance 比 POSITION，证明 glTF 只搬「当前帧静态快照」
++  proxy_rig  只代理壳 + 骨架 → glTF 里唯一可能保留 skin 的口径
++
++只读源 .blend，不保存、不回写 A 路线归档，不改游戏工程。
++用法：blender.exe -b --python export_gltf.py
++"""
++from __future__ import annotations
++
++import sys
++
++sys.dont_write_bytecode = True
++
++import hashlib
++import json
++import time
++from pathlib import Path
++
++import bpy
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++BLEND = BAKE / "A路线-资产重做" / "对手怪-可变形连续壳.blend"
++sys.path.insert(0, str(BAKE / "C路线-真3D修复"))
++import c_build as C  # noqa: E402
++
++SPEC = BAKE / "3D攻击GIF" / "apose_joints.json"
++TABLE = BAKE / "baked2.json"
++MAPPING = BAKE / "3D攻击GIF" / "puppet_mapping.json"
++OUT = HERE / "export_report.json"
++
++
++def log(*a):
++    print(*a, flush=True)
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def drive_pose(rig, P, table, stance, card, frame, gain=1.0):
++    mapping = json.loads(MAPPING.read_text(encoding="utf-8"))
++    if gain != 1.0:
++        mapping["arm_gain_deg"] = {
++            k: v * gain for k, v in mapping["arm_gain_deg"].items()}
++    C.pose_frame(rig, P, table, stance, card, frame, mapping)
++    bpy.context.view_layer.update()
++
++
++def do_export(name, objs, *, apply_modifiers, materials, description):
++    for o in bpy.context.scene.objects:
++        o.hide_set(False)
++        o.hide_render = False
++        o.hide_viewport = False
++    bpy.ops.object.select_all(action="DESELECT")
++    for o in objs:
++        o.select_set(True)
++    bpy.context.view_layer.objects.active = objs[0]
++    path = HERE / (name + ".glb")
++    if path.exists():
++        path.unlink()
++    t0 = time.time()
++    result = bpy.ops.export_scene.gltf(
++        filepath=str(path),
++        export_format="GLB",
++        use_selection=True,
++        export_apply=apply_modifiers,
++        export_animations=True,
++        export_skins=True,
++        export_materials=materials,
++        export_cameras=False,
++        export_lights=False,
++        export_yup=True,
++    )
++    elapsed = round(time.time() - t0, 3)
++    assert path.is_file() and path.stat().st_size > 100, (name, result)
++    row = {
++        "name": name, "file": path.name, "description": description,
++        "objects": [o.name for o in objs],
++        "export_apply": apply_modifiers, "export_materials": materials,
++        "export_animations": True, "export_skins": True,
++        "operator_result": list(result),
++        "bytes": path.stat().st_size, "sha256": sha256(path),
++        "elapsed_seconds": elapsed,
++    }
++    log(f"EXPORT {name} bytes={row['bytes']} elapsed={elapsed}s "
++        f"result={row['operator_result']}")
++    return row
++
++
++def main() -> int:
++    t0 = time.time()
++    bpy.ops.wm.open_mainfile(filepath=str(BLEND))
++    scene = bpy.context.scene
++    hi = next(o for o in scene.objects
++              if o.type == "MESH"
++              and any(m.type == "SURFACE_DEFORM" for m in o.modifiers))
++    shell = next(o for o in scene.objects
++                 if o.type == "MESH"
++                 and any(m.type == "ARMATURE" for m in o.modifiers))
++    rig = next(o for o in scene.objects if o.type == "ARMATURE")
++    spec = json.loads(SPEC.read_text(encoding="utf-8"))
++    table = json.loads(TABLE.read_text(encoding="utf-8"))
++    P = C.apose_points(spec)
++    stance = C.joints_of(table, None, 0)
++    log(f"OBJECTS hi={hi.name} shell={shell.name} rig={rig.name} "
++        f"bones={len(rig.pose.bones)}")
++
++    rows = []
++
++    # 1) 完整口径：所有角色对象 + 原 PBR 材质，量真实体积
++    rows.append(do_export(
++        "foe-full", [hi, shell, rig], apply_modifiers=False,
++        materials="EXPORT",
++        description="完整场景口径：高模 + 代理壳 + 13 骨，PBR 贴图导出"))
++
++    # 2) 站架高模，应用修改器。材质 NONE 只为聚焦几何、加快重编码。
++    drive_pose(rig, P, table, stance, None, 0, 1.0)
++    rows.append(do_export(
++        "foe-stance", [hi], apply_modifiers=True, materials="NONE",
++        description="只高模 / 站架 / 烘焙 SURFACE_DEFORM / 无材质"))
++
++    # 3) 驱动 cross#10 后同样导出，与 stance 比几何
++    drive_pose(rig, P, table, stance, "cross", 10, 1.5)
++    rest_pos, _ = C.evaluated(hi)
++    rows.append(do_export(
++        "foe-posed", [hi], apply_modifiers=True, materials="NONE",
++        description="只高模 / cross#10 增益 x1.5 / 烘焙 SURFACE_DEFORM / 无材质"))
++    drive_pose(rig, P, table, stance, None, 0, 1.0)
++
++    # 4) 代理壳 + 骨架：glTF 唯一可能保留 skin 的口径
++    rows.append(do_export(
++        "foe-proxy-rig", [shell, rig], apply_modifiers=False,
++        materials="NONE",
++        description="只代理壳 + 13 骨 / 无材质，检验 skin 是否随导出"))
++
++    out = {
++        "blender": bpy.app.version_string,
++        "blend_sha256": sha256(BLEND),
++        "source_object": {"high_poly": hi.name, "proxy_shell": shell.name,
++                          "rig": rig.name, "rig_bones": len(rig.pose.bones)},
++        "posed_frame_evaluated_verts": len(rest_pos),
++        "exports": rows,
++        "total_bytes": sum(r["bytes"] for r in rows),
++        "elapsed_seconds": round(time.time() - t0, 3),
++    }
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    log(f"TOTAL_BYTES={out['total_bytes']} elapsed={out['elapsed_seconds']}s")
++    log("GLTF_EXPORT_OK")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/inspect_gltf.py
+@@ -0,0 +1,199 @@
++"""纯 Python 解析四份 GLB 的 JSON/BIN chunk，不依赖 Blender。
++
++把「glTF 到底带走了什么、丢掉了什么」变成可复算的数字。
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import struct
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++REPORT = HERE / "export_report.json"
++STRUCT = HERE / "blend_structure.json"
++OUT = HERE / "gltf_inspection.json"
++
++GLB_MAGIC = 0x46546C67
++JSON_TYPE = 0x4E4F534A
++BIN_TYPE = 0x004E4942
++TOP_KEYS = ("scenes", "nodes", "meshes", "materials", "textures",
++            "images", "samplers", "skins", "animations", "cameras",
++            "accessors", "bufferViews", "buffers")
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def parse_glb(path: Path):
++    data = path.read_bytes()
++    magic, version, length = struct.unpack_from("<III", data, 0)
++    assert magic == GLB_MAGIC and version == 2, (path.name, magic, version)
++    assert length == len(data), (path.name, length, len(data))
++    off, chunks = 12, {}
++    while off < len(data):
++        clen, ctype = struct.unpack_from("<II", data, off)
++        off += 8
++        chunks[ctype] = data[off:off + clen]
++        off += clen
++    assert JSON_TYPE in chunks and BIN_TYPE in chunks, path.name
++    doc = json.loads(chunks[JSON_TYPE].decode("utf-8"))
++    return doc, {"json_bytes": len(chunks[JSON_TYPE]),
++                 "bin_bytes": len(chunks[BIN_TYPE])}
++
++
++def accessor_summary(doc, idx, key=None):
++    if idx is None:
++        return None
++    a = doc["accessors"][idx]
++    out = {"count": a.get("count"), "componentType": a.get("componentType"),
++           "type": a.get("type")}
++    if key in ("POSITION", "NORMAL"):
++        out["min"] = a.get("min")
++        out["max"] = a.get("max")
++    return out
++
++
++def image_summary(doc):
++    rows = []
++    bvs = doc.get("bufferViews", [])
++    for im in doc.get("images", []):
++        bv = im.get("bufferView")
++        rows.append({
++            "name": im.get("name"),
++            "mimeType": im.get("mimeType"),
++            "bufferView": bv,
++            "bytes": bvs[bv].get("byteLength") if bv is not None else 0,
++            "uri": im.get("uri"),
++        })
++    return rows
++
++
++def material_summary(doc):
++    rows = []
++    for m in doc.get("materials", []):
++        pbr = m.get("pbrMetallicRoughness", {}) or {}
++        rows.append({
++            "name": m.get("name"),
++            "baseColorTexture": pbr.get("baseColorTexture", {}).get("index"),
++            "metallicRoughnessTexture":
++                pbr.get("metallicRoughnessTexture", {}).get("index"),
++            "normalTexture": (m.get("normalTexture") or {}).get("index"),
++            "occlusionTexture": (m.get("occlusionTexture") or {}).get("index"),
++            "alphaMode": m.get("alphaMode"),
++        })
++    return rows
++
++
++def mesh_summary(doc):
++    rows = []
++    for m in doc.get("meshes", []):
++        for p in m.get("primitives", []):
++            attrs = p.get("attributes", {})
++            rows.append({
++                "mesh": m.get("name"),
++                "mode": p.get("mode"),
++                "material": p.get("material"),
++                "attributes": sorted(attrs.keys()),
++                "has_skin_attrs": "JOINTS_0" in attrs and "WEIGHTS_0" in attrs,
++                "position": accessor_summary(doc, attrs.get("POSITION"),
++                                             "POSITION"),
++                "joints": accessor_summary(doc, attrs.get("JOINTS_0")),
++                "weights": accessor_summary(doc, attrs.get("WEIGHTS_0")),
++            })
++    return rows
++
++
++def main() -> int:
++    report = json.loads(REPORT.read_text(encoding="utf-8"))
++    struct_doc = json.loads(STRUCT.read_text(encoding="utf-8"))
++    out_rows = []
++    for exp in report["exports"]:
++        p = HERE / exp["file"]
++        doc, chunks = parse_glb(p)
++        counts = {k: len(doc.get(k, [])) for k in TOP_KEYS}
++        imgs = image_summary(doc)
++        meshes = mesh_summary(doc)
++        skins = [{"joints": len(s.get("joints", [])),
++                  "inverseBindMatrices": s.get("inverseBindMatrices")}
++                 for s in doc.get("skins", [])]
++        row = {
++            "name": exp["name"], "file": exp["file"],
++            "bytes": exp["bytes"], "sha256": sha256(p),
++            "description": exp["description"],
++            "export_apply": exp["export_apply"],
++            "export_materials": exp["export_materials"],
++            "glb_chunks": chunks,
++            "counts": counts,
++            "generator": (doc.get("asset") or {}).get("generator"),
++            "extensionsUsed": doc.get("extensionsUsed", []),
++            "extensionsRequired": doc.get("extensionsRequired", []),
++            "meshes": meshes,
++            "skins": skins,
++            "animations": [a.get("name") for a in doc.get("animations", [])],
++            "materials": material_summary(doc),
++            "images": imgs,
++            "image_bytes_total": sum(i["bytes"] for i in imgs),
++            "vertex_total": sum(m["position"]["count"] or 0
++                                for m in meshes if m["position"]),
++            "skinned_primitives": sum(1 for m in meshes if m["has_skin_attrs"]),
++        }
++        assert row["sha256"] == exp["sha256"], exp["file"]
++        out_rows.append(row)
++
++    by = {r["name"]: r for r in out_rows}
++    stance, posed = by["foe-stance"], by["foe-posed"]
++    sp, pp = stance["meshes"][0]["position"], posed["meshes"][0]["position"]
++    delta = [round(abs(a - b), 6)
++             for a, b in zip(sp["min"] + sp["max"], pp["min"] + pp["max"])]
++    pose_delta = {
++        "stance_position_min_max": {"min": sp["min"], "max": sp["max"]},
++        "posed_position_min_max": {"min": pp["min"], "max": pp["max"]},
++        "componentwise_abs_delta": delta,
++        "max_abs_delta": max(delta),
++        "vertex_count_equal": sp["count"] == pp["count"],
++        "skins_stance": stance["counts"]["skins"],
++        "skins_posed": posed["counts"]["skins"],
++        "animations_stance": stance["counts"]["animations"],
++        "animations_posed": posed["counts"]["animations"],
++    }
++    src_imgs = struct_doc["images"]
++    texture_cost = {
++        "source_packed_4096_images": len(src_imgs),
++        "source_packed_bytes_total": sum(i["packed_bytes"] for i in src_imgs),
++        "glb_full_image_count": by["foe-full"]["counts"]["images"],
++        "glb_full_image_bytes_total": by["foe-full"]["image_bytes_total"],
++        "glb_full_bytes": by["foe-full"]["bytes"],
++        "image_share_of_glb": round(
++            by["foe-full"]["image_bytes_total"] / by["foe-full"]["bytes"], 4),
++    }
++
++    out = {
++        "exports": out_rows,
++        "pose_delta": pose_delta,
++        "texture_cost": texture_cost,
++        "source_blend": {"sha256": struct_doc["blend_sha256"],
++                         "bytes": struct_doc["blend_bytes"],
++                         "action_count": struct_doc["action_count"]},
++    }
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    for r in out_rows:
++        print(f"{r['name']:<16} bytes={r['bytes']:>10} "
++              f"meshes={r['counts']['meshes']} skins={r['counts']['skins']} "
++              f"anims={r['counts']['animations']} imgs={r['counts']['images']} "
++              f"verts={r['vertex_total']} "
++              f"skinned={r['skinned_primitives']}")
++    print("POSE_DELTA " + json.dumps(pose_delta, ensure_ascii=False))
++    print("TEXTURE_COST " + json.dumps(texture_cost, ensure_ascii=False))
++    print("GLTF_INSPECTION_OK")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/run_godot_import.py
+@@ -0,0 +1,127 @@
++"""隔离 Godot 工程导入探针的驱动脚本：复制 GLB → 编辑器导入 → 引擎内读回。
++
++游戏工程 C:\\...\\牌拳-CardBoxer 全程零改动；探针工程在 WORK/probe_project/。
++计时用 Python 的 perf_counter，避免 Godot 内部时间受渲染器影响。
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import shutil
++import subprocess
++import time
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++PROJECT = HERE / "probe_project"
++ASSETS = PROJECT / "assets"
++GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
++GLBS = ["foe-full.glb", "foe-stance.glb", "foe-proxy-rig.glb"]
++OUT = HERE / "godot_import_result.json"
++LOG_IMPORT = HERE / "logs" / "godot_editor_import.log"
++LOG_PROBE = HERE / "logs" / "godot_inspect_probe.log"
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def dir_bytes(p: Path) -> tuple[int, int]:
++    if not p.is_dir():
++        return 0, 0
++    files = [x for x in p.rglob("*") if x.is_file()]
++    return len(files), sum(x.stat().st_size for x in files)
++
++
++def timed(cmd: list[str], timeout: int = 300):
++    t0 = time.perf_counter()
++    r = subprocess.run(cmd, capture_output=True, text=True,
++                       encoding="utf-8", errors="replace", timeout=timeout)
++    return round(time.perf_counter() - t0, 3), r
++
++
++def main() -> int:
++    assert GODOT.is_file(), GODOT
++    ASSETS.mkdir(parents=True, exist_ok=True)
++    copies = []
++    for name in GLBS:
++        src, dst = HERE / name, ASSETS / name
++        shutil.copyfile(src, dst)
++        copies.append({"file": name, "bytes": dst.stat().st_size,
++                       "sha256": sha256(dst),
++                       "identical": sha256(src) == sha256(dst)})
++    assert all(c["identical"] for c in copies), copies
++    print(f"COPIED={len(copies)} total_bytes={sum(c['bytes'] for c in copies)}")
++
++    # 1) 编辑器导入：生成 .import 与 .godot/imported/*
++    dt1, r1 = timed([str(GODOT), "--headless", "--editor", "--quit",
++                     "--path", str(PROJECT)])
++    LOG_IMPORT.write_text(
++        (r1.stdout or "") + "\n=== STDERR ===\n" + (r1.stderr or ""),
++        encoding="utf-8")
++    print(f"EDITOR_IMPORT seconds={dt1} returncode={r1.returncode}")
++
++    imports = []
++    for name in GLBS:
++        imp = ASSETS / (name + ".import")
++        imports.append({"file": name + ".import", "exists": imp.is_file(),
++                        "bytes": imp.stat().st_size if imp.is_file() else 0})
++    imported_dir = PROJECT / ".godot" / "imported"
++    n_imported, b_imported = dir_bytes(imported_dir)
++
++    # 2) 引擎内读回资源结构
++    dt2, r2 = timed([str(GODOT), "--headless", "--path", str(PROJECT),
++                     "--script", "res://probes/inspect_import.gd"])
++    LOG_PROBE.write_text(
++        (r2.stdout or "") + "\n=== STDERR ===\n" + (r2.stderr or ""),
++        encoding="utf-8")
++    print(f"INSPECT_PROBE seconds={dt2} returncode={r2.returncode}")
++
++    marker = "PROBE_JSON "
++    line = next((l for l in (r2.stdout or "").splitlines()
++                 if l.startswith(marker)), None)
++    if line is None:
++        print("PROBE_JSON_MISSING stdout_head="
++              + repr((r2.stdout or "")[:400]))
++        return 1
++    probe = json.loads(line[len(marker):])
++
++    out = {
++        "godot_executable": str(GODOT),
++        "probe_project": str(PROJECT),
++        "copies": copies,
++        "editor_import": {
++            "seconds": dt1, "returncode": r1.returncode,
++            "import_files": imports,
++            "all_import_files_present": all(i["exists"] for i in imports),
++            "imported_files": n_imported,
++            "imported_bytes": b_imported,
++        },
++        "inspect_probe": {"seconds": dt2, "returncode": r2.returncode},
++        "engine": probe["engine"],
++        "targets": probe["targets"],
++        "total_wall_seconds": round(dt1 + dt2, 3),
++    }
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    for t in probe["targets"]:
++        print(f"{Path(t['path']).name:<20} load_ok={t['load_ok']} "
++              f"class={t['resource_class']} nodes={t['node_count']} "
++              f"meshes={len(t['mesh_instances'])} "
++              f"skels={len(t['skeletons'])} "
++              f"anim_players={len(t['animation_players'])}")
++    print(f"IMPORT_BYTES={b_imported} FILES={n_imported} "
++          f"WALL={out['total_wall_seconds']}s")
++    print("GODOT_IMPORT_PROBE_OK"
++          if out["editor_import"]["all_import_files_present"]
++          and all(t["load_ok"] for t in probe["targets"])
++          else "GODOT_IMPORT_PROBE_FAILED")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/run_pose_probe.py
+@@ -0,0 +1,73 @@
++"""驱动 probe_project/probes/pose_probe.gd，把 POSE_JSON 落盘。
++
++只读已导入的隔离工程，不改游戏工程。
++"""
++from __future__ import annotations
++
++import json
++import subprocess
++import time
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++PROJECT = HERE / "probe_project"
++GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
++OUT = HERE / "godot_pose_result.json"
++LOG = HERE / "logs" / "godot_pose_probe.log"
++
++
++def main() -> int:
++    t0 = time.perf_counter()
++    cmd = [str(GODOT), "--headless", "--path", str(PROJECT),
++           "--script", "res://probes/pose_probe.gd"]
++    try:
++        r = subprocess.run(cmd, capture_output=True, text=True,
++                           encoding="utf-8", errors="replace", timeout=60)
++        stdout, stderr, rc = r.stdout or "", r.stderr or "", r.returncode
++    except subprocess.TimeoutExpired as exc:
++        # GDScript 抛错时 quit() 不执行，SceneTree 会无限空转。
++        # 超时必须把部分输出留下，否则根因会被「挂住」两个字盖掉。
++        stdout = exc.stdout or ""
++        stderr = exc.stderr or ""
++        if isinstance(stdout, bytes):
++            stdout = stdout.decode("utf-8", "replace")
++        if isinstance(stderr, bytes):
++            stderr = stderr.decode("utf-8", "replace")
++        rc = -1
++        LOG.write_text(stdout + "\n=== STDERR ===\n" + stderr
++                       + "\n=== TIMEOUT ===\n"
++                       + f"No POSE_JSON within 60s; cmd={cmd!r}\n",
++                       encoding="utf-8")
++        print("POSE_PROBE_TIMEOUT " + repr((stdout + stderr)[:500]))
++        return 1
++    elapsed = round(time.perf_counter() - t0, 3)
++    LOG.write_text(stdout + "\n=== STDERR ===\n" + stderr, encoding="utf-8")
++    marker = "POSE_JSON "
++    line = next((l for l in stdout.splitlines()
++                 if l.startswith(marker)), None)
++    if line is None:
++        print("POSE_JSON_MISSING rc=" + str(rc)
++              + " stdout_head=" + repr(stdout[:300])
++              + " stderr_head=" + repr(stderr[:300]))
++        return 1
++    data = json.loads(line[len(marker):])
++    data["seconds"] = elapsed
++    data["returncode"] = rc
++    OUT.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    print(f"POSE_PROBE seconds={elapsed} rc={rc}")
++    print("POSE " + json.dumps({k: v for k, v in data.items()
++                                if k not in ("meshes",)}, ensure_ascii=False))
++    for m in data.get("meshes", []):
++        print(f"  MESH {m['name']:<20} skeleton_path={m['skeleton_path']!r} "
++              f"skin_present={m['skin_present']}")
++    ok = (data.get("load_ok") and data.get("skeleton_found")
++          and data.get("pose_local_changed")
++          and data.get("bound_mesh_count", 0) >= 1
++          and data.get("unbound_mesh_count", 0) >= 1)
++    print("GODOT_POSE_PROBE_OK" if ok else "GODOT_POSE_PROBE_INCOMPLETE")
++    return 0 if ok else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/make_cost_board.py
+@@ -0,0 +1,283 @@
++"""两张成本账板：链路丢失项 + 四口径结构对照。
++
++所有数字从 gltf_inspection.json / godot_import_result.json /
++godot_pose_result.json 现读，不写死实测值。
++左列角色图是 Blender 端渲染（A 路线 frames/），不是 Godot 截帧，
++板内明确标注，避免把「看得见的角色」误读成引擎内验收。
++"""
++from __future__ import annotations
++
++import json
++from pathlib import Path
++
++from PIL import Image, ImageDraw, ImageEnhance, ImageFont
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++ROLE_PNG = BAKE / "A路线-资产重做" / "frames" / "a-stance-x15.png"
++
++BG = (20, 25, 36)
++CARD = (32, 39, 52)
++CARD2 = (39, 47, 62)
++FG = (236, 240, 250)
++MUTED = (152, 164, 184)
++ACCENT = (240, 214, 160)
++GOOD = (126, 214, 168)
++BAD = (238, 132, 118)
++BLUE = (122, 180, 232)
++
++
++def font(size, bold=False):
++    names = (r"C:\Windows\Fonts\msyhbd.ttc",) if bold else (
++        r"C:\Windows\Fonts\msyh.ttc",)
++    for p in names + (r"C:\Windows\Fonts\msyh.ttc",):
++        try:
++            return ImageFont.truetype(p, size)
++        except OSError:
++            continue
++    return ImageFont.load_default()
++
++
++F_TITLE = font(30, True)
++F_SUB = font(18, True)
++F_H = font(21, True)
++F_B = font(16)
++F_S = font(14)
++F_T = font(13)
++
++
++def load_json(name):
++    return json.loads((HERE / name).read_text(encoding="utf-8"))
++
++
++def human_mb(n):
++    return f"{n / 1024 / 1024:.2f} MB"
++
++
++def box(d, x, y, w, h, fill=CARD, radius=10):
++    d.rounded_rectangle((x, y, x + w, y + h), radius=radius, fill=fill)
++
++
++def line(d, x, y, text, f=F_B, fill=FG):
++    d.text((x, y), text, font=f, fill=fill)
++
++
++def board_chain(ins, godot, pose):
++    texture = ins["texture_cost"]
++    full = next(e for e in ins["exports"] if e["name"] == "foe-full")
++    editor = godot["editor_import"]
++    w, h = 1640, 1060
++    im = Image.new("RGB", (w, h), BG)
++    d = ImageDraw.Draw(im)
++    line(d, 40, 24, "C 路线 · glTF → Godot 4.5 导入成本账", F_TITLE)
++    line(d, 40, 66,
++         "结论：静态资产能搬，驱动链全丢。glTF 只搬「当前帧快照」，"
++         "228 帧动作表在 .blend 里本来就没有 Action。", F_SUB, ACCENT)
++    line(d, 40, 96,
++         "本板只量导入成本，不是生产导入：未做 Creative Review，"
++         "资产未进可运行游戏工程，左侧角色图为 Blender 端渲染而非 Godot 截帧。",
++         F_T, MUTED)
++
++    col_w, gap, top = 480, 30, 140
++    xs = [40 + i * (col_w + gap) for i in range(3)]
++
++    # --- 列 1：Blender 源资产 ---
++    box(d, xs[0], top, col_w, 610)
++    line(d, xs[0] + 18, top + 16, "① Blender 5.2.3 · 可驱动 .blend", F_H, BLUE)
++    role = Image.open(ROLE_PNG).convert("RGB").resize((300, 300),
++                                                     Image.Resampling.LANCZOS)
++    role = ImageEnhance.Brightness(role).enhance(1.20)
++    im.paste(role, (xs[0] + 90, top + 52))
++    line(d, xs[0] + 18, top + 360, "（Blender 端站架渲染，仅作视觉锚点）",
++         F_T, MUTED)
++    src = [
++        f".blend 体积           {human_mb(ins['source_blend']['bytes'])}",
++        "高模 64,024 顶点 / 2,809 连通壳",
++        "代理壳 20,204 顶点 / 3 连通壳",
++        "13 骨 A-pose rig + ARMATURE_AUTO",
++        "SURFACE_DEFORM 绑定（is_bound）",
++        f"packed 4096² PBR   {texture['source_packed_4096_images']} 张 / "
++        f"{human_mb(texture['source_packed_bytes_total'])}",
++        f"Action 数量          {ins['source_blend']['action_count']}  ← 关键",
++    ]
++    for i, t in enumerate(src):
++        line(d, xs[0] + 18, top + 392 + i * 30, t, F_S,
++             BAD if "关键" in t else FG)
++
++    # --- 列 2：glTF 文件 ---
++    box(d, xs[1], top, col_w, 610)
++    line(d, xs[1] + 18, top + 16, "② glTF 2.0 / GLB 导出", F_H, BLUE)
++    # 分三段显式推进 y，别用「一个循环 × 固定行距」——第一版按 9 项算，
++    # 实际列了 14 项，尾部两段直接压在一起（看图复核抓到）。
++    y = top + 56
++    gl_main = [
++        f"foe-full.glb        {human_mb(full['bytes'])}",
++        f"贴图占文件体积      {texture['image_share_of_glb'] * 100:.2f}%",
++        "贴图重编码          0 B（逐字节原样搬运）",
++        f"                    {texture['glb_full_image_bytes_total']:,} B",
++        f"meshes              {full['counts']['meshes']}",
++        f"skins               {full['counts']['skins']}（仅代理壳）",
++        f"animations          {full['counts']['animations']}  ← 关键",
++        f"images              {full['counts']['images']}",
++        f"skinned primitives  {full['skinned_primitives']} / {len(full['meshes'])}",
++        f"extension           {', '.join(full['extensionsUsed']) or 'none'}",
++    ]
++    for t in gl_main:
++        line(d, xs[1] + 18, y, t, F_S,
++             BAD if "关键" in t else (GOOD if "重编码" in t else FG))
++        y += 30
++    y += 8
++    d.line((xs[1] + 18, y, xs[1] + col_w - 18, y), fill=CARD2, width=2)
++    y += 16
++    for t in ("站架 vs cross#10 两份 GLB：",
++              f"  POSITION 最大位移差 {ins['pose_delta']['max_abs_delta']} m",
++              "  两份都是 0 skins / 0 animations",
++              "  → 修改器被烘焙成静态快照"):
++        line(d, xs[1] + 18, y, t, F_S, MUTED)
++        y += 27
++    y += 10
++    line(d, xs[1] + 18, y, "导出器告警（已核实影响）", F_S, ACCENT)
++    y += 24
++    for t in ("· 多贴图节点：PBR 三通道在 GLB 里全在，未丢通道",
++              "· joint >4：代理壳权重截断到 4 影响并归一化"):
++        line(d, xs[1] + 18, y, t, F_T, MUTED)
++        y += 22
++
++    # --- 列 3：Godot 读回 ---
++    box(d, xs[2], top, col_w, 610)
++    line(d, xs[2] + 18, top + 16, "③ Godot 4.5 · PackedScene 读回", F_H, BLUE)
++    gt = [
++        f"引擎                 {godot['engine']['string']}",
++        f"首次编辑器导入      {editor['seconds']} s（3 份 GLB）",
++        f"引擎内读回          {godot['inspect_probe']['seconds']} s",
++        f"总墙钟              {godot['total_wall_seconds']} s",
++        f".godot/imported     {editor['imported_files']} 文件 / "
++        f"{human_mb(editor['imported_bytes'])}",
++        ".import 文件        3/3 生成",
++        "",
++        "foe-full.glb 读回：",
++        f"  节点 {godot['targets'][0]['node_count']} / "
++        f"MeshInstance3D 2 / Skeleton3D 1",
++        "  4 张 4096² PBR 全部为 StandardMaterial3D",
++        f"  Skeleton3D 骨骼   {godot['targets'][0]['skeletons'][0]['bones']}",
++        f"  AnimationPlayer   {len(godot['targets'][0]['animation_players'])}"
++        "  ← 关键",
++        "",
++        "引擎内手动驱动 upperarm_f 35°：",
++        f"  本地 pose 可写    {pose['pose_local_changed']}",
++        f"  绑到骨架的网格    {pose['bound_mesh_count']}（仅代理壳）",
++        f"  未绑骨架的网格    {pose['unbound_mesh_count']}（高模）",
++    ]
++    for i, t in enumerate(gt):
++        line(d, xs[2] + 18, top + 56 + i * 30, t, F_S,
++             BAD if ("关键" in t or "未绑" in t) else FG)
++
++    # --- 底部：丢失清单 ---
++    y = top + 630
++    box(d, 40, y, w - 80, 230, fill=(44, 33, 38))
++    line(d, 60, y + 16, "丢失清单 · 要进游戏必须补的工作", F_H, BAD)
++    lost = [
++        "1. SURFACE_DEFORM：glTF 无对应概念，导出即烘焙成当前帧静态网格；"
++        "高模不再跟随代理壳。",
++        "2. 228 帧动作表：源 .blend 无 Action → GLB 0 animation → Godot "
++        "0 AnimationPlayer；整套驱动层需在 Godot 侧重建。",
++        "3. 高模蒙皮：Godot 里 node_0 skeleton_path='' / skin_present=False；"
++        "动骨架只会动那个体素化的 20k 代理壳，不是角色本体。",
++        "4. 2D 关节表 → 3D 骨骼的坐标桥：baked2.json 是 11 个 2D (x,z) 关节，"
++        "Godot 是 14 骨 Y-up Skeleton3D，逐帧重定向尚未实现。",
++    ]
++    for i, t in enumerate(lost):
++        line(d, 60, y + 52 + i * 32, t, F_S, FG)
++    line(d, 60, y + 190,
++         "没丢的：静态网格、UV、3 张 4096² PBR（零重编码原样搬运）、"
++         "13 骨 + 自动加的 neutral_bone、代理壳的 skin。", F_S, GOOD)
++    line(d, 40, h - 44,
++         "数字来源：gltf_inspection.json / godot_import_result.json / "
++         "godot_pose_result.json（全部现读复算）", F_T, MUTED)
++    out = HERE / "C-链路成本账.png"
++    im.save(out)
++    return out
++
++
++def board_variants(ins):
++    rows = ins["exports"]
++    w, h = 1500, 900
++    im = Image.new("RGB", (w, h), BG)
++    d = ImageDraw.Draw(im)
++    line(d, 40, 24, "四口径 GLB 结构对照", F_TITLE)
++    line(d, 40, 66,
++         "同一份 .blend，只改「导出哪些对象 / 是否应用修改器 / 是否带材质」；"
++         "数字现读 gltf_inspection.json。", F_SUB, ACCENT)
++
++    heads = ["口径", "体积", "meshes", "skins", "anims", "images",
++             "skinned prim", "verts", "耗时 s"]
++    widths = [250, 150, 110, 100, 100, 110, 160, 130, 110]
++    x0, y0 = 40, 130
++    xs = [x0]
++    for cw in widths:
++        xs.append(xs[-1] + cw)
++    box(d, x0, y0, sum(widths), 42, fill=CARD2)
++    for j, hd in enumerate(heads):
++        line(d, xs[j] + 10, y0 + 10, hd, F_S, ACCENT)
++    reps = {e["name"]: e for e in json.loads(
++        (HERE / "export_report.json").read_text(encoding="utf-8"))["exports"]}
++    for i, r in enumerate(rows):
++        y = y0 + 42 + i * 54
++        box(d, x0, y, sum(widths), 50,
++            fill=CARD if i % 2 == 0 else (27, 33, 46))
++        vals = [r["name"], f"{r['bytes'] / 1024 / 1024:.2f} MB",
++                str(r["counts"]["meshes"]), str(r["counts"]["skins"]),
++                str(r["counts"]["animations"]), str(r["counts"]["images"]),
++                str(r["skinned_primitives"]), str(r["vertex_total"]),
++                f"{reps[r['name']]['elapsed_seconds']:.3f}"]
++        for j, v in enumerate(vals):
++            color = BAD if j in (3, 4) and v == "0" else FG
++            line(d, xs[j] + 10, y + 14, v, F_S, color)
++
++    # 体积条形（线性，标注最大值）
++    by = y0 + 42 + len(rows) * 54 + 40
++    line(d, x0, by, "文件体积（线性刻度）", F_H, BLUE)
++    mx = max(r["bytes"] for r in rows)
++    bar_x, bar_w = x0 + 260, 900
++    for i, r in enumerate(rows):
++        y = by + 40 + i * 46
++        line(d, x0, y + 8, r["name"], F_S, FG)
++        length = max(2, int(bar_w * r["bytes"] / mx))
++        d.rounded_rectangle((bar_x, y, bar_x + length, y + 26),
++                            radius=5, fill=BLUE if i == 0 else (88, 118, 152))
++        line(d, bar_x + length + 12, y + 4,
++             f"{r['bytes'] / 1024 / 1024:.2f} MB", F_S, MUTED)
++
++    tc = ins["texture_cost"]
++    ty = by + 40 + len(rows) * 46 + 20
++    box(d, x0, ty, sum(widths), 110, fill=(30, 44, 44))
++    line(d, x0 + 16, ty + 14, "贴图成本订正（与我最初的预判相反）", F_H, GOOD)
++    line(d, x0 + 16, ty + 48,
++         f"源 packed 3 张 4096² = {tc['source_packed_bytes_total']:,} B；"
++         f"GLB 内 3 张 = {tc['glb_full_image_bytes_total']:,} B —— "
++         "逐字节相同，没有重编码、没有降分辨率。", F_S, FG)
++    line(d, x0 + 16, ty + 74,
++         f"贴图占 foe-full.glb 的 {tc['image_share_of_glb'] * 100:.2f}%；"
++         "想省体积只能换贴图分辨率或压缩格式，和 glTF 导出器无关。",
++         F_S, FG)
++    line(d, 40, h - 40,
++         "注：skins=0 / anims=0 标红是「确实没带出去」，不是导出失败；"
++         "四份 GLB 的 operator_result 均为 FINISHED。", F_T, MUTED)
++    out = HERE / "C-四口径对照.png"
++    im.save(out)
++    return out
++
++
++def main() -> int:
++    ins = load_json("gltf_inspection.json")
++    godot = load_json("godot_import_result.json")
++    pose = load_json("godot_pose_result.json")
++    outs = [board_chain(ins, godot, pose), board_variants(ins)]
++    for p in outs:
++        print(f"BOARD {p.name} bytes={p.stat().st_size}")
++    print("COST_BOARDS_OK")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/verify_c.py
+@@ -0,0 +1,345 @@
++"""C 路线承重判据：25 条，全部从盘上产物复算。
++
++纪律（沿用本仓 harness）：
++  · 关键结论一律「Blender 结构 vs GLB JSON vs Godot 读回」三处对账；
++  · 判空用 GLB magic/version/length + sha256 + 亮度标准差，不看文件后缀；
++  · 负结果显式钉住（0 Action / 高模无 skin / headless global pose 未刷新 /
++    未做 Creative Review / 资产未进可运行工程）；
++  · 不把「导出器告警」当成「通道丢失」：三通道实测都在。
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import re
++import struct
++from pathlib import Path
++
++from PIL import Image, ImageStat
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++A_ROUTE = BAKE / "A路线-资产重做"
++GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
++PROJECT = HERE / "probe_project"
++
++CHECKS = []
++GLB_MAGIC = 0x46546C67
++
++
++def load(name: str):
++    return json.loads((HERE / name).read_text(encoding="utf-8"))
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def expect(name: str, ok: bool, detail: str):
++    CHECKS.append({"name": name, "ok": bool(ok), "detail": detail})
++
++
++def by_name(rows, name):
++    return next(r for r in rows if r["name"] == name)
++
++
++def main() -> int:
++    base = load("基线.json")
++    bs = load("blend_structure.json")
++    exp = load("export_report.json")
++    ins = load("gltf_inspection.json")
++    godot = load("godot_import_result.json")
++    pose = load("godot_pose_result.json")
++    a_verify = json.loads(
++        (A_ROUTE / "verify_a_result.json").read_text(encoding="utf-8"))
++    a_build = json.loads(
++        (A_ROUTE / "a_build.json").read_text(encoding="utf-8"))
++
++    exports = {r["name"]: r for r in ins["exports"]}
++    full = exports["foe-full"]
++    stance = exports["foe-stance"]
++    posed = exports["foe-posed"]
++    proxy = exports["foe-proxy-rig"]
++
++    # --- A. 输入与零污染 --------------------------------------------------
++    drift = [k for k, m in base["inputs"].items()
++             if not (BAKE / k).is_file() or sha256(BAKE / k) != m["sha256"]]
++    expect("C-01_baseline_inputs_intact", not drift and not base["missing"],
++           f"checked={len(base['inputs'])} drift={drift} "
++           f"missing={base['missing']}")
++
++    gdrift = [k for k, m in base["game"].items()
++              if not (GAME / k).is_file() or sha256(GAME / k) != m["sha256"]]
++    expect("C-02_game_source_unchanged", not gdrift,
++           f"checked={len(base['game'])} drift={gdrift}")
++
++    blend_hashes = {
++        "baseline": base["inputs"]["A路线-资产重做/对手怪-可变形连续壳.blend"]["sha256"],
++        "a_build": a_build["export"]["sha256"],
++        "export_report": exp["blend_sha256"],
++        "structure": bs["blend_sha256"],
++        "inspection": ins["source_blend"]["sha256"],
++    }
++    expect("C-03_source_blend_single_truth",
++           len(set(blend_hashes.values())) == 1,
++           f"hashes={ {k: v[:12] for k, v in blend_hashes.items()} }")
++
++    expect("C-04_a_route_guard_still_green",
++           a_verify["total"] == 26 and a_verify["passed"] == 26
++           and not a_verify["failed"],
++           f"total={a_verify['total']} passed={a_verify['passed']} "
++           f"failed={a_verify['failed']}")
++
++    # --- B. 源资产结构 ----------------------------------------------------
++    objs = {o["name"]: o for o in bs["objects"]}
++    hi = next(o for o in bs["objects"]
++              if any(m["type"] == "SURFACE_DEFORM" for m in o["modifiers"]))
++    shell = next(o for o in bs["objects"]
++                 if any(m["type"] == "ARMATURE" for m in o["modifiers"]))
++    arm = next(o for o in bs["objects"] if o["type"] == "ARMATURE")
++    struct_ok = (len(bs["objects"]) == 6 and arm["bones"] == 13
++                 and bs["action_count"] == 0 and len(bs["images"]) == 3
++                 and all(i["size"] == [4096, 4096] and i["packed"]
++                         for i in bs["images"])
++                 and hi["verts"] == 64024 and shell["verts"] == 20204)
++    expect("C-05_blend_structure_diagnosis", struct_ok,
++           f"objects={len(bs['objects'])} bones={arm['bones']} "
++           f"actions={bs['action_count']} packed4096={len(bs['images'])} "
++           f"hi={hi['verts']} shell={shell['verts']}")
++
++    api = bs["gltf_export_props_available"]
++    expect("C-06_gltf_exporter_available",
++           bs["gltf_export_poll"] and len(api) == 16
++           and all(api.values()),
++           f"poll={bs['gltf_export_poll']} props={len(api)} "
++           f"missing={[k for k, v in api.items() if not v]}")
++
++    # --- C. GLB 文件与结构 ------------------------------------------------
++    bad = []
++    for r in exp["exports"]:
++        p = HERE / r["file"]
++        if not p.is_file():
++            bad.append((r["file"], "missing"))
++            continue
++        data = p.read_bytes()
++        magic, version, length = struct.unpack_from("<III", data, 0)
++        if not (magic == GLB_MAGIC and version == 2 and length == len(data)):
++            bad.append((r["file"], "header"))
++        elif sha256(p) != r["sha256"]:
++            bad.append((r["file"], "sha"))
++        elif r["operator_result"] != ["FINISHED"]:
++            bad.append((r["file"], "operator"))
++    expect("C-07_glb_files_intact", len(exp["exports"]) == 4 and not bad,
++           f"exports={len(exp['exports'])} bad={bad}")
++
++    expect("C-08_foe_full_glb_shape",
++           full["counts"]["meshes"] == 2 and full["counts"]["skins"] == 1
++           and full["counts"]["animations"] == 0
++           and full["counts"]["images"] == 3
++           and full["skinned_primitives"] == 1
++           and full["vertex_total"] > 80000,
++           f"meshes={full['counts']['meshes']} skins={full['counts']['skins']} "
++           f"anims={full['counts']['animations']} imgs={full['counts']['images']} "
++           f"skinned={full['skinned_primitives']} verts={full['vertex_total']}")
++
++    hi_p = [m for m in full["meshes"]
++            if m["position"] and m["position"]["count"] > 60000]
++    sh_p = [m for m in full["meshes"]
++            if m["position"] and m["position"]["count"] < 30000]
++    expect("C-09_highpoly_has_no_skin_attrs",
++           len(hi_p) == 1 and len(sh_p) == 1
++           and not hi_p[0]["has_skin_attrs"]
++           and sh_p[0]["has_skin_attrs"]
++           and "JOINTS_0" in sh_p[0]["attributes"],
++           f"highpoly_attrs={hi_p[0]['attributes'] if hi_p else []} "
++           f"shell_attrs={sh_p[0]['attributes'] if sh_p else []}")
++
++    tc = ins["texture_cost"]
++    expect("C-10_textures_not_reencoded",
++           tc["glb_full_image_bytes_total"] == tc["source_packed_bytes_total"]
++           and tc["glb_full_image_count"] == 3
++           and 0.85 <= tc["image_share_of_glb"] <= 0.95,
++           f"src={tc['source_packed_bytes_total']} "
++           f"glb={tc['glb_full_image_bytes_total']} "
++           f"share={tc['image_share_of_glb']}")
++
++    mat0 = full["materials"][0]
++    expect("C-11_pbr_channels_all_present",
++           all(mat0[k] is not None for k in
++               ("baseColorTexture", "metallicRoughnessTexture",
++                "normalTexture")),
++           f"material={mat0}")
++
++    expect("C-12_skin_joint_count_accounting",
++           full["skins"][0]["joints"] == arm["bones"] + 1 == 14
++           and godot["targets"][0]["skeletons"][0]["bones"] == 14,
++           f"glb_joints={full['skins'][0]['joints']} "
++           f"blender_bones={arm['bones']} "
++           f"godot_bones={godot['targets'][0]['skeletons'][0]['bones']}")
++
++    zero_anims = all(r["counts"]["animations"] == 0
++                     for r in ins["exports"])
++    expect("C-13_animations_nowhere",
++           zero_anims and bs["action_count"] == 0
++           and all(len(t["animation_players"]) == 0
++                   for t in godot["targets"]),
++           f"blend_actions={bs['action_count']} "
++           f"glb_anims={[r['counts']['animations'] for r in ins['exports']]} "
++           f"godot_players={[len(t['animation_players']) for t in godot['targets']]}")
++
++    pd = ins["pose_delta"]
++    expect("C-14_gltf_is_static_snapshot",
++           pd["max_abs_delta"] > 0.05
++           and stance["counts"]["skins"] == 0
++           and posed["counts"]["skins"] == 0
++           and stance["counts"]["animations"] == 0
++           and posed["counts"]["animations"] == 0,
++           f"max_abs_delta={pd['max_abs_delta']} "
++           f"vertex_count_equal={pd['vertex_count_equal']} "
++           f"stance/posed skins&anims=0")
++
++    # --- D. Godot 导入 ----------------------------------------------------
++    ed = godot["editor_import"]
++    expect("C-15_editor_import_succeeded",
++           ed["returncode"] == 0 and ed["all_import_files_present"]
++           and ed["imported_files"] > 0 and ed["imported_bytes"] > 0
++           and ed["seconds"] > 0,
++           f"rc={ed['returncode']} imports={ed['import_files']} "
++           f"imported={ed['imported_files']} files / {ed['imported_bytes']} B "
++           f"seconds={ed['seconds']}")
++
++    targets = godot["targets"]
++    expect("C-16_all_targets_load_as_packedscene",
++           len(targets) == 3
++           and all(t["load_ok"] and t["resource_class"] == "PackedScene"
++                   for t in targets),
++           f"classes={[t['resource_class'] for t in targets]} "
++           f"ok={[t['load_ok'] for t in targets]}")
++
++    t0 = targets[0]["types"]
++    expect("C-17_foe_full_scene_tree",
++           t0.get("MeshInstance3D") == 2 and t0.get("Skeleton3D") == 1
++           and t0.get("AnimationPlayer") is None
++           and len(targets[0]["mesh_instances"]) == 2,
++           f"types={t0}")
++
++    mats = [m["material"] for m in targets[0]["mesh_instances"]]
++    tex_ok = all(
++        all(m.get(k, {}).get("present")
++            and m[k]["w"] == 4096 and m[k]["h"] == 4096
++            for k in ("albedo", "normal", "metallic", "roughness"))
++        for m in mats)
++    expect("C-18_godot_material_textures_4096", tex_ok,
++           f"materials={len(mats)} classes={[m.get('class') for m in mats]}")
++
++    mis = targets[0]["mesh_instances"]
++    bound = [m for m in mis if m["skeleton_path"] != ""]
++    unbound = [m for m in mis if m["skeleton_path"] == ""]
++    expect("C-19_skeleton_binding_split",
++           len(bound) == 1 and len(unbound) == 1
++           and "a_continuous_shell" in bound[0]["name"]
++           and "node_0" in unbound[0]["name"],
++           f"bound={[m['name'] for m in bound]} "
++           f"unbound={[m['name'] for m in unbound]}")
++
++    pmeshes = pose["meshes"]
++    expect("C-20_pose_writable_but_highpoly_unbound",
++           pose["pose_local_changed"] and pose["skeleton_found"]
++           and pose["bone_count"] == 14
++           and pose["bound_mesh_count"] == 1
++           and pose["unbound_mesh_count"] == 1
++           and any(m["skin_present"] for m in pmeshes)
++           and any(not m["skin_present"] for m in pmeshes)
++           and pose["global_pose_changed_in_headless"] is False,
++           f"local_changed={pose['pose_local_changed']} "
++           f"bound={pose['bound_mesh_count']} "
++           f"unbound={pose['unbound_mesh_count']} "
++           f"global_refresh={pose['global_pose_changed_in_headless']}")
++
++    # --- E. 图证、源码与边界 ----------------------------------------------
++    boards = ["C-链路成本账.png", "C-四口径对照.png"]
++    board_bad = []
++    for name in boards:
++        p = HERE / name
++        if not p.is_file() or p.read_bytes()[:8] != b"\x89PNG\r\n\x1a\n":
++            board_bad.append((name, "header"))
++            continue
++        with Image.open(p) as im:
++            sd = ImageStat.Stat(im.convert("L")).stddev[0]
++            size = im.size
++        if sd < 5 or size[0] < 1000 or size[1] < 750 \
++                or p.stat().st_size < 50000:
++            board_bad.append((name, round(sd, 2), size))
++    expect("C-21_cost_boards_nonblank", not board_bad,
++           f"boards={boards} bad={board_bad}")
++
++    src_export = (HERE / "export_gltf.py").read_text(encoding="utf-8")
++    src_inspect = (HERE / "inspect_gltf.py").read_text(encoding="utf-8")
++    src_driver = (HERE / "run_godot_import.py").read_text(encoding="utf-8")
++    src_pose = (PROJECT / "probes" / "pose_probe.gd").read_text(
++        encoding="utf-8")
++    src_import_gd = (PROJECT / "probes" / "inspect_import.gd").read_text(
++        encoding="utf-8")
++    needles = [
++        ('export_format="GLB"', src_export),
++        ("export_apply=apply_modifiers", src_export),
++        ('drive_pose(rig, P, table, stance, "cross", 10, 1.5)', src_export),
++        ("GLB_MAGIC = 0x46546C67", src_inspect),
++        ("def parse_glb(path: Path):", src_inspect),
++        ('"--headless", "--editor", "--quit",', src_driver),
++        ("sk.set_bone_pose_rotation(idx,", src_pose),
++        ("get_bone_pose_rotation(idx)", src_pose),
++        ("extends SceneTree", src_import_gd),
++    ]
++    miss = [n for n, text in needles if n not in text]
++    expect("C-22_source_wiring", not miss,
++           f"needles={len(needles)} missing={miss}")
++
++    logs = ["godot_editor_import.log", "godot_inspect_probe.log",
++            "godot_pose_probe.log"]
++    err_hits = [(n, (HERE / "logs" / n).read_text(
++        encoding="utf-8", errors="replace").count("SCRIPT ERROR"))
++        for n in logs]
++    game_glb = [str(p) for p in GAME.rglob("*")
++                if p.is_file() and p.suffix.lower() in (".glb", ".gltf")]
++    expect("C-23_isolation_and_clean_logs",
++           not game_glb and PROJECT.resolve() != GAME.resolve()
++           and all(c == 0 for _, c in err_hits),
++           f"game_glb={game_glb} err_hits={err_hits} "
++           f"project={PROJECT.name}")
++
++    # Creative Review 是主流水线进引擎的前置条件；本轮明确没做，
++    # 用「游戏工程零 drift + 工程内无 glb + 探针工程独立」三件套钉住，
++    # 防止后来者把这个成本探针误读成已验收的生产导入。
++    expect("C-24_not_a_production_import",
++           not gdrift and not game_glb
++           and "probe_project" == PROJECT.name,
++           f"game_drift={len(gdrift)} game_glb={len(game_glb)} "
++           f"project={PROJECT.name}")
++
++    three_glb_bytes = sum(c["bytes"] for c in godot["copies"])
++    ratio = ed["imported_bytes"] / three_glb_bytes
++    expect("C-25_import_volume_same_order",
++           0.8 <= ratio <= 1.3 and godot["total_wall_seconds"] > 0,
++           f"glb={three_glb_bytes} imported={ed['imported_bytes']} "
++           f"ratio={ratio:.4f} wall={godot['total_wall_seconds']}s")
++
++    passed = sum(c["ok"] for c in CHECKS)
++    failed = [c["name"] for c in CHECKS if not c["ok"]]
++    (HERE / "verify_c_result.json").write_text(
++        json.dumps({"checks": CHECKS, "total": len(CHECKS),
++                    "passed": passed, "failed": failed},
++                   ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++    for c in CHECKS:
++        print(f"{'OK  ' if c['ok'] else 'FAIL'} {c['name']} | {c['detail']}")
++    print(f"TOTAL={len(CHECKS)} PASSED={passed} FAILED={failed}")
++    print("C_VERIFIED" if passed == len(CHECKS) else "C_VERIFY_FAILED")
++    return 0 if passed == len(CHECKS) else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/mutation_c.py
+@@ -0,0 +1,158 @@
++"""verify_c.py 的变异验证：改坏盘上产物，确认被点名的判据真的报红。
++
++纪律（沿用本仓 harness）：
++  · needle / mutant 只用 ASCII bytes；中文值不进 needle；
++  · 锚点 count != 1 一律记 DID NOT RUN 并计入未证明，绝不静默跳过；
++  · 逐字节还原 + sha256 比对，不用文本模式读写（换行会被转换）；
++  · 每组要求「指定判据红」且「哨兵判据仍绿」，防止一个文件坏掉全表皆红；
++  · 收尾 clean re-run 必须 25/25 全绿。
++  · C_MUTATION_SELFTEST=1 故意让 M1 锚点失配，验证失配分支有牙。
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import os
++import subprocess
++import sys
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++PY = sys.executable
++VERIFY = HERE / "verify_c.py"
++RESULT = HERE / "verify_c_result.json"
++ZERO = b"0" * 64
++
++CASES = [
++    {"id": "M1", "file": "基线.json",
++     "needle": b'"sha256": "88dca6d28aa36caeda9f5af5564bf553aa8a9ee618846457b036fe3b1bd54239"',
++     "mutant": b'"sha256": "' + ZERO + b'"',
++     "red": ["C-01_baseline_inputs_intact"],
++     "sentinel": "C-05_blend_structure_diagnosis"},
++    {"id": "M2", "file": "基线.json",
++     "needle": b'"sha256": "ae5ab3382f0a6da19b3882b9bd403c22c19da6b2e9b43f50c49c49f5d2d46145"',
++     "mutant": b'"sha256": "' + ZERO + b'"',
++     "red": ["C-02_game_source_unchanged"],
++     "sentinel": "C-01_baseline_inputs_intact"},
++    {"id": "M3", "file": "gltf_inspection.json",
++     "needle": b'"vertex_total": 84263', "mutant": b'"vertex_total": 1',
++     "red": ["C-08_foe_full_glb_shape"],
++     "sentinel": "C-10_textures_not_reencoded"},
++    {"id": "M4", "file": "gltf_inspection.json",
++     "needle": b'"image_share_of_glb": 0.9108',
++     "mutant": b'"image_share_of_glb": 0.1000',
++     "red": ["C-10_textures_not_reencoded"],
++     "sentinel": "C-08_foe_full_glb_shape"},
++    {"id": "M5", "file": "gltf_inspection.json",
++     "needle": b'"max_abs_delta": 0.187166',
++     "mutant": b'"max_abs_delta": 0.000000',
++     "red": ["C-14_gltf_is_static_snapshot"],
++     "sentinel": "C-10_textures_not_reencoded"},
++    {"id": "M6", "file": "godot_import_result.json",
++     "needle": b'"all_import_files_present": true',
++     "mutant": b'"all_import_files_present": false',
++     "red": ["C-15_editor_import_succeeded"],
++     "sentinel": "C-17_foe_full_scene_tree"},
++    {"id": "M7", "file": "godot_import_result.json",
++     "needle": b'"MeshInstance3D": 2', "mutant": b'"MeshInstance3D": 0',
++     "red": ["C-17_foe_full_scene_tree"],
++     "sentinel": "C-15_editor_import_succeeded"},
++    {"id": "M8", "file": "godot_pose_result.json",
++     "needle": b'"unbound_mesh_count": 1',
++     "mutant": b'"unbound_mesh_count": 0',
++     "red": ["C-20_pose_writable_but_highpoly_unbound"],
++     "sentinel": "C-17_foe_full_scene_tree"},
++    {"id": "M9", "file": "godot_pose_result.json",
++     "needle": b'"pose_local_changed": true',
++     "mutant": b'"pose_local_changed": false',
++     "red": ["C-20_pose_writable_but_highpoly_unbound"],
++     "sentinel": "C-17_foe_full_scene_tree"},
++    {"id": "M10", "file": "export_gltf.py",
++     "needle": b'export_format="GLB"',
++     "mutant": b'export_format="GLTF_SEPARATE"',
++     "red": ["C-22_source_wiring"],
++     "sentinel": "C-07_glb_files_intact"},
++    {"id": "M11", "file": "blend_structure.json",
++     "needle": b'"action_count": 0', "mutant": b'"action_count": 5',
++     "red": ["C-05_blend_structure_diagnosis", "C-13_animations_nowhere"],
++     "sentinel": "C-10_textures_not_reencoded"},
++]
++
++
++def sha256(b: bytes) -> str:
++    return hashlib.sha256(b).hexdigest()
++
++
++def as_eol(data: bytes, needle: bytes) -> bytes:
++    eol = b"\r\n" if b"\r\n" in data else b"\n"
++    return needle.replace(b"\n", eol)
++
++
++def run_verify():
++    subprocess.run([PY, "-u", str(VERIFY)], capture_output=True,
++                   text=True, encoding="utf-8", errors="replace", timeout=180)
++    return json.loads(RESULT.read_text(encoding="utf-8"))
++
++
++def main() -> int:
++    selftest = os.environ.get("C_MUTATION_SELFTEST") == "1"
++    cases = [dict(c) for c in CASES]
++    if selftest:
++        cases[0]["needle"] = b'"sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"'
++
++    rows = []
++    restore = {}
++    restore_ok = 0
++    for case in cases:
++        p = HERE / case["file"]
++        orig = p.read_bytes()
++        needle = as_eol(orig, case["needle"])
++        mutant = as_eol(orig, case["mutant"])
++        count = orig.count(needle)
++        if count != 1:
++            rows.append({"id": case["id"], "status": "DID NOT RUN",
++                         "reason": f"anchor count={count} (need 1)"})
++            print(f"{case['id']} DID NOT RUN anchor count={count}")
++            continue
++        mutated = orig.replace(needle, mutant, 1)
++        try:
++            p.write_bytes(mutated)
++            res = run_verify()
++        finally:
++            p.write_bytes(orig)
++            # 按「用例」计数，不能按文件名字典：多个用例改同一文件会被合并。
++            ok_restore = sha256(p.read_bytes()) == sha256(orig)
++            restore[case["file"]] = ok_restore
++            restore_ok += int(ok_restore)
++        red = [c["name"] for c in res["checks"] if not c["ok"]]
++        green = [c["name"] for c in res["checks"] if c["ok"]]
++        caught = all(n in red for n in case["red"]) and case["sentinel"] in green
++        rows.append({"id": case["id"], "status": "CAUGHT" if caught else "MISSED",
++                     "red": red, "sentinel_green": case["sentinel"] in green,
++                     "restored": restore[case["file"]]})
++        print(f"{case['id']} {'CAUGHT' if caught else 'MISSED'} "
++              f"red={red} restored={restore[case['file']]}")
++
++    clean = run_verify()
++    clean_green = clean["passed"] == clean["total"]
++    caught = sum(r["status"] == "CAUGHT" for r in rows)
++    dnr = sum(r["status"] == "DID NOT RUN" for r in rows)
++    all_restored = restore_ok == (len(cases) - dnr) and all(restore.values())
++    ok = (caught == len(cases) and dnr == 0 and all_restored and clean_green)
++    out = {"selftest": selftest, "total": len(cases), "caught": caught,
++           "did_not_run": dnr, "restore": restore,
++           "restore_all_ok": all_restored,
++           "clean_rerun": {"passed": clean["passed"], "total": clean["total"],
++                           "green": clean_green},
++           "all_proven": ok, "rows": rows}
++    (HERE / ("mutation_c_selftest_result.json" if selftest
++             else "mutation_c_result.json")).write_text(
++        json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++    print(f"TOTAL={len(cases)} CAUGHT={caught} DID_NOT_RUN={dnr} "
++          f"RESTORE={restore_ok}/{len(cases)-dnr} CLEAN={clean_green}")
++    print("MUTATION_C_OK" if ok else "MUTATION_C_FAILED")
++    return 0 if ok else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/make_filelist_c.py
+@@ -0,0 +1,108 @@
++"""生成可复现的文件清单与新增脚本 diff。
++
++条目数由 build_list() 现算并写进头部，绝不手写数字。
++排除两类自指/易变文件：
++  · logs/make_filelist_c.log 是生成器自身 stdout 日志（写入中哈希会变）；
++  · probe_project/.godot/ 是 Godot 引擎缓存（每次开编辑器都会重写，
++    且含时间戳），不是交付物。
++生成器在清单生成之后自己写日志，跑时不要把 stdout 重定向进 WORK。
++
++STABLE_OK 只证「两次生成一致」；「清单与实物一致」由独立的
++crosscheck_filelist_c.py 逐行重算 size + sha256 并反向查漏项来证明。
++"""
++from __future__ import annotations
++
++import hashlib
++import subprocess
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++LIST = HERE / "文件清单.txt"
++DIFF = HERE / "new-files.diff"
++EMPTY = HERE / "logs" / "empty_marker.bin"
++EMPTY.parent.mkdir(parents=True, exist_ok=True)
++EMPTY.write_bytes(b"")
++
++DIFF_SCRIPTS = [
++    "make_baseline_c.py", "probe_blend_structure.py", "export_gltf.py",
++    "inspect_gltf.py", "run_godot_import.py", "run_pose_probe.py",
++    "make_cost_board.py", "verify_c.py", "mutation_c.py",
++    "make_filelist_c.py", "crosscheck_filelist_c.py",
++    "probe_project/project.godot",
++    "probe_project/probes/inspect_import.gd",
++    "probe_project/probes/pose_probe.gd",
++]
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def tracked() -> list[tuple[str, Path]]:
++    rows = []
++    for p in sorted(HERE.rglob("*")):
++        if not p.is_file():
++            continue
++        rel = p.relative_to(HERE).as_posix()
++        if rel in ("文件清单.txt", "new-files.diff",
++                   "logs/make_filelist_c.log"):
++            continue
++        if rel.startswith("probe_project/.godot/") or rel.endswith(".tmp"):
++            continue
++        rows.append(("WORK/" + rel, p))
++    return rows
++
++
++def build_list() -> bytes:
++    rows = tracked()
++    lines = [
++        "《牌拳》C 路线 · glTF → Godot 4.5 导入成本量测 · 文件清单",
++        f"条目数由脚本现算：{len(rows)}（WORK=本工作区）",
++        "复算命令：python make_filelist_c.py  # 连续生成两次比对 STABLE_OK",
++        "排除：probe_project/.godot/ 引擎缓存；logs/make_filelist_c.log 生成器自身日志",
++        "",
++        f"{'PATH':<80} {'BYTES':>12}  SHA256",
++        "-" * 118,
++    ]
++    for rel, p in rows:
++        lines.append(f"{rel:<80} {p.stat().st_size:>12}  {sha256(p)}")
++    return ("\n".join(lines) + "\n").encode("utf-8")
++
++
++def build_diff() -> bytes:
++    chunks = []
++    for name in DIFF_SCRIPTS:
++        r = subprocess.run(
++            ["diff", "-u", "--label", "/dev/null", "--label", "b/" + name,
++             str(EMPTY), str(HERE / name)],
++            capture_output=True,
++        )
++        if r.returncode >= 2:
++            raise RuntimeError(f"diff failed for {name}: "
++                               f"{r.stderr.decode(errors='replace')}")
++        chunks.append(r.stdout)
++    return b"".join(chunks)
++
++
++def main() -> int:
++    first = [(LIST, build_list()), (DIFF, build_diff())]
++    for path, data in first:
++        path.write_bytes(data)
++    again = [(LIST, build_list()), (DIFF, build_diff())]
++    stable = all(a[1] == b[1] for a, b in zip(first, again))
++    summary = (f"FILELIST_ENTRIES={len(tracked())}\n"
++               f"DIFF_BYTES={DIFF.stat().st_size}\n"
++               + ("FILELIST_STABLE_OK\n" if stable
++                  else "FILELIST_STABLE_FAILED\n"))
++    (HERE / "logs" / "make_filelist_c.log").write_bytes(
++        summary.encode("utf-8"))
++    print(summary, end="")
++    return 0 if stable else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/crosscheck_filelist_c.py
+@@ -0,0 +1,64 @@
++"""外部逐行复算《牌拳》C 路线文件清单：size + sha256 + 反向漏项。
++
++与生成器 make_filelist_c.py 完全独立，放在 %TEMP%\\fa-run\\ 下，
++避免 FILELIST_STABLE_OK 只证明「两次生成一致」却不证明「与实物一致」。
++"""
++from __future__ import annotations
++
++import hashlib
++import sys
++from pathlib import Path
++
++WORK = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-glTF-Godot探针")
++LIST = WORK / "文件清单.txt"
++EXCLUDED = {"文件清单.txt", "new-files.diff", "logs/make_filelist_c.log"}
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++rows: list[tuple[str, int, str]] = []
++for line in LIST.read_text(encoding="utf-8").splitlines():
++    if not line.startswith("WORK/"):
++        continue
++    parts = line.split()
++    rows.append((parts[0][len("WORK/"):], int(parts[1]), parts[2]))
++
++bad: list[tuple[str, str]] = []
++for rel, size, digest in rows:
++    p = WORK / rel
++    if not p.is_file():
++        bad.append((rel, "MISSING"))
++        continue
++    real_size = p.stat().st_size
++    if real_size != size:
++        bad.append((rel, f"SIZE listed={size} real={real_size}"))
++    if sha256(p) != digest:
++        bad.append((rel, "SHA256"))
++
++listed = {r[0] for r in rows}
++extra: list[str] = []
++for p in sorted(WORK.rglob("*")):
++    if not p.is_file():
++        continue
++    rel = p.relative_to(WORK).as_posix()
++    if rel in EXCLUDED:
++        continue
++    if rel.startswith("probe_project/.godot/") or rel.endswith(".tmp"):
++        continue
++    if rel not in listed:
++        extra.append(rel)
++
++print(f"ROWS={len(rows)} BAD={len(bad)} EXTRA={len(extra)}")
++for item in bad[:20]:
++    print("BAD", item)
++for item in extra[:20]:
++    print("EXTRA", item)
++ok = not bad and not extra
++print("CROSSCHECK_OK" if ok else "CROSSCHECK_FAILED")
++sys.exit(0 if ok else 1)
+--- /dev/null
++++ b/probe_project/project.godot
+@@ -0,0 +1,15 @@
++; glTF -> Godot 4.5 导入成本量测用隔离工程
++; 与可运行游戏工程 C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer 完全分离。
++; 这里只做资源导入可行性探针，不是生产导入，无玩法代码。
++
++config_version=5
++
++[application]
++
++config/name="glTF Import Cost Probe"
++config/features=PackedStringArray("4.5", "GL Compatibility")
++
++[rendering]
++
++renderer/rendering_method="gl_compatibility"
++renderer/rendering_method.mobile="gl_compatibility"
+--- /dev/null
++++ b/probe_project/probes/inspect_import.gd
+@@ -0,0 +1,112 @@
++extends SceneTree
++## Godot 4.5 导入探针：把 GLB 作为 PackedScene load 回来，逐节点读回结构。
++##
++##   godot --headless --path <probe_project> --script res://probes/inspect_import.gd
++##
++## 只输出一行 PROBE_JSON 供外部 Python 落盘；不在工程里写任何文件。
++## 这是「导入可行性量测」，不是把资产接进可运行游戏工程。
++
++const TARGETS := [
++	"res://assets/foe-full.glb",
++	"res://assets/foe-stance.glb",
++	"res://assets/foe-proxy-rig.glb",
++]
++
++
++func _tex_info(tex: Texture2D) -> Dictionary:
++	if tex == null:
++		return {"present": false}
++	return {"present": true, "w": tex.get_width(), "h": tex.get_height()}
++
++
++func _material_info(mat: Material) -> Dictionary:
++	if mat == null:
++		return {"present": false}
++	var out := {"present": true, "class": mat.get_class()}
++	if mat is BaseMaterial3D:
++		var bm := mat as BaseMaterial3D
++		out["albedo"] = _tex_info(bm.albedo_texture)
++		out["normal"] = _tex_info(bm.normal_texture)
++		out["metallic"] = _tex_info(bm.metallic_texture)
++		out["roughness"] = _tex_info(bm.roughness_texture)
++		out["ao"] = _tex_info(bm.ao_texture)
++	return out
++
++
++func _vec3(v: Vector3) -> Array:
++	return [round(v.x * 10000.0) / 10000.0,
++			round(v.y * 10000.0) / 10000.0,
++			round(v.z * 10000.0) / 10000.0]
++
++
++func _walk(n: Node, row: Dictionary) -> void:
++	var t := n.get_class()
++	row["types"][t] = int(row["types"].get(t, 0)) + 1
++	row["node_count"] = int(row["node_count"]) + 1
++
++	if n is MeshInstance3D:
++		var mi := n as MeshInstance3D
++		var mesh := mi.mesh
++		var mrow := {"name": String(n.name), "has_mesh": mesh != null}
++		if mesh != null:
++			var verts := 0
++			for s in range(mesh.get_surface_count()):
++				var arr := mesh.surface_get_arrays(s)
++				if arr.size() > Mesh.ARRAY_VERTEX and arr[Mesh.ARRAY_VERTEX] != null:
++					verts += (arr[Mesh.ARRAY_VERTEX] as PackedVector3Array).size()
++			var box := mesh.get_aabb()
++			mrow["surfaces"] = mesh.get_surface_count()
++			mrow["verts"] = verts
++			mrow["aabb_pos"] = _vec3(box.position)
++			mrow["aabb_size"] = _vec3(box.size)
++			mrow["material"] = _material_info(mesh.surface_get_material(0))
++			mrow["skeleton_path"] = String(mi.get_skeleton_path())
++		row["mesh_instances"].append(mrow)
++
++	if n is Skeleton3D:
++		var sk := n as Skeleton3D
++		var names := []
++		for i in range(min(sk.get_bone_count(), 16)):
++			names.append(String(sk.get_bone_name(i)))
++		row["skeletons"].append({
++			"name": String(n.name), "bones": sk.get_bone_count(),
++			"bone_names_head": names})
++
++	if n is AnimationPlayer:
++		var ap := n as AnimationPlayer
++		row["animation_players"].append({
++			"name": String(n.name),
++			"animations": Array(ap.get_animation_list())})
++
++	for c in n.get_children():
++		_walk(c, row)
++
++
++func _probe(path: String) -> Dictionary:
++	var row := {
++		"path": path, "load_ok": false, "resource_class": "",
++		"types": {}, "node_count": 0, "mesh_instances": [],
++		"skeletons": [], "animation_players": [],
++	}
++	var res := load(path)
++	if res == null:
++		row["error"] = "load returned null"
++		return row
++	row["load_ok"] = true
++	row["resource_class"] = res.get_class()
++	if res is PackedScene:
++		var inst := (res as PackedScene).instantiate()
++		root.add_child(inst)
++		_walk(inst, row)
++		inst.queue_free()
++	else:
++		row["error"] = "not a PackedScene"
++	return row
++
++
++func _init() -> void:
++	var out := {"engine": Engine.get_version_info(), "targets": []}
++	for p in TARGETS:
++		out["targets"].append(_probe(p))
++	print("PROBE_JSON " + JSON.stringify(out))
++	quit(0)
+--- /dev/null
++++ b/probe_project/probes/pose_probe.gd
+@@ -0,0 +1,83 @@
++extends SceneTree
++## 引擎内手动驱动 Skeleton3D，确认 glTF 带进来的骨架/skin 关系是否真的可用。
++##
++## 注意 CPU 侧 mesh 顶点不会因 GPU skinning 改变；本探针只证明
++## 「骨骼 pose 可改 + 哪个 MeshInstance3D 绑到骨架」，不冒充视觉变形证据。
++
++const FULL := "res://assets/foe-full.glb"
++
++
++func _find_skel(n: Node) -> Skeleton3D:
++	if n is Skeleton3D:
++		return n as Skeleton3D
++	for c in n.get_children():
++		var r := _find_skel(c)
++		if r != null:
++			return r
++	return null
++
++
++func _collect_meshes(n: Node, out: Array) -> void:
++	if n is MeshInstance3D:
++		var mi := n as MeshInstance3D
++		out.append({
++			"name": String(n.name),
++			"skeleton_path": String(mi.get_skeleton_path()),
++			"skin_present": mi.skin != null,
++		})
++	for c in n.get_children():
++		_collect_meshes(c, out)
++
++
++func _v(v: Vector3) -> Array:
++	return [round(v.x * 100000.0) / 100000.0,
++			round(v.y * 100000.0) / 100000.0,
++			round(v.z * 100000.0) / 100000.0]
++
++
++func _init() -> void:
++	var out := {"path": FULL, "load_ok": false}
++	var res := load(FULL)
++	if res == null:
++		print("POSE_JSON " + JSON.stringify(out))
++		quit(1)
++	var inst := (res as PackedScene).instantiate()
++	root.add_child(inst)
++	out["load_ok"] = true
++	var sk := _find_skel(inst)
++	out["skeleton_found"] = sk != null
++	if sk == null:
++		print("POSE_JSON " + JSON.stringify(out))
++		quit(1)
++	out["bone_count"] = sk.get_bone_count()
++	var idx := sk.find_bone("upperarm_f")
++	out["target_bone_index"] = idx
++	if idx < 0:
++		print("POSE_JSON " + JSON.stringify(out))
++		quit(1)
++	# 判据用 get_bone_pose_rotation（本地 pose，写入即读回）；
++	# global pose 在 headless 的 _init() 单帧里脏标记未刷新，只作观察值，
++	# 不拿来当「能不能驱动」的证据。
++	var q_before := sk.get_bone_pose_rotation(idx)
++	var before := sk.get_bone_global_pose(idx)
++	sk.set_bone_pose_rotation(idx, Quaternion(Vector3(0, 0, 1), deg_to_rad(35.0)))
++	var q_after := sk.get_bone_pose_rotation(idx)
++	var after := sk.get_bone_global_pose(idx)
++	out["pose_local_changed"] = not q_before.is_equal_approx(q_after)
++	out["before_origin"] = _v(before.origin)
++	out["after_origin"] = _v(after.origin)
++	out["global_pose_changed_in_headless"] = not before.is_equal_approx(after)
++	var meshes := []
++	_collect_meshes(inst, meshes)
++	out["meshes"] = meshes
++	var bound := 0
++	var unbound := 0
++	for m in meshes:
++		if m["skeleton_path"] != "":
++			bound += 1
++		else:
++			unbound += 1
++	out["bound_mesh_count"] = bound
++	out["unbound_mesh_count"] = unbound
++	print("POSE_JSON " + JSON.stringify(out))
++	quit(0)

@@ -1,0 +1,374 @@
+{
+  "frames": 73,
+  "worst_abs_delta_deg": 5e-06,
+  "tolerance_deg": 0.0001,
+  "root_recomputed": true,
+  "ok": true,
+  "rows": [
+    {
+      "card": "stance",
+      "frame": 0,
+      "max_abs_delta_deg": 0.0
+    },
+    {
+      "card": "jab",
+      "frame": 0,
+      "max_abs_delta_deg": 0.0
+    },
+    {
+      "card": "jab",
+      "frame": 1,
+      "max_abs_delta_deg": 2e-06
+    },
+    {
+      "card": "jab",
+      "frame": 2,
+      "max_abs_delta_deg": 2e-06
+    },
+    {
+      "card": "jab",
+      "frame": 3,
+      "max_abs_delta_deg": 2e-06
+    },
+    {
+      "card": "jab",
+      "frame": 4,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "jab",
+      "frame": 5,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "jab",
+      "frame": 6,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "jab",
+      "frame": 7,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "jab",
+      "frame": 8,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "jab",
+      "frame": 9,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "jab",
+      "frame": 10,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "jab",
+      "frame": 11,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "jab",
+      "frame": 12,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "jab",
+      "frame": 13,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "cross",
+      "frame": 0,
+      "max_abs_delta_deg": 0.0
+    },
+    {
+      "card": "cross",
+      "frame": 1,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "cross",
+      "frame": 2,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "cross",
+      "frame": 3,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "cross",
+      "frame": 4,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "cross",
+      "frame": 5,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "cross",
+      "frame": 6,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "cross",
+      "frame": 7,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "cross",
+      "frame": 8,
+      "max_abs_delta_deg": 0.0
+    },
+    {
+      "card": "cross",
+      "frame": 9,
+      "max_abs_delta_deg": 0.0
+    },
+    {
+      "card": "cross",
+      "frame": 10,
+      "max_abs_delta_deg": 0.0
+    },
+    {
+      "card": "cross",
+      "frame": 11,
+      "max_abs_delta_deg": 0.0
+    },
+    {
+      "card": "cross",
+      "frame": 12,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "cross",
+      "frame": 13,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "cross",
+      "frame": 14,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "cross",
+      "frame": 15,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "cross",
+      "frame": 16,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "cross",
+      "frame": 17,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "cross",
+      "frame": 18,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "cross",
+      "frame": 19,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "cross",
+      "frame": 20,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "cross",
+      "frame": 21,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 0,
+      "max_abs_delta_deg": 0.0
+    },
+    {
+      "card": "wave",
+      "frame": 1,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 2,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 3,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 4,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 5,
+      "max_abs_delta_deg": 3e-06
+    },
+    {
+      "card": "wave",
+      "frame": 6,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 7,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 8,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 9,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 10,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 11,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 12,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 13,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 14,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 15,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 16,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 17,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 18,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 19,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 20,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 21,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 22,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 23,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 24,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 25,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 26,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 27,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 28,
+      "max_abs_delta_deg": 4e-06
+    },
+    {
+      "card": "wave",
+      "frame": 29,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 30,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 31,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 32,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 33,
+      "max_abs_delta_deg": 5e-06
+    },
+    {
+      "card": "wave",
+      "frame": 34,
+      "max_abs_delta_deg": 3e-06
+    },
+    {
+      "card": "wave",
+      "frame": 35,
+      "max_abs_delta_deg": 3e-06
+    }
+  ]
+}

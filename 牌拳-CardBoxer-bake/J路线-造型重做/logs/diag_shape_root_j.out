@@ -1,0 +1,12 @@
+GLB game_player verts 57934 bbox [1.254475, 1.72, 0.769385] skins 1 images ['texture_pbr_20250901_normal', 'texture_pbr_20250901', 'texture_pbr_20250901_metallic-texture_pbr_20250901_roughness']
+GLB game_foe verts 64059 bbox [1.216869, 1.72, 0.720506] skins 1 images ['texture_pbr_20250901_normal', 'texture_pbr_20250901', 'texture_pbr_20250901_metallic-texture_pbr_20250901_roughness']
+GLB foe_v1_source verts 64024 bbox [0.717744, 0.424975, 1.014505] skins 0 images ['texture_pbr_20250901_normal', 'texture_pbr_20250901', 'texture_pbr_20250901_metallic-texture_pbr_20250901_roughness']
+CHECK three_glbs_parsed True
+CHECK game_foe_has_skin True
+CHECK game_foe_verts_match_v1_source True
+CHECK source_model_is_unskinned True
+CHECK foe_and_player_geometry_differ True
+CHECK foe_basecolor_size_matches_v1_zip True
+CHECK h_export_verts_match_game_glb True
+CHECK board_written True
+SHAPE_ROOT_J_OK

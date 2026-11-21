@@ -1,0 +1,245 @@
+{
+  "selftest": true,
+  "total": 19,
+  "caught": 18,
+  "did_not_run": 1,
+  "missed": 0,
+  "write_failed": 0,
+  "restore": {
+    "source_probe.json": true,
+    "e_build.json": true,
+    "metrics_e.json": true,
+    "frames/e-jab07-x15.png": true,
+    "boards/E-全72帧变形质量.png": true,
+    "board_stats_e.json": true,
+    "e_conclusion.json": true,
+    "gltf_e_inspection.json": true,
+    "export_e.json": true,
+    "godot_e_result.json": true,
+    "make_boards_e.py": true,
+    "run_godot_e.py": true,
+    "logs/e_build.log": true,
+    "player-full.glb": true
+  },
+  "restore_all_ok": true,
+  "clean_rerun": {
+    "passed": 26,
+    "total": 26,
+    "green": true
+  },
+  "all_proven": false,
+  "selftest_assertion_ok": true,
+  "rows": [
+    {
+      "id": "M1",
+      "status": "DID NOT RUN",
+      "red": [],
+      "expected": [
+        "E-01_baseline_inputs_intact"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M2",
+      "status": "CAUGHT",
+      "red": [
+        "E-03_source_asset_structure"
+      ],
+      "expected": [
+        "E-03_source_asset_structure"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M3",
+      "status": "CAUGHT",
+      "red": [
+        "E-07_surface_deform_bound_and_reopened"
+      ],
+      "expected": [
+        "E-07_surface_deform_bound_and_reopened"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M4",
+      "status": "CAUGHT",
+      "red": [
+        "E-10_72_frames_ledger"
+      ],
+      "expected": [
+        "E-10_72_frames_ledger"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M5",
+      "status": "CAUGHT",
+      "red": [
+        "E-05_voxel_shell_collapses_2035_shells"
+      ],
+      "expected": [
+        "E-05_voxel_shell_collapses_2035_shells"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M6",
+      "status": "CAUGHT",
+      "red": [
+        "E-09_reopen_still_drives"
+      ],
+      "expected": [
+        "E-09_reopen_still_drives"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M7",
+      "status": "CAUGHT",
+      "red": [
+        "E-11_metrics_recomputed_from_raw_rows",
+        "E-13_negative_result_not_sugarcoated",
+        "E-14_conclusion_recomputable"
+      ],
+      "expected": [
+        "E-11_metrics_recomputed_from_raw_rows",
+        "E-13_negative_result_not_sugarcoated",
+        "E-14_conclusion_recomputable"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M8",
+      "status": "CAUGHT",
+      "red": [
+        "E-15_all_16_frames_sha_matched"
+      ],
+      "expected": [
+        "E-15_all_16_frames_sha_matched"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M9",
+      "status": "CAUGHT",
+      "red": [
+        "E-16_four_boards_shape_and_distinct"
+      ],
+      "expected": [
+        "E-16_four_boards_shape_and_distinct"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M10",
+      "status": "CAUGHT",
+      "red": [
+        "E-14_conclusion_recomputable"
+      ],
+      "expected": [
+        "E-14_conclusion_recomputable"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M11",
+      "status": "CAUGHT",
+      "red": [
+        "E-13_negative_result_not_sugarcoated"
+      ],
+      "expected": [
+        "E-13_negative_result_not_sugarcoated"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M12",
+      "status": "CAUGHT",
+      "red": [
+        "E-20_pbr_zero_reencode"
+      ],
+      "expected": [
+        "E-20_pbr_zero_reencode"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M13",
+      "status": "CAUGHT",
+      "red": [
+        "E-18_four_glb_exports_intact"
+      ],
+      "expected": [
+        "E-18_four_glb_exports_intact"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M14",
+      "status": "CAUGHT",
+      "red": [
+        "E-22_godot_import_clean"
+      ],
+      "expected": [
+        "E-22_godot_import_clean"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M15",
+      "status": "CAUGHT",
+      "red": [
+        "E-23_godot_skeleton_only_on_proxy"
+      ],
+      "expected": [
+        "E-23_godot_skeleton_only_on_proxy"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M16",
+      "status": "CAUGHT",
+      "red": [
+        "E-17_board_ledger_and_source_wiring"
+      ],
+      "expected": [
+        "E-17_board_ledger_and_source_wiring"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M17",
+      "status": "CAUGHT",
+      "red": [
+        "E-24_pipeline_source_wiring"
+      ],
+      "expected": [
+        "E-24_pipeline_source_wiring"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M18",
+      "status": "CAUGHT",
+      "red": [
+        "E-25_logs_have_no_errors"
+      ],
+      "expected": [
+        "E-25_logs_have_no_errors"
+      ],
+      "restored": true
+    },
+    {
+      "id": "M19",
+      "status": "CAUGHT",
+      "red": [
+        "E-18_four_glb_exports_intact"
+      ],
+      "expected": [
+        "E-18_four_glb_exports_intact"
+      ],
+      "restored": true
+    }
+  ]
+}

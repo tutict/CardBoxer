@@ -1,0 +1,12 @@
+M1 DID NOT RUN anchor count=0
+M2 CAUGHT red=['A-02_game_source_unchanged'] restored=True
+M3 CAUGHT red=['A-06_bake_probe_nonblank'] restored=True
+M4 CAUGHT red=['A-08_surfdeform_probe_bind'] restored=True
+M5 CAUGHT red=['A-12_reopen_is_driveable'] restored=True
+M6 CAUGHT red=['A-17_gain_ratio_double_computed'] restored=True
+M7 CAUGHT red=['A-19_ab_counts_double_computed'] restored=True
+M8 CAUGHT red=['A-23_params_match_source'] restored=True
+M9 CAUGHT red=['A-24_source_wiring'] restored=True
+M10 CAUGHT red=['A-21_shot_files_intact'] restored=True
+TOTAL=10 CAUGHT=9 DID_NOT_RUN=1 RESTORE=9/9 CLEAN=True
+MUTATION_A_FAILED

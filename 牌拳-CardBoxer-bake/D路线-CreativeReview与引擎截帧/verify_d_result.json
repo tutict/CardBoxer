@@ -1,0 +1,123 @@
+{
+  "checks": [
+    {
+      "name": "D-01_baseline_inputs_intact",
+      "ok": true,
+      "detail": "game_drift=0 clist=True glb=True"
+    },
+    {
+      "name": "D-02_game_and_c_route_zero_drift",
+      "ok": true,
+      "detail": "game_drift=0 verify_c=25/25"
+    },
+    {
+      "name": "D-03_render_channel_windowed_opengl",
+      "ok": true,
+      "detail": "headless=False gl=True errs=0 rc=0"
+    },
+    {
+      "name": "D-04_six_views_shape",
+      "ok": true,
+      "detail": "views=6 stats=6 ok=True"
+    },
+    {
+      "name": "D-05_frames_nonblank_and_textured",
+      "ok": true,
+      "detail": "min_stddev=40.58 min_colorful=2.057%"
+    },
+    {
+      "name": "D-06_views_are_distinct",
+      "ok": true,
+      "detail": "pairs=15 min_lowfreq_mae=17.3553"
+    },
+    {
+      "name": "D-07_capture_wiring_no_headless",
+      "ok": true,
+      "detail": "render_cmds=1 headless_in_cmd=False"
+    },
+    {
+      "name": "D-08_camera_only_not_posed",
+      "ok": true,
+      "detail": "count=0 list=[] conclusion=0 posed_api_in_script=False"
+    },
+    {
+      "name": "D-09_pbr_materials_visible",
+      "ok": true,
+      "detail": "four_4096_textures=True front_colorful=31.323%"
+    },
+    {
+      "name": "D-10_game_scale_from_baked2",
+      "ok": true,
+      "detail": "char_px=172.0 stats=172.0 steps=[1100, 344, 172, 96]"
+    },
+    {
+      "name": "D-11_scale_loss_monotonic",
+      "ok": true,
+      "detail": "stored=[0.0, 1.5173, 4.9525, 7.3106] recomputed=[0.0, 1.5173, 4.9525, 7.3106] inc=True"
+    },
+    {
+      "name": "D-12_four_boards_nonblank",
+      "ok": true,
+      "detail": "boards=4 disk=4 bytes_ok=True"
+    },
+    {
+      "name": "D-13_review_conclusion_recomputable",
+      "ok": true,
+      "detail": "verdict=STATIC_ONLY rec=B reasons=5 unbound=1"
+    },
+    {
+      "name": "D-14_side_view_evidence_triplet",
+      "ok": true,
+      "detail": "evidence=['angle35', 'side90', 'back'] mae=[21.82, 18.7043, 18.7419]"
+    },
+    {
+      "name": "D-15_isolation_and_clean_logs",
+      "ok": true,
+      "detail": "copy=True game_glb=0 errs=[('godot_render_3d.log', 0), ('godot_editor_import_d.log', 0)]"
+    },
+    {
+      "name": "D-16_source_wiring",
+      "ok": true,
+      "detail": "needles=9 missing=[]"
+    },
+    {
+      "name": "D-17_not_a_production_import",
+      "ok": true,
+      "detail": "verdict=STATIC_ONLY isolated_project=probe_project_d"
+    },
+    {
+      "name": "D-18_scale_steps_aligned",
+      "ok": true,
+      "detail": "rows=[1100, 344, 172, 96] steps=[1100, 344, 172, 96]"
+    }
+  ],
+  "total": 18,
+  "passed": 18,
+  "failed": [],
+  "metrics": {
+    "front": {
+      "stddev": 48.412,
+      "colorful_pct": 31.323
+    },
+    "angle35": {
+      "stddev": 46.959,
+      "colorful_pct": 28.595
+    },
+    "side90": {
+      "stddev": 40.581,
+      "colorful_pct": 2.057
+    },
+    "back": {
+      "stddev": 41.662,
+      "colorful_pct": 17.114
+    },
+    "upper": {
+      "stddev": 41.542,
+      "colorful_pct": 10.98
+    },
+    "wide": {
+      "stddev": 47.36,
+      "colorful_pct": 42.56
+    }
+  }
+}

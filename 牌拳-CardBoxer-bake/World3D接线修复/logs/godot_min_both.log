@@ -1,0 +1,18 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 621.24 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5080 Laptop GPU
+
+F3D_READY bones=13 cards=3
+F3D_FOE_READY bones=13
+W3D_MIN_JSON {"apply_rows":[{"label":"player","mode":"both","own_after_apply":true,"present":true,"world_id_after_apply":-9223371998233623049},{"label":"foe","mode":"both","own_after_apply":true,"present":true,"world_id_after_apply":-9223371998183291494}],"live_png":"C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\both/min-both-live.png","mode":"both","state":{"layers":[{"label":"player","own_world_3d":true,"present":true,"sv_error":0,"sv_png":"C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\both/min-both-sv-player.png","world3d_id":-9223371998233623049,"yaw":-55.0},{"label":"foe","own_world_3d":true,"present":true,"sv_error":0,"sv_png":"C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\both/min-both-sv-foe.png","world3d_id":-9223371998183291494,"yaw":55.0}]},"use_3d":true}
+
+--- STDERR ---
+ERROR: Parameter "scenario" is null.
+   at: scenario_remove_viewport_visibility_mask (servers/rendering/renderer_scene_cull.cpp:488)
+   GDScript backtrace (most recent call first):
+       [0] _apply (res://tests/world3d_min_probe.gd:57)
+       [1] _process (res://tests/world3d_min_probe.gd:109)
+ERROR: Parameter "scenario" is null.
+   at: scenario_remove_viewport_visibility_mask (servers/rendering/renderer_scene_cull.cpp:488)
+   GDScript backtrace (most recent call first):
+       [0] _apply (res://tests/world3d_min_probe.gd:57)
+       [1] _process (res://tests/world3d_min_probe.gd:109)

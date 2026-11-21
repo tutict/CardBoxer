@@ -1,0 +1,4 @@
+CHANGED 7940 RATIO 0.2378
+MEAN_DELTA [-25.03, -25.77, -23.39] ROW_SPAN [42, 251] COL_SPAN [0, 114]
+TOP_BLOCKS [{'block': [70, 100], 'changed_px': 100}, {'block': [60, 110], 'changed_px': 100}, {'block': [100, 190], 'changed_px': 100}, {'block': [70, 60], 'changed_px': 99}, {'block': [60, 120], 'changed_px': 99}]
+WROTE I-玩家侧泄漏热图.png 509518 B

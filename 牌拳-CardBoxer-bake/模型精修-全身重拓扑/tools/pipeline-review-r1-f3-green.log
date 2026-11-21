@@ -1,0 +1,7 @@
+test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure) ... ok
+test_f3_rgb_rgba_8_and_16_bit_atlases_remain_decodable (__main__.CanonicalTests.test_f3_rgb_rgba_8_and_16_bit_atlases_remain_decodable) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.473s
+
+OK

@@ -1,0 +1,34 @@
+READBACK_CAP 9.0 9.0
+DIFF shipped_vs_rolled_back:stance00:player 0
+DIFF shipped_vs_rolled_back:stance00:foe 0
+DIFF shipped_vs_rolled_back:jab01:player 22468
+DIFF shipped_vs_rolled_back:jab01:foe 17206
+DIFF shipped_vs_rolled_back:sweep07:player 22028
+DIFF shipped_vs_rolled_back:sweep07:foe 24139
+DIFF shipped_vs_rolled_back:hit_heavy01:player 24732
+DIFF shipped_vs_rolled_back:hit_heavy01:foe 21365
+DIFF shipped_vs_reapplied:stance00:player 0
+DIFF shipped_vs_reapplied:stance00:foe 0
+DIFF shipped_vs_reapplied:jab01:player 0
+DIFF shipped_vs_reapplied:jab01:foe 0
+DIFF shipped_vs_reapplied:sweep07:player 0
+DIFF shipped_vs_reapplied:sweep07:foe 0
+DIFF shipped_vs_reapplied:hit_heavy01:player 0
+DIFF shipped_vs_reapplied:hit_heavy01:foe 0
+CROSS_PROCESS_BYTEWISE_EQUAL 8 / 8
+CHECK main_marker_parsed True
+CHECK main_no_script_errors True
+CHECK main_no_scenario_errors True
+CHECK use_3d_and_15_cards True
+CHECK shipped_cap_readback_is_9_both_sides True
+CHECK live_caps_match_each_mode True
+CHECK hp_unchanged True
+CHECK delta_matches_python_formula True
+CHECK shipped_changes_every_action_frame_both_sides True
+CHECK stance_untouched_by_cap True
+CHECK shipped_reapplied_identical_same_process True
+CHECK all_sv_pngs_nonempty True
+CHECK default_zero_pollution True
+CHECK default_no_script_errors True
+CHECK default_two_pngs True
+P2_SHIPPED_PROBE_OK

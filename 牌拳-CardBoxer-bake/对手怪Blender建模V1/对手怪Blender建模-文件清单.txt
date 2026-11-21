@@ -1,0 +1,68 @@
+《牌拳》对手怪 V1 · Blender 建模阶段文件清单
+========================================================================
+目录：C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer-bake/对手怪Blender建模V1
+文件数：58（不含清单自身 / __pycache__ / .pyc）
+合计字节：206,448,711
+
+相对路径                                                    bytes  sha256
+-------------------------------------------------------------------------------------------------------------------------------
+artifact_01.zip                                      36062095  f2e0ff324eb835a0cd5d8e0cf36f39299fa60b6e09aca23554bb307db6434226
+artifact_02.png                                        127531  1221e13657b77bead42a418de11b2f0ae3e98ec2917e704393d3ccee124514a4
+artifact_03.glb                                      41628356  e3ba93f0d61dace74af7b3fee70214aa96d3477f362f9188152801f77cc26707
+artifact_04.fbx                                      40901036  5849ad11367ab4e1fd099f794a9b23f9f73ff97a5083dc686b5823cb300dc5bd
+blender_build.json                                       2783  35109afd0fd5a0461428b779622c8e2e8c2998c06407776a7a07f0bd1f9d1f4d
+blender_build.log                                        2289  e0bd18f41e2079928fcdbdfbba50be8506deeb32c82f0f25a649c39758f102bb
+compare_run.log                                           170  c9bec11ff07a285dec316d6184b3686a1f893600ae8958ecef12d9e71d7d9f80
+deform_probe.json                                         553  9b84c3966a10b1703d2bedd702f0074777d24329481a8e6589e43116417b81a9
+deform_run.log                                            839  90d85d7f47347ffb807a4cde9bb7c029a8783e0a72c29969f6af0d02769e761f
+foe-angle25.png                                        445436  e7f80dc3a25484a88866d421c1647512e1cd0b1b7a1b4fbc8fd570d8841260d2
+foe-angle55.png                                        410501  0ccb7f9f90ca3e4d6430939e0b1884b878c6914b23d26f4f34a944513a83065f
+foe-back35.png                                         443552  6c9dd2027c3956023978de7cdb9dc5a755415c95cd13cd05211bdc91b8441381
+foe-deform-upperarm35.png                              437738  0f99bfd93f3407d55b057945a87a61389bfc39ff3b67d4405d223fbd516e0d26
+foe-front.png                                          451628  e695093959c39cfc6a66da933044ba75f0472cbe448f3a5b3c0556397d673f8f
+foe-upper.png                                         1407579  6f3e5c71bed4b2a7970729124c45cf9978a8f52f8fc6f8cf92ae407192dac3ed
+foe_blender_build.py                                     9554  1b25fcd27ef36ced25c788c84b14a317bc1050569edc3e188c5accadf6cda3c2
+gen_stderr.log                                           1545  89ae3d02ac4437e0c082fff889f1be26528115e9dec6f220f1a46abf62a7b94c
+gen_stdout.json                                           140  60bdcdc1ff620c00739856521f8dff4ea36e91b29debc6252a0b9a2182d1cf24
+generated_model_20261108-104647_viewer.html               671  2a1bc654669e63165b9023d46068d6ff407d5dccd9786720e1a1456693c49675
+generator_local.py                                      25214  105e046fd7d0618f40fd66f519057bbdc71acd4851d9e07c9b7f169b70673a9c
+inspect_model.log                                        1092  a7890e609448e424f0871bcdba5d2963606ba93383669ffbf1ca12dae5d7fa7a
+inspect_model_v4.py                                      7165  68ce128bffe74fbaca94274fa31987c3e0ede2eb2efebcc05045717200659029
+inspect_run.log                                          1092  a7890e609448e424f0871bcdba5d2963606ba93383669ffbf1ca12dae5d7fa7a
+make_filelist.py                                         1373  d815d156a99c9bbe52480ccee24e147c09f45c8fd6988366d80862205f999f8b
+make_foe_compare.py                                      4639  739da7990c5230c8a79e5ad6aaa3bc19b77656aa56cdff590f10c86d3b0521e4
+measure_silhouette.py                                    3086  bd446249b9ef9479833a2356137c1808fea1e3a56f3f17b5288005cee688305c
+model_inspection.json                                    2426  7404b740b3040ecd88f2f7dff628b601a691de2361080bb3d06be6787806a8a7
+mutation_foe_build.log                                    511  073d078a0e9b388adedffddaacb5166545968c1f557854a9cffbdb9e0b46b28b
+mutation_foe_build.py                                    5222  2bce0b177ac037c8df3534e1aa9a5ae122d3abd997f92d4783629266e8b52fec
+mutation_foe_build_result.json                           1189  01790b9ae012701db5e9e43ca31a27980f3736ca50e95fa05ebf5fe69b8962f2
+mutation_run.log                                          556  2a03c4c01596bfdbdc97ec5f7a4d08e03b70ad5969b514b93b85c1d4fc47bfcc
+obj_bundle/eec02ad32336f89ca2073a3e23577fae.obj       5469616  0d57d6e94534e496852418541ca4b980493d1dc6257dc487e6cdca4dd4d002fa
+obj_bundle/material.mtl                                   245  9850ae5248d6dbf106daf4d0ba88a74ecfab339015525940460521a52d6c17f9
+obj_bundle/texture_pbr_20250901.png                  15782150  3c1076596ef22f2e45c6509e459f7e262053724ce05b803874ed53a927473d6a
+obj_bundle/texture_pbr_20250901_metallic.png          5320403  76c9e60ccc99d9e4ea502fbec2c0e1fc9f36ec8cbe06e9281505d074b88eec7e
+obj_bundle/texture_pbr_20250901_normal.png            8934769  ed4d58cd90dd1419746a26926e80e0912f23ed83fdae8a9d881629e7e848cd9f
+obj_bundle/texture_pbr_20250901_roughness.png         5370612  25dd5655f01ffcdfd1566ee432e60757a7f3c6bd6341dd238b870565bdec4354
+probe_deform.py                                          2932  d431517c04c9f8766a855a26a29b7a99eadaccf12556bb36b07b8170fee1533d
+probe_report.json                                        1658  cdc631d09fcfae2e57d094021b9f219d1a65a2c7686523f24b44a83ea0aa3f0e
+probe_rigfit_v4.py                                      12054  beec3085dd982acfe87d61928bcbf2d6778a7d568c0d3fcbdd05e3af085afe42
+probe_run.log                                             807  48f195359d581cf7a377638107bcb93e9a286f166cd9fb8ff53c8f7fc645b60d
+render_character.py                                      5342  5436e3899d892fc123e6affd36740ff96282decf3a9c41c70f2ea4854a342182
+resume_image_probe.py                                    5894  9b65468cf15bdc6f4e595e2019bdc07b82d0f2b2d6c0a5c77bd178837133e50b
+resume_probe.py                                          5665  379e3d72f18405c5faed95d00f177adc4c0e8f2bdb7d6ac080ef6efca3bb8daa
+resume_run.log                                            393  55b05b5550703d567246b2685ac0542743502e06f3bd7607a9f2eec04be7df14
+rigfit_overlay.png                                     340534  c96a79da14f970eb489de18640ae160279a7538377e99808ccbc8c6927effb3f
+rigfit_result.json                                       2739  6028759235038925b94764818b1ad5895e67b47a829527f2d5c6c014d351c32f
+rigfit_run.log                                           2810  1c6ff31145117b0c6169a1bee6a6cd42deac45445f5df1e7d3fdb11638a2210b
+run_image_probe.py                                       6411  67ad1f1ee3e4faaf47dfff7be7a1ec7bc73672d79246dd000edf6fe24b9146e0
+silhouette_run.log                                       1219  a922332e4623275cb8bb5e509b9065782030e491a0fb20ff5b64c81c436bb9d1
+silhouette_stats.json                                    1217  59ae16ca6fe2216d7e4c8ffdd382cef32df9a6068dad88b55bde0cd09391b000
+verify_foe_build.log                                     1332  ec523bce87520bf1cc04c47dd21282e1bf13d6e3615fdc1121bbafe4caf0de85
+verify_foe_build.py                                      8334  59a8e161cbfd9750bbb4dc74bfbd772b2b03531e5e57fb9ed38617fdbaed3b1e
+verify_foe_build_result.json                             2272  ff9de659020eff990c7b411fba14f871c798e69fb6d36e4cb7e5d3db344e5719
+verify_run.log                                           1334  ef9097a64a8b06cc66995f539457daa903efd31d80e1da59be426d2752e6bb96
+对手怪Blender建模-验证记录.txt                                   11267  ef18f5cdf62931a6cf4433e228a945b39c4b306c36e4a7f66ccde7ddb530c287
+对手怪V1.blend                                          42300798  76004e212759c76f8f84a5d8fbab58680eedc4ebcd11d663e783f8c234e13165
+玩家V4b-对手怪3D-对照.png                                     468343  8d264fd31586137d92fd60248cdea3c2ecc8139a1065397839ef5dddd1cfe559
+
+复算： <venv>/python.exe make_filelist.py

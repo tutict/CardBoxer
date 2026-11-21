@@ -1,0 +1,54 @@
+RUN three_d rc 0 seconds 26.717 rows 128 end round_over
+RUN default_off rc 0 seconds 23.381 rows 128 end round_over
+SEQ three_d {'1': ['discard', 'select', 'reveal', 'resolve'], '2': ['discard', 'select', 'reveal', 'resolve'], '3': ['discard', 'select', 'reveal', 'resolve']}
+END three_d round_over t 19.458 hp [85, 80] wins [1, 0]
+PNG three_d {'total': 24, 'nonempty': 24, 'unique_sha': 24} SV {'total': 87, 'nonempty': 87, 'unique_sha': 34}
+SEQ default_off {'1': ['discard', 'select', 'reveal', 'resolve'], '2': ['discard', 'select', 'reveal', 'resolve'], '3': ['discard', 'select', 'reveal', 'resolve']}
+END default_off round_over t 19.424 hp [97, 63] wins [1, 0]
+PNG default_off {'total': 25, 'nonempty': 25, 'unique_sha': 25} SV {'total': 0, 'nonempty': 0, 'unique_sha': 0}
+MARKER_MISMATCHES 0 DELTA_MISMATCHES 0
+CHECK three_d_marker_parsed True
+CHECK three_d_rc_and_no_script_errors True
+CHECK three_d_no_scenario_errors True
+CHECK three_d_round_over_not_timeout True
+CHECK three_d_tk_bot_true True
+CHECK three_d_use_3d_matches_tag True
+CHECK three_d_paused_never_true True
+CHECK three_d_three_turns True
+CHECK three_d_phase_order_per_turn True
+CHECK three_d_final_round_phase_over True
+CHECK three_d_seed_matches True
+CHECK three_d_marker_2d_is_shipped True
+CHECK three_d_cards_2d_positive True
+CHECK three_d_live_pngs_all_nonzero True
+CHECK three_d_live_pngs_all_unique True
+CHECK three_d_live_png_saves_ok True
+CHECK three_d_15_cards_both True
+CHECK three_d_cap_mode_readback True
+CHECK three_d_marker_3d_is_shipped_both True
+CHECK three_d_marker_3d_differs_from_p3_both True
+CHECK three_d_all_rows_marker_match_shipped True
+CHECK three_d_all_rows_delta_match_python True
+CHECK three_d_frames_applied_growing True
+CHECK three_d_sv_pngs_all_nonzero True
+CHECK three_d_action_rows_have_sv True
+CHECK default_off_marker_parsed True
+CHECK default_off_rc_and_no_script_errors True
+CHECK default_off_no_scenario_errors True
+CHECK default_off_round_over_not_timeout True
+CHECK default_off_tk_bot_true True
+CHECK default_off_use_3d_matches_tag True
+CHECK default_off_paused_never_true True
+CHECK default_off_three_turns True
+CHECK default_off_phase_order_per_turn True
+CHECK default_off_final_round_phase_over True
+CHECK default_off_seed_matches True
+CHECK default_off_marker_2d_is_shipped True
+CHECK default_off_cards_2d_positive True
+CHECK default_off_live_pngs_all_nonzero True
+CHECK default_off_live_pngs_all_unique True
+CHECK default_off_live_png_saves_ok True
+CHECK marker_2d_differs_from_p3 True
+CHECK no_monitored_game_file_modified True
+CHECK two_independent_processes True
+LIVE_P4_OK

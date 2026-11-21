@@ -1,0 +1,15 @@
+[PASS] E01_t000 size=(1280, 720) bytes=703999
+[PASS] E01_t048 size=(1280, 720) bytes=698556
+[PASS] E01_t072 size=(1280, 720) bytes=706700
+[PASS] E01_t112 size=(1280, 720) bytes=701624
+[PASS] E01_t140 size=(1280, 720) bytes=685534
+[PASS] E01_t180 size=(1280, 720) bytes=701531
+[PASS] E01_draw size=(1280, 720) bytes=684674
+[PASS] E01_foewin size=(1280, 720) bytes=706189
+[PASS] E02_hit_label_present diff=2350 floor=100
+[PASS] E03_spark_present diff=10349 floor=200
+[PASS] E04_speed_lines_present diff=3091 floor=30
+[PASS] E05_fighter_band_moved diff=72878 floor=2000
+[PASS] E06_cross_modes_differ min=52387 {"t048_vs_draw": 61671, "t048_vs_foewin": 68829, "t000_vs_t180": 52387, "t048_vs_t072": 66610, "t072_vs_t112": 68200}
+saved 节奏帧-八态对照板.png (1844724 B)
+RESULT: 13/13 EVIDENCE_RHYTHM_OK

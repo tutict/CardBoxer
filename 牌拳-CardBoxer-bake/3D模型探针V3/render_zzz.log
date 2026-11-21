@@ -1,0 +1,22 @@
+15:51:22 | INFO: Data are loaded, start creating Blender stuff
+15:51:22 | INFO: Blender create Mesh node node_0
+15:51:22 | INFO: glTF import finished in 0.11s
+IMPORT glb=artifact_03.glb meshes=1
+NORMALIZE scale=1.547429 raw_height=1.1115
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V3\render_zzz.py:117: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if slot.material and slot.material.use_nodes:
+TOON materials=1
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V3\render_zzz.py:126: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+00:02.109  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V3\zzz-front.png'
+RENDER front 319947 B
+00:02.297  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V3\zzz-angle25.png'
+RENDER angle25 316807 B
+00:02.453  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V3\zzz-angle55.png'
+RENDER angle55 298438 B
+00:02.609  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V3\zzz-back35.png'
+RENDER back35 307977 B
+RENDER_ZZZ_OK shots=4 elapsed=1.58s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit

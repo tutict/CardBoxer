@@ -1,0 +1,135 @@
+{
+  "blender": "5.2.3 LTS",
+  "source_blend": "对手怪V1.blend",
+  "source_blend_sha256": "76004e212759c76f8f84a5d8fbab58680eedc4ebcd11d663e783f8c234e13165",
+  "decimate_target_faces": 20000,
+  "raw": {
+    "verts": 64024,
+    "faces": 79998,
+    "uv_layers": 1,
+    "materials": 1,
+    "shells": 2809,
+    "bbox": [
+      [
+        -0.60843,
+        -0.36025,
+        0.0
+      ],
+      [
+        0.60843,
+        0.36025,
+        1.72
+      ]
+    ]
+  },
+  "cases": [
+    {
+      "case": "raw_no_remesh",
+      "voxel_size": null,
+      "operator": null,
+      "after_remesh": {
+        "verts": 64024,
+        "faces": 79998,
+        "shells": 2809
+      },
+      "decimate": {
+        "applied": false
+      },
+      "bbox": [
+        [
+          -0.60843,
+          -0.36025,
+          0.0
+        ],
+        [
+          0.60843,
+          0.36025,
+          1.72
+        ]
+      ],
+      "auto_weight": {
+        "groups": 13,
+        "covered": 0,
+        "total": 64024,
+        "coverage": 0.0
+      }
+    },
+    {
+      "case": "v0p02",
+      "voxel_size": 0.02,
+      "operator": "bpy.ops.object.voxel_remesh",
+      "after_remesh": {
+        "verts": 20204,
+        "faces": 20198,
+        "shells": 3
+      },
+      "decimate": {
+        "applied": true,
+        "faces_before": 20198,
+        "faces_after": 20476
+      },
+      "after_decimate": {
+        "verts": 20006,
+        "faces": 20476,
+        "shells": 3
+      },
+      "bbox": [
+        [
+          -0.60524,
+          -0.35836,
+          7e-05
+        ],
+        [
+          0.60567,
+          0.36172,
+          1.71739
+        ]
+      ],
+      "auto_weight": {
+        "groups": 13,
+        "covered": 19998,
+        "total": 20006,
+        "coverage": 0.9996
+      }
+    },
+    {
+      "case": "v0p035",
+      "voxel_size": 0.035,
+      "operator": "bpy.ops.object.voxel_remesh",
+      "after_remesh": {
+        "verts": 6446,
+        "faces": 6452,
+        "shells": 2
+      },
+      "decimate": {
+        "applied": false,
+        "faces_before": 6452,
+        "faces_after": 6452
+      },
+      "after_decimate": {
+        "verts": 6446,
+        "faces": 6452,
+        "shells": 2
+      },
+      "bbox": [
+        [
+          -0.60543,
+          -0.35915,
+          0.00016
+        ],
+        [
+          0.59865,
+          0.35639,
+          1.71211
+        ]
+      ],
+      "auto_weight": {
+        "groups": 13,
+        "covered": 6446,
+        "total": 6446,
+        "coverage": 1.0
+      }
+    }
+  ],
+  "elapsed_seconds": 2.64
+}

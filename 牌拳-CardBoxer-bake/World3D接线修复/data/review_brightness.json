@@ -1,0 +1,99 @@
+{
+  "rois": {
+    "player": [
+      350,
+      275,
+      545,
+      535
+    ],
+    "foe": [
+      730,
+      275,
+      985,
+      535
+    ]
+  },
+  "frames": {
+    "legacy": {
+      "player": {
+        "mean_luma": 37.965,
+        "pct_above_128": 0.0,
+        "pct_below_48": 0.768876,
+        "pct_above_48": 0.225976,
+        "mean_luma_above_48": 81.804,
+        "pct_above_80": 0.104063,
+        "max_luma": 118,
+        "pixels": 50700
+      },
+      "foe": {
+        "mean_luma": 26.911,
+        "pct_above_128": 0.0,
+        "pct_below_48": 0.941403,
+        "pct_above_48": 0.057481,
+        "mean_luma_above_48": 73.072,
+        "pct_above_80": 0.0281,
+        "max_luma": 89,
+        "pixels": 66300
+      }
+    },
+    "shipped": {
+      "player": {
+        "mean_luma": 34.945,
+        "pct_above_128": 0.0,
+        "pct_below_48": 0.837791,
+        "pct_above_48": 0.158817,
+        "mean_luma_above_48": 86.147,
+        "pct_above_80": 0.087495,
+        "max_luma": 118,
+        "pixels": 50700
+      },
+      "foe": {
+        "mean_luma": 24.826,
+        "pct_above_128": 0.0,
+        "pct_below_48": 0.936908,
+        "pct_above_48": 0.061659,
+        "mean_luma_above_48": 72.693,
+        "pct_above_80": 0.029487,
+        "max_luma": 89,
+        "pixels": 66300
+      }
+    },
+    "no_tint": {
+      "player": {
+        "mean_luma": 34.945,
+        "pct_above_128": 0.0,
+        "pct_below_48": 0.837791,
+        "pct_above_48": 0.158817,
+        "mean_luma_above_48": 86.147,
+        "pct_above_80": 0.087495,
+        "max_luma": 118,
+        "pixels": 50700
+      },
+      "foe": {
+        "mean_luma": 28.47,
+        "pct_above_128": 0.0,
+        "pct_below_48": 0.912986,
+        "pct_above_48": 0.084299,
+        "mean_luma_above_48": 70.749,
+        "pct_above_80": 0.033092,
+        "max_luma": 118,
+        "pixels": 66300
+      }
+    },
+    "player_luma_delta": -3.02,
+    "player_luma_pct": -7.95,
+    "foe_luma_delta": -2.085,
+    "foe_luma_pct": -7.75
+  },
+  "attribution": {
+    "foe_roi_luma": {
+      "legacy": 26.911,
+      "shipped": 24.826,
+      "no_tint": 28.47
+    },
+    "tint_effect": 3.644,
+    "world_isolation_effect_vs_legacy": -2.085,
+    "conclusion": "shipped 与 no_tint 同为独立 World3D（每层 4 盏灯），只差 I 路线 2D 调暗 shader；关掉 tint 后 foe ROI 亮度上升且高于改前，证伪「独立后灯少导致变暗」。改后 foe 偏暗的主因是 I 路线刻意 调暗 + 深色重甲，属既有设计，本轮未改。"
+  },
+  "note": "共享 World3D 时两层共 8 盏灯同时照到两个角色；独立后每层只剩自己的 4 盏灯。但实测关掉 I 路线 2D shader 后 foe 反而比改前更亮，所以「灯少导致变暗」被证伪；亮度下降主要来自串扰白布消失与 I 路线刻意调暗，本轮不改 tint 设计，作为已知视觉债如实记录。"
+}

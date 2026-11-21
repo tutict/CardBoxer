@@ -1,0 +1,185 @@
+《牌拳》B 路线「侧身节奏接线」· 验证记录
+日期: 2026-11-08
+目录: 牌拳-CardBoxer-bake/侧身节奏接线/
+游戏源码: C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer
+
+========================================================================
+一、结论
+========================================================================
+把离线「KOF 式侧身战斗 GIF」的命中节奏搬进了游戏 resolve 阶段，
+仍走 2D 自绘外观层，且离线脚本与游戏 GDScript 共用同一份数值真相来源。
+本轮真的改了游戏源码（不是纯离线合成）。
+
+    RESULT: 20/20 RHYTHM_VERIFIED
+    RESULT: 20/20 CAUGHT / did_not_run=0 / escaped=0 / restore=20/20 / clean=GREEN
+    RESULT: TOTAL 12 checks, 0 failed / ALL GREEN
+    RESULT: 13/13 EVIDENCE_RHYTHM_OK
+    RESULT: MUTATION_RHYTHM_SELFTEST_OK（19/20 + did_not_run=1 + clean GREEN）
+
+20 条判据、20 组变异一条都没有在评「好不好看」；看图结论单列在第六节。
+
+========================================================================
+二、做了什么
+========================================================================
+1) 开工前把 post-P0 游戏树 15 个源码文件备份到 orig/pre-side-rhythm/，
+   写 备份指纹.json，BACKUP_OK files=15。
+2) 新增 侧身节奏接线/battle_rhythm_spec.json —— 唯一数值真相来源。
+   gen_rhythm_gd.py 从它生成 牌拳-CardBoxer/scripts/battle_rhythm.gd
+   （3848 B，纯常量 + 纯函数，无节点无状态），GEN_RHYTHM_OK，
+   逐字节可复现（R05）。
+3) arena.gd 新增节奏层：
+     const Rhythm = preload("res://scripts/battle_rhythm.gd")
+     tk_rhythm_t / tk_rhythm_winner / tk_rhythm_hit
+     _tick_rhythm() / _apply_rhythm_visuals() / _clear_rhythm_visuals()
+     _draw_rhythm_fx(canvas)   ← 速度线、星芒火花、HIT! 标签
+   _tick_taikou() 开头驱动；_resolve_taikou() 末尾只在非平局时启动节奏；
+   hitstop 分支加 _maybe_capture()，否则命中停顿帧根本截不到。
+4) fighter.gd 新增纯绘制层字段 visual_shift / visual_tilt，
+   只在 _draw() 的 draw_set_transform 与 _draw_shadow() 生效，
+   不碰 position / tick() / apply_hit() / _build_pose()。
+5) 新增 tests/battle_rhythm_check.gd（10076 B，62/62 passed）。
+
+------------------------------------------------------------------------
+共用参数（离线 make_side_battle.py ↔ JSON ↔ battle_rhythm.gd）
+------------------------------------------------------------------------
+  frame_ms              80        (GIF 10ms 单位，83ms 会被量化成 80/90)
+  attack / settle       1.12s / 0.56s   = 14 帧 / 7 帧
+  recover / total       0.22s / 1.90s   = 战斗动作规格 resolve_seconds
+  hit_at / hitstop      0.48s / 0.24s   = 第 6 帧命中 / 3 帧定格
+  press                 110 px，三角脉冲 center 0.45 / half_width 0.30
+  knock / tilt          40 px (decay 1.7) / 9° (decay 1.4)
+  spark / speed lines   12 射线 / 4 条
+  hitstop label         HIT!
+  R07 逐项对账 33 个数值全等；R08 对账 5 组时间线形态全等。
+
+  离线画布 880x500 与游戏 1280x720 不同：数值常量共用，绝对坐标重映射
+  （spark_y_offset -130、HIT! 在 [690,330]、速度线 mid_x 640 / y0 300），
+  这一项不参与「离线/游戏数值一致性」判据。
+
+========================================================================
+三、变更范围（R01–R04，逐字节证明）
+========================================================================
+  备份 15 文件 sha256 与清单全部一致               R01
+  其中 13 个文件逐字节未改                          R02
+  恰好 2 个既有文件变更：arena.gd / fighter.gd     R03
+  2 个新文件：scripts/battle_rhythm.gd (3848 B)、
+              tests/battle_rhythm_check.gd (10076 B)  R04
+  arena.gd 最终 sha256 = 8559c20d6a59df3164e3b5b8ba13c539ff64894cf4920484f2b48b8ddb727303
+  截帧注入后 RESTORE OK 同一 sha256，源码指纹.json 记录 10 个文件。
+
+========================================================================
+四、判定零改动（R10–R15、R19）
+========================================================================
+  fighter.apply_hit() 函数体与 post-P0 基线逐字节相同（1263 B）  R10
+  arena.gd 的伤害/阶段/回数关键行 14 行逐行相同                  R11
+  visual_* 只出现在 _draw.._draw_limb 区间，且有复位 transform     R12
+  节奏接线 16 个真实调用形态逐行存在（排除注释）                  R13
+  hitstop 分支里 _maybe_capture() 恰好 1 处真实调用行              R14
+  平局不启动节奏（tk_rhythm_t = -1.0）                            R15
+  P0 接线未被顶掉：4 个形态计数与 post-P0 基线逐串一致，
+  且全为真实代码行                                                 R19
+  没改 tk_phase 时长、伤害公式、牌型判定、apply_hit 硬直四档。
+
+========================================================================
+五、引擎真实输出（R16–R18）
+========================================================================
+12 套 Godot 自检 ALL GREEN：
+  TAIKOU RULES 90/90 | TAIKOU FLOW 51/51 | TAIKOU RAGE 1482/1482
+  BATTLE MOTION P0 93/93 | BATTLE RHYTHM 62/62
+  COMBO 8/8 | MOTION / POSE / DUEL / REACH / FEET / FIGHTER SKIN PASS
+
+8 张 GL 上下文引擎内截帧（注入确定性牌型 + 手动推进 80ms 节奏时钟）：
+  t000 起手 / t048 命中 HIT! / t072 停顿尾 / t112 攻击窗末 /
+  t140 淡出 / t180 归零 / 平局无节奏 / 对手赢反向
+  全部 OK、engine_errors=0、gl=true；arena.gd 逐字节还原。
+  marker 实测：t048 p_shift=102.14 (前压)、t072 p_shift=39.29、
+  t180 p_shift/e_shift/tilt 全 0；draw t=-1.0；
+  foewin e_shift=-102.14 且 p_tilt=-0.0628（双方方向对称）。
+
+13/13 像素取证（从 PNG 重算，不只信 JSON）：
+  E02 HIT! 标签      diff=2350   (下限 100)
+  E03 星芒火花        diff=10349  (下限 200)
+  E04 速度线          diff=3091   (下限 30)
+  E05 角色带位移      diff=72878  (下限 2000)
+  R18 从 t048/t180 两张 PNG 独立重算 E02 得 2350，与 JSON 一致。
+
+========================================================================
+六、看图结论与订正记录
+========================================================================
+看图（节奏帧-八态对照板.png）：
+  t048 帧 HIT! 标签可见、星芒落在右侧角色胸口附近而非头顶、
+  速度线只在两人空隙、文字无重叠；t072 停顿尾帧 HIT! 仍在、
+  前压已回落到 39px；t180 完全归零；平局帧无节奏层。
+
+首版有三处视觉缺陷，已修：
+  ① HIT! 不可见     → game_hit_label_pos [640,230] → [690,330]，
+                       并加 GAME_HIT_LABEL_POS.y > 300.0 断言；
+  ② 星芒像发饰      → game_spark_y_offset -200 → -130；
+  ③ 后仰方向反了    → tilt 符号改回 dir，测试改判
+                       enemy.visual_tilt > 0 / player.visual_tilt < 0。
+
+判据自身的两次订正（都是变异/首跑抓出来的，如实留档）：
+  ① R19 首跑 19/20：初版写死「每个 P0 形态 count == 1」，
+     但 MotionP0.REVEAL_CARD 在 _do_taikou_reveal() 本来就是
+     双方各播一次 = 2 处真实调用，post-P0 基线也是 2。
+     改为「期望计数从基线独立复算 + 全为真实代码行 + 非零」，
+     不再写死数字。
+  ② M20 首跑 ESCAPED：R14 只查 "_maybe_capture()" in hitstop_branch，
+     而该分支的注释里也写着这个词 —— 把真实调用换成 pass 后仍假绿。
+     这是「守卫钉词不钉形态」的老坑。已把 R14 改为
+     「真实代码行恰好 1 处且 strip == _maybe_capture()」，
+     R13 从裸 count 改为逐行排除注释，R19 复用同一 helper。
+     重跑后 M20 CAUGHT，正常态仍 20/20。
+
+20 组变异的分组：
+  M1–M3   参数真相来源 / 生成物可复现
+  M4–M6   接线形态（含后仰符号回退）
+  M7–M9   P0 不回归 / 判定零改动 / 平局不启节奏
+  M10–M12 纯绘制层边界 / 未改文件 / 变更范围（M12 把 arena.gd
+          整文件换成 post-P0 基线 = 撤掉整条接线）
+  M13–M17 备份指纹 / 引擎自检 / 截帧日志 / 像素证据
+          （M17 整张 PNG 替换，证明 R18 真的读盘）
+  M18–M20 离线脚本未改 / 新自检存在 / hitstop 可截帧
+  R20 是「写出指纹后立即比对」的自检型判据，没有可改坏的上游输入，
+  不参与变异 —— 这是它的边界，不假装被证明过。
+
+========================================================================
+七、边界 / 没做的事
+========================================================================
+* 这是 2D 自绘外观层上的节奏表现层，不是侧身 55° 立绘进游戏，
+  更不是真 3D 蒙皮；角色几何仍是代码画的。
+* 8 张截帧是注入态 GL 渲染，不是真人录屏；离线 GIF 未重渲。
+* 离线 make_side_battle.py 一个字节没改（R09 用归档清单 sha256 证明），
+  侧身战斗演示的 18/18 判据与 8/8 变异结论保持原样。
+* battle_motion_spec.json 里标 new 的 10 项动作仍然一项没烘。
+* 没渲 228 帧图集、没导 glTF、没进 Godot 3D、没验证贴地与自交。
+* 20 条判据只钉可复算事实，不评造型、不评手感。
+
+========================================================================
+八、复算命令
+========================================================================
+set PY=C:\Users\tutic\IdeaProjects\Fantasy-Agent\.venv\Scripts\python.exe
+set D=C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\侧身节奏接线
+
+%PY% -u "%D%\gen_rhythm_gd.py"          # 从 JSON 重生成 battle_rhythm.gd
+%PY% -u "%D%\run_all_checks.py"         # 12 套 Godot 引擎自检
+%PY% -u "%D%\capture_rhythm.py"         # 8 张 GL 截帧 + 二进制还原
+%PY% -u "%D%\evidence_rhythm.py"        # 13 条像素取证
+%PY% -u "%D%\verify_rhythm.py"          # 20 条承重判据
+%PY% -u "%D%\mutation_rhythm.py"        # 20 组变异
+set RHYTHM_MUTATION_SELFTEST=1 && %PY% -u "%D%\mutation_rhythm.py"
+%PY% -u "%D%\make_filelist.py"          # 稳定文件清单
+
+日志与结果 JSON 全部落在 logs/ 与同目录：
+  verify_rhythm_result.json / mutation_rhythm_result.json /
+  logs/selftest_result.json / 源码指纹.json / 备份指纹.json /
+  all_checks.json / capture_result.json / evidence_rhythm.json
+
+========================================================================
+九、下一步（等工程师定方向）
+========================================================================
+A 补 battle_motion_spec.json 里 new 的 10 项 2D 表演
+  （亮牌按牌型分档定格 / EX 蓄力爆发 / 回合胜负 / KO）
+B 把已渲好的侧身 55° 立绘接成 2D 精灵，替换代码自绘角色
+C 等真 3D 能稳定摆姿势再换资产（C 路线已修撕裂，但动作幅度仍偏小）
+D 存档，此轮到此为止

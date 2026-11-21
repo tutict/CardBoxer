@@ -1,0 +1,5 @@
+FAIL: player f guard wrist beside cheek/chin below head origin (offset=0.050)
+FAIL: player b guard wrist beside cheek/chin below head origin (offset=0.061)
+FAIL: foe f guard wrist beside cheek/chin below head origin (offset=0.041)
+FAIL: foe b guard wrist beside cheek/chin below head origin (offset=0.028)
+NATURAL AUTHOR FLOW CHECK: FAIL failures= 4

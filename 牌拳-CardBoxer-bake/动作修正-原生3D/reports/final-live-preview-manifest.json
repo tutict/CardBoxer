@@ -1,0 +1,2467 @@
+{
+  "frames": [
+    {
+      "scenario": "player-card-cross",
+      "tick": 0,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0000-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 6,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0006-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 12,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0012-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 18,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0018-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 24,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0024-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 30,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0030-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 36,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0036-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 42,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0042-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 48,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0048-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 54,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0054-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 60,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0060-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 66,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0066-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 72,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0072-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 78,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0078-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 84,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0084-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 90,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0090-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 96,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0096-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 102,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0102-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 108,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0108-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 114,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0114-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 120,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0120-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 126,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0126-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 132,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0132-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 138,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0138-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-card-cross",
+      "tick": 144,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-card-cross-f0144-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 0,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0000-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 6,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0006-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 12,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0012-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 18,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0018-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 24,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0024-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 30,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0030-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 36,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0036-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 42,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0042-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 48,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0048-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 54,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0054-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 60,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0060-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 66,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0066-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 72,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0072-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 78,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0078-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 84,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0084-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 90,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0090-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 96,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0096-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 102,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0102-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 108,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0108-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 114,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0114-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 120,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0120-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 126,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0126-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 132,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0132-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 138,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0138-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-card-sweep",
+      "tick": 144,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-card-sweep-f0144-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 0,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0000-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 6,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0006-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 12,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0012-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 18,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0018-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 24,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0024-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 30,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0030-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 36,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0036-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 42,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0042-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 48,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0048-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 54,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0054-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 60,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0060-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 66,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0066-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 72,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0072-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 78,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0078-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 84,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0084-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 90,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0090-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 96,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0096-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 102,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0102-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 108,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0108-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 114,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0114-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 120,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0120-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 126,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0126-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 132,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0132-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 138,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0138-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 144,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0144-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 150,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0150-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 156,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0156-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 162,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0162-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "tick": 168,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-player-f0168-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 0,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0000-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 6,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0006-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 12,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0012-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 18,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0018-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 24,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0024-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 30,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0030-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 36,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0036-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 42,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0042-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 48,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0048-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 54,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0054-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 60,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0060-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 66,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0066-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 72,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0072-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 78,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0078-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 84,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0084-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 90,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0090-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 96,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0096-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 102,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0102-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 108,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0108-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 114,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0114-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 120,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0120-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 126,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0126-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 132,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0132-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 138,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0138-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 144,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0144-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 150,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0150-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 156,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0156-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 162,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0162-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "tick": 168,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6/taikou-enemy-f0168-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 0,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0000-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 6,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0006-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 12,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0012-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 18,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0018-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 24,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0024-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 30,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0030-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 36,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0036-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 42,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0042-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 48,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0048-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 54,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0054-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 60,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0060-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 66,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0066-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 72,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0072-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 78,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0078-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 84,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0084-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 90,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0090-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 96,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0096-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 102,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0102-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 108,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0108-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 114,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0114-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 120,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0120-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 126,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0126-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 132,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0132-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 138,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0138-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 144,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0144-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 150,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0150-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 156,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0156-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 162,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0162-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 168,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0168-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "tick": 174,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/player-wave-new-action-f0174-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "tick": 0,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0000-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "tick": 6,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0006-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "tick": 12,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0012-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "tick": 18,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0018-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "tick": 24,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0024-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "tick": 30,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0030-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "tick": 36,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0036-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "tick": 42,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0042-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "tick": 48,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0048-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "tick": 54,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0054-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "tick": 60,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0060-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "tick": 66,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0066-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "tick": 72,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0072-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "tick": 78,
+      "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0078-live.png",
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "tick": 80,
+      "reset": true,
+      "capture_type": "actual fighter SubViewports composited",
+      "source": {
+        "foe": {
+          "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0080-foe.png",
+          "png_error": 0
+        },
+        "player": {
+          "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed/foe-fatal-facing-reset-f0080-player.png",
+          "png_error": 0
+        }
+      },
+      "source_sha256": {
+        "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+        "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+        "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+        "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+        "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+        "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+        "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+        "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+        "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+      },
+      "duration_ms": 500
+    }
+  ],
+  "duration_ms": 100,
+  "evidence": "Real root viewport screenshots of actual production methods; fixed-input scenario setup, not default-spawn full match. Four realtime scenes use repaired mode-before-ready test setup; taikou captures unchanged.",
+  "reset_note": "Fatal reset tick80 has fighter captures; full arena capture occurs every6ticks, so the GIF explicitly labels the actual fighter viewport composite at reset."
+}

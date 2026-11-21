@@ -1,0 +1,3449 @@
+===== H/make_baseline_h.py =====
+"""H 路线 P0：备份「G 完成态」的可运行游戏工程，写逐文件 size+sha256 基线。
+
+二进制复制；排除 .godot/ 与 __pycache__/。
+用法：python make_baseline_h.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import shutil
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+ORIG = HERE / "orig" / "pre-3d-foe"
+BASELINE = HERE / "baseline_h.json"
+EXCLUDE_DIRS = {".godot", "__pycache__"}
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def game_files() -> list[Path]:
+    out = []
+    for p in sorted(GAME.rglob("*")):
+        if not p.is_file():
+            continue
+        rel = p.relative_to(GAME)
+        if any(part in EXCLUDE_DIRS for part in rel.parts):
+            continue
+        out.append(p)
+    return out
+
+
+def main() -> int:
+    files = game_files()
+    rows = []
+    for p in files:
+        rel = p.relative_to(GAME)
+        dst = ORIG / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(p, dst)
+        rows.append({"rel": str(rel).replace("\\", "/"),
+                     "size": p.stat().st_size,
+                     "sha256": sha256(p)})
+    mismatch = []
+    for row in rows:
+        q = ORIG / row["rel"]
+        if not q.is_file() or q.stat().st_size != row["size"] \
+                or sha256(q) != row["sha256"]:
+            mismatch.append(row["rel"])
+    payload = {
+        "game": str(GAME), "count": len(rows),
+        "backup": str(ORIG), "backup_verified": not mismatch,
+        "backup_mismatch": mismatch, "files": rows,
+    }
+    BASELINE.write_text(json.dumps(payload, ensure_ascii=False, indent=2)
+                        + "\n", encoding="utf-8")
+    print(f"BASELINE_FILES={len(rows)} BACKUP_VERIFIED={not mismatch} "
+          f"MISMATCH={len(mismatch)}")
+    print("BASELINE_H_OK" if not mismatch else "BASELINE_H_FAILED")
+    return 0 if not mismatch else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/probe_blends_h.py =====
+"""H 路线 P0：判定 A 路线对手怪 .blend 能否复用 F 的「权重回传 → GLB」链。
+
+只读两个 .blend，逐个 dump 对象 / modifier / vertex group / 13 骨 rest /
+UV / 贴图 / bbox，最后逐骨比对 rest matrix 与骨名。
+用法：blender.exe -b --python probe_blends_h.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import sys
+from pathlib import Path
+
+sys.dont_write_bytecode = True
+import bpy
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+OUT = HERE / "data" / "blend_probe_h.json"
+BLENDS = {
+    "foe": BAKE / "A路线-资产重做" / "对手怪-可变形连续壳.blend",
+    "player": BAKE / "E路线-玩家3D绑骨" / "玩家V4b-可变形连续壳.blend",
+}
+
+
+def log(*a):
+    print(*a, flush=True)
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def textures(obj) -> list[dict]:
+    out = []
+    for slot in obj.material_slots:
+        mat = slot.material
+        if mat and mat.use_nodes:
+            for n in mat.node_tree.nodes:
+                if n.type == "TEX_IMAGE" and n.image:
+                    out.append({"image": n.image.name,
+                                "size": list(n.image.size),
+                                "packed": n.image.packed_file is not None})
+    return sorted(out, key=lambda d: d["image"])
+
+
+def mesh_info(o) -> dict:
+    groups = []
+    for g in o.vertex_groups:
+        groups.append({"name": g.name, "index": g.index})
+    covered = sum(1 for v in o.data.vertices
+                  if any(w.weight > 1e-6 for w in v.groups))
+    return {
+        "name": o.name, "type": o.type,
+        "verts": len(o.data.vertices), "faces": len(o.data.polygons),
+        "uv_layers": [u.name for u in o.data.uv_layers],
+        "materials": [m.name if m else None for m in o.data.materials],
+        "textures": textures(o),
+        "vertex_groups": groups,
+        "weighted_verts": covered,
+        "modifiers": [
+            {"name": m.name, "type": m.type,
+             "target": (m.target.name if m.type in {"SURFACE_DEFORM", "ARMATURE",
+                                                    "DATA_TRANSFER"}
+                         and getattr(m, "target", None) else None),
+             "object": (m.object.name if m.type in {"ARMATURE", "DATA_TRANSFER"}
+                        and getattr(m, "object", None) else None)}
+            for m in o.modifiers],
+        "dimensions": [round(float(x), 6) for x in o.dimensions],
+        "location": [round(float(x), 6) for x in o.location],
+        "scale": [round(float(x), 6) for x in o.scale],
+        "parent": o.parent.name if o.parent else None,
+    }
+
+
+def rig_info(o) -> dict:
+    bones = []
+    for b in o.data.bones:
+        bones.append({
+            "name": b.name,
+            "parent": b.parent.name if b.parent else None,
+            "head": [round(float(x), 6) for x in b.head_local],
+            "tail": [round(float(x), 6) for x in b.tail_local],
+            "matrix_local": [round(float(x), 6)
+                             for row in b.matrix_local for x in row],
+        })
+    return {"name": o.name, "bones": bones,
+            "location": [round(float(x), 6) for x in o.location],
+            "scale": [round(float(x), 6) for x in o.scale]}
+
+
+def dump(tag: str, path: Path) -> dict:
+    assert path.is_file(), path
+    bpy.ops.wm.open_mainfile(filepath=str(path))
+    scene = bpy.context.scene
+    meshes = [mesh_info(o) for o in scene.objects if o.type == "MESH"]
+    rigs = [rig_info(o) for o in scene.objects if o.type == "ARMATURE"]
+    hi = [m for m in meshes if any(x["type"] == "SURFACE_DEFORM"
+                                  for x in m["modifiers"])]
+    shells = [m for m in meshes if any(x["type"] == "ARMATURE"
+                                       for x in m["modifiers"])]
+    return {
+        "blend": str(path), "sha256": sha256(path),
+        "blender": bpy.app.version_string,
+        "objects": [{"name": o.name, "type": o.type}
+                    for o in scene.objects],
+        "meshes": meshes, "rigs": rigs,
+        "highpoly": [m["name"] for m in hi],
+        "shells": [m["name"] for m in shells],
+    }
+
+
+def main() -> int:
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    data = {tag: dump(tag, p) for tag, p in BLENDS.items()}
+    foe_rig = data["foe"]["rigs"][0] if data["foe"]["rigs"] else None
+    pl_rig = data["player"]["rigs"][0] if data["player"]["rigs"] else None
+    checks = {}
+    facts = {}
+    if foe_rig and pl_rig:
+        fn = [b["name"] for b in foe_rig["bones"]]
+        pn = [b["name"] for b in pl_rig["bones"]]
+        checks["bone_names_identical"] = fn == pn
+        checks["bone_count_13"] = len(fn) == 13 and len(pn) == 13
+        # 判据订正 2026-11-11：rest 不同不是「链不可用」的失败，
+        # 而是本探针的**发现**——它决定对手怪必须有自己的 apose_points
+        # （RigDriver 拿它当旋转中心 hv）。写进 facts，不进 checks，
+        # 避免把「事实」当成「要修的红灯」。
+        facts["rest_matrix_identical"] = all(
+            a["matrix_local"] == b["matrix_local"]
+            for a, b in zip(foe_rig["bones"], pl_rig["bones"]))
+        facts["max_bone_head_delta_m"] = max(
+            round(sum((x - y) ** 2 for x, y in
+                      zip(a["head"], b["head"])) ** 0.5, 6)
+            for a, b in zip(foe_rig["bones"], pl_rig["bones"]))
+        facts["consequence"] = (
+            "foe needs its own apose_points; see make_foe_motion_h.py")
+        checks["rig_transform_identical"] = (
+            foe_rig["location"] == pl_rig["location"]
+            and foe_rig["scale"] == pl_rig["scale"])
+    checks["foe_has_surfdeform"] = bool(data["foe"]["highpoly"])
+    checks["foe_has_armature_shell"] = bool(data["foe"]["shells"])
+    checks["player_has_surfdeform"] = bool(data["player"]["highpoly"])
+    for tag in ("foe", "player"):
+        hi = [m for m in data[tag]["meshes"]
+              if m["name"] in data[tag]["highpoly"]]
+        if hi:
+            checks[f"{tag}_one_uv"] = len(hi[0]["uv_layers"]) == 1
+            checks[f"{tag}_three_textures"] = len(hi[0]["textures"]) == 3
+            checks[f"{tag}_4096_pbr"] = all(
+                t["size"] == [4096, 4096] for t in hi[0]["textures"])
+            checks[f"{tag}_textures_packed"] = all(
+                t["packed"] for t in hi[0]["textures"])
+    report = {"blends": data, "checks": checks, "facts": facts,
+              "failed": [k for k, v in checks.items() if not v],
+              "ok": all(checks.values()) and len(checks) >= 10}
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for tag, d in data.items():
+        log("BLEND", tag, Path(d["blend"]).name, d["sha256"][:12],
+            "objects=", len(d["objects"]))
+        for m in d["meshes"]:
+            log("  MESH", m["name"], m["verts"], "verts",
+                "groups=", len(m["vertex_groups"]),
+                "weighted=", m["weighted_verts"],
+                "mods=", [x["type"] for x in m["modifiers"]],
+                "uv=", len(m["uv_layers"]), "tex=", len(m["textures"]))
+        for r in d["rigs"]:
+            log("  RIG", r["name"], len(r["bones"]), "bones",
+                [b["name"] for b in r["bones"]][:4], "...")
+    for k, v in checks.items():
+        log("CHECK", k, v)
+    for k, v in facts.items():
+        log("FACT", k, v)
+    log("BLEND_PROBE_OK" if report["ok"] else "BLEND_PROBE_FAILED")
+    return 0 if report["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/diag_rest_h.py =====
+"""量化 A(foe) 与 E(player) 两套 13 骨 rest 的差异，判断能否共用 motion_input。"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+d = json.loads((HERE / "data" / "blend_probe_h.json").read_text(encoding="utf-8"))
+f = d["blends"]["foe"]["rigs"][0]["bones"]
+p = d["blends"]["player"]["rigs"][0]["bones"]
+print("name                 foe_head                       player_head                    dhead     dmatrix_max")
+rows = []
+for a, b in zip(f, p):
+    dh = [round(x - y, 6) for x, y in zip(a["head"], b["head"])]
+    dt = [round(x - y, 6) for x, y in zip(a["tail"], b["tail"])]
+    dm = [round(abs(x - y), 8) for x, y in zip(a["matrix_local"],
+                                              b["matrix_local"])]
+    dist = round(sum(x * x for x in dh) ** 0.5, 6)
+    rows.append({"bone": a["name"], "dhead": dh, "dtail": dt,
+                 "dhead_dist": dist, "dmatrix_max": max(dm)})
+    print(f"{a['name']:<20} {str(a['head']):<29} {str(b['head']):<29} "
+          f"{dist:<9} {max(dm):<12}")
+print("MAX_DHEAD_DIST", max(r["dhead_dist"] for r in rows))
+print("MAX_DMATRIX", max(r["dmatrix_max"] for r in rows))
+print("BONES_WITH_DIFF", [r["bone"] for r in rows if r["dhead_dist"] > 1e-6])
+out = HERE / "data" / "rest_diff_h.json"
+out.write_text(json.dumps(rows, ensure_ascii=False, indent=2) + "\n",
+               encoding="utf-8")
+
+
+===== H/diag_motion_h.py =====
+"""读 motion_input.json 的 chain / apose_points / mapping 口径。"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+p = BAKE / "F路线-Godot驱动层" / "data" / "motion_input.json"
+d = json.loads(p.read_text(encoding="utf-8"))
+print("KEYS", list(d.keys()))
+print("bones", d.get("bones"))
+print("chain:")
+for e in d.get("chain", []):
+    print("   ", e)
+print("apose_points:")
+for k, v in d.get("apose_points", {}).items():
+    print("   ", k, v)
+print("stance:")
+for k, v in d.get("stance", {}).items():
+    print("   ", k, v)
+print("mapping keys", list(d.get("mapping", {}).keys()))
+print("px_to_m", d.get("px_to_m"))
+print("cards", {k: v.get("frames") for k, v in d.get("cards", {}).items()})
+print("tracks", {k: len(v.get("track", [])) for k, v in d.get("cards", {}).items()})
+
+
+===== H/make_foe_motion_h.py =====
+"""H 路线 P0：证明 apose_points 口径，并为对手怪生成自己的 motion_input。
+
+F 的 RigDriver 用 motion["apose_points"] 当**旋转中心 hv**（米，Blender
+(x, z)），而 global_rest 从各自 GLB 的 Skeleton3D 读回。两个模型的 13 骨
+rest 不同（对手怪更矮更宽），所以旋转中心必须各用各的骨架，否则会绕
+错误的位置转。
+
+先按固定规则从玩家 rig 重算 apose_points，与 F 的 motion_input.json
+逐项对账（这是对规则的证明）；同一函数再从对手怪 rig 生成 foe 版。
+除 apose_points 外其余键（stance / cards / mapping / bones / chain /
+px_to_m / source / joint_names）逐项保持不变。
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+PROBE = HERE / "data" / "blend_probe_h.json"
+SRC = BAKE / "F路线-Godot驱动层" / "data" / "motion_input.json"
+OUT_FOE = HERE / "data" / "motion_input_foe.json"
+OUT_REPORT = HERE / "data" / "apose_crosscheck_h.json"
+
+
+def xz(v: list[float]) -> list[float]:
+    return [round(float(v[0]), 6), round(float(v[2]), 6)]
+
+
+def apose_from_rig(rig: dict) -> dict:
+    b = {x["name"]: x for x in rig["bones"]}
+    need = ["hips", "spine", "chest", "neck", "head",
+            "forearm_f", "forearm_b", "shin_f", "shin_b",
+            "thigh_f", "thigh_b"]
+    assert all(n in b for n in need), sorted(b)
+    out = {
+        "A": xz(b["hips"]["head"]),
+        "B": xz(b["spine"]["head"]),
+        "C": xz(b["chest"]["head"]),
+        "D": xz(b["neck"]["head"]),
+        "E": xz(b["head"]["head"]),
+        "F": xz(b["head"]["tail"]),
+        "f_elbow": xz(b["forearm_f"]["head"]),
+        "f_hand": xz(b["forearm_f"]["tail"]),
+        "b_elbow": xz(b["forearm_b"]["head"]),
+        "b_hand": xz(b["forearm_b"]["tail"]),
+        "f_knee": xz(b["shin_f"]["head"]),
+        "f_foot": xz(b["shin_f"]["tail"]),
+        "b_knee": xz(b["shin_b"]["head"]),
+        "b_foot": xz(b["shin_b"]["tail"]),
+        "tf_head": xz(b["thigh_f"]["head"]),
+        "tb_head": xz(b["thigh_b"]["head"]),
+    }
+    # 三个语义别名（make_points 用的是 2D frame joints，这里只为结构一致）
+    out["hip"] = out["A"]
+    out["shoulder"] = out["D"]
+    out["head"] = out["F"]
+    return out
+
+
+def main() -> int:
+    probe = json.loads(PROBE.read_text(encoding="utf-8"))
+    src = json.loads(SRC.read_text(encoding="utf-8"))
+    player_rig = probe["blends"]["player"]["rigs"][0]
+    foe_rig = probe["blends"]["foe"]["rigs"][0]
+
+    rebuilt = apose_from_rig(player_rig)
+    expect = {k: [round(float(x), 6) for x in v]
+              for k, v in src["apose_points"].items()}
+    rows = []
+    for k in sorted(expect):
+        got = rebuilt.get(k)
+        diff = (max(abs(a - b) for a, b in zip(got, expect[k]))
+                if got else None)
+        rows.append({"key": k, "rebuilt": got, "expected": expect[k],
+                     "max_abs_diff": diff})
+    worst = max((9.9 if r["max_abs_diff"] is None
+                 else r["max_abs_diff"]) for r in rows)
+    same_keys = set(rebuilt) == set(expect)
+    checks = {
+        "apose_key_set_identical": same_keys,
+        "player_rebuild_matches_F": worst <= 1e-4,
+        "foe_rest_differs_from_player": (
+            foe_rig["bones"] != player_rig["bones"]),
+        "foe_apose_not_equal_player": None,
+    }
+    foe_apose = apose_from_rig(foe_rig)
+    checks["foe_apose_not_equal_player"] = foe_apose != rebuilt
+
+    # 只换 apose_points 一个键；其余（含 source/joint_names/stance/cards/
+    # mapping/bones/chain/px_to_m）逐项保持原值，真相来源不被改写。
+    foe = dict(src)
+    foe["apose_points"] = foe_apose
+    report = {
+        "rule": "apose[u] = Blender bone.head_local/tail_local (x, z)",
+        "player_worst_abs_diff": worst,
+        "rows": rows,
+        "foe_apose": foe_apose,
+        "keys_other_than_apose_identical": all(
+            foe[k] == src[k] for k in src if k != "apose_points"),
+        "checks": checks,
+        "failed": [k for k, v in checks.items() if not v],
+        "ok": (all(checks.values())
+               and all(foe[k] == src[k] for k in src if k != "apose_points")),
+    }
+    OUT_REPORT.parent.mkdir(parents=True, exist_ok=True)
+    OUT_REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2)
+                          + "\n", encoding="utf-8")
+    for r in rows:
+        print(f"{r['key']:<10} rebuilt={str(r['rebuilt']):<24} "
+              f"expected={str(r['expected']):<24} diff={r['max_abs_diff']}")
+    print("WORST", worst, "SAME_KEYS", same_keys)
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    if report["ok"]:
+        OUT_FOE.write_text(json.dumps(foe, ensure_ascii=False,
+                                      separators=(",", ":"))
+                           + "\n", encoding="utf-8")
+        print("WROTE", OUT_FOE.name, OUT_FOE.stat().st_size, "B")
+        print("APOSE_FOE_MOTION_OK")
+        return 0
+    print("APOSE_FOE_MOTION_FAILED")
+    return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/build_foe_rigged_h.py =====
+"""H 路线 P1：给对手怪高模补平滑 skin，导出 Godot 能驱动的 GLB。
+
+链路与 F 路线 build_rigged_glb.py 同构：
+  A 路线 .blend 的 a_continuous_shell（3 壳 / ARMATURE_AUTO 平滑权重）
+  → DATA_TRANSFER 回传 node_0 原高模 → 加 ARMATURE modifier
+  → export_apply=False 只导出「高模 + 13 骨」。
+
+不能直接用 node_0 自带的 13 组权重：那是 11-08 的**刚性权重**
+（拓扑修复探针V1 实测 35° 驱动右臂撕裂），A 路线正是用
+SURFACE_DEFORM 绕开它。这里回传的是代理壳的平滑权重。
+
+只读 A 路线 .blend，不回写任何归档。
+用法：blender.exe -b --python build_foe_rigged_h.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import sys
+from pathlib import Path
+
+sys.dont_write_bytecode = True
+import bpy
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+BLEND = BAKE / "A路线-资产重做" / "对手怪-可变形连续壳.blend"
+OUT_GLB = HERE / "foe-rigged.glb"
+OUT_JSON = HERE / "data" / "foe_rigged_build.json"
+
+
+def log(*a):
+    print(*a, flush=True)
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def textures(obj) -> list[dict]:
+    out = []
+    for slot in obj.material_slots:
+        mat = slot.material
+        if mat and mat.use_nodes:
+            for n in mat.node_tree.nodes:
+                if n.type == "TEX_IMAGE" and n.image:
+                    out.append({"image": n.image.name,
+                                "size": list(n.image.size)})
+    return sorted(out, key=lambda d: d["image"])
+
+
+def fresh_copy(src, name):
+    obj = src.copy()
+    obj.data = src.data.copy()
+    bpy.context.scene.collection.objects.link(obj)
+    obj.name = name
+    for m in list(obj.modifiers):
+        obj.modifiers.remove(m)
+    obj.vertex_groups.clear()
+    obj.parent = None
+    obj.hide_render = True
+    return obj
+
+
+def main() -> int:
+    assert BLEND.is_file(), BLEND
+    blend_sha = sha256(BLEND)
+    bpy.ops.wm.open_mainfile(filepath=str(BLEND))
+    scene = bpy.context.scene
+
+    src = next(o for o in scene.objects
+               if o.type == "MESH"
+               and any(m.type == "SURFACE_DEFORM" for m in o.modifiers))
+    shell = next(m for m in src.modifiers
+                 if m.type == "SURFACE_DEFORM").target
+    rig = next(o for o in scene.objects if o.type == "ARMATURE")
+
+    src_uv = len(src.data.uv_layers)
+    src_tex = textures(src)
+    bone_names = [b.name for b in rig.data.bones]
+    shell_groups = [g.name for g in shell.vertex_groups]
+    log("OPEN", src.name, len(src.data.vertices), "verts /",
+        shell.name, len(shell.data.vertices), "verts /",
+        rig.name, len(bone_names), "bones")
+    assert set(bone_names) == set(shell_groups), (bone_names, shell_groups)
+
+    final = fresh_copy(src, "foe_HI_skinned")
+    for name in bone_names:
+        final.vertex_groups.new(name=name)
+
+    mod = final.modifiers.new("weights_from_continuous_shell",
+                              "DATA_TRANSFER")
+    mod.object = shell
+    mod.use_vert_data = True
+    mod.data_types_verts = {"VGROUP_WEIGHTS"}
+    mod.vert_mapping = "POLYINTERP_NEAREST"
+    mod.layers_vgroup_select_src = "ALL"
+    mod.layers_vgroup_select_dst = "NAME"
+    bpy.ops.object.select_all(action="DESELECT")
+    final.select_set(True)
+    bpy.context.view_layer.objects.active = final
+    bpy.ops.object.modifier_apply(modifier=mod.name)
+
+    arm_mod = final.modifiers.new("foe_rig", "ARMATURE")
+    arm_mod.object = rig
+
+    covered = sum(1 for v in final.data.vertices
+                  if any(g.weight > 1e-6 for g in v.groups))
+    total = len(final.data.vertices)
+    coverage = covered / total
+    log("WEIGHTS", covered, "/", total, round(coverage * 100, 4), "%")
+    assets = {
+        "uv_layers": len(final.data.uv_layers),
+        "materials": len(final.data.materials),
+        "textures": textures(final),
+        "uv_same": len(final.data.uv_layers) == src_uv,
+        "textures_same": textures(final) == src_tex,
+    }
+    log("ASSETS", assets)
+    assert assets["uv_same"] and assets["textures_same"]
+    assert coverage > 0.99, covered
+
+    bpy.ops.object.select_all(action="DESELECT")
+    final.select_set(True)
+    rig.select_set(True)
+    bpy.context.view_layer.objects.active = final
+    result = bpy.ops.export_scene.gltf(
+        filepath=str(OUT_GLB),
+        export_format="GLB",
+        use_selection=True,
+        export_apply=False,          # 关键：不烘焙 ARMATURE，保留 skin
+        export_skins=True,
+        export_animations=False,
+        export_materials="EXPORT",
+        export_yup=True,
+        export_cameras=False,
+        export_lights=False,
+    )
+    log("EXPORT", list(result), OUT_GLB.stat().st_size, "B")
+    assert list(result) == ["FINISHED"]
+    assert OUT_GLB.is_file() and OUT_GLB.stat().st_size > 1_000_000
+
+    report = {
+        "blender": bpy.app.version_string,
+        "source_blend": str(BLEND),
+        "source_blend_sha256": blend_sha,
+        "source": {"object": src.name, "verts": len(src.data.vertices),
+                   "uv_layers": src_uv, "textures": src_tex,
+                   "vertex_groups_before": len(src.vertex_groups)},
+        "weight_source": {"object": shell.name,
+                          "verts": len(shell.data.vertices),
+                          "groups": shell_groups},
+        "rig": {"object": rig.name, "bones": bone_names},
+        "skinned": {"object": final.name, "verts": total,
+                    "weighted_verts": covered,
+                    "coverage_pct": round(coverage * 100, 4),
+                    "assets": assets,
+                    "modifiers": [{"name": m.name, "type": m.type}
+                                  for m in final.modifiers]},
+        "export": {"file": OUT_GLB.name,
+                   "bytes": OUT_GLB.stat().st_size,
+                   "sha256": sha256(OUT_GLB),
+                   "export_apply": False,
+                   "export_skins": True,
+                   "operator_result": list(result)},
+    }
+    OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
+    OUT_JSON.write_text(json.dumps(report, ensure_ascii=False, indent=2)
+                        + "\n", encoding="utf-8")
+    log("FOE_RIGGED_GLB_OK", report["skinned"]["coverage_pct"], "%")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/inspect_foe_glb_h.py =====
+"""纯 Python 复核 foe-rigged.glb：skin 真的挂在高模上、贴图零重编码。
+
+不依赖 Blender；解析 GLB 的 JSON + BIN chunk，与
+F 路线 player-rigged.glb（骨名口径）和
+对手怪Blender建模V1/artifact_03.glb（原始 PBR 字节）对照。
+导出器警告「Armature must be the parent of skinned mesh」必须由这里的
+node.skin / JOINTS_0 实据判定有没有造成实际损害。
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import struct
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+GLB = HERE / "foe-rigged.glb"
+PLAYER = BAKE / "F路线-Godot驱动层" / "player-rigged.glb"
+SOURCE = BAKE / "对手怪Blender建模V1" / "artifact_03.glb"
+OUT = HERE / "data" / "foe_gltf_inspection.json"
+
+
+def sha(b: bytes) -> str:
+    return hashlib.sha256(b).hexdigest()
+
+
+def parse(path: Path):
+    data = path.read_bytes()
+    assert struct.unpack_from("<I", data, 0)[0] == 0x46546C67, path
+    version, length = struct.unpack_from("<II", data, 4)
+    assert version == 2 and length == len(data)
+    off, chunks = 12, []
+    while off < len(data):
+        clen, ctype = struct.unpack_from("<I4s", data, off)
+        off += 8
+        chunks.append((ctype, data[off:off + clen]))
+        off += clen
+    js = json.loads(next(p for t, p in chunks if t == b"JSON").decode("utf-8"))
+    binary = next(p for t, p in chunks if t == b"BIN\x00")
+    return js, binary, len(data)
+
+
+def image_blobs(js, binary):
+    out = []
+    for i, im in enumerate(js.get("images", [])):
+        bv = js["bufferViews"][im["bufferView"]]
+        off = bv.get("byteOffset", 0)
+        blob = binary[off:off + bv["byteLength"]]
+        out.append({"index": i, "bytes": len(blob), "sha256": sha(blob),
+                    "name": im.get("name")})
+    return out
+
+
+def summarize(path: Path) -> dict:
+    js, binary, size = parse(path)
+    prims = []
+    for mi, mesh in enumerate(js.get("meshes", [])):
+        for pi, prim in enumerate(mesh.get("primitives", [])):
+            acc = js["accessors"][prim["attributes"]["POSITION"]]
+            prims.append({
+                "mesh": mi, "primitive": pi,
+                "attributes": sorted(prim["attributes"].keys()),
+                "verts": acc["count"],
+                "has_joints": "JOINTS_0" in prim["attributes"],
+                "has_weights": "WEIGHTS_0" in prim["attributes"],
+                "pos_min": acc.get("min"), "pos_max": acc.get("max"),
+            })
+    skinned_nodes = [
+        {"node": i, "name": n.get("name"),
+         "skin": n.get("skin"), "mesh": n.get("mesh")}
+        for i, n in enumerate(js.get("nodes", []))
+        if "skin" in n]
+    skins = [{"joints": len(s.get("joints", [])),
+              "has_inverse_bind": "inverseBindMatrices" in s}
+             for s in js.get("skins", [])]
+    return {
+        "file": path.name, "bytes": size, "sha256": sha(path.read_bytes()),
+        "counts": {k: len(js.get(k, [])) for k in
+                   ("scenes", "nodes", "meshes", "materials", "textures",
+                    "images", "skins", "animations", "accessors")},
+        "primitives": prims, "skinned_nodes": skinned_nodes, "skins": skins,
+        "images": image_blobs(js, binary),
+        "joint_node_names": [js["nodes"][j].get("name")
+                             for j in js.get("skins", [{}])[0].get("joints", [])]
+        if js.get("skins") else [],
+    }
+
+
+def main() -> int:
+    for p in (GLB, PLAYER, SOURCE):
+        assert p.is_file(), p
+    foe = summarize(GLB)
+    player = summarize(PLAYER)
+    source = summarize(SOURCE)
+    hi = [p for p in foe["primitives"]
+          if p["has_joints"] and p["has_weights"] and p["verts"] > 50000]
+    phi = [p for p in player["primitives"]
+           if p["has_joints"] and p["has_weights"] and p["verts"] > 50000]
+    # 判据订正 2026-11-11：第一版写死 highpoly_verts == 64024（.blend 值）
+    # 报红。glTF 导出器会按 UV seam / 法线拆分顶点，F 玩家同样如此：
+    # .blend 57,901 → GLB 57,934（+33）。这里实测 +35，属同一现象。
+    # 因此退役「等于源顶点数」，改判「拆分增量在 0..100 且总量 > 6 万」，
+    # 并把两个增量都记进 verdict 供复算。
+    split_delta = (hi[0]["verts"] - 64024) if hi else None
+    player_split_delta = (phi[0]["verts"] - 57901) if phi else None
+    verdict = {
+        "highpoly_has_skin": bool(hi),
+        "highpoly_verts": hi[0]["verts"] if hi else None,
+        "blend_highpoly_verts": 64024,
+        "vertex_split_delta": split_delta,
+        "player_glb_verts": phi[0]["verts"] if phi else None,
+        "player_blend_verts": 57901,
+        "player_vertex_split_delta": player_split_delta,
+        "skinned_nodes": len(foe["skinned_nodes"]),
+        "skin_joints": foe["skins"][0]["joints"] if foe["skins"] else 0,
+        "has_inverse_bind": bool(foe["skins"]
+                                 and foe["skins"][0]["has_inverse_bind"]),
+        "zero_animations": foe["counts"]["animations"] == 0,
+        "three_images": foe["counts"]["images"] == 3,
+        "images_zero_reencode": all(
+            any(i["sha256"] == r["sha256"] for r in source["images"])
+            for i in foe["images"]),
+        "joint_names_same_as_player": (
+            foe["joint_node_names"] == player["joint_node_names"]),
+        "source_highpoly_has_no_skin": not any(
+            p["has_joints"] and p["verts"] > 50000
+            for p in source["primitives"]),
+    }
+    checks = {
+        "highpoly_has_skin": verdict["highpoly_has_skin"],
+        "highpoly_verts_split_ok": (
+            split_delta is not None and 0 <= split_delta <= 100
+            and verdict["highpoly_verts"] > 60000),
+        "player_split_delta_positive": (
+            player_split_delta is not None and 0 < player_split_delta <= 100),
+        "one_skinned_node": verdict["skinned_nodes"] >= 1,
+        "skin_joints_ge_13": verdict["skin_joints"] >= 13,
+        "inverse_bind_present": verdict["has_inverse_bind"],
+        "zero_animations": verdict["zero_animations"],
+        "three_images": verdict["three_images"],
+        "images_zero_reencode": verdict["images_zero_reencode"],
+        "joint_names_same_as_player": verdict["joint_names_same_as_player"],
+        "source_highpoly_has_no_skin": verdict["source_highpoly_has_no_skin"],
+    }
+    out = {"foe": foe, "player_joint_names": player["joint_node_names"],
+           "source": {"file": SOURCE.name, "bytes": source["bytes"],
+                      "images": source["images"],
+                      "primitives": source["primitives"]},
+           "verdict": verdict, "checks": checks,
+           "failed": [k for k, v in checks.items() if not v],
+           "ok": all(checks.values())}
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    print("VERDICT", json.dumps(verdict, ensure_ascii=False))
+    print("SKINNED_NODES", foe["skinned_nodes"])
+    print("JOINTS", foe["joint_node_names"])
+    print("PRIMS", [(p["verts"], p["has_joints"], p["has_weights"])
+                    for p in foe["primitives"]])
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("FOE_GLTF_OK" if out["ok"] else "FOE_GLTF_FAILED")
+    return 0 if out["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/install_assets_h.py =====
+"""H 路线 P2：把 foe-rigged.glb 与 foe 版 motion 装进可运行游戏工程。
+
+只读 H 工作区产物，二进制复制，逐项 sha256 核对；不改任何既有文件。
+Godot editor 导入可 headless（渲染才需要窗口）。
+用法：python install_assets_h.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import time
+from pathlib import Path
+
+from PIL import Image
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+LOGS = HERE / "logs"
+OUT = HERE / "data" / "install_assets_h.json"
+
+SOURCES = [
+    (HERE / "foe-rigged.glb", "assets/3d/foe-rigged.glb"),
+    (HERE / "data" / "motion_input_foe.json",
+     "data/motion_input_foe.json"),
+]
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def run(cmd: list[str], env: dict, timeout: int, log: Path):
+    t0 = time.perf_counter()
+    try:
+        r = subprocess.run(cmd, env=env, capture_output=True, timeout=timeout)
+        code, out, err = r.returncode, r.stdout, r.stderr
+    except subprocess.TimeoutExpired as exc:
+        code = -1
+        out = exc.stdout or b""
+        err = (exc.stderr or b"") + b"\n=== TIMEOUT ===\n"
+    text = (out + b"\n=== STDERR ===\n" + err).decode("utf-8", "replace")
+    log.write_text(text, encoding="utf-8")
+    return round(time.perf_counter() - t0, 3), code, text
+
+
+def main() -> int:
+    assert GODOT.is_file(), GODOT
+    LOGS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    (GAME / "assets" / "3d").mkdir(parents=True, exist_ok=True)
+
+    copies = []
+    for src, rel in SOURCES:
+        assert src.is_file(), src
+        dst = GAME / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(src, dst)
+        a, b = sha256(src), sha256(dst)
+        copies.append({"src": str(src), "dst": str(dst), "rel": rel,
+                       "bytes": dst.stat().st_size, "sha256": a,
+                       "identical": a == b})
+    env = os.environ.copy()
+    dt, rc, text = run(
+        [str(GODOT), "--headless", "--editor", "--quit",
+         "--path", str(GAME)],
+        env, 300, LOGS / "godot_editor_import_game_h.log")
+    errors = text.count("SCRIPT ERROR") + text.count("Parse Error")
+
+    d3 = GAME / "assets" / "3d"
+    generated = []
+    for p in sorted(d3.rglob("*")):
+        if p.is_file() and p.name.startswith("foe-rigged"):
+            row = {"rel": str(p.relative_to(GAME)).replace("\\", "/"),
+                   "bytes": p.stat().st_size, "sha256": sha256(p)}
+            if p.suffix.lower() == ".png":
+                with Image.open(p) as im:
+                    row["size"] = [im.width, im.height]
+            generated.append(row)
+    pngs = [g for g in generated if g["rel"].endswith(".png")]
+
+    checks = {
+        "two_copies_identical": all(c["identical"] for c in copies),
+        "import_rc": rc == 0,
+        "import_no_parse_errors": errors == 0,
+        "glb_import_stamp": (d3 / "foe-rigged.glb.import").is_file(),
+        "three_pbr_extracted": len(pngs) == 3,
+        "pbr_all_4096": all(g.get("size") == [4096, 4096] for g in pngs),
+        "foe_motion_in_game": (GAME / "data" / "motion_input_foe.json").is_file(),
+        "player_glb_untouched": (
+            sha256(d3 / "player-rigged.glb")
+            == sha256(HERE.parent / "F路线-Godot驱动层" / "player-rigged.glb")),
+    }
+    ok = all(checks.values())
+    OUT.write_text(json.dumps({
+        "import": {"seconds": dt, "returncode": rc, "errors": errors},
+        "copies": copies, "generated": generated,
+        "checks": checks, "failed": [k for k, v in checks.items() if not v],
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    for c in copies:
+        print(f"COPY {c['rel']:40s} {c['bytes']:>10} B "
+              f"sha={c['sha256'][:12]} identical={c['identical']}")
+    print(f"IMPORT rc={rc} {dt}s errors={errors} "
+          f"generated={len(generated)} pngs={len(pngs)}")
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("INSTALL_ASSETS_H_OK" if ok else "INSTALL_ASSETS_H_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/patch_game_h.py =====
+"""H 路线 P2：把双侧 3D 接线写进可运行游戏工程（二进制精确替换）。
+
+纪律：
+  · 每个 needle 必须在目标文件里**恰好命中 1 次**，否则整脚本不改任何文件；
+  · 二进制读写，不碰换行口径（本仓工作树 CRLF/LF 混合）；
+  · 改前 sha256 与 orig/pre-3d-foe 备份逐项核对；
+  · 改后断言 G 路线的 A 组源码形状仍在（双轨机制没被破坏）。
+
+只改 scripts/arena.gd 与 scripts/fighter_3d_layer.gd；
+scripts/fighter.gd 一字不动（draw_3d_override 已经存在，只需给 enemy 也置 true）。
+用法：python patch_game_h.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+BACKUP = HERE / "orig" / "pre-3d-foe"
+OUT = HERE / "data" / "patch_game_h.json"
+
+ARENA = GAME / "scripts" / "arena.gd"
+LAYER = GAME / "scripts" / "fighter_3d_layer.gd"
+FIGHTER = GAME / "scripts" / "fighter.gd"
+
+
+def sha(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def norm(s: str) -> bytes:
+    return s.replace("\r\n", "\n").encode("utf-8")
+
+
+PATCHES: list[tuple[Path, str, str, str]] = [
+    (LAYER, "foe_glb_const",
+     'const RigDriverScript := preload("res://scripts/rig_driver.gd")\n'
+     'const GLB_PATH := "res://assets/3d/player-rigged.glb"\n',
+     'const RigDriverScript := preload("res://scripts/rig_driver.gd")\n'
+     'const GLB_PATH := "res://assets/3d/player-rigged.glb"\n'
+     '# H 路线：对手怪是另一份带 skin 的 GLB（13 骨同名、rest 更矮更宽）。\n'
+     'const FOE_GLB_PATH := "res://assets/3d/foe-rigged.glb"\n'),
+
+    (LAYER, "foe_yaw_const",
+     'const DEFAULT_SIDE_YAW := 55.0\n'
+     'const DEFAULT_SIDE_FLIP := false\n',
+     'const DEFAULT_SIDE_YAW := 55.0\n'
+     'const DEFAULT_SIDE_FLIP := false\n'
+     '# H 路线：对手在画面右侧，脸要朝左；相机放到角色右前方（yaw 取负）。\n'
+     '# 不用 -90°：与玩家同理，零厚度壳会退化成线且出拳幅度被压成 0。\n'
+     'const DEFAULT_FOE_YAW := -55.0\n'),
+
+    (LAYER, "role_vars",
+     'var drv = null\n'
+     'var motion: Dictionary = {}\n',
+     'var drv = null\n'
+     'var motion: Dictionary = {}\n'
+     '# H 路线：同一个层类服务两个角色；默认仍是 G 的玩家形态。\n'
+     'var glb_path := GLB_PATH\n'
+     'var role_id := "player"\n'),
+
+    (LAYER, "configure_hook",
+     '## 探针/运行时改视角；不动骨架，只摆相机 + 决定贴图是否镜像。\n'
+     'func set_view(p_yaw_deg: float, p_flip: bool) -> void:\n',
+     '## H 路线：在 setup() 之前指定角色资产与朝向。\n'
+     '## 不传 = G 路线原样（玩家 / player-rigged.glb / +55° / 不翻）。\n'
+     'func configure(p_role: String, p_glb: String, p_yaw: float,\n'
+     '\t\tp_flip: bool) -> void:\n'
+     '\trole_id = p_role\n'
+     '\tglb_path = p_glb\n'
+     '\tview_yaw_deg = p_yaw\n'
+     '\tview_flip = p_flip\n'
+     '\n'
+     '\n'
+     '## 探针/运行时改视角；不动骨架，只摆相机 + 决定贴图是否镜像。\n'
+     'func set_view(p_yaw_deg: float, p_flip: bool) -> void:\n'),
+
+    (LAYER, "probe_env_player_only",
+     '\t# 环境变量只用于探针扫角度；默认走源码常量，双轨开关默认关不受影响。\n'
+     '\tvar yaw_env := OS.get_environment("CARD_BOXER_3D_YAW")\n'
+     '\tif yaw_env != "":\n'
+     '\t\tview_yaw_deg = float(yaw_env)\n'
+     '\tvar flip_env := OS.get_environment("CARD_BOXER_3D_FLIP")\n'
+     '\tif flip_env != "":\n'
+     '\t\tview_flip = flip_env != "0"\n',
+     '\t# 环境变量只用于玩家侧探针扫角度；对手侧由 configure() 定死朝向，\n'
+     '\t# 避免玩家探针的环境变量把对手一起转了。\n'
+     '\tif role_id == "player":\n'
+     '\t\tvar yaw_env := OS.get_environment("CARD_BOXER_3D_YAW")\n'
+     '\t\tif yaw_env != "":\n'
+     '\t\t\tview_yaw_deg = float(yaw_env)\n'
+     '\t\tvar flip_env := OS.get_environment("CARD_BOXER_3D_FLIP")\n'
+     '\t\tif flip_env != "":\n'
+     '\t\t\tview_flip = flip_env != "0"\n'),
+
+    (LAYER, "load_glb_path",
+     '\tvar res := load(GLB_PATH)\n',
+     '\tvar res := load(glb_path)\n'),
+
+    (ARENA, "foe_vars",
+     'var use_3d := false\n'
+     'var layer_3d = null\n'
+     'var motion_3d: Dictionary = {}\n',
+     'var use_3d := false\n'
+     'var layer_3d = null\n'
+     'var layer_3d_foe = null\n'
+     'var motion_3d: Dictionary = {}\n'
+     'var motion_3d_foe: Dictionary = {}\n'),
+
+    (ARENA, "create_two_layers",
+     '\tif use_3d:\n'
+     '\t\tvar mf3 := FileAccess.open("res://data/motion_input.json", FileAccess.READ)\n'
+     '\t\tif mf3 != null:\n'
+     '\t\t\tvar parsed3: Variant = JSON.parse_string(mf3.get_as_text())\n'
+     '\t\t\tmf3.close()\n'
+     '\t\t\tif parsed3 is Dictionary:\n'
+     '\t\t\t\tmotion_3d = parsed3\n'
+     '\t\tif not motion_3d.is_empty():\n'
+     '\t\t\tvar l3 := Fighter3DLayerScript.new()\n'
+     '\t\t\tworld.add_child(l3)\n'
+     '\t\t\tif l3.setup(motion_3d):\n'
+     '\t\t\t\tlayer_3d = l3\n'
+     '\t\t\t\tplayer.draw_3d_override = true\n'
+     '\t\t\t\tprint("F3D_READY bones=%d cards=%d" % [\n'
+     '\t\t\t\t\tl3.drv.bone_names.size(), motion_3d["cards"].size()])\n'
+     '\t\t\telse:\n'
+     '\t\t\t\tworld.remove_child(l3)\n'
+     '\t\t\t\tl3.queue_free()\n',
+     '\tif use_3d:\n'
+     '\t\tvar mf3 := FileAccess.open("res://data/motion_input.json", FileAccess.READ)\n'
+     '\t\tif mf3 != null:\n'
+     '\t\t\tvar parsed3: Variant = JSON.parse_string(mf3.get_as_text())\n'
+     '\t\t\tmf3.close()\n'
+     '\t\t\tif parsed3 is Dictionary:\n'
+     '\t\t\t\tmotion_3d = parsed3\n'
+     '\t\t# H 路线：两套骨架 rest 不同，旋转中心 apose_points 必须各用各的。\n'
+     '\t\tvar mf3f := FileAccess.open("res://data/motion_input_foe.json", FileAccess.READ)\n'
+     '\t\tif mf3f != null:\n'
+     '\t\t\tvar parsed3f: Variant = JSON.parse_string(mf3f.get_as_text())\n'
+     '\t\t\tmf3f.close()\n'
+     '\t\t\tif parsed3f is Dictionary:\n'
+     '\t\t\t\tmotion_3d_foe = parsed3f\n'
+     '\t\tif not motion_3d.is_empty() and not motion_3d_foe.is_empty():\n'
+     '\t\t\tvar l3 := Fighter3DLayerScript.new()\n'
+     '\t\t\tworld.add_child(l3)\n'
+     '\t\t\tif l3.setup(motion_3d):\n'
+     '\t\t\t\tlayer_3d = l3\n'
+     '\t\t\t\tplayer.draw_3d_override = true\n'
+     '\t\t\t\tprint("F3D_READY bones=%d cards=%d" % [\n'
+     '\t\t\t\t\tl3.drv.bone_names.size(), motion_3d["cards"].size()])\n'
+     '\t\t\telse:\n'
+     '\t\t\t\tworld.remove_child(l3)\n'
+     '\t\t\t\tl3.queue_free()\n'
+     '\t\t\tvar lf := Fighter3DLayerScript.new()\n'
+     '\t\t\tlf.configure("foe", Fighter3DLayerScript.FOE_GLB_PATH,\n'
+     '\t\t\t\t\tFighter3DLayerScript.DEFAULT_FOE_YAW, false)\n'
+     '\t\t\tworld.add_child(lf)\n'
+     '\t\t\tif lf.setup(motion_3d_foe):\n'
+     '\t\t\t\tlayer_3d_foe = lf\n'
+     '\t\t\t\tenemy.draw_3d_override = true\n'
+     '\t\t\t\tprint("F3D_FOE_READY bones=%d" % [\n'
+     '\t\t\t\t\tlf.drv.bone_names.size()])\n'
+     '\t\t\telse:\n'
+     '\t\t\t\tworld.remove_child(lf)\n'
+     '\t\t\t\tlf.queue_free()\n'),
+
+    (ARENA, "sync_two_layers",
+     'func _sync_3d_layer() -> void:\n'
+     '\tif layer_3d == null:\n'
+     '\t\treturn\n'
+     '\tlayer_3d.position = player.position + player.visual_shift\n'
+     '\tvar card := "stance"\n'
+     '\tvar frame := 0\n'
+     '\t# 只有玩家赢下本回、节奏时钟激活、且确实有赢家动作时播攻击；\n'
+     '\t# 输家 / 平局 / 亮牌阶段一律 stance（73 帧表里没有受击轨道）。\n'
+     '\tif tk_rhythm_winner == "player" and tk_rhythm_t >= 0.0 \\\n'
+     '\t\t\tand tk_motion_id != "" and tk_rhythm_t <= Rhythm.ATTACK_S:\n'
+     '\t\tcard = tk_motion_id\n'
+     '\t\tvar n: int = int(motion_3d["cards"][card]["frames"])\n'
+     '\t\tframe = clampi(int(tk_rhythm_t / Rhythm.ATTACK_S * float(n - 1)), 0, n - 1)\n'
+     '\tlayer_3d.apply(card, frame)\n',
+     'func _sync_3d_layer() -> void:\n'
+     '\t# 默认关时立刻返回：节奏时钟仍在跑，但 motion_3d 是空的，\n'
+     '\t# 继续往下算帧数会撞空字典。G 路线的早退语义必须保留。\n'
+     '\tif (layer_3d == null and layer_3d_foe == null) or motion_3d.is_empty():\n'
+     '\t\treturn\n'
+     '\tvar card := "stance"\n'
+     '\tvar frame := 0\n'
+     '\tvar foe_card := "stance"\n'
+     '\tvar foe_frame := 0\n'
+     '\t# 只有赢下本回的一方播攻击；输家 / 平局 / 亮牌阶段一律 stance\n'
+     '\t# （73 帧表里没有受击轨道，硬凑会变成自造动作）。\n'
+     '\tif tk_rhythm_t >= 0.0 and tk_motion_id != "" \\\n'
+     '\t\t\tand tk_rhythm_t <= Rhythm.ATTACK_S:\n'
+     '\t\tvar n: int = int(motion_3d["cards"][tk_motion_id]["frames"])\n'
+     '\t\tvar f := clampi(int(tk_rhythm_t / Rhythm.ATTACK_S * float(n - 1)), 0, n - 1)\n'
+     '\t\tif tk_rhythm_winner == "player":\n'
+     '\t\t\tcard = tk_motion_id\n'
+     '\t\t\tframe = f\n'
+     '\t\telif tk_rhythm_winner == "enemy":\n'
+     '\t\t\tfoe_card = tk_motion_id\n'
+     '\t\t\tfoe_frame = f\n'
+     '\tif layer_3d != null:\n'
+     '\t\tlayer_3d.position = player.position + player.visual_shift\n'
+     '\t\tlayer_3d.apply(card, frame)\n'
+     '\tif layer_3d_foe != null:\n'
+     '\t\tlayer_3d_foe.position = enemy.position + enemy.visual_shift\n'
+     '\t\tlayer_3d_foe.apply(foe_card, foe_frame)\n'),
+]
+
+
+def main() -> int:
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    before = {}
+    for p in (ARENA, LAYER, FIGHTER):
+        rel = str(p.relative_to(GAME)).replace("\\", "/")
+        q = BACKUP / rel
+        before[rel] = {"sha256": sha(p),
+                       "backup_sha256": sha(q) if q.is_file() else None,
+                       "backup_matches": q.is_file() and sha(q) == sha(p)}
+    assert all(v["backup_matches"] for v in before.values()), before
+
+    # 先全文预检：所有 needle 都必须在当前盘上恰好命中 1 次。
+    resolved = []
+    for path, name, old, new in PATCHES:
+        data = path.read_bytes()
+        o_lf, n_lf = norm(old), norm(new)
+        hits = []
+        for eol in (b"\n", b"\r\n"):
+            o = o_lf.replace(b"\n", eol)
+            if data.count(o) == 1:
+                hits.append((eol, o, n_lf.replace(b"\n", eol)))
+        assert len(hits) >= 1, f"anchor not found: {name}"
+        resolved.append((path, name, hits[0]))
+    applied = []
+    for path, name, (eol, o, n) in resolved:
+        data = path.read_bytes()
+        assert data.count(o) == 1, name
+        path.write_bytes(data.replace(o, n, 1))
+        applied.append({"file": path.name, "patch": name,
+                        "eol": "CRLF" if eol == b"\r\n" else "LF"})
+
+    layer_src = LAYER.read_text(encoding="utf-8")
+    arena_src = ARENA.read_text(encoding="utf-8")
+    checks = {
+        "fighter_gd_untouched": sha(FIGHTER) == before[
+            "scripts/fighter.gd"]["sha256"],
+        "switch_default_off": (
+            'use_3d = OS.get_environment("CARD_BOXER_3D") != ""' in arena_src),
+        "override_default_false": (
+            "var draw_3d_override := false" in FIGHTER.read_text(
+                encoding="utf-8")),
+        "sync_hook_count": arena_src.count("_sync_3d_layer()") >= 2,
+        "G_shape_side_yaw_55": "const DEFAULT_SIDE_YAW := 55.0" in layer_src,
+        "G_shape_side_flip_false": (
+            "const DEFAULT_SIDE_FLIP := false" in layer_src),
+        "G_shape_stance_bias": (
+            "var stance_bias_deg: Dictionary = DEFAULT_STANCE_BIAS.duplicate()"
+            in layer_src),
+        "G_shape_apply_frame_before_bias": (
+            "drv.apply_frame(c, f)" in layer_src
+            and "_apply_stance_bias()" in layer_src),
+        "G_shape_bone_pose_rotation": (
+            "drv.skel.set_bone_pose_rotation(i, cur * q)" in layer_src),
+        "H_foe_yaw": "const DEFAULT_FOE_YAW := -55.0" in layer_src,
+        "H_foe_glb": 'FOE_GLB_PATH := "res://assets/3d/foe-rigged.glb"'
+                     in layer_src,
+        "H_configure": "func configure(" in layer_src,
+        "H_two_layers": ("layer_3d_foe" in arena_src
+                         and "motion_3d_foe" in arena_src),
+        "H_two_motions": ('res://data/motion_input_foe.json' in arena_src
+                          and 'res://data/motion_input.json' in arena_src),
+        "H_arena_uses_layer_constants": (
+            "Fighter3DLayerScript.FOE_GLB_PATH" in arena_src
+            and "Fighter3DLayerScript.DEFAULT_FOE_YAW" in arena_src),
+        "H_sync_early_return_preserved": (
+            "or motion_3d.is_empty():" in arena_src),
+        "H_enemy_override": "enemy.draw_3d_override = true" in arena_src,
+        "H_enemy_winner_branch": 'tk_rhythm_winner == "enemy"' in arena_src,
+        "H_layer_loads_glb_path": "var res := load(glb_path)" in layer_src,
+    }
+    after = {str(p.relative_to(GAME)).replace("\\", "/"): sha(p)
+             for p in (ARENA, LAYER, FIGHTER)}
+    report = {"before": before, "after": after, "applied": applied,
+              "checks": checks,
+              "failed": [k for k, v in checks.items() if not v],
+              "ok": all(checks.values())}
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for a in applied:
+        print("PATCH", a["file"], a["patch"], a["eol"])
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("PATCH_GAME_H_OK" if report["ok"] else "PATCH_GAME_H_FAILED")
+    return 0 if report["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/diag_glb_pair_h.py =====
+"""H 路线：比对两份 GLB 的贴图字节与 POSITION bbox，判定是否内容串味。"""
+from __future__ import annotations
+
+import hashlib
+import json
+import struct
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+PAIR = {
+    "player": BAKE / "F路线-Godot驱动层" / "player-rigged.glb",
+    "foe": HERE / "foe-rigged.glb",
+}
+OUT = HERE / "data" / "glb_pair_h.json"
+
+
+def parse(p: Path):
+    data = p.read_bytes()
+    assert struct.unpack_from("<I", data, 0)[0] == 0x46546C67
+    off, chunks = 12, []
+    while off < len(data):
+        clen, ctype = struct.unpack_from("<I4s", data, off)
+        off += 8
+        chunks.append((ctype, data[off:off + clen]))
+        off += clen
+    js = json.loads(next(c for t, c in chunks if t == b"JSON").decode("utf-8"))
+    binary = next(c for t, c in chunks if t == b"BIN\x00")
+    return js, binary, len(data)
+
+
+def main() -> int:
+    out = {}
+    for tag, p in PAIR.items():
+        js, binary, size = parse(p)
+        images = []
+        for im in js.get("images", []):
+            bv = js["bufferViews"][im["bufferView"]]
+            off = bv.get("byteOffset", 0)
+            blob = binary[off:off + bv["byteLength"]]
+            images.append({"name": im.get("name"), "bytes": len(blob),
+                           "sha256": hashlib.sha256(blob).hexdigest()})
+        prim = js["meshes"][0]["primitives"][0]
+        acc = js["accessors"][prim["attributes"]["POSITION"]]
+        out[tag] = {"file": p.name, "bytes": size,
+                    "images": images, "verts": acc["count"],
+                    "pos_min": acc.get("min"), "pos_max": acc.get("max"),
+                    "skin_joints": len(js["skins"][0]["joints"])
+                    if js.get("skins") else 0}
+    psha = {x["sha256"] for x in out["player"]["images"]}
+    fsha = {x["sha256"] for x in out["foe"]["images"]}
+    report = {"pair": out,
+              "image_sets_identical": psha == fsha,
+              "shared_image_count": len(psha & fsha),
+              "bbox_different": (out["player"]["pos_min"] != out["foe"]["pos_min"]
+                                 or out["player"]["pos_max"]
+                                 != out["foe"]["pos_max"]),
+              "verts_different": out["player"]["verts"] != out["foe"]["verts"]}
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for tag, d in out.items():
+        print(tag, d["file"], d["bytes"], "B verts=", d["verts"],
+              "bbox=", d["pos_min"], d["pos_max"])
+        for i in d["images"]:
+            print("   IMG", i["name"], i["bytes"], i["sha256"][:16])
+    print("image_sets_identical", report["image_sets_identical"],
+          "shared", report["shared_image_count"],
+          "bbox_different", report["bbox_different"],
+          "verts_different", report["verts_different"])
+    print("GLB_PAIR_DISTINCT_OK" if (not report["image_sets_identical"]
+                                    and report["bbox_different"]
+                                    and report["verts_different"])
+          else "GLB_PAIR_SUSPICIOUS")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/diag_roi_h.py =====
+"""H 路线：用 off vs both-stance 的逐列差异自动定位两个 3D 角色的 x 区间。
+
+肉眼按缩放后的预览图估 ROI 会偏（1280 原图被缩到约 1080 显示），
+所以这里不猜坐标：逐列数差异像素，找出两段连续峰。
+输出 data/roi_h.json 供 make_zoom_h.py 与 verify_h.py 使用。
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from PIL import Image, ImageChops
+
+HERE = Path(__file__).resolve().parent
+SHOTS = HERE / "shots" / "two_side_ab"
+OFF = SHOTS / "h-off.png"
+ON = SHOTS / "h-both-stance.png"
+OUT = HERE / "data" / "roi_h.json"
+Y0, Y1 = 280, 545
+
+
+def main() -> int:
+    a = Image.open(OFF).convert("RGB").crop((0, Y0, 1280, Y1))
+    b = Image.open(ON).convert("RGB").crop((0, Y0, 1280, Y1))
+    d = ImageChops.difference(a, b)
+    cols = []
+    for x in range(1280):
+        col = d.crop((x, 0, x + 1, Y1 - Y0))
+        cols.append(sum(1 for px in col.get_flattened_data()
+                        if sum(px) > 18))
+    # 阈值 = 峰值的 12%，把连续段合并（允许 12 px 空洞）
+    peak = max(cols)
+    thr = max(6, int(peak * 0.12))
+    hot = [c > thr for c in cols]
+    segs = []
+    start = None
+    for x, v in enumerate(hot):
+        if v and start is None:
+            start = x
+        if not v and start is not None:
+            segs.append([start, x])
+            start = None
+    if start is not None:
+        segs.append([start, 1280])
+    merged = []
+    for s in segs:
+        if merged and s[0] - merged[-1][1] <= 12:
+            merged[-1][1] = s[1]
+        else:
+            merged.append(list(s))
+    big = [s for s in merged if s[1] - s[0] >= 40]
+    boxes = [[s[0], Y0, s[1], Y1] for s in big[:2]]
+    report = {"peak_col_diff": peak, "threshold": thr,
+              "segments": big, "boxes": boxes,
+              "two_regions": len(boxes) == 2,
+              "left_box": boxes[0] if boxes else None,
+              "right_box": boxes[1] if len(boxes) > 1 else None}
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    print("PEAK", peak, "THR", thr, "SEGMENTS", big)
+    print("BOXES", boxes, "two_regions", report["two_regions"])
+    print("ROI_H_OK" if report["two_regions"] else "ROI_H_FAILED")
+    return 0 if report["two_regions"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/make_zoom_h.py =====
+"""H 路线：把双侧角色的 ROI 放大，并做像素级「两人是否同一造型」核对。
+
+左右 ROI 取同样尺寸，逐像素比对；若差异很小就说明渲染串味了。
+输出 boards/H-双侧角色特写.png 与 data/zoom_h.json。
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from PIL import Image, ImageChops, ImageDraw, ImageFont
+
+HERE = Path(__file__).resolve().parent
+SHOT = HERE / "shots" / "two_side_ab" / "h-both-stance.png"
+OUT = HERE / "boards" / "H-双侧角色特写.png"
+DATA = HERE / "data" / "zoom_h.json"
+FONT = Path(r"C:\Windows\Fonts\msyh.ttc")
+ROI_JSON = HERE / "data" / "roi_h.json"
+
+
+def main() -> int:
+    assert SHOT.is_file() and ROI_JSON.is_file()
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    DATA.parent.mkdir(parents=True, exist_ok=True)
+    # 不手填 ROI：按 diag_roi_h.py 从 off/on 逐列差异自动定位的两个区域。
+    roi = json.loads(ROI_JSON.read_text(encoding="utf-8"))
+    assert roi["two_regions"] is True, roi
+    left_box, right_box = roi["boxes"][:2]
+    im = Image.open(SHOT).convert("RGB")
+    w = min(left_box[2] - left_box[0], right_box[2] - right_box[0])
+    h = min(left_box[3] - left_box[1], right_box[3] - right_box[1])
+    def centered(box):
+        cx = (box[0] + box[2]) // 2
+        cy = (box[1] + box[3]) // 2
+        return (cx - w // 2, cy - h // 2,
+                cx - w // 2 + w, cy - h // 2 + h)
+    LEFT, RIGHT = centered(left_box), centered(right_box)
+    a = im.crop(LEFT)
+    b = im.crop(RIGHT)
+    assert a.size == b.size, (a.size, b.size)
+    diff = ImageChops.difference(a, b)
+    changed = sum(1 for px in diff.get_flattened_data()
+                  if px != (0, 0, 0))
+    total = a.width * a.height
+    ratio = changed / total
+
+    z = 2
+    w, h = a.width * z, a.height * z
+    pad, label = 24, 40
+    canvas = Image.new("RGB", (2 * w + 3 * pad, h + label + 2 * pad),
+                       (20, 24, 34))
+    d = ImageDraw.Draw(canvas)
+    f = ImageFont.truetype(str(FONT), 22) if FONT.is_file() \
+        else ImageFont.load_default()
+    canvas.paste(a.resize((w, h), Image.LANCZOS), (pad, pad))
+    canvas.paste(b.resize((w, h), Image.LANCZOS), (2 * pad + w, pad))
+    d.text((pad + 6, pad + h + 6), "左侧 · 玩家 V4b（+55°）",
+           font=f, fill=(160, 225, 205))
+    d.text((2 * pad + w + 6, pad + h + 6), "右侧 · 对手怪（-55°）",
+           font=f, fill=(160, 225, 205))
+    canvas.save(OUT)
+
+    report = {"shot": SHOT.name, "left_roi": list(LEFT),
+              "right_roi": list(RIGHT), "roi_size": list(a.size),
+              "auto_boxes": [left_box, right_box],
+              "changed_px": changed, "total_px": total,
+              "changed_ratio": round(ratio, 4),
+              # 注：这个比值含擂台背景差异，只作「不是同一张图」的辅助；
+              # 「两个不同模型」的硬证据是引擎自报的 glb_path / mesh_name。
+              "distinct": ratio > 0.15,
+              "board": OUT.name, "board_bytes": OUT.stat().st_size}
+    DATA.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
+    print("ROI", a.size, "changed_px", changed, "/", total,
+          "ratio", round(ratio, 4), "distinct", report["distinct"])
+    print("ZOOM_H_OK" if report["distinct"] else "ZOOM_H_FAILED")
+    return 0 if report["distinct"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/diag_cross_h.py =====
+"""H 路线：双侧模式 vs 单侧隔离模式，逐侧 ROI 像素对账（v2 订正版）。
+
+v1（备份在 data/cross_h_v1_retired.json）用「跨进程 ROI 绝对像素等价」
+当判据：要求 left_both ≈ left_only_player、right_both ≈ right_only_foe。
+实测四个 ratio 全在 0.40~0.54，报 CROSS_H_SUSPICIOUS。这不是串味，
+是口径错了：BOTH 与 ONLY_P / ONLY_F 分别来自三个不同的 Godot 进程，
+每次启动随机化全局 RNG，观众席 / 灯光相位 / 手牌都会变，跨进程整帧
+像素等价在 G 路线就已经退役（G 验证记录踩坑节）。
+
+v2 改判据：
+1. 四个 ratio 只作事实记录，不再要求绝对值 < 0.20。
+2. 改用**方向性**判据：双侧左侧更接近「只有玩家」而不是「只有对手」，
+   双侧右侧更接近「只有对手」而不是「只有玩家」，且差值 > 0.05。
+   跨进程噪声是共同基线，排序仍然有意义。
+3. 真正的「两个 SubViewport 互不串味」硬证据是同进程同树的
+   data/vp_diag_h.json：隐藏一侧时另一侧 ROI changed_px 精确为 0。
+
+输出 data/cross_h.json，带 retired_metric 字段供 verify_h.py 钉住，
+防止哪天又把跨进程绝对等价当 PASS 复用。
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from PIL import Image, ImageChops
+
+HERE = Path(__file__).resolve().parent
+SHOTS = HERE / "shots"
+BOTH = SHOTS / "two_side_ab" / "h-both-stance.png"
+ONLY_P = SHOTS / "isolate" / "player" / "h-both-stance.png"
+ONLY_F = SHOTS / "isolate" / "foe" / "h-both-stance.png"
+ROI = json.loads((HERE / "data" / "roi_h.json").read_text(encoding="utf-8"))
+OUT = HERE / "data" / "cross_h.json"
+
+RETIRED = ("absolute ROI pixel identity across separate Godot processes "
+           "(v1: ratio < 0.20)")
+
+
+def diff(a: Path, b: Path, box) -> dict:
+    ia = Image.open(a).convert("RGB").crop(box)
+    ib = Image.open(b).convert("RGB").crop(box)
+    d = ImageChops.difference(ia, ib)
+    changed = sum(1 for px in d.get_flattened_data() if sum(px) > 18)
+    total = ia.width * ia.height
+    return {"changed_px": changed, "total_px": total,
+            "ratio": round(changed / total, 4)}
+
+
+def main() -> int:
+    boxes = ROI["boxes"]
+    assert len(boxes) == 2
+    left, right = boxes[0], boxes[1]
+    out = {
+        "left_both_vs_only_player": diff(BOTH, ONLY_P, left),
+        "left_both_vs_only_foe": diff(BOTH, ONLY_F, left),
+        "right_both_vs_only_foe": diff(BOTH, ONLY_F, right),
+        "right_both_vs_only_player": diff(BOTH, ONLY_P, right),
+        "left_roi": left, "right_roi": right,
+        "retired_metric": RETIRED,
+        "primary_evidence": "data/vp_diag_h.json (same-process A/B, "
+                            "untouched ROI changed_px == 0)",
+        "v1_backup": "data/cross_h_v1_retired.json",
+    }
+    lp = out["left_both_vs_only_player"]["ratio"]
+    lf = out["left_both_vs_only_foe"]["ratio"]
+    rf = out["right_both_vs_only_foe"]["ratio"]
+    rp = out["right_both_vs_only_player"]["ratio"]
+    out["directional_margin"] = {
+        "left": round(lf - lp, 4), "right": round(rp - rf, 4)}
+    # 方向性判据：对应单侧必须比反侧更接近，且余量不是浮点抖动。
+    out["checks"] = {
+        "left_matches_player_more": lp < lf,
+        "right_matches_foe_more": rf < rp,
+        "left_margin_above_noise": (lf - lp) > 0.05,
+        "right_margin_above_noise": (rp - rf) > 0.05,
+        "no_absolute_identity_claim": "retired_metric" in out,
+    }
+    out["ok"] = all(out["checks"].values())
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for k, v in out.items():
+        if isinstance(v, dict):
+            print(k, v)
+    print("MARGIN", out["directional_margin"], "ok", out["ok"])
+    print("CROSS_H_V2_OK" if out["ok"] else "CROSS_H_V2_FAILED")
+    return 0 if out["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/run_isolate_h.py =====
+"""H 路线诊断：单侧隔离渲染，确认每层各自画的是哪个模型。
+
+分别只挂 player 层 / 只挂 foe 层，各渲 5 帧；取 both-stance 帧做对照板。
+输出 shots/isolate/{player,foe}/h-both-stance.png、boards/H-单侧隔离对照.png
+与 data/isolate_h.json。
+用法：python run_isolate_h.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import shutil
+import subprocess
+import time
+from pathlib import Path
+
+from PIL import Image, ImageDraw, ImageFont
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+BASE = HERE / "shots" / "isolate"
+LOGS = HERE / "logs"
+BOARD = HERE / "boards" / "H-单侧隔离对照.png"
+OUT = HERE / "data" / "isolate_h.json"
+PROBE_SRC = HERE / "tests" / "two_side_probe.gd"
+PROBE_DST = GAME / "tests" / "two_side_probe.gd"
+FONT = Path(r"C:\Windows\Fonts\msyh.ttc")
+
+
+def run(only: str) -> dict:
+    out = BASE / only
+    out.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    env.pop("CARD_BOXER_3D", None)
+    env["H_2SIDE_DIR"] = str(out)
+    env["H_2SIDE_ONLY"] = only
+    t0 = time.perf_counter()
+    proc = subprocess.run(
+        [str(GODOT), "--path", str(GAME), "--resolution", "1280x720",
+         "--quit-after", "900", "--script", "res://tests/two_side_probe.gd"],
+        env=env, capture_output=True, timeout=300, cwd=str(GAME))
+    text = (proc.stdout + b"\n--- STDERR ---\n"
+            + proc.stderr).decode("utf-8", "replace")
+    (LOGS / f"godot_isolate_{only}.log").write_text(text, encoding="utf-8")
+    marker = "H2SIDE_JSON "
+    line = next((l for l in text.splitlines() if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no marker"}
+    return {"only": only, "rc": proc.returncode,
+            "seconds": round(time.perf_counter() - t0, 3),
+            "has_opengl": "OpenGL API" in text,
+            "errors": text.count("SCRIPT ERROR") + text.count("Parse Error"),
+            "payload": payload,
+            "stance_png": str(out / "h-both-stance.png")}
+
+
+def main() -> int:
+    assert GODOT.is_file() and PROBE_SRC.is_file()
+    BASE.mkdir(parents=True, exist_ok=True)
+    LOGS.mkdir(parents=True, exist_ok=True)
+    BOARD.parent.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(PROBE_SRC, PROBE_DST)
+    runs = [run("player"), run("foe")]
+
+    ims = []
+    for r in runs:
+        p = Path(r["stance_png"])
+        assert p.is_file(), p
+        ims.append(Image.open(p).convert("RGB"))
+    w, h = 640, 360
+    pad, label = 18, 34
+    canvas = Image.new("RGB", (2 * w + 3 * pad, h + label + 2 * pad),
+                       (20, 24, 34))
+    d = ImageDraw.Draw(canvas)
+    f = ImageFont.truetype(str(FONT), 20) if FONT.is_file() \
+        else ImageFont.load_default()
+    for i, (r, im) in enumerate(zip(runs, ims)):
+        x = pad + i * (w + pad)
+        canvas.paste(im.resize((w, h), Image.LANCZOS), (x, pad))
+        d.text((x + 4, pad + h + 4),
+               f"only={r['only']}  rc={r['rc']}  errors={r['errors']}",
+               font=f, fill=(160, 225, 205))
+    canvas.save(BOARD)
+
+    checks = {}
+    for r in runs:
+        p = r["payload"]
+        checks[f"{r['only']}_rc0"] = r["rc"] == 0
+        checks[f"{r['only']}_gl"] = r["has_opengl"]
+        checks[f"{r['only']}_no_errors"] = r["errors"] == 0
+        checks[f"{r['only']}_marker_only"] = p.get("only") == r["only"]
+        if r["only"] == "player":
+            checks["player_layer_ready"] = p.get("player_layer_ready") is True
+            checks["player_foe_layer_absent"] = (
+                p.get("foe_layer_ready") is False)
+            checks["player_mesh_is_player"] = (
+                p.get("player_mesh_name") == "player_HI_skinned")
+        else:
+            checks["foe_layer_ready"] = p.get("foe_layer_ready") is True
+            checks["foe_player_layer_absent"] = (
+                p.get("player_layer_ready") is False)
+            checks["foe_mesh_is_foe"] = (
+                p.get("foe_mesh_name") == "foe_HI_skinned")
+    checks["board_nonempty"] = BOARD.stat().st_size > 10000
+    report = {"runs": [{k: v for k, v in r.items() if k != "payload"}
+                       | {"payload": r["payload"]} for r in runs],
+              "checks": checks,
+              "failed": [k for k, v in checks.items() if not v],
+              "board": BOARD.name, "board_bytes": BOARD.stat().st_size,
+              "ok": all(checks.values())}
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for r in runs:
+        p = r["payload"]
+        print("RUN", r["only"], f"{r['seconds']}s rc={r['rc']} "
+              f"gl={r['has_opengl']} errors={r['errors']}")
+        print("   player_ready=", p.get("player_layer_ready"),
+              "foe_ready=", p.get("foe_layer_ready"),
+              "mesh=", p.get("player_mesh_name"), "/",
+              p.get("foe_mesh_name"),
+              "glb=", p.get("player_glb_path"), "/",
+              p.get("foe_glb_path"))
+    for k, v in checks.items():
+        if not v:
+            print("  FAIL", k)
+    print("ISOLATE_H_OK" if report["ok"] else "ISOLATE_H_FAILED")
+    return 0 if report["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/run_two_side_probe.py =====
+"""H 路线：同进程同树「双侧 3D」A/B 探针驱动。
+
+把 tests/two_side_probe.gd 复制进游戏工程（新增文件，不改既有），
+带窗口跑 Godot 4.5，解析 H2SIDE_JSON payload 并写判据。
+用法：python run_two_side_probe.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import shutil
+import subprocess
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+OUTDIR = HERE / "shots" / "two_side_ab"
+LOGS = HERE / "logs"
+OUT = HERE / "data" / "two_side_ab.json"
+PROBE_SRC = HERE / "tests" / "two_side_probe.gd"
+PROBE_DST = GAME / "tests" / "two_side_probe.gd"
+PROBE_RES = "res://tests/two_side_probe.gd"
+
+
+def main() -> int:
+    assert GODOT.is_file() and PROBE_SRC.is_file()
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    LOGS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    PROBE_DST.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(PROBE_SRC, PROBE_DST)
+
+    env = os.environ.copy()
+    env.pop("CARD_BOXER_3D", None)      # 探针自己挂层，off 阶段必须无 3D
+    env["H_2SIDE_DIR"] = str(OUTDIR)
+    t0 = time.perf_counter()
+    try:
+        proc = subprocess.run(
+            [str(GODOT), "--path", str(GAME), "--resolution", "1280x720",
+             "--quit-after", "900", "--script", PROBE_RES],
+            env=env, capture_output=True, timeout=300, cwd=str(GAME))
+        rc, text = proc.returncode, (proc.stdout + b"\n--- STDERR ---\n"
+                                     + proc.stderr).decode("utf-8", "replace")
+    except subprocess.TimeoutExpired as exc:
+        rc = -1
+        text = ((exc.stdout or b"") + b"\n--- TIMEOUT ---\n").decode(
+            "utf-8", "replace")
+    dt = round(time.perf_counter() - t0, 3)
+    (LOGS / "godot_two_side_ab.log").write_text(text, encoding="utf-8")
+
+    marker = "H2SIDE_JSON "
+    line = next((l for l in text.splitlines() if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no marker"}
+    rows = payload.get("shots", [])
+    has_gl = "OpenGL API" in text
+    errors = text.count("SCRIPT ERROR") + text.count("Parse Error")
+    prims = {r["name"]: r.get("prims_mean", 0.0) for r in rows}
+
+    checks = {
+        "rc": rc == 0,
+        "has_opengl": has_gl,
+        "no_script_errors": errors == 0,
+        "no_payload_error": "error" not in payload,
+        "player_layer_ready": payload.get("player_layer_ready") is True,
+        "foe_layer_ready": payload.get("foe_layer_ready") is True,
+        "five_shots": len(rows) == 5,
+        "all_png_ok": all(r.get("save_error") == 0
+                          and r.get("w") == 1280 and r.get("h") == 720
+                          and Path(r.get("path", "")).is_file() for r in rows),
+        "bones_13": payload.get("bones") == 13,
+        "foe_bones_13": payload.get("foe_bones") == 13,
+        "player_frames_applied": int(payload.get(
+            "player_frames_applied", 0)) > 0,
+        "foe_frames_applied": int(payload.get("foe_frames_applied", 0)) > 0,
+        "player_tex_drawn": payload.get("player_tex_drawn") is True,
+        "foe_tex_drawn": payload.get("foe_tex_drawn") is True,
+        "player_yaw_55": payload.get("player_yaw") == 55.0,
+        "foe_yaw_minus55": payload.get("foe_yaw") == -55.0,
+        "foe_role": payload.get("foe_role") == "foe",
+        "both_overrides": (payload.get("player_override") is True
+                           and payload.get("enemy_override") is True),
+        "env_not_preset": payload.get("use_3d_env") == "",
+        "prims_grew": prims.get("both-stance", 0) > prims.get("off", 0) * 2,
+        "probe_in_game": PROBE_DST.is_file(),
+        "glb_paths_differ": (bool(payload.get("player_glb_path"))
+                             and bool(payload.get("foe_glb_path"))
+                             and payload.get("player_glb_path")
+                             != payload.get("foe_glb_path")),
+        "mesh_names_differ": (bool(payload.get("player_mesh_name"))
+                              and bool(payload.get("foe_mesh_name"))
+                              and payload.get("player_mesh_name")
+                              != payload.get("foe_mesh_name")),
+        "sv_not_shared": payload.get("sv_same") is False,
+        "tex_not_shared": payload.get("tex_same") is False,
+    }
+    ok = all(checks.values())
+    OUT.write_text(json.dumps({
+        "run": {"seconds": dt, "returncode": rc, "has_opengl": has_gl,
+                "script_errors": errors, "headless": False},
+        "payload": payload, "prims": prims,
+        "checks": checks, "failed": [k for k, v in checks.items() if not v],
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"RUN {dt}s rc={rc} gl={has_gl} errors={errors}")
+    print(f"LAYERS player={payload.get('player_layer_ready')} "
+          f"foe={payload.get('foe_layer_ready')} "
+          f"bones={payload.get('bones')}/{payload.get('foe_bones')} "
+          f"yaw={payload.get('player_yaw')}/{payload.get('foe_yaw')}")
+    print("DIAG glb=", payload.get("player_glb_path"), "/",
+          payload.get("foe_glb_path"),
+          " mesh=", payload.get("player_mesh_name"), "/",
+          payload.get("foe_mesh_name"),
+          " sv_same=", payload.get("sv_same"),
+          " tex_same=", payload.get("tex_same"))
+    print("MESH_SIG player=", payload.get("player_mesh_sig"))
+    print("MESH_SIG foe=   ", payload.get("foe_mesh_sig"))
+    for r in rows:
+        print(f"SHOT {r['name']:<14} {r['w']}x{r['h']} "
+              f"err={r['save_error']} prims={r['prims_mean']:.0f} "
+              f"calls={r['draw_calls_mean']:.1f}")
+    for k, v in checks.items():
+        if not v:
+            print("  FAIL", k)
+    print("TWO_SIDE_AB_OK" if ok else "TWO_SIDE_AB_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/run_vp_diag_h.py =====
+"""H 路线：同进程隐藏层对照，判定两个 SubViewport 是否串味。
+
+判据（全部同进程，无 RNG 噪声）：
+  隐藏 player 时：左侧 ROI 应显著变化、右侧 ROI 应几乎不变；
+  隐藏 foe 时：右侧 ROI 应显著变化、左侧 ROI 应几乎不变。
+用法：python run_vp_diag_h.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import shutil
+import subprocess
+import time
+from pathlib import Path
+
+from PIL import Image, ImageChops
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+OUTDIR = HERE / "shots" / "vp_diag"
+LOGS = HERE / "logs"
+OUT = HERE / "data" / "vp_diag_h.json"
+ROI = HERE / "data" / "roi_h.json"
+PROBE_SRC = HERE / "tests" / "vp_diag_probe.gd"
+PROBE_DST = GAME / "tests" / "vp_diag_probe.gd"
+
+
+def diff(a: Path, b: Path, box) -> dict:
+    ia = Image.open(a).convert("RGB").crop(box)
+    ib = Image.open(b).convert("RGB").crop(box)
+    d = ImageChops.difference(ia, ib)
+    changed = sum(1 for px in d.get_flattened_data() if sum(px) > 18)
+    total = ia.width * ia.height
+    return {"changed_px": changed, "total_px": total,
+            "ratio": round(changed / total, 4)}
+
+
+def main() -> int:
+    assert GODOT.is_file() and PROBE_SRC.is_file() and ROI.is_file()
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    LOGS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(PROBE_SRC, PROBE_DST)
+    boxes = json.loads(ROI.read_text(encoding="utf-8"))["boxes"]
+    left, right = boxes[0], boxes[1]
+
+    env = os.environ.copy()
+    env.pop("CARD_BOXER_3D", None)
+    env["H_VP_DIR"] = str(OUTDIR)
+    t0 = time.perf_counter()
+    proc = subprocess.run(
+        [str(GODOT), "--path", str(GAME), "--resolution", "1280x720",
+         "--quit-after", "900", "--script", "res://tests/vp_diag_probe.gd"],
+        env=env, capture_output=True, timeout=300, cwd=str(GAME))
+    text = (proc.stdout + b"\n--- STDERR ---\n"
+            + proc.stderr).decode("utf-8", "replace")
+    (LOGS / "godot_vp_diag.log").write_text(text, encoding="utf-8")
+    marker = "HVP_JSON "
+    line = next((l for l in text.splitlines() if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no marker"}
+    rows = payload.get("shots", [])
+    by = {r["name"]: Path(r["path"]) for r in rows}
+    has_gl = "OpenGL API" in text
+    errors = text.count("SCRIPT ERROR") + text.count("Parse Error")
+
+    res = {}
+    for hidden, untouched_side, changed_side in (
+            ("player-hidden", right, left),
+            ("foe-hidden", left, right)):
+        res[f"{hidden}_untouched"] = diff(by["both"], by[hidden],
+                                          untouched_side)
+        res[f"{hidden}_changed"] = diff(by["both"], by[hidden], changed_side)
+
+    checks = {
+        "rc": proc.returncode == 0,
+        "has_opengl": has_gl,
+        "no_errors": errors == 0,
+        "no_payload_error": "error" not in payload,
+        "five_frames": len(rows) == 5,
+        "all_png_ok": all(r.get("save_error") == 0
+                          and r.get("w") == 1280 and r.get("h") == 720
+                          and Path(r.get("path", "")).is_file() for r in rows),
+        "both_layers_ready": (payload.get("player_layer_ready") is True
+                              and payload.get("foe_layer_ready") is True),
+        # 隐藏 player：右侧（对手）不受影响，左侧显著变化
+        "hide_player_right_untouched": (
+            res["player-hidden_untouched"]["ratio"] < 0.02),
+        "hide_player_left_changed": (
+            res["player-hidden_changed"]["ratio"] > 0.10),
+        # 隐藏 foe：左侧（玩家）不受影响，右侧显著变化
+        "hide_foe_left_untouched": (
+            res["foe-hidden_untouched"]["ratio"] < 0.02),
+        "hide_foe_right_changed": (
+            res["foe-hidden_changed"]["ratio"] > 0.10),
+    }
+    report = {"run": {"seconds": round(time.perf_counter() - t0, 3),
+                      "returncode": proc.returncode, "has_opengl": has_gl,
+                      "script_errors": errors},
+              "payload": payload, "roi": {"left": left, "right": right},
+              "diffs": res, "checks": checks,
+              "failed": [k for k, v in checks.items() if not v],
+              "ok": all(checks.values())}
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    print(f"RUN {report['run']['seconds']}s rc={proc.returncode} "
+          f"gl={has_gl} errors={errors}")
+    for k, v in res.items():
+        print(f"DIFF {k:<28} {v['changed_px']:>6}/{v['total_px']} "
+              f"ratio={v['ratio']}")
+    for k, v in checks.items():
+        if not v:
+            print("  FAIL", k)
+    print("VP_DIAG_OK" if report["ok"] else "VP_DIAG_SUSPICIOUS")
+    return 0 if report["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/make_isolate_zoom_h.py =====
+"""把同进程两帧里各自的 3D 角色裁出来并排放大，做最终视觉定性。
+
+vp-foe-hidden.png 只剩玩家层（左侧），vp-player-hidden.png 只剩对手层（右侧）。
+用 diag_roi_h.py 自动定位的 ROI，不手填坐标。
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from PIL import Image, ImageDraw, ImageFont
+
+HERE = Path(__file__).resolve().parent
+VP = HERE / "shots" / "vp_diag"
+OUT = HERE / "boards" / "H-同进程单角色特写.png"
+ROI = HERE / "data" / "roi_h.json"
+FONT = Path(r"C:\Windows\Fonts\msyh.ttc")
+
+
+def main() -> int:
+    boxes = json.loads(ROI.read_text(encoding="utf-8"))["boxes"]
+    left, right = boxes[0], boxes[1]
+    w = min(left[2] - left[0], right[2] - right[0])
+    h = min(left[3] - left[1], right[3] - right[1])
+    def centered(box):
+        cx, cy = (box[0] + box[2]) // 2, (box[1] + box[3]) // 2
+        return (cx - w // 2, cy - h // 2,
+                cx - w // 2 + w, cy - h // 2 + h)
+    a = Image.open(VP / "vp-foe-hidden.png").convert("RGB").crop(
+        centered(left))
+    b = Image.open(VP / "vp-player-hidden.png").convert("RGB").crop(
+        centered(right))
+    z = 2
+    W, H = w * z, h * z
+    pad, label = 24, 40
+    canvas = Image.new("RGB", (2 * W + 3 * pad, H + label + 2 * pad),
+                       (20, 24, 34))
+    d = ImageDraw.Draw(canvas)
+    f = ImageFont.truetype(str(FONT), 22) if FONT.is_file() \
+        else ImageFont.load_default()
+    canvas.paste(a.resize((W, H), Image.LANCZOS), (pad, pad))
+    canvas.paste(b.resize((W, H), Image.LANCZOS), (2 * pad + W, pad))
+    d.text((pad + 6, pad + H + 6), "玩家 V4b（仅玩家层可见）",
+           font=f, fill=(160, 225, 205))
+    d.text((2 * pad + W + 6, pad + H + 6), "对手怪（仅对手层可见）",
+           font=f, fill=(160, 225, 205))
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(OUT)
+    print("WROTE", OUT.name, OUT.stat().st_size, "B",
+          "roi_size", (w, h))
+    print("ISOLATE_ZOOM_OK" if OUT.stat().st_size > 10000
+          else "ISOLATE_ZOOM_FAILED")
+    return 0 if OUT.stat().st_size > 10000 else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/diag_identity_h.py =====
+"""H 路线视觉诊断附录：定量核对「左右两个 3D 角色是不是同一张脸」。
+
+盘上已知：两份 GLB 的 mesh 名 / 顶点数 / bbox / 三张 PBR 的 sha256
+全都不同（diag_glb_pair_h.py），Godot 里读回的 mesh_sig / SubViewport /
+ViewportTexture 也各自独立（data/two_side_ab.json）。但 h-both-stance.png
+里左右两个角色看起来高度雷同，必须用数字把「串味 bug」与「造型雷同」
+分开，不能靠肉眼下结论。
+
+口径订正（第一版的缺陷）：ROI 里包含擂台绳索 / 观众席 / 灯光，
+水平镜像后背景必然错位，所以「镜像 ROI 差异率 0.8667」只能证明
+**两帧不是同一张图**，不能证明两个角色长得不同。这一版把该判据
+改名并加 scope_note；真正针对渲染的证据改为两侧 ROI 平均亮度。
+
+输出 data/identity_h.json。本脚本只读，不改任何源码或归档。
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from PIL import Image, ImageChops, ImageStat
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+VP = HERE / "shots" / "vp_diag"
+OUT = HERE / "data" / "identity_h.json"
+
+P_TEX = GAME / "assets" / "3d" / "player-rigged_texture_pbr_20250901.png"
+F_TEX = GAME / "assets" / "3d" / "foe-rigged_texture_pbr_20250901.png"
+P_SHOT = VP / "vp-foe-hidden.png"       # 对手层隐藏 → 只剩下玩家（左）
+F_SHOT = VP / "vp-player-hidden.png"    # 玩家层隐藏 → 只剩下对手（右）
+
+SCOPE_NOTE = (
+    "ROI 含擂台绳索/观众席/灯光，水平镜像后背景必然错位；"
+    "镜像 ROI 差异率只证明两帧非同一张图，不作角色造型差异证据。"
+    "造型区分度是看图判断，不用像素指标硬撑。")
+
+
+def thumb_mae(a: Image.Image, b: Image.Image) -> float:
+    d = ImageChops.difference(a, b)
+    return round(sum(ImageStat.Stat(d).mean) / 3.0, 4)
+
+
+def roi_mean(path: Path, box) -> list[float]:
+    im = Image.open(path).convert("RGB").crop(box)
+    return [round(v, 2) for v in ImageStat.Stat(im).mean]
+
+
+def roi_diff(box_a, box_b, mirror_b: bool) -> dict:
+    ia = Image.open(P_SHOT).convert("RGB").crop(box_a)
+    ib = Image.open(F_SHOT).convert("RGB").crop(box_b)
+    w = min(ia.width, ib.width)
+    h = min(ia.height, ib.height)
+
+    def center(im):
+        cx, cy = (im.width - w) // 2, (im.height - h) // 2
+        return im.crop((cx, cy, cx + w, cy + h))
+
+    a = center(ia)
+    b = center(ib)
+    if mirror_b:
+        b = b.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+    d = ImageChops.difference(a, b)
+    changed = sum(1 for px in d.get_flattened_data() if sum(px) > 18)
+    total = w * h
+    return {"size": [w, h], "changed_px": changed, "total_px": total,
+            "ratio": round(changed / total, 4),
+            "mae": round(sum(ImageStat.Stat(d).mean) / 3.0, 4)}
+
+
+def main() -> int:
+    boxes = json.loads((HERE / "data" / "roi_h.json").read_text(
+        encoding="utf-8"))["boxes"]
+    pair = json.loads((HERE / "data" / "glb_pair_h.json").read_text(
+        encoding="utf-8"))["pair"]
+
+    tex_a = Image.open(P_TEX).convert("RGB").resize(
+        (64, 64), Image.LANCZOS)
+    tex_b = Image.open(F_TEX).convert("RGB").resize(
+        (64, 64), Image.LANCZOS)
+    tex_mae = thumb_mae(tex_a, tex_b)
+
+    mirrored = roi_diff(boxes[0], boxes[1], True)
+    raw = roi_diff(boxes[0], boxes[1], False)
+    roi_means = {
+        "player": roi_mean(P_SHOT, boxes[0]),
+        "foe": roi_mean(F_SHOT, boxes[1]),
+    }
+    lum = {k: round(sum(v) / 3.0, 2) for k, v in roi_means.items()}
+
+    out = {
+        "basecolor_thumb_mae": tex_mae,
+        "basecolor_mean_rgb": {
+            "player": [round(v, 2) for v in ImageStat.Stat(tex_a).mean],
+            "foe": [round(v, 2) for v in ImageStat.Stat(tex_b).mean]},
+        "roi_mean_rgb": roi_means,
+        "roi_mean_luminance": lum,
+        "roi_mirrored": mirrored,
+        "roi_unmirrored": raw,
+        "roi_scope_note": SCOPE_NOTE,
+        "primary_identity_evidence": (
+            "GLB 顶点数/bbox/三张 PBR sha256 不同 + Godot 读回 "
+            "mesh_sig/SubViewport/ViewportTexture 各自独立"),
+        "glb_vertex_counts": {
+            "player": pair["player"]["verts"],
+            "foe": pair["foe"]["verts"]},
+        "glb_bbox_x_span": {
+            "player": round(pair["player"]["pos_max"][0]
+                            - pair["player"]["pos_min"][0], 6),
+            "foe": round(pair["foe"]["pos_max"][0]
+                         - pair["foe"]["pos_min"][0], 6)},
+    }
+    out["checks"] = {
+        "basecolor_not_identical": tex_mae > 5.0,
+        "frames_not_identical_including_background": mirrored["ratio"] > 0.20,
+        "render_brightness_differs": abs(lum["player"] - lum["foe"]) > 5.0,
+        "vertex_counts_differ": (out["glb_vertex_counts"]["player"]
+                                 != out["glb_vertex_counts"]["foe"]),
+        "bbox_spans_differ": (out["glb_bbox_x_span"]["player"]
+                              != out["glb_bbox_x_span"]["foe"]),
+        "scope_note_present": "背景" in SCOPE_NOTE,
+    }
+    out["ok"] = all(out["checks"].values())
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    print("BASECOLOR_THUMB_MAE", tex_mae)
+    print("MEAN_RGB", out["basecolor_mean_rgb"])
+    print("ROI_MEAN_RGB", roi_means, "LUM", lum)
+    print("ROI_MIRRORED", mirrored)
+    print("ROI_UNMIRRORED", raw)
+    print("VERTS", out["glb_vertex_counts"], "BBOX_X",
+          out["glb_bbox_x_span"])
+    for k, v in out["checks"].items():
+        print("CHECK", k, v)
+    print("IDENTITY_H_OK" if out["ok"] else "IDENTITY_H_SUSPICIOUS")
+    return 0 if out["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/run_all_checks_h.py =====
+"""H 路线收口：在 H 改动后的游戏树上跑 15 套引擎内自检。
+
+口径与 G 路线 run_all_checks_g.py 完全一致（同一批 res:// 脚本、
+同一套 OK/FAIL 判定），只是输出落到 H/logs/checks 与 H/data，
+不覆盖 G 的归档。用法：python run_all_checks_h.py
+"""
+from __future__ import annotations
+
+import json
+import subprocess
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+LOGS = HERE / "logs" / "checks"
+OUT = HERE / "data" / "all_checks_h.json"
+
+CHECKS = [
+    ("motion_check", "res://tests/motion_check.gd"),
+    ("pose_probe", "res://tests/pose_probe.gd"),
+    ("duel_probe", "res://tests/duel_probe.gd"),
+    ("reach_probe", "res://tests/reach_probe.gd"),
+    ("feet_probe", "res://tests/feet_probe.gd"),
+    ("fighter_skin_check", "res://tests/fighter_skin_check.gd"),
+    ("battle_motion_p0_check", "res://tests/battle_motion_p0_check.gd"),
+    ("battle_rhythm_check", "res://tests/battle_rhythm_check.gd"),
+    ("engine_opt_check", "res://tests/engine_opt_check.gd"),
+    ("redraw_gate_check", "res://tests/redraw_gate_check.gd"),
+    ("taikou_flow_check", "res://tests/taikou_flow_check.gd"),
+    ("taikou_rage_check", "res://tests/taikou_rage_check.gd"),
+    ("taikou_rules_check", "res://tests/taikou_rules_check.gd"),
+    ("combo_check", "res://scripts/combo_check.gd"),
+    ("portrait_wiring_check", "res://tests/portrait_wiring_check.gd"),
+]
+
+
+def summary(text: str) -> str:
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+    hits = [ln for ln in lines
+            if ("CHECK" in ln.upper() or "PROBE" in ln.upper()
+                or "passed" in ln.lower())
+            and not ln.startswith("at:")]
+    return hits[-1] if hits else (lines[-1] if lines else "<empty output>")
+
+
+def main() -> int:
+    LOGS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    rows, failures = [], []
+    for name, script in CHECKS:
+        p = GAME / script.replace("res://", "")
+        if not p.is_file():
+            failures.append(name)
+            rows.append({"name": name, "rc": -1, "ok": False,
+                         "summary": "MISSING FILE"})
+            print(f"FAIL {name:32s} MISSING FILE")
+            continue
+        try:
+            proc = subprocess.run(
+                [str(GODOT), "--headless", "--path", str(GAME),
+                 "--script", script],
+                capture_output=True, timeout=180, cwd=str(GAME))
+            rc = proc.returncode
+            text = (proc.stdout + b"\n" + proc.stderr).decode("utf-8", "replace")
+        except subprocess.TimeoutExpired:
+            rc, text = -1, "TIMEOUT"
+        bad = (rc != 0 or "FAIL:" in text or "SCRIPT ERROR" in text
+               or "Parse Error" in text or len(text.strip()) < 20)
+        rows.append({"name": name, "rc": rc, "ok": not bad,
+                     "summary": summary(text)})
+        (LOGS / f"h_{name}.log").write_text(text, encoding="utf-8")
+        if bad:
+            failures.append(name)
+        print(("FAIL " if bad else "OK   ") +
+              f"{name:32s} rc={rc}  {summary(text)}")
+    payload = {"tag": "h", "total": len(CHECKS), "failed": failures,
+               "result": "ALL GREEN" if not failures else "FAILED",
+               "checks": rows}
+    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    print(f"ALL_CHECKS_H {len(CHECKS) - len(failures)}/{len(CHECKS)} "
+          f"{payload['result']}")
+    return 0 if not failures else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/run_static_ab_h.py =====
+"""H 路线收口：H 改动后「默认关」与改动前基线工程逐像素等价。
+
+基线工程复用 G 路线 baseline_project（G 改动前的完整 2D 工程副本，
+G 已证明 G 默认关 == 它）。H 默认关若也 == 它，则传递证明
+H 的源码改动在 use_3d=false 时零污染。
+
+口径与 G 路线 run_static_ab_g.py 一致：perf_probe.gd 冻结静态状态，
+跨进程可复现；不设 CARD_BOXER_3D。跨运行整帧不可比，见 diag_cross_h.py
+的退役说明。用法：python run_static_ab_h.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import subprocess
+import time
+from pathlib import Path
+
+from PIL import Image, ImageChops
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+BASE_PROJECT = (HERE.parent / "G路线-游戏内3D接线" / "baseline_project")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+OUT = HERE / "data" / "static_ab_h.json"
+LOGS = HERE / "logs"
+SHOTS = HERE / "shots" / "static_ab_h"
+PROBE = "res://tests/perf_probe.gd"
+
+
+def run(project: Path, tag: str) -> dict:
+    d = SHOTS / tag
+    d.mkdir(parents=True, exist_ok=True)
+    png = d / "背景基线.png"
+    js = d / "perf.json"
+    env = os.environ.copy()
+    env.pop("CARD_BOXER_3D", None)
+    env["CARD_BOXER_PERF_OUT"] = str(png)
+    env["CARD_BOXER_PERF_JSON"] = str(js)
+    env["CARD_BOXER_PERF_FRAMES"] = "120"
+    t0 = time.perf_counter()
+    try:
+        proc = subprocess.run(
+            [str(GODOT), "--path", str(project),
+             "--resolution", "1280x720", "--quit-after", "900",
+             "--script", PROBE],
+            env=env, capture_output=True, timeout=240, cwd=str(project))
+        rc = proc.returncode
+        text = (proc.stdout + b"\n--- STDERR ---\n"
+                + proc.stderr).decode("utf-8", "replace")
+    except subprocess.TimeoutExpired as exc:
+        rc = -1
+        text = ((exc.stdout or b"") + b"\n--- TIMEOUT ---\n").decode(
+            "utf-8", "replace")
+    dt = round(time.perf_counter() - t0, 3)
+    (LOGS / ("static_ab_h_%s.log" % tag)).write_text(text, encoding="utf-8")
+    perf = json.loads(js.read_text(encoding="utf-8")) if js.is_file() else {}
+    return {"tag": tag, "project": str(project), "rc": rc, "seconds": dt,
+            "png": png, "perf": perf,
+            "marker": "PERF_PROBE_DONE" in text,
+            "errors": text.count("SCRIPT ERROR") + text.count("Parse Error"),
+            "has_opengl": "OpenGL API" in text}
+
+
+def main() -> int:
+    assert BASE_PROJECT.is_dir(), BASE_PROJECT
+    LOGS.mkdir(parents=True, exist_ok=True)
+    SHOTS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    a = run(BASE_PROJECT, "pre_g_baseline")
+    b = run(GAME, "h_off")
+
+    ia = Image.open(a["png"]).convert("RGB") if a["png"].is_file() else None
+    ib = Image.open(b["png"]).convert("RGB") if b["png"].is_file() else None
+    changed = None
+    if ia is not None and ib is not None and ia.size == ib.size:
+        changed = sum(ImageChops.difference(ia, ib)
+                      .convert("L").histogram()[1:])
+    checks = {
+        "both_rc0": a["rc"] == 0 and b["rc"] == 0,
+        "both_markers": a["marker"] and b["marker"],
+        "both_gl": a["has_opengl"] and b["has_opengl"],
+        "no_errors": a["errors"] == 0 and b["errors"] == 0,
+        "both_png": ia is not None and ib is not None,
+        "same_size": ia is not None and ib is not None and ia.size == ib.size,
+        "pixel_identical": changed == 0,
+        "same_sample_count": a["perf"].get("samples") == 120
+                             and b["perf"].get("samples") == 120,
+        "same_viewport": a["perf"].get("viewport") == [1280, 720]
+                         and b["perf"].get("viewport") == [1280, 720],
+    }
+    ok = all(checks.values())
+    OUT.write_text(json.dumps({
+        "baseline_project": str(BASE_PROJECT),
+        "baseline": {k: (str(v) if isinstance(v, Path) else v)
+                     for k, v in a.items()},
+        "h_off": {k: (str(v) if isinstance(v, Path) else v)
+                  for k, v in b.items()},
+        "changed_pixels": changed,
+        "prims_mean": {"baseline": a["perf"].get("primitives", {}).get("mean"),
+                       "h_off": b["perf"].get("primitives", {}).get("mean")},
+        "draw_calls_mean": {
+            "baseline": a["perf"].get("draw_calls", {}).get("mean"),
+            "h_off": b["perf"].get("draw_calls", {}).get("mean")},
+        "checks": checks, "failed": [k for k, v in checks.items() if not v],
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"BASELINE rc={a['rc']} {a['seconds']}s  "
+          f"H_OFF rc={b['rc']} {b['seconds']}s")
+    print(f"CHANGED_PIXELS={changed}")
+    for k, v in checks.items():
+        if not v:
+            print("  FAIL", k)
+    print("STATIC_AB_H_OK" if ok else "STATIC_AB_H_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/verify_h.py =====
+"""H 路线承重判据：双方 3D 侧面战斗。
+
+只读盘、只复算，不改任何文件。判据分六族：
+零污染 / 源码形状 / 资产独立性 / 引擎内双侧 / 判据订正与退役 / 边界如实。
+
+用法：python verify_h.py
+退出码 0 且打印 H_VERIFIED 才算全绿。
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+D = HERE / "data"
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+BACKUP = HERE / "orig" / "pre-3d-foe"
+LIST = HERE / "文件清单.txt"
+RECORD = HERE / "H路线-验证记录.txt"
+
+C = {}
+
+
+def rd(name: str):
+    return json.loads((D / name).read_text(encoding="utf-8"))
+
+
+def sha(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def all_true(d: dict, key: str = "checks") -> bool:
+    v = d.get(key, {})
+    return isinstance(v, dict) and len(v) > 0 and all(v.values())
+
+
+def txt(rel: str) -> str:
+    return (GAME / rel).read_text(encoding="utf-8")
+
+
+def main() -> int:
+    # ── 1. 关键文件在位 ────────────────────────────────────────
+    must = [
+        "foe-rigged.glb", "boards/H-双侧角色特写.png",
+        "boards/H-单侧隔离对照.png", "boards/H-同进程单角色特写.png",
+        "data/motion_input_foe.json", "data/two_side_ab.json",
+        "data/vp_diag_h.json", "data/isolate_h.json",
+        "data/static_ab_h.json", "data/all_checks_h.json",
+        "data/cross_h.json", "data/cross_h_v1_retired.json",
+        "data/identity_h.json", "tests/two_side_probe.gd",
+        "tests/vp_diag_probe.gd", "H路线-验证记录.txt", "文件清单.txt",
+    ]
+    C["H01_required_files_present"] = all((HERE / m).is_file() for m in must)
+    glb = HERE / "foe-rigged.glb"
+    C["H02_glb_magic_and_size"] = (glb.is_file()
+        and glb.stat().st_size > 40_000_000
+        and glb.open("rb").read(4) == b"glTF")
+
+    # ── 2. 零污染 ──────────────────────────────────────────────
+    base = json.loads((HERE / "baseline_h.json").read_text(
+        encoding="utf-8"))
+    files = base["files"]
+    C["H03_baseline_backup_verified"] = (
+        base["count"] == 122 and base["backup_verified"] is True
+        and base["backup_mismatch"] == [])
+    C["H04_backup_bytes_match_baseline"] = all(
+        (BACKUP / r["rel"]).is_file()
+        and (BACKUP / r["rel"]).stat().st_size == r["size"]
+        and sha(BACKUP / r["rel"]) == r["sha256"] for r in files)
+    changed_ok = {"scripts/arena.gd", "scripts/fighter_3d_layer.gd"}
+    untouched = [r for r in files if r["rel"] not in changed_ok]
+    C["H05_game_tree_untouched_except_two_sources"] = (
+        len(untouched) == 120 and all(
+            (GAME / r["rel"]).is_file()
+            and sha(GAME / r["rel"]) == r["sha256"] for r in untouched))
+    patch = rd("patch_game_h.json")
+    C["H06_patch_before_matches_backup"] = all(
+        v["backup_matches"] is True
+        and sha(BACKUP / k) == v["sha256"]
+        for k, v in patch["before"].items())
+    C["H07_patch_after_matches_live_sources"] = all(
+        sha(GAME / k) == v for k, v in patch["after"].items())
+    C["H08_fighter_gd_sha_unchanged"] = (
+        patch["after"]["scripts/fighter.gd"]
+        == patch["before"]["scripts/fighter.gd"]["sha256"])
+
+    static = rd("static_ab_h.json")
+    C["H09_static_ab_pixel_identical"] = (
+        static["ok"] is True and static["changed_pixels"] == 0
+        and all_true(static))
+    checks_h = rd("all_checks_h.json")
+    C["H10_all_15_checks_green"] = (
+        checks_h["total"] == 15 and checks_h["result"] == "ALL GREEN"
+        and checks_h["failed"] == []
+        and len(checks_h["checks"]) == 15
+        and all(r["ok"] for r in checks_h["checks"]))
+
+    # ── 3. 源码形状 ────────────────────────────────────────────
+    arena = txt("scripts/arena.gd")
+    fighter = txt("scripts/fighter.gd")
+    layer = txt("scripts/fighter_3d_layer.gd")
+    C["H11_switch_default_off"] = (
+        "var use_3d := false" in arena
+        and 'use_3d = OS.get_environment("CARD_BOXER_3D") != ""' in arena)
+    C["H12_override_default_false"] = (
+        "var draw_3d_override := false" in fighter)
+    C["H13_layer_parametrised"] = all(s in layer for s in [
+        'const FOE_GLB_PATH := "res://assets/3d/foe-rigged.glb"',
+        "const DEFAULT_FOE_YAW := -55.0",
+        "func configure(", "var res := load(glb_path)",
+        'var role_id := "player"'])
+    C["H14_arena_two_layers_wired"] = all(s in arena for s in [
+        "layer_3d_foe", "motion_3d_foe",
+        "enemy.draw_3d_override = true",
+        'tk_rhythm_winner == "enemy"',
+        "Fighter3DLayerScript.FOE_GLB_PATH",
+        "Fighter3DLayerScript.DEFAULT_FOE_YAW"])
+    C["H15_patch_checks_all_true"] = all_true(patch) and patch["ok"] is True
+    syn = (HERE / "logs" / "godot_syntax_h.out").read_text(
+        encoding="utf-8", errors="replace")
+    C["H16_no_syntax_errors"] = ("Parse Error" not in syn
+        and "SCRIPT ERROR" not in syn and "first_scan_filesystem" in syn)
+
+    # ── 4. 资产独立性 ──────────────────────────────────────────
+    inst = rd("install_assets_h.json")
+    C["H17_install_checks_all_true"] = all_true(inst) and inst["ok"] is True
+    C["H18_two_copies_byte_identical"] = (
+        len(inst["copies"]) == 2 and all(c["identical"] for c in inst["copies"]))
+    C["H19_glb_in_game_matches_archive"] = (
+        sha(GAME / "assets/3d/foe-rigged.glb") == sha(glb))
+    C["H20_foe_motion_in_game_matches_archive"] = (
+        sha(GAME / "data/motion_input_foe.json")
+        == sha(D / "motion_input_foe.json"))
+    pair = rd("glb_pair_h.json")["pair"]
+    pbr_ingame = [g for g in inst["generated"]
+                  if g["rel"].endswith(".png")
+                  and not g["rel"].endswith(".png.import")]
+    C["H21_three_pbr_4096_and_embedded_sha_match"] = (
+        len(pbr_ingame) == 3
+        and all(g.get("size") == [4096, 4096] for g in pbr_ingame)
+        and {g["sha256"] for g in pbr_ingame}
+        == {i["sha256"] for i in pair["foe"]["images"]})
+    insp = rd("foe_gltf_inspection.json")
+    C["H22_gltf_inspection_all_true"] = all_true(insp) and insp["ok"] is True
+    C["H23_glb_static_with_14_joints"] = (
+        insp["verdict"]["zero_animations"] is True
+        and insp["verdict"]["skin_joints"] == 14
+        and insp["verdict"]["highpoly_has_skin"] is True)
+    gp = rd("glb_pair_h.json")
+    C["H24_two_glbs_are_distinct_assets"] = (
+        gp["image_sets_identical"] is False
+        and gp["shared_image_count"] == 0
+        and gp["verts_different"] is True
+        and gp["bbox_different"] is True)
+    ident = rd("identity_h.json")
+    C["H25_assets_distinct_scope_not_overclaimed"] = (
+        all_true(ident) and ident["ok"] is True
+        and ident["basecolor_thumb_mae"] > 5.0
+        and ident["roi_mirrored"]["ratio"] > 0.20
+        and "背景" in ident.get("roi_scope_note", "")
+        and "frames_not_identical_including_background" in ident["checks"])
+    apose = rd("apose_crosscheck_h.json")
+    C["H26_foe_apose_is_its_own_rest"] = (
+        all_true(apose) and apose["ok"] is True
+        and apose["player_worst_abs_diff"] < 1e-5
+        and apose["keys_other_than_apose_identical"] is True)
+    fm = rd("motion_input_foe.json")
+    pm = json.loads((GAME / "data/motion_input.json").read_text(
+        encoding="utf-8"))
+    C["H27_only_three_attack_tracks_73_frames"] = (
+        set(fm["cards"]) == {"jab", "cross", "wave"}
+        and [fm["cards"][k]["frames"] for k in ("jab", "cross", "wave")]
+        == [14, 22, 36]
+        and sum(fm["cards"][k]["frames"]
+                for k in ("jab", "cross", "wave")) == 72
+        and fm["apose_points"] != pm["apose_points"])
+    rest = rd("rest_diff_h.json")
+    C["H28_rest_skeleton_differs_measurably"] = (
+        len(rest) == 13
+        and max(r["dhead_dist"] for r in rest) > 0.20)
+
+    # ── 5. 引擎内双侧 ──────────────────────────────────────────
+    ab = rd("two_side_ab.json")
+    pay = ab["payload"]
+    C["H29_two_side_ab_all_true"] = all_true(ab) and ab["ok"] is True
+    C["H30_engine_run_clean"] = (
+        ab["run"]["returncode"] == 0 and ab["run"]["has_opengl"] is True
+        and ab["run"]["script_errors"] == 0
+        and ab["run"]["headless"] is False)
+    C["H31_five_shots_real_png"] = all(
+        Path(r["path"]).is_file() and Path(r["path"]).stat().st_size > 10000
+        and r["w"] == 1280 and r["h"] == 720 and r["save_error"] == 0
+        for r in pay["shots"]) and len(pay["shots"]) == 5
+    C["H32_both_layers_driven"] = (
+        pay["bones"] == 13 and pay["foe_bones"] == 13
+        and pay["player_frames_applied"] > 0
+        and pay["foe_frames_applied"] > 0
+        and pay["player_tex_drawn"] is True
+        and pay["foe_tex_drawn"] is True)
+    C["H33_mirrored_side_yaw"] = (
+        pay["player_yaw"] == 55.0 and pay["foe_yaw"] == -55.0
+        and pay["foe_role"] == "foe")
+    C["H34_no_shared_viewport_or_texture"] = (
+        pay["sv_same"] is False and pay["tex_same"] is False
+        and pay["player_glb_path"] != pay["foe_glb_path"]
+        and pay["player_mesh_sig"] != pay["foe_mesh_sig"])
+    C["H35_prims_grew_when_3d_on"] = (
+        ab["prims"]["both-stance"] > ab["prims"]["off"] * 2
+        and ab["prims"]["off"] == 5136.0)
+    vp = rd("vp_diag_h.json")
+    diffs = vp["diffs"]
+    C["H36_vp_diag_all_true"] = all_true(vp) and vp["ok"] is True
+    C["H37_same_process_untouched_exactly_zero"] = (
+        diffs["player-hidden_untouched"]["changed_px"] == 0
+        and diffs["foe-hidden_untouched"]["changed_px"] == 0)
+    C["H38_same_process_own_side_changed"] = (
+        diffs["player-hidden_changed"]["ratio"] > 0.20
+        and diffs["foe-hidden_changed"]["ratio"] > 0.20)
+    iso = rd("isolate_h.json")
+    C["H39_isolate_all_true"] = all_true(iso) and iso["ok"] is True
+    roi = rd("roi_h.json")
+    C["H40_roi_auto_two_regions"] = (
+        roi["two_regions"] is True and len(roi["boxes"]) == 2
+        and roi["peak_col_diff"] > roi["threshold"])
+    zoom = rd("zoom_h.json")
+    C["H41_zoom_board_distinct"] = (
+        zoom["distinct"] is True and zoom["changed_ratio"] > 0.90)
+    boards = [HERE / "boards" / n for n in (
+        "H-双侧角色特写.png", "H-单侧隔离对照.png",
+        "H-同进程单角色特写.png")]
+    C["H42_three_boards_nonempty"] = all(
+        p.is_file() and p.stat().st_size > 100_000 for p in boards)
+    C["H43_probe_script_copied_into_game"] = (
+        sha(GAME / "tests/two_side_probe.gd")
+        == sha(HERE / "tests/two_side_probe.gd"))
+
+    # ── 6. 判据订正与退役 ──────────────────────────────────────
+    v1 = rd("cross_h_v1_retired.json")
+    cross = rd("cross_h.json")
+    C["H44_v1_negative_result_preserved"] = (
+        v1["ok"] is False and v1["left_ok"] is False
+        and v1["right_ok"] is False)
+    C["H45_retired_metric_is_named"] = (
+        "absolute ROI pixel identity" in cross.get("retired_metric", "")
+        and "ratio < 0.20" in cross["retired_metric"])
+    C["H46_v2_directional_checks_all_true"] = (
+        all_true(cross) and cross["ok"] is True
+        and min(cross["directional_margin"].values()) > 0.05)
+    C["H47_primary_evidence_points_to_same_process"] = (
+        "vp_diag_h.json" in cross["primary_evidence"])
+    C["H48_absolute_identity_fields_removed"] = (
+        "left_ok" not in cross and "right_ok" not in cross
+        and "CROSS_H_OK" not in (HERE / "logs" / "diag_cross_h.out").read_text(
+            encoding="utf-8", errors="replace"))
+    C["H49_retired_claim_not_reused_as_pass"] = (
+        v1["ok"] is False
+        and cross["checks"]["no_absolute_identity_claim"] is True
+        and C["H37_same_process_untouched_exactly_zero"])
+
+    # ── 7. 边界如实 ────────────────────────────────────────────
+    C["H50_zero_animations_declared"] = (
+        insp["verdict"]["zero_animations"] is True)
+    C["H51_not_full_228_frames"] = (
+        sum(fm["cards"][k]["frames"] for k in fm["cards"]) == 72)
+    C["H52_default_off_means_2d_game"] = C["H11_switch_default_off"]
+    C["H53_no_bak_tmp_leftovers"] = not any(
+        p.suffix in {".bak", ".tmp"} for p in HERE.rglob("*")
+        if p.is_file() and "orig" not in p.parts and "logs" not in p.parts)
+    # 清单自洽：逐行复算 size / sha256（与 make_filelist_h.py 同口径）
+    rows = [ln for ln in LIST.read_bytes().decode("utf-8").splitlines()
+            if ln and not ln.startswith("#")] if LIST.is_file() else []
+    good = 0
+    for ln in rows:
+        parts = ln.split("\t")
+        if len(parts) != 3:
+            continue
+        rel, size, digest = parts
+        p = HERE / rel
+        if p.is_file() and p.stat().st_size == int(size) and sha(p) == digest:
+            good += 1
+    C["H54_filelist_selfconsistent"] = (len(rows) > 40 and good == len(rows))
+    C["H55_record_is_in_filelist"] = any(
+        ln.startswith("H路线-验证记录.txt\t") for ln in rows)
+    C["H56_record_nonempty"] = (RECORD.is_file()
+        and RECORD.stat().st_size > 4000)
+
+    failed = [k for k, v in C.items() if not v]
+    for k, v in C.items():
+        print(("OK   " if v else "FAIL ") + k)
+    print(f"VERIFY_H {len(C) - len(failed)}/{len(C)} failed={len(failed)}")
+    print("H_VERIFIED" if not failed else "H_NOT_VERIFIED")
+    return 0 if not failed else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/mutation_h.py =====
+"""H 路线变异验证：逐条改坏被守卫的对象，确认 verify_h.py 真的报红。
+
+纪律（沿用 G/F 路线）：
+- 用二进制读写 + sha256 证明还原，不用 read_text/write_text（换行会被转）。
+- needle 匹配 0 次 = DID NOT RUN，计入未证明，不许直接崩、不许算 CAUGHT。
+- 每组都还原后才进下一组；最后 clean re-run 必须 GREEN。
+- 变异体必须仍能解析：改 JSON 布尔/数值、改 GDScript 字面量，不制造语法错。
+
+H_ROOT 环境变量供 selftest_did_not_run_h.py 把副本放到 logs/ 下时
+仍指向真正的工作区；正常运行时不设。
+用法：python mutation_h.py
+"""
+from __future__ import annotations
+
+import hashlib
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(os.environ.get("H_ROOT", str(Path(__file__).resolve().parent)))
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+VERIFY = HERE / "verify_h.py"
+
+# (编号, 目标, needle, mutant)；目标 "GAME:xxx" 表示游戏工程内文件。
+CASES = [
+    ("M01_retired_metric_renamed", "data/cross_h.json",
+     b'"retired_metric":', b'"retired_v1_metric":'),
+    ("M02_untouched_roi_not_zero", "data/vp_diag_h.json",
+     b'"changed_px": 0', b'"changed_px": 1'),
+    ("M03_static_ab_pixels_changed", "data/static_ab_h.json",
+     b'"changed_pixels": 0', b'"changed_pixels": 1'),
+    ("M04_all_checks_not_green", "data/all_checks_h.json",
+     b'"result": "ALL GREEN"', b'"result": "FAILED"'),
+    ("M05_foe_yaw_flipped", "data/two_side_ab.json",
+     b'"foe_yaw": -55.0', b'"foe_yaw": 55.0'),
+    ("M06_basecolor_identical", "data/identity_h.json",
+     b'"basecolor_thumb_mae": 75.3802',
+     b'"basecolor_thumb_mae": 0.0'),
+    ("M07_arena_uses_player_yaw", "GAME:scripts/arena.gd",
+     b"Fighter3DLayerScript.DEFAULT_FOE_YAW",
+     b"Fighter3DLayerScript.DEFAULT_SIDE_YAW"),
+    ("M08_layer_loads_fixed_glb", "GAME:scripts/fighter_3d_layer.gd",
+     b"var res := load(glb_path)", b"var res := load(GLB_PATH)"),
+    ("M09_copy_not_identical", "data/install_assets_h.json",
+     b'"identical": true', b'"identical": false'),
+    ("M10_v1_negative_result_erased", "data/cross_h_v1_retired.json",
+     b'"ok": false', b'"ok": true'),
+    ("M11_foe_apose_equals_player", "data/apose_crosscheck_h.json",
+     b'"foe_apose_not_equal_player": true',
+     b'"foe_apose_not_equal_player": false'),
+    ("M12_glb_has_animations", "data/foe_gltf_inspection.json",
+     b'"zero_animations": true', b'"zero_animations": false'),
+    ("M13_roi_not_two_regions", "data/roi_h.json",
+     b'"two_regions": true', b'"two_regions": false'),
+]
+
+
+def resolve(target: str) -> Path:
+    if target.startswith("GAME:"):
+        return GAME / target[5:]
+    return HERE / target
+
+
+def digest(b: bytes) -> str:
+    return hashlib.sha256(b).hexdigest()
+
+
+def run_verify() -> tuple[int, str]:
+    p = subprocess.run([sys.executable, "-u", str(VERIFY)],
+                       capture_output=True, timeout=120)
+    return p.returncode, (p.stdout + p.stderr).decode("utf-8", "replace")
+
+
+def main() -> int:
+    assert VERIFY.is_file(), VERIFY
+    caught = 0
+    did_not_run = []
+    restore_ok = 0
+    restore_total = 0
+    for name, target, needle, mutant in CASES:
+        path = resolve(target)
+        if not path.is_file():
+            did_not_run.append(name + ":FILE_MISSING")
+            print(f"{name} DID NOT RUN (missing file)")
+            continue
+        orig = path.read_bytes()
+        count = orig.count(needle)
+        if count == 0:
+            did_not_run.append(name + ":ANCHOR_MISS")
+            print(f"{name} DID NOT RUN (anchor not found)")
+            continue
+        path.write_bytes(orig.replace(needle, mutant, 1))
+        restore_total += 1
+        try:
+            rc, out = run_verify()
+            red = rc != 0 and "H_NOT_VERIFIED" in out
+            if red:
+                caught += 1
+            print(f"{name} {'CAUGHT' if red else 'MISSED'} rc={rc}")
+        finally:
+            path.write_bytes(orig)
+            if path.read_bytes() == orig and digest(path.read_bytes()) == digest(orig):
+                restore_ok += 1
+
+    rc_clean, out_clean = run_verify()
+    clean_green = rc_clean == 0 and "H_VERIFIED" in out_clean
+    total = len(CASES)
+    ok = (caught == total and not did_not_run
+          and restore_ok == restore_total == total and clean_green)
+    print(f"CAUGHT={caught}/{total} DID_NOT_RUN={len(did_not_run)} "
+          f"restore={restore_ok}/{restore_total} "
+          f"clean={'GREEN' if clean_green else 'RED'}")
+    for x in did_not_run:
+        print("  DNR", x)
+    print("MUTATION_H_OK" if ok else "MUTATION_H_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/selftest_did_not_run_h.py =====
+"""证明 mutation_h.py 的「锚点失配 = DID NOT RUN」分支真的有牙。
+
+做法：复制一份变异脚本到 logs/（清单排除目录），把 M01 的 needle
+改成一个盘上绝不会出现的字符串，用 H_ROOT 指回真工作区后跑它。
+期望：M01 被标 DID NOT RUN、汇总 MUTATION_H_FAILED（不算通过）、
+其余 12 组照常 CAUGHT 并逐字节还原、clean re-run 仍 GREEN。
+
+用法：python selftest_did_not_run_h.py
+"""
+from __future__ import annotations
+
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+SRC = HERE / "mutation_h.py"
+COPY = HERE / "logs" / "selftest_mutation_h.py"
+NEEDLE = '"retired_metric":'
+ABSENT = '"retired_metric_ABSENT999":'
+
+
+def main() -> int:
+    src = SRC.read_text(encoding="utf-8")
+    anchor = src.find("CASES = [")
+    assert anchor > 0, "CASES block not found"
+    head, tail = src[:anchor], src[anchor:]
+    assert NEEDLE in tail, "needle literal not in CASES"
+    patched = head + tail.replace(NEEDLE, ABSENT, 1)
+    assert ABSENT in patched and patched != src
+    COPY.parent.mkdir(parents=True, exist_ok=True)
+    COPY.write_text(patched, encoding="utf-8")
+
+    env = os.environ.copy()
+    env["H_ROOT"] = str(HERE)
+    p = subprocess.run([sys.executable, "-u", str(COPY)],
+                       capture_output=True, timeout=300, env=env)
+    out = (p.stdout + p.stderr).decode("utf-8", "replace")
+    (HERE / "logs" / "selftest_did_not_run_h.out").write_text(
+        out, encoding="utf-8")
+
+    checks = {
+        "m01_marked_did_not_run": "M01_retired_metric_renamed DID NOT RUN" in out,
+        "dnr_counted": "DID_NOT_RUN=1" in out,
+        "not_reported_as_ok": "MUTATION_H_FAILED" in out,
+        "other_cases_still_caught": "CAUGHT=12/13" in out,
+        "all_mutations_restored": "restore=12/12" in out,
+        "clean_rerun_green": "clean=GREEN" in out,
+        "copy_script_left_in_excluded_dir": COPY.is_file(),
+    }
+    COPY.unlink(missing_ok=True)
+    checks["temp_script_removed"] = not COPY.exists()
+    for k, v in checks.items():
+        print(("OK   " if v else "FAIL ") + k)
+    ok = all(checks.values())
+    print(f"SELFTEST_H {sum(checks.values())}/{len(checks)}")
+    print("DID_NOT_RUN_BRANCH_OK" if ok else "DID_NOT_RUN_BRANCH_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/make_filelist_h.py =====
+"""生成 H 路线交付文件清单与新增脚本 diff。
+
+自指纪律（G 路线踩过）：清单 / diff / logs / orig / .godot /
+__pycache__ 一律排除，否则「清单写好后重跑」会把自己算进去。
+用法：python make_filelist_h.py
+"""
+from __future__ import annotations
+
+import hashlib
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = HERE.parent / "牌拳-CardBoxer"
+LIST = HERE / "文件清单.txt"
+DIFF = HERE / "new-files.diff"
+EXCLUDE_NAMES = {"文件清单.txt", "new-files.diff"}
+EXCLUDE_DIRS = {"logs", ".godot", "__pycache__", "orig"}
+EXCLUDE_PREFIX = ("logs/", "orig/")
+
+DIFF_SCRIPTS = [
+    "make_baseline_h.py", "probe_blends_h.py", "diag_rest_h.py",
+    "diag_motion_h.py", "make_foe_motion_h.py", "build_foe_rigged_h.py",
+    "inspect_foe_glb_h.py", "install_assets_h.py", "patch_game_h.py",
+    "diag_glb_pair_h.py", "diag_roi_h.py", "make_zoom_h.py",
+    "diag_cross_h.py", "run_isolate_h.py", "run_two_side_probe.py",
+    "run_vp_diag_h.py", "make_isolate_zoom_h.py", "diag_identity_h.py",
+    "run_all_checks_h.py", "run_static_ab_h.py", "verify_h.py",
+    "mutation_h.py", "selftest_did_not_run_h.py",
+    "make_filelist_h.py", "crosscheck_filelist_h.py",
+]
+DIFF_TESTS = ["tests/two_side_probe.gd", "tests/vp_diag_probe.gd"]
+DIFF_GAME_GD = ["scripts/arena.gd", "scripts/fighter_3d_layer.gd",
+                "scripts/fighter.gd"]
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def entries() -> list[Path]:
+    out = []
+    for p in sorted(HERE.rglob("*")):
+        if not p.is_file() or p.name in EXCLUDE_NAMES:
+            continue
+        rel = p.relative_to(HERE)
+        if any(part in EXCLUDE_DIRS for part in rel.parts):
+            continue
+        if str(rel).replace("\\", "/").startswith(EXCLUDE_PREFIX):
+            continue
+        out.append(p)
+    return out
+
+
+def main() -> int:
+    rows = []
+    for p in entries():
+        rel = str(p.relative_to(HERE)).replace("\\", "/")
+        rows.append(f"{rel}\t{p.stat().st_size}\t{sha256(p)}")
+    header = [
+        "# H 路线 · 双方 3D 侧面战斗 · 交付文件清单",
+        "# 格式: 相对路径<TAB>字节<TAB>sha256",
+        "# 排除: 本清单 / new-files.diff / logs / orig / .godot / __pycache__",
+        "",
+    ]
+    LIST.write_bytes(("\n".join(header + rows) + "\n").encode("utf-8"))
+
+    parts = []
+    for name in DIFF_SCRIPTS:
+        p = HERE / name
+        if p.is_file():
+            parts.append(f"===== H/{name} =====\n"
+                         + p.read_text(encoding="utf-8"))
+    for rel in DIFF_TESTS:
+        p = HERE / rel
+        if p.is_file():
+            parts.append(f"===== H/{rel} =====\n"
+                         + p.read_text(encoding="utf-8"))
+    for rel in DIFF_GAME_GD:
+        p = GAME / rel
+        if p.is_file():
+            parts.append(f"===== GAME/{rel} =====\n"
+                         + p.read_text(encoding="utf-8"))
+    DIFF.write_bytes(("\n\n".join(parts) + "\n").encode("utf-8"))
+
+    again = ("\n".join(header + [
+        f"{str(p.relative_to(HERE)).replace(chr(92), '/')}\t"
+        f"{p.stat().st_size}\t{sha256(p)}" for p in entries()
+    ]) + "\n").encode("utf-8")
+    stable = LIST.read_bytes() == again
+    print(f"FILELIST_ENTRIES={len(rows)} DIFF_BYTES={DIFF.stat().st_size}")
+    print(f"STABLE={stable}")
+    print("FILELIST_STABLE_OK" if stable else "FILELIST_UNSTABLE")
+    return 0 if stable else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/crosscheck_filelist_h.py =====
+"""独立复核 H 路线文件清单：重新遍历目录，逐条比对路径/字节/sha256。
+
+刻意不 import make_filelist_h.py，避免「两边用同一个错函数一起错」。
+用法：python crosscheck_filelist_h.py
+"""
+from __future__ import annotations
+
+import hashlib
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+LIST = HERE / "文件清单.txt"
+SKIP_NAMES = {"文件清单.txt", "new-files.diff"}
+SKIP_DIRS = {"logs", ".godot", "__pycache__", "orig"}
+
+
+def digest(p: Path) -> str:
+    return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+def main() -> int:
+    actual = {}
+    for p in HERE.rglob("*"):
+        if not p.is_file() or p.name in SKIP_NAMES:
+            continue
+        rel = p.relative_to(HERE)
+        if any(part in SKIP_DIRS for part in rel.parts):
+            continue
+        key = str(rel).replace("\\", "/")
+        actual[key] = (p.stat().st_size, digest(p))
+
+    declared = {}
+    for ln in LIST.read_bytes().decode("utf-8").splitlines():
+        if not ln or ln.startswith("#"):
+            continue
+        parts = ln.split("\t")
+        if len(parts) != 3:
+            print("BAD ROW", repr(ln))
+            continue
+        declared[parts[0]] = (int(parts[1]), parts[2])
+
+    bad = [k for k, v in declared.items() if actual.get(k) != v]
+    extra = sorted(set(actual) - set(declared))
+    missing = sorted(set(declared) - set(actual))
+    ok = not bad and not extra and not missing and len(declared) > 40
+    print(f"ROWS={len(declared)} ACTUAL={len(actual)} "
+          f"BAD={len(bad)} EXTRA={len(extra)} MISSING={len(missing)}")
+    for k in bad[:10]:
+        print("  MISMATCH", k)
+    for k in extra[:10]:
+        print("  EXTRA", k)
+    for k in missing[:10]:
+        print("  MISSING", k)
+    print("CROSSCHECK_H_OK" if ok else "CROSSCHECK_H_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== H/tests/two_side_probe.gd =====
+extends SceneTree
+## H 路线：同一棵树、同一冻结状态的「双侧 3D」A/B 探针。
+##
+## 跨 Godot 进程逐像素对比不成立（全局 RNG 每次启动随机化，见
+## tests/rng_probe.gd 与 引擎优化/compare_regression.py 的订正）。
+## 这里在同一个进程里：
+##   ① 实例化 main.tscn 后立刻 paused，隐藏 HUD / fx，只留 World；
+##   ② 抓 off 帧（两人都是既有 2D 自绘）；
+##   ③ 原地挂两套 3D 表现层（玩家 / 对手各读自己的 motion），
+##      两个 Fighter 都切 draw_3d_override；
+##   ④ 逐阶段分别 apply 动作，各抓一帧。
+## 于是 A/B 差异只可能来自两个 3D 层与骨架驱动。
+##
+## 跑法（必须带窗口）：
+##   H_2SIDE_DIR=<abs> godot --path . --resolution 1280x720 \
+##     --quit-after 900 --script res://tests/two_side_probe.gd
+
+const ArenaScene = preload("res://scenes/main.tscn")
+const LayerScript = preload("res://scripts/fighter_3d_layer.gd")
+const MOTION_P := "res://data/motion_input.json"
+const MOTION_F := "res://data/motion_input_foe.json"
+
+
+class Driver:
+	extends Node
+
+	# 内部类有独立常量作用域，这里显式复制一份，不依赖作用域猜测。
+	const LayerScript = preload("res://scripts/fighter_3d_layer.gd")
+	const MOTION_P := "res://data/motion_input.json"
+	const MOTION_F := "res://data/motion_input_foe.json"
+	const WARM := 26
+	const SHOTS := [
+		{"name": "off", "p": "stance", "pf": 0, "f": "stance", "ff": 0},
+		{"name": "both-stance", "p": "stance", "pf": 0, "f": "stance", "ff": 0},
+		{"name": "player-jab6", "p": "jab", "pf": 6, "f": "stance", "ff": 0},
+		{"name": "foe-cross11", "p": "stance", "pf": 0, "f": "cross", "ff": 11},
+		{"name": "both-wave17", "p": "wave", "pf": 17, "f": "wave", "ff": 17},
+	]
+
+	var arena: Node2D
+	var out_dir := ""
+	var only := ""   # "" = 双侧；"player"/"foe" = 单侧隔离诊断
+	var motion_p: Dictionary = {}
+	var motion_f: Dictionary = {}
+	var initialized := false
+	var busy := false
+	var stage := 0
+	var wait := 0
+	var player_ready := false
+	var foe_ready := false
+	var rows: Array = []
+	var prims: Array = []
+	var calls: Array = []
+
+	func _avg(a: Array) -> float:
+		if a.is_empty():
+			return 0.0
+		var s := 0.0
+		for x in a:
+			s += float(x)
+		return s / float(a.size())
+
+	func _snap(name: String) -> void:
+		await RenderingServer.frame_post_draw
+		var img := get_viewport().get_texture().get_image()
+		var path := out_dir + "/h-" + name + ".png"
+		var err := img.save_png(path)
+		rows.append({
+			"name": name, "path": path,
+			"w": img.get_width(), "h": img.get_height(),
+			"save_error": int(err),
+			"prims_mean": _avg(prims),
+			"draw_calls_mean": _avg(calls),
+		})
+		prims.clear()
+		calls.clear()
+
+	## 诊断：层里第一个 MeshInstance3D 的节点名能区分两份 GLB
+	## （player_HI_skinned vs foe_HI_skinned）。
+	func _first_mesh_name(layer) -> String:
+		if layer == null or layer.sv == null:
+			return ""
+		var stack: Array = []
+		for c in layer.sv.get_children():
+			stack.append(c)
+		while not stack.is_empty():
+			var n = stack.pop_back()
+			if n is MeshInstance3D:
+				return String(n.name)
+			for c in n.get_children():
+				stack.append(c)
+		return ""
+
+	## 返回 mesh 节点名 + 资源路径 + 顶点数，用来认出实际挂的是哪份 GLB。
+	func _mesh_signature(layer) -> String:
+		if layer == null or layer.sv == null:
+			return ""
+		var stack: Array = []
+		for c in layer.sv.get_children():
+			stack.append(c)
+		while not stack.is_empty():
+			var n = stack.pop_back()
+			if n is MeshInstance3D:
+				var m: Mesh = n.mesh
+				var verts := 0
+				if m is ArrayMesh:
+					var arr: Array = (m as ArrayMesh).surface_get_arrays(0)
+					if arr.size() > Mesh.ARRAY_VERTEX:
+						verts = arr[Mesh.ARRAY_VERTEX].size()
+				var sig := "%s|%s|%d" % [n.name, m.resource_path, verts]
+				# 贴图资源路径：若两层指向同一张，就是材质缓存串味。
+				var mat: Material = n.get_active_material(0)
+				if mat is BaseMaterial3D:
+					var t: Texture2D = (mat as BaseMaterial3D).albedo_texture
+					if t != null:
+						sig += "|albedo=" + String(t.resource_path)
+				return sig
+			for c in n.get_children():
+				stack.append(c)
+		return ""
+
+	func _attach_layers() -> void:
+		if only != "foe":
+			_attach_player()
+		if only != "player":
+			_attach_foe()
+
+	func _attach_player() -> void:
+		var lp := LayerScript.new()
+		arena.world.add_child(lp)
+		player_ready = lp.setup(motion_p)
+		if player_ready:
+			arena.layer_3d = lp
+			arena.motion_3d = motion_p
+			# arena.paused 让 _sync_3d_layer() 不跑，位置必须由探针显式给，
+			# 否则层留在 (0,0) 被画到画布外（G 路线首版踩过）。
+			lp.position = arena.player.position + arena.player.visual_shift
+			arena.player.draw_3d_override = true
+			arena.player.queue_redraw()
+
+	func _attach_foe() -> void:
+		var lf := LayerScript.new()
+		lf.configure("foe", LayerScript.FOE_GLB_PATH,
+				LayerScript.DEFAULT_FOE_YAW, false)
+		arena.world.add_child(lf)
+		foe_ready = lf.setup(motion_f)
+		if foe_ready:
+			arena.layer_3d_foe = lf
+			arena.motion_3d_foe = motion_f
+			lf.position = arena.enemy.position + arena.enemy.visual_shift
+			arena.enemy.draw_3d_override = true
+			arena.enemy.queue_redraw()
+
+	func _process(_d: float) -> void:
+		if busy:
+			return
+		busy = true
+		if not initialized:
+			initialized = true
+			arena.paused = true
+			for c in arena.get_children():
+				if c.name != "World":
+					c.visible = false
+			var pp: Variant = JSON.parse_string(
+					FileAccess.get_file_as_string(MOTION_P))
+			if pp is Dictionary:
+				motion_p = pp
+			var ff: Variant = JSON.parse_string(
+					FileAccess.get_file_as_string(MOTION_F))
+			if ff is Dictionary:
+				motion_f = ff
+		if wait >= WARM - 10:
+			prims.append(Performance.get_monitor(
+					Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME))
+			calls.append(Performance.get_monitor(
+					Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))
+
+		if stage == 0:
+			wait += 1
+			if wait >= WARM:
+				await _snap("off")
+				_attach_layers()
+				stage = 1
+				wait = 0
+		elif stage < SHOTS.size():
+			wait += 1
+			var spec: Dictionary = SHOTS[stage]
+			if arena.layer_3d != null:
+				arena.layer_3d.apply(String(spec["p"]), int(spec["pf"]))
+			if arena.layer_3d_foe != null:
+				arena.layer_3d_foe.apply(String(spec["f"]), int(spec["ff"]))
+			if wait >= WARM:
+				await _snap(String(spec["name"]))
+				stage += 1
+				wait = 0
+		else:
+			var payload := {
+				"shots": rows,
+				"player_layer_ready": player_ready,
+				"foe_layer_ready": foe_ready,
+				"bones": int(arena.layer_3d.drv.bone_names.size())
+						if arena.layer_3d != null else 0,
+				"foe_bones": int(arena.layer_3d_foe.drv.bone_names.size())
+						if arena.layer_3d_foe != null else 0,
+				"player_frames_applied": int(arena.layer_3d.frames_applied)
+						if arena.layer_3d != null else 0,
+				"foe_frames_applied": int(arena.layer_3d_foe.frames_applied)
+						if arena.layer_3d_foe != null else 0,
+				"player_tex_drawn": bool(arena.layer_3d.tex_drawn)
+						if arena.layer_3d != null else false,
+				"foe_tex_drawn": bool(arena.layer_3d_foe.tex_drawn)
+						if arena.layer_3d_foe != null else false,
+				"player_yaw": float(arena.layer_3d.view_yaw_deg)
+						if arena.layer_3d != null else 0.0,
+				"foe_yaw": float(arena.layer_3d_foe.view_yaw_deg)
+						if arena.layer_3d_foe != null else 0.0,
+				"foe_role": String(arena.layer_3d_foe.role_id)
+						if arena.layer_3d_foe != null else "",
+				"player_override": bool(arena.player.draw_3d_override),
+				"enemy_override": bool(arena.enemy.draw_3d_override),
+				"player_glb_path": String(arena.layer_3d.glb_path)
+						if arena.layer_3d != null else "",
+				"foe_glb_path": String(arena.layer_3d_foe.glb_path)
+						if arena.layer_3d_foe != null else "",
+				"player_mesh_name": _first_mesh_name(arena.layer_3d),
+				"foe_mesh_name": _first_mesh_name(arena.layer_3d_foe),
+				"player_mesh_sig": _mesh_signature(arena.layer_3d),
+				"foe_mesh_sig": _mesh_signature(arena.layer_3d_foe),
+				"sv_same": (arena.layer_3d != null
+						and arena.layer_3d_foe != null
+						and arena.layer_3d.sv == arena.layer_3d_foe.sv),
+				"tex_same": (arena.layer_3d != null
+						and arena.layer_3d_foe != null
+						and arena.layer_3d.sv.get_texture()
+						== arena.layer_3d_foe.sv.get_texture()),
+				"use_3d_env": OS.get_environment("CARD_BOXER_3D"),
+				"only": only,
+			}
+			var f := FileAccess.open(out_dir + "/ab_result.json",
+					FileAccess.WRITE)
+			if f != null:
+				f.store_string(JSON.stringify(payload, "\t"))
+				f.close()
+			print("H2SIDE_JSON " + JSON.stringify(payload))
+			get_tree().quit(0)
+			return
+		busy = false
+
+
+func _init() -> void:
+	var out_dir := OS.get_environment("H_2SIDE_DIR")
+	if out_dir == "":
+		print("H2SIDE_JSON " + JSON.stringify({"error": "H_2SIDE_DIR missing"}))
+		quit(1)
+		return
+	DirAccess.make_dir_recursive_absolute(out_dir)
+	var inst: Node2D = (ArenaScene as PackedScene).instantiate()
+	root.add_child(inst)
+	var d := Driver.new()
+	d.arena = inst
+	d.out_dir = out_dir
+	d.only = OS.get_environment("H_2SIDE_ONLY")
+	root.add_child(d)
+	print("H2SIDE_START out=%s" % out_dir)
+
+
+===== H/tests/vp_diag_probe.gd =====
+extends SceneTree
+## H 路线诊断：同一进程内隐藏单层，判定两个 SubViewport 是否串味。
+##
+## 跨进程逐像素对比不成立（全局 RNG 每次启动随机化）。这里在同一个
+## 进程、同一棵树里抓 4 帧：both / player-hidden / foe-hidden / neither。
+## 若隐藏 player 时右侧 ROI 也变了，就说明两个视口内容互相依赖。
+##
+## 跑法（必须带窗口）：
+##   H_VP_DIR=<abs> godot --path . --resolution 1280x720 \
+##     --quit-after 900 --script res://tests/vp_diag_probe.gd
+
+const ArenaScene = preload("res://scenes/main.tscn")
+const LayerScript = preload("res://scripts/fighter_3d_layer.gd")
+
+
+class Driver:
+	extends Node
+
+	const LayerScript = preload("res://scripts/fighter_3d_layer.gd")
+	const MOTION_P := "res://data/motion_input.json"
+	const MOTION_F := "res://data/motion_input_foe.json"
+	const WARM := 20
+	const NAMES := ["off", "both", "player-hidden", "foe-hidden", "neither"]
+
+	var arena: Node2D
+	var out_dir := ""
+	var motion_p: Dictionary = {}
+	var motion_f: Dictionary = {}
+	var initialized := false
+	var busy := false
+	var stage := 0
+	var wait := 0
+	var rows: Array = []
+	var player_ready := false
+	var foe_ready := false
+
+	func _snap(name: String) -> void:
+		await RenderingServer.frame_post_draw
+		var img := get_viewport().get_texture().get_image()
+		var path := out_dir + "/vp-" + name + ".png"
+		var err := img.save_png(path)
+		rows.append({"name": name, "path": path,
+			"w": img.get_width(), "h": img.get_height(),
+			"save_error": int(err)})
+
+	func _attach() -> void:
+		var lp := LayerScript.new()
+		arena.world.add_child(lp)
+		player_ready = lp.setup(motion_p)
+		if player_ready:
+			arena.layer_3d = lp
+			arena.motion_3d = motion_p
+			lp.position = arena.player.position + arena.player.visual_shift
+			arena.player.draw_3d_override = true
+			arena.player.queue_redraw()
+		var lf := LayerScript.new()
+		lf.configure("foe", LayerScript.FOE_GLB_PATH,
+				LayerScript.DEFAULT_FOE_YAW, false)
+		arena.world.add_child(lf)
+		foe_ready = lf.setup(motion_f)
+		if foe_ready:
+			arena.layer_3d_foe = lf
+			arena.motion_3d_foe = motion_f
+			lf.position = arena.enemy.position + arena.enemy.visual_shift
+			arena.enemy.draw_3d_override = true
+			arena.enemy.queue_redraw()
+
+	func _set_vis(p: bool, f: bool) -> void:
+		if arena.layer_3d != null:
+			arena.layer_3d.visible = p
+		if arena.layer_3d_foe != null:
+			arena.layer_3d_foe.visible = f
+
+	func _process(_d: float) -> void:
+		if busy:
+			return
+		busy = true
+		if not initialized:
+			initialized = true
+			arena.paused = true
+			for c in arena.get_children():
+				if c.name != "World":
+					c.visible = false
+			var pp: Variant = JSON.parse_string(
+					FileAccess.get_file_as_string(MOTION_P))
+			if pp is Dictionary:
+				motion_p = pp
+			var ff: Variant = JSON.parse_string(
+					FileAccess.get_file_as_string(MOTION_F))
+			if ff is Dictionary:
+				motion_f = ff
+		wait += 1
+		if wait < WARM:
+			busy = false
+			return
+		wait = 0
+		if stage == 0:
+			await _snap("off")
+			_attach()
+		elif stage == 1:
+			await _snap("both")
+			_set_vis(false, true)
+		elif stage == 2:
+			await _snap("player-hidden")
+			_set_vis(true, false)
+		elif stage == 3:
+			await _snap("foe-hidden")
+			_set_vis(false, false)
+		elif stage == 4:
+			await _snap("neither")
+			var payload := {
+				"shots": rows,
+				"player_layer_ready": player_ready,
+				"foe_layer_ready": foe_ready,
+				"player_glb": String(arena.layer_3d.glb_path)
+						if arena.layer_3d != null else "",
+				"foe_glb": String(arena.layer_3d_foe.glb_path)
+						if arena.layer_3d_foe != null else "",
+			}
+			var f := FileAccess.open(out_dir + "/vp_result.json",
+					FileAccess.WRITE)
+			if f != null:
+				f.store_string(JSON.stringify(payload, "\t"))
+				f.close()
+			print("HVP_JSON " + JSON.stringify(payload))
+			get_tree().quit(0)
+			return
+		stage += 1
+		busy = false
+
+
+func _init() -> void:
+	var out_dir := OS.get_environment("H_VP_DIR")
+	if out_dir == "":
+		print("HVP_JSON " + JSON.stringify({"error": "H_VP_DIR missing"}))
+		quit(1)
+		return
+	DirAccess.make_dir_recursive_absolute(out_dir)
+	var inst: Node2D = (ArenaScene as PackedScene).instantiate()
+	root.add_child(inst)
+	var d := Driver.new()
+	d.arena = inst
+	d.out_dir = out_dir
+	root.add_child(d)
+	print("HVP_START out=%s" % out_dir)
+

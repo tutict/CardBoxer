@@ -1,0 +1,9 @@
+M1 CAUGHT  target_red=True sentinel_green=True restore=True  伪造站架帧不是原始 3D 立绘
+M2 CAUGHT  target_red=True sentinel_green=True restore=True  改坏一张帧 PNG 的文件魔数
+M3 CAUGHT  target_red=True sentinel_green=True restore=True  把网格撕裂的量化证据抹成 0
+M4 CAUGHT  target_red=True sentinel_green=True restore=True  偷偷改 A-pose 头顶标定却不重算指纹
+M5 CAUGHT  target_red=True sentinel_green=True restore=True  摘掉角度环绕，试探 310 度翻臂能否蒙混过关
+M6 CAUGHT  target_red=True sentinel_green=True restore=True  篡改源码基线指纹，假装游戏源码没动
+
+clean_rerun=GREEN  exit=0  red=[]
+6/6 CAUGHT  restore=6/6  did_not_run=0  all_restored=True  MUTATION_ATTACK_3D_OK

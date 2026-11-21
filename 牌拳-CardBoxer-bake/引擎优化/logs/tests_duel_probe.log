@@ -1,0 +1,9 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+OK  命中     (出牌成功)  攻 hp=100 守 hp=96  (受击方应掉 4，信号 blocked=false / attacker_is_player=true)
+OK  格挡     (出牌成功)  攻 hp=100 守 hp=99  (应只掉 1（两成），信号 blocked=true —— 格挡判定必须读到防守方)
+OK  打空     (出牌成功)  攻 hp=100 守 hp=100  (距离 400 > reach，两边都不该掉血、不该有命中信号)
+OK  反应   硬直 21 帧  膝盖峰值位移 16.3 px（>=6，仅表能提供）  头部后仰 36.4 px（>=12）  硬直后回位 0.00 px（<=1）
+
+DUEL PROBE: PASS
+

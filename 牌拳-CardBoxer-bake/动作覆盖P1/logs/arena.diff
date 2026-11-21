@@ -1,0 +1,101 @@
+--- orig/pre-p1/arena.gd	2026-11-14 16:49:02.541703700 +0800
++++ C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/scripts/arena.gd	2026-11-14 17:20:22.993406100 +0800
+@@ -258,6 +258,33 @@
+ 				lf.queue_free()
+ 
+ 
++# ── P1 动作覆盖：3D 侧亮牌 / 输家受击 / 平局对峙 ───────────────
++# 受击轨道与 fighter.gd:1044-1053 同口径：按硬直倾角绝对值 >=0.6
++# 选 hit_heavy，否则 hit_light；只有 BLOCKSTUN 才用 block。回合制的
++# apply_hit(card_id="taikou") 不会进 BLOCKSTUN，所以这里只会有前两条，
++# block 轨道仍烘进表里备用。hit_crush 是 spec 的规格索引、未烘新帧，
++# 2D 侧 super 实际也走 hit_heavy，3D 跟它一致，不假装已有 crush。
++# REVEAL_S 必须与 _tick_taikou() 里 reveal 的 1.5 秒判定同值；
++# 这里只用于把亮牌进度映射到 focus 帧号，不改阶段时长。
++const REACT_STUN_TILT := {"": 0.55, "launch": 0.9,
++		"stagger": 0.7, "super": 1.2}
++const REACT_DURATION_S := {"": 0.26, "launch": 0.42,
++		"stagger": 0.5, "super": 0.75}
++const REVEAL_S := 1.5
++
++
++## 输家 / 平局该播哪条受击轨道（只读现有状态，不改判定）。
++func _3d_react_track() -> String:
++	var tilt := float(REACT_STUN_TILT.get(tk_motion_extra, 0.55))
++	return "hit_heavy" if absf(tilt) >= 0.6 else "hit_light"
++
++
++## 把 0..1 的进度映射到轨道帧号；帧数从动作表读，不写死。
++func _3d_frame_of(card: String, t01: float) -> int:
++	var n := int(motion_3d["cards"][card]["frames"])
++	return clampi(int(clampf(t01, 0.0, 1.0) * float(n - 1)), 0, n - 1)
++
++
+ func _sync_3d_layer() -> void:
+ 	# 默认关时立刻返回：节奏时钟仍在跑，但 motion_3d 是空的，
+ 	# 继续往下算帧数会撞空字典。G 路线的早退语义必须保留。
+@@ -267,18 +294,52 @@
+ 	var frame := 0
+ 	var foe_card := "stance"
+ 	var foe_frame := 0
+-	# 只有赢下本回的一方播攻击；输家 / 平局 / 亮牌阶段一律 stance
+-	# （73 帧表里没有受击轨道，硬凑会变成自造动作）。
+-	if tk_rhythm_t >= 0.0 and tk_motion_id != "" \
+-			and tk_rhythm_t <= Rhythm.ATTACK_S:
+-		var n: int = int(motion_3d["cards"][tk_motion_id]["frames"])
+-		var f := clampi(int(tk_rhythm_t / Rhythm.ATTACK_S * float(n - 1)), 0, n - 1)
+-		if tk_rhythm_winner == "player":
+-			card = tk_motion_id
+-			frame = f
+-		elif tk_rhythm_winner == "enemy":
+-			foe_card = tk_motion_id
+-			foe_frame = f
++	# 显式 bool：Dictionary.has() 返回 Variant，用 := 推断会 Parse Error。
++	var has_focus: bool = motion_3d["cards"].has("focus")
++	var react := _3d_react_track()
++	var has_react: bool = motion_3d["cards"].has(react)
++
++	if tk_phase == "reveal" and has_focus:
++		# 亮牌阶段两侧同播 focus，与 2D 的
++		# perform_visual(MotionP0.REVEAL_CARD) 同一语义。
++		var ff := _3d_frame_of("focus", tk_phase_time / REVEAL_S)
++		card = "focus"
++		frame = ff
++		foe_card = "focus"
++		foe_frame = ff
++	elif tk_phase == "resolve":
++		# 只有赢下本回的一方播攻击（G/H 路线原逻辑，一字未改）。
++		if tk_rhythm_t >= 0.0 and tk_motion_id != "" \
++				and tk_rhythm_t <= Rhythm.ATTACK_S:
++			var n: int = int(motion_3d["cards"][tk_motion_id]["frames"])
++			var f := clampi(int(tk_rhythm_t / Rhythm.ATTACK_S * float(n - 1)), 0, n - 1)
++			if tk_rhythm_winner == "player":
++				card = tk_motion_id
++				frame = f
++			elif tk_rhythm_winner == "enemy":
++				foe_card = tk_motion_id
++				foe_frame = f
++		# P1：输家 / 平局接上受击轨道。命中瞬间（HIT_AT_S）之后起播，
++		# 按 fighter.gd 的四档硬直时长归一化，播完自然回 stance。
++		# 平局不启节奏时钟，用 resolve 阶段时钟直接从 0 起播。
++		if has_react and tk_winner != "":
++			var stun := float(REACT_DURATION_S.get(tk_motion_extra, 0.26))
++			var at := tk_phase_time
++			if tk_winner != "draw":
++				at = tk_rhythm_t - Rhythm.HIT_AT_S
++			if at >= 0.0 and at <= stun:
++				var fr := _3d_frame_of(react, at / stun)
++				if tk_winner == "player":
++					foe_card = react
++					foe_frame = fr
++				elif tk_winner == "enemy":
++					card = react
++					frame = fr
++				else:
++					card = react
++					frame = fr
++					foe_card = react
++					foe_frame = fr
+ 	if layer_3d != null:
+ 		layer_3d.position = player.position + player.visual_shift
+ 		layer_3d.apply(card, frame)

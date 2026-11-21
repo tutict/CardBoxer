@@ -1,0 +1,15 @@
+17:22:44 | INFO: Data are loaded, start creating Blender stuff
+17:22:44 | INFO: Blender create Mesh node node_0
+17:22:44 | INFO: glTF import finished in 0.13s
+IMPORT meshes=1 names=['node_0']
+NORMALIZE scale=1.652229 raw_height=1.04102 bbox=[-0.6272, -0.3847, 0.0]..[0.6272, 0.3847, 1.72]
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\probe_v4b_source.py:75: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if mat and mat.use_nodes:
+Info: No new files have been packed
+STRUCT {"verts": 57901, "faces": 79986, "shells": 2035, "uv_layers": 1, "materials": 1, "textures": [{"image": "texture_pbr_20250901", "size": [4096, 4096], "packed": true, "source": "FILE"}, {"image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness", "size": [4096, 4096], "packed": true, "source": "FILE"}, {"image": "texture_pbr_20250901_normal", "size": [4096, 4096], "packed": true, "source": "FILE"}], "packed_textures": 3}
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\probe_v4b_source.py:89: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+00:03.328  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\frames\e-source-front.png'
+Info: Saved as "玩家V4b-源.blend"
+SOURCE_PROBE_OK verts=57901 shells=2035 packed=3/3 blend=37993889B elapsed=2.74s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

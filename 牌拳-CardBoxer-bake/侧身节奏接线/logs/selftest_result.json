@@ -1,0 +1,198 @@
+{
+  "cases": [
+    {
+      "case": "M1",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R05_generated_gd_reproducible_from_json",
+        "R07_offline_numbers_match_json"
+      ],
+      "target": "R07"
+    },
+    {
+      "case": "M2",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R05_generated_gd_reproducible_from_json",
+        "R06_timeline_self_consistent"
+      ],
+      "target": "R06"
+    },
+    {
+      "case": "M3",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R05_generated_gd_reproducible_from_json"
+      ],
+      "target": "R05"
+    },
+    {
+      "case": "M4",
+      "status": "DID NOT RUN",
+      "reason": "anchor_count=0 in game/scripts/arena.gd",
+      "target": "R13"
+    },
+    {
+      "case": "M5",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R13_rhythm_wiring_forms_all_present"
+      ],
+      "target": "R13"
+    },
+    {
+      "case": "M6",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R13_rhythm_wiring_forms_all_present"
+      ],
+      "target": "R13"
+    },
+    {
+      "case": "M7",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R19_p0_wiring_not_regressed"
+      ],
+      "target": "R19"
+    },
+    {
+      "case": "M8",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R11_damage_and_phase_lines_untouched"
+      ],
+      "target": "R11"
+    },
+    {
+      "case": "M9",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R15_draw_does_not_start_rhythm"
+      ],
+      "target": "R15"
+    },
+    {
+      "case": "M10",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R10_apply_hit_body_untouched",
+        "R12_visual_fields_only_in_draw_zone"
+      ],
+      "target": "R12"
+    },
+    {
+      "case": "M11",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R02_thirteen_untouched_files_byte_identical"
+      ],
+      "target": "R02"
+    },
+    {
+      "case": "M12",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R03_exactly_two_existing_files_changed",
+        "R13_rhythm_wiring_forms_all_present",
+        "R14_hitstop_branch_allows_capture",
+        "R15_draw_does_not_start_rhythm"
+      ],
+      "target": "R03"
+    },
+    {
+      "case": "M13",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R01_backup_manifest_intact"
+      ],
+      "target": "R01"
+    },
+    {
+      "case": "M14",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R16_twelve_engine_checks_green"
+      ],
+      "target": "R16"
+    },
+    {
+      "case": "M15",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R17_eight_engine_frames_and_state_numbers"
+      ],
+      "target": "R17"
+    },
+    {
+      "case": "M16",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R18_pixel_evidence_recomputed_from_png"
+      ],
+      "target": "R18"
+    },
+    {
+      "case": "M17",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R18_pixel_evidence_recomputed_from_png"
+      ],
+      "target": "R18"
+    },
+    {
+      "case": "M18",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R07_offline_numbers_match_json",
+        "R09_offline_script_not_modified_by_this_round"
+      ],
+      "target": "R09"
+    },
+    {
+      "case": "M19",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R04_two_new_sources_present"
+      ],
+      "target": "R04"
+    },
+    {
+      "case": "M20",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "R14_hitstop_branch_allows_capture"
+      ],
+      "target": "R14"
+    }
+  ],
+  "caught": 19,
+  "escaped": 0,
+  "did_not_run": 1,
+  "restored": 19,
+  "total": 20,
+  "clean_rerun_rc": 0,
+  "clean_failed": [],
+  "clean_ok": true,
+  "result": "MUTATION_RHYTHM_SELFTEST_OK",
+  "selftest": true
+}

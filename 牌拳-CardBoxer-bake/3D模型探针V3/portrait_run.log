@@ -1,0 +1,6 @@
+PORTRAIT {"file": "zzz-front.png", "output": "立绘-front.png", "size": [768, 768], "alpha_bbox": [265, 96, 503, 672], "opaque_pixels": 77658, "outer_edge_pixels": 13984, "inner_edge_pixels": 10664, "bytes": 135959}
+PORTRAIT {"file": "zzz-angle25.png", "output": "立绘-angle25.png", "size": [768, 768], "alpha_bbox": [263, 96, 522, 672], "opaque_pixels": 75476, "outer_edge_pixels": 13192, "inner_edge_pixels": 10269, "bytes": 133184}
+PORTRAIT {"file": "zzz-angle55.png", "output": "立绘-angle55.png", "size": [768, 768], "alpha_bbox": [271, 96, 512, 672], "opaque_pixels": 65411, "outer_edge_pixels": 10287, "inner_edge_pixels": 7847, "bytes": 113925}
+PORTRAIT {"file": "zzz-back35.png", "output": "立绘-back35.png", "size": [768, 768], "alpha_bbox": [293, 96, 503, 672], "opaque_pixels": 72873, "outer_edge_pixels": 11494, "inner_edge_pixels": 8767, "bytes": 124001}
+PORTRAIT_OK
+STYLE_COMPARE_OK 造型三版对照.png 1744x610 bytes=234068

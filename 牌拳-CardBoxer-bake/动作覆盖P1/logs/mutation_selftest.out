@@ -1,0 +1,18 @@
+CAUGHT       M01_whitelist_reverted_to_hardcoded_three rc=1 reds=3 restore=True layer_only_two_hunks,apply_is_data_driven,apply_has_no_hardcoded_three
+CAUGHT       M02_reveal_branch_disabled rc=1 reds=1 restore=True arena_reveal_branch_present
+CAUGHT       M03_loser_react_branch_disabled rc=1 reds=1 restore=True arena_loser_react_branch_present
+CAUGHT       M04_reveal_s_decoupled_from_phase rc=1 reds=1 restore=True reveal_s_matches_tick_taikou
+CAUGHT       M05_declared_frame_count_faked rc=1 reds=2 restore=True declared_frames_match_track_len_both,two_files_cards_identical
+CAUGHT       M06_probe_check_flipped rc=1 reds=1 restore=True probe_report_all_checks_true
+CAUGHT       M09_all_checks_out_faked rc=1 reds=1 restore=True all_checks_out_15_15
+CAUGHT       M10_all_checks_json_faked rc=1 reds=1 restore=True all_checks_report_selfconsistent
+CAUGHT       M12_build_cross_file_flipped rc=1 reds=1 restore=True build_report_all_checks_true
+CAUGHT       M13_world3d_fix_regressed rc=1 reds=2 restore=True world3d_fix_preserved,layer_only_two_hunks
+CAUGHT       M14_explicit_bool_reverted_to_parse_error rc=1 reds=1 restore=True arena_explicit_bool_types
+CAUGHT       M07_winner_ab_sha_tampered rc=1 reds=1 restore=True sv_sha_recomputed_matches_report
+CAUGHT       M08_diff_px_tampered rc=1 reds=1 restore=True diff_px_recomputed_matches_report
+CAUGHT       M11_baseline_watched_sha_tampered rc=1 reds=1 restore=True ten_untouched_unchanged
+DID NOT RUN SELFTEST_anchor_missing anchor_count=0
+MUTATION 14/15 CAUGHT / DID_NOT_RUN 1 / MISSED 0 / RESTORE 15/15 / clean=True
+MUTATION_MOTION_P1_FAILED
+SELFTEST_DNR_EFFECTIVE (DID NOT RUN 分支有牙；整体仍按设计判 FAILED)

@@ -1,0 +1,35 @@
+[player] STANCE_MATCH_S2 identical=True
+[player] stance_f000.png root=[0.0, 0.0] world_max=0.0deg local_max=0.0deg capped=0
+[player] jab_f000.png root=[0.0, 0.0] world_max=0.0deg local_max=0.0deg capped=0
+[player] jab_f007.png root=[26.045, 0.0] world_max=63.867deg local_max=18.0deg capped=5
+[player] jab_f013.png root=[0.0, 0.0] world_max=1.424deg local_max=1.512deg capped=0
+[player] cross_f000.png root=[0.0, 0.0] world_max=0.0deg local_max=0.0deg capped=0
+[player] cross_f007.png root=[27.448, -1.402] world_max=146.002deg local_max=18.0deg capped=6
+[player] cross_f013.png root=[25.645, 2.003] world_max=146.628deg local_max=18.0deg capped=7
+[player] cross_f018.png root=[5.009, 0.601] world_max=91.828deg local_max=18.0deg capped=2
+[player] cross_f021.png root=[0.0, 0.0] world_max=0.758deg local_max=0.387deg capped=0
+[player] wave_f000.png root=[0.0, 0.0] world_max=0.0deg local_max=0.0deg capped=0
+[player] wave_f007.png root=[-16.028, 8.014] world_max=67.996deg local_max=18.0deg capped=4
+[player] wave_f013.png root=[10.017, -0.401] world_max=164.198deg local_max=18.0deg capped=2
+[player] wave_f018.png root=[18.031, -2.003] world_max=162.075deg local_max=18.0deg capped=3
+[player] wave_f021.png root=[14.024, 0.0] world_max=171.711deg local_max=18.0deg capped=2
+[player] wave_f035.png root=[0.0, 0.0] world_max=0.971deg local_max=0.72deg capped=0
+[player] SIDE_FRAMES_OK frames=73
+[foe] STANCE_MATCH_S2 identical=True
+[foe] stance_f000.png root=[0.0, 0.0] world_max=0.0deg local_max=0.0deg capped=0
+[foe] jab_f000.png root=[0.0, 0.0] world_max=0.0deg local_max=0.0deg capped=0
+[foe] jab_f007.png root=[26.045, 0.0] world_max=63.867deg local_max=18.0deg capped=5
+[foe] jab_f013.png root=[0.0, 0.0] world_max=1.424deg local_max=1.512deg capped=0
+[foe] cross_f000.png root=[0.0, 0.0] world_max=0.0deg local_max=0.0deg capped=0
+[foe] cross_f007.png root=[27.448, -1.402] world_max=146.002deg local_max=18.0deg capped=6
+[foe] cross_f013.png root=[25.645, 2.003] world_max=146.628deg local_max=18.0deg capped=7
+[foe] cross_f018.png root=[5.009, 0.601] world_max=91.828deg local_max=18.0deg capped=2
+[foe] cross_f021.png root=[0.0, 0.0] world_max=0.758deg local_max=0.387deg capped=0
+[foe] wave_f000.png root=[0.0, 0.0] world_max=0.0deg local_max=0.0deg capped=0
+[foe] wave_f007.png root=[-16.028, 8.014] world_max=67.996deg local_max=18.0deg capped=4
+[foe] wave_f013.png root=[10.017, -0.401] world_max=164.198deg local_max=18.0deg capped=2
+[foe] wave_f018.png root=[18.031, -2.003] world_max=162.075deg local_max=18.0deg capped=3
+[foe] wave_f021.png root=[14.024, 0.0] world_max=171.711deg local_max=18.0deg capped=2
+[foe] wave_f035.png root=[0.0, 0.0] world_max=0.971deg local_max=0.72deg capped=0
+[foe] SIDE_FRAMES_OK frames=73
+SIDE_FRAMES_ALL_OK elapsed=6.84s

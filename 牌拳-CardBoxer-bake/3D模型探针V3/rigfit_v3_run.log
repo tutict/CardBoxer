@@ -1,0 +1,32 @@
+15:54:55 | INFO: Data are loaded, start creating Blender stuff
+15:54:55 | INFO: Blender create Mesh node node_0
+15:54:56 | INFO: glTF import finished in 0.11s
+IMPORT meshes= 1 names= ['node_0'] objects= 1
+RAW_BBOX min= [-0.2214, -0.1136, -0.0] max= [0.2345, 0.1945, 1.1115] verts= 55622
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V3\probe_rigfit_v3.py:89: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if not mat.use_nodes:
+TEXTURES 3 loaded= 3 uv_layers= 1
+   {'material': 'Material.001', 'image': 'texture_pbr_20250901', 'size': [4096, 4096], 'filepath': '', 'linked_to': ['Base Color']}
+   {'material': 'Material.001', 'image': 'texture_pbr_20250901_metallic-texture_pbr_20250901_roughness', 'size': [4096, 4096], 'filepath': '', 'linked_to': ['Color']}
+   {'material': 'Material.001', 'image': 'texture_pbr_20250901_normal', 'size': [4096, 4096], 'filepath': '', 'linked_to': ['Color']}
+NORMALIZED scale= 1.547429 min= [-0.3527, -0.2384, 0.0] max= [0.3527, 0.2384, 1.72] verts= 55622
+REST_JOINT_NEAREST_VERTEX_M {'hip': 0.034, 'shoulder': 0.0068, 'head': 0.0275, 'f_elbow': 0.0976, 'f_hand': 0.3161, 'b_elbow': 0.0128, 'b_hand': 0.0105, 'f_knee': 0.0564, 'f_foot': 0.0905, 'b_knee': 0.0247, 'b_foot': 0.1585}
+JOINTS_OUTSIDE_GEOMETRY(>0.12m) 2 ['f_hand', 'b_foot']
+WIDTHS {'at_rest_f_hand_z': {'z': 1.56, 'xmin': -0.1936, 'xmax': 0.103, 'vertices': 3193}, 'at_rest_head_z': {'z': 1.72, 'xmin': -0.1132, 'xmax': 0.0823, 'vertices': 800}, 'at_rest_hip_z': {'z': 0.8, 'xmin': -0.3513, 'xmax': 0.33, 'vertices': 3092}, 'at_rest_foot_z': {'z': 0.0, 'xmin': -0.3198, 'xmax': 0.3094, 'vertices': 2932}}
+MODEL_MAX_ABS_X -0.3527 at_z= 0.8511
+ARMATURE bones= 13 names= ['hips', 'spine', 'chest', 'neck', 'head', 'upperarm_f', 'forearm_f', 'upperarm_b', 'forearm_b', 'thigh_f', 'shin_f', 'thigh_b', 'shin_b']
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V3\probe_rigfit_v3.py:46: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+OVERLAY markers= 24 front_y= -0.2984
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V3\probe_rigfit_v3.py:223: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+00:02.516  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V3\rigfit_overlay.png'
+OVERLAY_PNG rigfit_overlay.png 307163 B
+Warning: Bone Heat Weighting: failed to find solution for one or more bones
+AUTO_WEIGHT seconds= 0.35 error= None
+VERTEX_GROUPS 0 covered= 0 / 55622 coverage= 0.0
+GROUP_COUNTS {}
+RIGFIT_OK elapsed= 2.34 s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit

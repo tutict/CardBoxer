@@ -1,0 +1,1520 @@
+--- /dev/null
++++ b/make_baseline_d.py
+@@ -0,0 +1,67 @@
++"""D 路线开工前冻结三处输入指纹，供 verify_d.py 判「全程零污染」。
++
++1. 可运行游戏工程（排除 .godot/ 引擎缓存）逐文件 sha256；
++2. C 路线刚交付的文件清单整体 sha256 与条目数（清单会随文件改动而失配）；
++3. 源 GLB 的 sha256。
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++GAME = BAKE.parent / "牌拳-CardBoxer"
++C_ROUTE = BAKE / "C路线-glTF-Godot探针"
++OUT = HERE / "baseline_d.json"
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def main() -> int:
++    game: dict[str, dict] = {}
++    for p in sorted(GAME.rglob("*")):
++        if not p.is_file():
++            continue
++        rel = p.relative_to(GAME).as_posix()
++        if rel.startswith(".godot/"):
++            continue
++        game[rel] = {"bytes": p.stat().st_size, "sha256": sha256(p)}
++
++    clist = C_ROUTE / "文件清单.txt"
++    cblob = clist.read_bytes()
++    ctext = cblob.decode("utf-8")
++    centries = sum(1 for line in ctext.splitlines()
++                   if line.startswith("WORK/"))
++    glb = C_ROUTE / "foe-full.glb"
++
++    out = {
++        "game": game,
++        "game_root": str(GAME),
++        "c_route_filelist": {
++            "sha256": hashlib.sha256(cblob).hexdigest(),
++            "entries": centries,
++            "path": str(clist),
++        },
++        "source_glb": {
++            "bytes": glb.stat().st_size,
++            "sha256": sha256(glb),
++            "path": str(glb),
++        },
++    }
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    print(f"GAME_FILES={len(game)} C_LIST_ENTRIES={centries} "
++          f"GLB_BYTES={out['source_glb']['bytes']} BASELINE_D_OK")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/run_godot_render.py
+@@ -0,0 +1,143 @@
++"""D 路线驱动：隔离工程导入 GLB → **带窗口** Godot 逐视角渲染 → 落 PNG 与报告。
++
++关键：渲染这一步绝不能加 --headless。本机实测 dummy driver 不发
++RenderingServer.frame_post_draw（外观层 capture_skin.py 踩过），脚本会挂住。
++--quit-after 只是挂起保护，脚本自己 quit(0)。
++
++用法：
++  python run_godot_render.py front,back     # 小探针
++  python run_godot_render.py                # 全六视角
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import os
++import shutil
++import subprocess
++import sys
++import time
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++C_ROUTE = BAKE / "C路线-glTF-Godot探针"
++PROJECT = HERE / "probe_project_d"
++ASSETS = PROJECT / "assets"
++SHOTS = HERE / "shots"
++LOGS = HERE / "logs"
++GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
++GLB = "foe-full.glb"
++OUT = HERE / "godot_render_result.json"
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def run(cmd: list[str], env: dict, timeout: int, log: Path):
++    t0 = time.perf_counter()
++    try:
++        r = subprocess.run(cmd, env=env, capture_output=True, timeout=timeout)
++        code, out, err = r.returncode, r.stdout, r.stderr
++    except subprocess.TimeoutExpired as exc:
++        code = -1
++        out = exc.stdout or b""
++        err = (exc.stderr or b"") + b"\n=== TIMEOUT ===\n"
++    text = (out + b"\n=== STDERR ===\n" + err).decode("utf-8", "replace")
++    log.write_text(text, encoding="utf-8")
++    return round(time.perf_counter() - t0, 3), code, text
++
++
++def main() -> int:
++    assert GODOT.is_file(), GODOT
++    LOGS.mkdir(parents=True, exist_ok=True)
++    SHOTS.mkdir(parents=True, exist_ok=True)
++    views = sys.argv[1] if len(sys.argv) > 1 else ""
++
++    # 1) 资源复制 + 编辑器导入（这一步可以 headless）
++    src = C_ROUTE / GLB
++    dst = ASSETS / GLB
++    shutil.copyfile(src, dst)
++    copied_ok = sha256(src) == sha256(dst)
++    print(f"COPIED {GLB} bytes={dst.stat().st_size} identical={copied_ok}")
++    if not copied_ok:
++        return 1
++
++    base_env = os.environ.copy()
++    dt_import, rc_import, log_import = run(
++        [str(GODOT), "--headless", "--editor", "--quit",
++         "--path", str(PROJECT)],
++        base_env, 300, LOGS / "godot_editor_import_d.log")
++    import_ok = (ASSETS / (GLB + ".import")).is_file()
++    print(f"EDITOR_IMPORT seconds={dt_import} rc={rc_import} "
++          f"import_file={import_ok}")
++    if rc_import != 0 or not import_ok:
++        return 1
++
++    # 2) 带窗口渲染
++    env = base_env.copy()
++    env["D_SHOT_DIR"] = str(SHOTS)
++    env["D_VIEWS"] = views
++    dt_render, rc_render, log_render = run(
++        [str(GODOT), "--path", str(PROJECT),
++         "--resolution", "900x1100",
++         "--script", "res://probes/render_3d.gd",
++         "--quit-after", "6000"],
++        env, 300, LOGS / "godot_render_3d.log")
++
++    marker = "RENDER_JSON "
++    line = next((l for l in log_render.splitlines()
++                 if l.startswith(marker)), None)
++    payload = json.loads(line[len(marker):]) if line else {"error": "no RENDER_JSON"}
++    rows = payload.get("views", [])
++    pngs = []
++    for row in rows:
++        p = Path(row["path"])
++        pngs.append({
++            "name": row["name"], "path": str(p),
++            "exists": p.is_file(),
++            "bytes": p.stat().st_size if p.is_file() else 0,
++            "w": row.get("w"), "h": row.get("h"),
++            "save_error": row.get("save_error"),
++            "yaw": row.get("yaw"), "radius": row.get("radius"),
++            "fov": row.get("fov"),
++        })
++
++    has_gl = "OpenGL API" in log_render
++    script_errors = log_render.count("SCRIPT ERROR")
++    ok = (rc_render == 0 and has_gl and script_errors == 0
++          and "error" not in payload and bool(pngs)
++          and all(x["exists"] and x["bytes"] > 20000 for x in pngs)
++          and all(x["save_error"] == 0 for x in pngs))
++    out = {
++        "godot_executable": str(GODOT),
++        "probe_project": str(PROJECT),
++        "views_requested": views or "ALL",
++        "copy_identical": copied_ok,
++        "editor_import": {"seconds": dt_import, "returncode": rc_import,
++                          "import_file": import_ok},
++        "render": {"seconds": dt_render, "returncode": rc_render,
++                   "has_opengl": has_gl, "script_errors": script_errors,
++                   "headless": False},
++        "engine_version_marker": "4.5-stable",
++        "pngs": pngs,
++        "ok": ok,
++    }
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    for x in pngs:
++        print(f"SHOT {x['name']:<9} {x['w']}x{x['h']} {x['bytes']:>9} B "
++              f"err={x['save_error']}")
++    print(f"RENDER seconds={dt_render} rc={rc_render} gl={has_gl} "
++          f"errs={script_errors} shots={len(pngs)}")
++    print("GODOT_RENDER_OK" if ok else "GODOT_RENDER_FAILED")
++    return 0 if ok else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/make_review_boards.py
+@@ -0,0 +1,325 @@
++"""D 路线 Creative Review 三张板。
++
++所有数字现读 godot_render_result.json / baked2.json / C 路线结构 JSON，
++不写死实测值。三张板：
++  1) D-引擎内六视角.png    —— Godot 4.5 带窗口真实渲染，非 Blender 截图
++  2) D-三方对照.png        —— 引擎内 / Blender 端 / 生成服务预览
++  3) D-尺度可读性.png      —— 按 baked2.json 的 172 game px 做阶梯
++"""
++from __future__ import annotations
++
++import json
++from pathlib import Path
++
++from PIL import Image, ImageDraw, ImageFont
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++C_ROUTE = BAKE / "C路线-glTF-Godot探针"
++FOE = BAKE / "对手怪Blender建模V1"
++SHOTS = HERE / "shots"
++BOARDS = HERE / "boards"
++
++BG = (20, 25, 36)
++CARD = (32, 39, 52)
++CARD2 = (39, 47, 62)
++FG = (236, 240, 250)
++MUTED = (152, 164, 184)
++ACCENT = (240, 214, 160)
++GOOD = (126, 214, 168)
++BAD = (238, 132, 118)
++BLUE = (122, 180, 232)
++
++
++def font(size: int, bold: bool = False):
++    names = (r"C:\Windows\Fonts\msyhbd.ttc",) if bold else (
++        r"C:\Windows\Fonts\msyh.ttc",)
++    for p in names + (r"C:\Windows\Fonts\msyh.ttc",):
++        try:
++            return ImageFont.truetype(p, size)
++        except OSError:
++            continue
++    return ImageFont.load_default()
++
++
++F_TITLE = font(31, True)
++F_SUB = font(17)
++F_H = font(21, True)
++F_B = font(16)
++F_S = font(14)
++F_TAG = font(15, True)
++
++
++def lines(d: ImageDraw.ImageDraw, x: int, y: int,
++          items: list[tuple[str, object]], f, fill, leading: int) -> int:
++    """逐行显式推进 y，绝不按固定行数猜高度。"""
++    for text, col in items:
++        d.text((x, y), text, font=f, fill=col or fill)
++        y += leading
++    return y
++
++
++def contain(img: Image.Image, box: tuple[int, int]) -> Image.Image:
++    w, h = img.size
++    bw, bh = box
++    scale = min(bw / w, bh / h)
++    return img.resize((max(1, int(w * scale)), max(1, int(h * scale))),
++                      Image.Resampling.LANCZOS)
++
++
++def paste_center(canvas: Image.Image, img: Image.Image,
++                 box: tuple[int, int, int, int]) -> None:
++    x, y, w, h = box
++    fit = contain(img.convert("RGB"), (w, h))
++    canvas.paste(fit, (x + (w - fit.width) // 2, y + (h - fit.height) // 2))
++
++
++def card(d: ImageDraw.ImageDraw, box: tuple[int, int, int, int],
++         color=CARD) -> None:
++    d.rounded_rectangle(box, radius=10, fill=color)
++
++
++def header(d: ImageDraw.ImageDraw, title: str, sub: str, w: int) -> None:
++    d.text((36, 26), title, font=F_TITLE, fill=FG)
++    d.text((36, 74), sub, font=F_SUB, fill=MUTED)
++    d.line((36, 108, w - 36, 108), fill=CARD2, width=2)
++
++
++def load_json(p: Path):
++    return json.loads(p.read_text(encoding="utf-8"))
++
++
++def main() -> int:
++    BOARDS.mkdir(parents=True, exist_ok=True)
++    render = load_json(HERE / "godot_render_result.json")
++    baked = load_json(BAKE / "baked2.json")
++    gltf = load_json(C_ROUTE / "gltf_inspection.json")
++    imp = load_json(C_ROUTE / "godot_import_result.json")
++
++    views = render["pngs"]
++    full = next((e for e in gltf["exports"] if e.get("name") == "foe-full"),
++                {})
++    stance = baked["stance"]
++    char_px = abs(float(stance["head"][1]) - float(stance["f_foot"][1]))
++    full_target = next((t for t in imp["targets"]
++                        if t["path"].endswith("foe-full.glb")), {})
++    hi_meshes = full_target.get("mesh_instances", [])
++    unbound = [m for m in hi_meshes if m.get("skeleton_path") == ""]
++
++    # ---------- 板 1：引擎内六视角 ----------
++    W, H = 1800, 1580
++    im1 = Image.new("RGB", (W, H), BG)
++    d1 = ImageDraw.Draw(im1)
++    header(d1, "D 路线 · Godot 4.5 引擎内 3D 截帧（六视角）",
++           "真实引擎渲染 / GL Compatibility / 带窗口 / 每视角同一套固定棚拍灯光；"
++           "不是 Blender 截图、不是服务预览", W)
++    for i, v in enumerate(views):
++        col, row = i % 3, i // 3
++        cx, cy = 36 + col * 588, 126 + row * 660
++        card(d1, (cx, cy, cx + 556, cy + 630))
++        p = Path(v["path"])
++        if p.is_file():
++            paste_center(im1, Image.open(p), (cx + 18, cy + 16, 520, 540))
++        d1.text((cx + 20, cy + 568), f"{v['name']}   yaw={v['yaw']}°",
++                font=F_TAG, fill=ACCENT)
++        d1.text((cx + 20, cy + 596),
++                f"r={v['radius']} m  fov={v['fov']}°  {v['w']}×{v['h']}",
++                font=F_S, fill=MUTED)
++    lines(d1, 40, 1450, [
++        (f"共 {len(views)} 视角，全部由 Godot 渲染；"
++         f"导入 GLB animations={full.get("counts", {}).get("animations")}，"
++         f"高模未绑骨架 {len(unbound)}/{len(hi_meshes)}。", FG),
++        ("结论：静态网格 + 四张 4096² PBR 在引擎里完整生效；"
++         "六张只是转相机，不是六个动作姿势。", ACCENT),
++    ], F_B, FG, 32)
++    out1 = BOARDS / "D-引擎内六视角.png"
++    im1.save(out1)
++
++    # ---------- 板 2：三方对照 ----------
++    W2, H2 = 1660, 1120
++    im2 = Image.new("RGB", (W2, H2), BG)
++    d2 = ImageDraw.Draw(im2)
++    header(d2, "D 路线 · Creative Review 三方对照",
++           "同一份对手怪资产：Godot 引擎内棚拍 / Blender 端渲染 / 3D 生成服务预览",
++           W2)
++    cols = [
++        ("Godot 4.5 引擎内", SHOTS / "godot-front.png",
++         ["有地面、投影、三点光 + 固定背光", "金属 / 锈迹 / 青结晶层次最清楚",
++          "这是本轮新增的真实引擎证据"]),
++        ("Blender 端渲染", FOE / "foe-front.png",
++         ["黑底棚拍，造型基准", "用于对照「导入有没有变样」",
++          "不是引擎内验收"]),
++        ("生成服务预览", FOE / "artifact_02.png",
++         ["PBR 柔光预览，整体偏平偏亮", "最初选型的依据",
++          "不是引擎内验收"]),
++    ]
++    for i, (label, path, desc) in enumerate(cols):
++        cx = 36 + i * 540
++        card(d2, (cx, 130, cx + 510, 130 + 700))
++        if path.is_file():
++            paste_center(im2, Image.open(path), (cx + 20, 150, 470, 520))
++        d2.text((cx + 20, 690), label, font=F_H, fill=ACCENT)
++        lines(d2, cx + 20, 728, [(t, MUTED) for t in desc], F_S, MUTED, 26)
++
++    card(d2, (36, 860, W2 - 36, 1085), CARD2)
++    lines(d2, 60, 880, [
++        ("造型层：三者一致 —— 覆面/防毒面具、宽肩硬壳、青色结晶、橙黄警示条纹全在，导入没有变样。", GOOD),
++        ("材质层：Godot 读回 albedo / normal / metallic / roughness 四张 4096² 全 present，"
++         "引擎内比服务预览更有体积。", GOOD),
++        ("动作层：仍是 A-pose 静态。" + f"GLB animations={full.get("counts", {}).get("animations")}，"
++         f"高模 skeleton_path='' 的 {len(unbound)} 个 mesh 转骨架也不会动。", BAD),
++        ("判断：静态展示/卡牌插画/头像可用；要进战斗区必须另做动作层，"
++         "见 D-尺度可读性.png 与验证记录第九节。", ACCENT),
++    ], F_B, FG, 42)
++    out2 = BOARDS / "D-三方对照.png"
++    im2.save(out2)
++
++    # ---------- 板 3：战斗区尺度可读性 ----------
++    W3, H3 = 1660, 860
++    im3 = Image.new("RGB", (W3, H3), BG)
++    d3 = ImageDraw.Draw(im3)
++    foot_y = abs(float(stance["f_foot"][1]))
++    header(d3, "D 路线 · 战斗区尺度可读性",
++           f"尺度依据：baked2.json stance head={stance['head'][1]:g} / "
++           f"foot={foot_y:g} → 角色真实高度 {char_px:.0f} game px", W3)
++    src = Image.open(SHOTS / "godot-front.png").convert("RGB")
++    metrics = load_json(HERE / "scale_metrics.json")
++    mae_by_h = {r["target_h"]: r["mae_vs_direct_400"] for r in metrics["rows"]}
++    steps = [
++        (int(src.height), "原图（棚拍）", "细节全可读", GOOD),
++        (int(char_px) * 2, "2× 战斗尺度", "扣件开始糊", ACCENT),
++        (int(char_px), f"游戏内 {char_px:.0f} px", "只剩轮廓 + 配色", ACCENT),
++        (96, "头像/小图标 96 px", "覆面与结晶基本不可辨", BAD),
++    ]
++    for i, (h_target, label, verdict, col) in enumerate(steps):
++        cx = 36 + i * 405
++        card(d3, (cx, 140, cx + 380, 140 + 560))
++        small = src.resize((max(1, round(src.width * h_target / src.height)),
++                            max(1, h_target)), Image.Resampling.LANCZOS)
++        disp_h = 400
++        disp = small.resize((max(1, round(small.width * disp_h / small.height)),
++                             disp_h), Image.Resampling.NEAREST)
++        im3.paste(disp, (cx + (380 - disp.width) // 2, 160))
++        d3.text((cx + 20, 580), label, font=F_TAG, fill=col)
++        d3.text((cx + 20, 608), f"整图高 {h_target} px → 放大到 {disp_h} px",
++                font=F_S, fill=MUTED)
++        d3.text((cx + 20, 632), f"细节损失 MAE={mae_by_h[h_target]:.2f}",
++                font=F_S, fill=BLUE)
++        d3.text((cx + 20, 660), verdict, font=F_B, fill=FG)
++
++    card(d3, (36, 720, W3 - 36, 840), CARD2)
++    lines(d3, 60, 738, [
++        (f"结论：{char_px:.0f} game px 时轮廓、宽肩、橙黄条纹、青色结晶仍可辨，"
++         "但覆面栅格 / 铆钉 / 腰牌这些细节已丢失（MAE 随尺度严格递增）。", FG),
++        ("所以静态大图好看不等于战斗区可读；这也是「先渲 2~8 帧小样本再看」"
++         "（B）比「直接重建 Godot 驱动层」（C）更划算的理由。", ACCENT),
++    ], F_B, FG, 38)
++    out3 = BOARDS / "D-尺度可读性.png"
++    im3.save(out3)
++
++    # ---------- 板 4：侧视退化诊断（看图后订正的判断） ----------
++    W4, H4 = 1660, 1060
++    im4 = Image.new("RGB", (W4, H4), BG)
++    d4 = ImageDraw.Draw(im4)
++    header(d4, "D 路线 · 侧视退化诊断（看图后订正）",
++           "同一块零厚度披风：35° 可见宽面 / 90° 退化成一条线 / 180° 可见整片",
++           W4)
++    diag = [
++        ("angle35 · 宽面", "godot-angle35.png",
++         ["右腿后方是深色锯齿边布片", "与躯干相连，有可见面积",
++          "斜视角下尚可接受"]),
++        ("side90 · 退化", "godot-side90.png",
++         ["整块布退化成一根细长斜线", "从肩背垂到近地面，像悬浮破面",
++          "正侧面几乎无厚度"]),
++        ("back · 整片", "godot-back.png",
++         ["灰蓝披风完整可见", "补丁与破洞纹理可读",
++          "固定背光后细节已能看清"]),
++    ]
++    for i, (label, fname, desc) in enumerate(diag):
++        cx = 36 + i * 540
++        card(d4, (cx, 130, cx + 510, 130 + 700))
++        p = SHOTS / fname
++        if p.is_file():
++            paste_center(im4, Image.open(p), (cx + 20, 150, 470, 520))
++        d4.text((cx + 20, 690), label, font=F_H,
++                fill=BAD if i == 1 else ACCENT)
++        lines(d4, cx + 20, 728, [(t, MUTED) for t in desc], F_S, MUTED, 26)
++
++    card(d4, (36, 860, W4 - 36, 1030), CARD2)
++    lines(d4, 60, 878, [
++        ("订正：第一眼在 side90 里判成「悬浮破面」；三视角对照后确认"
++         "是同一块零厚度单面披风壳，正侧面看过去退化成线。", FG),
++        ("成因：生成模型的薄壳拓扑（源资产 2,809 连通壳）；"
++         "glTF / Godot 没有把它变厚，正面被躯干遮住才一直没暴露。", MUTED),
++        ("影响：C（真 3D 进引擎）必须先给披风加厚度/双面/实体化；"
++         "B（渲 2D 图集）只渲正面与小角度，基本不受影响。", ACCENT),
++    ], F_B, FG, 42)
++    out4 = BOARDS / "D-侧视退化诊断.png"
++    im4.save(out4)
++
++    conclusion = {
++        "verdict": "STATIC_ONLY",
++        "human_visual_review": True,
++        "static_visual_in_engine": "PASS",
++        "pbr_materials_in_engine": "PASS",
++        "six_views_are_camera_only": True,
++        "glb_animations": full.get("counts", {}).get("animations"),
++        "highpoly_unbound_meshes": len(unbound),
++        "game_character_px": char_px,
++        "scale_mae_strictly_increasing": metrics["strictly_increasing"],
++        "side_view_cape": {
++            "degenerate_at_90deg": True,
++            "evidence_views": ["angle35", "side90", "back"],
++            "root_cause": "zero-thickness single-sided cape shell",
++            "not_a_floating_shard": True,
++        },
++        "recommendation": "B",
++        "reject_C_reasons": [
++            "GLB 0 animation / source .blend 0 Action",
++            "highpoly mesh has empty skeleton_path, only voxel proxy is skinned",
++            "SURFACE_DEFORM has no glTF equivalent, export bakes a static snapshot",
++            "baked2.json is 2D (x,z) joints, Godot needs 14-bone Y-up poses",
++            "zero-thickness cape degenerates at side view; needs mesh repair",
++        ],
++    }
++    (HERE / "review_conclusion.json").write_text(
++        json.dumps(conclusion, ensure_ascii=False, indent=2) + "\n",
++        encoding="utf-8")
++
++    stats = {
++        "boards": [
++            {"file": out1.name, "w": im1.width, "h": im1.height,
++             "bytes": out1.stat().st_size},
++            {"file": out2.name, "w": im2.width, "h": im2.height,
++             "bytes": out2.stat().st_size},
++            {"file": out3.name, "w": im3.width, "h": im3.height,
++             "bytes": out3.stat().st_size},
++            {"file": out4.name, "w": im4.width, "h": im4.height,
++             "bytes": out4.stat().st_size},
++        ],
++        "game_character_px": char_px,
++        "scale_steps": [s[0] for s in steps],
++        "views": [v["name"] for v in views],
++        "glb_animations": full.get("counts", {}).get("animations"),
++        "unbound_highpoly_meshes": len(unbound),
++        "mesh_count": len(hi_meshes),
++    }
++    (HERE / "board_stats.json").write_text(
++        json.dumps(stats, ensure_ascii=False, indent=2) + "\n",
++        encoding="utf-8")
++    for b in stats["boards"]:
++        print(f"BOARD {b['file']:<24} {b['w']}×{b['h']} {b['bytes']} B")
++    # 目录实物与 stats 必须对账：重复字典键曾让第四张板静默漏记。
++    on_disk = sorted(p.name for p in BOARDS.glob("D-*.png"))
++    listed = sorted(b["file"] for b in stats["boards"])
++    if on_disk != listed:
++        print(f"BOARD_LIST_MISMATCH disk={on_disk} listed={listed}")
++        return 1
++    print(f"GAME_CHARACTER_PX={char_px} SCALE_STEPS={stats['scale_steps']} "
++          f"BOARDS_ON_DISK={len(on_disk)}")
++    print("REVIEW_BOARDS_OK")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/measure_scale.py
+@@ -0,0 +1,71 @@
++"""尺度可读性判据：下采样是不可逆的信息损失，用 MAE 量化。
++
++对每一档 h_target：
++  参考 ref = 原图直接 LANCZOS 到显示尺寸 400px 高
++  实验 up  = 原图先降到 h_target，再 LANCZOS 放大回 400px 高
++  MAE(up, ref) 越大，说明这一档丢掉的细节越多。
++
++1100 档本身就是 ref，MAE 应为 0；其余档必须严格递增，
++否则「尺度越小越糊」只是肉眼印象而非可复算事实。
++"""
++from __future__ import annotations
++
++import json
++from pathlib import Path
++
++from PIL import Image, ImageChops, ImageStat
++
++HERE = Path(__file__).resolve().parent
++SHOTS = HERE / "shots"
++SRC = SHOTS / "godot-front.png"
++OUT = HERE / "scale_metrics.json"
++DISPLAY_H = 400
++
++
++def fit_h(img: Image.Image, h: int) -> Image.Image:
++    return img.resize((max(1, round(img.width * h / img.height)), max(1, h)),
++                      Image.Resampling.LANCZOS)
++
++
++def mae(a: Image.Image, b: Image.Image) -> float:
++    stat = ImageStat.Stat(ImageChops.difference(a, b))
++    return round(sum(stat.mean) / 3.0, 4)
++
++
++def main() -> int:
++    stats = json.loads((HERE / "board_stats.json").read_text(encoding="utf-8"))
++    targets: list[int] = stats["scale_steps"]
++    src = Image.open(SRC).convert("RGB")
++    ref = fit_h(src, DISPLAY_H)
++    rows = []
++    for h in targets:
++        up = fit_h(fit_h(src, h), DISPLAY_H)
++        rows.append({
++            "target_h": h,
++            "downscaled_w": max(1, round(src.width * h / src.height)),
++            "mae_vs_direct_400": mae(up, ref),
++            "display": {"w": ref.width, "h": ref.height},
++        })
++    increasing = all(rows[i]["mae_vs_direct_400"] < rows[i + 1]["mae_vs_direct_400"]
++                     for i in range(len(rows) - 1))
++    out = {
++        "source": str(SRC),
++        "source_size": [src.width, src.height],
++        "display_height": DISPLAY_H,
++        "rows": rows,
++        "strictly_increasing": increasing,
++        "baseline_zero": rows[0]["mae_vs_direct_400"] == 0.0,
++    }
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    for r in rows:
++        print(f"H={r['target_h']:>5}  down={r['downscaled_w']:>4}px wide  "
++              f"MAE={r['mae_vs_direct_400']:.4f}")
++    print(f"STRICTLY_INCREASING={increasing} BASELINE_ZERO={out['baseline_zero']}")
++    print("SCALE_METRICS_OK" if increasing and out["baseline_zero"]
++          else "SCALE_METRICS_FAILED")
++    return 0 if increasing and out["baseline_zero"] else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/verify_d.py
+@@ -0,0 +1,339 @@
++"""D 路线承重判据：Creative Review + 引擎内 3D 截帧。
++
++量的是「证据链是否成立」，不评审美：
++  · 渲染必须带窗口（headless 无 frame_post_draw）
++  · 六视角必须真有内容且两两不同（不是同一张复制）
++  · 六视角只是转相机，不是摆姿势（0 animation 三处对账）
++  · 尺度损失用独立重算的 MAE 严格递增来证明
++  · D 全程对游戏工程 / C 路线归档零污染
++"""
++from __future__ import annotations
++
++import ast
++import hashlib
++import json
++from pathlib import Path
++
++from PIL import Image, ImageChops, ImageStat
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++GAME = BAKE.parent / "牌拳-CardBoxer"
++C_ROUTE = BAKE / "C路线-glTF-Godot探针"
++PROBE = HERE / "probe_project_d"
++SHOTS = HERE / "shots"
++BOARDS = HERE / "boards"
++OUT = HERE / "verify_d_result.json"
++
++CHECKS: list[dict] = []
++
++
++def expect(name: str, cond: bool, detail: str) -> None:
++    CHECKS.append({"name": name, "ok": bool(cond), "detail": detail})
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def load(p: Path):
++    return json.loads(p.read_text(encoding="utf-8"))
++
++
++def img_metrics(p: Path) -> dict:
++    im = Image.open(p).convert("RGB")
++    st = ImageStat.Stat(im)
++    small = im.resize((128, 128), Image.Resampling.LANCZOS)
++    raw = small.tobytes()
++    colorful = sum(
++        1 for i in range(0, len(raw), 3)
++        if (max(raw[i], raw[i + 1], raw[i + 2])
++            - min(raw[i], raw[i + 1], raw[i + 2])) > 25
++    ) / (len(raw) // 3)
++    return {
++        "w": im.width, "h": im.height,
++        "stddev": round(sum(st.stddev) / 3, 3),
++        "mean": round(sum(st.mean) / 3, 3),
++        "colorful_pct": round(colorful * 100, 3),
++    }
++
++
++def lowfreq(p: Path) -> Image.Image:
++    return Image.open(p).convert("RGB").resize(
++        (24, 24), Image.Resampling.LANCZOS)
++
++
++def mae(a: Image.Image, b: Image.Image) -> float:
++    return round(sum(ImageStat.Stat(ImageChops.difference(a, b)).mean) / 3, 4)
++
++
++def fit_h(img: Image.Image, h: int) -> Image.Image:
++    return img.resize((max(1, round(img.width * h / img.height)), max(1, h)),
++                      Image.Resampling.LANCZOS)
++
++
++def main() -> int:
++    baseline = load(HERE / "baseline_d.json")
++    render = load(HERE / "godot_render_result.json")
++    stats = load(HERE / "board_stats.json")
++    scale = load(HERE / "scale_metrics.json")
++    conclusion = load(HERE / "review_conclusion.json")
++    baked = load(BAKE / "baked2.json")
++    gltf = load(C_ROUTE / "gltf_inspection.json")
++    imp = load(C_ROUTE / "godot_import_result.json")
++    c_verify = load(C_ROUTE / "verify_c_result.json")
++    c_list_bytes = (C_ROUTE / "文件清单.txt").read_bytes()
++    c_entries = sum(1 for line in c_list_bytes.decode("utf-8").splitlines()
++                    if line.startswith("WORK/"))
++
++    # D-01 三处输入指纹
++    game_drift = []
++    for rel, meta in baseline["game"].items():
++        p = GAME / rel
++        if not p.is_file():
++            game_drift.append("missing:" + rel)
++        elif p.stat().st_size != meta["bytes"] or sha256(p) != meta["sha256"]:
++            game_drift.append("changed:" + rel)
++    clist_ok = (hashlib.sha256(c_list_bytes).hexdigest()
++                == baseline["c_route_filelist"]["sha256"]
++                and c_entries == baseline["c_route_filelist"]["entries"])
++    src_glb = Path(baseline["source_glb"]["path"])
++    glb_ok = (src_glb.stat().st_size == baseline["source_glb"]["bytes"]
++              and sha256(src_glb) == baseline["source_glb"]["sha256"])
++    expect("D-01_baseline_inputs_intact",
++           not game_drift and clist_ok and glb_ok,
++           f"game_drift={len(game_drift)} clist={clist_ok} glb={glb_ok}")
++
++    # D-02 零污染 + C 路线仍绿
++    expect("D-02_game_and_c_route_zero_drift",
++           not game_drift and c_verify["total"] == 25
++           and c_verify["passed"] == 25 and not c_verify["failed"],
++           f"game_drift={len(game_drift)} verify_c="
++           f"{c_verify['passed']}/{c_verify['total']}")
++
++    # D-03 渲染通道：必须带窗口 + OpenGL + 零脚本错误
++    r = render["render"]
++    expect("D-03_render_channel_windowed_opengl",
++           r["headless"] is False and r["has_opengl"] is True
++           and r["script_errors"] == 0 and r["returncode"] == 0,
++           f"headless={r['headless']} gl={r['has_opengl']} "
++           f"errs={r['script_errors']} rc={r['returncode']}")
++
++    # D-04 六视角形状
++    pngs = render["pngs"]
++    expect("D-04_six_views_shape",
++           len(pngs) == len(stats["views"]) and render["ok"] is True
++           and all(x["exists"] and x["w"] == 900 and x["h"] == 1100
++                   and x["save_error"] == 0 and x["bytes"] > 20000
++                   for x in pngs),
++           f"views={len(pngs)} stats={len(stats['views'])} ok={render['ok']}")
++
++    # D-05 截帧非空且有贴图内容（纯色/空白图会被打红）
++    metrics = {}
++    for x in pngs:
++        p = Path(x["path"])
++        metrics[x["name"]] = img_metrics(p) if p.is_file() else {}
++    expect("D-05_frames_nonblank_and_textured",
++           all(m and m["stddev"] > 8 and m["colorful_pct"] > 0.2
++               for m in metrics.values()),
++           "min_stddev=%.2f min_colorful=%.3f%%" % (
++               min(m.get("stddev", 0) for m in metrics.values()),
++               min(m.get("colorful_pct", 0) for m in metrics.values())))
++
++    # D-06 六视角两两不同（复制同一张会被打红）
++    lf = {name: lowfreq(HERE / "shots" / f"godot-{name}.png")
++          for name in stats["views"]
++          if (HERE / "shots" / f"godot-{name}.png").is_file()}
++    pairs = []
++    names = sorted(lf)
++    for i, a in enumerate(names):
++        for b in names[i + 1:]:
++            pairs.append((a, b, mae(lf[a], lf[b])))
++    min_pair = min((p[2] for p in pairs), default=0.0)
++    expect("D-06_views_are_distinct",
++           len(pairs) == 15 and min_pair > 0.5,
++           f"pairs={len(pairs)} min_lowfreq_mae={min_pair}")
++
++    # D-07 渲染命令里绝不能有 --headless（用 AST 精确定位，不靠子串）
++    driver_src = (HERE / "run_godot_render.py").read_text(encoding="utf-8")
++    render_cmd = []
++    for node in ast.walk(ast.parse(driver_src)):
++        if isinstance(node, ast.List):
++            vals = [e.value for e in node.elts
++                    if isinstance(e, ast.Constant)
++                    and isinstance(e.value, str)]
++            if "res://probes/render_3d.gd" in vals:
++                render_cmd.append(vals)
++    expect("D-07_capture_wiring_no_headless",
++           len(render_cmd) == 1 and "--headless" not in render_cmd[0]
++           and "--resolution" in render_cmd[0]
++           and "--quit-after" in render_cmd[0],
++           f"render_cmds={len(render_cmd)} "
++           f"headless_in_cmd={any('--headless' in c for c in render_cmd)}")
++
++    # D-08 六视角只是转相机（0 animation 三处对账）
++    full = next((e for e in gltf["exports"] if e.get("name") == "foe-full"), {})
++    # gltf_inspection.json 里 animations 有两种表示：counts.animations 是计数 0，
++    # 顶层 animations 是空列表。第一版取错口径把判据判红，这里两处都对账。
++    anim_count = full.get("counts", {}).get("animations")
++    anim_list = full.get("animations")
++    gd_src = (PROBE / "probes" / "render_3d.gd").read_text(encoding="utf-8")
++    expect("D-08_camera_only_not_posed",
++           anim_count == 0 and anim_list == []
++           and conclusion["glb_animations"] == anim_count
++           and "set_bone_pose_rotation" not in gd_src
++           and "AnimationPlayer" not in gd_src
++           and conclusion["six_views_are_camera_only"] is True,
++           f"count={anim_count} list={anim_list} "
++           f"conclusion={conclusion['glb_animations']} posed_api_in_script="
++           f"{'set_bone_pose_rotation' in gd_src}")
++
++    # D-09 PBR 在引擎内可见（灰模会被打红）
++    target = next((t for t in imp["targets"]
++                   if t["path"].endswith("foe-full.glb")), {})
++    tex_ok = all(
++        all(mesh["material"][k]["present"]
++            and mesh["material"][k]["w"] == 4096
++            and mesh["material"][k]["h"] == 4096
++            for k in ("albedo", "normal", "metallic", "roughness"))
++        for mesh in target.get("mesh_instances", []))
++    expect("D-09_pbr_materials_visible",
++           tex_ok and metrics.get("front", {}).get("colorful_pct", 0) > 0.5,
++           f"four_4096_textures={tex_ok} "
++           f"front_colorful={metrics.get('front', {}).get('colorful_pct')}%")
++
++    # D-10 游戏内尺度从 baked2 现算，不是拍脑袋
++    char_px = abs(float(baked["stance"]["head"][1])
++                  - float(baked["stance"]["f_foot"][1]))
++    expect("D-10_game_scale_from_baked2",
++           char_px == stats["game_character_px"]
++           == conclusion["game_character_px"]
++           and int(char_px) in stats["scale_steps"]
++           and int(char_px) in [r["target_h"] for r in scale["rows"]],
++           f"char_px={char_px} stats={stats['game_character_px']} "
++           f"steps={stats['scale_steps']}")
++
++    # D-11 尺度损失独立重算，必须严格递增
++    src = Image.open(SHOTS / "godot-front.png").convert("RGB")
++    ref = fit_h(src, 400)
++    recomputed = [round(mae(fit_h(fit_h(src, h), 400), ref), 4)
++                  for h in [row["target_h"] for row in scale["rows"]]]
++    stored = [row["mae_vs_direct_400"] for row in scale["rows"]]
++    inc = all(a < b for a, b in zip(stored, stored[1:]))
++    expect("D-11_scale_loss_monotonic",
++           inc and scale["strictly_increasing"] is True
++           and scale["baseline_zero"] is True
++           and recomputed == stored,
++           f"stored={stored} recomputed={recomputed} inc={inc}")
++
++    # D-12 四张板非空、尺寸对账、与磁盘集合一致
++    boards = stats["boards"]
++    disk = sorted(p.name for p in BOARDS.glob("D-*.png"))
++    listed = sorted(b["file"] for b in boards)
++    board_ok = all(
++        (BOARDS / b["file"]).is_file()
++        and (BOARDS / b["file"]).stat().st_size == b["bytes"] > 30000
++        and Image.open(BOARDS / b["file"]).size == (b["w"], b["h"])
++        for b in boards)
++    expect("D-12_four_boards_nonblank",
++           len(boards) == 4 and board_ok and disk == listed,
++           f"boards={len(boards)} disk={len(disk)} bytes_ok={board_ok}")
++
++    # D-13 Creative Review 结论可复算
++    unbound = [m for m in target.get("mesh_instances", [])
++               if m.get("skeleton_path") == ""]
++    expect("D-13_review_conclusion_recomputable",
++           conclusion["verdict"] == "STATIC_ONLY"
++           and conclusion["recommendation"] == "B"
++           and conclusion["human_visual_review"] is True
++           and len(conclusion["reject_C_reasons"]) >= 5
++           and conclusion["glb_animations"] == anim_count
++           and conclusion["highpoly_unbound_meshes"] == len(unbound)
++           and conclusion["scale_mae_strictly_increasing"] is True,
++           f"verdict={conclusion['verdict']} rec={conclusion['recommendation']} "
++           f"reasons={len(conclusion['reject_C_reasons'])} "
++           f"unbound={len(unbound)}")
++
++    # D-14 侧视退化三视角证据齐全且两两不同
++    ev = conclusion["side_view_cape"]["evidence_views"]
++    ev_files = [SHOTS / f"godot-{n}.png" for n in ev]
++    ev_ok = all(p.is_file() for p in ev_files)
++    ev_mae = [mae(lowfreq(ev_files[0]), lowfreq(ev_files[1])),
++              mae(lowfreq(ev_files[0]), lowfreq(ev_files[2])),
++              mae(lowfreq(ev_files[1]), lowfreq(ev_files[2]))] if ev_ok else []
++    expect("D-14_side_view_evidence_triplet",
++           len(ev) == 3 and ev_ok
++           and conclusion["side_view_cape"]["degenerate_at_90deg"] is True
++           and conclusion["side_view_cape"]["not_a_floating_shard"] is True
++           and len(ev_mae) == 3 and min(ev_mae) > 0.5,
++           f"evidence={ev} mae={ev_mae}")
++
++    # D-15 隔离 + 日志洁净
++    copy_ok = sha256(PROBE / "assets" / "foe-full.glb") == sha256(src_glb)
++    game_glb = [p for p in GAME.rglob("*")
++                if p.is_file() and p.suffix.lower() in (".glb", ".gltf")]
++    logs = ["godot_render_3d.log", "godot_editor_import_d.log"]
++    log_errs = [(n, (HERE / "logs" / n).read_text(
++        encoding="utf-8", errors="replace").count("SCRIPT ERROR"))
++        for n in logs if (HERE / "logs" / n).is_file()]
++    expect("D-15_isolation_and_clean_logs",
++           copy_ok and not game_glb
++           and str(PROBE) != str(GAME)
++           and log_errs and all(c == 0 for _, c in log_errs),
++           f"copy={copy_ok} game_glb={len(game_glb)} errs={log_errs}")
++
++    # D-16 源码针脚（9 条）
++    board_src = (HERE / "make_review_boards.py").read_text(encoding="utf-8")
++    scale_src = (HERE / "measure_scale.py").read_text(encoding="utf-8")
++    needles = [
++        ("RenderingServer.frame_post_draw", gd_src),
++        ("get_viewport().get_texture().get_image()", gd_src),
++        ("D_SHOT_DIR", gd_src),
++        ("--resolution", driver_src),
++        ("--quit-after", driver_src),
++        ("RenderingServer.frame_post_draw", driver_src),
++        ("ImageChops.difference", scale_src),
++        ("BOARD_LIST_MISMATCH", board_src),
++        ("review_conclusion.json", board_src),
++    ]
++    miss = [n for n, text in needles if n not in text]
++    expect("D-16_source_wiring", not miss,
++           f"needles={len(needles)} missing={miss}")
++
++    # D-17 非生产导入声明
++    expect("D-17_not_a_production_import",
++           conclusion["verdict"] != "PRODUCTION"
++           and "隔离" in driver_src
++           and not game_glb and str(PROBE).startswith(str(HERE)),
++           f"verdict={conclusion['verdict']} isolated_project={PROBE.name}")
++
++    # D-18 尺度档位与板脚本口径一致
++    expect("D-18_scale_steps_aligned",
++           [r["target_h"] for r in scale["rows"]] == stats["scale_steps"]
++           and scale["source_size"] == [src.width, src.height]
++           and scale["display_height"] == 400,
++           f"rows={[r['target_h'] for r in scale['rows']]} "
++           f"steps={stats['scale_steps']}")
++
++    passed = sum(1 for c in CHECKS if c["ok"])
++    failed = [c["name"] for c in CHECKS if not c["ok"]]
++    out = {"checks": CHECKS, "total": len(CHECKS), "passed": passed,
++           "failed": failed,
++           "metrics": {k: {"stddev": v.get("stddev"),
++                           "colorful_pct": v.get("colorful_pct")}
++                       for k, v in metrics.items()}}
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    for c in CHECKS:
++        print(f"{'OK  ' if c['ok'] else 'FAIL'} {c['name']} | {c['detail']}")
++    print(f"TOTAL={len(CHECKS)} PASSED={passed} FAILED={failed}")
++    print("D_VERIFIED" if passed == len(CHECKS) else "D_VERIFY_FAILED")
++    return 0 if passed == len(CHECKS) else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/mutation_d.py
+@@ -0,0 +1,198 @@
++"""D 路线变异验证：逐条打红判据，证明 18 条守卫不是摆设。
++
++纪律：
++  · needle 锚点失配 = DID NOT RUN，计入未证明，不静默算成 CAUGHT；
++  · 还原必须逐字节 + sha256 校验；
++  · 全部跑完必须 clean re-run 18/18；
++  · --selftest 故意让一个锚点失配，证明 DID NOT RUN 分支本身有牙。
++  变异目标只在 D 工作区内，不改可运行游戏工程、不改 C 路线归档、
++  不改 verify_d.py 自身。
++"""
++from __future__ import annotations
++
++import hashlib
++import io
++import json
++import subprocess
++import sys
++from pathlib import Path
++
++from PIL import Image
++
++HERE = Path(__file__).resolve().parent
++RESULT = HERE / "verify_d_result.json"
++SELFTEST = "--selftest" in sys.argv
++OUT = HERE / ("mutation_d_selftest_result.json" if SELFTEST
++              else "mutation_d_result.json")
++
++
++def sha(data: bytes) -> str:
++    return hashlib.sha256(data).hexdigest()
++
++
++def solid_png(data: bytes, size: tuple[int, int] | None = None) -> bytes:
++    if size is None:
++        size = Image.open(io.BytesIO(data)).size
++    buf = io.BytesIO()
++    Image.new("RGB", size, (0, 0, 0)).save(buf, format="PNG")
++    return buf.getvalue()
++
++
++CASES = [
++    {"id": "M1", "path": "baseline_d.json", "kind": "text",
++     "needle": b'"entries": 58', "mutant": b'"entries": 59',
++     "expect": ["D-01_baseline_inputs_intact"]},
++    {"id": "M2", "path": "godot_render_result.json", "kind": "text",
++     "needle": b'"headless": false', "mutant": b'"headless": true',
++     "expect": ["D-03_render_channel_windowed_opengl"]},
++    {"id": "M3", "path": "shots/godot-front.png", "kind": "solid_png",
++     "expect": ["D-05_frames_nonblank_and_textured"]},
++    {"id": "M4", "path": "shots/godot-back.png", "kind": "copy_from",
++     "arg": "shots/godot-side90.png",
++     "expect": ["D-06_views_are_distinct"]},
++    {"id": "M5", "path": "scale_metrics.json", "kind": "text",
++     "needle": b'"mae_vs_direct_400": 4.9525',
++     "mutant": b'"mae_vs_direct_400": 0.1000',
++     "expect": ["D-11_scale_loss_monotonic"]},
++    {"id": "M6", "path": "boards/D-侧视退化诊断.png", "kind": "small_png",
++     "expect": ["D-12_four_boards_nonblank"]},
++    {"id": "M7", "path": "review_conclusion.json", "kind": "text",
++     "needle": b'"recommendation": "B"', "mutant": b'"recommendation": "C"',
++     "expect": ["D-13_review_conclusion_recomputable"]},
++    {"id": "M8", "path": "make_review_boards.py", "kind": "text",
++     "needle": b"BOARD_LIST_MISMATCH", "mutant": b"BOARD_LIST_CHANGED",
++     "expect": ["D-16_source_wiring"]},
++    {"id": "M9", "path": "board_stats.json", "kind": "text",
++     "needle": b'"game_character_px": 172.0',
++     "mutant": b'"game_character_px": 180.0',
++     "expect": ["D-10_game_scale_from_baked2"]},
++    {"id": "M10", "path": "probe_project_d/assets/foe-full.glb",
++     "kind": "flip_byte",
++     "expect": ["D-15_isolation_and_clean_logs"]},
++    {"id": "M11", "path": "run_godot_render.py", "kind": "text",
++     "needle": b'"--resolution", "900x1100",',
++     "mutant": b'"--headless", "--resolution", "900x1100",',
++     "expect": ["D-07_capture_wiring_no_headless"]},
++    {"id": "M12", "path": "measure_scale.py", "kind": "text",
++     "needle": b"ImageChops.difference", "mutant": b"ImageChops.darker",
++     "expect": ["D-16_source_wiring"]},
++]
++
++
++def mutate(case: dict, data: bytes) -> bytes | None:
++    """返回 None 表示锚点失配（DID NOT RUN），绝不当成已证明。"""
++    kind = case["kind"]
++    if kind == "text":
++        needle = case["needle"]
++        if data.count(needle) != 1:
++            return None
++        return data.replace(needle, case["mutant"], 1)
++    if kind == "solid_png":
++        return solid_png(data)
++    if kind == "small_png":
++        return solid_png(data, (8, 8))
++    if kind == "copy_from":
++        other = (HERE / case["arg"]).read_bytes()
++        return other if other != data else None
++    if kind == "flip_byte":
++        if len(data) < 2:
++            return None
++        return data[:-1] + bytes([data[-1] ^ 0x01])
++    raise ValueError(kind)
++
++
++def run_verify() -> dict:
++    subprocess.run([sys.executable, "-u", "verify_d.py"], cwd=str(HERE),
++                   capture_output=True, timeout=180)
++    return json.loads(RESULT.read_text(encoding="utf-8"))
++
++
++def main() -> int:
++    cases = [dict(c) for c in CASES]
++    if SELFTEST:
++        # 故意让 M1 的锚点不存在，验证 DID NOT RUN 分支有牙。
++        cases[0]["needle"] = b'"entries": 999999'
++        cases[0]["mutant"] = b'"entries": 999998'
++
++    rows = []
++    restored = {}
++    for case in cases:
++        p = HERE / case["path"]
++        orig = p.read_bytes()
++        orig_sha = sha(orig)
++        changed = mutate(case, orig)
++        if changed is None or changed == orig:
++            rows.append({"id": case["id"], "status": "DID NOT RUN",
++                         "red": [], "expected": case["expect"],
++                         "restored": True})
++            continue
++        try:
++            p.write_bytes(changed)
++            if sha(p.read_bytes()) != sha(changed):
++                rows.append({"id": case["id"], "status": "WRITE_FAILED",
++                             "red": [], "expected": case["expect"],
++                             "restored": False})
++                continue
++            res = run_verify()
++            red = res["failed"]
++            hit = [name for name in case["expect"] if name in red]
++            rows.append({"id": case["id"],
++                         "status": "CAUGHT" if hit else "MISSED",
++                         "red": red, "expected": case["expect"],
++                         "restored": False})
++        finally:
++            p.write_bytes(orig)
++            restored[case["path"]] = sha(p.read_bytes()) == orig_sha
++    for row in rows:
++        row["restored"] = restored.get(
++            next(c["path"] for c in cases if c["id"] == row["id"]), True)
++
++    clean = run_verify()
++    caught = sum(1 for r in rows if r["status"] == "CAUGHT")
++    did_not_run = sum(1 for r in rows if r["status"] == "DID NOT RUN")
++    missed = sum(1 for r in rows if r["status"] == "MISSED")
++    write_failed = sum(1 for r in rows if r["status"] == "WRITE_FAILED")
++    all_restored = all(restored.values())
++    clean_green = clean["passed"] == clean["total"] == 18 and not clean["failed"]
++    expected_total = len(cases)
++    all_proven = (caught == expected_total and did_not_run == 0
++                  and missed == 0 and write_failed == 0)
++    if SELFTEST:
++        # selftest 的「成功」是：恰好少证明 1 条、DID_NOT_RUN=1、
++        # 整体判定为未证明、还原与 clean 仍绿。
++        assertion_ok = (caught == expected_total - 1 and did_not_run == 1
++                        and missed == 0 and write_failed == 0
++                        and not all_proven and all_restored and clean_green)
++    else:
++        assertion_ok = all_proven and all_restored and clean_green
++
++    out = {
++        "selftest": SELFTEST, "total": expected_total, "caught": caught,
++        "did_not_run": did_not_run, "missed": missed,
++        "write_failed": write_failed,
++        "restore": restored, "restore_all_ok": all_restored,
++        "clean_rerun": {"passed": clean["passed"],
++                        "total": clean["total"], "green": clean_green},
++        "all_proven": all_proven,
++        "selftest_assertion_ok": assertion_ok,
++        "rows": rows,
++    }
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    for r in rows:
++        print(f"{r['id']:<4} {r['status']:<11} red={r['red']}")
++    print(f"CAUGHT={caught}/{expected_total} DID_NOT_RUN={did_not_run} "
++          f"MISSED={missed} RESTORE={sum(restored.values())}/{len(restored)} "
++          f"CLEAN={clean['passed']}/{clean['total']}")
++    if SELFTEST:
++        print("SELFTEST_ASSERTION_OK" if assertion_ok
++              else "SELFTEST_ASSERTION_FAILED")
++        print("MUTATION_D_FAILED (expected 1 DID NOT RUN)"
++              if not all_proven else "MUTATION_D_OK")
++    else:
++        print("MUTATION_D_OK" if all_proven else "MUTATION_D_FAILED")
++    return 0 if assertion_ok else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/make_filelist_d.py
+@@ -0,0 +1,105 @@
++"""生成 D 路线可复现的文件清单与新增脚本 diff。
++
++条目数由 build_list() 现算并写进头部，绝不手写数字。
++排除：
++  · probe_project_d/.godot/ 引擎缓存（含时间戳，每次开编辑器会重写）；
++  · logs/make_filelist_d.log 是生成器自身 stdout（写入中哈希会变）；
++  · 清单与 diff 自身。
++STABLE_OK 只证「两次生成一致」；「与实物一致」由独立的
++crosscheck_filelist_d.py 逐行重算 size + sha256 并反向查漏项证明。
++"""
++from __future__ import annotations
++
++import hashlib
++import subprocess
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++LIST = HERE / "文件清单.txt"
++DIFF = HERE / "new-files-d.diff"
++EMPTY = HERE / "logs" / "empty_marker_d.bin"
++EMPTY.parent.mkdir(parents=True, exist_ok=True)
++EMPTY.write_bytes(b"")
++
++DIFF_SCRIPTS = [
++    "make_baseline_d.py", "run_godot_render.py", "make_review_boards.py",
++    "measure_scale.py", "verify_d.py", "mutation_d.py",
++    "make_filelist_d.py", "crosscheck_filelist_d.py",
++    "probe_project_d/project.godot",
++    "probe_project_d/probes/render_3d.gd",
++]
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def tracked() -> list[tuple[str, Path]]:
++    rows = []
++    for p in sorted(HERE.rglob("*")):
++        if not p.is_file():
++            continue
++        rel = p.relative_to(HERE).as_posix()
++        if rel in ("文件清单.txt", "new-files-d.diff",
++                   "logs/make_filelist_d.log"):
++            continue
++        if rel.startswith("probe_project_d/.godot/") or rel.endswith(".tmp"):
++            continue
++        rows.append(("WORK/" + rel, p))
++    return rows
++
++
++def build_list() -> bytes:
++    rows = tracked()
++    lines = [
++        "《牌拳》D 路线 · Creative Review + 引擎内 3D 截帧 · 文件清单",
++        f"条目数由脚本现算：{len(rows)}（WORK=本工作区）",
++        "复算命令：python make_filelist_d.py  # 连续生成两次比对 STABLE_OK",
++        "排除：probe_project_d/.godot/ 引擎缓存；"
++        "logs/make_filelist_d.log 生成器自身日志",
++        "",
++        f"{'PATH':<84} {'BYTES':>12}  SHA256",
++        "-" * 122,
++    ]
++    for rel, p in rows:
++        lines.append(f"{rel:<84} {p.stat().st_size:>12}  {sha256(p)}")
++    return ("\n".join(lines) + "\n").encode("utf-8")
++
++
++def build_diff() -> bytes:
++    chunks = []
++    for name in DIFF_SCRIPTS:
++        r = subprocess.run(
++            ["diff", "-u", "--label", "/dev/null", "--label", "b/" + name,
++             str(EMPTY), str(HERE / name)],
++            capture_output=True,
++        )
++        if r.returncode >= 2:
++            raise RuntimeError(f"diff failed for {name}: "
++                               f"{r.stderr.decode(errors='replace')}")
++        chunks.append(r.stdout)
++    return b"".join(chunks)
++
++
++def main() -> int:
++    first = [(LIST, build_list()), (DIFF, build_diff())]
++    for path, data in first:
++        path.write_bytes(data)
++    again = [(LIST, build_list()), (DIFF, build_diff())]
++    stable = all(a[1] == b[1] for a, b in zip(first, again))
++    summary = (f"FILELIST_ENTRIES={len(tracked())}\n"
++               f"DIFF_BYTES={DIFF.stat().st_size}\n"
++               + ("FILELIST_STABLE_OK\n" if stable
++                  else "FILELIST_STABLE_FAILED\n"))
++    (HERE / "logs" / "make_filelist_d.log").write_bytes(
++        summary.encode("utf-8"))
++    print(summary, end="")
++    return 0 if stable else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/crosscheck_filelist_d.py
+@@ -0,0 +1,63 @@
++"""外部逐行复算 D 路线文件清单：size + sha256 + 反向漏项。
++
++与生成器 make_filelist_d.py 完全独立，不 import 生成器、不复用其枚举。
++"""
++from __future__ import annotations
++
++import hashlib
++import sys
++from pathlib import Path
++
++WORK = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\D路线-CreativeReview与引擎截帧")
++LIST = WORK / "文件清单.txt"
++EXCLUDED = {"文件清单.txt", "new-files-d.diff", "logs/make_filelist_d.log"}
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++rows: list[tuple[str, int, str]] = []
++for line in LIST.read_text(encoding="utf-8").splitlines():
++    if not line.startswith("WORK/"):
++        continue
++    parts = line.split()
++    rows.append((parts[0][len("WORK/"):], int(parts[1]), parts[2]))
++
++bad: list[tuple[str, str]] = []
++for rel, size, digest in rows:
++    p = WORK / rel
++    if not p.is_file():
++        bad.append((rel, "MISSING"))
++        continue
++    real_size = p.stat().st_size
++    if real_size != size:
++        bad.append((rel, f"SIZE listed={size} real={real_size}"))
++    if sha256(p) != digest:
++        bad.append((rel, "SHA256"))
++
++listed = {r[0] for r in rows}
++extra: list[str] = []
++for p in sorted(WORK.rglob("*")):
++    if not p.is_file():
++        continue
++    rel = p.relative_to(WORK).as_posix()
++    if rel in EXCLUDED:
++        continue
++    if rel.startswith("probe_project_d/.godot/") or rel.endswith(".tmp"):
++        continue
++    if rel not in listed:
++        extra.append(rel)
++
++print(f"ROWS={len(rows)} BAD={len(bad)} EXTRA={len(extra)}")
++for item in bad[:20]:
++    print("BAD", item)
++for item in extra[:20]:
++    print("EXTRA", item)
++ok = not bad and not extra
++print("CROSSCHECK_OK" if ok else "CROSSCHECK_FAILED")
++sys.exit(0 if ok else 1)
+--- /dev/null
++++ b/probe_project_d/project.godot
+@@ -0,0 +1,21 @@
++; D 路线：Creative Review + Godot 引擎内 3D 截帧专用隔离工程
++; 与可运行游戏工程、C 路线探针工程三者完全分离。
++; 只做视觉复核，不是生产导入，无玩法代码。
++
++config_version=5
++
++[application]
++
++config/name="D Route 3D Render Review"
++config/features=PackedStringArray("4.5", "GL Compatibility")
++run/main_scene=""
++
++[display]
++
++window/size/viewport_width=900
++window/size/viewport_height=1100
++
++[rendering]
++
++renderer/rendering_method="gl_compatibility"
++renderer/rendering_method.mobile="gl_compatibility"
+--- /dev/null
++++ b/probe_project_d/probes/render_3d.gd
+@@ -0,0 +1,158 @@
++extends SceneTree
++## D 路线：Godot 4.5 **引擎内** 3D 截帧，供 Creative Review 看图。
++##
++## 跑法（必须带窗口）：
++##   D_SHOT_DIR=<abs> D_VIEWS=front,back godot --path <probe_project_d> \
++##     --resolution 900x1100 --script res://probes/render_3d.gd --quit-after 6000
++## 不能加 --headless：dummy driver 不发 RenderingServer.frame_post_draw，
++## 本脚本会永远等不到帧（外观层 capture_skin.py 已实测过）。
++##
++## 只 load 一份 foe-full.glb，搭最小棚拍场景，逐视角存 PNG；
++## 不写工程内任何文件，不碰可运行游戏工程。
++
++const GLB_PATH := "res://assets/foe-full.glb"
++
++# yaw 为绕 +Y 的角度；相机始终 look_at 目标点。半径/高度单位米。
++# 网格 AABB 实测 x[-0.608,0.608] y[0,1.72] z[-0.360,0.360]。
++# v2：第一版 radius=3.20/fov=34 让人物顶到上下边缘，背面在全暗里几乎
++# 读不出披风；拉远到 3.55 并补一盏固定背光（六视角同一套灯，口径公平）。
++const VIEWS := [
++	{"name": "front",   "yaw": 0.0,   "radius": 3.55, "height": 1.12, "fov": 33.0, "ty": 0.86},
++	{"name": "angle35", "yaw": 35.0,  "radius": 3.55, "height": 1.12, "fov": 33.0, "ty": 0.86},
++	{"name": "side90",  "yaw": 90.0,  "radius": 3.55, "height": 1.12, "fov": 33.0, "ty": 0.86},
++	{"name": "back",    "yaw": 180.0, "radius": 3.55, "height": 1.12, "fov": 33.0, "ty": 0.86},
++	{"name": "upper",   "yaw": 20.0,  "radius": 1.70, "height": 1.60, "fov": 32.0, "ty": 1.38},
++	{"name": "wide",    "yaw": 15.0,  "radius": 4.80, "height": 1.60, "fov": 38.0, "ty": 0.88},
++]
++
++
++class Driver:
++	extends Node
++	const SETTLE := 4
++
++	var cam: Camera3D
++	var views: Array = []
++	var out_dir := ""
++	var idx := 0
++	var busy := false
++	var report: Array = []
++
++	func _place(v: Dictionary) -> void:
++		var yaw := deg_to_rad(float(v["yaw"]))
++		var r := float(v["radius"])
++		cam.position = Vector3(r * sin(yaw), float(v["height"]), r * cos(yaw))
++		cam.fov = float(v["fov"])
++		cam.look_at(Vector3(0.0, float(v["ty"]), 0.0), Vector3.UP)
++
++	func _process(_delta: float) -> void:
++		if busy:
++			return
++		if idx >= views.size():
++			busy = true
++			print("RENDER_JSON " + JSON.stringify({"views": report}))
++			get_tree().quit(0)
++			return
++		busy = true
++		var v: Dictionary = views[idx]
++		_place(v)
++		# 4096² 贴图首帧可能还没上传完，多等几帧再抓，避免抓到空白/未贴图。
++		for _i in range(SETTLE):
++			await RenderingServer.frame_post_draw
++		var img := get_viewport().get_texture().get_image()
++		var path := "%s/godot-%s.png" % [out_dir, String(v["name"])]
++		var err := img.save_png(path)
++		report.append({
++			"name": String(v["name"]), "yaw": float(v["yaw"]),
++			"radius": float(v["radius"]), "fov": float(v["fov"]),
++			"path": path, "w": img.get_width(), "h": img.get_height(),
++			"save_error": int(err),
++		})
++		idx += 1
++		busy = false
++
++
++func _add_light(rot: Vector3, energy: float, col: Color, shadow: bool) -> void:
++	var l := DirectionalLight3D.new()
++	l.rotation_degrees = rot
++	l.light_energy = energy
++	l.light_color = col
++	l.shadow_enabled = shadow
++	root.add_child(l)
++
++
++func _build_stage() -> Camera3D:
++	var we := WorldEnvironment.new()
++	var env := Environment.new()
++	env.background_mode = Environment.BG_COLOR
++	env.background_color = Color(0.075, 0.090, 0.125)
++	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
++	env.ambient_light_color = Color(0.42, 0.48, 0.62)
++	env.ambient_light_energy = 0.68
++	we.environment = env
++	root.add_child(we)
++
++	_add_light(Vector3(-38.0, -32.0, 0.0), 1.9,
++			Color(1.00, 0.96, 0.90), true)
++	_add_light(Vector3(-20.0, 145.0, 0.0), 0.75,
++			Color(0.68, 0.79, 1.00), false)
++	_add_light(Vector3(-12.0, 75.0, 0.0), 0.55,
++			Color(1.00, 0.85, 0.70), false)
++	# 固定背光：第一版 back 视角披风全黑，读不出结构。
++	_add_light(Vector3(-25.0, 200.0, 0.0), 0.95,
++			Color(0.76, 0.85, 1.00), false)
++
++	var ground := MeshInstance3D.new()
++	var plane := PlaneMesh.new()
++	plane.size = Vector2(12.0, 12.0)
++	ground.mesh = plane
++	var gmat := StandardMaterial3D.new()
++	gmat.albedo_color = Color(0.10, 0.12, 0.16)
++	gmat.roughness = 0.95
++	ground.material_override = gmat
++	ground.position = Vector3(0.0, -0.012, 0.0)
++	root.add_child(ground)
++
++	var cam := Camera3D.new()
++	cam.current = true
++	cam.near = 0.05
++	cam.far = 100.0
++	root.add_child(cam)
++	return cam
++
++
++func _init() -> void:
++	var shot_dir := OS.get_environment("D_SHOT_DIR")
++	if shot_dir == "":
++		print("RENDER_JSON " + JSON.stringify({"error": "D_SHOT_DIR missing"}))
++		quit(1)
++		return
++	DirAccess.make_dir_recursive_absolute(shot_dir)
++
++	var names := OS.get_environment("D_VIEWS")
++	var wanted: PackedStringArray = names.split(",", false)
++	var selected: Array = []
++	for entry in VIEWS:
++		var v: Dictionary = entry
++		if wanted.is_empty() or wanted.has(String(v["name"])):
++			selected.append(v)
++	if selected.is_empty():
++		print("RENDER_JSON " + JSON.stringify({"error": "no view selected"}))
++		quit(1)
++		return
++
++	var res := load(GLB_PATH)
++	if res == null or not (res is PackedScene):
++		print("RENDER_JSON " + JSON.stringify({"error": "glb load failed",
++				"path": GLB_PATH}))
++		quit(1)
++		return
++	var inst: Node3D = (res as PackedScene).instantiate()
++	root.add_child(inst)
++
++	var cam := _build_stage()
++	var d := Driver.new()
++	d.cam = cam
++	d.views = selected
++	d.out_dir = shot_dir
++	root.add_child(d)
++	print("RENDER_START views=%d out=%s" % [selected.size(), shot_dir])

@@ -1,0 +1,21 @@
+motion_p1    rc=1 failed=3 MOTION_P1_VERIFY 49/52 FAILED
+   RED ten_untouched_unchanged
+   RED non_cards_fields_equal_backup_both
+   RED mapping_gains_unchanged_both
+motion_p2    rc=1 failed=6 MOTION_P2_VERIFY 53/59 FAILED
+   RED player_cap_is_9
+   RED foe_cap_is_9
+   RED only_one_diff_path_player
+   RED only_one_diff_path_foe
+   RED other_12_watched_files_unchanged
+   RED three_core_scripts_sha_unchanged
+live_match   rc=1 failed=1 LIVE_VERIFY 67/68 FAILED
+   RED shipped_cap_still_9_both
+plateau_p3   rc=0 failed=0 PLATEAU_VERIFY 80/80 ALL GREEN
+CHECK all_reports_present_and_parsed True
+CHECK all_restored_bytewise True
+CHECK no_verify_crashed True
+CHECK all_verdict_lines_present True
+CHECK venv_python_has_pil True
+CHECK no_history_script_modified True
+HISTORY_GATES_P4_BEFORE_OK

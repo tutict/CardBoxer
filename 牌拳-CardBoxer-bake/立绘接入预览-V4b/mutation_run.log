@@ -1,0 +1,7 @@
+M1 CAUGHT  red=True sentinel_green=True restore=True  擦除填充源改回外侧 ±190（会复制斜向装饰）
+M2 CAUGHT  red=True sentinel_green=True restore=True  SUBJECT.front 换成 V3 的窄包围盒（照抄旧模型）
+M3 CAUGHT  red=True sentinel_green=True restore=True  A 图换成 V3 版副本（拿旧造型冒充 V4b）
+M4 CAUGHT  red=True sentinel_green=True restore=True  manifest 里脸特写母图的 sha 改错（假装换了母图不认账）
+
+4/4 CAUGHT  restore=4/4  clean_rerun=GREEN  MUTATION_V4B_OK
+

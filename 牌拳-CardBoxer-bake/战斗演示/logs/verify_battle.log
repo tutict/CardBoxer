@@ -1,0 +1,16 @@
+[PASS] B01_card_type_binding: rounds=3 spec_violations=[]
+[PASS] B02_hp_rage_track_recomputed: recomputed={'after_round': 3, 'player': 86, 'foe': 81, 'rage_player': 34, 'rage_foe': 68} recorded={'after_round': 3, 'player': 86, 'foe': 81, 'rage_player': 34, 'rage_foe': 68}
+[PASS] B03_outcome_derived: derived=player declared=player hp=86:81
+[PASS] B04_gif_hashes: modes=['puppet', 'c3d'] bad=[]
+[PASS] B05_duration_conservation: total_frames=140 frame_ms=80 bad=[]
+[PASS] B06_frame_ms_10ms_multiple: frame_ms=80 fps=12.5
+[PASS] B07_gif_frames_readable: canvas=880x500 bad=[]
+[PASS] B08_keyframes_complete: expected=12 per mode bad=[]
+[PASS] B09_foe_differs_between_versions: frame=69 foe_diff_px=7826 threshold>3000
+[PASS] B10_player_identical_between_versions: frame=69 player_diff_px=0 threshold<200
+[PASS] B11_boards_nonempty: boards=2 bad=[]
+[PASS] B12_source_wiring: needles=8 missing=[]
+[PASS] B13_source_fingerprints: spec/table/script all_match=True
+[PASS] B14_not_claimed_is_explicit: compare='type_rank: triple=3 / sequence=2 / scatter=1; ti'
+[PASS] B15_game_sources_untouched: files=7 changed=[]
+VERIFY_BATTLE 15/15 BATTLE_DEMO_VERIFIED

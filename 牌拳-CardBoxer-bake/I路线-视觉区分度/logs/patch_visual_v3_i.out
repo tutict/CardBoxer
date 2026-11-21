@@ -1,0 +1,14 @@
+PATCH SKIPPED_ALREADY_APPLIED
+CHECK arena_untouched True
+CHECK fighter_untouched True
+CHECK no_surface_override_calls True
+CHECK no_3d_material_duplicate True
+CHECK no_light_energy_write True
+CHECK canvas_shader_present True
+CHECK canvas_material_set True
+CHECK canvas_material_cleared True
+CHECK shader_tint_matches_spec True
+CHECK draw_scale_kept True
+CHECK collect_meshes_kept_for_diagnostics True
+CHECK G_shape_preserved True
+PATCH_VISUAL_V3_I_OK

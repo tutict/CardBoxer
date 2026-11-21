@@ -1,0 +1,15 @@
+; 女角色 V4b 3D 展示工程：打开按 F5 就能看到玩家，而不是空场景。
+; 与可运行游戏工程、C/D/E 路线探针工程完全隔离，只放一份 player-full.glb。
+
+config_version=5
+
+[application]
+
+config/name="Player V4b 3D Showcase"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+run/main_scene="res://scenes/player_showcase.tscn"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

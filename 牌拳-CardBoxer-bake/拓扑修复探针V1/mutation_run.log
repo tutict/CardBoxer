@@ -1,0 +1,8 @@
+M1 CAUGHT  target_red=True sentinel_green=True restore=True  把基线的 Bone Heat 0 覆盖伪装成 1.0
+M2 CAUGHT  target_red=True sentinel_green=True restore=True  把 PBR 贴图保住伪装成丢失
+M3 CAUGHT  target_red=True sentinel_green=True restore=True  把 B 的最大位移改到比 A 还大
+M4 CAUGHT  target_red=True sentinel_green=True restore=True  把看图负结果改写成通过
+
+clean_rerun=GREEN  exit=0  red=[]
+
+4/4 CAUGHT  restore=4/4  did_not_run=0  all_restored=True  MUTATION_VOXEL_OK

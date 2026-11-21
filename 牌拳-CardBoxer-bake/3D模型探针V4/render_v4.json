@@ -1,0 +1,75 @@
+{
+  "blender": "5.2.3 LTS",
+  "glb": "artifact_03.glb",
+  "glb_sha256": "2ee39fe29df0d8b6afc224268240248a3d983ebc97fb0860aa9ad3b391447e68",
+  "prefix": "v4",
+  "material_policy": "original PBR kept (engineer picked the PBR service preview)",
+  "normalize_scale": 1.596522,
+  "raw_height_m": 1.07734,
+  "shots": [
+    {
+      "shot": "front",
+      "angle_deg": 0,
+      "target_z": 0.86,
+      "ortho_scale": 2.3,
+      "resolution": 768,
+      "file": "v4-front.png",
+      "bytes": 341881
+    },
+    {
+      "shot": "angle25",
+      "angle_deg": 25,
+      "target_z": 0.86,
+      "ortho_scale": 2.3,
+      "resolution": 768,
+      "file": "v4-angle25.png",
+      "bytes": 339774
+    },
+    {
+      "shot": "angle55",
+      "angle_deg": 55,
+      "target_z": 0.86,
+      "ortho_scale": 2.3,
+      "resolution": 768,
+      "file": "v4-angle55.png",
+      "bytes": 324110
+    },
+    {
+      "shot": "back35",
+      "angle_deg": -35,
+      "target_z": 0.86,
+      "ortho_scale": 2.3,
+      "resolution": 768,
+      "file": "v4-back35.png",
+      "bytes": 325248
+    },
+    {
+      "shot": "face-front",
+      "angle_deg": 0,
+      "target_z": 1.55,
+      "ortho_scale": 0.46,
+      "resolution": 1024,
+      "file": "v4-face-front.png",
+      "bytes": 932986
+    },
+    {
+      "shot": "face-25",
+      "angle_deg": 25,
+      "target_z": 1.55,
+      "ortho_scale": 0.46,
+      "resolution": 1024,
+      "file": "v4-face-25.png",
+      "bytes": 937308
+    },
+    {
+      "shot": "upper",
+      "angle_deg": 0,
+      "target_z": 1.24,
+      "ortho_scale": 1.0,
+      "resolution": 1024,
+      "file": "v4-upper.png",
+      "bytes": 949312
+    }
+  ],
+  "elapsed_seconds": 2.57
+}

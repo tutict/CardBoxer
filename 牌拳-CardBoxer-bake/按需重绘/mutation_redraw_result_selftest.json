@@ -1,0 +1,22 @@
+{
+  "selftest": true,
+  "total": 1,
+  "caught": 0,
+  "did_not_run": 1,
+  "restored": 0,
+  "clean_rerun": {
+    "rc": 0,
+    "total": 24,
+    "failed": [],
+    "ok": true
+  },
+  "cases": [
+    {
+      "id": "SELFTEST-DID-NOT-RUN",
+      "status": "DID NOT RUN",
+      "anchor_count": 0,
+      "why": "锚点失配自检"
+    }
+  ],
+  "verdict": "MUTATION_REDRAW_SELFTEST_OK"
+}

@@ -1,0 +1,33 @@
+# Local credentials and editor state
+.env
+.env.*
+!.env.example
+!.env.sample
+.aws/
+.codex/
+.agents/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Generated engine and Python caches
+.godot/
+.import/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+.venv-cpython/
+venv/
+node_modules/
+
+# Temporary fixtures and recursive publication copies
+pipeline_fixture_*/
+github-publish/
+
+# Blender automatic backups; keep authored .blend files
+*.blend[0-9]*

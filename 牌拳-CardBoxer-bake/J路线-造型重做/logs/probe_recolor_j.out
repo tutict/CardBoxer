@@ -1,0 +1,22 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\probe_recolor_j.py:56: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  px = list(im.getdata())
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\probe_recolor_j.py:92: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  px = list(im.convert("RGBA").getdata())
+STATS source {'mask_px': 71959, 'near_white_ratio': 0.208647, 'cyan_ratio': 0.034256, 'hot_red_ratio': 0.003919, 'warning_orange_ratio': 0.005406, 'mean_rgb': [132.26, 126.41, 120.53]}
+STATS C0 {'mask_px': 71959, 'near_white_ratio': 0.0, 'cyan_ratio': 0.0, 'hot_red_ratio': 0.0, 'warning_orange_ratio': 0.0, 'mean_rgb': [55.16, 37.49, 33.3]}
+STATS C1 {'mask_px': 71959, 'near_white_ratio': 0.0, 'cyan_ratio': 0.0, 'hot_red_ratio': 0.0, 'warning_orange_ratio': 0.0, 'mean_rgb': [45.85, 28.28, 24.08]}
+STATS C2 {'mask_px': 71959, 'near_white_ratio': 0.0, 'cyan_ratio': 0.0, 'hot_red_ratio': 0.0, 'warning_orange_ratio': 0.134729, 'mean_rgb': [63.06, 39.54, 24.15]}
+STATS player_reference {'mask_px': 74953, 'near_white_ratio': 0.170427, 'cyan_ratio': 0.030086, 'hot_red_ratio': 0.006204, 'warning_orange_ratio': 0.005764, 'mean_rgb': [112.74, 105.59, 99.89]}
+CHECK source_is_rgba_with_alpha True
+CHECK source_has_high_white True
+CHECK i_route_tint_already_removes_white True
+CHECK i_route_tint_already_removes_cyan True
+CHECK c1_removes_white True
+CHECK c2_removes_white True
+CHECK c1_removes_cyan True
+CHECK c2_adds_warning_color True
+CHECK c1_darker_than_c0 True
+CHECK all_modes_keep_identical_silhouette True
+CHECK player_reference_unchanged True
+CHECK board_written True
+RECOLOR_PROBE_J_OK

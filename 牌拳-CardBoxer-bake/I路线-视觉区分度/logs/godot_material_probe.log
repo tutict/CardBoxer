@@ -1,0 +1,20 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+IMAT_JSON {"foe":{"path":"res://assets/3d/foe-rigged.glb","surfaces":[{"albedo_color":[1.0,1.0,1.0,1.0],"albedo_texture":"res://assets/3d/foe-rigged_texture_pbr_20250901.png","material_class":"StandardMaterial3D","mesh":"foe_HI_skinned","metallic":1.0,"metallic_texture":"res://assets/3d/foe-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png","normal_texture":"res://assets/3d/foe-rigged_texture_pbr_20250901_normal.png","roughness":1.0,"surface":0}]},"player":{"path":"res://assets/3d/player-rigged.glb","surfaces":[{"albedo_color":[1.0,1.0,1.0,1.0],"albedo_texture":"res://assets/3d/player-rigged_texture_pbr_20250901.png","material_class":"StandardMaterial3D","mesh":"player_HI_skinned","metallic":1.0,"metallic_texture":"res://assets/3d/player-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png","normal_texture":"res://assets/3d/player-rigged_texture_pbr_20250901_normal.png","roughness":1.0,"surface":0}]}}
+
+--- STDERR ---
+ERROR: Pages in use exist at exit in PagedAllocator: N20RasterizerSceneDummy21GeometryInstanceDummyE
+   at: ~PagedAllocator (./core/templates/paged_allocator.h:169)
+ERROR: 6 RID allocations of type 'PN13RendererDummy14TextureStorage12DummyTextureE' were leaked at exit.
+ERROR: 2 RID allocations of type 'N13RendererDummy9DummyMeshE' were leaked at exit.
+WARNING: Leaked instance dependency: Bug - did not call instance_notify_deleted when freeing.
+   at: ~Dependency (servers/rendering/storage/utilities.cpp:56)
+WARNING: Leaked instance dependency: Bug - did not call instance_notify_deleted when freeing.
+   at: ~Dependency (servers/rendering/storage/utilities.cpp:56)
+ERROR: 2 RID allocations of type 'N13RendererDummy15MaterialStorage13DummyMaterialE' were leaked at exit.
+ERROR: 1 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+ERROR: 2 RID allocations of type 'N17RendererSceneCull8InstanceE' were leaked at exit.
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+   at: cleanup (core/object/object.cpp:2514)
+ERROR: 12 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:795)

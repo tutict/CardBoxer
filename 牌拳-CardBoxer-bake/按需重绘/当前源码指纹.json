@@ -1,0 +1,38 @@
+{
+  "scripts/arena.gd": {
+    "sha256": "ae5ab3382f0a6da19b3882b9bd403c22c19da6b2e9b43f50c49c49f5d2d46145",
+    "bytes": 47194
+  },
+  "scripts/hud.gd": {
+    "sha256": "108c598bf6c8b1df535eeddff23296d7fcf56a7b8b510e64ebbe1c5a8bb3217c",
+    "bytes": 26568
+  },
+  "scripts/fighter.gd": {
+    "sha256": "df9b5e99e8c7c3b4bb6f163150ed87574205fd9a266bd6b1bc20e85818d9b81b",
+    "bytes": 40685
+  },
+  "scripts/fx_layer.gd": {
+    "sha256": "e57f3c0e8604e9ffa704edfba1d070ee3eb947b3c8630bdefd46d8db3e9bba50",
+    "bytes": 642
+  },
+  "project.godot": {
+    "sha256": "a4bb56358694fc1dcb83babd4603866a8c541906859cab8b6ef5db64bfa27522",
+    "bytes": 1290
+  },
+  "tests/redraw_gate_check.gd": {
+    "sha256": "450308358cdd0f7f010429209848d55c3d9246a3bcb57f90a9040ee017b6407c",
+    "bytes": 6167
+  },
+  "tests/redraw_probe.gd": {
+    "sha256": "c1d0ab3276d52dbe3344df8716e32b16b2f8f07fc9df17bee1a1b20e885f3dd3",
+    "bytes": 5724
+  },
+  "tests/redraw_perf_probe.gd": {
+    "sha256": "ec70e2980cd0aa8e9566de128c7908ae8c1f75d4c8e780b3cb699cb1b020c65f",
+    "bytes": 3575
+  },
+  "tests/key_bench.gd": {
+    "sha256": "92c170b4be344998189f85e887a3d502cc84c1d32d724ca851deb08dbe83386a",
+    "bytes": 970
+  }
+}

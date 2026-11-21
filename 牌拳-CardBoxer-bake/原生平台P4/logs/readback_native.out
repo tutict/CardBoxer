@@ -1,0 +1,17 @@
+READBACK {'exact_flat_pairs': 0, 'perceptual_flat_pairs': 200, 'changed_frames': 109, 'max_joint_delta_px': 1.7778, 'max_adjacent_jump_px': 112.0179, 'baseline_max_adjacent_jump_px': 112.0179}
+SCAN     {'exact_flat_pairs': 0, 'perceptual_flat_pairs': 180, 'changed_frames': 80, 'max_joint_delta_px': 1.9616, 'max_adjacent_jump_px': 112.0179, 'baseline_max_adjacent_jump_px': 112.0179}
+BASELINE {'exact_flat_pairs': 255, 'perceptual_flat_pairs': 308, 'changed_frames': 0, 'max_joint_delta_px': 0.0, 'max_adjacent_jump_px': 112.0179, 'baseline_max_adjacent_jump_px': 112.0179}
+EDIT_TOTAL 1308 BAD 0 META_BAD 0
+SYNC {'mi_vs_cm': True, 'mi_vs_mif': True}
+CHECK fifteen_tracks_284_frames True
+CHECK exact_flat_pairs_zero True
+CHECK perceptual_below_baseline True
+CHECK agg_matches_landing_recomputed True
+CHECK changed_frames_matches_landing True
+CHECK all_track_endpoints_identical_to_orig True
+CHECK max_displacement_under_2px True
+CHECK three_tables_synchronized True
+CHECK all_edits_read_back_all_three True
+CHECK non_leg_metadata_unchanged True
+CHECK apply_report_ok True
+READBACK_NATIVE_OK

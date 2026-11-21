@@ -1,0 +1,136 @@
+{
+  "note": "2D 概念图展示整理；取景框是人工设计选择，不是测量结论",
+  "source_size": [
+    1024,
+    1536
+  ],
+  "copies": {
+    "foe-full-original.png": {
+      "source": "对手怪模型探针V1/概念图/Full_body_character_concept_ar_2026-11-07T11-02-32.png",
+      "sha256": "a6ea4d6a1f47f18baa75089abf471d7bbc8eafdfa40de10d83d47ec7302c7e03",
+      "copy_sha256": "a6ea4d6a1f47f18baa75089abf471d7bbc8eafdfa40de10d83d47ec7302c7e03",
+      "identical": true
+    },
+    "foe-redraw.png": {
+      "source": "对手怪模型探针V1/概念图/Same_single_character__identic_2026-11-07T11-03-25.png",
+      "sha256": "5884a733fa46a13058731f0b23a26b7e5a3b151129f8bdca0f33c280b46beb42",
+      "copy_sha256": "5884a733fa46a13058731f0b23a26b7e5a3b151129f8bdca0f33c280b46beb42",
+      "identical": true
+    },
+    "玩家V4b-对手怪V1-概念对照.png": {
+      "source": "对手怪模型探针V1/玩家V4b-对手怪V1-概念对照.png",
+      "sha256": "73cadb5acfc9e4f4fb16c2f442bd127f8c01396b192313590bee635e8110b9d8",
+      "copy_sha256": "73cadb5acfc9e4f4fb16c2f442bd127f8c01396b192313590bee635e8110b9d8",
+      "identical": true
+    }
+  },
+  "wipe_watermark": {
+    "box": [
+      881,
+      1436,
+      1024,
+      1536
+    ],
+    "fill_rgb": [
+      202,
+      199,
+      197
+    ],
+    "dark_ratio_before": 0.0,
+    "dark_ratio_after": 0.0,
+    "off_fill_before": 0.17224,
+    "off_fill_after": 0.0
+  },
+  "crops": [
+    {
+      "key": "head",
+      "title": "头部 · 兜帽与全面罩",
+      "relative_box": [
+        0.4,
+        0.02,
+        0.68,
+        0.25
+      ],
+      "desc": "深兜帽 + 双圆镜片防毒面罩 + 呼吸管；脸完全遮住、无表情"
+    },
+    {
+      "key": "crystal",
+      "title": "单肩 · 以太结晶",
+      "relative_box": [
+        0.13,
+        0.08,
+        0.41,
+        0.28
+      ],
+      "desc": "青色发光结晶簇 + 细裂纹；干净风格化，不做血肉融合"
+    },
+    {
+      "key": "chest",
+      "title": "胸甲 · 铆接与管线",
+      "relative_box": [
+        0.27,
+        0.16,
+        0.73,
+        0.47
+      ],
+      "desc": "错配装甲板、斜跨带、圆盘机件、外露铆钉与管线"
+    },
+    {
+      "key": "arms",
+      "title": "护臂 · 缠手带",
+      "relative_box": [
+        0.04,
+        0.29,
+        0.37,
+        0.63
+      ],
+      "desc": "超大铆接护臂 + 补丁缠带；手部无拳套"
+    },
+    {
+      "key": "belt",
+      "title": "腰带 · 挂包与垂牌",
+      "relative_box": [
+        0.19,
+        0.38,
+        0.77,
+        0.65
+      ],
+      "desc": "厚重工具腰带、挂包、盘绕电缆、垂挂金属牌、破布下摆"
+    },
+    {
+      "key": "boots",
+      "title": "腿部 · 警示条纹与靴",
+      "relative_box": [
+        0.11,
+        0.72,
+        0.9,
+        0.99
+      ],
+      "desc": "橙黄警示斜纹、护膝、厚底钢头靴；炭黑与铁锈红掉漆"
+    }
+  ],
+  "board": {
+    "file": "对手怪V1-2D设计板.png",
+    "size": [
+      1800,
+      1500
+    ],
+    "bytes": 1569615,
+    "colors_120": 3082,
+    "shown_crops": [
+      "head",
+      "crystal",
+      "chest",
+      "boots"
+    ]
+  },
+  "detail": {
+    "file": "对手怪V1-细节六格.png",
+    "size": [
+      1800,
+      1180
+    ],
+    "bytes": 1452322,
+    "colors_120": 3582
+  }
+}

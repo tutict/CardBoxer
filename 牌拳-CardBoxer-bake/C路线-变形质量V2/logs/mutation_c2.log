@@ -1,0 +1,11 @@
+M1 CAUGHT red=['V2-01_baseline_inputs_intact'] restored=True
+M2 CAUGHT red=['V2-06_reach_ratio_double_computed'] restored=True
+M3 CAUGHT red=['V2-07_reach_non_negative_every_frame'] restored=True
+M4 CAUGHT red=['V2-04_stance_identity'] restored=True
+M5 CAUGHT red=['V2-16_shells_small_holds_body'] restored=True
+M6 CAUGHT red=['V2-17_smooth_sweep_no_real_improvement'] restored=True
+M7 CAUGHT red=['V2-19_final_shots_single_variable'] restored=True
+M8 CAUGHT red=['V2-21_params_match_source'] restored=True
+M9 CAUGHT red=['V2-22_source_wiring'] restored=True
+TOTAL=9 CAUGHT=9 DID_NOT_RUN=0 RESTORE=9/9 CLEAN=True
+MUTATION_C2_OK

@@ -1,0 +1,7 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+FAIL: startup battle mode follows environment with taikou default
+FAIL: spark/text/shake do not consume gameplay RNG
+BATTLE INTEGRATION CHECK: 0/2 passed

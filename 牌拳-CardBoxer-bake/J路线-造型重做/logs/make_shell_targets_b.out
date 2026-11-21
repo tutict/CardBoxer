@@ -1,0 +1,25 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\make_shell_targets_b.py:48: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  return sum(1 for v in a.getdata() if v > 16)
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\make_shell_targets_b.py:53: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  px = list(im.getdata())
+GROUP G0_CAPE shells 2 verts 2122 z [0.7566, 0.8783] span 1.4306
+GROUP G1_SKIRT shells 19 verts 1684 z [0.2805, 0.8772] span 0.8272
+GROUP G2_HEAD_SMALL shells 174 verts 4947 z [1.4802, 1.6811] span 0.2611
+ISO_PX {'G0_CAPE': 81302, 'G1_SKIRT': 18371, 'G2_HEAD_SMALL': 12447}
+COLOR front green/red 0.030074 0.021244 back blue 0.14483
+CHECK source_probe_ok True
+CHECK shell_table_covers_2809 True
+CHECK target_ids_unique True
+CHECK target_ids_all_in_table True
+CHECK cape_shell_count_2 True
+CHECK skirt_shell_count_19 True
+CHECK head_small_shell_count_174 True
+CHECK target_verts_8753 True
+CHECK cape_spans_full_back True
+CHECK skirt_below_waist True
+CHECK head_ornament_above_head True
+CHECK isolation_images_nonempty True
+CHECK group_colors_visible_front True
+CHECK cape_visible_from_back True
+CHECK board_written True
+SHELL_TARGETS_B_OK

@@ -1,0 +1,233 @@
+《牌拳》P4 · 数据层 255 对原生平台 · 验证记录
+================================================================
+日期：2026-11-15
+证据区：牌拳-CardBoxer-bake/原生平台P4/
+游戏工程：牌拳-CardBoxer/
+上游：P3「方波平台期」把 clamp 造成的 227 对方波消掉，剩下 255 对是
+      2D 动作表自带的原生平台。本轮攻的就是这 255 对。
+
+
+一、结论（先看这段）
+----------------------------------------------------------------
+落地成功，但必须说清收益边界：
+
+  * 精确平台   255 → 0（硬指标达成）
+  * 可辨平台   308 → 200（下降 35.1%）
+  * 2D 侧关节最大位移 1.7778 px（亚 2 像素，不可见）
+  * 全量 284 帧真实 GLB 撕裂 0.042737 m → 0.042681 m
+    （比现状还略低；外部锚 0.09365 m，越锚帧 0）
+  * 15/15 引擎内自检全绿，pose_probe 归位红线保持 1.100 px
+
+但 255 对里 224 对是「整帧 11 关节完全相同」的定格 hold 帧，本来就是
+动画设计意图，不是缺陷。本轮攻下的是**数值特征**，不是让动作变好看。
+看图复核也证实两版姿态差异肉眼很弱，不能夸大成「一眼可见的改善」。
+
+用户授权的是「攻数值平台」，因此**否决**了候选扫描自动推荐的 hybrid
+（那个档会重设动画语义，见 §三）。
+
+
+二、诊断：255 对到底是什么
+----------------------------------------------------------------
+两个真相来源先钉死（diag_native.py / layout_probe.py）：
+
+  2D 运行时：fighter.gd:1027 → Motion.sample() → CardMotion._pose_at()
+             读 res://data/card_motion.json 的 11 关节 + lean
+  3D 运行时：rig_driver.gd::_joints_of()
+             读 motion_input*.json 的 cards[card].track[frame]
+
+改前实测三份表的 11 关节逐值相同（CM_VS_MI_IDENTICAL /
+PLAYER_FOE_TRACKS_EQUAL 均为 True），所以「改数据层」必然同时影响双侧。
+
+  255 对 = 80 个唯一帧对
+    224 对  整帧 11 关节完全相同（定格蓄力 / 保持帧）
+     31 对  上身仍在动，但 retarget 后四条腿骨 delta 碰巧同值
+  按卡分布 top：wave 43 / focus 28 / hit_heavy 22 / guard 21
+  数值微分：1 px 腿关节位移 ≈ 0.8878°，0.1° ≈ 0.1126 px
+
+
+三、决策订正：否决 hybrid，落地 micro2
+----------------------------------------------------------------
+候选扫描（evaluate_candidates.py）按「可辨平台最低」自动推荐
+hybrid_lerp_micro03。落地前重新算成本账后否决：
+
+  档位          精确   可辨   2D 最大位移   全量 p999    三表同步
+  现状 P3       255    308    0             0.042737     是
+  micro05         0    257    0.49 px       0.042737     是
+  micro2 首版     0    180    1.96 px       0.042737     是
+  hybrid          0    120   33.06 px       0.043500     是
+  落地版 micro2   0    200    1.7778 px     0.042681     是
+
+否决理由：hybrid 的 33.06 px 来自 build_lerp 把整帧定格段改成匀速
+滑动，等于把「蓄力定格」重设成「渐进过渡」；用户没有授权重设动作。
+它同时是四档里撕裂最贵的（0.043500 m）。
+
+落地版 micro2（make_landing.py）：段内 w = A*(k+1)/(m+2)，A = 2 px，
+恒 > 0 且严格递增，相邻帧必不同、不累积漂移；每条 track 的**首帧与
+末帧不扰动**（起手/收招归位帧）。三份表 11 关节仍逐值相同。
+
+
+四、落地形态（apply_native.py，可 --restore 逐字节回退）
+----------------------------------------------------------------
+改 3 个文件，只改四个腿关节在 109 个帧上的数值：
+
+  data/card_motion.json       2D 运行时表
+  data/motion_input.json      玩家侧 3D 表
+  data/motion_input_foe.json  对手侧 3D 表
+
+每份 436 个关节值改动 / 872 条坐标路径（合计 1308 个 edits 读回全中）。
+不改任何 GDScript，不改 mapping（仍是 P3 的 atan / 12.0）。
+
+不做文本 needle 替换：定格段里多帧文本完全相同，needle 不唯一。
+改用「load → 改数值 → 用同格式 dump」，并在改前证明 round-trip 恒等：
+  motion_input*.json  json.dumps(separators=(",", ":")) + "\n"，LF
+  card_motion.json    json.dumps(indent=1) 整体转 CRLF，无尾换行
+三份表改前 round-trip 逐字节恒等均已实测通过。
+
+递归逐值 diff 只允许四个腿关节坐标路径；非关节元数据（units / rhythm /
+stance / warnings / mapping / source / split / k / phase / torso_deg /
+lean ...）逐值不变；其余 11 个受监控文件 sha256 全同。
+
+
+五、成本账：真实 GLB 全量撕裂
+----------------------------------------------------------------
+P4 候选三档 × 284 帧 = 852 姿态（full_tear_blender.json，Blender 5.2.0
+LTS，136092 边 / 57934 顶点，pose_matrix_max_err 4.77e-07）：
+  baseline 0.042737 m / hybrid 0.043500 m / micro05 0.042737 m
+落地版单独补测 284 帧（micro2_tear_blender.json，37.8 s，
+max_pose_err 3.87e-07；耗时读 logs/micro2_tear.out 的
+PROGRESS 284/284 elapsed=37.8s）：
+  micro2 0.042681 m，mean 0.015717 m，越锚帧 0，代表帧 gap 0
+
+外部锚 P999_LIMIT_M = 0.09365 沿用历史 C 路线 7 档最坏 p999。
+max_edge_tear_m 跨档恒定 0.367047 m 是既有单边伪影，只记
+diagnostic_only，不参与放行。
+
+
+六、引擎内验收数字
+----------------------------------------------------------------
+A/B（run_p4_probe.py，同进程冻结静态帧，3 模式 × 12 帧 × 双侧 = 36 行）：
+  shipped（落盘表）/ rolled_back（运行时换回 orig/pre-p4 原表）/
+  reapplied（再换回，验证可逆）
+  * 落盘 mapping 引擎读回 atan / 12.0；运行时表标记三模式全对
+  * 36 行 × 2 侧 13 骨 delta 与 p4_math 按「哪张表」独立复算逐骨对账
+  * 11 个动作帧（全部选自改动集）双侧腿骨 delta 均不同
+  * 22/22 动作帧 SubViewport 像素差 > 0，最大 14110 px
+  * 站架帧逐像素 0；shipped vs reapplied 逐像素相同
+  * 2D 侧引擎读回 CardMotion._tracks：12 卡 / 228 帧，86 帧变化，
+    最大 1.7778 px，非腿关节变化 0
+  * 默认关 3D 零污染（引擎读回 use_3d=false、两层 null、无 override）
+  P4_PROBE_OK 22/22
+
+代表帧特意重选过：P3 用的 jab1 / sweep7 / hit_heavy1 恰好都不在
+micro2 的 109 个改动帧里，拿它们做 A/B 会全零。
+
+全量自检：ALL_CHECKS_P4 15/15 ALL GREEN
+  pose_probe 的「表内起收招最大漂移」= 1.100 px @sweep 末帧（<=1.5）
+
+承重判据：NATIVE_VERIFY 91/91 ALL GREEN（只读盘，不重跑 Godot/Blender）
+变异验证：MUTATION_NATIVE 32/32 CAUGHT / DNR 0 / BROKEN 0 / MISSED 0 /
+          RESTORE 32/32 / clean 91/91 ALL GREEN
+          --selftest-dnr：0/1 CAUGHT / DNR 1 / SELFTEST_DNR_EFFECTIVE
+
+
+七、看图复核（ViewImage 逐张看过）
+----------------------------------------------------------------
+  P4-平台曲线对照.png   focus 全 22 帧 thigh_f；灰线水平定格、橙线在
+                        放大子图（f5-f12）里逐帧分开；右侧数字卡
+                        255→0 / 308→200 / 109 帧 / 1.7778 px
+  P4-连续帧条带.png     focus 6-11，4 行 × 6 帧 = 24 格；原表每行
+                        -9.238° 不动，micro2 从 -9.300° 递增到 -9.444°；
+                        人物无甩飞 / 穿模 / 出框
+  P4-上线前后对照.png   jab6 / sweep14 / hit_heavy8 共 6 格；差异集中在
+                        膝踝，上身与手臂不受影响
+  shots/default_p4/     默认关整帧：中文无乱码、无「暂停」字样、两名
+                        角色分离、2D 火柴人正常
+
+三张板中文无乱码 / 缺字方框 / 文字重叠 / 裁切。首版曲线板放大图把
+f13 的大跳变纳入纵轴，0.2° 逐帧差被压平，已收窄到 f5-f12 重出。
+
+
+八、历史守卫债（实测，不篡改历史结论）
+----------------------------------------------------------------
+check_history_gates_p4.py before / after 各重跑 P1 / P2 / B / P3 四套
+verify，输出 json 逐字节备份 → 重跑 → 读 failed → sha256 原字节还原。
+
+  before：P1 49/52（3 红）、P2 53/59（6 红）、B 67/68（1 红）、
+          P3 80/80 ALL GREEN —— 全部是 P3 遗留红因
+  after ：新增 8 条红因，逐条点名
+    P1   original_three_unchanged_both
+    B    jump_numeric_fields_match_recomputation
+         peak_stats_match_recomputation
+    P3   only_two_diff_paths_player / only_two_diff_paths_foe
+         other_11_watched_files_unchanged
+         delta_13_bones_independently_recomputed
+         timeline_flat_stats_independently_recomputed
+    P2   无新增
+
+性质：全是历史归档里的旧表快照 / 旧值断言，改动作表必然红；
+不是真实回归。按项目约定只列债，不改历史脚本、不放宽阈值。
+
+
+九、本轮踩到并钉死的坑（可复用）
+----------------------------------------------------------------
+1. **历史守卫会「假证明」**：第一版 check_history_gates_p4.py 用系统
+   3.13 裸解释器跑，P1 verify 在 `from PIL import Image` 就崩栈
+   （ModuleNotFoundError），rc=1 看起来像正常 FAILED，读到的 failed
+   是旧 json → 只报 2 红，真实是 3 红。修法：换带 Pillow 的项目 venv
+   `Fantasy-Agent/.venv/Scripts/python.exe`，并加
+   `no_traceback_in_output` + `all_verdict_lines_present` 门禁。
+   守卫崩栈不算 CAUGHT，同理也不算「实测过历史守卫」。
+2. **扰动形状会撞历史红线**：micro2 首版用四分之一正弦
+   `w = A*sin(pi*k/(2*(m+1)))`，k=m 时 w≈A 正好把位移堆到段末；
+   wave 末帧是收招归位帧，pose_probe 的 1.5 px 归位红线从
+   1.100 px 被推到 1.569 px，自检 14/15。修法是端点保护 + 线性
+   递增权重，不是降幅、更不是放宽 1.5 px 阈值。
+3. **代表帧必须来自改动集**：沿用 P3 的 jab1/sweep7/hit_heavy1
+   会让 A/B 全零。改为 jab6/sweep14/hit_heavy8/focus6-11/wave29-30，
+   并在 runner 里加 `all_action_frames_are_edited_frames` 判据钉死。
+4. **图表的纵轴会吞掉要展示的信号**：0.2° 的逐帧差在 10° 量级主图
+   上不可见；放大子图第一版又把 f13 的 -7.3° 跳变算进范围，再次压平。
+   放大范围必须只覆盖定格段本身。
+5. **PNG 板底部文字裁切**：条带板 H=900 时第二行说明被切，改 980。
+6. 变异 needle 一律单行 ASCII bytes，避开 CRLF 多行锚点与中文 bytes
+   字面量；本轮 32 组零 DNR。
+
+
+十、复跑命令（在本证据区，用带 Pillow 的 venv）
+----------------------------------------------------------------
+set PY=C:\Users\tutic\IdeaProjects\Fantasy-Agent\.venv\Scripts\python.exe
+
+%PY% -u diag_native.py
+%PY% -u evaluate_candidates.py
+%PY% -u make_candidate_board.py
+%PY% -u make_native_plan.py
+%PY% -u run_micro2_tear.py          # headless Blender 5.2.0 LTS
+%PY% -u analyze_native_tear.py
+%PY% -u make_landing.py
+%PY% -u probe_layout.py
+%PY% -u check_history_gates_p4.py before
+%PY% -u apply_native.py             # --restore 可逐字节回退
+%PY% -u readback_native.py
+%PY% -u run_p4_probe.py
+%PY% -u run_all_checks_p4.py
+%PY% -u make_p4_boards.py
+%PY% -u check_history_gates_p4.py after
+%PY% -u verify_native.py
+%PY% -u mutation_native.py
+%PY% -u mutation_native.py --selftest-dnr
+%PY% -u make_filelist_p4.py
+
+
+十一、未决边界
+----------------------------------------------------------------
+* 224 / 255 对原生平台是整帧定格 hold 帧，属动画设计意图。本轮只让
+  数值曲线不再出现精确平台，没有把 hold 段改成连续动作；观感收益有限，
+  主要由数值分布与像素差支撑。
+* 引擎内 A/B 是同进程冻结静态帧（arena.paused 冻结，板上的「暂停」来自
+  探针），不是真实对局连续节奏。P4 未重跑「实跑一局」通道。
+* 默认关 3D 时 2D 关节表参与绘制，但最大位移 1.7778 px 由引擎读回
+  CardMotion 表量化；3D 开态 fighter.gd:_draw() 只画影子就 early
+  return，所以没做「3D 开态的 2D 像素 A/B」——该前提不成立，已在
+  p4_2d_readback.gd 注释里写明。
+* 历史守卫新增 8 条红因按约定列债，未修。
+* `#53`（可变形 .blend 的下一步方向）仍 pending。

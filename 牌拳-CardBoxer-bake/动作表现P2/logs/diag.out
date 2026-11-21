@@ -1,0 +1,26 @@
+TRACKS 15 FRAMES 284
+LEG raw {'n': 1136, 'mean': 10.1991, 'p95': 34.9608, 'max': 116.0986} delivered {'n': 1136, 'mean': 2.1599, 'p95': 3.0, 'max': 3.0} delivery 0.2118
+CAP 3.0 delivery 0.2118 peak 3.0 still_clipped 702
+CAP 6.0 delivery 0.3682 peak 6.0 still_clipped 526
+CAP 9.0 delivery 0.4901 peak 9.0 still_clipped 426
+CAP 12.0 delivery 0.5906 peak 12.0 still_clipped 355
+CAP 1000000000.0 delivery 1.0 peak 116.0986 still_clipped 0
+DUAL_ARM_TRACKS ['focus', 'hit_heavy', 'sweep', 'throw', 'wave']
+ONE_ARM_FROZEN ['backstep', 'cross', 'jab', 'sidestep', 'uppercut']
+DUAL_SIGNAL_FRAMES 66
+ARM_GAIN 1.0 peak_deg 28.0
+ARM_GAIN 1.25 peak_deg 35.0
+ARM_GAIN 1.5 peak_deg 42.0
+ARM_GAIN 2.0 peak_deg 56.0
+TORSO cap hits 13
+HIST mapping_equal True worst_p999 0.09365 arm15 [0.02808, 0.05411, 0.02749]
+CHECK fifteen_tracks True
+CHECK 284_frames True
+CHECK leg_is_hard_clamp True
+CHECK arm_is_gain_times_signal True
+CHECK raw_leg_signal_exceeds_cap True
+CHECK cap_raises_delivery True
+CHECK puppet_mapping_same_values True
+CHECK historical_sweep_has_arm15 True
+CHECK candidate_gains_monotonic True
+DIAG_P2_OK

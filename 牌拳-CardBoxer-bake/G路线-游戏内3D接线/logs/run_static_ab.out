@@ -1,0 +1,3 @@
+BASELINE rc=0 3.307s  OFF rc=0 3.248s
+CHANGED_PIXELS=0 prims=static_ab_g.json
+STATIC_AB_G_OK

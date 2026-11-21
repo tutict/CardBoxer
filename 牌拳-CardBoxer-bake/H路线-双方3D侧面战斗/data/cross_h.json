@@ -1,0 +1,49 @@
+{
+  "left_both_vs_only_player": {
+    "changed_px": 14155,
+    "total_px": 33390,
+    "ratio": 0.4239
+  },
+  "left_both_vs_only_foe": {
+    "changed_px": 18062,
+    "total_px": 33390,
+    "ratio": 0.5409
+  },
+  "right_both_vs_only_foe": {
+    "changed_px": 13882,
+    "total_px": 33920,
+    "ratio": 0.4093
+  },
+  "right_both_vs_only_player": {
+    "changed_px": 17911,
+    "total_px": 33920,
+    "ratio": 0.528
+  },
+  "left_roi": [
+    361,
+    280,
+    487,
+    545
+  ],
+  "right_roi": [
+    793,
+    280,
+    921,
+    545
+  ],
+  "retired_metric": "absolute ROI pixel identity across separate Godot processes (v1: ratio < 0.20)",
+  "primary_evidence": "data/vp_diag_h.json (same-process A/B, untouched ROI changed_px == 0)",
+  "v1_backup": "data/cross_h_v1_retired.json",
+  "directional_margin": {
+    "left": 0.117,
+    "right": 0.1187
+  },
+  "checks": {
+    "left_matches_player_more": true,
+    "right_matches_foe_more": true,
+    "left_margin_above_noise": true,
+    "right_margin_above_noise": true,
+    "no_absolute_identity_claim": true
+  },
+  "ok": true
+}

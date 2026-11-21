@@ -1,0 +1,10 @@
+BEFORE 42914328 0edcfe9e455f3c8c
+AFTER  42917240 f30c31a1b90234f6
+REIMPORT 0 11.225s errors 0
+CHECK backup_verified True
+CHECK glb_replaced True
+CHECK import_file_untouched True
+CHECK reimport_rc0 True
+CHECK no_script_errors True
+CHECK has_opengl_marker_or_clean True
+INSTALL_J_OK

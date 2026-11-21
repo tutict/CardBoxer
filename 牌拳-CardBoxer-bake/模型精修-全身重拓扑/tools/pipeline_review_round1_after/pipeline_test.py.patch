@@ -1,0 +1,239 @@
+--- tools/pipeline_review_round1_before/pipeline_test.py
++++ tools/pipeline_test.py
+@@ -4,6 +4,8 @@
+ import importlib.util
+ import json
+ import struct
++import subprocess
++import sys
+ import tempfile
+ import unittest
+ import zlib
+@@ -104,12 +106,13 @@
+     return canonical
+ 
+ 
+-def png_atlas():
++def png_atlas(colour=2,depth=8):
+     def chunk(kind, payload):
+         return struct.pack(">I",len(payload))+kind+payload+struct.pack(">I",zlib.crc32(kind+payload))
+     # Real decodable 4K RGB PNG, not an IHDR-only dimension stub.
+-    pixels=(b"\0"+b"\x80\x80\xff"*4096)*4096
+-    return b"\x89PNG\r\n\x1a\n"+chunk(b"IHDR",struct.pack(">IIBBBBB",4096,4096,8,2,0,0,0))+chunk(b"IDAT",zlib.compress(pixels))+chunk(b"IEND",b"")
++    channels={0:1,2:3,3:1,6:4}[colour];pixel=bytes([128])*channels*(depth//8)
++    pixels=(b"\0"+pixel*4096)*4096
++    return b"\x89PNG\r\n\x1a\n"+chunk(b"IHDR",struct.pack(">IIBBBBB",4096,4096,depth,colour,0,0,0))+chunk(b"IDAT",zlib.compress(pixels))+chunk(b"IEND",b"")
+ 
+ 
+ def acceptance_pair(directory):
+@@ -308,5 +311,210 @@
+                 api.canonicalize(src,raw,sockets,sockets,tmp/"profile.json")
+             self.assertEqual(sockets.read_bytes(),before)
+ 
++    def test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker(self):
++        api=self.module("canonical_glb");checker=self.module("check_retopology_assets")
++        cases=[("fractional",5126,"SCALAR",False,np.arange(9)+.25),
++               ("vector",5123,"VEC3",False,np.arange(9).reshape(3,3)),
++               ("normalized",5123,"SCALAR",True,np.arange(9)),
++               ("signed",5122,"SCALAR",False,np.arange(9))]
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src,candidate=acceptance_pair(tmp);base=api.GLB(candidate)
++            sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++            for label,component,kind,norm,data in cases:
++                b=api.Builder(base);p=b.doc["meshes"][0]["primitives"][0]
++                p["indices"]=b.accessor(data,kind,component);b.doc["accessors"][p["indices"]]["normalized"]=norm;b.write(candidate)
++                with self.subTest(case=label,consumer="checker"):
++                    result=checker.check_asset(src,candidate)
++                    self.assertIn("triangle_indices",[e["code"] for e in result["errors"]])
++                with self.subTest(case=label,consumer="bridge"):
++                    with self.assertRaisesRegex(ValueError,"triangle"):
++                        api.canonicalize(src,candidate,tmp/(label+".glb"),sockets,tmp/(label+".json"))
++
++    def test_f1_unsigned_scalar_triangle_indices_remain_accepted(self):
++        api=self.module("canonical_glb");checker=self.module("check_retopology_assets")
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);base=api.GLB(candidate)
++            for component in (5121,5123,5125):
++                b=api.Builder(base);p=b.doc["meshes"][0]["primitives"][0];p["indices"]=b.accessor(np.arange(9),"SCALAR",component);b.write(candidate)
++                self.assertTrue(checker.check_asset(src,candidate)["ok"])
++
++    def test_f1_malformed_source_triangle_storage_is_not_trusted(self):
++        api=self.module("canonical_glb");checker=self.module("check_retopology_assets")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src,candidate=acceptance_pair(tmp);b=api.Builder(api.GLB(src));p=b.doc["meshes"][0]["primitives"][0]
++            p["indices"]=b.accessor(np.arange(9)+.25,"SCALAR");b.write(src)
++            self.assertFalse(checker.check_asset(src,candidate)["ok"])
++            sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++            with self.assertRaisesRegex(ValueError,"triangle"):
++                api.canonicalize(src,candidate,tmp/"out.glb",sockets,tmp/"profile.json")
++
++    def test_f2_base_accessor_view_offsets_counts_and_strides_are_bounded(self):
++        api=self.module("canonical_glb");checker=self.module("check_retopology_assets")
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);base=api.GLB(candidate)
++            cases=[("short_view","view","byteLength",4), ("negative_view_offset","view","byteOffset",-4),
++                   ("fractional_view_offset","view","byteOffset",.5), ("backing_buffer_crossing","view","byteOffset",len(base.buffers[0])-4),
++                   ("negative_buffer","view","buffer",-1), ("negative_accessor_offset","accessor","byteOffset",-4),
++                   ("fractional_accessor_offset","accessor","byteOffset",.5), ("unaligned_accessor_offset","accessor","byteOffset",2),
++                   ("negative_count","accessor","count",-1), ("fractional_count","accessor","count",8.5),
++                   ("short_stride","view","byteStride",8), ("unaligned_stride","view","byteStride",13),
++                   ("zero_stride","view","byteStride",0)]
++            for label,section,key,value in cases:
++                b=api.Builder(base);idx=b.doc["meshes"][0]["primitives"][0]["attributes"]["POSITION"]
++                a=b.doc["accessors"][idx];v=b.doc["bufferViews"][a["bufferView"]]
++                (a if section=="accessor" else v)[key]=value;b.write(candidate)
++                with self.subTest(case=label,consumer="reader"):
++                    with self.assertRaises(ValueError):api.GLB(candidate).accessor(idx)
++                with self.subTest(case=label,consumer="checker"):
++                    self.assertFalse(checker.check_asset(src,candidate)["ok"])
++
++    def test_f2_sparse_bounds_offsets_unsigned_order_and_range_are_validated(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);b=api.Builder(api.GLB(candidate));idx=b.doc["meshes"][0]["primitives"][0]["attributes"]["POSITION"]
++            a=b.doc["accessors"][idx];a.pop("bufferView")
++            a["sparse"]={"count":2,"indices":{"bufferView":b.view(b"\0\1"),"componentType":5121},
++                         "values":{"bufferView":b.view(struct.pack("<6f",0,.4,0,.05,.4,0))}}
++            b.write(candidate);base=api.GLB(candidate)
++            mutations=[("negative_index_offset","indices_offset",-1), ("fractional_value_offset","values_offset",.5),
++                       ("negative_sparse_count","count",-1), ("too_many_sparse","count",10),
++                       ("signed_sparse_indices","index_component",5120), ("short_index_view","index_length",1),
++                       ("short_value_view","value_length",4), ("strided_sparse","index_stride",4),
++                       ("negative_sparse_index","indices",b"\xff\0"), ("out_of_range_sparse","indices",b"\0\x09"),
++                       ("duplicate_sparse","indices",b"\1\1"), ("unordered_sparse","indices",b"\1\0")]
++            for label,kind,value in mutations:
++                m=api.Builder(base);s=m.doc["accessors"][idx]["sparse"]
++                if kind=="indices_offset":s["indices"]["byteOffset"]=value
++                elif kind=="values_offset":s["values"]["byteOffset"]=value
++                elif kind=="count":s["count"]=value
++                elif kind=="index_component":s["indices"]["componentType"]=value
++                elif kind=="index_length":m.doc["bufferViews"][s["indices"]["bufferView"]]["byteLength"]=value
++                elif kind=="value_length":m.doc["bufferViews"][s["values"]["bufferView"]]["byteLength"]=value
++                elif kind=="index_stride":m.doc["bufferViews"][s["indices"]["bufferView"]]["byteStride"]=value
++                else:s["indices"]["bufferView"]=m.view(value)
++                m.write(candidate)
++                with self.subTest(case=label):
++                    with self.assertRaises(ValueError):api.GLB(candidate).accessor(idx)
++
++    def test_f2_valid_interleaved_sparse_and_padded_matrix_accessors(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);b=api.Builder(api.GLB(candidate))
++            inter=b.accessor([[1,2,3,99],[4,5,6,99]],"VEC4");entry=b.doc["accessors"][inter];entry["type"]="VEC3"
++            b.doc["bufferViews"][entry["bufferView"]]["byteStride"]=16
++            matrix=b.accessor([[1,2,3,0,4,5,6,0,7,8,9,0]],"MAT3",5121)
++            sparse=b.accessor([[0,0,0]]*3,"VEC3");s=b.doc["accessors"][sparse];s.pop("bufferView")
++            s["sparse"]={"count":1,"indices":{"bufferView":b.view(b"\x01"),"componentType":5121},"values":{"bufferView":b.view(struct.pack("<3f",7,8,9))}}
++            b.write(candidate);g=api.GLB(candidate)
++            np.testing.assert_array_equal(g.accessor(inter),[[1,2,3],[4,5,6]])
++            np.testing.assert_array_equal(g.accessor(matrix),[[1,2,3,4,5,6,7,8,9]])
++            np.testing.assert_array_equal(g.accessor(sparse),[[0,0,0],[7,8,9],[0,0,0]])
++
++    def test_f3_png_requires_supported_colour_and_legal_chunk_structure(self):
++        checker=self.module("check_retopology_assets");api=self.module("canonical_glb")
++        def chunk(kind,payload):return struct.pack(">I",len(payload))+kind+payload+struct.pack(">I",zlib.crc32(kind+payload))
++        rgb=png_atlas();head=rgb[:33];tail=rgb[33:];rgba=png_atlas(6)
++        compressed=zlib.compress((b"\0"+b"\0"*(4096*3))*4096);middle=len(compressed)//2
++        cases={"indexed_without_palette":png_atlas(3),
++               "unknown_critical":head+chunk(b"ABCD",b"test")+tail,
++               "noncontiguous_idat":head+chunk(b"IDAT",compressed[:middle])+chunk(b"tEXt",b"x\0y")+chunk(b"IDAT",compressed[middle:])+chunk(b"IEND",b""),
++               "late_palette":rgb[:-12]+chunk(b"PLTE",b"\0\0\0")+rgb[-12:],
++               "invalid_palette_length":head+chunk(b"PLTE",b"\0")+tail,
++               "rgba_transparency":rgba[:33]+chunk(b"tRNS",b"\0"*6)+rgba[33:]}
++        for label,data in cases.items():
++            with self.subTest(case=label):
++                with self.assertRaises(ValueError):checker.image_dimensions(data)
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);b=api.Builder(api.GLB(candidate));b.doc["images"][0]={"bufferView":b.view(cases["indexed_without_palette"]),"mimeType":"image/png"};b.write(candidate)
++            self.assertIn("pbr_image",[e["code"] for e in checker.check_asset(src,candidate)["errors"]])
++
++    def test_f3_rgb_rgba_8_and_16_bit_atlases_remain_decodable(self):
++        checker=self.module("check_retopology_assets")
++        for colour,depth in ((2,8),(6,8),(2,16),(6,16)):
++            with self.subTest(colour=colour,depth=depth):self.assertEqual(checker.image_dimensions(png_atlas(colour,depth)),[4096,4096])
++
++    def test_f4_unique_staging_preserves_source_named_as_legacy_temporary_file(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src=tmp/"out.glb.tmp";raw=tmp/"raw.glb";fixture(src);fixture(raw,True)
++            sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++            before=src.read_bytes();api.canonicalize(src,raw,tmp/"out.glb",sockets,tmp/"profile.json")
++            self.assertEqual(src.read_bytes(),before)
++            self.assertFalse(list(tmp.glob(".out.glb.*.tmp")))
++
++    def test_f4_external_buffers_and_images_are_protected_from_both_outputs(self):
++        api=self.module("canonical_glb")
++        for owner in ("raw","source"):
++            for resource in ("image","buffer"):
++                for destination in ("glb","profile"):
++                    with self.subTest(owner=owner,resource=resource,destination=destination),owned_fixture_dir() as tmp:
++                        tmp=Path(tmp);src=tmp/"source.glb";raw=tmp/"raw.glb";fixture(src);fixture(raw,True)
++                        external=tmp/(owner+"-external.bin");selected=raw if owner=="raw" else src
++                        doc,payload=read_glb(selected)
++                        if resource=="image":
++                            external.write_bytes(b"original image dependency");doc["images"]=[{"uri":external.name.replace(" ","%20")}]
++                        else:
++                            external.write_bytes(payload[:doc["buffers"][0]["byteLength"]]);doc["buffers"][0]["uri"]=external.name.replace(" ","%20")
++                        encoded=json.dumps(doc,separators=(",",":")).encode();encoded+=b" "*((-len(encoded))%4)
++                        if resource=="buffer":selected.write_bytes(struct.pack("<III",0x46546c67,2,20+len(encoded))+struct.pack("<II",len(encoded),0x4e4f534a)+encoded)
++                        else:selected.write_bytes(struct.pack("<III",0x46546c67,2,28+len(encoded)+len(payload))+struct.pack("<II",len(encoded),0x4e4f534a)+encoded+struct.pack("<II",len(payload),0x004e4942)+payload)
++                        sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++                        before={p:p.read_bytes() for p in (src,raw,sockets,external)}
++                        output=external if destination=="glb" else tmp/"out.glb";profile=external if destination=="profile" else tmp/"profile.json"
++                        with self.assertRaisesRegex(ValueError,"overwrite"):
++                            api.canonicalize(src,raw,output,sockets,profile)
++                        for path,data in before.items():self.assertEqual(path.read_bytes(),data)
++
++    def test_f4_cli_report_collision_is_rejected_before_any_output_write(self):
++        for target in ("source","raw","sockets","output","profile"):
++            with self.subTest(target=target),owned_fixture_dir() as tmp:
++                tmp=Path(tmp);paths={name:tmp/(name+suffix) for name,suffix in (("source",".glb"),("raw",".glb"),("sockets",".json"),("output",".glb"),("profile",".json"))}
++                fixture(paths["source"]);fixture(paths["raw"],True)
++                paths["sockets"].write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++                before={p:p.read_bytes() for p in (paths["source"],paths["raw"],paths["sockets"])}
++                process=subprocess.run([sys.executable,str(HERE/"canonical_glb.py"),*[str(paths[k]) for k in ("source","raw","output","sockets","profile")],"--report",str(paths[target])],capture_output=True,text=True)
++                self.assertNotEqual(process.returncode,0)
++                for p,data in before.items():self.assertEqual(p.read_bytes(),data)
++                self.assertFalse(paths["output"].exists());self.assertFalse(paths["profile"].exists())
++
++    def test_f4_report_writes_protect_external_dependencies_and_checker_inputs(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src=tmp/"source.glb";raw=tmp/"raw.glb";fixture(src);fixture(raw,True)
++            external=tmp/"image.png";external.write_bytes(png_atlas())
++            b=api.Builder(api.GLB(raw));b.doc["images"]=[{"uri":external.name}];b.write(raw)
++            sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++            before={p:p.read_bytes() for p in (src,raw,external,sockets)}
++            with self.subTest(consumer="bridge_report"):
++                process=subprocess.run([sys.executable,str(HERE/"canonical_glb.py"),str(src),str(raw),str(tmp/"out.glb"),str(sockets),str(tmp/"profile.json"),"--report",str(external)],capture_output=True,text=True)
++                self.assertNotEqual(process.returncode,0)
++                for p,data in before.items():self.assertEqual(p.read_bytes(),data)
++                self.assertFalse((tmp/"out.glb").exists())
++        for target in ("source","candidate","profile"):
++            with self.subTest(consumer="checker_report",target=target),owned_fixture_dir() as tmp:
++                tmp=Path(tmp);src,candidate=acceptance_pair(tmp);profile=tmp/"profile.json";profile.write_text("{}")
++                paths={"source":src,"candidate":candidate,"profile":profile};before={p:p.read_bytes() for p in paths.values()}
++                process=subprocess.run([sys.executable,str(HERE/"check_retopology_assets.py"),str(src),str(candidate),"--profile",str(profile),"--report",str(paths[target])],capture_output=True,text=True)
++                for p,data in before.items():self.assertEqual(p.read_bytes(),data)
++
++    def test_f4_percent_encoded_external_image_resolves_without_mutation(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src=tmp/"source.glb";raw=tmp/"raw.glb";fixture(src);fixture(raw,True)
++            image=tmp/"image space.png";pixels=png_atlas();image.write_bytes(pixels)
++            b=api.Builder(api.GLB(raw));b.doc["images"]=[{"uri":"image%20space.png"}];b.write(raw)
++            sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++            api.canonicalize(src,raw,tmp/"out.glb",sockets,tmp/"profile.json")
++            output=api.GLB(tmp/"out.glb");self.assertEqual(output.view(output.doc["images"][0]["bufferView"]),pixels)
++            self.assertEqual(image.read_bytes(),pixels)
++
++    def test_f4_report_does_not_drop_dependencies_when_another_uri_is_unsupported(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src,candidate=acceptance_pair(tmp);dependency=tmp/"dependency.png";data=png_atlas();dependency.write_bytes(data)
++            b=api.Builder(api.GLB(candidate));b.doc["images"][0]={"uri":dependency.name};b.doc["images"].append({"uri":"https://invalid.example/image.png"});b.write(candidate)
++            process=subprocess.run([sys.executable,str(HERE/"check_retopology_assets.py"),str(src),str(candidate),"--report",str(dependency)],capture_output=True,text=True)
++            self.assertNotEqual(process.returncode,0);self.assertEqual(dependency.read_bytes(),data)
++
+ 
+ if __name__ == "__main__": unittest.main(verbosity=2)

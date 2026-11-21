@@ -1,0 +1,4 @@
+M1 CAUGHT red=True green=True restore=True
+M2 CAUGHT red=True green=True restore=True
+M3 CAUGHT red=True green=True restore=True
+{"caught": 3, "clean": 17, "verdict": "MUTATION_OK"}

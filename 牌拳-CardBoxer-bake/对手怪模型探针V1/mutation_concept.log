@@ -1,0 +1,6 @@
+M1 CAUGHT  target_red=True sentinel_green=True restore=True red=['prompt_ok_and_sha_self_consistent']
+M2 CAUGHT  target_red=True sentinel_green=True restore=True red=['quota_429_recorded_no_fake_artifacts']
+M3 CAUGHT  target_red=True sentinel_green=True restore=True red=['concept_board_valid']
+M4 CAUGHT  target_red=True sentinel_green=True restore=True red=['board_bboxes_are_measured_not_guessed']
+
+4/4 CAUGHT  restore=4/4  did_not_run=0  clean_rerun=GREEN  MUTATION_CONCEPT_OK

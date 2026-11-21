@@ -1,0 +1,7 @@
+RUN 6.043s rc=0 gl=True errors=0
+LAYER ready=True bones=13 frames_applied=79 tex_drawn=True
+SHOT off          1280x720 err=0 prims=5136 calls=117.0
+SHOT on-stance    1280x720 err=0 prims=118856 calls=67.0
+SHOT on-jab6      1280x720 err=0 prims=118856 calls=67.0
+SHOT on-wave17    1280x720 err=0 prims=118856 calls=67.0
+THREE_D_AB_OK

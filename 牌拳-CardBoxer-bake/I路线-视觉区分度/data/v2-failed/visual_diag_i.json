@@ -1,0 +1,117 @@
+{
+  "threshold_sum_rgb": 18,
+  "left_roi": [
+    361,
+    280,
+    487,
+    545
+  ],
+  "right_roi": [
+    793,
+    280,
+    921,
+    545
+  ],
+  "diffs": {
+    "player_roi_noop": {
+      "changed_px": 0,
+      "total_px": 33390,
+      "ratio": 0.0,
+      "mae": 0.0
+    },
+    "foe_roi_noop": {
+      "changed_px": 0,
+      "total_px": 33920,
+      "ratio": 0.0,
+      "mae": 0.0
+    },
+    "player_roi_on_vs_plain": {
+      "changed_px": 7940,
+      "total_px": 33390,
+      "ratio": 0.2378,
+      "mae": 6.1702
+    },
+    "foe_roi_on_vs_plain": {
+      "changed_px": 16220,
+      "total_px": 33920,
+      "ratio": 0.4782,
+      "mae": 42.7959
+    },
+    "player_roi_on_vs_base": {
+      "changed_px": 18057,
+      "total_px": 33390,
+      "ratio": 0.5408,
+      "mae": 55.9464
+    },
+    "foe_roi_on_vs_again": {
+      "changed_px": 0,
+      "total_px": 33920,
+      "ratio": 0.0,
+      "mae": 0.0
+    },
+    "full_frame_on_vs_plain": {
+      "changed_px": 24691,
+      "total_px": 921600,
+      "ratio": 0.0268,
+      "mae": 1.8203
+    }
+  },
+  "masks": {
+    "player_on": {
+      "mask_px": 18057,
+      "rgb": [
+        97.47,
+        88.51,
+        86.32
+      ],
+      "luma": 90.77,
+      "red_minus_blue": 11.15,
+      "width_px": 126,
+      "mask_ratio": 0.5408
+    },
+    "player_plain": {
+      "mask_px": 18062,
+      "rgb": [
+        108.78,
+        100.09,
+        96.75
+      ],
+      "luma": 101.87,
+      "red_minus_blue": 12.03,
+      "width_px": 126,
+      "mask_ratio": 0.5409
+    },
+    "foe_on": {
+      "mask_px": 18909,
+      "rgb": [
+        50.99,
+        38.28,
+        39.23
+      ],
+      "luma": 42.83,
+      "red_minus_blue": 11.76,
+      "width_px": 128,
+      "mask_ratio": 0.5575
+    },
+    "foe_plain": {
+      "mask_px": 17909,
+      "rgb": [
+        119.55,
+        114.99,
+        114.2
+      ],
+      "luma": 116.25,
+      "red_minus_blue": 5.35,
+      "width_px": 128,
+      "mask_ratio": 0.528
+    }
+  },
+  "metrics": {
+    "luma_gap_player_minus_foe_on": 47.94,
+    "luma_gap_player_minus_foe_plain": -14.38,
+    "foe_luma_drop_on_vs_plain": 73.42,
+    "red_blue_shift_delta": -7.29,
+    "foe_width_ratio_on_over_plain": 1.0,
+    "player_luma_change_on_vs_plain": -11.1
+  }
+}

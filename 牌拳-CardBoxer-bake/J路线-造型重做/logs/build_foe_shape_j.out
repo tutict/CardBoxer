@@ -1,0 +1,18 @@
+00:00.875  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\对手怪-可变形连续壳.blend"
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\build_foe_shape_j.py:61: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if mat and mat.use_nodes:
+INFO Draco is available, use library at D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+20:58:48 | INFO: Starting glTF 2.0 export
+20:58:48 | WARNING: Armature must be the parent of skinned meshArmature is selected by its name, but may be false in case of instances
+20:58:48 | INFO: Extracting primitive: node_0.002
+20:58:49 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+20:58:49 | INFO: Primitives created: 1
+20:58:49 | WARNING: There are more than 4 joint vertex influences.The 4 with highest weight will be used (and normalized).
+20:58:49 | INFO: Finished glTF 2.0 export in 0.6339659690856934 s
+
+SURGERY {'SKIRT': 1684, 'HEAD_ORNAMENT': 3532, 'CAPE_OR_PANEL': 2122} moved 7338 uv_loops 31461
+INTEGRITY {'verts_before': 64024, 'verts_after': 64024, 'polygons_before': 79998, 'polygons_after': 79998, 'uv_layers': 1, 'materials': 1, 'textures_same': True, 'weighted_before': 64006, 'weighted_after': 64006}
+EXPORT 42917240 B f30c31a1b90234f6
+FOE_SHAPE_J_OK
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

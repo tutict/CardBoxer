@@ -1,0 +1,76 @@
+=== plateau_diagnosis.json ===
+  source: dict keys=['motion_input', 'card_motion', 'live_match']
+  eps: dict keys=['exact_deg', 'perceptual_deg']
+  raw_abs_deg: dict keys=['n', 'mean', 'p95', 'max']
+  q1_cause: dict keys=['shipped_cap_deg', 'exact_flat_pairs', 'exact_flat_from_native_track', 'exact_flat_from_clamp', 'clamp_share_of_exact_flat', 'perceptual_flat_pairs', 'perceptual_flat_from_clamp', 'clamp_share_of_perceptual_flat']
+  mappings: dict keys=['hard09', 'hard12', 'tanh09', 'tanh12', 'atan09', 'atan12', 'atan15', 'log09', 'log12', 'norm09_track_peak']
+  contextual_track_peaks_deg: dict keys=['jab', 'cross', 'uppercut', 'sweep', 'rush', 'backstep', 'guard', 'sidestep', 'focus', 'recover', 'wave', 'throw']
+  live_match_curves: dict keys=['hard09', 'tanh12', 'atan12', 'atan15']
+  checks: dict keys=['fifteen_tracks', 'frames_284', 'raw_distribution_matches_p2', 'shipped_hard09_has_plateau', 'both_causes_sum_to_total', 'both_causes_are_material', 'soft_mapping_removes_every_clamp_flat_pair', 'soft_mapping_reaches_native_track_floor', 'contextual_norm_cannot_beat_stateless', 'soft_mapping_shortens_longest_flat_run', 'soft_mapping_improves_perceptual_flatness', 'atan_beats_tanh_on_perceptual_flatness']
+  failed: list len=0 first_type=-
+  ok: bool = True
+=== plateau_plan.json ===
+  glb: str = C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer\assets\3d\player-rigged.glb
+  px_to_m: float = 0.01
+  chain: list len=13 first_type=list
+  apose_points: dict keys=['head', 'shoulder', 'hip', 'f_elbow', 'f_hand', 'b_elbow', 'b_hand', 'f_knee', 'f_foot', 'b_knee', 'b_foot', 'A']
+  bones: list len=13 first_type=str
+  cases: list len=5 first_type=dict
+  poses: list len=1420 first_type=dict
+  frame_count: int = 284
+  frames: list len=284 first_type=dict
+  legend: dict keys=['delta_deg', 'hard', 'atan', 'tanh']
+=== full_tear_blender.json ===
+  blender: str = 5.2.0 LTS
+  glb: str = C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer\assets\3d\player-rigged.glb
+  vertices: int = 57934
+  edges: int = 136092
+  armature_bones: int = 14
+  chain_bones: int = 13
+  missing_bones: list len=0 first_type=-
+  cases: list len=5 first_type=dict
+  frames: list len=284 first_type=dict
+  poses_total_in_plan: int = 1420
+  poses_evaluated: int = 1420
+  elapsed_s: float = 285.28
+  max_pose_matrix_err: float = 4.77e-07
+  rows: list len=1420 first_type=dict
+=== p3_probe.json ===
+  frames: list len=12 first_type=list
+  modes: list len=4 first_type=str
+  mode_live_spec: dict keys=['shipped', 'rolled_back', 'reapplied', 'legacy_compat']
+  mode_math_spec: dict keys=['shipped', 'rolled_back', 'reapplied', 'legacy_compat']
+  main: dict keys=['tag', 'seconds', 'rc', 'payload', 'script_errors', 'scenario_errors']
+  default: dict keys=['tag', 'seconds', 'rc', 'payload', 'script_errors', 'scenario_errors']
+  rows: list len=48 first_type=dict
+  diff_px: dict keys=['shipped_vs_rolled_back:stance00:player', 'shipped_vs_rolled_back:stance00:foe', 'shipped_vs_rolled_back:jab01:player', 'shipped_vs_rolled_back:jab01:foe', 'shipped_vs_rolled_back:sweep07:player', 'shipped_vs_rolled_back:sweep07:foe', 'shipped_vs_rolled_back:hit_heavy01:player', 'shipped_vs_rolled_back:hit_heavy01:foe', 'shipped_vs_rolled_back:sweep14:player', 'shipped_vs_rolled_back:sweep14:foe', 'shipped_vs_rolled_back:sweep15:player', 'shipped_vs_rolled_back:sweep15:foe']
+  action_diff_gt_200: int = 22
+  action_diff_max: int = 17608
+  mode_mismatches: list len=0 first_type=-
+  delta_mismatches: list len=0 first_type=-
+  checks: dict keys=['main_marker_parsed', 'main_no_script_errors', 'main_no_scenario_errors', 'use_3d_and_15_cards', 'shipped_readback_atan_12_both_sides', 'live_mode_and_cap_match_each_scene', 'hp_unchanged', 'delta_matches_python_formula', 'every_action_frame_changed_both_sides', 'stance_untouched', 'shipped_reapplied_identical_same_process', 'legacy_compat_equals_rollback_bytewise']
+  failed: list len=0 first_type=-
+  ok: bool = True
+=== baseline_p3.json ===
+  game: str = C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer
+  to_change: list len=3 first_type=str
+  files: dict keys=['scripts/arena.gd', 'scripts/fighter_3d_layer.gd', 'data/motion_input.json', 'data/motion_input_foe.json', 'scripts/fighter.gd', 'scripts/rig_driver.gd', 'scripts/battle_motion_p0.gd', 'scripts/battle_rhythm.gd', 'scripts/card_motion.gd', 'scripts/hud.gd', 'data/card_motion.json', 'project.godot']
+  backups: dict keys=['scripts/rig_driver.gd', 'data/motion_input.json', 'data/motion_input_foe.json']
+  checks: dict keys=['all_14_watched_exist', 'three_backups_match_live_sha']
+  ok: bool = True
+=== p3_boards.json ===
+  made: dict keys=['timeline', 'strip', 'compare']
+  checks: dict keys=['three_boards_written', 'timeline_from_129_real_samples', 'timeline_plateau_reduced', 'timeline_distinct_increased', 'strip_32_panels', 'compare_three_frames']
+  failed: list len=0 first_type=-
+  ok: bool = True
+=== history_gates_p3.json ===
+  rows: list len=3 first_type=dict
+  checks: dict keys=['all_three_reports_present_and_parsed', 'all_three_restored_bytewise', 'no_verify_crashed', 'no_history_script_modified', 'at_least_one_historical_red']
+  failed_checks: list len=0 first_type=-
+  ok: bool = True
+=== all_checks_p3.json ===
+  tag: str = plateau_p3
+  total: int = 15
+  failed: list len=0 first_type=-
+  result: str = ALL GREEN
+  checks: list len=15 first_type=dict

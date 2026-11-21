@@ -1,0 +1,20 @@
+CASE hard09_baseline worst_p999 0.043694 over_anchor 0 gt5cm 71 leg_mean 6.813 leg_max 9.0 flat 482 gap 0.0
+CASE atan09 worst_p999 0.042233 over_anchor 0 gt5cm 67 leg_mean 5.5059 leg_max 8.7175 flat 255 gap 0.0
+CASE atan12 worst_p999 0.042737 over_anchor 0 gt5cm 73 leg_mean 6.7178 leg_max 11.498 flat 255 gap 0.0
+CASE atan15 worst_p999 0.044806 over_anchor 0 gt5cm 91 leg_mean 7.7404 leg_max 14.2163 flat 255 gap 0.0
+CASE tanh12 worst_p999 0.043412 over_anchor 0 gt5cm 83 leg_mean 7.8331 leg_max 12.0 flat 255 gap 0.0
+PASSING ['atan09', 'atan12', 'atan15', 'hard09_baseline']
+RECOMMENDED atan12
+CHECK all_1420_poses_evaluated True
+CHECK five_cases True
+CHECK each_case_284_frames True
+CHECK glb_mesh_shape True
+CHECK pose_matrices_readback_accurate True
+CHECK external_anchor_matches_p2 True
+CHECK baseline_within_anchor True
+CHECK representative_frames_subset_of_full True
+CHECK representative_never_worse_than_full True
+CHECK all_candidates_within_anchor True
+CHECK all_candidates_no_frame_over_anchor True
+CHECK recommended_is_passing_and_at_platform_floor True
+PLATEAU_TEAR_OK

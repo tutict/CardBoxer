@@ -1,0 +1,7 @@
+[player/S1] guard=5902 diff=75602 bbox=[218, 95, 566, 677] maxdeg=70.0
+[player/S2] guard=5630 diff=85525 bbox=[235, 96, 538, 679] maxdeg=95.0
+[player/S3] guard=5699 diff=89415 bbox=[249, 99, 530, 680] maxdeg=112.0
+[foe/S1] guard=9232 diff=87298 bbox=[197, 97, 582, 681] maxdeg=70.0
+[foe/S2] guard=9131 diff=99649 bbox=[224, 100, 556, 685] maxdeg=95.0
+[foe/S3] guard=9248 diff=107454 bbox=[257, 104, 548, 687] maxdeg=112.0
+STANCE_PROBE_OK

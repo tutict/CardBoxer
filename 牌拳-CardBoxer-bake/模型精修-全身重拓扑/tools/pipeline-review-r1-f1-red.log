@@ -1,0 +1,87 @@
+test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) ... 
+  test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='fractional', consumer='checker') ... FAIL
+  test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='fractional', consumer='bridge') ... FAIL
+  test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='vector', consumer='checker') ... FAIL
+  test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='vector', consumer='bridge') ... FAIL
+  test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='normalized', consumer='checker') ... FAIL
+  test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='normalized', consumer='bridge') ... FAIL
+  test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='signed', consumer='checker') ... FAIL
+  test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='signed', consumer='bridge') ... FAIL
+test_f1_unsigned_scalar_triangle_indices_remain_accepted (__main__.CanonicalTests.test_f1_unsigned_scalar_triangle_indices_remain_accepted) ... ok
+
+======================================================================
+FAIL: test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='fractional', consumer='checker')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 325, in test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker
+    self.assertIn("triangle_indices",[e["code"] for e in result["errors"]])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'triangle_indices' not found in []
+
+======================================================================
+FAIL: test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='fractional', consumer='bridge')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 327, in test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker
+    with self.assertRaisesRegex(ValueError,"triangle"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='vector', consumer='checker')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 325, in test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker
+    self.assertIn("triangle_indices",[e["code"] for e in result["errors"]])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'triangle_indices' not found in []
+
+======================================================================
+FAIL: test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='vector', consumer='bridge')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 327, in test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker
+    with self.assertRaisesRegex(ValueError,"triangle"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='normalized', consumer='checker')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 325, in test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker
+    self.assertIn("triangle_indices",[e["code"] for e in result["errors"]])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'triangle_indices' not found in ['degenerate_triangles']
+
+======================================================================
+FAIL: test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='normalized', consumer='bridge')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 327, in test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker
+    with self.assertRaisesRegex(ValueError,"triangle"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='signed', consumer='checker')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 325, in test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker
+    self.assertIn("triangle_indices",[e["code"] for e in result["errors"]])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'triangle_indices' not found in []
+
+======================================================================
+FAIL: test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker (__main__.CanonicalTests.test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker) (case='signed', consumer='bridge')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 327, in test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker
+    with self.assertRaisesRegex(ValueError,"triangle"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.600s
+
+FAILED (failures=8)

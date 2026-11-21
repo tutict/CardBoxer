@@ -1,0 +1,11 @@
+16:19:36 | INFO: Data are loaded, start creating Blender stuff
+16:19:36 | INFO: Blender create Mesh node node_0.002
+16:19:36 | INFO: glTF import finished in 0.24s
+WELDED 39921 79986
+Info: QuadriFlow: Remeshing completed
+QUADFLOW 38.057124614715576 30897 30883
+00:40.078  image.write      | ERROR OpenImageIO write failed: Could not open file "C:\Users\tutic\.thumbnails\large\blender_33560_760b77636269bf4eeab587e204f3febf.png.png"
+Info: Saved as "quadflow-probe.blend"
+Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:35:40)
+
+Blender quit

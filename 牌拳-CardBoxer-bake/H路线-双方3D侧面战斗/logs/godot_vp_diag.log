@@ -1,0 +1,7 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 621.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5080 Laptop GPU
+
+HVP_START out=C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\H路线-双方3D侧面战斗\shots\vp_diag
+HVP_JSON {"foe_glb":"res://assets/3d/foe-rigged.glb","foe_layer_ready":true,"player_glb":"res://assets/3d/player-rigged.glb","player_layer_ready":true,"shots":[{"h":720,"name":"off","path":"C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\H路线-双方3D侧面战斗\\shots\\vp_diag/vp-off.png","save_error":0,"w":1280},{"h":720,"name":"both","path":"C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\H路线-双方3D侧面战斗\\shots\\vp_diag/vp-both.png","save_error":0,"w":1280},{"h":720,"name":"player-hidden","path":"C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\H路线-双方3D侧面战斗\\shots\\vp_diag/vp-player-hidden.png","save_error":0,"w":1280},{"h":720,"name":"foe-hidden","path":"C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\H路线-双方3D侧面战斗\\shots\\vp_diag/vp-foe-hidden.png","save_error":0,"w":1280},{"h":720,"name":"neither","path":"C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\H路线-双方3D侧面战斗\\shots\\vp_diag/vp-neither.png","save_error":0,"w":1280}]}
+
+--- STDERR ---

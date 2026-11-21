@@ -1,0 +1,12 @@
+RC 0 marker True
+foe surfaces 1 [('StandardMaterial3D', 's/3d/foe-rigged_texture_pbr_20250901.png')]
+player surfaces 1 [('StandardMaterial3D', 'd/player-rigged_texture_pbr_20250901.png')]
+CHECK rc0 True
+CHECK marker_present True
+CHECK no_parse_error True
+CHECK both_loaded True
+CHECK both_have_standard_material True
+CHECK both_have_albedo_texture True
+CHECK albedo_colors_are_white True
+CHECK textures_differ_between_roles True
+MATERIAL_I_OK

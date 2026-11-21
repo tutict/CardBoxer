@@ -1,0 +1,9 @@
+01:08:47 | INFO: Data are loaded, start creating Blender stuff
+01:08:47 | INFO: Blender create Mesh node node_0.002
+01:08:48 | INFO: glTF import finished in 0.28s
+PLAYER surface_preserving_quad_reflow 31922 38789
+PLAYER explicit_feature_loops {}
+PLAYER structured_face {'features': {'eye_b': {'connected_to_face_grid': True, 'boundary_vertices': 38, 'concentric_rings': 5}, 'eye_f': {'connected_to_face_grid': True, 'boundary_vertices': 38, 'concentric_rings': 5}, 'lips': {'connected_to_face_grid': True, 'boundary_vertices': 28, 'concentric_rings': 5}}, 'grid': [32, 30], 'internal_cap_triangles': 137, 'closed_face_component': True}
+00:05.766  image.write      | ERROR OpenImageIO write failed: Could not open file "C:\Users\tutic\.thumbnails\large\blender_14644_7abc053261b0ef7162aa506fd9171ca3.png.png"
+Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:35:40)
+Info: Saved as "topology-diagnostic.blend"

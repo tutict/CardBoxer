@@ -1,0 +1,64 @@
+{
+  "blender": "5.2.3 LTS",
+  "topology": {
+    "verts": 51587,
+    "faces": 79996,
+    "edges": 130784,
+    "non_manifold_edges": 21580,
+    "boundary_edges": 21580,
+    "connected_components": 861,
+    "component_sizes_top10": [
+      1281,
+      1106,
+      1102,
+      951,
+      875,
+      735,
+      712,
+      674,
+      615,
+      605
+    ],
+    "component_singletons": 0
+  },
+  "experiments": {
+    "C1_minimal": {
+      "seconds": 0.33,
+      "error": null,
+      "vertex_groups": 3,
+      "covered_vertices": 0,
+      "total_vertices": 51587,
+      "coverage": 0.0,
+      "per_group": {}
+    },
+    "C2_scaled": {
+      "seconds": 0.31,
+      "error": null,
+      "vertex_groups": 13,
+      "covered_vertices": 0,
+      "total_vertices": 51587,
+      "coverage": 0.0,
+      "per_group": {}
+    },
+    "C3_apose": {
+      "seconds": 0.29,
+      "error": null,
+      "vertex_groups": 13,
+      "covered_vertices": 0,
+      "total_vertices": 51587,
+      "coverage": 0.0,
+      "per_group": {}
+    },
+    "C4_nearest_segment_rigid": {
+      "weights_seconds": 0.51,
+      "vertex_groups": 13,
+      "weighted_vertices": 51587,
+      "coverage": 1.0,
+      "rotation_deg": 35,
+      "pose_bone": "upperarm_f",
+      "max_displacement_m": 0.31552,
+      "mean_displacement_m": 0.00697,
+      "moved_vertices_gt_1cm": 3430
+    }
+  }
+}

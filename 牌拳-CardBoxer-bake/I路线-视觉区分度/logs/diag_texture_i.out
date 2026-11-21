@@ -1,0 +1,11 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\I路线-视觉区分度\diag_texture_i.py:34: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  px = list(im.resize((256, 256), Image.LANCZOS).getdata())
+player mean_all [109.89, 103.51, 95.4] lit_ratio 0.9837 mean_lit [111.62, 105.12, 96.86]
+foe mean_all [33.18, 32.23, 31.4] lit_ratio 0.9527 mean_lit [34.48, 33.51, 32.63]
+DELTAS {'mean_all_luma_player_minus_foe': 70.66, 'mean_lit_luma_player_minus_foe': 70.99, 'lit_ratio_player_minus_foe': 0.031}
+ROOT_CAUSE 贴图确实整体暗（UV 岛亮度差 70.99），黑填充只差 3.1%；渲染亮度差被抹平的原因不在贴图，转查材质/光照
+CHECK full_image_luma_gap_is_large True
+CHECK uv_island_gap_same_order True
+CHECK black_fill_not_the_cause True
+CHECK both_are_4096 True
+TEXTURE_I_OK

@@ -1,0 +1,10 @@
+CLAMP_RUN {'card': 'hit_heavy', 'bone': 'shin_b', 'start': 8, 'end': 20, 'pairs': 12, 'out_deg': -9.0, 'raw_span_deg': [-19.01, -9.6]}
+CLAMP_RUN {'card': 'hit_heavy', 'bone': 'thigh_b', 'start': 8, 'end': 20, 'pairs': 12, 'out_deg': 9.0, 'raw_span_deg': [9.37, 18.07]}
+CLAMP_RUN {'card': 'sweep', 'bone': 'shin_b', 'start': 14, 'end': 26, 'pairs': 12, 'out_deg': -9.0, 'raw_span_deg': [-78.15, -11.0]}
+CLAMP_RUN {'card': 'sweep', 'bone': 'thigh_b', 'start': 14, 'end': 26, 'pairs': 12, 'out_deg': 9.0, 'raw_span_deg': [12.99, 53.27]}
+CLAMP_RUN {'card': 'sweep', 'bone': 'thigh_f', 'start': 14, 'end': 24, 'pairs': 10, 'out_deg': -9.0, 'raw_span_deg': [-53.59, -11.86]}
+CLAMP_RUN {'card': 'cross', 'bone': 'shin_f', 'start': 11, 'end': 16, 'pairs': 5, 'out_deg': 9.0, 'raw_span_deg': [9.31, 22.7]}
+CLAMP_RUN {'card': 'focus', 'bone': 'thigh_b', 'start': 12, 'end': 17, 'pairs': 5, 'out_deg': 9.0, 'raw_span_deg': [9.83, 34.96]}
+CLAMP_RUN {'card': 'backstep', 'bone': 'shin_b', 'start': 3, 'end': 7, 'pairs': 4, 'out_deg': -9.0, 'raw_span_deg': [-36.59, -11.0]}
+CLAMP_RUN {'card': 'backstep', 'bone': 'thigh_b', 'start': 3, 'end': 7, 'pairs': 4, 'out_deg': 9.0, 'raw_span_deg': [9.37, 20.53]}
+CLAMP_RUN {'card': 'focus', 'bone': 'shin_b', 'start': 12, 'end': 16, 'pairs': 4, 'out_deg': -9.0, 'raw_span_deg': [-23.09, -10.22]}

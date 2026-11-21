@@ -1,0 +1,7 @@
+M1 CAUGHT  target_red=True sentinel_green=True restore=True  把亮牌阶段时长改成与 arena.gd 不符的 2.5s
+M2 CAUGHT  target_red=True sentinel_green=True restore=True  把三同赢家动作指向不存在的卡轨道
+M3 CAUGHT  target_red=True sentinel_green=True restore=True  删掉唯一的赢家事件，试探空集真空通过
+M4 CAUGHT  target_red=True sentinel_green=True restore=True  篡改源码基线指纹，假装源码没动
+
+clean_rerun=GREEN  exit=0  red=[]
+4/4 CAUGHT  restore=4/4  did_not_run=0  all_restored=True  MUTATION_SPEC_OK

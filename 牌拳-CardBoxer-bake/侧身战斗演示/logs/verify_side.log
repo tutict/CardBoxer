@@ -1,0 +1,19 @@
+[PASS] S01_stance_candidate_curve: selected=S2 monotone_diff=True
+[PASS] S02_stance_frame_equals_selected_probe: tags=player,foe byte_identical_bad=[]
+[PASS] S03_side_view_semantics: flip=True no_retarget=True hips_zero=True
+[PASS] S04_local_relative_angle_and_caps: shape=True world_max=179.099 local_max=18.0 cap=18.0 gain=0.55
+[PASS] S05_facing_rule: player=right (+x) foe=left (-x)
+[PASS] S06_frames_complete_and_hashed: per_tag=73 bad=[] total_bad=0
+[PASS] S07_duration_conservation: total=11200 expected=11200 enc=70/140 frame_ms=80
+[PASS] S08_gif_frames_readable: canvas=880x500 sampled_bad=[]
+[PASS] S09_hitstop_is_three_frames: f27_vs_f29=643px (<3000) f19_vs_f27=279921px (>5000)
+[PASS] S10_script_spec_hp_rage: spec_bad=[] final=86:81
+[PASS] S11_source_fingerprints: checked=7 mismatched=[]
+[PASS] S12_source_wiring: needles=9 missing=[]
+[PASS] S13_boards_nonempty: boards=4 bad=[]
+[PASS] S14_mesh_warp_wired: grid=1024 far=813
+[PASS] S15_negative_results_archived: v1_png=9 v2_png=9
+[PASS] S16_side_differs_from_front: same_hit_frame_diff=65857px (>20000)
+[PASS] S17_not_claimed_is_explicit: action_not_claimed_len=61
+[PASS] S18_game_sources_untouched: files=7 changed=[]
+VERIFY_SIDE 18/18 SIDE_BATTLE_VERIFIED

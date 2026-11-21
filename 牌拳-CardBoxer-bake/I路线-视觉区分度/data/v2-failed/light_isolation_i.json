@@ -1,0 +1,235 @@
+{
+  "payload": {
+    "rows": [
+      {
+        "foe_lights": [
+          {
+            "b": 0.9,
+            "energy": 1.9,
+            "g": 0.96,
+            "r": 1.0
+          },
+          {
+            "b": 1.0,
+            "energy": 0.75,
+            "g": 0.79,
+            "r": 0.68
+          },
+          {
+            "b": 0.7,
+            "energy": 0.55,
+            "g": 0.85,
+            "r": 1.0
+          },
+          {
+            "b": 1.0,
+            "energy": 0.95,
+            "g": 0.85,
+            "r": 0.76
+          }
+        ],
+        "foe_overrides": 1,
+        "foe_state": {
+          "foe_materials": 1,
+          "foe_visual": true,
+          "light_rows": 4,
+          "mesh_rows": 1,
+          "role": "foe"
+        },
+        "player_lights": [
+          {
+            "b": 0.9,
+            "energy": 1.9,
+            "g": 0.96,
+            "r": 1.0
+          },
+          {
+            "b": 1.0,
+            "energy": 0.75,
+            "g": 0.79,
+            "r": 0.68
+          },
+          {
+            "b": 0.7,
+            "energy": 0.55,
+            "g": 0.85,
+            "r": 1.0
+          },
+          {
+            "b": 1.0,
+            "energy": 0.95,
+            "g": 0.85,
+            "r": 0.76
+          }
+        ],
+        "player_overrides": 0,
+        "player_state": {
+          "foe_materials": 0,
+          "foe_visual": false,
+          "light_rows": 4,
+          "mesh_rows": 1,
+          "role": "player"
+        },
+        "tag": "on"
+      },
+      {
+        "foe_lights": [
+          {
+            "b": 0.9,
+            "energy": 1.9,
+            "g": 0.96,
+            "r": 1.0
+          },
+          {
+            "b": 1.0,
+            "energy": 0.75,
+            "g": 0.79,
+            "r": 0.68
+          },
+          {
+            "b": 0.7,
+            "energy": 0.55,
+            "g": 0.85,
+            "r": 1.0
+          },
+          {
+            "b": 1.0,
+            "energy": 0.95,
+            "g": 0.85,
+            "r": 0.76
+          }
+        ],
+        "foe_overrides": 0,
+        "foe_state": {
+          "foe_materials": 1,
+          "foe_visual": false,
+          "light_rows": 4,
+          "mesh_rows": 1,
+          "role": "foe"
+        },
+        "player_lights": [
+          {
+            "b": 0.9,
+            "energy": 1.9,
+            "g": 0.96,
+            "r": 1.0
+          },
+          {
+            "b": 1.0,
+            "energy": 0.75,
+            "g": 0.79,
+            "r": 0.68
+          },
+          {
+            "b": 0.7,
+            "energy": 0.55,
+            "g": 0.85,
+            "r": 1.0
+          },
+          {
+            "b": 1.0,
+            "energy": 0.95,
+            "g": 0.85,
+            "r": 0.76
+          }
+        ],
+        "player_overrides": 0,
+        "player_state": {
+          "foe_materials": 0,
+          "foe_visual": false,
+          "light_rows": 4,
+          "mesh_rows": 1,
+          "role": "player"
+        },
+        "tag": "plain"
+      },
+      {
+        "foe_lights": [
+          {
+            "b": 0.9,
+            "energy": 1.9,
+            "g": 0.96,
+            "r": 1.0
+          },
+          {
+            "b": 1.0,
+            "energy": 0.75,
+            "g": 0.79,
+            "r": 0.68
+          },
+          {
+            "b": 0.7,
+            "energy": 0.55,
+            "g": 0.85,
+            "r": 1.0
+          },
+          {
+            "b": 1.0,
+            "energy": 0.95,
+            "g": 0.85,
+            "r": 0.76
+          }
+        ],
+        "foe_overrides": 1,
+        "foe_state": {
+          "foe_materials": 1,
+          "foe_visual": true,
+          "light_rows": 4,
+          "mesh_rows": 1,
+          "role": "foe"
+        },
+        "player_lights": [
+          {
+            "b": 0.9,
+            "energy": 1.9,
+            "g": 0.96,
+            "r": 1.0
+          },
+          {
+            "b": 1.0,
+            "energy": 0.75,
+            "g": 0.79,
+            "r": 0.68
+          },
+          {
+            "b": 0.7,
+            "energy": 0.55,
+            "g": 0.85,
+            "r": 1.0
+          },
+          {
+            "b": 1.0,
+            "energy": 0.95,
+            "g": 0.85,
+            "r": 0.76
+          }
+        ],
+        "player_overrides": 0,
+        "player_state": {
+          "foe_materials": 0,
+          "foe_visual": false,
+          "light_rows": 4,
+          "mesh_rows": 1,
+          "role": "player"
+        },
+        "tag": "again"
+      }
+    ]
+  },
+  "checks": {
+    "rc0": true,
+    "marker": true,
+    "no_errors": true,
+    "three_states": true,
+    "four_lights_each": true,
+    "player_lights_unchanged": true,
+    "foe_lights_unchanged": true,
+    "all_lights_identical_across_states": true,
+    "player_no_override": true,
+    "foe_override_on": true,
+    "foe_override_off": true
+  },
+  "failed": [],
+  "player_lights_equal_but_pixels_changed": true,
+  "ok": true
+}

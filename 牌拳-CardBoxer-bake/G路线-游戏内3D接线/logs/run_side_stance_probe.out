@@ -1,0 +1,7 @@
+RUN 5.305s rc=0 gl=True errors=0
+LAYER ready=True bones=13 final_bias_keys=['upperarm_f', 'forearm_f', 'upperarm_b', 'forearm_b', 'spine', 'head', 'thigh_f', 'shin_f', 'thigh_b', 'shin_b']
+SHOT b0-none      1280x720 err=0
+SHOT b1-light     1280x720 err=0
+SHOT b2-mid       1280x720 err=0
+SHOT b3-heavy     1280x720 err=0
+SIDE_STANCE_PROBE_OK

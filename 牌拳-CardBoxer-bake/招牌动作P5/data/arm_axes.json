@@ -1,0 +1,2186 @@
+{
+  "stance": {
+    "shoulder": [
+      2.0,
+      -148.0
+    ],
+    "f_hand": [
+      44.0,
+      -156.0
+    ]
+  },
+  "tracks": {
+    "jab": [
+      {
+        "i": 0,
+        "phase": "windup",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          2.0,
+          -148.0
+        ],
+        "forward_ext_px": 42.0,
+        "reach_px": 42.7551,
+        "mf_px": 0.0
+      },
+      {
+        "i": 1,
+        "phase": "windup",
+        "f_hand": [
+          34.0,
+          -152.0
+        ],
+        "shoulder": [
+          -9.0,
+          -145.9
+        ],
+        "forward_ext_px": 43.0,
+        "reach_px": 43.4305,
+        "mf_px": 10.7703
+      },
+      {
+        "i": 2,
+        "phase": "windup",
+        "f_hand": [
+          34.0,
+          -152.0
+        ],
+        "shoulder": [
+          -9.0,
+          -145.9
+        ],
+        "forward_ext_px": 43.0,
+        "reach_px": 43.4305,
+        "mf_px": 10.7703
+      },
+      {
+        "i": 3,
+        "phase": "windup",
+        "f_hand": [
+          34.0,
+          -152.0
+        ],
+        "shoulder": [
+          -9.0,
+          -145.9
+        ],
+        "forward_ext_px": 43.0,
+        "reach_px": 43.4305,
+        "mf_px": 10.7703
+      },
+      {
+        "i": 4,
+        "phase": "active",
+        "f_hand": [
+          98.0,
+          -152.0
+        ],
+        "shoulder": [
+          25.9,
+          -145.9
+        ],
+        "forward_ext_px": 72.1,
+        "reach_px": 72.3576,
+        "mf_px": 54.1479
+      },
+      {
+        "i": 5,
+        "phase": "active",
+        "f_hand": [
+          111.0,
+          -151.0
+        ],
+        "shoulder": [
+          31.8,
+          -144.1
+        ],
+        "forward_ext_px": 79.2,
+        "reach_px": 79.5,
+        "mf_px": 67.1863
+      },
+      {
+        "i": 6,
+        "phase": "active",
+        "f_hand": [
+          124.0,
+          -150.0
+        ],
+        "shoulder": [
+          37.6,
+          -142.0
+        ],
+        "forward_ext_px": 86.4,
+        "reach_px": 86.7696,
+        "mf_px": 80.2247
+      },
+      {
+        "i": 7,
+        "phase": "recover",
+        "f_hand": [
+          124.0,
+          -150.0
+        ],
+        "shoulder": [
+          37.6,
+          -142.0
+        ],
+        "forward_ext_px": 86.4,
+        "reach_px": 86.7696,
+        "mf_px": 80.2247
+      },
+      {
+        "i": 8,
+        "phase": "recover",
+        "f_hand": [
+          110.0,
+          -152.0
+        ],
+        "shoulder": [
+          29.7,
+          -143.2
+        ],
+        "forward_ext_px": 80.3,
+        "reach_px": 80.7808,
+        "mf_px": 66.1211
+      },
+      {
+        "i": 9,
+        "phase": "recover",
+        "f_hand": [
+          94.7,
+          -153.3
+        ],
+        "shoulder": [
+          22.6,
+          -144.8
+        ],
+        "forward_ext_px": 72.1,
+        "reach_px": 72.5993,
+        "mf_px": 50.7718
+      },
+      {
+        "i": 10,
+        "phase": "recover",
+        "f_hand": [
+          77.3,
+          -154.4
+        ],
+        "shoulder": [
+          15.2,
+          -146.2
+        ],
+        "forward_ext_px": 62.1,
+        "reach_px": 62.639,
+        "mf_px": 33.3384
+      },
+      {
+        "i": 11,
+        "phase": "recover",
+        "f_hand": [
+          60.9,
+          -155.3
+        ],
+        "shoulder": [
+          8.5,
+          -147.2
+        ],
+        "forward_ext_px": 52.4,
+        "reach_px": 53.0224,
+        "mf_px": 16.9145
+      },
+      {
+        "i": 12,
+        "phase": "recover",
+        "f_hand": [
+          48.8,
+          -155.8
+        ],
+        "shoulder": [
+          3.7,
+          -147.7
+        ],
+        "forward_ext_px": 45.1,
+        "reach_px": 45.8216,
+        "mf_px": 4.8042
+      },
+      {
+        "i": 13,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          1.9,
+          -147.9
+        ],
+        "forward_ext_px": 42.1,
+        "reach_px": 42.8721,
+        "mf_px": 0.0
+      }
+    ],
+    "cross": [
+      {
+        "i": 0,
+        "phase": "windup",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          2.0,
+          -148.0
+        ],
+        "forward_ext_px": 42.0,
+        "reach_px": 42.7551,
+        "mf_px": 0.0
+      },
+      {
+        "i": 1,
+        "phase": "windup",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          -4.3,
+          -147.0
+        ],
+        "forward_ext_px": 48.3,
+        "reach_px": 49.1314,
+        "mf_px": 0.0
+      },
+      {
+        "i": 2,
+        "phase": "windup",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          -13.9,
+          -144.7
+        ],
+        "forward_ext_px": 57.9,
+        "reach_px": 58.9924,
+        "mf_px": 0.0
+      },
+      {
+        "i": 3,
+        "phase": "windup",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          -16.4,
+          -143.5
+        ],
+        "forward_ext_px": 60.4,
+        "reach_px": 61.6799,
+        "mf_px": 0.0
+      },
+      {
+        "i": 4,
+        "phase": "windup",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          -16.4,
+          -143.5
+        ],
+        "forward_ext_px": 60.4,
+        "reach_px": 61.6799,
+        "mf_px": 0.0
+      },
+      {
+        "i": 5,
+        "phase": "windup",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          -16.4,
+          -143.5
+        ],
+        "forward_ext_px": 60.4,
+        "reach_px": 61.6799,
+        "mf_px": 0.0
+      },
+      {
+        "i": 6,
+        "phase": "active",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          34.3,
+          -143.7
+        ],
+        "forward_ext_px": 9.7,
+        "reach_px": 15.6646,
+        "mf_px": 0.0
+      },
+      {
+        "i": 7,
+        "phase": "active",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          39.9,
+          -141.9
+        ],
+        "forward_ext_px": 4.1,
+        "reach_px": 14.684,
+        "mf_px": 0.0
+      },
+      {
+        "i": 8,
+        "phase": "active",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          45.4,
+          -139.9
+        ],
+        "forward_ext_px": -1.4,
+        "reach_px": 16.1608,
+        "mf_px": 0.0
+      },
+      {
+        "i": 9,
+        "phase": "active",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          50.8,
+          -137.7
+        ],
+        "forward_ext_px": -6.8,
+        "reach_px": 19.5226,
+        "mf_px": 0.0
+      },
+      {
+        "i": 10,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          50.8,
+          -137.7
+        ],
+        "forward_ext_px": -6.8,
+        "reach_px": 19.5226,
+        "mf_px": 0.0
+      },
+      {
+        "i": 11,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          50.8,
+          -137.7
+        ],
+        "forward_ext_px": -6.8,
+        "reach_px": 19.5226,
+        "mf_px": 0.0
+      },
+      {
+        "i": 12,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          39.8,
+          -141.1
+        ],
+        "forward_ext_px": 4.2,
+        "reach_px": 15.4806,
+        "mf_px": 0.0
+      },
+      {
+        "i": 13,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          33.9,
+          -142.9
+        ],
+        "forward_ext_px": 10.1,
+        "reach_px": 16.5415,
+        "mf_px": 0.0
+      },
+      {
+        "i": 14,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          28.0,
+          -144.4
+        ],
+        "forward_ext_px": 16.0,
+        "reach_px": 19.7626,
+        "mf_px": 0.0
+      },
+      {
+        "i": 15,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          22.2,
+          -145.6
+        ],
+        "forward_ext_px": 21.8,
+        "reach_px": 24.1537,
+        "mf_px": 0.0
+      },
+      {
+        "i": 16,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          16.8,
+          -146.5
+        ],
+        "forward_ext_px": 27.2,
+        "reach_px": 28.8113,
+        "mf_px": 0.0
+      },
+      {
+        "i": 17,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          11.9,
+          -147.2
+        ],
+        "forward_ext_px": 32.1,
+        "reach_px": 33.2844,
+        "mf_px": 0.0
+      },
+      {
+        "i": 18,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          7.8,
+          -147.7
+        ],
+        "forward_ext_px": 36.2,
+        "reach_px": 37.1393,
+        "mf_px": 0.0
+      },
+      {
+        "i": 19,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          4.6,
+          -148.0
+        ],
+        "forward_ext_px": 39.4,
+        "reach_px": 40.204,
+        "mf_px": 0.0
+      },
+      {
+        "i": 20,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          2.6,
+          -148.2
+        ],
+        "forward_ext_px": 41.4,
+        "reach_px": 42.1284,
+        "mf_px": 0.0
+      },
+      {
+        "i": 21,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          1.9,
+          -148.3
+        ],
+        "forward_ext_px": 42.1,
+        "reach_px": 42.7984,
+        "mf_px": 0.0
+      }
+    ],
+    "uppercut": [
+      {
+        "i": 0,
+        "phase": "windup",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          2.0,
+          -148.0
+        ],
+        "forward_ext_px": 42.0,
+        "reach_px": 42.7551,
+        "mf_px": 0.0
+      },
+      {
+        "i": 1,
+        "phase": "windup",
+        "f_hand": [
+          42.8,
+          -150.9
+        ],
+        "shoulder": [
+          -3.5,
+          -145.7
+        ],
+        "forward_ext_px": 46.3,
+        "reach_px": 46.5911,
+        "mf_px": 5.2393
+      },
+      {
+        "i": 2,
+        "phase": "windup",
+        "f_hand": [
+          40.0,
+          -142.0
+        ],
+        "shoulder": [
+          -12.4,
+          -140.5
+        ],
+        "forward_ext_px": 52.4,
+        "reach_px": 52.4215,
+        "mf_px": 14.5602
+      },
+      {
+        "i": 3,
+        "phase": "windup",
+        "f_hand": [
+          37.3,
+          -137.1
+        ],
+        "shoulder": [
+          -16.5,
+          -136.3
+        ],
+        "forward_ext_px": 53.8,
+        "reach_px": 53.8059,
+        "mf_px": 20.0524
+      },
+      {
+        "i": 4,
+        "phase": "windup",
+        "f_hand": [
+          36.0,
+          -136.0
+        ],
+        "shoulder": [
+          -17.2,
+          -134.8
+        ],
+        "forward_ext_px": 53.2,
+        "reach_px": 53.2135,
+        "mf_px": 21.5407
+      },
+      {
+        "i": 5,
+        "phase": "windup",
+        "f_hand": [
+          36.0,
+          -136.0
+        ],
+        "shoulder": [
+          -17.2,
+          -134.8
+        ],
+        "forward_ext_px": 53.2,
+        "reach_px": 53.2135,
+        "mf_px": 21.5407
+      },
+      {
+        "i": 6,
+        "phase": "windup",
+        "f_hand": [
+          36.0,
+          -136.0
+        ],
+        "shoulder": [
+          -17.2,
+          -134.8
+        ],
+        "forward_ext_px": 53.2,
+        "reach_px": 53.2135,
+        "mf_px": 21.5407
+      },
+      {
+        "i": 7,
+        "phase": "active",
+        "f_hand": [
+          72.0,
+          -158.0
+        ],
+        "shoulder": [
+          14.9,
+          -143.1
+        ],
+        "forward_ext_px": 57.1,
+        "reach_px": 59.012,
+        "mf_px": 28.0713
+      },
+      {
+        "i": 8,
+        "phase": "active",
+        "f_hand": [
+          85.3,
+          -164.7
+        ],
+        "shoulder": [
+          20.7,
+          -145.0
+        ],
+        "forward_ext_px": 64.6,
+        "reach_px": 67.537,
+        "mf_px": 42.2064
+      },
+      {
+        "i": 9,
+        "phase": "active",
+        "f_hand": [
+          98.7,
+          -171.3
+        ],
+        "shoulder": [
+          26.5,
+          -146.6
+        ],
+        "forward_ext_px": 72.2,
+        "reach_px": 76.3081,
+        "mf_px": 56.7995
+      },
+      {
+        "i": 10,
+        "phase": "active",
+        "f_hand": [
+          112.0,
+          -178.0
+        ],
+        "shoulder": [
+          32.2,
+          -148.0
+        ],
+        "forward_ext_px": 79.8,
+        "reach_px": 85.2528,
+        "mf_px": 71.4703
+      },
+      {
+        "i": 11,
+        "phase": "recover",
+        "f_hand": [
+          112.0,
+          -178.0
+        ],
+        "shoulder": [
+          32.2,
+          -148.0
+        ],
+        "forward_ext_px": 79.8,
+        "reach_px": 85.2528,
+        "mf_px": 71.4703
+      },
+      {
+        "i": 12,
+        "phase": "recover",
+        "f_hand": [
+          112.0,
+          -178.0
+        ],
+        "shoulder": [
+          32.2,
+          -148.0
+        ],
+        "forward_ext_px": 79.8,
+        "reach_px": 85.2528,
+        "mf_px": 71.4703
+      },
+      {
+        "i": 13,
+        "phase": "recover",
+        "f_hand": [
+          100.0,
+          -172.0
+        ],
+        "shoulder": [
+          23.7,
+          -148.0
+        ],
+        "forward_ext_px": 76.3,
+        "reach_px": 79.9856,
+        "mf_px": 58.2409
+      },
+      {
+        "i": 14,
+        "phase": "recover",
+        "f_hand": [
+          93.1,
+          -169.2
+        ],
+        "shoulder": [
+          19.8,
+          -148.1
+        ],
+        "forward_ext_px": 73.3,
+        "reach_px": 76.2765,
+        "mf_px": 50.8434
+      },
+      {
+        "i": 15,
+        "phase": "recover",
+        "f_hand": [
+          85.8,
+          -166.7
+        ],
+        "shoulder": [
+          16.2,
+          -148.1
+        ],
+        "forward_ext_px": 69.6,
+        "reach_px": 72.0425,
+        "mf_px": 43.1478
+      },
+      {
+        "i": 16,
+        "phase": "recover",
+        "f_hand": [
+          78.3,
+          -164.3
+        ],
+        "shoulder": [
+          13.0,
+          -148.1
+        ],
+        "forward_ext_px": 65.3,
+        "reach_px": 67.2795,
+        "mf_px": 35.2899
+      },
+      {
+        "i": 17,
+        "phase": "recover",
+        "f_hand": [
+          70.9,
+          -162.2
+        ],
+        "shoulder": [
+          10.2,
+          -148.1
+        ],
+        "forward_ext_px": 60.7,
+        "reach_px": 62.3161,
+        "mf_px": 27.6053
+      },
+      {
+        "i": 18,
+        "phase": "recover",
+        "f_hand": [
+          63.8,
+          -160.4
+        ],
+        "shoulder": [
+          7.8,
+          -148.1
+        ],
+        "forward_ext_px": 56.0,
+        "reach_px": 57.3349,
+        "mf_px": 20.283
+      },
+      {
+        "i": 19,
+        "phase": "recover",
+        "f_hand": [
+          57.4,
+          -158.9
+        ],
+        "shoulder": [
+          5.8,
+          -148.1
+        ],
+        "forward_ext_px": 51.6,
+        "reach_px": 52.7181,
+        "mf_px": 13.7102
+      },
+      {
+        "i": 20,
+        "phase": "recover",
+        "f_hand": [
+          52.0,
+          -157.7
+        ],
+        "shoulder": [
+          4.2,
+          -148.1
+        ],
+        "forward_ext_px": 47.8,
+        "reach_px": 48.7545,
+        "mf_px": 8.1786
+      },
+      {
+        "i": 21,
+        "phase": "recover",
+        "f_hand": [
+          47.7,
+          -156.7
+        ],
+        "shoulder": [
+          3.0,
+          -148.1
+        ],
+        "forward_ext_px": 44.7,
+        "reach_px": 45.5198,
+        "mf_px": 3.7656
+      },
+      {
+        "i": 22,
+        "phase": "recover",
+        "f_hand": [
+          45.0,
+          -156.2
+        ],
+        "shoulder": [
+          2.3,
+          -148.1
+        ],
+        "forward_ext_px": 42.7,
+        "reach_px": 43.4615,
+        "mf_px": 1.0198
+      },
+      {
+        "i": 23,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          2.1,
+          -148.1
+        ],
+        "forward_ext_px": 41.9,
+        "reach_px": 42.6382,
+        "mf_px": 0.0
+      }
+    ],
+    "sweep": [
+      {
+        "i": 0,
+        "phase": "windup",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          2.0,
+          -148.0
+        ],
+        "forward_ext_px": 42.0,
+        "reach_px": 42.7551,
+        "mf_px": 0.0
+      },
+      {
+        "i": 1,
+        "phase": "windup",
+        "f_hand": [
+          43.3,
+          -155.6
+        ],
+        "shoulder": [
+          -0.4,
+          -145.6
+        ],
+        "forward_ext_px": 43.7,
+        "reach_px": 44.8296,
+        "mf_px": 0.8062
+      },
+      {
+        "i": 2,
+        "phase": "windup",
+        "f_hand": [
+          41.2,
+          -153.0
+        ],
+        "shoulder": [
+          -5.8,
+          -140.0
+        ],
+        "forward_ext_px": 47.0,
+        "reach_px": 48.7647,
+        "mf_px": 4.1037
+      },
+      {
+        "i": 3,
+        "phase": "windup",
+        "f_hand": [
+          38.0,
+          -146.0
+        ],
+        "shoulder": [
+          -11.4,
+          -133.9
+        ],
+        "forward_ext_px": 49.4,
+        "reach_px": 50.8603,
+        "mf_px": 11.6619
+      },
+      {
+        "i": 4,
+        "phase": "windup",
+        "f_hand": [
+          34.0,
+          -133.2
+        ],
+        "shoulder": [
+          -14.8,
+          -129.4
+        ],
+        "forward_ext_px": 48.8,
+        "reach_px": 48.9477,
+        "mf_px": 24.8966
+      },
+      {
+        "i": 5,
+        "phase": "windup",
+        "f_hand": [
+          30.0,
+          -118.0
+        ],
+        "shoulder": [
+          -15.9,
+          -125.6
+        ],
+        "forward_ext_px": 45.9,
+        "reach_px": 46.5249,
+        "mf_px": 40.4969
+      },
+      {
+        "i": 6,
+        "phase": "windup",
+        "f_hand": [
+          30.0,
+          -118.0
+        ],
+        "shoulder": [
+          -15.9,
+          -125.6
+        ],
+        "forward_ext_px": 45.9,
+        "reach_px": 46.5249,
+        "mf_px": 40.4969
+      },
+      {
+        "i": 7,
+        "phase": "windup",
+        "f_hand": [
+          26.0,
+          -96.0
+        ],
+        "shoulder": [
+          -9.4,
+          -117.9
+        ],
+        "forward_ext_px": 35.4,
+        "reach_px": 41.6266,
+        "mf_px": 62.6418
+      },
+      {
+        "i": 8,
+        "phase": "active",
+        "f_hand": [
+          26.0,
+          -96.0
+        ],
+        "shoulder": [
+          -9.4,
+          -117.9
+        ],
+        "forward_ext_px": 35.4,
+        "reach_px": 41.6266,
+        "mf_px": 62.6418
+      },
+      {
+        "i": 9,
+        "phase": "active",
+        "f_hand": [
+          32.0,
+          -90.0
+        ],
+        "shoulder": [
+          0.1,
+          -115.6
+        ],
+        "forward_ext_px": 31.9,
+        "reach_px": 40.902,
+        "mf_px": 67.082
+      },
+      {
+        "i": 10,
+        "phase": "active",
+        "f_hand": [
+          39.3,
+          -86.0
+        ],
+        "shoulder": [
+          2.9,
+          -114.9
+        ],
+        "forward_ext_px": 36.4,
+        "reach_px": 46.4776,
+        "mf_px": 70.1576
+      },
+      {
+        "i": 11,
+        "phase": "active",
+        "f_hand": [
+          46.7,
+          -82.0
+        ],
+        "shoulder": [
+          5.7,
+          -114.2
+        ],
+        "forward_ext_px": 41.0,
+        "reach_px": 52.1329,
+        "mf_px": 74.0492
+      },
+      {
+        "i": 12,
+        "phase": "active",
+        "f_hand": [
+          54.0,
+          -78.0
+        ],
+        "shoulder": [
+          8.5,
+          -113.5
+        ],
+        "forward_ext_px": 45.5,
+        "reach_px": 57.7105,
+        "mf_px": 78.6384
+      },
+      {
+        "i": 13,
+        "phase": "recover",
+        "f_hand": [
+          54.0,
+          -78.0
+        ],
+        "shoulder": [
+          8.5,
+          -113.5
+        ],
+        "forward_ext_px": 45.5,
+        "reach_px": 57.7105,
+        "mf_px": 78.6384
+      },
+      {
+        "i": 14,
+        "phase": "recover",
+        "f_hand": [
+          54.0,
+          -78.0
+        ],
+        "shoulder": [
+          8.5,
+          -113.5
+        ],
+        "forward_ext_px": 45.5,
+        "reach_px": 57.7105,
+        "mf_px": 78.6384
+      },
+      {
+        "i": 15,
+        "phase": "recover",
+        "f_hand": [
+          36.0,
+          -96.0
+        ],
+        "shoulder": [
+          7.4,
+          -122.1
+        ],
+        "forward_ext_px": 28.6,
+        "reach_px": 38.7191,
+        "mf_px": 60.531
+      },
+      {
+        "i": 16,
+        "phase": "recover",
+        "f_hand": [
+          36.2,
+          -104.6
+        ],
+        "shoulder": [
+          6.8,
+          -125.6
+        ],
+        "forward_ext_px": 29.4,
+        "reach_px": 36.1298,
+        "mf_px": 51.9885
+      },
+      {
+        "i": 17,
+        "phase": "recover",
+        "f_hand": [
+          36.6,
+          -112.9
+        ],
+        "shoulder": [
+          6.2,
+          -128.6
+        ],
+        "forward_ext_px": 30.4,
+        "reach_px": 34.2148,
+        "mf_px": 43.7307
+      },
+      {
+        "i": 18,
+        "phase": "recover",
+        "f_hand": [
+          37.3,
+          -120.6
+        ],
+        "shoulder": [
+          5.6,
+          -131.2
+        ],
+        "forward_ext_px": 31.7,
+        "reach_px": 33.4253,
+        "mf_px": 36.0285
+      },
+      {
+        "i": 19,
+        "phase": "recover",
+        "f_hand": [
+          38.1,
+          -127.8
+        ],
+        "shoulder": [
+          5.0,
+          -133.6
+        ],
+        "forward_ext_px": 33.1,
+        "reach_px": 33.6043,
+        "mf_px": 28.8106
+      },
+      {
+        "i": 20,
+        "phase": "recover",
+        "f_hand": [
+          39.0,
+          -134.3
+        ],
+        "shoulder": [
+          4.4,
+          -135.9
+        ],
+        "forward_ext_px": 34.6,
+        "reach_px": 34.637,
+        "mf_px": 22.2686
+      },
+      {
+        "i": 21,
+        "phase": "recover",
+        "f_hand": [
+          40.0,
+          -140.0
+        ],
+        "shoulder": [
+          3.8,
+          -138.2
+        ],
+        "forward_ext_px": 36.2,
+        "reach_px": 36.2447,
+        "mf_px": 16.4924
+      },
+      {
+        "i": 22,
+        "phase": "recover",
+        "f_hand": [
+          40.7,
+          -142.7
+        ],
+        "shoulder": [
+          3.5,
+          -139.9
+        ],
+        "forward_ext_px": 37.2,
+        "reach_px": 37.3052,
+        "mf_px": 13.7033
+      },
+      {
+        "i": 23,
+        "phase": "recover",
+        "f_hand": [
+          41.3,
+          -145.3
+        ],
+        "shoulder": [
+          3.2,
+          -141.6
+        ],
+        "forward_ext_px": 38.1,
+        "reach_px": 38.2792,
+        "mf_px": 11.0354
+      },
+      {
+        "i": 24,
+        "phase": "recover",
+        "f_hand": [
+          42.0,
+          -148.0
+        ],
+        "shoulder": [
+          2.9,
+          -143.3
+        ],
+        "forward_ext_px": 39.1,
+        "reach_px": 39.3815,
+        "mf_px": 8.2462
+      },
+      {
+        "i": 25,
+        "phase": "recover",
+        "f_hand": [
+          42.7,
+          -150.7
+        ],
+        "shoulder": [
+          2.6,
+          -145.0
+        ],
+        "forward_ext_px": 40.1,
+        "reach_px": 40.5031,
+        "mf_px": 5.4571
+      },
+      {
+        "i": 26,
+        "phase": "recover",
+        "f_hand": [
+          43.3,
+          -153.3
+        ],
+        "shoulder": [
+          2.3,
+          -146.7
+        ],
+        "forward_ext_px": 41.0,
+        "reach_px": 41.5278,
+        "mf_px": 2.7893
+      },
+      {
+        "i": 27,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          2.0,
+          -148.4
+        ],
+        "forward_ext_px": 42.0,
+        "reach_px": 42.6821,
+        "mf_px": 0.0
+      }
+    ],
+    "wave": [
+      {
+        "i": 0,
+        "phase": "windup",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          2.0,
+          -148.0
+        ],
+        "forward_ext_px": 42.0,
+        "reach_px": 42.7551,
+        "mf_px": 0.0
+      },
+      {
+        "i": 1,
+        "phase": "windup",
+        "f_hand": [
+          42.7,
+          -155.0
+        ],
+        "shoulder": [
+          0.2,
+          -147.7
+        ],
+        "forward_ext_px": 42.5,
+        "reach_px": 43.1224,
+        "mf_px": 1.6401
+      },
+      {
+        "i": 2,
+        "phase": "windup",
+        "f_hand": [
+          39.6,
+          -152.7
+        ],
+        "shoulder": [
+          -3.8,
+          -147.0
+        ],
+        "forward_ext_px": 43.4,
+        "reach_px": 43.7727,
+        "mf_px": 5.5
+      },
+      {
+        "i": 3,
+        "phase": "windup",
+        "f_hand": [
+          36.0,
+          -150.0
+        ],
+        "shoulder": [
+          -8.1,
+          -146.0
+        ],
+        "forward_ext_px": 44.1,
+        "reach_px": 44.281,
+        "mf_px": 10.0
+      },
+      {
+        "i": 4,
+        "phase": "windup",
+        "f_hand": [
+          32.9,
+          -147.9
+        ],
+        "shoulder": [
+          -11.1,
+          -145.0
+        ],
+        "forward_ext_px": 44.0,
+        "reach_px": 44.0955,
+        "mf_px": 13.7412
+      },
+      {
+        "i": 5,
+        "phase": "windup",
+        "f_hand": [
+          30.8,
+          -146.5
+        ],
+        "shoulder": [
+          -12.7,
+          -144.2
+        ],
+        "forward_ext_px": 43.5,
+        "reach_px": 43.5608,
+        "mf_px": 16.2631
+      },
+      {
+        "i": 6,
+        "phase": "windup",
+        "f_hand": [
+          30.0,
+          -146.0
+        ],
+        "shoulder": [
+          -13.2,
+          -143.9
+        ],
+        "forward_ext_px": 43.2,
+        "reach_px": 43.251,
+        "mf_px": 17.2047
+      },
+      {
+        "i": 7,
+        "phase": "windup",
+        "f_hand": [
+          30.0,
+          -146.0
+        ],
+        "shoulder": [
+          -13.2,
+          -143.9
+        ],
+        "forward_ext_px": 43.2,
+        "reach_px": 43.251,
+        "mf_px": 17.2047
+      },
+      {
+        "i": 8,
+        "phase": "windup",
+        "f_hand": [
+          30.0,
+          -146.0
+        ],
+        "shoulder": [
+          -13.2,
+          -143.9
+        ],
+        "forward_ext_px": 43.2,
+        "reach_px": 43.251,
+        "mf_px": 17.2047
+      },
+      {
+        "i": 9,
+        "phase": "windup",
+        "f_hand": [
+          30.0,
+          -146.0
+        ],
+        "shoulder": [
+          -13.2,
+          -143.9
+        ],
+        "forward_ext_px": 43.2,
+        "reach_px": 43.251,
+        "mf_px": 17.2047
+      },
+      {
+        "i": 10,
+        "phase": "active",
+        "f_hand": [
+          30.0,
+          -146.0
+        ],
+        "shoulder": [
+          -13.2,
+          -143.9
+        ],
+        "forward_ext_px": 43.2,
+        "reach_px": 43.251,
+        "mf_px": 17.2047
+      },
+      {
+        "i": 11,
+        "phase": "active",
+        "f_hand": [
+          30.0,
+          -146.0
+        ],
+        "shoulder": [
+          -13.2,
+          -143.9
+        ],
+        "forward_ext_px": 43.2,
+        "reach_px": 43.251,
+        "mf_px": 17.2047
+      },
+      {
+        "i": 12,
+        "phase": "active",
+        "f_hand": [
+          54.0,
+          -152.0
+        ],
+        "shoulder": [
+          9.9,
+          -147.8
+        ],
+        "forward_ext_px": 44.1,
+        "reach_px": 44.2995,
+        "mf_px": 10.7703
+      },
+      {
+        "i": 13,
+        "phase": "active",
+        "f_hand": [
+          56.4,
+          -152.4
+        ],
+        "shoulder": [
+          12.4,
+          -147.8
+        ],
+        "forward_ext_px": 44.0,
+        "reach_px": 44.2398,
+        "mf_px": 12.912
+      },
+      {
+        "i": 14,
+        "phase": "active",
+        "f_hand": [
+          58.8,
+          -152.8
+        ],
+        "shoulder": [
+          14.8,
+          -147.8
+        ],
+        "forward_ext_px": 44.0,
+        "reach_px": 44.2832,
+        "mf_px": 15.142
+      },
+      {
+        "i": 15,
+        "phase": "active",
+        "f_hand": [
+          61.2,
+          -153.2
+        ],
+        "shoulder": [
+          17.2,
+          -147.7
+        ],
+        "forward_ext_px": 44.0,
+        "reach_px": 44.3424,
+        "mf_px": 17.4264
+      },
+      {
+        "i": 16,
+        "phase": "active",
+        "f_hand": [
+          63.6,
+          -153.6
+        ],
+        "shoulder": [
+          19.6,
+          -147.6
+        ],
+        "forward_ext_px": 44.0,
+        "reach_px": 44.4072,
+        "mf_px": 19.7464
+      },
+      {
+        "i": 17,
+        "phase": "active",
+        "f_hand": [
+          66.0,
+          -154.0
+        ],
+        "shoulder": [
+          22.0,
+          -147.5
+        ],
+        "forward_ext_px": 44.0,
+        "reach_px": 44.4775,
+        "mf_px": 22.0907
+      },
+      {
+        "i": 18,
+        "phase": "recover",
+        "f_hand": [
+          66.0,
+          -154.0
+        ],
+        "shoulder": [
+          22.0,
+          -147.5
+        ],
+        "forward_ext_px": 44.0,
+        "reach_px": 44.4775,
+        "mf_px": 22.0907
+      },
+      {
+        "i": 19,
+        "phase": "recover",
+        "f_hand": [
+          66.0,
+          -154.0
+        ],
+        "shoulder": [
+          22.0,
+          -147.5
+        ],
+        "forward_ext_px": 44.0,
+        "reach_px": 44.4775,
+        "mf_px": 22.0907
+      },
+      {
+        "i": 20,
+        "phase": "recover",
+        "f_hand": [
+          66.0,
+          -154.0
+        ],
+        "shoulder": [
+          22.0,
+          -147.5
+        ],
+        "forward_ext_px": 44.0,
+        "reach_px": 44.4775,
+        "mf_px": 22.0907
+      },
+      {
+        "i": 21,
+        "phase": "recover",
+        "f_hand": [
+          60.0,
+          -152.0
+        ],
+        "shoulder": [
+          17.1,
+          -147.2
+        ],
+        "forward_ext_px": 42.9,
+        "reach_px": 43.1677,
+        "mf_px": 16.4924
+      },
+      {
+        "i": 22,
+        "phase": "recover",
+        "f_hand": [
+          57.9,
+          -152.1
+        ],
+        "shoulder": [
+          15.3,
+          -147.4
+        ],
+        "forward_ext_px": 42.6,
+        "reach_px": 42.8585,
+        "mf_px": 14.4368
+      },
+      {
+        "i": 23,
+        "phase": "recover",
+        "f_hand": [
+          56.0,
+          -152.2
+        ],
+        "shoulder": [
+          13.6,
+          -147.6
+        ],
+        "forward_ext_px": 42.4,
+        "reach_px": 42.6488,
+        "mf_px": 12.5873
+      },
+      {
+        "i": 24,
+        "phase": "recover",
+        "f_hand": [
+          54.2,
+          -152.5
+        ],
+        "shoulder": [
+          11.9,
+          -147.7
+        ],
+        "forward_ext_px": 42.3,
+        "reach_px": 42.5715,
+        "mf_px": 10.7838
+      },
+      {
+        "i": 25,
+        "phase": "recover",
+        "f_hand": [
+          52.5,
+          -152.8
+        ],
+        "shoulder": [
+          10.3,
+          -147.8
+        ],
+        "forward_ext_px": 42.2,
+        "reach_px": 42.4952,
+        "mf_px": 9.0824
+      },
+      {
+        "i": 26,
+        "phase": "recover",
+        "f_hand": [
+          50.9,
+          -153.2
+        ],
+        "shoulder": [
+          8.8,
+          -147.9
+        ],
+        "forward_ext_px": 42.1,
+        "reach_px": 42.4323,
+        "mf_px": 7.4465
+      },
+      {
+        "i": 27,
+        "phase": "recover",
+        "f_hand": [
+          49.5,
+          -153.6
+        ],
+        "shoulder": [
+          7.4,
+          -148.0
+        ],
+        "forward_ext_px": 42.1,
+        "reach_px": 42.4708,
+        "mf_px": 6.0008
+      },
+      {
+        "i": 28,
+        "phase": "recover",
+        "f_hand": [
+          48.3,
+          -154.0
+        ],
+        "shoulder": [
+          6.1,
+          -148.1
+        ],
+        "forward_ext_px": 42.2,
+        "reach_px": 42.6104,
+        "mf_px": 4.7424
+      },
+      {
+        "i": 29,
+        "phase": "recover",
+        "f_hand": [
+          47.2,
+          -154.4
+        ],
+        "shoulder": [
+          5.0,
+          -148.1
+        ],
+        "forward_ext_px": 42.2,
+        "reach_px": 42.6677,
+        "mf_px": 3.5777
+      },
+      {
+        "i": 30,
+        "phase": "recover",
+        "f_hand": [
+          46.2,
+          -154.8
+        ],
+        "shoulder": [
+          4.0,
+          -148.1
+        ],
+        "forward_ext_px": 42.2,
+        "reach_px": 42.7286,
+        "mf_px": 2.506
+      },
+      {
+        "i": 31,
+        "phase": "recover",
+        "f_hand": [
+          45.4,
+          -155.2
+        ],
+        "shoulder": [
+          3.2,
+          -148.1
+        ],
+        "forward_ext_px": 42.2,
+        "reach_px": 42.7931,
+        "mf_px": 1.6125
+      },
+      {
+        "i": 32,
+        "phase": "recover",
+        "f_hand": [
+          44.8,
+          -155.5
+        ],
+        "shoulder": [
+          2.5,
+          -148.1
+        ],
+        "forward_ext_px": 42.3,
+        "reach_px": 42.9424,
+        "mf_px": 0.9434
+      },
+      {
+        "i": 33,
+        "phase": "recover",
+        "f_hand": [
+          44.4,
+          -155.8
+        ],
+        "shoulder": [
+          2.0,
+          -148.1
+        ],
+        "forward_ext_px": 42.4,
+        "reach_px": 43.0935,
+        "mf_px": 0.4472
+      },
+      {
+        "i": 34,
+        "phase": "recover",
+        "f_hand": [
+          44.1,
+          -155.9
+        ],
+        "shoulder": [
+          1.7,
+          -148.1
+        ],
+        "forward_ext_px": 42.4,
+        "reach_px": 43.1115,
+        "mf_px": 0.1414
+      },
+      {
+        "i": 35,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          1.6,
+          -148.1
+        ],
+        "forward_ext_px": 42.4,
+        "reach_px": 43.1297,
+        "mf_px": 0.0
+      }
+    ],
+    "throw": [
+      {
+        "i": 0,
+        "phase": "windup",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          2.0,
+          -148.0
+        ],
+        "forward_ext_px": 42.0,
+        "reach_px": 42.7551,
+        "mf_px": 0.0
+      },
+      {
+        "i": 1,
+        "phase": "windup",
+        "f_hand": [
+          41.1,
+          -153.7
+        ],
+        "shoulder": [
+          -0.1,
+          -147.3
+        ],
+        "forward_ext_px": 41.2,
+        "reach_px": 41.6941,
+        "mf_px": 3.7014
+      },
+      {
+        "i": 2,
+        "phase": "windup",
+        "f_hand": [
+          36.0,
+          -150.0
+        ],
+        "shoulder": [
+          -4.1,
+          -146.0
+        ],
+        "forward_ext_px": 40.1,
+        "reach_px": 40.299,
+        "mf_px": 10.0
+      },
+      {
+        "i": 3,
+        "phase": "windup",
+        "f_hand": [
+          32.9,
+          -148.3
+        ],
+        "shoulder": [
+          -7.7,
+          -145.2
+        ],
+        "forward_ext_px": 40.6,
+        "reach_px": 40.7182,
+        "mf_px": 13.5093
+      },
+      {
+        "i": 4,
+        "phase": "windup",
+        "f_hand": [
+          32.0,
+          -148.0
+        ],
+        "shoulder": [
+          -9.4,
+          -144.9
+        ],
+        "forward_ext_px": 41.4,
+        "reach_px": 41.5159,
+        "mf_px": 14.4222
+      },
+      {
+        "i": 5,
+        "phase": "active",
+        "f_hand": [
+          32.0,
+          -148.0
+        ],
+        "shoulder": [
+          -9.4,
+          -144.9
+        ],
+        "forward_ext_px": 41.4,
+        "reach_px": 41.5159,
+        "mf_px": 14.4222
+      },
+      {
+        "i": 6,
+        "phase": "active",
+        "f_hand": [
+          80.0,
+          -148.0
+        ],
+        "shoulder": [
+          20.1,
+          -146.0
+        ],
+        "forward_ext_px": 59.9,
+        "reach_px": 59.9334,
+        "mf_px": 36.8782
+      },
+      {
+        "i": 7,
+        "phase": "active",
+        "f_hand": [
+          89.0,
+          -147.0
+        ],
+        "shoulder": [
+          25.4,
+          -144.5
+        ],
+        "forward_ext_px": 63.6,
+        "reach_px": 63.6491,
+        "mf_px": 45.8912
+      },
+      {
+        "i": 8,
+        "phase": "active",
+        "f_hand": [
+          98.0,
+          -146.0
+        ],
+        "shoulder": [
+          30.6,
+          -142.8
+        ],
+        "forward_ext_px": 67.4,
+        "reach_px": 67.4759,
+        "mf_px": 54.9181
+      },
+      {
+        "i": 9,
+        "phase": "recover",
+        "f_hand": [
+          98.0,
+          -146.0
+        ],
+        "shoulder": [
+          30.6,
+          -142.8
+        ],
+        "forward_ext_px": 67.4,
+        "reach_px": 67.4759,
+        "mf_px": 54.9181
+      },
+      {
+        "i": 10,
+        "phase": "recover",
+        "f_hand": [
+          98.0,
+          -146.0
+        ],
+        "shoulder": [
+          30.6,
+          -142.8
+        ],
+        "forward_ext_px": 67.4,
+        "reach_px": 67.4759,
+        "mf_px": 54.9181
+      },
+      {
+        "i": 11,
+        "phase": "recover",
+        "f_hand": [
+          60.0,
+          -150.0
+        ],
+        "shoulder": [
+          12.4,
+          -145.4
+        ],
+        "forward_ext_px": 47.6,
+        "reach_px": 47.8218,
+        "mf_px": 17.088
+      },
+      {
+        "i": 12,
+        "phase": "recover",
+        "f_hand": [
+          54.7,
+          -151.6
+        ],
+        "shoulder": [
+          9.0,
+          -145.8
+        ],
+        "forward_ext_px": 45.7,
+        "reach_px": 46.0666,
+        "mf_px": 11.5694
+      },
+      {
+        "i": 13,
+        "phase": "recover",
+        "f_hand": [
+          50.7,
+          -152.9
+        ],
+        "shoulder": [
+          6.4,
+          -146.2
+        ],
+        "forward_ext_px": 44.3,
+        "reach_px": 44.8038,
+        "mf_px": 7.3824
+      },
+      {
+        "i": 14,
+        "phase": "recover",
+        "f_hand": [
+          47.9,
+          -154.0
+        ],
+        "shoulder": [
+          4.5,
+          -146.6
+        ],
+        "forward_ext_px": 43.4,
+        "reach_px": 44.0264,
+        "mf_px": 4.3829
+      },
+      {
+        "i": 15,
+        "phase": "recover",
+        "f_hand": [
+          46.0,
+          -154.8
+        ],
+        "shoulder": [
+          3.3,
+          -147.0
+        ],
+        "forward_ext_px": 42.7,
+        "reach_px": 43.4066,
+        "mf_px": 2.3324
+      },
+      {
+        "i": 16,
+        "phase": "recover",
+        "f_hand": [
+          44.8,
+          -155.3
+        ],
+        "shoulder": [
+          2.5,
+          -147.4
+        ],
+        "forward_ext_px": 42.3,
+        "reach_px": 43.0314,
+        "mf_px": 1.063
+      },
+      {
+        "i": 17,
+        "phase": "recover",
+        "f_hand": [
+          44.2,
+          -155.7
+        ],
+        "shoulder": [
+          2.1,
+          -147.7
+        ],
+        "forward_ext_px": 42.1,
+        "reach_px": 42.8534,
+        "mf_px": 0.3606
+      },
+      {
+        "i": 18,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -155.9
+        ],
+        "shoulder": [
+          2.0,
+          -147.9
+        ],
+        "forward_ext_px": 42.0,
+        "reach_px": 42.7551,
+        "mf_px": 0.1
+      },
+      {
+        "i": 19,
+        "phase": "recover",
+        "f_hand": [
+          44.0,
+          -156.0
+        ],
+        "shoulder": [
+          2.0,
+          -148.0
+        ],
+        "forward_ext_px": 42.0,
+        "reach_px": 42.7551,
+        "mf_px": 0.0
+      }
+    ]
+  }
+}

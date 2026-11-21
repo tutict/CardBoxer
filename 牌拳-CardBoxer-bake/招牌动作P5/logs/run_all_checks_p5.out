@@ -1,0 +1,17 @@
+PASS motion_check                     MOTION CHECK: PASS
+PASS pose_probe                       POSE PROBE: PASS
+PASS duel_probe                       DUEL PROBE: PASS
+PASS reach_probe                      REACH PROBE: PASS
+PASS feet_probe                       FEET PROBE: PASS
+PASS fighter_skin_check               FIGHTER SKIN CHECK: PASS
+PASS battle_motion_p0_check           BATTLE MOTION P0 CHECK: 93/93 passed
+PASS battle_rhythm_check              BATTLE RHYTHM CHECK: 62/62 passed
+PASS engine_opt_check                 ENGINE OPT CHECK: 37/37 passed
+PASS redraw_gate_check                REDRAW GATE CHECK: 72/72 passed
+PASS taikou_flow_check                TAIKOU FLOW CHECK: 51/51 passed
+PASS taikou_rage_check                TAIKOU RAGE CHECK: 1482/1482 passed
+PASS taikou_rules_check               TAIKOU RULES CHECK: 90/90 passed
+PASS combo_check                      COMBO CHECK: 8/8 passed
+PASS portrait_wiring_check            PORTRAIT WIRING CHECK: 157/157 passed
+
+ALL_CHECKS_P5 15/15 ALL GREEN

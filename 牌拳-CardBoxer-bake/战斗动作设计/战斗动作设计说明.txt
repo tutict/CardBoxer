@@ -1,0 +1,188 @@
+《牌拳》回合制（太阁合战）战斗动作设计说明
+================================================================
+日期：2026-11-08
+需求：工程师「接下来就是设计战斗动作」
+状态：**规格层设计完成；游戏源码 0 改动、未烘新帧、未导 Godot**
+
+
+一、结论（先给）
+----------------------------------------------------------------
+  1. 现状**不是「没有动作」**，而是「动作与胜负脱钩」：回合制一直在播
+     实时格斗时代那 228 帧，但 `arena.gd:652-655` 只把「亮出的 3 张牌里
+     的第 1 张」交给 `perform_visual()` 当纯表演。赢家可能在播「后撤」，
+     输家可能在播「气功波」—— 玩家看动作完全读不出谁赢了。
+  2. 真正的卡点不是造型，是**语义与节奏**：亮牌阶段就不该打架；
+     伤害在 `_resolve_taikou()` 才结算，攻击动作却提前在 reveal 播完了。
+  3. 本轮交付「事件表 + 牌型绑定 + 伤害分档 + 时间线 + 资产计划」，
+     一份机器可读 `battle_motion_spec.json` + 判据，不改任何 `.gd`。
+  4. **new 资产一律没烘**。上一轮刚证明对手怪 3D 骨架 35° 驱动下右臂
+     不可见，所以 P0 接线只允许用现有 7 项 reuse 资产。规格不假装已有。
+
+
+二、读盘诊断（每条都带文件与行号，不是印象）
+----------------------------------------------------------------
+  状态机 `scripts/arena.gd`
+    :24   BATTLE_MODE := "taikou"          （实时骨架仍在，改回可还原）
+    :28   TK_MAX_TURNS := 3                （三回制）
+    :97   tk_phase = discard/select/reveal/resolve
+    :547  reveal 阶段 1.5 s 后 _resolve_taikou()
+    :550  resolve 阶段 1.9 s 后 _finish_taikou_turn()
+    :652-655 perform_visual(tk_player_ids[0] / tk_enemy_ids[0])
+             注释写「只播动画，伤害留到 _resolve_taikou」
+    :671/681/691-692 apply_hit(dmg, "taikou", "", false)
+             extra 恒为 "" -> 一律走 0.26 s / hit_light
+    :725-731 三回战罢按兵力判，不产生第 4 轮
+
+  表演与受击 `scripts/fighter.gd`
+    :202 perform_visual(id) 进 State.ACTION，按 windup/active/recover 相位播
+    :463-509 apply_hit 的硬直四档：""=0.26 / launch=0.42 /
+             stagger=0.5 / super=0.75；受击轨道经 :1026-1045 按
+             _stun_tilt 选 hit_light / hit_heavy / block
+    :845 _build_pose() 混合手写姿势与 CardMotion 取回的 11 关节
+
+  动作表 `data/card_motion.json`（与 bake/baked2.json 同 226918 B）
+    12 张卡共 228 帧：jab 14 / cross 22 / uppercut 24 / sweep 28 /
+      rush 13 / backstep 11 / guard 14 / sidestep 10 / focus 22 /
+      recover 14 / wave 36 / throw 20
+    3 条受击：hit_light 16 / hit_heavy 30 / block 10
+    11 关节，游戏像素坐标，原点脚下 +x 前 -y 上
+    `card_motion.gd:86-102` 按「相位 + 相位内进度」逐帧取样
+
+  规则 `scripts/taikou_rules.gd`
+    :68-75 damage_of：triple 14+sum/3 / sequence 10+sum/3 /
+           scatter 5+sum/3；平局在 arena.gd:690 固定 3
+
+  **节奏换算**：reveal 1.5 s = 90 帧，resolve 1.9 s = 114 帧（60fps）。
+  现有最长动作 wave 36 帧 = 0.6 s，最短 sidestep 10 帧 = 0.167 s；
+  默认受击硬直 0.26 s。也就是说 reveal 播完还剩 0.9~1.33 s、
+  resolve 播完还剩 1.64 s **站桩空转**。
+
+
+三、五个缺口 → 规格怎么补
+----------------------------------------------------------------
+  G1 只播 3 张亮牌的第 1 张，且与胜负无关
+     -> P2/P3 + card_type_binding，动作由牌型决定
+  G2 赢家/输家动作与判定结果无关
+     -> reveal 只做仪式；赢家攻击只在 resolve 的 0.12~0.72 s
+  G3 阶段时长大面积空转
+     -> events 用「起势 / 亮牌 / 定格 / 收势 / 回站架」显式占满
+  G4 四种伤害共用 0.26 s hit_light
+     -> damage_tiers 三档 + draw 档，复用 fighter.gd 已有硬直四档
+  G5 弃牌 / 选牌 / EX / 三回结束 / 局结束 / KO 全靠 HUD 文字
+     -> events 与 outcomes 全覆盖
+
+
+四、设计原则
+----------------------------------------------------------------
+  P1 亮牌阶段不打架：同时亮牌 → 比牌型 → 结算，与太阁 IV 同构。
+  P2 动作强度由牌型决定，不由第一张手牌 id 决定。
+  P3 输赢决定谁播攻击、谁播受击；平局双方对峙后各吃一下。
+  P4 EX 独立分支，蓄力 + 爆发两段，不能只换 HUD 文字。
+  P5 动作时长落在阶段内，播完定格，不留站桩。
+  P6 reuse 与 new 分开标注，new 不得假装已有。
+
+
+五、事件表（一回 = reveal 1.5 s + resolve 1.9 s = 3.4 s / 204 帧）
+----------------------------------------------------------------
+  阶段      区间(s)      角色      事件              资产
+  discard   等输入       both     discard.idle      reuse:stance
+  select    等输入       player   select.focus      reuse:card:focus
+  reveal    0.00-0.18    both     reveal.ready      new:reveal_ready
+  reveal    0.18-1.15    both     reveal.present    new:reveal_present
+  reveal    1.15-1.50    both     reveal.hold       new:reveal_hold
+  reveal    0.00-0.18    ex_side  ex.charge (p20)   new:ex_charge
+  resolve   0.00-0.12    both     resolve.judge     reuse:stance
+  resolve   0.00-0.12    ex_side  ex.burst (p20)    new:ex_burst
+  resolve   0.12-0.72    winner   resolve.attack    绑定 winner_card
+  resolve   0.12-0.72    loser    resolve.hit       绑定 damage_tiers
+  resolve   0.72-1.50    both     resolve.recover   reuse:react:hit_light
+  resolve   1.50-1.90    both     resolve.return    reuse:stance
+
+  `p20` 表示优先级 20，覆盖同区间 p10 的普通事件；EX 侧专属，
+  另一侧仍播普通事件。平局不触发 resolve.attack。
+
+
+六、牌型 → 动作强度绑定
+----------------------------------------------------------------
+  牌型       赢家动作           帧数   输家反应        extra    硬直
+  triple     wave               36     hit_crush(new)  super    0.75 s
+  sequence   cross              22     hit_heavy       launch   0.42 s
+  scatter    jab                14     hit_light       ""       0.26 s
+  draw       双方对峙不攻击      -     hit_light 双方   ""       0.26 s
+
+  短招播完定格末帧填满 0.6 s 攻击窗；wave 36 帧 = 0.6 s 正好填满。
+  `extra` 复用 `fighter.gd:494-502` 已有分支，**不需要改 fighter.gd**。
+
+
+七、伤害档（由 taikou_rules.damage_of 对 165 组 rank 多重集复算）
+----------------------------------------------------------------
+  triple   14 + sum/3 -> 15..23
+  sequence 10 + sum/3 -> 12..18
+  scatter   5 + sum/3 ->  6..13
+  draw     固定 3
+  档位之间数值有重叠（如 12..13），所以**按牌型分档，不按伤害数值分档**
+  —— 这是刻意的：牌型是玩家看得懂的语义，伤害点数不是。
+  判据会逐组复算并核对这三个区间，防止写死数字过期。
+
+
+八、EX 与结局
+----------------------------------------------------------------
+  EX：`Rage.is_full` 且本回消耗怒火升 EX 时，该侧播 ex.charge +
+      ex.burst；rank 由 `Rage.best` 升级，升级未被采用则 `ex_boosted=false`
+      不播爆发。EX 只改牌型与表现，不改伤害公式。
+  结局：局胜 / 局负 / 平局 / KO / 三回战罢，全部在 outcomes 里点名动作；
+      现状这五种都是 HUD 横幅，角色一动不动。
+
+
+九、资产计划：reuse 7 项 / new 10 项
+----------------------------------------------------------------
+  reuse（现在就能用）：stance、focus、jab、cross、wave、
+      hit_light、hit_heavy
+  new（尚未烘）：reveal_ready / reveal_present / reveal_hold /
+      ex_charge / ex_burst / hit_crush / round_victory / round_defeat /
+      round_settle / ko_fall
+  **阻塞**：对手怪 3D 模型在 35° 驱动下右臂不可见（见
+  `拓扑修复探针V1/拓扑修复探针-结论.txt` 第三节），骨架可用性未证；
+  且现有 228 帧是按实时判定帧烘的，回合制没有判定帧，
+  `CardMotion.sample()` 的 phase/progress 要按阶段时间重新映射。
+  所以 P0 接线只用 reuse + 现有 `fighter.gd` 播放器，new 留 P1。
+
+
+十、接线方案（写清位置，但本轮一行都不改）
+----------------------------------------------------------------
+  arena.gd:652-655   perform_visual 改由牌型绑定驱动，不再取 ids[0]
+  arena.gd:671,681,691-692  apply_hit 的 extra 改传 damage_extra
+  fighter.gd        不需要改（四档硬直已存在）
+  card_motion.gd    P1 才需要按阶段时间映射，P0 不动
+  规格成立与否由 `verify_spec.py` 判据证明，与是否接线无关。
+
+
+十一、边界
+----------------------------------------------------------------
+  * 游戏源码 0 改动：`源码基线.json` 保存 7 个源文件的 sha256，
+    判据逐项比对当前值。
+  * 未烘任何新帧、未渲精灵图集、未导 Godot、未生成 `.import`、
+    未改 228 帧动作表、未做 IP 合规审查。
+  * 规格不评「好不好看」；动作是否好看要等真实帧渲出来看图。
+  * 这是设计规格，不是玩法变更：牌型判定、伤害公式、三回制、
+    三局两胜、怒火槽一律不动。
+
+
+十二、复算命令（项目 venv）
+----------------------------------------------------------------
+  python -m json.tool battle_motion_spec.json
+  python -u make_source_baseline.py
+  python -u make_timeline.py
+  python -u verify_spec.py                -> 12/12
+  python -u mutation_spec.py              -> 4/4 CAUGHT
+  python -u verify_spec.py                -> clean 12/12
+
+
+十三、下一步（等工程师定，不擅自推进）
+----------------------------------------------------------------
+  A P0 接线：只改 arena.gd 那几行，用 7 项 reuse 资产让「赢家打、
+    输家挨」先成立，跑原有 10 套自检 + 引擎内截帧；不动任何 3D。
+  B P1 烘 new 资产：先做驱动轴诊断 / REST 姿态，确认骨架可用，
+    再决定是烘 11 关节目帧还是渲 2D 精灵。
+  C 只把规格当设计文档收着，先看时间线图确认节奏对不对。
+  三条都不推翻现有玩法与 228 帧动作表。

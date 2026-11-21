@@ -1,0 +1,6 @@
+NATIVE_VERIFY 87/91 FAILED
+  RED only_four_leg_joints_in_diff_paths 
+  RED diff_paths_bounded_by_edits 
+  RED three_shipped_sha_match_apply_report 
+  RED delta_13_bones_recomputed_all_rows_both_sides 
+

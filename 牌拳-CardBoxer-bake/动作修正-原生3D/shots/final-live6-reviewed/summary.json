@@ -1,0 +1,14 @@
+{
+  "failures": [],
+  "scenario_count": 6,
+  "rendered": true,
+  "evidence": "Reviewed six-scenario aggregate: four realtime scenarios recaptured after test-only mode-before-ready initialization repair; two unchanged taikou captures retained. Original PNGs and manifests retained at source paths.",
+  "source_scenarios": {
+    "player-card-cross": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed\\player-card-cross.json",
+    "foe-card-sweep": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed\\foe-card-sweep.json",
+    "taikou-player": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6\\taikou-player.json",
+    "taikou-enemy": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live6\\taikou-enemy.json",
+    "player-wave-new-action": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed\\player-wave-new-action.json",
+    "foe-fatal-facing-reset": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\final-live-realtime-fixed\\foe-fatal-facing-reset.json"
+  }
+}

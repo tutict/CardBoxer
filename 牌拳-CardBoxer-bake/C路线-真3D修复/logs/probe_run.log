@@ -1,0 +1,24 @@
+00:00.765  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\对手怪V1.blend"
+OPEN src=node_0 verts=64024 old_rig=foe_rig removed
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\c_build.py:213: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if mat and mat.use_nodes:
+APOSE_RIG bones=13 head_top_z=1.7105 hip_z=0.8420
+PROXY verts=20204 faces=20198
+PROXY auto_weight 20196/20204
+FINAL covered=64006/64024 multi_bone_verts=57967 assets=True/True
+RIGID buckets={'hips': 1608, 'spine': 2010, 'chest': 398, 'neck': 4533, 'head': 1382, 'upperarm_f': 9937, 'forearm_f': 5174, 'upperarm_b': 10661, 'forearm_b': 5497, 'thigh_f': 6397, 'shin_f': 5097, 'thigh_b': 6345, 'shin_b': 4985}
+00:03.359  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-rest-unposed.png'
+00:03.671  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-stance-driven.png'
+STANCE_IDENTITY delta0=0.000000000 root0=(0.0, -0.0) max_vertex_delta_m=0.000000643 mean=0.000000062 tol=1e-05 identical=True
+TEAR_SMOOTH {"edges": 141529, "max_edge_tear_m": 0.10377, "p999_edge_tear_m": 0.01806, "p99_edge_tear_m": 0.01062, "mean_edge_tear_m": 0.00182, "edges_gt_2cm": 77, "edges_gt_5cm": 21}
+TEAR_RIGID  {"edges": 141529, "max_edge_tear_m": 0.39292, "p999_edge_tear_m": 0.28048, "p99_edge_tear_m": 0.02535, "mean_edge_tear_m": 0.00317, "edges_gt_2cm": 1732, "edges_gt_5cm": 916}
+00:04.156  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-smooth.png'
+00:04.343  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-jab-rigid.png'
+00:04.546  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-cross-f11.png'
+SHOT c-cross-f11 card=cross f=11 deg=0.0 maxdeg=28.0 bytes=457978
+00:04.750  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-wave-f18.png'
+SHOT c-wave-f18 card=wave f=18 deg=0.0 maxdeg=13.565 bytes=456499
+00:04.953  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-真3D修复\frames\c-stance-angle55.png'
+SHOT c-stance-angle55 card=None f=0 deg=55.0 maxdeg=0.0 bytes=410743
+C_BUILD_OK shots=7 elapsed=4.4s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

@@ -1,0 +1,92 @@
+{
+  "verdict": "MUTATION_ATTACK_3D_OK",
+  "selftest": false,
+  "cases": [
+    {
+      "tag": "M1",
+      "caught": true,
+      "did_not_run": false,
+      "restore": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "stance_is_untouched_portrait"
+      ],
+      "error": "",
+      "desc": "伪造站架帧不是原始 3D 立绘"
+    },
+    {
+      "tag": "M2",
+      "caught": true,
+      "did_not_run": false,
+      "restore": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "png_bytes_and_hash",
+        "stance_is_untouched_portrait"
+      ],
+      "error": "",
+      "desc": "改坏一张帧 PNG 的文件魔数"
+    },
+    {
+      "tag": "M3",
+      "caught": true,
+      "did_not_run": false,
+      "restore": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "mesh_deform_falsified"
+      ],
+      "error": "",
+      "desc": "把网格撕裂的量化证据抹成 0"
+    },
+    {
+      "tag": "M4",
+      "caught": true,
+      "did_not_run": false,
+      "restore": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "spec_mapping_table_consistency"
+      ],
+      "error": "",
+      "desc": "偷偷改 A-pose 头顶标定却不重算指纹"
+    },
+    {
+      "tag": "M5",
+      "caught": true,
+      "did_not_run": false,
+      "restore": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "angle_wrap_wired_and_bounded",
+        "stance_matrices_identity"
+      ],
+      "error": "",
+      "desc": "摘掉角度环绕，试探 310 度翻臂能否蒙混过关"
+    },
+    {
+      "tag": "M6",
+      "caught": true,
+      "did_not_run": false,
+      "restore": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "game_sources_untouched"
+      ],
+      "error": "",
+      "desc": "篡改源码基线指纹，假装游戏源码没动"
+    }
+  ],
+  "clean": true,
+  "caught": 6,
+  "restored": 6,
+  "did_not_run": 0,
+  "all_restored": true,
+  "clean_red": []
+}

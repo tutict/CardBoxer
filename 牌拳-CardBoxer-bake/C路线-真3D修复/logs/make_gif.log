@@ -1,0 +1,5 @@
+BOX (90, 62, 741, 713) alpha_union=(136, 92, 696, 683)
+GIF 真3D网格-攻击-jab.gif src=14 enc=12 duration=840ms bytes=1253837
+GIF 真3D网格-攻击-cross.gif src=22 enc=19 duration=1320ms bytes=2053015
+GIF 真3D网格-攻击-wave.gif src=36 enc=33 duration=2160ms bytes=3219308
+C_GIF_OK

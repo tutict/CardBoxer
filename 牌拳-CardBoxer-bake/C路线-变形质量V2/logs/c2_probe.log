@@ -1,0 +1,30 @@
+00:00.813  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\对手怪V1.blend"
+OPEN src=node_0 verts=64024 uv=1
+APOSE_RIG bones=13
+PROXY verts=20204 covered=20196
+BASE covered=64006/64024
+PURITY_V1 {"arm_b": {"verts": 16158, "mean_own_weight": 0.83599}, "arm_f": {"verts": 15111, "mean_own_weight": 0.83376}, "leg_b": {"verts": 11330, "mean_own_weight": 0.84071}, "leg_f": {"verts": 11476, "mean_own_weight": 0.8384}, "torso": {"verts": 9931, "mean_own_weight": 0.56479}}
+PURITY_V2 {"arm_b": {"verts": 16158, "mean_own_weight": 0.90144}, "arm_f": {"verts": 15111, "mean_own_weight": 0.89875}, "leg_b": {"verts": 11330, "mean_own_weight": 0.91387}, "leg_f": {"verts": 11476, "mean_own_weight": 0.91545}, "torso": {"verts": 9931, "mean_own_weight": 0.72812}}
+REFINE {"changed_vertices": 64006, "dropped_assignments": 720} ASSETS True/True
+CLUSTERS hand_f=160 hand_b=160 foot=640 edges=141529
+STANCE_IDENTITY max=0.000000643 identical=True
+METRICS jab 14 frames done elapsed=12.2s
+METRICS cross 22 frames done elapsed=28.2s
+METRICS wave 36 frames done elapsed=55.9s
+ALL_FRAMES rows=72
+00:57.578  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-变形质量V2\frames\jab07-V1.png'
+SHOT jab07-V1 bytes=456674
+00:57.844  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-变形质量V2\frames\jab07-V2.png'
+SHOT jab07-V2 bytes=458472
+00:58.094  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-变形质量V2\frames\cross11-V1.png'
+SHOT cross11-V1 bytes=457984
+00:58.375  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-变形质量V2\frames\cross11-V2.png'
+SHOT cross11-V2 bytes=458756
+00:58.609  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-变形质量V2\frames\wave18-V1.png'
+SHOT wave18-V1 bytes=456505
+00:58.875  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-变形质量V2\frames\wave18-V2.png'
+SHOT wave18-V2 bytes=459249
+00:59.078  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-变形质量V2\frames\stance-V2-angle55.png'
+SHOT stance-V2-angle55 bytes=419942
+C2_BUILD_OK frames=72 shots=7 elapsed=58.49s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

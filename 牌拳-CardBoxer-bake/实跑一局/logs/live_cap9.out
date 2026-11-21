@@ -1,0 +1,21 @@
+RUN cap9 rc 0 seconds 25.577 rows 128 end round_over
+SEQ cap9 {'1': ['discard', 'select', 'reveal', 'resolve'], '2': ['discard', 'select', 'reveal', 'resolve'], '3': ['discard', 'select', 'reveal', 'resolve']}
+FP cap9 {'1': {'motion_ids': [''], 'winners': ['draw'], 'extras': [''], 'hp_end': [97, 97]}, '2': {'motion_ids': ['cross'], 'winners': ['enemy'], 'extras': ['launch'], 'hp_end': [84, 97]}, '3': {'motion_ids': ['jab'], 'winners': ['player'], 'extras': [''], 'hp_end': [84, 85]}}
+END cap9 round_over t 19.499 hp [84, 85] wins [0, 1]
+FINGERPRINT_EQUAL False
+DELTA_MISMATCHES 0
+CHECK cap9_marker_parsed True
+CHECK cap9_rc_and_no_script_errors True
+CHECK cap9_no_scenario_errors True
+CHECK cap9_round_over_not_timeout True
+CHECK cap9_use_3d_and_bot True
+CHECK cap9_15_cards_both True
+CHECK cap9_cap_readback True
+CHECK cap9_final_round_phase_over True
+CHECK cap9_three_turns True
+CHECK cap9_phase_order_per_turn True
+CHECK cap9_all_rows_cap_live True
+CHECK cap9_frames_applied_growing True
+CHECK same_seed_both_runs True
+CHECK all_rows_delta_match_python_formula True
+LIVE_MATCH_OK

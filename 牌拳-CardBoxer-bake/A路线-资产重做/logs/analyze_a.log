@@ -1,0 +1,9 @@
+FRAMES=72
+variant       tear_mean   tear_max  gt5cm_max   foot_max  reach_mean   pen_max
+A2_x1           0.01173    0.03496         25    0.02301     0.17442       0.0
+A2_x15           0.0163    0.04739        100    0.02301     0.25315       0.0
+V2_V1_base      0.01318       0.04        103    0.02301     0.17448       0.0
+V2_V1_gain      0.01824    0.05411        186    0.02301     0.25326       0.0
+DECOMP {"tear_worst_A2x15_over_V2x15": 0.8758, "tear_mean_A2x15_over_V2x15": 0.8936, "gt5cm_worst_A2x15_over_V2x15": 0.5376, "foot_worst_A2x15_over_V2x15": 1.0, "reach_mean_A2x15_over_V2x15": 0.9996, "reach_mean_A2x15_over_A2x1": 1.4514}
+TEAR_WINS=65/72 FOOT_WINS=72/72 REACH_KEPT=72/72
+METRICS_A_ANALYZED

@@ -1,0 +1,30 @@
+{
+  "job_id": "1510512569416187904",
+  "status": "DONE",
+  "raw_result": {
+    "RequestId": "89ccd36d-4c5c-4915-8206-cbb7ec140f70",
+    "Status": "DONE",
+    "ResultFile3Ds": [
+      {
+        "Type": "OBJ",
+        "Url": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/d713c3e4-9a13-4b20-a111-9c260b72753d_0.zip?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794028854%3B1794115254&q-key-time=1794028854%3B1794115254&q-header-list=host&q-url-param-list=&q-signature=a6e61746f9291c0299961ca193f89e3fc118ba52",
+        "PreviewImageUrl": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/preview_d713c3e4-9a13-4b20-a111-9c260b72753d_0.png?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794028854%3B1794115254&q-key-time=1794028854%3B1794115254&q-header-list=host&q-url-param-list=&q-signature=21b47fe18de7e112062073779efe19e130b5fea3"
+      },
+      {
+        "Url": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/d713c3e4-9a13-4b20-a111-9c260b72753d_0.glb?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794028854%3B1794115254&q-key-time=1794028854%3B1794115254&q-header-list=host&q-url-param-list=&q-signature=c163576fd2fd8a9b06d550988b5b812ab5ceb962",
+        "PreviewImageUrl": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/preview_d713c3e4-9a13-4b20-a111-9c260b72753d_0.png?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794028854%3B1794115254&q-key-time=1794028854%3B1794115254&q-header-list=host&q-url-param-list=&q-signature=21b47fe18de7e112062073779efe19e130b5fea3",
+        "Type": "GLB"
+      },
+      {
+        "Type": "FBX",
+        "Url": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/d713c3e4-9a13-4b20-a111-9c260b72753d_0.fbx?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794028854%3B1794115254&q-key-time=1794028854%3B1794115254&q-header-list=host&q-url-param-list=&q-signature=27c2ad259616212d0a7ded8c5a773c53c9a0678d",
+        "PreviewImageUrl": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/preview_d713c3e4-9a13-4b20-a111-9c260b72753d_0.png?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794028854%3B1794115254&q-key-time=1794028854%3B1794115254&q-header-list=host&q-url-param-list=&q-signature=21b47fe18de7e112062073779efe19e130b5fea3"
+      }
+    ],
+    "ErrorCode": "",
+    "ErrorMessage": "",
+    "ResultCreditDetails": "{\"FaceCount\":10,\"Format\":5,\"GenerateType-Normal\":20,\"Pbr\":10}",
+    "ResultCreditConsumed": 45
+  },
+  "request_id": "89ccd36d-4c5c-4915-8206-cbb7ec140f70"
+}

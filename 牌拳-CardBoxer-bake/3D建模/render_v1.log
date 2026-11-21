@@ -1,0 +1,31 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\boxer_3d.py:104: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\boxer_3d.py:143: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\boxer_3d.py:273: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+00:01.422  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\3d-stance.png'
+SHOT_OK stance card=None frame=0 palette=player angle=0.0
+00:01.563  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\3d-jab_impact.png'
+SHOT_OK jab_impact card=jab frame=7 palette=player angle=0.0
+00:01.703  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\3d-sweep_impact.png'
+SHOT_OK sweep_impact card=sweep frame=13 palette=player angle=0.0
+00:01.844  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\3d-throw_impact.png'
+SHOT_OK throw_impact card=throw frame=9 palette=player angle=0.0
+00:01.969  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\3d-hit_heavy_mid.png'
+SHOT_OK hit_heavy_mid card=hit_heavy frame=15 palette=player angle=0.0
+00:02.109  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\3d-stance_enemy.png'
+SHOT_OK stance_enemy card=None frame=0 palette=enemy angle=0.0
+00:02.266  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\3d-stance_angle35.png'
+SHOT_OK stance_angle35 card=None frame=0 palette=player angle=35.0
+00:02.406  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\3d-stance_repeat.png'
+SHOT_OK stance_repeat card=None frame=0 palette=player angle=0.0
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\boxer_3d.py:501: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if not mat.use_nodes:
+00:02.438  reports          | WARNING Path 'D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\5.2\datafiles\assets\brushes\essentials_brushes-gp_draw.blend' cannot be made relative for Material 'Dots Stroke'
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+00:02.438  reports          | WARNING Path 'D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\5.2\datafiles\assets\brushes\essentials_brushes-gp_draw.blend' cannot be made relative for Material 'Material'
+Info: Saved as "boxer_3d.blend"
+BLEND_OK C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\boxer_3d.blend
+RIG_OK bones=13 skinned=13 props=27 s2rgb=12
+MODEL_3D_OK

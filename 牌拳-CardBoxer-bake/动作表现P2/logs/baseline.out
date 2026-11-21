@@ -1,0 +1,6 @@
+CHECK all_watched_present True
+CHECK all_sha_nonempty True
+CHECK backups_bytewise_equal True
+CHECK fourteen_watched True
+CHECK two_to_change True
+BASELINE_P2_OK

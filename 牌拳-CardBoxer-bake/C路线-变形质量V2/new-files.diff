@@ -1,0 +1,1551 @@
+--- /dev/null
++++ b/make_baseline.py
+@@ -0,0 +1,71 @@
++"""V2 只读基线：采集输入指纹与游戏源码 sha256，不写任何既有归档。
++
++用途：证明本轮改的是工作区新文件，源 .blend / 动作表 / C 路线归档 /
++可运行工程一字节未动。判据 V2-xx 会读这份基线逐项对账。
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
++
++INPUTS = {
++    "baked2.json": BAKE / "baked2.json",
++    "apose_joints.json": BAKE / "3D攻击GIF" / "apose_joints.json",
++    "puppet_mapping.json": BAKE / "3D攻击GIF" / "puppet_mapping.json",
++    "对手怪V1.blend": BAKE / "对手怪Blender建模V1" / "对手怪V1.blend",
++    "C路线/c_build.py": BAKE / "C路线-真3D修复" / "c_build.py",
++    "C路线/c_build.json": BAKE / "C路线-真3D修复" / "c_build.json",
++    "C路线/C路线-验证记录.txt": BAKE / "C路线-真3D修复" / "C路线-验证记录.txt",
++}
++
++GAME_FILES = [
++    "scripts/arena.gd", "scripts/fighter.gd", "scripts/hud.gd",
++    "scripts/fighter_skin.gd", "scripts/fx_layer.gd", "scripts/card_data.gd",
++    "scripts/taikou_rage.gd", "scripts/battle_motion_p0.gd",
++    "scripts/battle_rhythm.gd", "data/card_motion.json",
++    "project.godot", "scenes/main.tscn",
++]
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def main() -> int:
++    inputs = {}
++    missing = []
++    for key, p in INPUTS.items():
++        if not p.is_file():
++            missing.append(key)
++            continue
++        inputs[key] = {"path": str(p.relative_to(BAKE)).replace("\\", "/"),
++                       "bytes": p.stat().st_size, "sha256": sha256(p)}
++    game = {}
++    for rel in GAME_FILES:
++        p = GAME / rel
++        if not p.is_file():
++            missing.append("GAME/" + rel)
++            continue
++        game[rel] = {"bytes": p.stat().st_size, "sha256": sha256(p)}
++    out = {"inputs": inputs, "game": game, "missing": missing}
++    (HERE / "基线.json").write_text(
++        json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++    print(f"INPUTS={len(inputs)} GAME={len(game)} MISSING={len(missing)}")
++    if missing:
++        print("MISSING_LIST", missing)
++        return 1
++    print("BASELINE_OK")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/c2_build.py
+@@ -0,0 +1,452 @@
++"""C 路线 V2：A-pose 权重领地修正 + 全 72 帧变形质量门禁。
++
++显式 import C路线-真3D修复/c_build.py 复用整条链路（A-pose rest 13 骨、
++Voxel 连续壳、ARMATURE_AUTO、Data Transfer、相对 rest 增量驱动、retarget），
++保证「同一公式只有一个真相来源」。本脚本只加两层：
++
++  1. territory refinement（本轮真正修的东西）
++     Data Transfer 用 POLYINTERP_NEAREST 把代理壳**表面**权重贴回高模。
++     高模有 2,809 个开放薄壳，很多顶点落到错误肢体附近，于是手臂顶点掺进
++     chest/hips 的权重 —— 一动手臂就被整片摊薄，看图三档几乎一样。
++     按 A-pose rest 骨段给每个顶点定 owner 族（arm_f/arm_b/torso/leg_*），
++     跨族权重乘 ALPHA，肩髋桥接骨乘 BETA，再归一化。
++
++  2. 全帧质量度量（不只是 jab#8 一帧）
++     jab/cross/wave 共 72 帧，四组单变量对照：
++       V1_base  原权重 + x1.0        （C 路线现状）
++       V1_gain  原权重 + x1.5 arm-only（只看增益）
++       V2_base  领地修正 + x1.0      （只看权重）
++       V2_final 领地修正 + x1.5      （定稿）
++     逐帧量：边撕裂 p999 / >5cm 边数、手腕簇位移、脚底贴地偏差、
++     手-躯干穿透比例、最大骨角。把「变形质量」从一句话变成可复算数字。
++
++不回写任何既有归档，不进 Godot，不改游戏源码。
++用法（Blender 5.2.3）：
++  blender.exe -b --python c2_build.py -- --probe
++  blender.exe -b --python c2_build.py -- --shots
++"""
++from __future__ import annotations
++
++import argparse
++import copy
++import hashlib
++import json
++import sys
++import time
++from pathlib import Path
++
++import bmesh
++import bpy
++from mathutils import Vector
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++sys.path.insert(0, str(BAKE / "C路线-真3D修复"))
++import c_build as C  # noqa: E402  - 复用同一条链路，不复制公式
++
++TABLE = BAKE / "baked2.json"
++SPEC = BAKE / "3D攻击GIF" / "apose_joints.json"
++MAPPING = BAKE / "3D攻击GIF" / "puppet_mapping.json"
++BLEND = BAKE / "对手怪Blender建模V1" / "对手怪V1.blend"
++
++# 权重领地修正参数：跨族压到 10%，肩/髋桥接骨保留 45%
++ALPHA = 0.10
++BETA = 0.45
++# C 路线增益 sweep 看图给出的可用区间上沿，且只放大 arm_gain_deg
++ARM_GAIN = 1.5
++
++HAND_CLUSTER_N = 160
++FOOT_PCT = 0.01
++TORSO_HALF_X = 0.22
++TORSO_HALF_Y = 0.25
++
++FAMILY = {
++    "hips": "torso", "spine": "torso", "chest": "torso",
++    "neck": "torso", "head": "torso",
++    "upperarm_f": "arm_f", "forearm_f": "arm_f",
++    "upperarm_b": "arm_b", "forearm_b": "arm_b",
++    "thigh_f": "leg_f", "shin_f": "leg_f",
++    "thigh_b": "leg_b", "shin_b": "leg_b",
++}
++BRIDGE = {"chest", "hips", "upperarm_f", "upperarm_b",
++          "thigh_f", "thigh_b"}
++CARDS = (("jab", 14), ("cross", 22), ("wave", 36))
++
++PROBE_SHOTS = [
++    ("jab07", "jab", 6, 0.0),
++    ("cross11", "cross", 10, 0.0),
++    ("wave18", "wave", 17, 0.0),
++]
++FULL_SHOTS = [
++    ("stance", None, 0, 0.0),
++    ("jab01", "jab", 0, 0.0), ("jab07", "jab", 6, 0.0),
++    ("jab13", "jab", 12, 0.0),
++    ("cross01", "cross", 0, 0.0), ("cross11", "cross", 10, 0.0),
++    ("cross21", "cross", 20, 0.0),
++    ("wave01", "wave", 0, 0.0), ("wave18", "wave", 17, 0.0),
++    ("wave35", "wave", 34, 0.0),
++]
++
++
++def log(*a):
++    print(*a, flush=True)
++
++
++def seg_dist(p, a, b):
++    ab = b - a
++    den = ab.length_squared
++    t = max(0.0, min(1.0, (p - a).dot(ab) / den)) if den > 1e-12 else 0.0
++    return (p - (a + t * ab)).length
++
++
++def segments(P):
++    return [(n, Vector((P[u][0], 0.0, P[u][1])),
++             Vector((P[v][0], 0.0, P[v][1])))
++            for n, _p, u, v in C.CHAIN]
++
++
++def owner_families(obj, segs):
++    """每个顶点最近的 A-pose rest 骨段决定它属于哪条肢体。"""
++    out = []
++    for v in obj.data.vertices:
++        p = obj.matrix_world @ v.co
++        out.append(FAMILY[min(segs, key=lambda s: seg_dist(p, s[1], s[2]))[0]])
++    return out
++
++
++def purity(obj, owners):
++    """owner 族内的权重占比。1.0 = 该顶点完全由自己那条肢体驱动。"""
++    g2n = {g.index: g.name for g in obj.vertex_groups}
++    acc = {}
++    for i, v in enumerate(obj.data.vertices):
++        tot = sum(g.weight for g in v.groups)
++        if tot <= 1e-9:
++            continue
++        fam = owners[i]
++        own = sum(g.weight for g in v.groups
++                  if FAMILY.get(g2n.get(g.group, "")) == fam)
++        n, s = acc.get(fam, (0, 0.0))
++        acc[fam] = (n + 1, s + own / tot)
++    return {k: {"verts": n, "mean_own_weight": round(s / n, 5)}
++            for k, (n, s) in sorted(acc.items())}
++
++
++def refine(obj, owners):
++    """按 owner 族压掉跨肢体权重并归一化。用 bmesh deform layer 批量写。"""
++    g2n = {g.index: g.name for g in obj.vertex_groups}
++    bm = bmesh.new()
++    bm.from_mesh(obj.data)
++    bm.verts.ensure_lookup_table()
++    bm.verts.index_update()
++    dl = bm.verts.layers.deform.verify()
++    changed = 0
++    dropped = 0
++    for v in bm.verts:
++        dv = v[dl]
++        old = {gi: float(dv[gi]) for gi in dv.keys()}
++        if not old:
++            continue
++        fam = owners[v.index]
++        new = {}
++        for gi, w in old.items():
++            bone = g2n.get(gi, "")
++            if FAMILY.get(bone) == fam:
++                f = 1.0
++            elif bone in BRIDGE:
++                f = BETA
++            else:
++                f = ALPHA
++            nw = w * f
++            if nw > 1e-6:
++                new[gi] = nw
++        if not new:
++            continue
++        s = sum(new.values())
++        for gi in list(dv.keys()):
++            del dv[gi]
++        for gi, w in new.items():
++            dv[gi] = w / s
++        changed += 1
++        dropped += len(old) - len(new)
++    bm.to_mesh(obj.data)
++    bm.free()
++    obj.data.update()
++    return {"changed_vertices": changed, "dropped_assignments": dropped}
++
++
++def clone(src, name):
++    obj = src.copy()
++    obj.data = src.data.copy()
++    bpy.context.scene.collection.objects.link(obj)
++    obj.name = name
++    obj.hide_render = True
++    return obj
++
++
++def clusters(coords, P):
++    def nearest(pt, n):
++        t = Vector((pt[0], 0.0, pt[1]))
++        return sorted(range(len(coords)),
++                      key=lambda i: (coords[i] - t).length_squared)[:n]
++    hf = nearest(P["f_hand"], HAND_CLUSTER_N)
++    hb = nearest(P["b_hand"], HAND_CLUSTER_N)
++    nf = max(1, int(len(coords) * FOOT_PCT))
++    foot = sorted(range(len(coords)), key=lambda i: coords[i].z)[:nf]
++    return hf, hb, foot
++
++
++def frame_metrics(rest, edges, posed, hf, hb, foot, hip_z, sh_z):
++    tear = C.tear_stats(rest, posed, edges)
++    disp = C.displacement_stats(rest, posed)
++    reach_f = sum((posed[i] - rest[i]).length for i in hf) / len(hf)
++    reach_b = sum((posed[i] - rest[i]).length for i in hb) / len(hb)
++    zr = sum(rest[i].z for i in foot) / len(foot)
++    zp = sum(posed[i].z for i in foot) / len(foot)
++    pen = 0
++    for i in hf + hb:
++        p = posed[i]
++        if (abs(p.x) < TORSO_HALF_X and hip_z - 0.05 < p.z < sh_z + 0.05
++                and abs(p.y) < TORSO_HALF_Y):
++            pen += 1
++    return {
++        "tear_p999_m": tear["p999_edge_tear_m"],
++        "tear_gt5cm": tear["edges_gt_5cm"],
++        "max_displacement_m": disp["max_displacement_m"],
++        "moved_gt_1mm": disp["moved_gt_1mm"],
++        "reach_f_m": round(reach_f, 5),
++        "reach_b_m": round(reach_b, 5),
++        "reach_max_m": round(max(reach_f, reach_b), 5),
++        "foot_gap_m": round(abs(zp - zr), 5),
++        "penetration_pct": round(pen / (len(hf) + len(hb)), 5),
++    }
++
++
++def main() -> int:
++    ap = argparse.ArgumentParser()
++    ap.add_argument("--probe", action="store_true")
++    ap.add_argument("--shots", action="store_true")
++    args = ap.parse_args(sys.argv[sys.argv.index("--") + 1:]
++                         if "--" in sys.argv else [])
++
++    spec = json.loads(SPEC.read_text(encoding="utf-8"))
++    base_mapping = json.loads(MAPPING.read_text(encoding="utf-8"))
++    table = json.loads(TABLE.read_text(encoding="utf-8"))
++    mapping_gain = copy.deepcopy(base_mapping)
++    mapping_gain["arm_gain_deg"] = {
++        k: v * ARM_GAIN for k, v in base_mapping["arm_gain_deg"].items()}
++    stance = C.joints_of(table, None, 0)
++    P = C.apose_points(spec)
++    assert BLEND.is_file(), f"missing {BLEND}"
++
++    t0 = time.time()
++    fingerprints = {k: hashlib.sha256(p.read_bytes()).hexdigest()
++                    for k, p in (("blend", BLEND), ("table", TABLE),
++                                 ("spec", SPEC), ("mapping", MAPPING),
++                                 ("c_build_py", BAKE / "C路线-真3D修复" / "c_build.py"))}
++    bpy.ops.wm.open_mainfile(filepath=str(BLEND))
++    scene = bpy.context.scene
++    src = next(o for o in scene.objects if o.type == "MESH")
++    for o in list(scene.objects):
++        if o.type == "ARMATURE":
++            bpy.data.objects.remove(o, do_unlink=True)
++    src.hide_render = True
++    src_tex, src_uv = C.texture_inventory(src), len(src.data.uv_layers)
++    log(f"OPEN src={src.name} verts={len(src.data.vertices)} uv={src_uv}")
++
++    # --- 1. 与 C 路线完全相同的 A-pose rest 13 骨 ----------------------------
++    arm_data = bpy.data.armatures.new("c2_apose_rig")
++    rig = bpy.data.objects.new("c2_apose_rig", arm_data)
++    scene.collection.objects.link(rig)
++    bpy.context.view_layer.objects.active = rig
++    rig.select_set(True)
++    bpy.ops.object.mode_set(mode="EDIT")
++    made = {}
++    for name, parent, u, v in C.CHAIN:
++        eb = arm_data.edit_bones.new(name)
++        hx, hz = P[u]
++        tx, tz = P[v]
++        eb.head, eb.tail = (hx, 0.0, hz), (tx, 0.0, tz)
++        assert (eb.tail - eb.head).length > 1e-4, f"zero-length bone {name}"
++        if parent:
++            eb.parent = made[parent]
++        made[name] = eb
++    bpy.ops.object.mode_set(mode="OBJECT")
++    for pb in rig.pose.bones:
++        pb.bone.inherit_scale = "NONE"
++    bpy.context.view_layer.update()
++    log(f"APOSE_RIG bones={len(rig.pose.bones)}")
++
++    # --- 2. Voxel 连续壳 + 自动权重 + Data Transfer --------------------------
++    proxy = C.fresh_copy(src, "c2_voxel_proxy")
++    proxy.data.remesh_voxel_size = C.VOXEL
++    proxy.data.remesh_voxel_adaptivity = 0.0
++    bpy.ops.object.select_all(action="DESELECT")
++    proxy.select_set(True)
++    bpy.context.view_layer.objects.active = proxy
++    assert bpy.ops.object.voxel_remesh.poll()
++    bpy.ops.object.voxel_remesh()
++    proxy_v = len(proxy.data.vertices)
++    C.auto_weight(proxy, rig)
++    proxy_covered = sum(1 for v in proxy.data.vertices
++                        if any(g.weight > 1e-6 for g in v.groups))
++    log(f"PROXY verts={proxy_v} covered={proxy_covered}")
++
++    base = C.fresh_copy(src, "c2_base")
++    for b in rig.data.bones:
++        base.vertex_groups.new(name=b.name)
++    mod = base.modifiers.new("weights_from_voxel_proxy", "DATA_TRANSFER")
++    mod.object = proxy
++    mod.use_vert_data = True
++    mod.data_types_verts = {"VGROUP_WEIGHTS"}
++    mod.vert_mapping = "POLYINTERP_NEAREST"
++    mod.layers_vgroup_select_src = "ALL"
++    mod.layers_vgroup_select_dst = "NAME"
++    bpy.ops.object.select_all(action="DESELECT")
++    base.select_set(True)
++    bpy.context.view_layer.objects.active = base
++    bpy.ops.object.modifier_apply(modifier=mod.name)
++    base.modifiers.new("c2_armature", "ARMATURE").object = rig
++    covered = sum(1 for v in base.data.vertices
++                  if any(g.weight > 1e-6 for g in v.groups))
++    log(f"BASE covered={covered}/{len(base.data.vertices)}")
++
++    # --- 3. V1 / V2 双副本 + 领地修正 ----------------------------------------
++    v1 = clone(base, "c2_v1_original")
++    v2 = clone(base, "c2_v2_refined")
++    segs = segments(P)
++    coords = [v2.matrix_world @ v.co for v in v2.data.vertices]
++    owners = owner_families(v2, segs)
++    purity_v1 = purity(v1, owners)
++    refine_info = refine(v2, owners)
++    purity_v2 = purity(v2, owners)
++    assets = {"uv_layers": len(v2.data.uv_layers),
++              "materials": len(v2.data.materials),
++              "textures": C.texture_inventory(v2),
++              "uv_same": len(v2.data.uv_layers) == src_uv,
++              "textures_same": C.texture_inventory(v2) == src_tex}
++    log(f"PURITY_V1 {json.dumps(purity_v1)}")
++    log(f"PURITY_V2 {json.dumps(purity_v2)}")
++    log(f"REFINE {json.dumps(refine_info)} ASSETS {assets['uv_same']}/{assets['textures_same']}")
++
++    meshes = (src, proxy, base, v1, v2)
++
++    def show_only(obj):
++        for o in meshes:
++            o.hide_render = o is not obj
++
++    C.setup_camera(scene, 0.0)
++    rest_pos, rest_edges = C.evaluated(v2)
++    hf, hb, foot = clusters(rest_pos, P)
++    hip_z, sh_z = P["hip"][1], P["shoulder"][1]
++    log(f"CLUSTERS hand_f={len(hf)} hand_b={len(hb)} foot={len(foot)} "
++        f"edges={len(rest_edges)}")
++
++    # --- 4. 站架恒等（V2 修正后仍不许把 A-pose 扭成站架）--------------------
++    C.pose_frame(rig, P, table, stance, None, 0, mapping_gain)
++    stance_pos, _ = C.evaluated(v2)
++    sd = [(a - b).length for a, b in zip(rest_pos, stance_pos)]
++    max_stance = max(sd)
++    identical = max_stance < 1e-5
++    log(f"STANCE_IDENTITY max={max_stance:.9f} identical={identical}")
++    assert identical, "refined weights must not deform the A-pose at stance"
++
++    # --- 5. 全 72 帧 × 四组单变量对照 ---------------------------------------
++    rows = []
++    for cid, n in CARDS:
++        for f in range(n):
++            row = {"card": cid, "frame": f}
++            for mtag, mapping in (("base", base_mapping), ("gain", mapping_gain)):
++                _d, _r, sig = C.pose_frame(rig, P, table, stance, cid, f, mapping)
++                for otag, obj in (("V1", v1), ("V2", v2)):
++                    pos, _ = C.evaluated(obj)
++                    m = frame_metrics(rest_pos, rest_edges, pos,
++                                      hf, hb, foot, hip_z, sh_z)
++                    m["max_delta_deg"] = sig["mapped_max_abs_deg"]
++                    row[f"{otag}_{mtag}"] = m
++            # V2 + x1.5 是本轮定稿配置，给它一个稳定名字，别让下游猜。
++            row["V2_final"] = row.pop("V2_gain")
++            rows.append(row)
++        log(f"METRICS {cid} {n} frames done elapsed={time.time()-t0:.1f}s")
++    log(f"ALL_FRAMES rows={len(rows)}")
++
++    # --- 6. 代表帧渲染（同帧同相机，V1/V2 并排）-----------------------------
++    def render(name, obj, deg=0.0):
++        C.setup_camera(scene, deg)
++        show_only(obj)
++        path = HERE / "frames" / f"{name}.png"
++        scene.render.filepath = str(path)
++        bpy.ops.render.render(write_still=True)
++        b = path.read_bytes()
++        assert b[:8] == b"\x89PNG\r\n\x1a\n" and len(b) > 10000
++        return {"file": path.name, "bytes": len(b),
++                "sha256": hashlib.sha256(b).hexdigest()}
++
++    if args.shots:
++        # 定稿对照：同一份 C 路线原始平滑权重，只改 arm-only 增益。
++        # V2（领地修正）被全帧数据证伪（幅度零贡献、撕裂 1.89x），不进定稿图。
++        pairs = (("A_x1", v1, base_mapping), ("B_x15", v1, mapping_gain))
++        shots = FULL_SHOTS
++    else:
++        # 探针图保留 V2 作为「试过并否掉」的视觉证据。
++        pairs = (("V1", v1, base_mapping), ("V2", v2, mapping_gain))
++        shots = PROBE_SHOTS
++    outputs = []
++    for name, card, frame, _deg in shots:
++        for tag, obj, mapping in pairs:
++            d, r, sig = C.pose_frame(rig, P, table, stance, card, frame, mapping)
++            png = render(f"{name}-{tag}", obj, 0.0)
++            png.update({"tag": tag, "shot": name, "card": card, "frame": frame,
++                        "max_delta_deg": sig["mapped_max_abs_deg"]})
++            outputs.append(png)
++            log(f"SHOT {name}-{tag} bytes={png['bytes']}")
++    if args.probe or args.shots:
++        # 侧视必须显式回到站架，否则沿用上面循环最后一帧的 pose，
++        # 名字写着 stance 实际渲的是 wave#35 —— 这条坑在 probe 版踩过。
++        C.pose_frame(rig, P, table, stance, None, 0, mapping_gain)
++        side_obj = v1 if args.shots else v2
++        side_tag = "B_x15" if args.shots else "V2"
++        png = render(f"stance-{side_tag}-angle55", side_obj, 55.0)
++        png.update({"tag": side_tag, "shot": "stance-angle55", "card": None,
++                    "frame": 0, "angle_deg": 55.0})
++        outputs.append(png)
++        log(f"SHOT stance-{side_tag}-angle55 bytes={png['bytes']}")
++
++    report = {
++        "blender": bpy.app.version_string,
++        "fingerprints": fingerprints,
++        "method": "explicit import of C路线-真3D修复/c_build.py (same retarget "
++                  "formula) + A-pose territory weight refinement "
++                  "+ 72-frame four-variant quality metrics",
++        "params": {"alpha_cross_family": ALPHA, "beta_bridge": BETA,
++                   "arm_only_gain": ARM_GAIN, "hand_cluster_n": HAND_CLUSTER_N,
++                   "foot_pct": FOOT_PCT, "torso_half_x": TORSO_HALF_X,
++                   "torso_half_y": TORSO_HALF_Y, "bridge_bones": sorted(BRIDGE)},
++        "rig": {"bones": len(rig.pose.bones),
++                "names": sorted(rig.pose.bones.keys())},
++        "proxy": {"voxel_size": C.VOXEL, "verts": proxy_v,
++                  "auto_weight_covered": proxy_covered},
++        "weights": {"covered": covered,
++                    "verts": len(v2.data.vertices),
++                    "owner_families": {f: owners.count(f) for f in sorted(set(owners))},
++                    "v1_purity": purity_v1, "v2_purity": purity_v2,
++                    "refine": refine_info},
++        "assets": assets,
++        "stance_identity": {"vertices_identical": identical,
++                            "tolerance_m": 1e-5,
++                            "max_vertex_delta_m": round(max_stance, 9)},
++        "clusters": {"hand_f": len(hf), "hand_b": len(hb), "foot": len(foot),
++                     "hip_z": round(hip_z, 5), "shoulder_z": round(sh_z, 5)},
++        "all_frames": {"count": len(rows), "cards": {k: n for k, n in CARDS},
++                       "rows": rows},
++        "shots": outputs,
++        "elapsed_seconds": round(time.time() - t0, 2),
++    }
++    (HERE / "c2_build.json").write_text(
++        json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++    log(f"C2_BUILD_OK frames={len(rows)} shots={len(outputs)} "
++        f"elapsed={report['elapsed_seconds']}s")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/probe_shells.py
+@@ -0,0 +1,138 @@
++"""诊断 .blend 里 2,809 个连通壳的形状，判断腰间斜片/下摆锯齿是不是游离小壳。
++
++C 路线验证记录写明「没修生成模型自带的 2,809 壳与腰间游离碎片」。
++本探针回答：碎片能不能按连通分量安全剔除，而不误删配件/贴图。
++
++只读源 .blend；产物全部写进本工作区。
++用法：blender.exe -b --python probe_shells.py
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++from collections import Counter
++from pathlib import Path
++
++import bmesh
++import bpy
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++BLEND = BAKE / "对手怪Blender建模V1" / "对手怪V1.blend"
++
++
++def log(*a):
++    print(*a, flush=True)
++
++
++def main() -> int:
++    bpy.ops.wm.open_mainfile(filepath=str(BLEND))
++    scene = bpy.context.scene
++    src = next(o for o in scene.objects if o.type == "MESH")
++    mesh = src.data
++    n = len(mesh.vertices)
++    parent = list(range(n))
++
++    def find(x):
++        while parent[x] != x:
++            parent[x] = parent[parent[x]]
++            x = parent[x]
++        return x
++
++    def union(a, b):
++        ra, rb = find(a), find(b)
++        if ra != rb:
++            parent[rb] = ra
++
++    for e in mesh.edges:
++        union(e.vertices[0], e.vertices[1])
++    comps = {}
++    for i in range(n):
++        comps.setdefault(find(i), []).append(i)
++    comp_list = sorted(comps.values(), key=len, reverse=True)
++
++    sizes = [len(c) for c in comp_list]
++    buckets = Counter()
++    for s in sizes:
++        if s < 10:
++            buckets["<10"] += 1
++        elif s < 50:
++            buckets["10-49"] += 1
++        elif s < 200:
++            buckets["50-199"] += 1
++        elif s < 1000:
++            buckets["200-999"] += 1
++        elif s < 5000:
++            buckets["1000-4999"] += 1
++        else:
++            buckets[">=5000"] += 1
++
++    def bbox(idx):
++        xs = [mesh.vertices[i].co.x for i in idx]
++        ys = [mesh.vertices[i].co.y for i in idx]
++        zs = [mesh.vertices[i].co.z for i in idx]
++        return [[round(min(xs), 4), round(min(ys), 4), round(min(zs), 4)],
++                [round(max(xs), 4), round(max(ys), 4), round(max(zs), 4)]]
++
++    top = [{"rank": k + 1, "verts": len(c), "bbox": bbox(c)}
++           for k, c in enumerate(comp_list[:12])]
++    small = [c for c in comp_list if len(c) < 200]
++    small_verts = sum(len(c) for c in small)
++    log(f"SHELLS total={len(comp_list)} verts={n} buckets={dict(buckets)}")
++    log(f"SMALL(<200) shells={len(small)} verts={small_verts} "
++        f"pct={small_verts/n:.4f}")
++    for t in top:
++        log(f"TOP {json.dumps(t)}")
++
++    # 只留小壳渲一张，肉眼确认这些是不是腰间斜片 / 下摆锯齿
++    keep = set(i for c in small for i in c)
++    tmp = src.copy()
++    tmp.data = mesh.copy()
++    scene.collection.objects.link(tmp)
++    tmp.name = "shells_small_only"
++    bm = bmesh.new()
++    bm.from_mesh(tmp.data)
++    bm.verts.ensure_lookup_table()
++    bm.verts.index_update()
++    for v in list(bm.verts):
++        if v.index not in keep:
++            bm.verts.remove(v)
++    bm.to_mesh(tmp.data)
++    bm.free()
++    tmp.data.update()
++    src.hide_render = True
++    tmp.hide_render = False
++    cam = next(o for o in scene.objects if o.type == "CAMERA")
++    cam.data.type = "ORTHO"
++    cam.data.ortho_scale = 2.30
++    scene.camera = cam
++    scene.render.resolution_x = scene.render.resolution_y = 768
++    scene.render.image_settings.file_format = "PNG"
++    scene.render.image_settings.color_mode = "RGBA"
++    scene.render.film_transparent = True
++    path = HERE / "frames" / "shells-small-only.png"
++    scene.render.filepath = str(path)
++    bpy.ops.render.render(write_still=True)
++    png = path.read_bytes()
++    log(f"SMALL_ONLY_PNG bytes={len(png)}")
++
++    out = {
++        "blend_sha256": hashlib.sha256(BLEND.read_bytes()).hexdigest(),
++        "verts": n, "shells": len(comp_list), "buckets": dict(buckets),
++        "top": top,
++        "small": {"threshold": 200, "shells": len(small),
++                  "verts": small_verts, "vert_pct": round(small_verts / n, 5),
++                  "largest": max((len(c) for c in small), default=0)},
++        "small_only_png": {"file": path.name, "bytes": len(png),
++                           "sha256": hashlib.sha256(png).hexdigest()},
++        "largest_shell_verts": sizes[0],
++        "top5_vert_coverage": round(sum(sizes[:5]) / n, 5),
++    }
++    (HERE / "shells_probe.json").write_text(
++        json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++    log("SHELLS_PROBE_OK")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/probe_smooth.py
+@@ -0,0 +1,221 @@
++"""权重邻域平滑 sweep：能不能在不牺牲动作幅度的前提下把边撕裂压下去。
++
++背景：领地修正把跨族权重硬切，撕裂反而涨 1.89 倍。理论上相反的改动
++（在 C 路线原始平滑权重上再做一次邻域 Laplacian 平滑）应该让权重梯度
++更缓、edge tear 更低。本探针用代表帧做参数扫描，只有数据支持才采用。
++
++独立脚本，不改动 c2_build.py / c2_build.json 的既有证据。
++用法：blender.exe -b --python probe_smooth.py
++"""
++from __future__ import annotations
++
++import copy
++import hashlib
++import json
++import sys
++import time
++from pathlib import Path
++
++import bmesh
++import bpy
++from mathutils import Vector
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++sys.path.insert(0, str(HERE))
++import c2_build as C2  # noqa: E402
++import c_build as C  # noqa: E402
++
++BLEND = BAKE / "对手怪Blender建模V1" / "对手怪V1.blend"
++TABLE = BAKE / "baked2.json"
++SPEC = BAKE / "3D攻击GIF" / "apose_joints.json"
++MAPPING = BAKE / "3D攻击GIF" / "puppet_mapping.json"
++REP_FRAMES = (("jab", 6), ("cross", 10), ("wave", 17))
++CONFIGS = ((0.0, 0), (0.25, 1), (0.5, 1), (0.5, 2), (0.75, 2))
++
++
++def log(*a):
++    print(*a, flush=True)
++
++
++def build_adj(obj):
++    adj = [[] for _ in range(len(obj.data.vertices))]
++    for e in obj.data.edges:
++        a, b = e.vertices[0], e.vertices[1]
++        adj[a].append(b)
++        adj[b].append(a)
++    return adj
++
++
++def read_weights(obj):
++    return [{g.group: float(g.weight) for g in v.groups}
++            for v in obj.data.vertices]
++
++
++def smooth(W, adj, lam, iters):
++    if iters == 0:
++        return W
++    cur = W
++    for _ in range(iters):
++        nxt = []
++        for i, wi in enumerate(cur):
++            nb = adj[i]
++            if not nb:
++                nxt.append(dict(wi))
++                continue
++            acc = {}
++            for j in nb:
++                for gi, w in cur[j].items():
++                    acc[gi] = acc.get(gi, 0.0) + w
++            m = len(nb)
++            nw = {gi: (1.0 - lam) * wi.get(gi, 0.0)
++                  + lam * acc.get(gi, 0.0) / m
++                  for gi in set(wi) | set(acc)}
++            s = sum(nw.values())
++            nxt.append({k: v / s for k, v in nw.items() if v / s > 1e-6}
++                       if s > 1e-9 else {})
++        cur = nxt
++    return cur
++
++
++def write_weights(obj, W):
++    bm = bmesh.new()
++    bm.from_mesh(obj.data)
++    bm.verts.ensure_lookup_table()
++    bm.verts.index_update()
++    dl = bm.verts.layers.deform.verify()
++    for v in bm.verts:
++        dv = v[dl]
++        for gi in list(dv.keys()):
++            del dv[gi]
++        for gi, w in W[v.index].items():
++            dv[gi] = w
++    bm.to_mesh(obj.data)
++    bm.free()
++    obj.data.update()
++
++
++def main() -> int:
++    t0 = time.time()
++    spec = json.loads(SPEC.read_text(encoding="utf-8"))
++    base_mapping = json.loads(MAPPING.read_text(encoding="utf-8"))
++    gain_mapping = copy.deepcopy(base_mapping)
++    gain_mapping["arm_gain_deg"] = {
++        k: v * C2.ARM_GAIN for k, v in base_mapping["arm_gain_deg"].items()}
++    table = json.loads(TABLE.read_text(encoding="utf-8"))
++    stance = C.joints_of(table, None, 0)
++    P = C.apose_points(spec)
++
++    bpy.ops.wm.open_mainfile(filepath=str(BLEND))
++    scene = bpy.context.scene
++    src = next(o for o in scene.objects if o.type == "MESH")
++    for o in list(scene.objects):
++        if o.type == "ARMATURE":
++            bpy.data.objects.remove(o, do_unlink=True)
++    src.hide_render = True
++
++    arm_data = bpy.data.armatures.new("smooth_rig")
++    rig = bpy.data.objects.new("smooth_rig", arm_data)
++    scene.collection.objects.link(rig)
++    bpy.context.view_layer.objects.active = rig
++    rig.select_set(True)
++    bpy.ops.object.mode_set(mode="EDIT")
++    made = {}
++    for name, parent, u, v in C.CHAIN:
++        eb = arm_data.edit_bones.new(name)
++        hx, hz = P[u]
++        tx, tz = P[v]
++        eb.head, eb.tail = (hx, 0.0, hz), (tx, 0.0, tz)
++        if parent:
++            eb.parent = made[parent]
++        made[name] = eb
++    bpy.ops.object.mode_set(mode="OBJECT")
++    for pb in rig.pose.bones:
++        pb.bone.inherit_scale = "NONE"
++    bpy.context.view_layer.update()
++
++    proxy = C.fresh_copy(src, "smooth_proxy")
++    proxy.data.remesh_voxel_size = C.VOXEL
++    proxy.data.remesh_voxel_adaptivity = 0.0
++    bpy.ops.object.select_all(action="DESELECT")
++    proxy.select_set(True)
++    bpy.context.view_layer.objects.active = proxy
++    bpy.ops.object.voxel_remesh()
++    C.auto_weight(proxy, rig)
++
++    base = C.fresh_copy(src, "smooth_base")
++    for b in rig.data.bones:
++        base.vertex_groups.new(name=b.name)
++    mod = base.modifiers.new("weights_from_voxel_proxy", "DATA_TRANSFER")
++    mod.object = proxy
++    mod.use_vert_data = True
++    mod.data_types_verts = {"VGROUP_WEIGHTS"}
++    mod.vert_mapping = "POLYINTERP_NEAREST"
++    mod.layers_vgroup_select_src = "ALL"
++    mod.layers_vgroup_select_dst = "NAME"
++    bpy.ops.object.select_all(action="DESELECT")
++    base.select_set(True)
++    bpy.context.view_layer.objects.active = base
++    bpy.ops.object.modifier_apply(modifier=mod.name)
++    base.modifiers.new("smooth_armature", "ARMATURE").object = rig
++    base.hide_render = True
++
++    rest_pos, rest_edges = C.evaluated(base)
++    hf, hb, foot = C2.clusters(rest_pos, P)
++    hip_z, sh_z = P["hip"][1], P["shoulder"][1]
++    segs = C2.segments(P)
++    owners = C2.owner_families(base, segs)
++    W0 = read_weights(base)
++    adj = build_adj(base)
++    log(f"BASE verts={len(W0)} edges={len(rest_edges)} "
++        f"adj_mean={sum(len(a) for a in adj)/len(adj):.2f}")
++
++    out = []
++    for lam, iters in CONFIGS:
++        obj = C2.clone(base, f"smooth_{lam}_{iters}")
++        W = smooth(W0, adj, lam, iters)
++        write_weights(obj, W)
++        pur = C2.purity(obj, owners)
++        rows = []
++        for cid, fr in REP_FRAMES:
++            for mtag, mapping in (("base", base_mapping), ("gain", gain_mapping)):
++                _d, _r, sig = C.pose_frame(rig, P, table, stance, cid, fr, mapping)
++                pos, _ = C.evaluated(obj)
++                m = C2.frame_metrics(rest_pos, rest_edges, pos,
++                                     hf, hb, foot, hip_z, sh_z)
++                rows.append({"card": cid, "frame": fr, "gain": mtag,
++                             "tear_p999_m": m["tear_p999_m"],
++                             "tear_gt5cm": m["tear_gt5cm"],
++                             "reach_max_m": m["reach_max_m"]})
++        gain_rows = [r for r in rows if r["gain"] == "gain"]
++        rec = {
++            "lam": lam, "iters": iters,
++            "tear_gain_mean": round(sum(r["tear_p999_m"] for r in gain_rows) / 3, 5),
++            "tear_gain_max": max(r["tear_p999_m"] for r in gain_rows),
++            "gt5cm_gain_max": max(r["tear_gt5cm"] for r in gain_rows),
++            "reach_gain_mean": round(sum(r["reach_max_m"] for r in gain_rows) / 3, 5),
++            "purity_arm_f": pur["arm_f"]["mean_own_weight"],
++            "purity_torso": pur["torso"]["mean_own_weight"],
++            "rows": rows,
++        }
++        out.append(rec)
++        log(f"CFG lam={lam} iters={iters} tear={rec['tear_gain_mean']} "
++            f"max={rec['tear_gain_max']} reach={rec['reach_gain_mean']} "
++            f"arm_f={rec['purity_arm_f']} elapsed={time.time()-t0:.1f}s")
++        bpy.data.objects.remove(obj, do_unlink=True)
++
++    report = {
++        "fingerprints": {k: hashlib.sha256(p.read_bytes()).hexdigest()
++                         for k, p in (("blend", BLEND), ("table", TABLE),
++                                      ("spec", SPEC), ("mapping", MAPPING))},
++        "configs": list(CONFIGS), "frames": [list(x) for x in REP_FRAMES],
++        "results": out, "elapsed_seconds": round(time.time() - t0, 2),
++    }
++    (HERE / "smooth_sweep.json").write_text(
++        json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++    log("SMOOTH_SWEEP_OK")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/analyze_metrics.py
+@@ -0,0 +1,98 @@
++"""把 c2_build.json 的 72 帧 × 4 组原始指标汇总成可复算对照表。
++
++不设主观阈值；这里只做聚合与单变量拆解，门禁阈值由 verify_c2.py 用
++「相对基线」表述（不写死实测数字）。
++"""
++from __future__ import annotations
++
++import json
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++VARIANTS = ("V1_base", "V1_gain", "V2_base", "V2_final")
++KEYS = ("reach_max_m", "reach_f_m", "reach_b_m", "max_delta_deg",
++        "tear_p999_m", "tear_gt5cm", "max_displacement_m",
++        "foot_gap_m", "penetration_pct", "moved_gt_1mm")
++
++
++def agg(vals):
++    s = sorted(vals)
++    n = len(s)
++    return {"min": round(s[0], 5), "mean": round(sum(s) / n, 5),
++            "p95": round(s[int(n * 0.95)], 5), "max": round(s[-1], 5)}
++
++
++def ratio(a, b):
++    return round(a / b, 4) if b > 1e-9 else None
++
++
++def main() -> int:
++    d = json.loads((HERE / "c2_build.json").read_text(encoding="utf-8"))
++    rows = d["all_frames"]["rows"]
++    per = {v: {k: agg([r[v][k] for r in rows]) for k in KEYS} for v in VARIANTS}
++
++    # 单变量拆解：只增益 / 只权重 / 两者叠加
++    decomp = {
++        "gain_only_on_V1": ratio(per["V1_gain"]["reach_max_m"]["mean"],
++                                 per["V1_base"]["reach_max_m"]["mean"]),
++        "weight_only_at_x1": ratio(per["V2_base"]["reach_max_m"]["mean"],
++                                   per["V1_base"]["reach_max_m"]["mean"]),
++        "gain_on_V2": ratio(per["V2_final"]["reach_max_m"]["mean"],
++                            per["V2_base"]["reach_max_m"]["mean"]),
++        "combined_V2_final_over_V1_base": ratio(
++            per["V2_final"]["reach_max_m"]["mean"],
++            per["V1_base"]["reach_max_m"]["mean"]),
++        "tear_worst_V2_final_over_V1_base": ratio(
++            per["V2_final"]["tear_p999_m"]["max"],
++            per["V1_base"]["tear_p999_m"]["max"]),
++        "tear_worst_V2_final_over_rigid_C_baseline": ratio(
++            per["V2_final"]["tear_p999_m"]["max"], 0.28048),
++    }
++
++    # 逐帧非负：V2_final 的幅度是否每帧都不低于 V1_base
++    non_negative = sum(1 for r in rows
++                       if r["V2_final"]["reach_max_m"] >= r["V1_base"]["reach_max_m"])
++    worst = {
++        "tear_p999_m": per["V2_final"]["tear_p999_m"]["max"],
++        "tear_gt5cm": per["V2_final"]["tear_gt5cm"]["max"],
++        "foot_gap_m": per["V2_final"]["foot_gap_m"]["max"],
++        "penetration_pct": per["V2_final"]["penetration_pct"]["max"],
++    }
++    purities = {
++        fam: {"v1": d["weights"]["v1_purity"][fam]["mean_own_weight"],
++              "v2": d["weights"]["v2_purity"][fam]["mean_own_weight"],
++              "delta": round(d["weights"]["v2_purity"][fam]["mean_own_weight"]
++                             - d["weights"]["v1_purity"][fam]["mean_own_weight"], 5)}
++        for fam in d["weights"]["v1_purity"]
++    }
++
++    out = {"frames": len(rows), "cards": d["all_frames"]["cards"],
++           "variants": VARIANTS, "per_variant": per,
++           "decomposition": decomp, "purity": purities,
++           "reach_non_negative_frames": non_negative,
++           "V2_final_worst": worst,
++           "stance_identity": d["stance_identity"],
++           "assets": d["assets"]}
++    (HERE / "metrics_summary.json").write_text(
++        json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++
++    print(f"FRAMES={len(rows)} PURITY_DELTA=" + json.dumps(
++        {k: v["delta"] for k, v in purities.items()}, ensure_ascii=False))
++    print(f"{'variant':<10} {'reach_mean':>11} {'reach_max':>10} "
++          f"{'tear_p999_max':>15} {'gt5cm_max':>10} {'foot_gap_max':>14} "
++          f"{'penetration_max':>17}")
++    for v in VARIANTS:
++        p = per[v]
++        print(f"{v:<10} {p['reach_max_m']['mean']:>11} "
++              f"{p['reach_max_m']['max']:>10} "
++              f"{p['tear_p999_m']['max']:>15} {p['tear_gt5cm']['max']:>10} "
++              f"{p['foot_gap_m']['max']:>14} "
++              f"{p['penetration_pct']['max']:>17}")
++    print("DECOMP " + json.dumps(decomp, ensure_ascii=False))
++    print(f"REACH_NON_NEGATIVE={non_negative}/{len(rows)}")
++    print("METRICS_ANALYZED")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/make_v2_board.py
+@@ -0,0 +1,149 @@
++"""出两张板：定稿 A/B 对照 + 定稿关键帧。数值全部从 c2_build.json 现读。
++
++定稿对照只变一个变量（arm-only 增益 x1.0 -> x1.5），权重 / 骨架 / 相机
++全部相同。V2（领地修正）已被证伪，不进定稿图。
++"""
++from __future__ import annotations
++
++import json
++from pathlib import Path
++
++from PIL import Image, ImageDraw, ImageFont
++
++HERE = Path(__file__).resolve().parent
++FRAMES = HERE / "frames"
++BG = (24, 29, 40)
++CARD = (32, 38, 51)
++FG = (236, 240, 250)
++MUTED = (150, 162, 180)
++ACCENT = (240, 214, 160)
++
++
++def font(size, bold=False):
++    names = (r"C:\Windows\Fonts\msyhbd.ttc",) if bold else (
++        r"C:\Windows\Fonts\msyh.ttc",)
++    for p in names + (r"C:\Windows\Fonts\msyh.ttc",):
++        try:
++            return ImageFont.truetype(p, size)
++        except OSError:
++            continue
++    return ImageFont.load_default()
++
++
++FH, FL, FS, FT = font(27, True), font(19, True), font(15), font(13)
++
++
++def load(name, size):
++    p = FRAMES / name
++    im = Image.open(p).convert("RGBA").resize((size, size), Image.Resampling.LANCZOS)
++    assert im.getbbox() is not None, f"blank {p}"
++    return im
++
++
++def cell(board, im, x, y, size, label, sub=""):
++    d = ImageDraw.Draw(board)
++    d.rounded_rectangle((x - 6, y - 6, x + size + 6, y + size + 6),
++                        radius=8, fill=CARD)
++    board.alpha_composite(im, (x, y))
++    d.text((x + 2, y + size + 10), label, font=FS, fill=FG)
++    if sub:
++        d.text((x + 2, y + size + 30), sub, font=FT, fill=MUTED)
++
++
++def metrics_for(report, card, frame):
++    for r in report["all_frames"]["rows"]:
++        if r["card"] == card and r["frame"] == frame:
++            return r
++    raise KeyError(f"no metrics for {card}#{frame}")
++
++
++def board_compare(report):
++    rows = [
++        ("jab07", "jab", 6, "散牌 · 刺拳 命中帧 #08"),
++        ("cross11", "cross", 10, "三连 · 交叉反击 命中帧 #12"),
++        ("wave18", "wave", 17, "三同 · 气功波 命中帧 #19"),
++    ]
++    size, gap, mx, head = 380, 20, 32, 116
++    row_h = size + 20 + 52
++    w = mx * 2 + size * 2 + gap
++    h = head + row_h * len(rows) + 60
++    board = Image.new("RGBA", (w, h), BG + (255,))
++    d = ImageDraw.Draw(board)
++    d.text((mx, 18), "C 路线 V2 · 变形质量定稿对照", font=FH, fill=FG)
++    d.text((mx, 58), "同一份 A-pose 平滑权重 / 同一骨架 / 同一相机，"
++                     "只改 arm-only 增益 x1.0 → x1.5", font=FL, fill=ACCENT)
++    d.text((mx, 86), "数值 = 该帧手腕簇位移 reach_max_m 与边撕裂 p999_m（现读 c2_build.json）",
++           font=FT, fill=MUTED)
++    for k, (shot, card, fr, title) in enumerate(rows):
++        y = head + k * row_h
++        m = metrics_for(report, card, fr)
++        a, b = m["V1_base"], m["V1_gain"]
++        for j, tag in enumerate(("A_x1", "B_x15")):
++            x = mx + j * (size + gap)
++            im = load(f"{shot}-{tag}.png", size)
++            sub = (f"reach {a['reach_max_m'] if j == 0 else b['reach_max_m']:.4f} m"
++                   f"  /  tear p999 "
++                   f"{a['tear_p999_m'] if j == 0 else b['tear_p999_m']:.5f} m")
++            label = ("A · 原增益 x1.0" if j == 0 else "B · 定稿 x1.5") + "   " + title
++            cell(board, im, x, y, size, label, sub)
++    out = HERE / "V2-定稿对照板.png"
++    board.convert("RGB").save(out)
++    return out
++
++
++def board_keyframes(report):
++    shots = [
++        ("stance", None, 0, "站架"),
++        ("jab01", "jab", 0, "刺拳 #01 前摇"),
++        ("jab07", "jab", 6, "刺拳 #08 命中"),
++        ("jab13", "jab", 12, "刺拳 #14 收招"),
++        ("cross01", "cross", 0, "交叉反击 #01"),
++        ("cross11", "cross", 10, "交叉反击 #12 命中"),
++        ("cross21", "cross", 20, "交叉反击 #22"),
++        ("wave01", "wave", 0, "气功波 #01"),
++        ("wave18", "wave", 17, "气功波 #19 命中"),
++        ("wave35", "wave", 34, "气功波 #36"),
++    ]
++    # head 必须给 y=90 的第三行说明留够空隙：卡片圆角框从 head-6 起画，
++    # 104 会把 13px 的说明文字盖掉半截（看图复核过一次）。
++    size, gap, mx, head, cols = 290, 16, 30, 148, 4
++    row_h = size + 20 + 40
++    nrows = (len(shots) + cols - 1) // cols
++    w = mx * 2 + cols * size + (cols - 1) * gap
++    h = head + row_h * nrows + 56
++    board = Image.new("RGBA", (w, h), BG + (255,))
++    d = ImageDraw.Draw(board)
++    d.text((mx, 18), "C 路线 V2 · 定稿关键帧（B_x15）", font=FH, fill=FG)
++    d.text((mx, 58), "10 个代表帧 + 55° 侧视；全部走引擎同款 72 帧门禁",
++           font=FL, fill=ACCENT)
++    d.text((mx, 90), "腰间斜片 / 下摆锯齿是生成模型自带的 2,809 壳碎片，本轮未修",
++           font=FT, fill=MUTED)
++    entries = [(s, c, f, t) for s, c, f, t in shots]
++    entries.append(("stance-B_x15-angle55", None, 0, "站架 55° 侧视"))
++    for k, (shot, card, fr, title) in enumerate(entries):
++        x = mx + (k % cols) * (size + gap)
++        y = head + (k // cols) * row_h
++        fname = f"{shot}-B_x15.png" if not shot.endswith("angle55") else f"{shot}.png"
++        im = load(fname, size)
++        sub = ""
++        if card is not None:
++            m = metrics_for(report, card, fr)["V1_gain"]
++            sub = f"reach {m['reach_max_m']:.4f} m / tear {m['tear_p999_m']:.5f} m"
++        cell(board, im, x, y, size, title, sub)
++    out = HERE / "V2-关键帧板.png"
++    board.convert("RGB").save(out)
++    return out
++
++
++def main() -> int:
++    report = json.loads((HERE / "c2_build.json").read_text(encoding="utf-8"))
++    a = board_compare(report)
++    b = board_keyframes(report)
++    for p in (a, b):
++        print(f"BOARD {p.name} bytes={p.stat().st_size}")
++    print("BOARDS_OK")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/verify_c2.py
+@@ -0,0 +1,246 @@
++"""C 路线 V2 承重判据：22 条，全部从盘上产物复算，不读「应该是什么」的注释。
++
++设计纪律：
++  · 关键倍率一律「汇总表 vs 逐帧 rows 双算」，两边不一致就是真信号；
++  · 阈值尽量相对（C 路线刚性基线 / V1_base 最坏值），不写死实测数字；
++  · 三条负结果也要被判据钉住，防止后来者把证伪过的方案重新捡起来；
++  · 源码级守卫写「赋值 / 调用形态」，不写裸标识符（散文会满足裸子串）。
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import re
++from collections import defaultdict
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
++C_ROUTE = BAKE / "C路线-真3D修复"
++
++CHECKS = []
++VARIANTS = ("V1_base", "V1_gain", "V2_base", "V2_final")
++
++
++def load(p: Path):
++    return json.loads(p.read_text(encoding="utf-8"))
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def expect(name: str, ok: bool, detail: str):
++    CHECKS.append({"name": name, "ok": bool(ok), "detail": detail})
++
++
++def mean(rows, variant, key):
++    return sum(r[variant][key] for r in rows) / len(rows)
++
++
++def worst(rows, variant, key):
++    return max(r[variant][key] for r in rows)
++
++
++def main() -> int:
++    base = load(HERE / "基线.json")
++    report = load(HERE / "c2_build.json")
++    summary = load(HERE / "metrics_summary.json")
++    tmetrics = load(HERE / "territory_metrics.json")
++    shells = load(HERE / "shells_probe.json")
++    smooth = load(HERE / "smooth_sweep.json")
++    croute = load(C_ROUTE / "c_build.json")
++    rows = report["all_frames"]["rows"]
++
++    # --- A. 输入与零污染 --------------------------------------------------
++    drift = [k for k, m in base["inputs"].items()
++             if not (BAKE / m["path"]).is_file()
++             or sha256(BAKE / m["path"]) != m["sha256"]]
++    expect("V2-01_baseline_inputs_intact", not drift,
++           f"checked={len(base['inputs'])} drift={drift}")
++
++    gdrift = [k for k, m in base["game"].items()
++              if not (GAME / k).is_file() or sha256(GAME / k) != m["sha256"]]
++    expect("V2-02_game_source_unchanged", not gdrift,
++           f"checked={len(base['game'])} drift={gdrift}")
++
++    a = report["assets"]
++    cov = report["weights"]["covered"] / report["weights"]["verts"]
++    expect("V2-03_assets_preserved",
++           a["uv_same"] and a["textures_same"] and a["uv_layers"] == 1
++           and len(a["textures"]) == 3 and cov > 0.999,
++           f"uv={a['uv_layers']} tex={len(a['textures'])} same="
++           f"{a['uv_same']}/{a['textures_same']} coverage={cov:.5f}")
++
++    si = report["stance_identity"]
++    expect("V2-04_stance_identity",
++           si["vertices_identical"] and si["max_vertex_delta_m"] < 1e-5,
++           f"max_delta_m={si['max_vertex_delta_m']}")
++
++    # --- B. 全 72 帧变形质量门禁 ------------------------------------------
++    cards = report["all_frames"]["cards"]
++    shape_ok = (len(rows) == 72 and cards == {"jab": 14, "cross": 22, "wave": 36}
++                and all(all(v in r for v in VARIANTS) for r in rows))
++    expect("V2-05_frame_count_and_variants", shape_ok,
++           f"rows={len(rows)} cards={cards}")
++
++    ratio_recalc = mean(rows, "V1_gain", "reach_max_m") / mean(rows, "V1_base", "reach_max_m")
++    ratio_summary = summary["decomposition"]["gain_only_on_V1"]
++    expect("V2-06_reach_ratio_double_computed",
++           abs(ratio_recalc - ratio_summary) < 0.002 and ratio_recalc > 1.3,
++           f"rows={ratio_recalc:.4f} summary={ratio_summary} threshold>1.3")
++
++    nn = sum(1 for r in rows
++             if r["V1_gain"]["reach_max_m"] >= r["V1_base"]["reach_max_m"])
++    expect("V2-07_reach_non_negative_every_frame",
++           nn == len(rows) and nn == summary["reach_non_negative_frames"],
++           f"non_negative={nn}/{len(rows)} summary={summary['reach_non_negative_frames']}")
++
++    fg, fb = worst(rows, "V1_gain", "foot_gap_m"), worst(rows, "V1_base", "foot_gap_m")
++    expect("V2-08_foot_grounded_all_frames",
++           fg <= fb * 1.05 + 1e-9 and fg < 0.05,
++           f"worst_gain={fg} worst_base={fb} cap=0.05m")
++
++    pen = worst(rows, "V1_gain", "penetration_pct")
++    expect("V2-09_no_torso_penetration", pen == 0.0,
++           f"worst_penetration_pct={pen}")
++
++    rigid = croute["jab8_ab"]["rigid_tear"]["p999_edge_tear_m"]
++    tg, tb = worst(rows, "V1_gain", "tear_p999_m"), worst(rows, "V1_base", "tear_p999_m")
++    expect("V2-10_tear_below_rigid_half", tg < rigid * 0.5,
++           f"worst_gain={tg} rigid_C_baseline={rigid} cap={rigid*0.5:.5f}")
++    expect("V2-11_tear_gain_cost_bounded", tg <= tb * 2.0,
++           f"worst_gain={tg} worst_base={tb} cap=x2.0")
++
++    # 前摇/收招帧本来就是站架（关键帧板 reach=0.0000），不能要求 72 帧全动。
++    # 判「确实在动」用活跃帧数下限 + 峰值，而不是 min。
++    active = sum(1 for r in rows if r["V1_gain"]["moved_gt_1mm"] > 60000)
++    moved_max = max(r["V1_gain"]["moved_gt_1mm"] for r in rows)
++    expect("V2-12_mesh_really_moves", active >= 30 and moved_max > 60000,
++           f"active_frames={active}/{len(rows)} max_moved_gt_1mm={moved_max}")
++
++    # --- C. 三条负结果必须被如实钉住 --------------------------------------
++    wo_recalc = mean(rows, "V2_base", "reach_max_m") / mean(rows, "V1_base", "reach_max_m")
++    wo_summary = summary["decomposition"]["weight_only_at_x1"]
++    expect("V2-13_territory_no_reach_gain",
++           abs(wo_recalc - wo_summary) < 0.002 and 0.99 <= wo_recalc <= 1.01,
++           f"rows={wo_recalc:.4f} summary={wo_summary} (purity up, reach flat)")
++
++    tv2, tv1 = worst(rows, "V2_final", "tear_p999_m"), tg
++    expect("V2-14_territory_tear_regression",
++           tv2 > tv1 * 1.5 and tv2 > tmetrics["per_variant"]["V1_gain"]["tear_p999_m"]["max"] * 1.5,
++           f"V2_final_worst={tv2} V1_gain_worst={tv1} ratio={tv2/tv1:.3f}")
++
++    p1, p2 = report["weights"]["v1_purity"], report["weights"]["v2_purity"]
++    fams_ok = all(p2[f]["mean_own_weight"] > p1[f]["mean_own_weight"] for f in p1)
++    expect("V2-15_territory_purity_did_improve", fams_ok,
++           f"families={len(p1)} deltas="
++           + json.dumps({f: round(p2[f]["mean_own_weight"] - p1[f]["mean_own_weight"], 5)
++                         for f in p1}, ensure_ascii=False))
++
++    sm = shells["small"]
++    expect("V2-16_shells_small_holds_body",
++           sm["vert_pct"] > 0.9 and sm["shells"] > 2000
++           and shells["largest_shell_verts"] < 2000,
++           f"small_shells={sm['shells']} vert_pct={sm['vert_pct']} "
++           f"largest_shell={shells['largest_shell_verts']}")
++
++    sweep = smooth["results"]
++    ref = next(r for r in sweep if r["lam"] == 0.0 and r["iters"] == 0)
++    others = [r for r in sweep if not (r["lam"] == 0.0 and r["iters"] == 0)]
++    sweep_ok = all(
++        r["tear_gain_mean"] >= ref["tear_gain_mean"] * 0.9
++        and abs(r["reach_gain_mean"] - ref["reach_gain_mean"])
++        / ref["reach_gain_mean"] < 0.01
++        for r in others
++    )
++    expect("V2-17_smooth_sweep_no_real_improvement", sweep_ok,
++           f"baseline_tear={ref['tear_gain_mean']} others="
++           + json.dumps([r["tear_gain_mean"] for r in others]))
++
++    evidence = [
++        "territory_probe.json", "territory_metrics.json",
++        "frames/shells-small-only.png",
++        "frames/jab07-V1.png", "frames/jab07-V2.png",
++        "frames/cross11-V1.png", "frames/cross11-V2.png",
++        "frames/wave18-V1.png", "frames/wave18-V2.png",
++    ]
++    ev_bad = [p for p in evidence
++              if not (HERE / p).is_file() or (HERE / p).stat().st_size < 500]
++    expect("V2-18_negative_evidence_saved", not ev_bad,
++           f"checked={len(evidence)} missing_or_tiny={ev_bad}")
++
++    # --- D. 定稿图与源码接线 ----------------------------------------------
++    by_shot = defaultdict(set)
++    shot_bad = []
++    for s in report["shots"]:
++        p = HERE / "frames" / s["file"]
++        if not p.is_file() or p.read_bytes()[:8] != b"\x89PNG\r\n\x1a\n" \
++                or sha256(p) != s["sha256"] or s["bytes"] < 10000:
++            shot_bad.append(s["file"])
++        by_shot[s["shot"]].add(s["tag"])
++    pairs_ok = all(t == {"A_x1", "B_x15"}
++                   for k, t in by_shot.items() if k != "stance-angle55")
++    expect("V2-19_final_shots_single_variable",
++           not shot_bad and len(report["shots"]) == 21 and pairs_ok
++           and len(by_shot) == 11,
++           f"shots={len(report['shots'])} groups={len(by_shot)} bad={shot_bad}")
++
++    from PIL import Image
++    boards = ["V2-定稿对照板.png", "V2-关键帧板.png"]
++    board_bad = []
++    for name in boards:
++        p = HERE / name
++        if not p.is_file() or p.stat().st_size < 50000:
++            board_bad.append(name)
++            continue
++        with Image.open(p) as im:
++            if im.width < 800 or im.height < 1000:
++                board_bad.append(name)
++    expect("V2-20_boards_nonblank", not board_bad,
++           f"boards={boards} bad={board_bad}")
++
++    src = (HERE / "c2_build.py").read_text(encoding="utf-8")
++    params = report["params"]
++    nums = {
++        "arm_only_gain": float(re.search(r"^ARM_GAIN\s*=\s*([\d.]+)", src, re.M).group(1)),
++        "alpha_cross_family": float(re.search(r"^ALPHA\s*=\s*([\d.]+)", src, re.M).group(1)),
++        "beta_bridge": float(re.search(r"^BETA\s*=\s*([\d.]+)", src, re.M).group(1)),
++    }
++    expect("V2-21_params_match_source",
++           all(abs(params[k] - v) < 1e-9 for k, v in nums.items()),
++           f"report={ {k: params[k] for k in nums} } source={nums}")
++
++    needles = [
++        ("import c_build as C", src),
++        ('row["V2_final"] = row.pop("V2_gain")', src),
++        ('pairs = (("A_x1", v1, base_mapping), ("B_x15", v1, mapping_gain))', src),
++        ("C.pose_frame(rig, P, table, stance, None, 0, mapping_gain)", src),
++        ("def smooth(", (HERE / "probe_smooth.py").read_text(encoding="utf-8")),
++        ("union(e.vertices[0], e.vertices[1])",
++         (HERE / "probe_shells.py").read_text(encoding="utf-8")),
++    ]
++    miss = [n for n, text in needles if n not in text]
++    expect("V2-22_source_wiring", not miss,
++           f"needles={len(needles)} missing={miss}")
++
++    passed = sum(c["ok"] for c in CHECKS)
++    failed = [c["name"] for c in CHECKS if not c["ok"]]
++    (HERE / "verify_c2_result.json").write_text(
++        json.dumps({"checks": CHECKS, "total": len(CHECKS),
++                    "passed": passed, "failed": failed},
++                   ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++    for c in CHECKS:
++        print(f"{'OK  ' if c['ok'] else 'FAIL'} {c['name']} | {c['detail']}")
++    print(f"TOTAL={len(CHECKS)} PASSED={passed} FAILED={failed}")
++    print("C2_VERIFIED" if passed == len(CHECKS) else "C2_VERIFY_FAILED")
++    return 0 if passed == len(CHECKS) else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/mutation_c2.py
+@@ -0,0 +1,152 @@
++"""verify_c2.py 的变异验证：改坏盘上产物，确认被点名的判据真的报红。
++
++纪律（沿用本仓既有 harness）：
++  · needle / mutant 只用 ASCII bytes；中文值不进 needle；
++  · 锚点 count != 1 一律记 DID NOT RUN 并计入未证明，绝不静默跳过；
++  · 逐字节还原 + sha256 比对，不用文本模式读写（换行会被转换）；
++  · 每组要求「指定判据红」且「哨兵判据仍绿」，防止一个文件坏掉全表皆红；
++  · 收尾 clean re-run 必须 22/22 全绿。
++  · C2_MUTATION_SELFTEST=1 故意让 M1 锚点失配，验证失配分支有牙。
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import os
++import subprocess
++import sys
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++PY = sys.executable
++VERIFY = HERE / "verify_c2.py"
++RESULT = HERE / "verify_c2_result.json"
++
++CASES = [
++    {"id": "M1", "file": "基线.json",
++     "needle": b'"sha256": "76004e212759c76f8f84a5d8fbab58680eedc4ebcd11d663e783f8c234e13165"',
++     "mutant": b'"sha256": "0000000000000000000000000000000000000000000000000000000000000000"',
++     "red": ["V2-01_baseline_inputs_intact"],
++     "sentinel": "V2-06_reach_ratio_double_computed"},
++    {"id": "M2", "file": "metrics_summary.json",
++     "needle": b'"gain_only_on_V1": 1.4515',
++     "mutant": b'"gain_only_on_V1": 1.0000',
++     "red": ["V2-06_reach_ratio_double_computed"],
++     "sentinel": "V2-01_baseline_inputs_intact"},
++    {"id": "M3", "file": "metrics_summary.json",
++     "needle": b'"reach_non_negative_frames": 72',
++     "mutant": b'"reach_non_negative_frames": 0',
++     "red": ["V2-07_reach_non_negative_every_frame"],
++     "sentinel": "V2-06_reach_ratio_double_computed"},
++    {"id": "M4", "file": "c2_build.json",
++     "needle": b'"max_vertex_delta_m": 6.43e-07',
++     "mutant": b'"max_vertex_delta_m": 0.5',
++     "red": ["V2-04_stance_identity"],
++     "sentinel": "V2-05_frame_count_and_variants"},
++    {"id": "M5", "file": "shells_probe.json",
++     "needle": b'"vert_pct": 0.9346',
++     "mutant": b'"vert_pct": 0.0500',
++     "red": ["V2-16_shells_small_holds_body"],
++     "sentinel": "V2-17_smooth_sweep_no_real_improvement"},
++    {"id": "M6", "file": "smooth_sweep.json",
++     "needle": b'"tear_gain_mean": 0.03453',
++     "mutant": b'"tear_gain_mean": 0.00100',
++     "red": ["V2-17_smooth_sweep_no_real_improvement"],
++     "sentinel": "V2-16_shells_small_holds_body"},
++    {"id": "M7", "file": "c2_build.json",
++     "needle": b'"bytes": 410738',
++     "mutant": b'"bytes": 1',
++     "red": ["V2-19_final_shots_single_variable"],
++     "sentinel": "V2-20_boards_nonblank"},
++    {"id": "M8", "file": "c2_build.py",
++     "needle": b"ARM_GAIN = 1.5",
++     "mutant": b"ARM_GAIN = 1.0",
++     "red": ["V2-21_params_match_source"],
++     "sentinel": "V2-22_source_wiring"},
++    {"id": "M9", "file": "c2_build.py",
++     "needle": b'row["V2_final"] = row.pop("V2_gain")',
++     "mutant": b'row["V2_final"] = row.get("V2_gain")',
++     "red": ["V2-22_source_wiring"],
++     "sentinel": "V2-21_params_match_source"},
++]
++
++
++def sha256(b: bytes) -> str:
++    return hashlib.sha256(b).hexdigest()
++
++
++def as_eol(data: bytes, needle: bytes) -> bytes:
++    eol = b"\r\n" if b"\r\n" in data else b"\n"
++    return needle.replace(b"\n", eol)
++
++
++def run_verify():
++    subprocess.run([PY, "-u", str(VERIFY)], capture_output=True,
++                   text=True, encoding="utf-8", errors="replace", timeout=180)
++    return json.loads(RESULT.read_text(encoding="utf-8"))
++
++
++def main() -> int:
++    selftest = os.environ.get("C2_MUTATION_SELFTEST") == "1"
++    cases = [dict(c) for c in CASES]
++    if selftest:
++        cases[0]["needle"] = b'"sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"'
++
++    rows = []
++    restore = {}
++    restore_ok = 0
++    for case in cases:
++        p = HERE / case["file"]
++        orig = p.read_bytes()
++        needle = as_eol(orig, case["needle"])
++        mutant = as_eol(orig, case["mutant"])
++        count = orig.count(needle)
++        if count != 1:
++            rows.append({"id": case["id"], "status": "DID NOT RUN",
++                         "reason": f"anchor count={count} (need 1)",
++                         "label": case["id"]})
++            print(f"{case['id']} DID NOT RUN anchor count={count}")
++            continue
++        mutated = orig.replace(needle, mutant, 1)
++        try:
++            p.write_bytes(mutated)
++            res = run_verify()
++        finally:
++            p.write_bytes(orig)
++            # 按「用例」计数，不能按文件名字典：多个用例改同一文件会被合并，
++            # 9 个用例只留 6 个 key，汇总会假报 RESTORE=6/9。
++            ok_restore = sha256(p.read_bytes()) == sha256(orig)
++            restore[case["file"]] = ok_restore
++            restore_ok += int(ok_restore)
++        red = [c["name"] for c in res["checks"] if not c["ok"]]
++        green = [c["name"] for c in res["checks"] if c["ok"]]
++        caught = all(n in red for n in case["red"]) and case["sentinel"] in green
++        rows.append({"id": case["id"], "status": "CAUGHT" if caught else "MISSED",
++                     "red": red, "sentinel_green": case["sentinel"] in green,
++                     "restored": restore[case["file"]]})
++        print(f"{case['id']} {'CAUGHT' if caught else 'MISSED'} "
++              f"red={red} restored={restore[case['file']]}")
++
++    clean = run_verify()
++    clean_green = clean["passed"] == clean["total"]
++    caught = sum(r["status"] == "CAUGHT" for r in rows)
++    dnr = sum(r["status"] == "DID NOT RUN" for r in rows)
++    all_restored = restore_ok == (len(cases) - dnr) and all(restore.values())
++    ok = (caught == len(cases) and dnr == 0 and all_restored and clean_green)
++    out = {"selftest": selftest, "total": len(cases), "caught": caught,
++           "did_not_run": dnr, "restore": restore,
++           "restore_all_ok": all_restored,
++           "clean_rerun": {"passed": clean["passed"], "total": clean["total"],
++                           "green": clean_green},
++           "all_proven": ok, "rows": rows}
++    (HERE / ("mutation_c2_selftest_result.json" if selftest
++             else "mutation_c2_result.json")).write_text(
++        json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++    print(f"TOTAL={len(cases)} CAUGHT={caught} DID_NOT_RUN={dnr} "
++          f"RESTORE={restore_ok}/{len(cases)-dnr} CLEAN={clean_green}")
++    print("MUTATION_C2_OK" if ok else "MUTATION_C2_FAILED")
++    return 0 if ok else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())

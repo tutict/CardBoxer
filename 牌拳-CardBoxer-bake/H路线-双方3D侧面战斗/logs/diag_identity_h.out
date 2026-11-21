@@ -1,0 +1,13 @@
+BASECOLOR_THUMB_MAE 75.3802
+MEAN_RGB {'player': [110.06, 103.65, 95.55], 'foe': [33.21, 32.26, 31.43]}
+ROI_MEAN_RGB {'player': [84.64, 76.14, 79.8], 'foe': [86.99, 85.83, 95.56]} LUM {'player': 80.19, 'foe': 89.46}
+ROI_MIRRORED {'size': [126, 265], 'changed_px': 28939, 'total_px': 33390, 'ratio': 0.8667, 'mae': 35.5448}
+ROI_UNMIRRORED {'size': [126, 265], 'changed_px': 30014, 'total_px': 33390, 'ratio': 0.8989, 'mae': 52.0477}
+VERTS {'player': 57934, 'foe': 64059} BBOX_X {'player': 1.254475, 'foe': 1.216869}
+CHECK basecolor_not_identical True
+CHECK frames_not_identical_including_background True
+CHECK render_brightness_differs True
+CHECK vertex_counts_differ True
+CHECK bbox_spans_differ True
+CHECK scope_note_present True
+IDENTITY_H_OK

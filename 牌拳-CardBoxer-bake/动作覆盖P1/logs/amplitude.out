@@ -1,0 +1,25 @@
+LIMITS {"hips": 0.0, "spine": 8.0, "chest": 0.0, "neck": 0.0, "head": 4.8, "upperarm_f": 21.393, "forearm_f": 17.382, "upperarm_b": 28.0, "forearm_b": 22.0, "thigh_f": 3.0, "shin_f": 3.0, "thigh_b": 3.0, "shin_b": 3.0}
+TRACK jab existing frames 14 peak 21.393 ratio 1.0 within True coord True
+TRACK cross existing frames 22 peak 28.0 ratio 1.0 within True coord True
+TRACK uppercut new frames 24 peak 19.059 ratio 1.0 within True coord True
+TRACK sweep new frames 28 peak 21.34 ratio 1.0 within True coord True
+TRACK rush new frames 13 peak 8.0 ratio 1.0 within True coord True
+TRACK backstep new frames 11 peak 6.309 ratio 1.0 within True coord True
+TRACK guard new frames 14 peak 6.411 ratio 1.0 within True coord True
+TRACK sidestep new frames 10 peak 3.765 ratio 1.0 within True coord True
+TRACK focus new frames 22 peak 12.981 ratio 1.0 within True coord True
+TRACK recover new frames 14 peak 4.883 ratio 1.0 within True coord True
+TRACK wave existing frames 36 peak 13.565 ratio 1.0 within True coord True
+TRACK throw new frames 20 peak 24.896 ratio 1.164 within True coord True
+TRACK hit_light react frames 16 peak 5.95 ratio 1.0 within True coord True
+TRACK hit_heavy react frames 30 peak 10.137 ratio 1.0 within True coord True
+TRACK block react frames 10 peak 4.883 ratio 1.0 within True coord True
+NEEDS_VISUAL_CHECK []
+CHECK track_count_15 True
+CHECK existing_three_present True
+CHECK new_tracks_twelve True
+CHECK all_within_mapping_limits True
+CHECK all_coords_sane True
+CHECK all_joint_keys_present True
+CHECK all_tracks_nonempty True
+AMPLITUDE_GATE_OK

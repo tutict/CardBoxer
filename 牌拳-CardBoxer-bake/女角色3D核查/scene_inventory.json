@@ -1,0 +1,190 @@
+{
+  "blend": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\E路线-玩家3D绑骨\\玩家V4b-可变形连续壳.blend",
+  "blend_bytes": 53408398,
+  "objects": [
+    {
+      "name": "node_0",
+      "type": "MESH",
+      "hide_render": false,
+      "hide_viewport": false,
+      "hide_get": false,
+      "dimensions": [
+        1.2545,
+        0.7694,
+        1.7204
+      ],
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "verts": 57901,
+      "materials": [
+        "Material.001"
+      ],
+      "modifiers": [
+        {
+          "name": "follow_continuous_shell",
+          "type": "SURFACE_DEFORM",
+          "target": "e_continuous_shell",
+          "is_bound": true
+        }
+      ]
+    },
+    {
+      "name": "e_key",
+      "type": "LIGHT",
+      "hide_render": false,
+      "hide_viewport": false,
+      "hide_get": false,
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "verts": null,
+      "materials": [],
+      "modifiers": []
+    },
+    {
+      "name": "e_fill",
+      "type": "LIGHT",
+      "hide_render": false,
+      "hide_viewport": false,
+      "hide_get": false,
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "location": [
+        -2.2,
+        -3.0,
+        2.6
+      ],
+      "verts": null,
+      "materials": [],
+      "modifiers": []
+    },
+    {
+      "name": "e_cam",
+      "type": "CAMERA",
+      "hide_render": false,
+      "hide_viewport": false,
+      "hide_get": false,
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "location": [
+        3.2766,
+        -2.2943,
+        0.86
+      ],
+      "verts": null,
+      "materials": [],
+      "modifiers": []
+    },
+    {
+      "name": "e_apose_rig",
+      "type": "ARMATURE",
+      "hide_render": false,
+      "hide_viewport": false,
+      "hide_get": false,
+      "dimensions": [
+        1.2069,
+        0.0,
+        1.7044
+      ],
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "verts": null,
+      "materials": [],
+      "modifiers": []
+    },
+    {
+      "name": "e_continuous_shell",
+      "type": "MESH",
+      "hide_render": true,
+      "hide_viewport": false,
+      "hide_get": false,
+      "dimensions": [
+        1.2477,
+        0.766,
+        1.7201
+      ],
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "verts": 14070,
+      "materials": [
+        "Material.001"
+      ],
+      "modifiers": [
+        {
+          "name": "Armature",
+          "type": "ARMATURE",
+          "target": null,
+          "is_bound": null
+        }
+      ]
+    }
+  ],
+  "images": [
+    {
+      "name": "Render Result",
+      "size": [
+        0,
+        0
+      ],
+      "packed": false
+    },
+    {
+      "name": "texture_pbr_20250901",
+      "size": [
+        4096,
+        4096
+      ],
+      "packed": true
+    },
+    {
+      "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+      "size": [
+        4096,
+        4096
+      ],
+      "packed": true
+    },
+    {
+      "name": "texture_pbr_20250901_normal",
+      "size": [
+        4096,
+        4096
+      ],
+      "packed": true
+    }
+  ],
+  "camera": "e_cam",
+  "engine": "BLENDER_EEVEE",
+  "resolution": [
+    768,
+    768,
+    100
+  ],
+  "world": "e_world",
+  "renders": [
+    "A-打开即所见.png",
+    "B-隐藏代理壳.png"
+  ]
+}

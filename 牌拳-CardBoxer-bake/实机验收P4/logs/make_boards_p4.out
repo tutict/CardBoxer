@@ -1,0 +1,10 @@
+CHECK three_boards_valid_png_signature True
+CHECK three_boards_nonempty True
+CHECK strip_six_continuous_frames True
+CHECK keyframes_picked_from_both_tags True
+CHECK keyframes_cover_reveal_and_resolve True
+CHECK timeline_zoom_is_single_continuous_segment True
+CHECK timeline_numbers_match_analysis True
+CHECK upstream_live_and_analysis_all_checks_true True
+BOARD_PATHS ['C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\实机验收P4\\boards\\P4实机-节奏时间线.png', 'C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\实机验收P4\\boards\\P4实机-连续帧条带.png', 'C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\实机验收P4\\boards\\P4实机-整帧关键帧.png']
+P4_LIVE_BOARDS_OK

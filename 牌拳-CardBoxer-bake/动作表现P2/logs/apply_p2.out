@@ -1,0 +1,23 @@
+FILE data/motion_input.json apply needle 1 diff ['mapping.leg_cap_deg'] sha ec74ff6c116f
+FILE data/motion_input_foe.json apply needle 1 diff ['mapping.leg_cap_deg'] sha a44d689482e0
+CHECK baseline_report_ok True
+CHECK baseline_two_to_change True
+CHECK pre_p2_backups_match_baseline_sha True
+CHECK data/motion_input.json::needle_exactly_once True
+CHECK data/motion_input.json::before_matches_baseline True
+CHECK data/motion_input.json::bytewise_single_replace True
+CHECK data/motion_input.json::only_mapping_leg_cap_changed True
+CHECK data/motion_input.json::cap_is_9 True
+CHECK data/motion_input.json::cards_untouched True
+CHECK data/motion_input_foe.json::needle_exactly_once True
+CHECK data/motion_input_foe.json::before_matches_baseline True
+CHECK data/motion_input_foe.json::bytewise_single_replace True
+CHECK data/motion_input_foe.json::only_mapping_leg_cap_changed True
+CHECK data/motion_input_foe.json::cap_is_9 True
+CHECK data/motion_input_foe.json::cards_untouched True
+CHECK two_mappings_still_identical True
+CHECK two_card_tables_still_identical True
+CHECK arm_gains_untouched True
+CHECK torso_cap_untouched True
+CHECK other_12_files_unchanged True
+APPLY_P2_OK

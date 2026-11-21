@@ -1,0 +1,4 @@
+t048: rc=0 shots=1 gl=True errors=0 marker=['[RHYTHM_SHOT] mode=t048 t=0.48 p_shift=102.142860412598 e_shift=9.43987655639648 p_tilt=0.0 e_tilt=0.0628318530718 hit=true hp=100/77']
+  saved 节奏帧-t048-命中HIT.png (999384 B)
+RESTORE OK sha256=485c7da3c15dc16740c1abb458a3b9e18d477fbf2da10b704666ff3f8efc0f95
+RESULT: OK t048 | OK RESTORE

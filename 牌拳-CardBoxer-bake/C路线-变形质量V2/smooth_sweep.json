@@ -1,0 +1,347 @@
+{
+  "fingerprints": {
+    "blend": "76004e212759c76f8f84a5d8fbab58680eedc4ebcd11d663e783f8c234e13165",
+    "table": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55",
+    "spec": "56add4f491d580fdd2394c3226f32bd2560a27e28a9c78e0ed1cd29d36ecfd28",
+    "mapping": "7ce408d9efb648ceb57d86619dbb3504057e4b1cb9095bf3ca8f00662f709547"
+  },
+  "configs": [
+    [
+      0.0,
+      0
+    ],
+    [
+      0.25,
+      1
+    ],
+    [
+      0.5,
+      1
+    ],
+    [
+      0.5,
+      2
+    ],
+    [
+      0.75,
+      2
+    ]
+  ],
+  "frames": [
+    [
+      "jab",
+      6
+    ],
+    [
+      "cross",
+      10
+    ],
+    [
+      "wave",
+      17
+    ]
+  ],
+  "results": [
+    {
+      "lam": 0.0,
+      "iters": 0,
+      "tear_gain_mean": 0.03656,
+      "tear_gain_max": 0.05411,
+      "gt5cm_gain_max": 186,
+      "reach_gain_mean": 0.55084,
+      "purity_arm_f": 0.83376,
+      "purity_torso": 0.56479,
+      "rows": [
+        {
+          "card": "jab",
+          "frame": 6,
+          "gain": "base",
+          "tear_p999_m": 0.01806,
+          "tear_gt5cm": 21,
+          "reach_max_m": 0.41171
+        },
+        {
+          "card": "jab",
+          "frame": 6,
+          "gain": "gain",
+          "tear_p999_m": 0.02808,
+          "tear_gt5cm": 21,
+          "reach_max_m": 0.57235
+        },
+        {
+          "card": "cross",
+          "frame": 10,
+          "gain": "base",
+          "tear_p999_m": 0.04,
+          "tear_gt5cm": 103,
+          "reach_max_m": 0.49169
+        },
+        {
+          "card": "cross",
+          "frame": 10,
+          "gain": "gain",
+          "tear_p999_m": 0.05411,
+          "tear_gt5cm": 186,
+          "reach_max_m": 0.73966
+        },
+        {
+          "card": "wave",
+          "frame": 17,
+          "gain": "base",
+          "tear_p999_m": 0.0195,
+          "tear_gt5cm": 98,
+          "reach_max_m": 0.22659
+        },
+        {
+          "card": "wave",
+          "frame": 17,
+          "gain": "gain",
+          "tear_p999_m": 0.02749,
+          "tear_gt5cm": 98,
+          "reach_max_m": 0.34052
+        }
+      ]
+    },
+    {
+      "lam": 0.25,
+      "iters": 1,
+      "tear_gain_mean": 0.03533,
+      "tear_gain_max": 0.05241,
+      "gt5cm_gain_max": 169,
+      "reach_gain_mean": 0.55084,
+      "purity_arm_f": 0.83362,
+      "purity_torso": 0.56434,
+      "rows": [
+        {
+          "card": "jab",
+          "frame": 6,
+          "gain": "base",
+          "tear_p999_m": 0.01726,
+          "tear_gt5cm": 10,
+          "reach_max_m": 0.41171
+        },
+        {
+          "card": "jab",
+          "frame": 6,
+          "gain": "gain",
+          "tear_p999_m": 0.02734,
+          "tear_gt5cm": 10,
+          "reach_max_m": 0.57235
+        },
+        {
+          "card": "cross",
+          "frame": 10,
+          "gain": "base",
+          "tear_p999_m": 0.03883,
+          "tear_gt5cm": 91,
+          "reach_max_m": 0.49168
+        },
+        {
+          "card": "cross",
+          "frame": 10,
+          "gain": "gain",
+          "tear_p999_m": 0.05241,
+          "tear_gt5cm": 169,
+          "reach_max_m": 0.73966
+        },
+        {
+          "card": "wave",
+          "frame": 17,
+          "gain": "base",
+          "tear_p999_m": 0.01865,
+          "tear_gt5cm": 87,
+          "reach_max_m": 0.22659
+        },
+        {
+          "card": "wave",
+          "frame": 17,
+          "gain": "gain",
+          "tear_p999_m": 0.02624,
+          "tear_gt5cm": 87,
+          "reach_max_m": 0.34052
+        }
+      ]
+    },
+    {
+      "lam": 0.5,
+      "iters": 1,
+      "tear_gain_mean": 0.03848,
+      "tear_gain_max": 0.05913,
+      "gt5cm_gain_max": 214,
+      "reach_gain_mean": 0.55084,
+      "purity_arm_f": 0.83348,
+      "purity_torso": 0.56388,
+      "rows": [
+        {
+          "card": "jab",
+          "frame": 6,
+          "gain": "base",
+          "tear_p999_m": 0.01689,
+          "tear_gt5cm": 10,
+          "reach_max_m": 0.41171
+        },
+        {
+          "card": "jab",
+          "frame": 6,
+          "gain": "gain",
+          "tear_p999_m": 0.02695,
+          "tear_gt5cm": 10,
+          "reach_max_m": 0.57235
+        },
+        {
+          "card": "cross",
+          "frame": 10,
+          "gain": "base",
+          "tear_p999_m": 0.0434,
+          "tear_gt5cm": 113,
+          "reach_max_m": 0.49168
+        },
+        {
+          "card": "cross",
+          "frame": 10,
+          "gain": "gain",
+          "tear_p999_m": 0.05913,
+          "tear_gt5cm": 214,
+          "reach_max_m": 0.73965
+        },
+        {
+          "card": "wave",
+          "frame": 17,
+          "gain": "base",
+          "tear_p999_m": 0.02082,
+          "tear_gt5cm": 78,
+          "reach_max_m": 0.22659
+        },
+        {
+          "card": "wave",
+          "frame": 17,
+          "gain": "gain",
+          "tear_p999_m": 0.02935,
+          "tear_gt5cm": 86,
+          "reach_max_m": 0.34052
+        }
+      ]
+    },
+    {
+      "lam": 0.5,
+      "iters": 2,
+      "tear_gain_mean": 0.03678,
+      "tear_gain_max": 0.05605,
+      "gt5cm_gain_max": 204,
+      "reach_gain_mean": 0.55083,
+      "purity_arm_f": 0.83328,
+      "purity_torso": 0.5632,
+      "rows": [
+        {
+          "card": "jab",
+          "frame": 6,
+          "gain": "base",
+          "tear_p999_m": 0.01658,
+          "tear_gt5cm": 0,
+          "reach_max_m": 0.41171
+        },
+        {
+          "card": "jab",
+          "frame": 6,
+          "gain": "gain",
+          "tear_p999_m": 0.02661,
+          "tear_gt5cm": 0,
+          "reach_max_m": 0.57234
+        },
+        {
+          "card": "cross",
+          "frame": 10,
+          "gain": "base",
+          "tear_p999_m": 0.04079,
+          "tear_gt5cm": 89,
+          "reach_max_m": 0.49167
+        },
+        {
+          "card": "cross",
+          "frame": 10,
+          "gain": "gain",
+          "tear_p999_m": 0.05605,
+          "tear_gt5cm": 204,
+          "reach_max_m": 0.73964
+        },
+        {
+          "card": "wave",
+          "frame": 17,
+          "gain": "base",
+          "tear_p999_m": 0.01944,
+          "tear_gt5cm": 14,
+          "reach_max_m": 0.22659
+        },
+        {
+          "card": "wave",
+          "frame": 17,
+          "gain": "gain",
+          "tear_p999_m": 0.02768,
+          "tear_gt5cm": 38,
+          "reach_max_m": 0.34051
+        }
+      ]
+    },
+    {
+      "lam": 0.75,
+      "iters": 2,
+      "tear_gain_mean": 0.03453,
+      "tear_gain_max": 0.05137,
+      "gt5cm_gain_max": 161,
+      "reach_gain_mean": 0.55083,
+      "purity_arm_f": 0.83308,
+      "purity_torso": 0.56258,
+      "rows": [
+        {
+          "card": "jab",
+          "frame": 6,
+          "gain": "base",
+          "tear_p999_m": 0.01654,
+          "tear_gt5cm": 0,
+          "reach_max_m": 0.4117
+        },
+        {
+          "card": "jab",
+          "frame": 6,
+          "gain": "gain",
+          "tear_p999_m": 0.02661,
+          "tear_gt5cm": 0,
+          "reach_max_m": 0.57234
+        },
+        {
+          "card": "cross",
+          "frame": 10,
+          "gain": "base",
+          "tear_p999_m": 0.03757,
+          "tear_gt5cm": 40,
+          "reach_max_m": 0.49166
+        },
+        {
+          "card": "cross",
+          "frame": 10,
+          "gain": "gain",
+          "tear_p999_m": 0.05137,
+          "tear_gt5cm": 161,
+          "reach_max_m": 0.73963
+        },
+        {
+          "card": "wave",
+          "frame": 17,
+          "gain": "base",
+          "tear_p999_m": 0.01799,
+          "tear_gt5cm": 0,
+          "reach_max_m": 0.22659
+        },
+        {
+          "card": "wave",
+          "frame": 17,
+          "gain": "gain",
+          "tear_p999_m": 0.0256,
+          "tear_gt5cm": 10,
+          "reach_max_m": 0.34051
+        }
+      ]
+    }
+  ],
+  "elapsed_seconds": 11.15
+}

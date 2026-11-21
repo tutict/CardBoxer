@@ -1,0 +1,182 @@
+{
+  "project.godot": {
+    "backup_file": "project.godot",
+    "sha256": "72cdfe54dfad3c62160e684b237e40fa87eca22f2f5cdd7292cf309f6f806dc6",
+    "bytes": 861,
+    "copy_ok": true
+  },
+  "scenes/main.tscn": {
+    "backup_file": "scenes__main.tscn",
+    "sha256": "2bcbdc9f31b8c7f38185699210b0b47c1b342063a6c9c6b86d6327f1e28619fd",
+    "bytes": 173,
+    "copy_ok": true
+  },
+  "scripts/ai_controller.gd": {
+    "backup_file": "scripts__ai_controller.gd",
+    "sha256": "846ec8a77d6c39e6b49cf603ad419dd2809bdf937aca0172f21f301935997920",
+    "bytes": 7001,
+    "copy_ok": true
+  },
+  "scripts/arena.gd": {
+    "backup_file": "scripts__arena.gd",
+    "sha256": "8559c20d6a59df3164e3b5b8ba13c539ff64894cf4920484f2b48b8ddb727303",
+    "bytes": 45868,
+    "copy_ok": true
+  },
+  "scripts/battle_motion_p0.gd": {
+    "backup_file": "scripts__battle_motion_p0.gd",
+    "sha256": "d958c71ae74ad2fefc7c7cb6574cb15a138c5a2cdfcfd7612d0daa85b7833460",
+    "bytes": 3021,
+    "copy_ok": true
+  },
+  "scripts/battle_rhythm.gd": {
+    "backup_file": "scripts__battle_rhythm.gd",
+    "sha256": "48c56db4aca20ddd4bacd7703d21546f4482137c2ac4a2f07ec2b92f6c7f4c84",
+    "bytes": 3848,
+    "copy_ok": true
+  },
+  "scripts/card_data.gd": {
+    "backup_file": "scripts__card_data.gd",
+    "sha256": "2d2a3dfe7dde22ebe337a243f06dd1199b5272f9904750a21b31202f8e6cf87f",
+    "bytes": 6365,
+    "copy_ok": true
+  },
+  "scripts/card_motion.gd": {
+    "backup_file": "scripts__card_motion.gd",
+    "sha256": "417201008f7deed9f6de942311b5e4048a5ad6d58828309ce9b52f32068e6050",
+    "bytes": 5324,
+    "copy_ok": true
+  },
+  "scripts/combo_check.gd": {
+    "backup_file": "scripts__combo_check.gd",
+    "sha256": "01137c8d04b3d20f4f1f35d0db69c25504d590a2a4f67aa92f63e0811a036000",
+    "bytes": 1988,
+    "copy_ok": true
+  },
+  "scripts/fighter.gd": {
+    "backup_file": "scripts__fighter.gd",
+    "sha256": "df9b5e99e8c7c3b4bb6f163150ed87574205fd9a266bd6b1bc20e85818d9b81b",
+    "bytes": 40685,
+    "copy_ok": true
+  },
+  "scripts/fighter_skin.gd": {
+    "backup_file": "scripts__fighter_skin.gd",
+    "sha256": "fda41d2da24f2a37896e6d3223482cb96f56c8aad45d020bb02c4e804b445c41",
+    "bytes": 1783,
+    "copy_ok": true
+  },
+  "scripts/fx_layer.gd": {
+    "backup_file": "scripts__fx_layer.gd",
+    "sha256": "b9192a3ba20d90062d6c0a829dcdc6c808126e70baf838f676a87290165572ed",
+    "bytes": 430,
+    "copy_ok": true
+  },
+  "scripts/hud.gd": {
+    "backup_file": "scripts__hud.gd",
+    "sha256": "0fca9b2ac80497254a7cd5f4c2fb6a58a7df99d2e6c1801aa39905ffd2b67bcf",
+    "bytes": 24522,
+    "copy_ok": true
+  },
+  "scripts/taikou_ai.gd": {
+    "backup_file": "scripts__taikou_ai.gd",
+    "sha256": "ba5d66094c53fdcd1bc5810b85a451d56c1dcd98c2c49bfa798c9d6c81404f42",
+    "bytes": 1184,
+    "copy_ok": true
+  },
+  "scripts/taikou_rage.gd": {
+    "backup_file": "scripts__taikou_rage.gd",
+    "sha256": "83e6509f78b3a469247de47e28f471e492c8cd7d955f800676efb55caadc3172",
+    "bytes": 2224,
+    "copy_ok": true
+  },
+  "scripts/taikou_rules.gd": {
+    "backup_file": "scripts__taikou_rules.gd",
+    "sha256": "d16a4b16668b60d929b0eab318e98d0a2acffefd503f17e8d344cb55a599bce1",
+    "bytes": 3362,
+    "copy_ok": true
+  },
+  "tests/battle_motion_p0_check.gd": {
+    "backup_file": "tests__battle_motion_p0_check.gd",
+    "sha256": "57ffad11f7a331debec7e0298d47a558a44fb512f12965a2722cd8cb9a5ec9db",
+    "bytes": 9447,
+    "copy_ok": true
+  },
+  "tests/battle_rhythm_check.gd": {
+    "backup_file": "tests__battle_rhythm_check.gd",
+    "sha256": "9dff302e84257b56b7857f48c0fef2dbda3342817e8f7a6b169f5143bc511e16",
+    "bytes": 10076,
+    "copy_ok": true
+  },
+  "tests/duel_probe.gd": {
+    "backup_file": "tests__duel_probe.gd",
+    "sha256": "ef32f2da0e93caed6f5263b986f46fe09a67eb32b53852b6cbeed3027983eb02",
+    "bytes": 5719,
+    "copy_ok": true
+  },
+  "tests/feet_probe.gd": {
+    "backup_file": "tests__feet_probe.gd",
+    "sha256": "647f35f80b9a814174c2dc3a7355f8b35a11ceea930349b3261e35c003082bc2",
+    "bytes": 7181,
+    "copy_ok": true
+  },
+  "tests/fighter_skin_check.gd": {
+    "backup_file": "tests__fighter_skin_check.gd",
+    "sha256": "0b408724b8e968c34ce6164c20f2adb35fc099072ec9a9db4a365bbff1f9163d",
+    "bytes": 5869,
+    "copy_ok": true
+  },
+  "tests/motion_check.gd": {
+    "backup_file": "tests__motion_check.gd",
+    "sha256": "582874947e6f78f2ce14a3017b010efc308bd9892773c4573a2e3a8d1db68e80",
+    "bytes": 5045,
+    "copy_ok": true
+  },
+  "tests/motion_strip.gd": {
+    "backup_file": "tests__motion_strip.gd",
+    "sha256": "415d4f0c34ca4b988b514933a70760b952c943a50c8ced30d19b81cdc5bf342d",
+    "bytes": 2163,
+    "copy_ok": true
+  },
+  "tests/perf_probe.gd": {
+    "backup_file": "tests__perf_probe.gd",
+    "sha256": "23ed9e421a3dc077560c405f0d7bd62d90cfb0f4d0398887e115d54c7b745654",
+    "bytes": 3301,
+    "copy_ok": true
+  },
+  "tests/pose_probe.gd": {
+    "backup_file": "tests__pose_probe.gd",
+    "sha256": "fab0068b319731602099ed2214d19928dc2f85748a107fe2c18ecc0c8030058e",
+    "bytes": 8144,
+    "copy_ok": true
+  },
+  "tests/reach_probe.gd": {
+    "backup_file": "tests__reach_probe.gd",
+    "sha256": "cc2ba6312a1f7410e1912954afefbddcd97491e4432df0fa536723801cd39d58",
+    "bytes": 4136,
+    "copy_ok": true
+  },
+  "tests/taikou_flow_check.gd": {
+    "backup_file": "tests__taikou_flow_check.gd",
+    "sha256": "7cdcf3c3b66cedc03e5f19e29dcf11fa505a27506af8f79f22aaee50230295be",
+    "bytes": 9067,
+    "copy_ok": true
+  },
+  "tests/taikou_rage_check.gd": {
+    "backup_file": "tests__taikou_rage_check.gd",
+    "sha256": "25f471d7074a788eb4c3ff90b6b8439743f122080c8f1c677b3c64be3b30bc77",
+    "bytes": 3530,
+    "copy_ok": true
+  },
+  "tests/taikou_rules_check.gd": {
+    "backup_file": "tests__taikou_rules_check.gd",
+    "sha256": "ef5be1ca8bd00726213be726a0bd8230f3598871291af28edcaef0624d2e4227",
+    "bytes": 5334,
+    "copy_ok": true
+  },
+  "tests/walk_strip.gd": {
+    "backup_file": "tests__walk_strip.gd",
+    "sha256": "cd6c6459838a388eb57ace11346d28f47da4b4075701d10f6395fc3716243139",
+    "bytes": 1806,
+    "copy_ok": true
+  }
+}

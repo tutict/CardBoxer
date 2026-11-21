@@ -1,0 +1,11 @@
+00:00.688  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\玩家V4b-可变形连续壳.blend"
+00:02.203  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\frames\e-stance-x1.png'
+X1_SHOT stance bytes=365315
+00:02.422  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\frames\e-jab07-x1.png'
+X1_SHOT jab07 bytes=370123
+00:02.641  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\frames\e-cross11-x1.png'
+X1_SHOT cross11 bytes=370822
+00:02.844  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\frames\e-wave18-x1.png'
+X1_SHOT wave18 bytes=367851
+X1_RENDER_OK shots=4
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

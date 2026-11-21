@@ -1,0 +1,80 @@
+{
+  "repeat": 3,
+  "pairs": [
+    {
+      "pair": 1,
+      "changed_px": 0,
+      "gate0": {
+        "process_ms": 4.01285833333334,
+        "draw_us": 4870,
+        "draws": 121,
+        "skips": 0,
+        "prims": 188.0,
+        "calls": 9.0
+      },
+      "gate1": {
+        "process_ms": 2.671,
+        "draw_us": 0,
+        "draws": 0,
+        "skips": 360,
+        "prims": 188.0,
+        "calls": 9.0
+      }
+    },
+    {
+      "pair": 2,
+      "changed_px": 0,
+      "gate0": {
+        "process_ms": 2.79199999999999,
+        "draw_us": 5143,
+        "draws": 121,
+        "skips": 0,
+        "prims": 188.0,
+        "calls": 9.0
+      },
+      "gate1": {
+        "process_ms": 2.525,
+        "draw_us": 0,
+        "draws": 0,
+        "skips": 360,
+        "prims": 188.0,
+        "calls": 9.0
+      }
+    },
+    {
+      "pair": 3,
+      "changed_px": 0,
+      "gate0": {
+        "process_ms": 2.601,
+        "draw_us": 4931,
+        "draws": 121,
+        "skips": 0,
+        "prims": 188.0,
+        "calls": 9.0
+      },
+      "gate1": {
+        "process_ms": 2.62,
+        "draw_us": 0,
+        "draws": 0,
+        "skips": 360,
+        "prims": 188.0,
+        "calls": 9.0
+      }
+    }
+  ],
+  "draw_us_mean_off": 4981.333333333333,
+  "draw_us_mean_on": 0.0,
+  "draw_us_gain_pct": 100.0,
+  "TIME_PROCESS_off": [
+    4.0129,
+    2.792,
+    2.601
+  ],
+  "TIME_PROCESS_on": [
+    2.671,
+    2.525,
+    2.62
+  ],
+  "TIME_PROCESS_note": "bimodal window sample; retired as a gain criterion",
+  "key_bench": "tests/key_bench.gd: str() 6.1140us, hash() 0.1159us, ratio 52.75"
+}

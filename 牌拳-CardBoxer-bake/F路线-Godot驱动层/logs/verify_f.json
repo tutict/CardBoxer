@@ -1,0 +1,108 @@
+{
+  "checks": {
+    "A01_driver_exists": true,
+    "A02_retarget_in_gdscript": true,
+    "A03_no_baked_pose_in_driver": true,
+    "A04_correct_pose_basis": true,
+    "A05_z_axis_neg_delta": true,
+    "A06_13_bones_only": true,
+    "A07_scene_preloads_driver": true,
+    "A08_scene_reads_motion_only": true,
+    "A09_scene_autoplay": true,
+    "A10_motion_copy_identical": true,
+    "A11_drive_probe_has_73": true,
+    "A12_render_uses_main_scene": true,
+    "A13_no_blender_import": true,
+    "A14_motion_input_recompute": true,
+    "B01_glb_exists": true,
+    "B02_glb_sha_matches_export": true,
+    "B03_highpoly_has_skin": true,
+    "B04_skin_14_joints": true,
+    "B05_zero_animations": true,
+    "B06_images_not_reencoded": true,
+    "B07_old_glb_highpoly_unskinned": true,
+    "B08_godot_import_ok": true,
+    "B09_godot_14_bones": true,
+    "B10_godot_mesh_skinned": true,
+    "B11_neutral_bone_present": true,
+    "C01_drive_probe_ok": true,
+    "C02_windowed": true,
+    "C03_no_script_errors": true,
+    "C04_73_frames": true,
+    "C05_73_applied": true,
+    "C06_crosscheck_all_green": true,
+    "C07_delta_tolerance": true,
+    "C08_calc_engine_tolerance": true,
+    "C09_engine_blender_tolerance": true,
+    "C10_neutral_untouched": true,
+    "C11_pose_written": true,
+    "C12_root_matches": true,
+    "C13_three_cards_driven": true,
+    "C14_nonzero_motion_frames": true,
+    "D01_render_ok": true,
+    "D02_no_script_errors": true,
+    "D03_stage_ready": true,
+    "D04_nine_shots": true,
+    "D05_all_png_valid": true,
+    "D06_repeat_byte_identical": true,
+    "D07_all_nonblank": true,
+    "D08_attack_pixels_changed": true,
+    "D09_yaw_pixels_changed": true,
+    "D10_cards_mutually_distinct": true,
+    "D11_last_frame_returns": true,
+    "E01_game_unchanged": true,
+    "E02_game_has_no_3d_asset": true,
+    "F01_filelist_exists": true,
+    "F02_filelist_nonempty": true,
+    "F03_filelist_sha_selfconsistent": true,
+    "F04_filelist_covers_all": true,
+    "F05_diff_nonempty": true
+  },
+  "failed": [],
+  "total": 57,
+  "passed": 57,
+  "notes": {
+    "motion_recompute_worst_deg": 5e-06,
+    "nonzero_motion_frames": 69,
+    "attack_vs_stance": {
+      "jab06-front": {
+        "changed_px": 323551,
+        "mean_abs": 32.3477
+      },
+      "cross07-front": {
+        "changed_px": 331267,
+        "mean_abs": 33.6498
+      },
+      "wave17-front": {
+        "changed_px": 283122,
+        "mean_abs": 26.6394
+      },
+      "wave35-front": {
+        "changed_px": 42188,
+        "mean_abs": 1.4816
+      }
+    },
+    "yaw_changed_px": {
+      "jab06": 498312,
+      "cross07": 509257,
+      "wave17": 489504
+    },
+    "card_pair_changed_px": {
+      "jab_vs_cross": 192155,
+      "jab_vs_wave": 259804,
+      "cross_vs_wave": 261097
+    },
+    "wave35_vs_stance_changed_px": 42188,
+    "game_file_count": 105,
+    "game_drift": [],
+    "game_extra": [],
+    "game_baseline_count": 105,
+    "game_3d_asset_count": 0,
+    "filelist_rows": 59,
+    "filelist_bad": [],
+    "filelist_missing": [],
+    "filelist_extra": [],
+    "diff_bytes": 116111
+  },
+  "ok": true
+}

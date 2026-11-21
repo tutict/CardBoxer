@@ -1,0 +1,10 @@
+test_f4_unique_staging_preserves_source_named_as_legacy_temporary_file (__main__.CanonicalTests.test_f4_unique_staging_preserves_source_named_as_legacy_temporary_file) ... ok
+test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) ... ok
+test_f4_cli_report_collision_is_rejected_before_any_output_write (__main__.CanonicalTests.test_f4_cli_report_collision_is_rejected_before_any_output_write) ... ok
+test_f4_report_writes_protect_external_dependencies_and_checker_inputs (__main__.CanonicalTests.test_f4_report_writes_protect_external_dependencies_and_checker_inputs) ... ok
+test_f4_percent_encoded_external_image_resolves_without_mutation (__main__.CanonicalTests.test_f4_percent_encoded_external_image_resolves_without_mutation) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 5.570s
+
+OK

@@ -1,0 +1,58 @@
+17:25:03 | INFO: Data are loaded, start creating Blender stuff
+17:25:03 | INFO: Blender create Mesh node node_0.002
+17:25:03 | INFO: glTF import finished in 0.23s
+PLAYER surface_preserving_quad_reflow 31922 38789
+PLAYER explicit_feature_loops {}
+PLAYER structured_face {'features': {'eye_b': {'connected_to_face_grid': True, 'boundary_vertices': 38, 'concentric_rings': 5}, 'eye_f': {'connected_to_face_grid': True, 'boundary_vertices': 38, 'concentric_rings': 5}, 'lips': {'connected_to_face_grid': True, 'boundary_vertices': 28, 'concentric_rings': 5}}, 'grid': [32, 30], 'internal_cap_triangles': 307, 'closed_face_component': True}
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\tools\author_player.py:272: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new(name);m.use_nodes=True;bs=m.node_tree.nodes.get('Principled BSDF');bs.inputs['Base Color'].default_value=(*color,1);bs.inputs['Roughness'].default_value=rough;return m
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\tools\author_player.py:336: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  newmat=bpy.data.materials.new('Player_Retopology_PBR_4K');newmat.use_nodes=True
+PLAYER surface_bake 0 / 73575 texels 68
+PLAYER surface_bake 4000 / 73575 texels 240201
+PLAYER surface_bake 8000 / 73575 texels 462505
+PLAYER surface_bake 12000 / 73575 texels 660722
+PLAYER surface_bake 16000 / 73575 texels 908979
+PLAYER surface_bake 20000 / 73575 texels 1129794
+PLAYER surface_bake 24000 / 73575 texels 1386593
+PLAYER surface_bake 28000 / 73575 texels 1654767
+PLAYER surface_bake 32000 / 73575 texels 1940622
+PLAYER surface_bake 36000 / 73575 texels 2198379
+PLAYER surface_bake 40000 / 73575 texels 2462130
+PLAYER surface_bake 44000 / 73575 texels 2708018
+PLAYER surface_bake 48000 / 73575 texels 2995826
+PLAYER surface_bake 52000 / 73575 texels 3270968
+PLAYER surface_bake 56000 / 73575 texels 3540208
+PLAYER surface_bake 60000 / 73575 texels 3826662
+PLAYER surface_bake 64000 / 73575 texels 4073712
+PLAYER surface_bake 68000 / 73575 texels 4194441
+PLAYER surface_bake 72000 / 73575 texels 4271079
+PLAYER surface_resample_bake_complete 4304667
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\tools\author_player.py:459: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  scene.world=bpy.data.worlds.new('Player studio');scene.world.use_nodes=True;scene.world.node_tree.nodes['Background'].inputs[0].default_value=(.17,.17,.17,1)
+01:00.500  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\candidate-full.png'
+01:03.609  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\candidate-face.png'
+01:05.734  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\candidate-hands.png'
+01:07.765  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\candidate-hand-back.png'
+01:09.750  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\grip-0.png'
+01:11.750  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\grip-0p25.png'
+01:13.937  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\grip-0p5.png'
+01:15.984  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\grip-0p75.png'
+01:18.203  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\grip-1.png'
+01:22.109  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\candidate-wireframe.png'
+01:24.625  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\candidate-hand-wireframe.png'
+Info: Baking map saved to internal image, save it externally or pack it
+INFO Draco is available, use library at C:\Program Files\Blender Foundation\Blender 5.2\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at C:\Program Files\Blender Foundation\Blender 5.2\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+17:26:26 | INFO: Starting glTF 2.0 export
+17:26:26 | INFO: Extracting primitive: node_0.001
+17:26:27 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+17:26:28 | INFO: Primitives created: 1
+17:26:28 | INFO: Finished glTF 2.0 export in 1.1655941009521484 s
+01:26.078  image.write      | ERROR OpenImageIO write failed: Could not open file "C:\Users\tutic\.thumbnails\large\blender_40872_5f08c25ae1440096f294e521263be525.png.png"
+
+Info: Saved as "player-retopology.blend"
+PLAYER DONE {"version": 1, "role": "player", "source_sha256": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b", "source_vertices": 57934, "source_triangles": 79986, "baseline_acceptance": "FAIL triangles only; morphs absent", "new_vertices": 36666, "new_faces": 43752, "quads": 29075, "quad_fraction": 0.6645410495520204, "triangles": 73575, "feature_loops": {"eye_b": {"connected_to_face_grid": true, "boundary_vertices": 38, "concentric_rings": 5}, "eye_f": {"connected_to_face_grid": true, "boundary_vertices": 38, "concentric_rings": 5}, "lips": {"connected_to_face_grid": true, "boundary_vertices": 28, "concentric_rings": 5}}, "max_body_projection_error_m": 0.07987268269062042, "max_influences": 4, "neutral_visible_weight": 0, "morphs": ["Basis", "grip_half_f", "grip_f", "grip_half_b", "grip_b"], "texture_sizes": {"player-basecolor-4k": [4096, 4096], "player-normal-4k": [4096, 4096], "player-orm-4k": [4096, 4096]}, "seconds": 84.73245477676392, "outputs": {"player-raw.glb": "4320e2bb2940d967af5b39dd2e76ed8cec21fb22e7388fe7d110b675d0c6927b", "player-retopology.blend": "794b4852dd1701ff1518b4fc5e5e11a5d09c1264ed6e55edb307bc677938eed4", "contact-sockets.json": "2fa97c8ff98fb481629a29438fe56dd5a5aa9be32330455656fe33840ab42754", "textures\\player-basecolor-4k.png": "3ecedae53ec0f5471f3382dd1bef3d616c6fd42d2e59fa474a717cf4cf1addf7", "textures\\player-normal-4k.png": "0070399bfe1fe4eb574f115ceae55f0f080cffd26691839c58a403aab7ab5eb2", "textures\\player-orm-4k.png": "6b7e1c24ea8b45bb68c7b17a13904a841de5309f400c67ea0d3c08d5cb886f16"}, "notes": ["Repaired baseline weights barycentrically transferred; original14joint armature unchanged.", "New base connectivity QuadriFlow, connected explicit eye/lip rings, manual procedural palm/finger rings and local joint grids.", "Thumb is a sealed deliberate insert rooted under glove; originalscan costume is a connected surface.", "PBR channels are rebaked using local sourceUV retargeting to avoid missed rays on thin overlapping scan components. Refined highdetail references retained.", "Facial feature rings retain source form; no claim of feature-film facial animation rig."]}
+Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:35:40)
+
+Blender quit

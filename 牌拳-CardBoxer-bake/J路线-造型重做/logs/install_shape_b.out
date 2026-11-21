@@ -1,0 +1,11 @@
+BEFORE 42914328 0edcfe9e455f3c8c
+AFTER  42917552 96d383eec6286efb
+REIMPORT 0 10.467 errors 0
+CHECK glb_precheck_ok True
+CHECK before_is_i_baseline True
+CHECK backup_verified True
+CHECK glb_replaced True
+CHECK import_file_untouched True
+CHECK reimport_rc0 True
+CHECK no_script_errors True
+INSTALL_B_OK

@@ -1,0 +1,24 @@
+DIFF player_roi_noop {'changed_px': 0, 'total_px': 33390, 'ratio': 0.0, 'mae': 0.0}
+DIFF foe_roi_noop {'changed_px': 0, 'total_px': 33920, 'ratio': 0.0, 'mae': 0.0}
+DIFF player_roi_on_vs_plain {'changed_px': 0, 'total_px': 33390, 'ratio': 0.0, 'mae': 0.0}
+DIFF foe_roi_on_vs_plain {'changed_px': 16810, 'total_px': 33920, 'ratio': 0.4956, 'mae': 41.6444}
+DIFF player_roi_on_vs_base {'changed_px': 18062, 'total_px': 33390, 'ratio': 0.5409, 'mae': 55.5029}
+DIFF foe_roi_on_vs_again {'changed_px': 0, 'total_px': 33920, 'ratio': 0.0, 'mae': 0.0}
+DIFF full_frame_on_vs_plain {'changed_px': 17566, 'total_px': 921600, 'ratio': 0.0191, 'mae': 1.5617}
+MASK player_on luma 101.87 w 126 px 18062 rb 12.03
+MASK player_plain luma 101.87 w 126 px 18062 rb 12.03
+MASK foe_on luma 47.51 w 128 px 19386 rb 14.18
+MASK foe_plain luma 116.25 w 128 px 17909 rb 5.35
+MASK foe_on_wide luma 47.33 w 152 px 20202 rb 14.33
+MASK foe_plain_wide luma 116.05 w 135 px 18003 rb 5.26
+METRICS {'luma_gap_player_minus_foe_on': 54.36, 'luma_gap_player_minus_foe_plain': -14.38, 'foe_luma_drop_on_vs_plain': 68.74, 'red_blue_shift_delta': -8.83, 'foe_width_ratio_on_over_plain': 1.0, 'player_luma_change_on_vs_plain': 0.0, 'foe_width_ratio_wide': 1.1259}
+CHECK noop_frames_identical True
+CHECK player_roi_pixel_identical True
+CHECK player_luma_unchanged True
+CHECK foe_roi_changed True
+CHECK luma_gap_above_target True
+CHECK foe_substantially_darker True
+CHECK color_shift_visible True
+CHECK repeat_switch_deterministic True
+CHECK wide_roi_wider_than_plain True
+VISUAL_DIAG_I_OK

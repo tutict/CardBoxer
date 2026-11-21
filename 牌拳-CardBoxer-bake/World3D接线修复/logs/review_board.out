@@ -1,0 +1,7 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\World3D接线修复\make_review_board.py:49: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  for r, g, b in c.getdata():
+player legacy {'mean_luma': 37.965, 'pct_above_128': 0.0, 'pct_below_48': 0.768876, 'pct_above_48': 0.225976, 'mean_luma_above_48': 81.804, 'pct_above_80': 0.104063, 'max_luma': 118, 'pixels': 50700} shipped {'mean_luma': 34.945, 'pct_above_128': 0.0, 'pct_below_48': 0.837791, 'pct_above_48': 0.158817, 'mean_luma_above_48': 86.147, 'pct_above_80': 0.087495, 'max_luma': 118, 'pixels': 50700} delta_pct -7.95
+foe legacy {'mean_luma': 26.911, 'pct_above_128': 0.0, 'pct_below_48': 0.941403, 'pct_above_48': 0.057481, 'mean_luma_above_48': 73.072, 'pct_above_80': 0.0281, 'max_luma': 89, 'pixels': 66300} shipped {'mean_luma': 24.826, 'pct_above_128': 0.0, 'pct_below_48': 0.936908, 'pct_above_48': 0.061659, 'mean_luma_above_48': 72.693, 'pct_above_80': 0.029487, 'max_luma': 89, 'pixels': 66300} delta_pct -7.75
+BOARD 1088334 286287 331086
+ATTRIBUTION {"legacy": 26.911, "shipped": 24.826, "no_tint": 28.47} tint_effect 3.644
+REVIEW_BOARD_OK

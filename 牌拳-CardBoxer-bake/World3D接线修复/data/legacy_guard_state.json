@@ -1,0 +1,78 @@
+{
+  "note": "2026-11-14 World3D 接线修复后实测。历史守卫的红因均为源码文本 / sha 快照 / 新增行白名单断言按设计报红，不是玩法回归；本轮未修改任何历史脚本，跑前快照、跑后逐字节还原 logs/。",
+  "source_sha256": "e99735fa1f78fe9230114cd2b9fa31d801e17c54016c3b5d4e87807f43d707e7",
+  "guards": [
+    {
+      "route": "G路线-游戏内3D接线",
+      "script": "verify_g.py",
+      "rc": 1,
+      "marker": "G_VERIFY_FAILED",
+      "failed": [
+        "A05_side_yaw_is_55",
+        "B03_added_all_whitelisted",
+        "B05_no_unclassified_added"
+      ],
+      "classifications": {
+        "A05_side_yaw_is_55": "源码文本 / sha 快照 / 新增行白名单断言：改 fighter_3d_layer.gd 必然红",
+        "B03_added_all_whitelisted": "源码文本 / sha 快照 / 新增行白名单断言：改 fighter_3d_layer.gd 必然红",
+        "B05_no_unclassified_added": "源码文本 / sha 快照 / 新增行白名单断言：改 fighter_3d_layer.gd 必然红"
+      },
+      "stdout_bytes": 153
+    },
+    {
+      "route": "H路线-双方3D侧面战斗",
+      "script": "verify_h.py",
+      "rc": 1,
+      "marker": "H_NOT_VERIFIED",
+      "failed": [
+        "H07_patch_after_matches_live_sources",
+        "H13_layer_parametrised"
+      ],
+      "classifications": {
+        "H07_patch_after_matches_live_sources": "源码文本 / sha 快照 / 新增行白名单断言：改 fighter_3d_layer.gd 必然红",
+        "H13_layer_parametrised": "源码文本 / sha 快照 / 新增行白名单断言：改 fighter_3d_layer.gd 必然红"
+      },
+      "stdout_bytes": 2053
+    },
+    {
+      "route": "I路线-视觉区分度",
+      "script": "verify_i.py",
+      "rc": 1,
+      "marker": "I_NOT_VERIFIED",
+      "failed": [
+        "source_G_shape_preserved",
+        "layer_sha_matches_final_report"
+      ],
+      "classifications": {
+        "source_G_shape_preserved": "源码文本 / sha 快照 / 新增行白名单断言：改 fighter_3d_layer.gd 必然红",
+        "layer_sha_matches_final_report": "源码文本 / sha 快照 / 新增行白名单断言：改 fighter_3d_layer.gd 必然红"
+      },
+      "stdout_bytes": 2258
+    },
+    {
+      "route": "止损-显示异常",
+      "script": "verify_stopgap.py",
+      "rc": 0,
+      "marker": "STOPGAP_VERIFIED",
+      "failed": [],
+      "classifications": {},
+      "stdout_bytes": 562
+    }
+  ],
+  "logs_restored": {
+    "G路线-游戏内3D接线": true,
+    "H路线-双方3D侧面战斗": true,
+    "I路线-视觉区分度": true,
+    "止损-显示异常": true
+  },
+  "unclassified_reds": [],
+  "checks": {
+    "four_guards_ran": true,
+    "all_logs_restored": true,
+    "stopgap_still_green": true,
+    "no_unclassified_reds": true,
+    "source_changed_once": true
+  },
+  "failed_checks": [],
+  "ok": true
+}

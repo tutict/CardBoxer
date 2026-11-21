@@ -1,0 +1,9 @@
+[player] far_pixels_pinned=431656 mask_counts=[432607, 1540, 635, 7075, 14665, 9999, 16233, 11095, 13117, 15779, 26227, 15414, 25438]
+[player/S1] guard=6004 diff=61628 bbox=[198, 95, 580, 678] maxdeg=45.0
+[player/S2] guard=5520 diff=70418 bbox=[198, 95, 559, 680] maxdeg=70.0
+[player/S3] guard=5175 diff=75516 bbox=[198, 95, 538, 680] maxdeg=92.0
+[foe] far_pixels_pinned=433670 mask_counts=[435672, 3039, 1243, 6543, 14176, 12966, 15053, 15208, 13794, 13710, 22966, 13438, 22016]
+[foe/S1] guard=9278 diff=74332 bbox=[238, 96, 586, 682] maxdeg=45.0
+[foe/S2] guard=8588 diff=84141 bbox=[238, 97, 571, 684] maxdeg=70.0
+[foe/S3] guard=8124 diff=90639 bbox=[238, 97, 556, 686] maxdeg=92.0
+STANCE_PROBE_OK

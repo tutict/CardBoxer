@@ -1,0 +1,89 @@
+{
+  "game": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer",
+  "to_change": [
+    "scripts/arena.gd",
+    "scripts/fighter_3d_layer.gd",
+    "data/motion_input.json",
+    "data/motion_input_foe.json"
+  ],
+  "files": {
+    "scripts/arena.gd": {
+      "exists": true,
+      "size": 50263,
+      "sha256": "c5dd4a3056a52e77f2269832bd898d8fbd03f2a61b81cc97b01d38e4c057e38e"
+    },
+    "scripts/fighter_3d_layer.gd": {
+      "exists": true,
+      "size": 13564,
+      "sha256": "e99735fa1f78fe9230114cd2b9fa31d801e17c54016c3b5d4e87807f43d707e7"
+    },
+    "data/motion_input.json": {
+      "exists": true,
+      "size": 19771,
+      "sha256": "c3ff4f76f5582b59d8706a611eb0bbbba4f8a8ee28bcf61a3cd801acd06f5cd2"
+    },
+    "data/motion_input_foe.json": {
+      "exists": true,
+      "size": 19769,
+      "sha256": "7d1dcd21b92edbb3bf6cb21cb0de500cd4b6ec810278fb89de387bea96548884"
+    },
+    "scripts/fighter.gd": {
+      "exists": true,
+      "size": 41208,
+      "sha256": "0ad8b0c3d94e0f0bd02ac9b2566bbbcd9d3bf7ee9a0c0e82333651e9659fe1c8"
+    },
+    "scripts/rig_driver.gd": {
+      "exists": true,
+      "size": 7827,
+      "sha256": "f287bf80a92962374201eb99d197aa32cc9ad7865486998fff9146cd76f1b933"
+    },
+    "scripts/battle_motion_p0.gd": {
+      "exists": true,
+      "size": 3021,
+      "sha256": "d958c71ae74ad2fefc7c7cb6574cb15a138c5a2cdfcfd7612d0daa85b7833460"
+    },
+    "scripts/battle_rhythm.gd": {
+      "exists": true,
+      "size": 3848,
+      "sha256": "48c56db4aca20ddd4bacd7703d21546f4482137c2ac4a2f07ec2b92f6c7f4c84"
+    },
+    "scripts/card_motion.gd": {
+      "exists": true,
+      "size": 5324,
+      "sha256": "417201008f7deed9f6de942311b5e4048a5ad6d58828309ce9b52f32068e6050"
+    },
+    "scripts/hud.gd": {
+      "exists": true,
+      "size": 32962,
+      "sha256": "d7220e8b8aedf0fe99fc194e79a61dd55ab70f26821f33c1d934d28e64d72a68"
+    },
+    "data/card_motion.json": {
+      "exists": true,
+      "size": 226918,
+      "sha256": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55"
+    },
+    "project.godot": {
+      "exists": true,
+      "size": 1290,
+      "sha256": "a4bb56358694fc1dcb83babd4603866a8c541906859cab8b6ef5db64bfa27522"
+    },
+    "assets/3d/player-rigged.glb": {
+      "exists": true,
+      "size": 38478140,
+      "sha256": "80e5a1a03f446dd8a080e69524d4e78d97191fe56fcb30f86ed7e8c945fcab28"
+    },
+    "assets/3d/foe-rigged.glb": {
+      "exists": true,
+      "size": 42914328,
+      "sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88"
+    }
+  },
+  "checks": {
+    "all_watched_present": true,
+    "all_sha_nonempty": true,
+    "backups_bytewise_equal": true,
+    "backup_count": true,
+    "four_to_change": true
+  },
+  "ok": true
+}

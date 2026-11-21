@@ -1,0 +1,39 @@
+FAIL: player f guard compact bent elbow, not open presentation (reach=0.791, angle=104.5)
+FAIL: player b guard compact bent elbow, not open presentation (reach=0.736, angle=94.7)
+FAIL: player sweep contact leg extended instead of raised knee (angle=129.8)
+FAIL: player sweep striking boot travels close to floor (sole=0.130)
+FAIL: player/jab target-space trajectory solved throughout the arc, maximum key gap=5.00
+FAIL: player/cross target-space trajectory solved throughout the arc, maximum key gap=6.00
+FAIL: player/sweep target-space trajectory solved throughout the arc, maximum key gap=8.00
+FAIL: player/uppercut target-space trajectory solved throughout the arc, maximum key gap=7.00
+FAIL: player/wave target-space trajectory solved throughout the arc, maximum key gap=10.00
+FAIL: player/throw target-space trajectory solved throughout the arc, maximum key gap=6.00
+FAIL: player/walk target-space trajectory solved throughout the arc, maximum key gap=9.00
+FAIL: player/hit_light target-space trajectory solved throughout the arc, maximum key gap=6.00
+FAIL: player/ko target-space trajectory solved throughout the arc, maximum key gap=7.00
+FAIL: player/jab economical chamber, pullback=0.237
+FAIL: player/jab trailing body settle follows recovered hand
+FAIL: player/cross economical chamber, pullback=0.299
+FAIL: player/cross hand regains guard before weight settles
+FAIL: player/cross trailing body settle follows recovered hand
+FAIL: foe f guard compact bent elbow, not open presentation (reach=0.766, angle=95.7)
+FAIL: foe f guard elbow hangs below shoulder
+FAIL: foe b guard compact bent elbow, not open presentation (reach=0.707, angle=84.6)
+FAIL: foe b guard elbow hangs below shoulder
+FAIL: foe sweep contact leg extended instead of raised knee (angle=111.2)
+FAIL: foe sweep striking boot travels close to floor (sole=0.130)
+FAIL: foe/jab target-space trajectory solved throughout the arc, maximum key gap=5.00
+FAIL: foe/cross target-space trajectory solved throughout the arc, maximum key gap=6.00
+FAIL: foe/sweep target-space trajectory solved throughout the arc, maximum key gap=8.00
+FAIL: foe/uppercut target-space trajectory solved throughout the arc, maximum key gap=7.00
+FAIL: foe/wave target-space trajectory solved throughout the arc, maximum key gap=10.00
+FAIL: foe/throw target-space trajectory solved throughout the arc, maximum key gap=6.00
+FAIL: foe/walk target-space trajectory solved throughout the arc, maximum key gap=9.00
+FAIL: foe/hit_light target-space trajectory solved throughout the arc, maximum key gap=6.00
+FAIL: foe/ko target-space trajectory solved throughout the arc, maximum key gap=7.00
+FAIL: foe/jab economical chamber, pullback=0.249
+FAIL: foe/jab trailing body settle follows recovered hand
+FAIL: foe/cross economical chamber, pullback=0.324
+FAIL: foe/cross hand regains guard before weight settles
+FAIL: foe/cross trailing body settle follows recovered hand
+NATURAL AUTHOR FLOW CHECK: FAIL failures= 38

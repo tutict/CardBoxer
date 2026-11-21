@@ -1,0 +1,11 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 621.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5080 Laptop GPU
+
+SV_START glb=res://assets/player-rigged.glb sv=600x560
+SV_JSON {"draw_count":11,"h":720,"path":"C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\G路线-游戏内3D接线\\shots/sv-probe.png","save_error":0,"sv_children":6,"sv_size":[600,560],"sv_transparent":true,"tex_ok":true,"w":1280}
+
+=== STDERR ===
+ERROR: Node not inside tree. Use look_at_from_position() instead.
+   at: look_at (scene/3d/node_3d.cpp:1224)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://probes/probe_subviewport.gd:127)

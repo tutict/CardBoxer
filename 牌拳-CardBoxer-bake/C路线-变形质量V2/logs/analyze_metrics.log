@@ -1,0 +1,9 @@
+FRAMES=72 PURITY_DELTA={"arm_b": 0.06545, "arm_f": 0.06499, "leg_b": 0.07316, "leg_f": 0.07705, "torso": 0.16333}
+variant     reach_mean  reach_max   tear_p999_max  gt5cm_max   foot_gap_max   penetration_max
+V1_base        0.17448    0.50489            0.04        103        0.02301               0.0
+V1_gain        0.25326    0.75003         0.05411        186        0.02301               0.0
+V2_base        0.17448    0.50489         0.07023        565        0.02301               0.0
+V2_final       0.25326    0.75003         0.10248       1007        0.02301               0.0
+DECOMP {"gain_only_on_V1": 1.4515, "weight_only_at_x1": 1.0, "gain_on_V2": 1.4515, "combined_V2_final_over_V1_base": 1.4515, "tear_worst_V2_final_over_V1_base": 2.562, "tear_worst_V2_final_over_rigid_C_baseline": 0.3654}
+REACH_NON_NEGATIVE=72/72
+METRICS_ANALYZED

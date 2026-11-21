@@ -1,0 +1,7 @@
+CHECK player_board_written True
+CHECK foe_board_written True
+CHECK boards_same_size True
+CHECK all_sources_exist True
+CHECK full_tear_gate_pass True
+CHECK shipped_probe_all_green True
+SHIPPED_BOARD_OK

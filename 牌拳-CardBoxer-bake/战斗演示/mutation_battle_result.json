@@ -1,0 +1,101 @@
+{
+  "cases": [
+    {
+      "case": "M1",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "B02_hp_rage_track_recomputed",
+      "failed_checks": [
+        "B02_hp_rage_track_recomputed",
+        "B13_source_fingerprints"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M2",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "B01_card_type_binding",
+      "failed_checks": [
+        "B01_card_type_binding",
+        "B02_hp_rage_track_recomputed",
+        "B03_outcome_derived",
+        "B13_source_fingerprints"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M3",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "B05_duration_conservation",
+      "failed_checks": [
+        "B05_duration_conservation"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M4",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "B06_frame_ms_10ms_multiple",
+      "failed_checks": [
+        "B06_frame_ms_10ms_multiple",
+        "B13_source_fingerprints"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M5",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "B12_source_wiring",
+      "failed_checks": [
+        "B12_source_wiring"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M6",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "B14_not_claimed_is_explicit",
+      "failed_checks": [
+        "B13_source_fingerprints",
+        "B14_not_claimed_is_explicit"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M7",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "B09_foe_differs_between_versions",
+      "failed_checks": [
+        "B09_foe_differs_between_versions"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M8",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "B13_source_fingerprints",
+      "failed_checks": [
+        "B13_source_fingerprints"
+      ],
+      "restored_sha256_ok": true
+    }
+  ],
+  "caught": 8,
+  "total": 8,
+  "did_not_run": 0,
+  "escaped": 0,
+  "restored": 8,
+  "restore_all_ok": true,
+  "clean_rerun": "GREEN",
+  "clean_passed": 15,
+  "clean_total": 15,
+  "selftest": false,
+  "verdict": "MUTATION_BATTLE_OK"
+}

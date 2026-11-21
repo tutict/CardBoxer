@@ -1,0 +1,50 @@
+16:18:25 | INFO: Data are loaded, start creating Blender stuff
+16:18:25 | INFO: Blender create Mesh node node_0.002
+16:18:25 | INFO: glTF import finished in 0.24s
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\tools\author_foe.py:30: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new(name);m.use_nodes=True;n=m.node_tree.nodes.get('Principled BSDF');n.inputs['Base Color'].default_value=(*color,1);n.inputs['Metallic'].default_value=metal;n.inputs['Roughness'].default_value=rough
+FOE f wrist loop 96 center (0.484773725271225, -0.22319284081459045, 0.8884787559509277)
+FOE b wrist loop 91 center (-0.49086132645606995, -0.21769362688064575, 0.8848437070846558)
+00:03.125  image.write      | ERROR OpenImageIO write failed: Could not open file "C:\Users\tutic\.thumbnails\large\blender_38448_d96dfedabaa122bde0a8b703489bfd43.png.png"
+Info: Saved as "foe-prebake.blend"
+FOE bake base-color
+Info: Baking map saved to internal image, save it externally or pack it
+FOE bake normal
+Info: Baking map saved to internal image, save it externally or pack it
+FOE bake orm
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\tools\author_foe.py:245: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  s=bpy.context.scene;s.render.engine='CYCLES';s.cycles.samples=20;s.render.resolution_x=900;s.render.resolution_y=1000;s.render.resolution_percentage=100;s.world=bpy.data.worlds.new('FoeSameLightStudio');s.world.use_nodes=True;s.world.node_tree.nodes['Background'].inputs[0].default_value=(.17,.17,.17,1)
+00:33.578  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\source-full.png'
+00:40.406  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\source-armor.png'
+00:44.641  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\source-hands.png'
+00:49.172  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\candidate-full.png'
+00:55.594  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\candidate-armor.png'
+00:59.344  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\candidate-hands.png'
+01:02.953  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-f-0.00.png'
+01:06.469  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-f-0.25.png'
+01:10.000  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-f-0.50.png'
+01:13.516  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-f-0.75.png'
+01:16.906  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-f-1.00.png'
+01:20.375  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-b-0.00.png'
+01:23.922  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-b-0.25.png'
+01:27.594  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-b-0.50.png'
+01:31.062  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-b-0.75.png'
+01:34.516  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\hand-b-1.00.png'
+01:38.734  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\candidate-wireframe.png'
+01:42.281  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\candidate-hand-wireframe.png'
+01:42.391  image.write      | ERROR OpenImageIO write failed: Could not open file "C:\Users\tutic\.thumbnails\large\blender_38448_92fed151cfbb8b0638395c3fbd42d86a.png.png"
+Info: Baking map saved to internal image, save it externally or pack it
+Info: Saved as "foe-retopology.blend"
+INFO Draco is available, use library at C:\Program Files\Blender Foundation\Blender 5.2\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at C:\Program Files\Blender Foundation\Blender 5.2\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+16:20:06 | INFO: Starting glTF 2.0 export
+16:20:06 | WARNING: Mesh Foe_Editable_QuadBody_and_GloveLoops is not valid, and may be exported wrongly
+16:20:06 | INFO: Extracting primitive: Foe_Editable_QuadBody_and_GloveLoops
+16:20:07 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+16:20:07 | INFO: Primitives created: 1
+16:20:07 | INFO: Finished glTF 2.0 export in 0.7975530624389648 s
+
+FOE {"vertices": 27264, "edges": 54746, "polygons": 27307, "triangles": 54469, "quads": 27082, "boundary_edges": 412, "nonmanifold_edges": 414, "components": [26922, 104, 104, 28, 24, 24, 19, 16, 11, 6, 6], "quad_fraction": 0.9917603544878603}
+Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:35:40)
+
+Blender quit

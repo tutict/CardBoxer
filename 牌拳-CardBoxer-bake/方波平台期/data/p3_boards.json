@@ -1,0 +1,66 @@
+{
+  "made": {
+    "timeline": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\boards\\P3-时间线方波.png",
+      "size": [
+        1400,
+        760
+      ],
+      "samples": 129,
+      "hard9_flat_pairs": 107,
+      "atan12_flat_pairs": 85,
+      "hard9_distinct": 7,
+      "atan12_distinct": 22
+    },
+    "strip": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\boards\\P3-连续帧条带.png",
+      "size": [
+        1400,
+        1060
+      ],
+      "frames": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "groups": 4,
+      "panels": 32
+    },
+    "compare": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\boards\\P3-上线前后对照.png",
+      "size": [
+        720,
+        1230
+      ],
+      "frames": [
+        [
+          "jab",
+          1
+        ],
+        [
+          "sweep",
+          7
+        ],
+        [
+          "hit_heavy",
+          1
+        ]
+      ]
+    }
+  },
+  "checks": {
+    "three_boards_written": true,
+    "timeline_from_129_real_samples": true,
+    "timeline_plateau_reduced": true,
+    "timeline_distinct_increased": true,
+    "strip_32_panels": true,
+    "compare_three_frames": true
+  },
+  "failed": [],
+  "ok": true
+}

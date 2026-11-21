@@ -1,0 +1,572 @@
+{
+  "sweep": [
+    {
+      "gain": 1.0,
+      "mode": "all",
+      "rows": [
+        {
+          "card": "jab",
+          "frame": 7,
+          "max_delta_deg": 21.393,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.10377,
+            "p999_edge_tear_m": 0.01806,
+            "p99_edge_tear_m": 0.01062,
+            "mean_edge_tear_m": 0.00182,
+            "edges_gt_2cm": 77,
+            "edges_gt_5cm": 21
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 0.45259,
+            "mean_displacement_m": 0.16273
+          },
+          "png": {
+            "file": "sweep-g1.0-jab07.png",
+            "bytes": 456620,
+            "sha256": "2a641e717c73da86e5df31bb45b7ad561e0421049b57edcf34d365800d4c0265"
+          }
+        },
+        {
+          "card": "cross",
+          "frame": 11,
+          "max_delta_deg": 28.0,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.29855,
+            "p999_edge_tear_m": 0.04,
+            "p99_edge_tear_m": 0.02148,
+            "mean_edge_tear_m": 0.00328,
+            "edges_gt_2cm": 1837,
+            "edges_gt_5cm": 103
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 0.54624,
+            "mean_displacement_m": 0.23297
+          },
+          "png": {
+            "file": "sweep-g1.0-cross11.png",
+            "bytes": 457999,
+            "sha256": "eeed98f393d92c382ab943b302f61d70b5e779df93357d9137369344f7ac45b5"
+          }
+        },
+        {
+          "card": "wave",
+          "frame": 18,
+          "max_delta_deg": 13.565,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.14285,
+            "p999_edge_tear_m": 0.0195,
+            "p99_edge_tear_m": 0.01033,
+            "mean_edge_tear_m": 0.00194,
+            "edges_gt_2cm": 132,
+            "edges_gt_5cm": 98
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 0.24928,
+            "mean_displacement_m": 0.1165
+          },
+          "png": {
+            "file": "sweep-g1.0-wave18.png",
+            "bytes": 456495,
+            "sha256": "110486c09051dca5c4bbd2d827a225208c098f7b3de7c7c7633a7bdbdf5c11b9"
+          }
+        }
+      ]
+    },
+    {
+      "gain": 1.5,
+      "mode": "all",
+      "rows": [
+        {
+          "card": "jab",
+          "frame": 7,
+          "max_delta_deg": 32.09,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.09675,
+            "p999_edge_tear_m": 0.02708,
+            "p99_edge_tear_m": 0.01562,
+            "mean_edge_tear_m": 0.00266,
+            "edges_gt_2cm": 608,
+            "edges_gt_5cm": 21
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 0.60903,
+            "mean_displacement_m": 0.18174
+          },
+          "png": {
+            "file": "sweep-g1.5-jab07.png",
+            "bytes": 456741,
+            "sha256": "464eb8739e7c8e4eec2107e1a454498757ce6643d7447e5d03e15c015cd72d57"
+          }
+        },
+        {
+          "card": "cross",
+          "frame": 11,
+          "max_delta_deg": 42.0,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.442,
+            "p999_edge_tear_m": 0.05718,
+            "p99_edge_tear_m": 0.03116,
+            "mean_edge_tear_m": 0.0048,
+            "edges_gt_2cm": 4995,
+            "edges_gt_5cm": 223
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 0.8637,
+            "mean_displacement_m": 0.27233
+          },
+          "png": {
+            "file": "sweep-g1.5-cross11.png",
+            "bytes": 458498,
+            "sha256": "d4fa0ada6771510081ad7815cba5ef14d71eefae16a0dc8ba35b2d1ee4bb1db1"
+          }
+        },
+        {
+          "card": "wave",
+          "frame": 18,
+          "max_delta_deg": 20.348,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.21415,
+            "p999_edge_tear_m": 0.02868,
+            "p99_edge_tear_m": 0.01533,
+            "mean_edge_tear_m": 0.00284,
+            "edges_gt_2cm": 512,
+            "edges_gt_5cm": 98
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 0.39675,
+            "mean_displacement_m": 0.13953
+          },
+          "png": {
+            "file": "sweep-g1.5-wave18.png",
+            "bytes": 456898,
+            "sha256": "53ada139928cfaf3b8010c64b193a5879d17056d15368a8e7d09560c1c3d7c35"
+          }
+        }
+      ]
+    },
+    {
+      "gain": 2.0,
+      "mode": "all",
+      "rows": [
+        {
+          "card": "jab",
+          "frame": 7,
+          "max_delta_deg": 42.786,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.08968,
+            "p999_edge_tear_m": 0.03573,
+            "p99_edge_tear_m": 0.02045,
+            "mean_edge_tear_m": 0.00348,
+            "edges_gt_2cm": 1519,
+            "edges_gt_5cm": 35
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 0.75713,
+            "mean_displacement_m": 0.20104
+          },
+          "png": {
+            "file": "sweep-g2.0-jab07.png",
+            "bytes": 457834,
+            "sha256": "f78b1635f9978f7fc10d4404db59654e5a13c5eb73f0933ad5bdfc02e7d392fb"
+          }
+        },
+        {
+          "card": "cross",
+          "frame": 11,
+          "max_delta_deg": 56.0,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.57877,
+            "p999_edge_tear_m": 0.07179,
+            "p99_edge_tear_m": 0.03954,
+            "mean_edge_tear_m": 0.00615,
+            "edges_gt_2cm": 8538,
+            "edges_gt_5cm": 566
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 1.16052,
+            "mean_displacement_m": 0.31396
+          },
+          "png": {
+            "file": "sweep-g2.0-cross11.png",
+            "bytes": 460447,
+            "sha256": "1605d7f338e8eaffe47f33d9f5e39ebd2b2607ce46d1107b43c3c0659c9beef6"
+          }
+        },
+        {
+          "card": "wave",
+          "frame": 18,
+          "max_delta_deg": 27.131,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.28529,
+            "p999_edge_tear_m": 0.03758,
+            "p99_edge_tear_m": 0.02016,
+            "mean_edge_tear_m": 0.00365,
+            "edges_gt_2cm": 1468,
+            "edges_gt_5cm": 101
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 0.54666,
+            "mean_displacement_m": 0.16394
+          },
+          "png": {
+            "file": "sweep-g2.0-wave18.png",
+            "bytes": 458042,
+            "sha256": "71ae8be6b13a8e0cb983e69ae556418c55081181566c458bf89abfc6acd2e9f0"
+          }
+        }
+      ]
+    },
+    {
+      "gain": 3.0,
+      "mode": "all",
+      "rows": [
+        {
+          "card": "jab",
+          "frame": 7,
+          "max_delta_deg": 64.18,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.08446,
+            "p999_edge_tear_m": 0.05121,
+            "p99_edge_tear_m": 0.02901,
+            "mean_edge_tear_m": 0.00493,
+            "edges_gt_2cm": 4138,
+            "edges_gt_5cm": 163
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 1.01633,
+            "mean_displacement_m": 0.23866
+          },
+          "png": {
+            "file": "sweep-g3.0-jab07.png",
+            "bytes": 454169,
+            "sha256": "c4b8bc242d9b97609d87c870313c0b1b5bac83b7098ecca8c7f70414cc5f2f1b"
+          }
+        },
+        {
+          "card": "cross",
+          "frame": 11,
+          "max_delta_deg": 84.0,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.82029,
+            "p999_edge_tear_m": 0.09365,
+            "p99_edge_tear_m": 0.05145,
+            "mean_edge_tear_m": 0.00833,
+            "edges_gt_2cm": 14188,
+            "edges_gt_5cm": 1568
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 1.62626,
+            "mean_displacement_m": 0.39274
+          },
+          "png": {
+            "file": "sweep-g3.0-cross11.png",
+            "bytes": 451175,
+            "sha256": "17a1a41426b8034dc82c40da8b81e9bc1c5b106510ccde5253bab2049dc98cdc"
+          }
+        },
+        {
+          "card": "wave",
+          "frame": 18,
+          "max_delta_deg": 40.696,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.42443,
+            "p999_edge_tear_m": 0.05284,
+            "p99_edge_tear_m": 0.02924,
+            "mean_edge_tear_m": 0.00519,
+            "edges_gt_2cm": 4619,
+            "edges_gt_5cm": 177
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 63996,
+            "max_displacement_m": 0.83834,
+            "mean_displacement_m": 0.21318
+          },
+          "png": {
+            "file": "sweep-g3.0-wave18.png",
+            "bytes": 457598,
+            "sha256": "d9462fb922bc1072de0d0c6d74303615add71f609ed61b43ecf93fbd91a7d6ba"
+          }
+        }
+      ]
+    },
+    {
+      "gain": 1.5,
+      "mode": "arm_only",
+      "rows": [
+        {
+          "card": "jab",
+          "frame": 7,
+          "max_delta_deg": 32.09,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.10459,
+            "p999_edge_tear_m": 0.02808,
+            "p99_edge_tear_m": 0.01669,
+            "mean_edge_tear_m": 0.00243,
+            "edges_gt_2cm": 727,
+            "edges_gt_5cm": 21
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 0.63573,
+            "mean_displacement_m": 0.17589
+          },
+          "png": {
+            "file": "sweep-arm-g1.5-jab07.png",
+            "bytes": 455474,
+            "sha256": "70505af825d887c4183b6260bb04bcd785259447e5adf00c0dd1815fd0d10b31"
+          }
+        },
+        {
+          "card": "cross",
+          "frame": 11,
+          "max_delta_deg": 42.0,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.43143,
+            "p999_edge_tear_m": 0.05411,
+            "p99_edge_tear_m": 0.02911,
+            "mean_edge_tear_m": 0.00417,
+            "edges_gt_2cm": 4231,
+            "edges_gt_5cm": 186
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 0.81154,
+            "mean_displacement_m": 0.25962
+          },
+          "png": {
+            "file": "sweep-arm-g1.5-cross11.png",
+            "bytes": 457545,
+            "sha256": "117ab318816683674eb4bc941c159db147d61e6a4dc1e4d919f5274413c6d165"
+          }
+        },
+        {
+          "card": "wave",
+          "frame": 18,
+          "max_delta_deg": 20.348,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.2097,
+            "p999_edge_tear_m": 0.02749,
+            "p99_edge_tear_m": 0.01461,
+            "mean_edge_tear_m": 0.00268,
+            "edges_gt_2cm": 426,
+            "edges_gt_5cm": 98
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 0.37699,
+            "mean_displacement_m": 0.13557
+          },
+          "png": {
+            "file": "sweep-arm-g1.5-wave18.png",
+            "bytes": 456979,
+            "sha256": "962fbe600f8c756d9064705fe382d037c7b404e2c9ce009e2d8ff0fb40df2ecb"
+          }
+        }
+      ]
+    },
+    {
+      "gain": 2.0,
+      "mode": "arm_only",
+      "rows": [
+        {
+          "card": "jab",
+          "frame": 7,
+          "max_delta_deg": 42.786,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.10532,
+            "p999_edge_tear_m": 0.03793,
+            "p99_edge_tear_m": 0.02244,
+            "mean_edge_tear_m": 0.00304,
+            "edges_gt_2cm": 2038,
+            "edges_gt_5cm": 40
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 0.81154,
+            "mean_displacement_m": 0.18903
+          },
+          "png": {
+            "file": "sweep-arm-g2.0-jab07.png",
+            "bytes": 455458,
+            "sha256": "f83e86c66034783db6db5b851dbe637429a00b7966cbd1f8f5a88c32ea4e51fa"
+          }
+        },
+        {
+          "card": "cross",
+          "frame": 11,
+          "max_delta_deg": 56.0,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.5579,
+            "p999_edge_tear_m": 0.06625,
+            "p99_edge_tear_m": 0.03594,
+            "mean_edge_tear_m": 0.00498,
+            "edges_gt_2cm": 6908,
+            "edges_gt_5cm": 380
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 1.06118,
+            "mean_displacement_m": 0.28656
+          },
+          "png": {
+            "file": "sweep-arm-g2.0-cross11.png",
+            "bytes": 458267,
+            "sha256": "8a7d71936611747b777a57630ed7200e6efecf3fac00fbd3afd40119ea056747"
+          }
+        },
+        {
+          "card": "wave",
+          "frame": 18,
+          "max_delta_deg": 27.131,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.27581,
+            "p999_edge_tear_m": 0.03519,
+            "p99_edge_tear_m": 0.01886,
+            "mean_edge_tear_m": 0.00342,
+            "edges_gt_2cm": 1158,
+            "edges_gt_5cm": 100
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 0.50719,
+            "mean_displacement_m": 0.15567
+          },
+          "png": {
+            "file": "sweep-arm-g2.0-wave18.png",
+            "bytes": 456305,
+            "sha256": "8fb2415a66467ceee3325c5903a3092cce2968a65ebd6daca5572968d8bcd57c"
+          }
+        }
+      ]
+    },
+    {
+      "gain": 3.0,
+      "mode": "arm_only",
+      "rows": [
+        {
+          "card": "jab",
+          "frame": 7,
+          "max_delta_deg": 64.18,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.10646,
+            "p999_edge_tear_m": 0.05482,
+            "p99_edge_tear_m": 0.03303,
+            "mean_edge_tear_m": 0.00415,
+            "edges_gt_2cm": 5635,
+            "edges_gt_5cm": 222
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 1.12368,
+            "mean_displacement_m": 0.21362
+          },
+          "png": {
+            "file": "sweep-arm-g3.0-jab07.png",
+            "bytes": 455356,
+            "sha256": "62862af3cd63e42ea8ea0ee6d8d8b1b01389000a3bf74e8df933f083cbb0cf12"
+          }
+        },
+        {
+          "card": "cross",
+          "frame": 11,
+          "max_delta_deg": 84.0,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.78414,
+            "p999_edge_tear_m": 0.08422,
+            "p99_edge_tear_m": 0.04643,
+            "mean_edge_tear_m": 0.00629,
+            "edges_gt_2cm": 11515,
+            "edges_gt_5cm": 1070
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 1.46492,
+            "mean_displacement_m": 0.33577
+          },
+          "png": {
+            "file": "sweep-arm-g3.0-cross11.png",
+            "bytes": 454386,
+            "sha256": "882c023fa642287e86f409c49e3526b622535ecbae54d5e670467ad99e167fe5"
+          }
+        },
+        {
+          "card": "wave",
+          "frame": 18,
+          "max_delta_deg": 40.696,
+          "tear": {
+            "edges": 141529,
+            "max_edge_tear_m": 0.40499,
+            "p999_edge_tear_m": 0.04972,
+            "p99_edge_tear_m": 0.02694,
+            "mean_edge_tear_m": 0.00485,
+            "edges_gt_2cm": 3850,
+            "edges_gt_5cm": 140
+          },
+          "displacement": {
+            "vertices": 64024,
+            "moved_gt_1mm": 64006,
+            "max_displacement_m": 0.76049,
+            "mean_displacement_m": 0.19676
+          },
+          "png": {
+            "file": "sweep-arm-g3.0-wave18.png",
+            "bytes": 454397,
+            "sha256": "0b9346594b22eb4050302f9b169d97365f0e48e62afe3d047b2c562ccf1493ab"
+          }
+        }
+      ]
+    }
+  ],
+  "baseline_mapping_sha256": "7ce408d9efb648ceb57d86619dbb3504057e4b1cb9095bf3ca8f00662f709547"
+}

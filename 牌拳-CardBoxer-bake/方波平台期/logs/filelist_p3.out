@@ -1,0 +1,11 @@
+CHECK all_sizes_positive True
+CHECK no_unexpected_zero_bytes True
+CHECK key_artifacts_present True
+CHECK four_boards_present True
+CHECK sv_shots_present True
+CHECK verify_all_green True
+CHECK mutation_all_caught True
+CHECK all_checks_green True
+CHECK upstream_reports_ok True
+CHECK history_reports_restored True
+FILELIST_P3_OK files=218 bytes=43207200

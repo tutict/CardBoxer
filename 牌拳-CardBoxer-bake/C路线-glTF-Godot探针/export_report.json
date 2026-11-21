@@ -1,0 +1,90 @@
+{
+  "blender": "5.2.3 LTS",
+  "blend_sha256": "88dca6d28aa36caeda9f5af5564bf553aa8a9ee618846457b036fe3b1bd54239",
+  "source_object": {
+    "high_poly": "node_0",
+    "proxy_shell": "a_continuous_shell",
+    "rig": "a_apose_rig",
+    "rig_bones": 13
+  },
+  "posed_frame_evaluated_verts": 64024,
+  "exports": [
+    {
+      "name": "foe-full",
+      "file": "foe-full.glb",
+      "description": "完整场景口径：高模 + 代理壳 + 13 骨，PBR 贴图导出",
+      "objects": [
+        "node_0",
+        "a_continuous_shell",
+        "a_apose_rig"
+      ],
+      "export_apply": false,
+      "export_materials": "EXPORT",
+      "export_animations": true,
+      "export_skins": true,
+      "operator_result": [
+        "FINISHED"
+      ],
+      "bytes": 42926956,
+      "sha256": "a8440333353d2dbe46a042e0739bf68b5b959e5ba68fe6aae01316eecf896f45",
+      "elapsed_seconds": 1.237
+    },
+    {
+      "name": "foe-stance",
+      "file": "foe-stance.glb",
+      "description": "只高模 / 站架 / 烘焙 SURFACE_DEFORM / 无材质",
+      "objects": [
+        "node_0"
+      ],
+      "export_apply": true,
+      "export_materials": "NONE",
+      "export_animations": true,
+      "export_skins": true,
+      "operator_result": [
+        "FINISHED"
+      ],
+      "bytes": 2531012,
+      "sha256": "5fa6d910383cad68ac3743daefaa4357b611c3858fb94d22bbff935416295087",
+      "elapsed_seconds": 0.066
+    },
+    {
+      "name": "foe-posed",
+      "file": "foe-posed.glb",
+      "description": "只高模 / cross#10 增益 x1.5 / 烘焙 SURFACE_DEFORM / 无材质",
+      "objects": [
+        "node_0"
+      ],
+      "export_apply": true,
+      "export_materials": "NONE",
+      "export_animations": true,
+      "export_skins": true,
+      "operator_result": [
+        "FINISHED"
+      ],
+      "bytes": 2533600,
+      "sha256": "7336f17c1431cceeecd11745b6ca8e018a6bc6bf45cf54fcd6fa477d16cd10ce",
+      "elapsed_seconds": 0.085
+    },
+    {
+      "name": "foe-proxy-rig",
+      "file": "foe-proxy-rig.glb",
+      "description": "只代理壳 + 13 骨 / 无材质，检验 skin 是否随导出",
+      "objects": [
+        "a_continuous_shell",
+        "a_apose_rig"
+      ],
+      "export_apply": false,
+      "export_materials": "NONE",
+      "export_animations": true,
+      "export_skins": true,
+      "operator_result": [
+        "FINISHED"
+      ],
+      "bytes": 1297744,
+      "sha256": "a332a6d4aceca43b48aeae0bf0f149c0e351f4b8a4e43a029a48c0ebf4883944",
+      "elapsed_seconds": 0.118
+    }
+  ],
+  "total_bytes": 49289312,
+  "elapsed_seconds": 2.731
+}

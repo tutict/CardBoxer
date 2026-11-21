@@ -1,0 +1,14 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\tools\author_player.py:272: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new(name);m.use_nodes=True;bs=m.node_tree.nodes.get('Principled BSDF');bs.inputs['Base Color'].default_value=(*color,1);bs.inputs['Roughness'].default_value=rough;return m
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\tools\author_player.py:336: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  newmat=bpy.data.materials.new('Player_Retopology_PBR_4K');newmat.use_nodes=True
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\tools\author_player.py:462: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  scene.world=bpy.data.worlds.new('Player studio');scene.world.use_nodes=True;scene.world.node_tree.nodes['Background'].inputs[0].default_value=(.17,.17,.17,1)
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\tools\author_player.py", line 494, in <module>
+    cleanup_spec=importlib.util.spec_from_file_location('player_export_cleanup',OUT+'/export_cleanup.py');cleanup_module=importlib.util.module_from_spec(cleanup_spec);cleanup_spec.loader.exec_module(cleanup_module);export_cleanup=cleanup_module.clean(glb)
+                                                                                                                                                                                                                                      ~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑/authoring/player/export_cleanup.py", line 11, in clean
+    accessor=doc['accessors'][target[semantic]];view=doc['bufferViews'][accessor['bufferView']]
+                                                                        ~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'bufferView'

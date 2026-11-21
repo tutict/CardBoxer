@@ -1,0 +1,141 @@
+{
+  "blender": "5.2.3 LTS",
+  "blend_sha256": "88dca6d28aa36caeda9f5af5564bf553aa8a9ee618846457b036fe3b1bd54239",
+  "blend_bytes": 59118499,
+  "scene_frame": 1,
+  "engine": "BLENDER_EEVEE",
+  "objects": [
+    {
+      "name": "a_apose_rig",
+      "type": "ARMATURE",
+      "hide_render": false,
+      "modifiers": [],
+      "vertex_groups": 0,
+      "bones": 13,
+      "pose_bones": 13,
+      "animation_data": false
+    },
+    {
+      "name": "a_continuous_shell",
+      "type": "MESH",
+      "hide_render": true,
+      "modifiers": [
+        {
+          "name": "Armature",
+          "type": "ARMATURE",
+          "target": null,
+          "is_bound": false
+        }
+      ],
+      "vertex_groups": 13,
+      "verts": 20204,
+      "faces": 40396,
+      "uv_layers": [
+        "UVMap"
+      ],
+      "materials": [
+        "Material.001"
+      ],
+      "weighted_verts": 20196
+    },
+    {
+      "name": "foe_cam",
+      "type": "CAMERA",
+      "hide_render": false,
+      "modifiers": [],
+      "vertex_groups": 0
+    },
+    {
+      "name": "foe_fill",
+      "type": "LIGHT",
+      "hide_render": false,
+      "modifiers": [],
+      "vertex_groups": 0
+    },
+    {
+      "name": "foe_key",
+      "type": "LIGHT",
+      "hide_render": false,
+      "modifiers": [],
+      "vertex_groups": 0
+    },
+    {
+      "name": "node_0",
+      "type": "MESH",
+      "hide_render": false,
+      "modifiers": [
+        {
+          "name": "follow_continuous_shell",
+          "type": "SURFACE_DEFORM",
+          "target": "a_continuous_shell",
+          "is_bound": true
+        }
+      ],
+      "vertex_groups": 13,
+      "verts": 64024,
+      "faces": 79998,
+      "uv_layers": [
+        "UVMap"
+      ],
+      "materials": [
+        "Material.001"
+      ],
+      "weighted_verts": 64024
+    }
+  ],
+  "armature_count": 1,
+  "action_count": 0,
+  "actions": [],
+  "images": [
+    {
+      "name": "texture_pbr_20250901",
+      "size": [
+        4096,
+        4096
+      ],
+      "packed": true,
+      "packed_bytes": 15782150,
+      "file_format": "PNG"
+    },
+    {
+      "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+      "size": [
+        4096,
+        4096
+      ],
+      "packed": true,
+      "packed_bytes": 14380706,
+      "file_format": "PNG"
+    },
+    {
+      "name": "texture_pbr_20250901_normal",
+      "size": [
+        4096,
+        4096
+      ],
+      "packed": true,
+      "packed_bytes": 8934769,
+      "file_format": "PNG"
+    }
+  ],
+  "gltf_export_poll": true,
+  "gltf_export_props_available": {
+    "export_format": true,
+    "use_selection": true,
+    "export_apply": true,
+    "export_animations": true,
+    "export_skins": true,
+    "export_materials": true,
+    "export_image_format": true,
+    "export_texture_dir": true,
+    "export_yup": true,
+    "export_cameras": true,
+    "export_lights": true,
+    "export_extras": true,
+    "export_gn_mesh": true,
+    "use_visible": true,
+    "use_renderable": true,
+    "use_active_collection": true
+  },
+  "gltf_export_props_total": 111
+}

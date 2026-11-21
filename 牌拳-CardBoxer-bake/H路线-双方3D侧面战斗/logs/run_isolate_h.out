@@ -1,0 +1,5 @@
+RUN player 5.284s rc=0 gl=True errors=0
+   player_ready= True foe_ready= False mesh= player_HI_skinned /  glb= res://assets/3d/player-rigged.glb / 
+RUN foe 5.056s rc=0 gl=True errors=0
+   player_ready= False foe_ready= True mesh=  / foe_HI_skinned glb=  / res://assets/3d/foe-rigged.glb
+ISOLATE_H_OK

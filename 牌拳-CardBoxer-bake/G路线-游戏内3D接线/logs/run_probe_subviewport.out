@@ -1,0 +1,8 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\G路线-游戏内3D接线\run_probe_subviewport.py:63: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  for r, g, b in view.getdata():
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\G路线-游戏内3D接线\run_probe_subviewport.py:67: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  red_px = sum(1 for r, g, b in red.getdata() if r > 100 and r > g * 2)
+IMPORT rc=0 18.798s  RENDER rc=0 3.681s gl=True errs=0
+PAYLOAD tex_ok=True draw_count=11 sv_size=[600, 560] save_error=0
+PIXELS {'w': 1280, 'h': 720, 'view_bright_px': 49783, 'view_color_bins': 3585, 'red_anchor_px': 75600}
+SUBVIEWPORT_PROBE_OK

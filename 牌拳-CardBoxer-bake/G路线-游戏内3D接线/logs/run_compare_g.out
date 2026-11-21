@@ -1,0 +1,8 @@
+t000     base-vs-off= 982849 on-vs-off= 981969 marker_same=True
+t048     base-vs-off= 980392 on-vs-off=1006200 marker_same=True
+t112     base-vs-off=1022090 on-vs-off=1007745 marker_same=True
+t140     base-vs-off=1032151 on-vs-off=1002300 marker_same=True
+draw     base-vs-off= 996078 on-vs-off= 988437 marker_same=True
+foewin   base-vs-off=1003327 on-vs-off= 975343 marker_same=True
+ROI {'t000_vs_t048': 75438, 't048_vs_t112': 76306, 't000_vs_t112': 76235}
+AB_G_OK

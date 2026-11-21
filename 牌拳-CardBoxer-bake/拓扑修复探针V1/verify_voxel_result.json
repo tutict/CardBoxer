@@ -1,0 +1,77 @@
+{
+  "verdict": "VOXEL_PROBE_VERIFIED",
+  "passed": 14,
+  "total": 14,
+  "checks": [
+    {
+      "name": "source_blend_unchanged",
+      "ok": true,
+      "detail": "sha=76004e212759"
+    },
+    {
+      "name": "baseline_bone_heat_really_zero",
+      "ok": true,
+      "detail": "shells=2809 coverage=0.0"
+    },
+    {
+      "name": "voxel_020_collapses_shells",
+      "ok": true,
+      "detail": "2809 -> 3"
+    },
+    {
+      "name": "voxel_020_autoweight_recovered",
+      "ok": true,
+      "detail": "19998/20006 = 0.9996"
+    },
+    {
+      "name": "voxel_035_collapses_shells",
+      "ok": true,
+      "detail": "2809 -> 2"
+    },
+    {
+      "name": "voxel_035_autoweight_full",
+      "ok": true,
+      "detail": "6446/6446"
+    },
+    {
+      "name": "independent_shell_crosscheck",
+      "ok": true,
+      "detail": "v0p02: indep=3 blender=3; v0p035: indep=2 blender=2"
+    },
+    {
+      "name": "transfer_keeps_original_assets",
+      "ok": true,
+      "detail": "coverage=0.99972 uv=1 textures=3 same=True"
+    },
+    {
+      "name": "transfer_reduces_max_displacement",
+      "ok": true,
+      "detail": "A=0.47922 m -> B=0.39142 m"
+    },
+    {
+      "name": "transfer_spreads_influence",
+      "ok": true,
+      "detail": "A=10780 -> B=22252"
+    },
+    {
+      "name": "renders_nonblank_and_nonuniform",
+      "ok": true,
+      "detail": "set_equal=True proxy-front.png:768x768/c840 transfer-compare-rigid.png:768x768/c1315 transfer-compare-transfer.png:768x768/c1272 transfer-rest-front.png:768x768/c1369"
+    },
+    {
+      "name": "negative_result_not_hidden",
+      "ok": true,
+      "detail": "caveat=覆盖率与位移数字只证明链路可动；变形质量必须看两... missing=[]"
+    },
+    {
+      "name": "probe_outputs_are_isolated",
+      "ok": true,
+      "detail": "engine_files=[]"
+    },
+    {
+      "name": "runtime_is_negligible",
+      "ok": true,
+      "detail": "total=5.62s (two Blender runs)"
+    }
+  ]
+}

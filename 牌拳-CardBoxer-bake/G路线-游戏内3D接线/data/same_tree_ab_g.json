@@ -1,0 +1,50 @@
+{
+  "roi": [
+    290,
+    270,
+    580,
+    535
+  ],
+  "full_changed_px": {
+    "off__on-stance": 16314,
+    "on-stance__on-jab6": 13015,
+    "on-jab6__on-wave17": 12045,
+    "on-stance__on-wave17": 12441
+  },
+  "roi_changed_px": {
+    "off__on-stance": 16314,
+    "on-stance__on-jab6": 12968,
+    "on-jab6__on-wave17": 11998,
+    "on-stance__on-wave17": 12441
+  },
+  "outside_roi_changed_px": {
+    "off__on-stance": 0,
+    "on-stance__on-jab6": 47,
+    "on-jab6__on-wave17": 47,
+    "on-stance__on-wave17": 0
+  },
+  "prims": {
+    "off": 5136.0,
+    "on": 118856.0,
+    "ratio": 23.142
+  },
+  "draw_calls": {
+    "off": 117.0,
+    "on-stance": 67.0,
+    "on-jab6": 67.0,
+    "on-wave17": 67.0
+  },
+  "checks": {
+    "all_png_1280x720": true,
+    "3d_visible_in_roi": true,
+    "outside_roi_clean": true,
+    "stance_vs_jab6_distinct": true,
+    "jab6_vs_wave17_distinct": true,
+    "stance_vs_wave17_distinct": true,
+    "prims_grew": true,
+    "prims_stable_across_frames": true,
+    "probe_ok": true
+  },
+  "failed": [],
+  "ok": true
+}

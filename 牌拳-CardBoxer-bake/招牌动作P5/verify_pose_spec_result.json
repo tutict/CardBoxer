@@ -1,0 +1,96 @@
+{
+  "verdict": "POSE_SPEC_VERIFIED",
+  "passed": 14,
+  "total": 14,
+  "checks": [
+    {
+      "name": "spec_structure_complete",
+      "ok": true,
+      "detail": "missing=[]"
+    },
+    {
+      "name": "sources_complete_and_unique",
+      "ok": true,
+      "detail": "sources=12 unique=12 kinds=['encyclopedia_secondary', 'industry_article', 'industry_tutorial', 'practitioner_tutorial_primary', 'project_accepted_evidence', 'reference_mapping', 'secondary_article']"
+    },
+    {
+      "name": "language_rules_complete_and_traceable",
+      "ok": true,
+      "detail": "rules=8 bad=[]"
+    },
+    {
+      "name": "hard_rules_are_explicit",
+      "ok": true,
+      "detail": "L3=\"hard_rule: peak_reach_phase == 'active' for every attack tra\" L4='hard_rule: 用非零微小差异制造低速段，exact_hold_pairs 必须保持 0；不得引入整帧完全相同的定' L5='recover_overshoot_px > 0，且 end_drift_px 不得超过 pose_probe.gd 的'"
+    },
+    {
+      "name": "coordinate_matches_live_table",
+      "ok": true,
+      "detail": "units_eq=True joints_eq=True stance_eq=True metrics=13"
+    },
+    {
+      "name": "metrics_computable_on_all_tracks",
+      "ok": true,
+      "detail": "tracks=15 metrics_each=13 attacks=6 pairs=15 bad=[]"
+    },
+    {
+      "name": "tiers_match_p0_binding",
+      "ok": true,
+      "detail": "triple:wave/wave sequence:cross/cross scatter:jab/jab draw_null=True"
+    },
+    {
+      "name": "conflicts_named_and_p4_not_retired",
+      "ok": true,
+      "detail": "conflicts=5 keywords_ok=True c1='用非零微小差异的低速段制造视觉停顿，exact_hold_pairs 保持 0。不退役、不篡改 P4'"
+    },
+    {
+      "name": "boundaries_declared",
+      "ok": true,
+      "detail": "boundaries=8"
+    },
+    {
+      "name": "provisional_findings_independently_recomputed",
+      "ok": true,
+      "detail": "recomputed={\"track_count\": 15, \"attack_track_count\": 6, \"three_tier_reach_gain_px\": {\"wave\": 1.7224, \"cross\": 18.9248, \"jab\": 44.0145}, \"three_tier_order_is_inverted\": true, \"cross_peak_reach_phase\": \"windup\", \"cross_peak_reach_argmax\": 3, \" mismatched=[] gap_conflict=False"
+    },
+    {
+      "name": "spec_text_covers_rules_and_sources",
+      "ok": true,
+      "detail": "bytes=7600 lang=8 sources=12"
+    },
+    {
+      "name": "game_sources_untouched",
+      "ok": true,
+      "detail": "files=14 mismatch=[]"
+    },
+    {
+      "name": "no_engine_wiring_in_spec_stage",
+      "ok": true,
+      "detail": "engine_files=[]"
+    },
+    {
+      "name": "external_frame_numbers_not_used_as_thresholds",
+      "ok": true,
+      "detail": "caveat_len=128 cost_items=6"
+    }
+  ],
+  "recomputed": {
+    "track_count": 15,
+    "attack_track_count": 6,
+    "three_tier_reach_gain_px": {
+      "wave": 1.7224,
+      "cross": 18.9248,
+      "jab": 44.0145
+    },
+    "three_tier_order_is_inverted": true,
+    "cross_peak_reach_phase": "windup",
+    "cross_peak_reach_argmax": 3,
+    "wave_peak_bbox_gain_pct": 26.2781,
+    "exact_hold_total": 0,
+    "attack_recover_overshoot_all_zero": true,
+    "end_drift_worst_px": 1.2083,
+    "end_drift_worst_track": "sweep",
+    "joint_sync_checked": 6248,
+    "joint_sync_disagreements": 0
+  }
+}

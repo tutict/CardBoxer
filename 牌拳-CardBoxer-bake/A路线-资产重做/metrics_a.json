@@ -1,0 +1,310 @@
+{
+  "frames": 72,
+  "cards": {
+    "jab": 14,
+    "cross": 22,
+    "wave": 36
+  },
+  "variants": [
+    "A2_x1",
+    "A2_x15",
+    "V2_V1_base",
+    "V2_V1_gain"
+  ],
+  "per_variant": {
+    "A2_x1": {
+      "tear_p999_m": {
+        "min": 0.0,
+        "mean": 0.01173,
+        "p95": 0.03496,
+        "max": 0.03496
+      },
+      "tear_gt5cm": {
+        "min": 0,
+        "mean": 11.77778,
+        "p95": 25,
+        "max": 25
+      },
+      "max_displacement_m": {
+        "min": 0.0,
+        "mean": 0.19392,
+        "p95": 0.54553,
+        "max": 0.55665
+      },
+      "moved_gt_1mm": {
+        "min": 0,
+        "mean": 58919.5,
+        "p95": 64006,
+        "max": 64006
+      },
+      "reach_f_m": {
+        "min": 0.0,
+        "mean": 0.10114,
+        "p95": 0.33354,
+        "max": 0.41196
+      },
+      "reach_b_m": {
+        "min": 0.0,
+        "mean": 0.15078,
+        "p95": 0.49134,
+        "max": 0.50454
+      },
+      "reach_max_m": {
+        "min": 0.0,
+        "mean": 0.17442,
+        "p95": 0.49134,
+        "max": 0.50454
+      },
+      "foot_gap_m": {
+        "min": 0.0,
+        "mean": 0.00808,
+        "p95": 0.02301,
+        "max": 0.02301
+      },
+      "penetration_pct": {
+        "min": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      }
+    },
+    "A2_x15": {
+      "tear_p999_m": {
+        "min": 0.0,
+        "mean": 0.0163,
+        "p95": 0.04739,
+        "max": 0.04739
+      },
+      "tear_gt5cm": {
+        "min": 0,
+        "mean": 19.61111,
+        "p95": 100,
+        "max": 100
+      },
+      "max_displacement_m": {
+        "min": 0.0,
+        "mean": 0.27979,
+        "p95": 0.81099,
+        "max": 0.82038
+      },
+      "moved_gt_1mm": {
+        "min": 0,
+        "mean": 58994.19444,
+        "p95": 64006,
+        "max": 64006
+      },
+      "reach_f_m": {
+        "min": 0.0,
+        "mean": 0.13503,
+        "p95": 0.4689,
+        "max": 0.57272
+      },
+      "reach_b_m": {
+        "min": 0.0,
+        "mean": 0.21678,
+        "p95": 0.73913,
+        "max": 0.7495
+      },
+      "reach_max_m": {
+        "min": 0.0,
+        "mean": 0.25315,
+        "p95": 0.73913,
+        "max": 0.7495
+      },
+      "foot_gap_m": {
+        "min": 0.0,
+        "mean": 0.00808,
+        "p95": 0.02301,
+        "max": 0.02301
+      },
+      "penetration_pct": {
+        "min": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      }
+    },
+    "V2_V1_base": {
+      "tear_p999_m": {
+        "min": 0.0,
+        "mean": 0.01318,
+        "p95": 0.04,
+        "max": 0.04
+      },
+      "tear_gt5cm": {
+        "min": 0,
+        "mean": 50.05556,
+        "p95": 103,
+        "max": 103
+      },
+      "max_displacement_m": {
+        "min": 0.0,
+        "mean": 0.19405,
+        "p95": 0.54624,
+        "max": 0.55708
+      },
+      "moved_gt_1mm": {
+        "min": 0,
+        "mean": 58918.73611,
+        "p95": 64006,
+        "max": 64006
+      },
+      "reach_f_m": {
+        "min": 0.0,
+        "mean": 0.10109,
+        "p95": 0.33333,
+        "max": 0.41171
+      },
+      "reach_b_m": {
+        "min": 0.0,
+        "mean": 0.15088,
+        "p95": 0.49169,
+        "max": 0.50489
+      },
+      "reach_max_m": {
+        "min": 0.0,
+        "mean": 0.17448,
+        "p95": 0.49169,
+        "max": 0.50489
+      },
+      "foot_gap_m": {
+        "min": 0.0,
+        "mean": 0.00808,
+        "p95": 0.02301,
+        "max": 0.02301
+      },
+      "penetration_pct": {
+        "min": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      }
+    },
+    "V2_V1_gain": {
+      "tear_p999_m": {
+        "min": 0.0,
+        "mean": 0.01824,
+        "p95": 0.05411,
+        "max": 0.05411
+      },
+      "tear_gt5cm": {
+        "min": 0,
+        "mean": 62.38889,
+        "p95": 186,
+        "max": 186
+      },
+      "max_displacement_m": {
+        "min": 0.0,
+        "mean": 0.27994,
+        "p95": 0.81154,
+        "max": 0.82094
+      },
+      "moved_gt_1mm": {
+        "min": 0,
+        "mean": 58992.45833,
+        "p95": 64006,
+        "max": 64006
+      },
+      "reach_f_m": {
+        "min": 0.0,
+        "mean": 0.13496,
+        "p95": 0.4686,
+        "max": 0.57235
+      },
+      "reach_b_m": {
+        "min": 0.0,
+        "mean": 0.21692,
+        "p95": 0.73966,
+        "max": 0.75003
+      },
+      "reach_max_m": {
+        "min": 0.0,
+        "mean": 0.25326,
+        "p95": 0.73966,
+        "max": 0.75003
+      },
+      "foot_gap_m": {
+        "min": 0.0,
+        "mean": 0.00808,
+        "p95": 0.02301,
+        "max": 0.02301
+      },
+      "penetration_pct": {
+        "min": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      }
+    }
+  },
+  "decomposition": {
+    "tear_worst_A2x15_over_V2x15": 0.8758,
+    "tear_mean_A2x15_over_V2x15": 0.8936,
+    "gt5cm_worst_A2x15_over_V2x15": 0.5376,
+    "foot_worst_A2x15_over_V2x15": 1.0,
+    "reach_mean_A2x15_over_V2x15": 0.9996,
+    "reach_mean_A2x15_over_A2x1": 1.4514
+  },
+  "tear_wins_frames": 65,
+  "foot_wins_frames": 72,
+  "reach_kept_frames": 72,
+  "chain": {
+    "src": {
+      "verts": 64024,
+      "shells": 2809,
+      "uv": 1,
+      "textures": 3
+    },
+    "shell": {
+      "verts": 20204,
+      "faces": 40396,
+      "shells": 3,
+      "tri_ratio": 1.0,
+      "auto_weight_covered": 20196
+    },
+    "bind": {
+      "is_bound": true,
+      "rest_drift_m": 1.92e-06
+    },
+    "assets": {
+      "uv_layers": 1,
+      "materials": 1,
+      "textures": [
+        {
+          "image": "texture_pbr_20250901",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "image": "texture_pbr_20250901_normal",
+          "size": [
+            4096,
+            4096
+          ]
+        }
+      ],
+      "uv_same": true,
+      "textures_same": true
+    }
+  },
+  "reopen": {
+    "surface_deform_is_bound": true,
+    "surface_deform_target": "a_continuous_shell",
+    "rig_count": 1,
+    "rig_bones": 13,
+    "high_poly_verts": 64024,
+    "high_poly_uv_layers": 1,
+    "packed_4096_textures": 3,
+    "textures_4096": 3,
+    "reopen_drive_max_displacement_m": 0.81099
+  }
+}

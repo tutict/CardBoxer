@@ -1,0 +1,21 @@
+test_bridge_refuses_baseline_overwrite_and_unknown_joint (__main__.CanonicalTests.test_bridge_refuses_baseline_overwrite_and_unknown_joint) ... ok
+test_bridge_rejects_fractional_joint_indices_instead_of_truncating (__main__.CanonicalTests.test_bridge_rejects_fractional_joint_indices_instead_of_truncating) ... ok
+test_bridge_rejects_raw_rest_bind_drift_before_writing_outputs (__main__.CanonicalTests.test_bridge_rejects_raw_rest_bind_drift_before_writing_outputs) ... ok
+test_bridge_transforms_morph_tangent_as_normalized_direction_delta (__main__.CanonicalTests.test_bridge_transforms_morph_tangent_as_normalized_direction_delta) ... ok
+test_checker_detects_rig_drift_and_body_morph_leak (__main__.CanonicalTests.test_checker_detects_rig_drift_and_body_morph_leak) ... ok
+test_checker_rejects_baseline_missing_hand_morphs (__main__.CanonicalTests.test_checker_rejects_baseline_missing_hand_morphs) ... ok
+test_checker_rejects_float_joint_storage_and_negative_extra_weights (__main__.CanonicalTests.test_checker_rejects_float_joint_storage_and_negative_extra_weights) ... ok
+test_checker_rejects_forearm_weighted_morph_outside_source_hand_bounds (__main__.CanonicalTests.test_checker_rejects_forearm_weighted_morph_outside_source_hand_bounds) ... ok
+test_checker_rejects_invalid_tangent_uv_and_pbr_texcoord (__main__.CanonicalTests.test_checker_rejects_invalid_tangent_uv_and_pbr_texcoord) ... ok
+test_checker_rejects_truncated_png_atlas (__main__.CanonicalTests.test_checker_rejects_truncated_png_atlas) ... ok
+test_checker_reports_malformed_skin_without_crashing (__main__.CanonicalTests.test_checker_reports_malformed_skin_without_crashing) ... ok
+test_checker_returns_errors_for_malformed_morph_accessor (__main__.CanonicalTests.test_checker_returns_errors_for_malformed_morph_accessor) ... ok
+test_complete_fixture_passes_geometry_material_hand_acceptance (__main__.CanonicalTests.test_complete_fixture_passes_geometry_material_hand_acceptance) ... ok
+test_fixture_nonidentity_frame_and_reordered_joints_preserve_original_basis (__main__.CanonicalTests.test_fixture_nonidentity_frame_and_reordered_joints_preserve_original_basis) ... ok
+test_hand_envelope_uses_original_forearm_geometry_not_upperarm_length (__main__.CanonicalTests.test_hand_envelope_uses_original_forearm_geometry_not_upperarm_length) ... ok
+test_original_acceptance_red_missing_hand_morphs (__main__.CanonicalTests.test_original_acceptance_red_missing_hand_morphs) ... expected failure
+
+----------------------------------------------------------------------
+Ran 16 tests in 2.776s
+
+OK (expected failures=1)

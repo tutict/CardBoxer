@@ -1,0 +1,40 @@
+=== ab_g.json
+keys: ['modes', 'groups', 'player_roi', 'per_mode', 'notes', 'checks', 'failed', 'ok']
+checks: {'pngs_t000': True, 'on_visible_t000': True, 'judgement_same_t000': True, 'pngs_t048': True, 'on_visible_t048': True, 'judgement_same_t048': True, 'pngs_t112': True, 'on_visible_t112': True, 'judgement_same_t112': True, 'pngs_t140': True, 'on_visible_t140': True, 'judgement_same_t140': True, 'pngs_draw': True, 'on_visible_draw': True, 'judgement_same_draw': True, 'pngs_foewin': True, 'on_visible_foewin': True, 'judgement_same_foewin': True, 'on_roi_frames_not_identical': True, 'all_groups_restored': True, 'all_groups_rc0': True, 'static_default_off_pixel_identical': True, 'same_tree_ab_all_green': True, 'same_tree_3d_visible_in_roi': True, 'retired_cross_process_claim_not_reused': True, 'retirement_documented': True}
+ok: True failed: []
+=== static_ab_g.json
+keys: ['baseline', 'off', 'changed_pixels', 'prims_mean', 'draw_calls_mean', 'checks', 'failed', 'ok']
+checks: {'both_rc0': True, 'both_markers': True, 'both_gl': True, 'no_errors': True, 'both_png': True, 'same_size': True, 'pixel_identical': True, 'same_sample_count': True, 'same_viewport': True}
+ok: True failed: []
+=== side_view_probe.json
+keys: ['run', 'views', 'payload', 'checks', 'failed', 'ok']
+checks: {'rc': True, 'has_opengl': True, 'no_script_errors': True, 'no_payload_error': True, 'layer_ready': True, 'eight_views': True, 'all_png_ok': True, 'view_changes_all': True, 'bones_13': True}
+ok: True failed: []
+=== side_stance_probe.json
+keys: ['run', 'payload', 'checks', 'failed', 'ok']
+checks: {'rc': True, 'has_opengl': True, 'no_script_errors': True, 'no_payload_error': True, 'layer_ready': True, 'four_cases': True, 'all_png_ok': True, 'fixed_yaw_55': True, 'bones_13': True, 'final_bias_nonempty': True}
+ok: True failed: []
+=== side_stance_scan.json
+keys: ['run', 'cases', 'payload', 'checks', 'failed', 'ok']
+checks: {'rc': True, 'has_opengl': True, 'no_script_errors': True, 'no_payload_error': True, 'layer_ready': True, 'six_cases': True, 'all_png_ok': True, 'cases_injected': True, 'bones_13': True}
+ok: True failed: []
+=== subviewport_probe.json
+keys: ['src', 'src_sha256', 'import', 'render', 'payload', 'pixels', 'checks', 'failed', 'ok']
+checks: {'import_rc': True, 'render_rc': True, 'has_opengl': True, 'no_script_errors': True, 'no_payload_error': True, 'texture_drawn': True, 'save_ok': True, 'size_1280x720': True, 'canvas_redrawn': True, '3d_region_nonblank': True, '3d_region_textured': True, '2d_anchor_visible': True, 'glb_identical': True}
+ok: True failed: []
+=== three_d_ab.json
+keys: ['run', 'payload', 'checks', 'failed', 'ok']
+checks: {'rc': True, 'has_opengl': True, 'no_script_errors': True, 'no_payload_error': True, 'layer_ready': True, 'four_shots': True, 'all_png_ok': True, 'bones_13': True, 'frames_applied_positive': True, 'tex_drawn': True, 'override_on': True, 'env_not_preset': True, 'last_frame_is_wave17': True}
+ok: True failed: []
+=== baseline_project_g.json
+keys: ['project', 'files', 'import', 'checks', 'failed', 'ok']
+checks: {'copied_105': True, 'all_identical': True, 'import_rc': True, 'import_no_errors': True, 'project_godot_present': True, 'no_3d_assets': True, 'no_rig_driver': True}
+ok: True failed: []
+=== all_checks_before.json
+keys: ['tag', 'total', 'failed', 'result', 'checks']
+checks: [{'name': 'motion_check', 'rc': 0, 'ok': True, 'summary': 'MOTION CHECK: PASS'}, {'name': 'pose_probe', 'rc': 0, 'ok': True, 'summary': 'POSE PROBE: PASS'}, {'name': 'duel_probe', 'rc': 0, 'ok': True, 'summary': 'DUEL PROBE: PASS'}, {'name': 'reach_probe', 'rc': 0, 'ok': True, 'summary': 'REACH PROBE: PASS'}, {'name': 'feet_probe', 'rc': 0, 'ok': True, 'summary': 'FEET PROBE: PASS'}, {'name': 'fighter_skin_check', 'rc': 0, 'ok': True, 'summary': 'FIGHTER SKIN CHECK: PASS'}, {'name': 'battle_motion_p0_check', 'rc': 0, 'ok': True, 'summary': 'BATTLE MOTION P0 CHECK: 93/93 passed'}, {'name': 'battle_rhythm_check', 'rc': 0, 'ok': True, 'summary': 'BATTLE RHYTHM CHECK: 62/62 passed'}, {'name': 'engine_opt_check', 'rc': 0, 'ok': True, 'summary': 'ENGINE OPT CHECK: 37/37 passed'}, {'name': 'redraw_gate_check', 'rc': 0, 'ok': True, 'summary': 'REDRAW GATE CHECK: 72/72 passed'}, {'name': 'taikou_flow_check', 'rc': 0, 'ok': True, 'summary': 'TAIKOU FLOW CHECK: 51/51 passed'}, {'name': 'taikou_rage_check', 'rc': 0, 'ok': True, 'summary': 'TAIKOU RAGE CHECK: 1482/1482 passed'}, {'name': 'taikou_rules_check', 'rc': 0, 'ok': True, 'summary': 'TAIKOU RULES CHECK: 90/90 passed'}, {'name': 'combo_check', 'rc': 0, 'ok': True, 'summary': 'COMBO CHECK: 8/8 passed'}, {'name': 'portrait_wiring_check', 'rc': 0, 'ok': True, 'summary': 'PORTRAIT WIRING CHECK: 157/157 passed'}]
+ok: None failed: []
+=== all_checks_after.json
+keys: ['tag', 'total', 'failed', 'result', 'checks']
+checks: [{'name': 'motion_check', 'rc': 0, 'ok': True, 'summary': 'MOTION CHECK: PASS'}, {'name': 'pose_probe', 'rc': 0, 'ok': True, 'summary': 'POSE PROBE: PASS'}, {'name': 'duel_probe', 'rc': 0, 'ok': True, 'summary': 'DUEL PROBE: PASS'}, {'name': 'reach_probe', 'rc': 0, 'ok': True, 'summary': 'REACH PROBE: PASS'}, {'name': 'feet_probe', 'rc': 0, 'ok': True, 'summary': 'FEET PROBE: PASS'}, {'name': 'fighter_skin_check', 'rc': 0, 'ok': True, 'summary': 'FIGHTER SKIN CHECK: PASS'}, {'name': 'battle_motion_p0_check', 'rc': 0, 'ok': True, 'summary': 'BATTLE MOTION P0 CHECK: 93/93 passed'}, {'name': 'battle_rhythm_check', 'rc': 0, 'ok': True, 'summary': 'BATTLE RHYTHM CHECK: 62/62 passed'}, {'name': 'engine_opt_check', 'rc': 0, 'ok': True, 'summary': 'ENGINE OPT CHECK: 37/37 passed'}, {'name': 'redraw_gate_check', 'rc': 0, 'ok': True, 'summary': 'REDRAW GATE CHECK: 72/72 passed'}, {'name': 'taikou_flow_check', 'rc': 0, 'ok': True, 'summary': 'TAIKOU FLOW CHECK: 51/51 passed'}, {'name': 'taikou_rage_check', 'rc': 0, 'ok': True, 'summary': 'TAIKOU RAGE CHECK: 1482/1482 passed'}, {'name': 'taikou_rules_check', 'rc': 0, 'ok': True, 'summary': 'TAIKOU RULES CHECK: 90/90 passed'}, {'name': 'combo_check', 'rc': 0, 'ok': True, 'summary': 'COMBO CHECK: 8/8 passed'}, {'name': 'portrait_wiring_check', 'rc': 0, 'ok': True, 'summary': 'PORTRAIT WIRING CHECK: 157/157 passed'}]
+ok: None failed: []

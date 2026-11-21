@@ -1,0 +1,9 @@
+CMD C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe --path C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer --resolution 1280x720 --quit-after 2000 --script res://tests/redraw_probe.gd
+
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 621.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5080 Laptop GPU
+
+REDRAW_PROBE_START phases=5
+REDRAW_PROBE_DONE phases=5
+
+--- STDERR ---

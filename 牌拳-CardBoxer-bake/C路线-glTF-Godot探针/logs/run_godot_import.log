@@ -1,0 +1,8 @@
+COPIED=3 total_bytes=46755712
+EDITOR_IMPORT seconds=16.835 returncode=0
+INSPECT_PROBE seconds=1.044 returncode=0
+foe-full.glb         load_ok=True class=PackedScene nodes=5 meshes=2 skels=1 anim_players=0
+foe-stance.glb       load_ok=True class=PackedScene nodes=2 meshes=1 skels=0 anim_players=0
+foe-proxy-rig.glb    load_ok=True class=PackedScene nodes=4 meshes=1 skels=1 anim_players=0
+IMPORT_BYTES=44728238 FILES=12 WALL=17.879s
+GODOT_IMPORT_PROBE_OK

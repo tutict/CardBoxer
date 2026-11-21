@@ -1,0 +1,23 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\probe_rig.py:52: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\probe_rig.py:81: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+00:01.422  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\probe_rig_rest.png'
+00:01.547  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\probe_rig_posed.png'
+PROBE rest = {'centroid': [-0.0, -0.0, 0.25], 'y_range': [-0.09, 0.09], 'vertex_count': 24, 'vertex_signature': '15a0951a8f6c4ad20c886a4c6d4119d62a40eec9a27d0c6df7cb036eadd27e3e', 'distinct_y_levels': 13}
+PROBE posed = {'centroid': [0.0258, 0.0, 0.2655], 'y_range': [-0.09, 0.09], 'vertex_count': 24, 'vertex_signature': '27df37c08bcc17466b61ad6df94aec0a3c69d61d4d98a6fcc9f34095eda617c4', 'distinct_y_levels': 13}
+PROBE centroid_delta = 0.0301
+PROBE max_vertex_displacement = 0.3752
+PROBE vertex_signatures_differ = True
+PROBE mesh_follows_bone = True
+PROBE y_thickness_rest = 0.18
+PROBE y_thickness_posed = 0.18
+PROBE distinct_y_levels_rest = 13
+PROBE bone_count = 1
+PROBE vertex_group_count = 1
+PROBE modifiers = [['Skin', 'ARMATURE']]
+PROBE first_vertex_weight_total = 1.0
+PROBE rest_png_sha256 = 40dd2a44d2c96237676d07ac99db4a2845e92d72907f2cf3e30e9e80560f224e
+PROBE posed_png_sha256 = 3271242524815c7bf761567f44460852c4843bc40df27ab74e40c8a7f74d9891
+RIG_PROBE_OK
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

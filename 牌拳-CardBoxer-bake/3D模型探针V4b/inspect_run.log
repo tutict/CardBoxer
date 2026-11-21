@@ -1,0 +1,16 @@
+SIGNATURES {"png": ["artifact_01.png"], "zip": ["artifact_02.zip"], "glb": ["artifact_03.glb"], "fbx": ["artifact_04.fbx"]}
+GLB {"gltf_version": 2, "declared_length": 37314784, "file_bytes": 37314784, "bin_chunk_bytes": 37312820}
+COUNTS {"scenes": 1, "nodes": 1, "meshes": 1, "materials": 1, "textures": 3, "images": 3, "skins": 0, "animations": 0, "accessors": 4, "bufferViews": 7, "buffers": 1, "samplers": 1, "cameras": 0}
+GEOMETRY vertices=57901 triangles=79986 primitives=1 meshes=1
+MATERIALS texture_refs=3 images=3
+RIG has_skin=False has_animation=False rig_like_nodes=0
+SHELLS unionfind=2035 top10=[1280, 1080, 1004, 673, 601, 575, 572, 559, 538, 521]
+ZIP entries=6
+  texture_pbr_20250901.png 16637843 B
+  texture_pbr_20250901_metallic.png 5438156 B
+  texture_pbr_20250901_roughness.png 4305005 B
+  texture_pbr_20250901_normal.png 5638722 B
+  fd8a21afa0e66605074db301097acbaa.obj 5340167 B
+  material.mtl 245 B
+FBX_TOKENS {"LimbNode": 0, "Deformer": 0, "Skin": 0, "Skeleton": 0, "BindPose": 0, "Geometry": 4, "Material": 12, "Texture": 27, "Animation": 0}
+INSPECT_V2_OK

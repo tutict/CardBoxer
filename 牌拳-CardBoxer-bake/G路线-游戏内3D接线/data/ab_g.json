@@ -1,0 +1,204 @@
+{
+  "modes": [
+    "t000",
+    "t048",
+    "t112",
+    "t140",
+    "draw",
+    "foewin"
+  ],
+  "groups": [
+    "baseline",
+    "off",
+    "on"
+  ],
+  "player_roi": [
+    290,
+    270,
+    580,
+    535
+  ],
+  "per_mode": {
+    "t000": {
+      "baseline_vs_off_changed_px": 982849,
+      "on_vs_off_changed_px": 981969,
+      "marker_baseline": "[RHYTHM_SHOT] mode=t000 t=0.0 p_shift=0.0 e_shift=40.0 p_tilt=0.0 e_tilt=0.15707963267949 hit=false hp=100/77",
+      "marker_off": "[RHYTHM_SHOT] mode=t000 t=0.0 p_shift=0.0 e_shift=40.0 p_tilt=0.0 e_tilt=0.15707963267949 hit=false hp=100/77",
+      "marker_on": "[RHYTHM_SHOT] mode=t000 t=0.0 p_shift=0.0 e_shift=40.0 p_tilt=0.0 e_tilt=0.15707963267949 hit=false hp=100/77",
+      "marker_all_same": true
+    },
+    "t048": {
+      "baseline_vs_off_changed_px": 980392,
+      "on_vs_off_changed_px": 1006200,
+      "marker_baseline": "[RHYTHM_SHOT] mode=t048 t=0.48 p_shift=102.142860412598 e_shift=9.43987655639648 p_tilt=0.0 e_tilt=0.0628318530718 hit=true hp=100/77",
+      "marker_off": "[RHYTHM_SHOT] mode=t048 t=0.48 p_shift=102.142860412598 e_shift=9.43987655639648 p_tilt=0.0 e_tilt=0.0628318530718 hit=true hp=100/77",
+      "marker_on": "[RHYTHM_SHOT] mode=t048 t=0.48 p_shift=102.142860412598 e_shift=9.43987655639648 p_tilt=0.0 e_tilt=0.0628318530718 hit=true hp=100/77",
+      "marker_all_same": true
+    },
+    "t112": {
+      "baseline_vs_off_changed_px": 1022090,
+      "on_vs_off_changed_px": 1007745,
+      "marker_baseline": "[RHYTHM_SHOT] mode=t112 t=1.12 p_shift=0.0 e_shift=0.30215129256248 p_tilt=0.0 e_tilt=0.0 hit=true hp=100/77",
+      "marker_off": "[RHYTHM_SHOT] mode=t112 t=1.12 p_shift=0.0 e_shift=0.30215129256248 p_tilt=0.0 e_tilt=0.0 hit=true hp=100/77",
+      "marker_on": "[RHYTHM_SHOT] mode=t112 t=1.12 p_shift=0.0 e_shift=0.30215129256248 p_tilt=0.0 e_tilt=0.0 hit=true hp=100/77",
+      "marker_all_same": true
+    },
+    "t140": {
+      "baseline_vs_off_changed_px": 1032151,
+      "on_vs_off_changed_px": 1002300,
+      "marker_baseline": "[RHYTHM_SHOT] mode=t140 t=1.36 p_shift=0.0 e_shift=1.61216390132904 p_tilt=0.0 e_tilt=0.0 hit=true hp=100/77",
+      "marker_off": "[RHYTHM_SHOT] mode=t140 t=1.36 p_shift=0.0 e_shift=1.61216390132904 p_tilt=0.0 e_tilt=0.0 hit=true hp=100/77",
+      "marker_on": "[RHYTHM_SHOT] mode=t140 t=1.36 p_shift=0.0 e_shift=1.61216390132904 p_tilt=0.0 e_tilt=0.0 hit=true hp=100/77",
+      "marker_all_same": true
+    },
+    "draw": {
+      "baseline_vs_off_changed_px": 996078,
+      "on_vs_off_changed_px": 988437,
+      "marker_baseline": "[RHYTHM_SHOT] mode=draw t=-1.0 p_shift=0.0 e_shift=0.0 p_tilt=0.0 e_tilt=0.0 hit=false hp=97/97",
+      "marker_off": "[RHYTHM_SHOT] mode=draw t=-1.0 p_shift=0.0 e_shift=0.0 p_tilt=0.0 e_tilt=0.0 hit=false hp=97/97",
+      "marker_on": "[RHYTHM_SHOT] mode=draw t=-1.0 p_shift=0.0 e_shift=0.0 p_tilt=0.0 e_tilt=0.0 hit=false hp=97/97",
+      "marker_all_same": true
+    },
+    "foewin": {
+      "baseline_vs_off_changed_px": 1003327,
+      "on_vs_off_changed_px": 975343,
+      "marker_baseline": "[RHYTHM_SHOT] mode=foewin t=0.48 p_shift=-12.2744083404541 e_shift=-102.142860412598 p_tilt=-0.0628318530718 e_tilt=0.0 hit=true hp=77/100",
+      "marker_off": "[RHYTHM_SHOT] mode=foewin t=0.48 p_shift=-12.2744083404541 e_shift=-102.142860412598 p_tilt=-0.0628318530718 e_tilt=0.0 hit=true hp=77/100",
+      "marker_on": "[RHYTHM_SHOT] mode=foewin t=0.48 p_shift=-12.2744083404541 e_shift=-102.142860412598 p_tilt=-0.0628318530718 e_tilt=0.0 hit=true hp=77/100",
+      "marker_all_same": true
+    }
+  },
+  "notes": {
+    "baseline": {
+      "t000": {
+        "bytes": 1030595,
+        "w": 1600,
+        "h": 900
+      },
+      "t048": {
+        "bytes": 1032162,
+        "w": 1600,
+        "h": 900
+      },
+      "t112": {
+        "bytes": 1051092,
+        "w": 1600,
+        "h": 900
+      },
+      "t140": {
+        "bytes": 1052071,
+        "w": 1600,
+        "h": 900
+      },
+      "draw": {
+        "bytes": 1015636,
+        "w": 1600,
+        "h": 900
+      },
+      "foewin": {
+        "bytes": 1040996,
+        "w": 1600,
+        "h": 900
+      }
+    },
+    "off": {
+      "t000": {
+        "bytes": 1022514,
+        "w": 1600,
+        "h": 900
+      },
+      "t048": {
+        "bytes": 1021882,
+        "w": 1600,
+        "h": 900
+      },
+      "t112": {
+        "bytes": 1036109,
+        "w": 1600,
+        "h": 900
+      },
+      "t140": {
+        "bytes": 1032559,
+        "w": 1600,
+        "h": 900
+      },
+      "draw": {
+        "bytes": 1019557,
+        "w": 1600,
+        "h": 900
+      },
+      "foewin": {
+        "bytes": 1039979,
+        "w": 1600,
+        "h": 900
+      }
+    },
+    "on": {
+      "t000": {
+        "bytes": 1073845,
+        "w": 1600,
+        "h": 900
+      },
+      "t048": {
+        "bytes": 1069616,
+        "w": 1600,
+        "h": 900
+      },
+      "t112": {
+        "bytes": 1092733,
+        "w": 1600,
+        "h": 900
+      },
+      "t140": {
+        "bytes": 1075708,
+        "w": 1600,
+        "h": 900
+      },
+      "draw": {
+        "bytes": 1058784,
+        "w": 1600,
+        "h": 900
+      },
+      "foewin": {
+        "bytes": 1076699,
+        "w": 1600,
+        "h": 900
+      }
+    },
+    "on_player_roi_changed_px": {
+      "t000_vs_t048": 75438,
+      "t048_vs_t112": 76306,
+      "t000_vs_t112": 76235
+    }
+  },
+  "checks": {
+    "pngs_t000": true,
+    "on_visible_t000": true,
+    "judgement_same_t000": true,
+    "pngs_t048": true,
+    "on_visible_t048": true,
+    "judgement_same_t048": true,
+    "pngs_t112": true,
+    "on_visible_t112": true,
+    "judgement_same_t112": true,
+    "pngs_t140": true,
+    "on_visible_t140": true,
+    "judgement_same_t140": true,
+    "pngs_draw": true,
+    "on_visible_draw": true,
+    "judgement_same_draw": true,
+    "pngs_foewin": true,
+    "on_visible_foewin": true,
+    "judgement_same_foewin": true,
+    "on_roi_frames_not_identical": true,
+    "all_groups_restored": true,
+    "all_groups_rc0": true,
+    "static_default_off_pixel_identical": true,
+    "same_tree_ab_all_green": true,
+    "same_tree_3d_visible_in_roi": true,
+    "retired_cross_process_claim_not_reused": true,
+    "retirement_documented": true
+  },
+  "failed": [],
+  "ok": true
+}

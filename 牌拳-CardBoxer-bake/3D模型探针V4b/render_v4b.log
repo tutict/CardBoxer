@@ -1,0 +1,25 @@
+16:44:44 | INFO: Data are loaded, start creating Blender stuff
+16:44:44 | INFO: Blender create Mesh node node_0
+16:44:44 | INFO: glTF import finished in 0.11s
+IMPORT glb=artifact_03.glb meshes=1
+NORMALIZE scale=1.652229 raw_height=1.0410
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V4b\render_character.py:75: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+00:02.234  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V4b\v4b-front.png'
+RENDER v4b-front.png 365239 B
+00:02.437  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V4b\v4b-angle25.png'
+RENDER v4b-angle25.png 365517 B
+00:02.609  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V4b\v4b-angle55.png'
+RENDER v4b-angle55.png 344638 B
+00:02.797  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V4b\v4b-back35.png'
+RENDER v4b-back35.png 338781 B
+00:03.062  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V4b\v4b-face-front.png'
+RENDER v4b-face-front.png 976469 B
+00:03.328  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V4b\v4b-face-25.png'
+RENDER v4b-face-25.png 989077 B
+00:03.578  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D模型探针V4b\v4b-upper.png'
+RENDER v4b-upper.png 992463 B
+RENDER_OK prefix=v4b shots=7 elapsed=2.7s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit

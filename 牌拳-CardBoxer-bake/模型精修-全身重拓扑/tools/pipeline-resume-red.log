@@ -1,0 +1,55 @@
+test_bridge_refuses_baseline_overwrite_and_unknown_joint (__main__.CanonicalTests.test_bridge_refuses_baseline_overwrite_and_unknown_joint) ... ok
+test_checker_detects_rig_drift_and_body_morph_leak (__main__.CanonicalTests.test_checker_detects_rig_drift_and_body_morph_leak) ... ok
+test_checker_rejects_baseline_missing_hand_morphs (__main__.CanonicalTests.test_checker_rejects_baseline_missing_hand_morphs) ... ok
+test_checker_rejects_forearm_weighted_morph_outside_source_hand_bounds (__main__.CanonicalTests.test_checker_rejects_forearm_weighted_morph_outside_source_hand_bounds) ... FAIL
+test_checker_rejects_invalid_tangent_uv_and_pbr_texcoord (__main__.CanonicalTests.test_checker_rejects_invalid_tangent_uv_and_pbr_texcoord) ... FAIL
+test_checker_rejects_truncated_png_atlas (__main__.CanonicalTests.test_checker_rejects_truncated_png_atlas) ... FAIL
+test_checker_returns_errors_for_malformed_morph_accessor (__main__.CanonicalTests.test_checker_returns_errors_for_malformed_morph_accessor) ... ERROR
+test_complete_fixture_passes_geometry_material_hand_acceptance (__main__.CanonicalTests.test_complete_fixture_passes_geometry_material_hand_acceptance) ... ok
+test_fixture_nonidentity_frame_and_reordered_joints_preserve_original_basis (__main__.CanonicalTests.test_fixture_nonidentity_frame_and_reordered_joints_preserve_original_basis) ... ok
+test_original_acceptance_red_missing_hand_morphs (__main__.CanonicalTests.test_original_acceptance_red_missing_hand_morphs) ... expected failure
+
+======================================================================
+ERROR: test_checker_returns_errors_for_malformed_morph_accessor (__main__.CanonicalTests.test_checker_returns_errors_for_malformed_morph_accessor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 239, in test_checker_returns_errors_for_malformed_morph_accessor
+    result=checker.check_asset(src,candidate)
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\check_retopology_assets.py", line 118, in check_asset
+    values=g.accessor(accessor)
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\canonical_glb.py", line 70, in accessor
+    if not np.isfinite(out).all(): raise ValueError(f"Nonfinite accessor {index}")
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Nonfinite accessor 20
+
+======================================================================
+FAIL: test_checker_rejects_forearm_weighted_morph_outside_source_hand_bounds (__main__.CanonicalTests.test_checker_rejects_forearm_weighted_morph_outside_source_hand_bounds)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 232, in test_checker_rejects_forearm_weighted_morph_outside_source_hand_bounds
+    self.assertIn("morph_hand_only",[e["code"] for e in checker.check_asset(src,candidate)["errors"]])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'morph_hand_only' not found in []
+
+======================================================================
+FAIL: test_checker_rejects_invalid_tangent_uv_and_pbr_texcoord (__main__.CanonicalTests.test_checker_rejects_invalid_tangent_uv_and_pbr_texcoord)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 224, in test_checker_rejects_invalid_tangent_uv_and_pbr_texcoord
+    for code in ("tangent_basis","atlas_uv","pbr_texcoord"):self.assertIn(code,codes)
+                                                            ~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: 'tangent_basis' not found in []
+
+======================================================================
+FAIL: test_checker_rejects_truncated_png_atlas (__main__.CanonicalTests.test_checker_rejects_truncated_png_atlas)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 208, in test_checker_rejects_truncated_png_atlas
+    with self.assertRaises(ValueError):checker.image_dimensions(png_atlas()[:33])
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 10 tests in 1.556s
+
+FAILED (failures=3, errors=1, expected failures=1)

@@ -1,0 +1,93 @@
+{
+  "records": [
+    {
+      "mode": "t000",
+      "rc": 0,
+      "ok": true,
+      "marker": [
+        "[RHYTHM_SHOT] mode=t000 t=0.0 p_shift=0.0 e_shift=40.0 p_tilt=0.0 e_tilt=0.15707963267949 hit=false hp=100/77"
+      ],
+      "engine_errors": 0,
+      "gl": true,
+      "bytes": 703999
+    },
+    {
+      "mode": "t048",
+      "rc": 0,
+      "ok": true,
+      "marker": [
+        "[RHYTHM_SHOT] mode=t048 t=0.48 p_shift=102.142860412598 e_shift=9.43987655639648 p_tilt=0.0 e_tilt=0.0628318530718 hit=true hp=100/77"
+      ],
+      "engine_errors": 0,
+      "gl": true,
+      "bytes": 698556
+    },
+    {
+      "mode": "t072",
+      "rc": 0,
+      "ok": true,
+      "marker": [
+        "[RHYTHM_SHOT] mode=t072 t=0.72 p_shift=39.2857131958008 e_shift=-2.21933579444885 p_tilt=0.0 e_tilt=0.01570796326795 hit=true hp=100/77"
+      ],
+      "engine_errors": 0,
+      "gl": true,
+      "bytes": 706700
+    },
+    {
+      "mode": "t112",
+      "rc": 0,
+      "ok": true,
+      "marker": [
+        "[RHYTHM_SHOT] mode=t112 t=1.12 p_shift=0.0 e_shift=0.30215129256248 p_tilt=0.0 e_tilt=0.0 hit=true hp=100/77"
+      ],
+      "engine_errors": 0,
+      "gl": true,
+      "bytes": 701624
+    },
+    {
+      "mode": "t140",
+      "rc": 0,
+      "ok": true,
+      "marker": [
+        "[RHYTHM_SHOT] mode=t140 t=1.36 p_shift=0.0 e_shift=1.61216390132904 p_tilt=0.0 e_tilt=0.0 hit=true hp=100/77"
+      ],
+      "engine_errors": 0,
+      "gl": true,
+      "bytes": 685534
+    },
+    {
+      "mode": "t180",
+      "rc": 0,
+      "ok": true,
+      "marker": [
+        "[RHYTHM_SHOT] mode=t180 t=1.76 p_shift=0.0 e_shift=0.0 p_tilt=0.0 e_tilt=0.0 hit=true hp=100/77"
+      ],
+      "engine_errors": 0,
+      "gl": true,
+      "bytes": 701531
+    },
+    {
+      "mode": "draw",
+      "rc": 0,
+      "ok": true,
+      "marker": [
+        "[RHYTHM_SHOT] mode=draw t=-1.0 p_shift=0.0 e_shift=0.0 p_tilt=0.0 e_tilt=0.0 hit=false hp=97/97"
+      ],
+      "engine_errors": 0,
+      "gl": true,
+      "bytes": 684674
+    },
+    {
+      "mode": "foewin",
+      "rc": 0,
+      "ok": true,
+      "marker": [
+        "[RHYTHM_SHOT] mode=foewin t=0.48 p_shift=-12.2744083404541 e_shift=-102.142860412598 p_tilt=-0.0628318530718 e_tilt=0.0 hit=true hp=77/100"
+      ],
+      "engine_errors": 0,
+      "gl": true,
+      "bytes": 706189
+    }
+  ],
+  "restore_ok": true
+}

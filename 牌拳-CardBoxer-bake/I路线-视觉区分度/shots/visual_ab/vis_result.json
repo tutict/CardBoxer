@@ -1,0 +1,85 @@
+{
+	"env_visual_none": "",
+	"foe_layer_ready": true,
+	"player_layer_ready": true,
+	"player_visual_state": {
+		"foe_materials": 0,
+		"foe_visual": false,
+		"light_rows": 4,
+		"mesh_rows": 1,
+		"role": "player"
+	},
+	"shots": [
+		{
+			"draw_calls": 117.0,
+			"h": 720,
+			"name": "base",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\I路线-视觉区分度\\shots\\visual_ab/vis-base.png",
+			"prims": 5136.0,
+			"save_error": 0,
+			"w": 1280
+		},
+		{
+			"draw_calls": 33.0,
+			"h": 720,
+			"name": "on",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\I路线-视觉区分度\\shots\\visual_ab/vis-on.png",
+			"prims": 1104816.0,
+			"save_error": 0,
+			"w": 1280
+		},
+		{
+			"draw_calls": 33.0,
+			"h": 720,
+			"name": "on-repeat",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\I路线-视觉区分度\\shots\\visual_ab/vis-on-repeat.png",
+			"prims": 1104816.0,
+			"save_error": 0,
+			"w": 1280
+		},
+		{
+			"draw_calls": 33.0,
+			"h": 720,
+			"name": "plain",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\I路线-视觉区分度\\shots\\visual_ab/vis-plain.png",
+			"prims": 1104816.0,
+			"save_error": 0,
+			"w": 1280
+		},
+		{
+			"draw_calls": 33.0,
+			"h": 720,
+			"name": "again",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\I路线-视觉区分度\\shots\\visual_ab/vis-again.png",
+			"prims": 1104816.0,
+			"save_error": 0,
+			"w": 1280
+		}
+	],
+	"states": [
+		{
+			"foe_materials": 0,
+			"foe_visual": true,
+			"light_rows": 4,
+			"mesh_rows": 1,
+			"role": "foe",
+			"tag": "on"
+		},
+		{
+			"foe_materials": 0,
+			"foe_visual": false,
+			"light_rows": 4,
+			"mesh_rows": 1,
+			"role": "foe",
+			"tag": "plain"
+		},
+		{
+			"foe_materials": 0,
+			"foe_visual": true,
+			"light_rows": 4,
+			"mesh_rows": 1,
+			"role": "foe",
+			"tag": "again"
+		}
+	]
+}

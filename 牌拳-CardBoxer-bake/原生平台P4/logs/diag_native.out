@@ -1,0 +1,22 @@
+TRACKS 15 FRAMES 284
+CM_VS_MI_IDENTICAL True DIFF_FRAMES 0
+PLAYER_FOE_TRACKS_EQUAL True
+NATIVE_PAIRS 255 UNIQUE_FRAME_PAIRS 80
+WHOLE_IDENTICAL 224 LEG_ONLY 31
+UNIQUE_WHOLE 56 UNIQUE_MOVING 24
+IN_HOLD_TAIL 14
+BY_CARD {'backstep': 6, 'block': 17, 'cross': 16, 'focus': 28, 'guard': 21, 'hit_heavy': 22, 'hit_light': 12, 'jab': 13, 'recover': 13, 'rush': 8, 'sidestep': 8, 'sweep': 17, 'throw': 13, 'uppercut': 18, 'wave': 43}
+BY_BONE {'shin_b': 59, 'shin_f': 60, 'thigh_b': 63, 'thigh_f': 73}
+CHANGED_JOINTS {'b_elbow': 31, 'b_foot': 4, 'b_hand': 18, 'b_knee': 23, 'f_elbow': 31, 'f_foot': 1, 'f_hand': 22, 'f_knee': 25, 'head': 31, 'hip': 27, 'shoulder': 31}
+LONGEST_RUNS [{'card': 'focus', 'start': 5, 'end': 12, 'identical_pairs': 7}, {'card': 'guard', 'start': 2, 'end': 7, 'identical_pairs': 5}, {'card': 'wave', 'start': 6, 'end': 11, 'identical_pairs': 5}, {'card': 'hit_heavy', 'start': 4, 'end': 8, 'identical_pairs': 4}, {'card': 'block', 'start': 1, 'end': 5, 'identical_pairs': 4}, {'card': 'recover', 'start': 3, 'end': 6, 'identical_pairs': 3}]
+DEG_PER_1PX 0.8878 PX_FOR_0.1DEG 0.1126
+FRAMES_TO_EDIT 80
+CHECK fifteen_tracks True
+CHECK frames_284 True
+CHECK native_pairs_matches_p3_floor True
+CHECK native_plus_clamp_equals_p3_total True
+CHECK split_sums True
+CHECK unique_frame_pairs_split True
+CHECK p3_shipped_is_atan12 True
+CHECK sensitivity_positive True
+NATIVE_DIAG_OK

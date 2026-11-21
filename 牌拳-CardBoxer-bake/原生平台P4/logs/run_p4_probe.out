@@ -1,0 +1,29 @@
+READBACK atan 12.0
+MARKERS shipped 46.533333|-39.511111 legacy 46.000000|-38.800000
+ROWS 36 MARKER_BAD 0 DELTA_BAD 0 DELTA_SAME 0
+ACTION_DIFF_MAX 14110 NONZERO 22 / 22
+STANCE_DIFF [0, 0]
+REAPPLIED_NONZERO []
+TWO_D {'cards': 12, 'changed_frames': 86, 'checks': {'all_legacy_cards_present': True, 'cardmotion_loaded': True, 'cards_and_frames_positive': True, 'max_displacement_under_2px': True, 'only_four_leg_joints_changed': True, 'some_frames_changed': True}, 'frames': 228, 'max_joint_delta_px': 1.7778, 'missing': [], 'non_leg_changes': 0, 'ok': True}
+CHECK all_action_frames_are_edited_frames True
+CHECK main_marker_parsed True
+CHECK main_no_script_errors True
+CHECK main_no_scenario_errors True
+CHECK use_3d_and_15_cards True
+CHECK shipped_mapping_still_atan12 True
+CHECK shipped_and_legacy_table_markers_differ True
+CHECK table_marker_matches_every_scene True
+CHECK hp_unchanged True
+CHECK delta_matches_python_formula_per_table True
+CHECK all_action_deltas_differ_between_tables True
+CHECK action_pixel_diffs_present True
+CHECK action_pixel_diffs_majority True
+CHECK stance_untouched True
+CHECK shipped_reapplied_identical_same_process True
+CHECK all_sv_pngs_nonempty True
+CHECK two_d_readback_ok True
+CHECK two_d_no_script_errors True
+CHECK default_zero_pollution True
+CHECK default_no_script_errors True
+CHECK default_two_pngs True
+P4_PROBE_OK

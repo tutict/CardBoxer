@@ -1,0 +1,116 @@
+--- /c/Users/tutic/Desktop/学习资料/牌拳-CardBoxer-bake/orig/hud.gd	2026-11-06 00:00:38.401086600 +0800
++++ /c/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/scripts/hud.gd	2026-11-06 00:12:22.744088700 +0800
+@@ -19,6 +19,15 @@
+ const COL_GUARD := Color(0.34, 0.60, 0.95)
+ const COL_POWER := Color(0.70, 0.45, 0.94)
+ 
++## 血条 V2：与擂台灯光 / 角色 / 回合点统一成暖琥珀（玩家）与冷青（对手）
++## 两套色；红色只留给「低血量危险」，不再表示阵营。
++const HP_PLAYER_TOP := Color(1.0, 0.80, 0.42)
++const HP_PLAYER_BOTTOM := Color(0.72, 0.38, 0.14)
++const HP_ENEMY_TOP := Color(0.48, 0.88, 1.0)
++const HP_ENEMY_BOTTOM := Color(0.14, 0.44, 0.72)
++const HP_DANGER := Color(0.98, 0.24, 0.22)
++const HP_GHOST := Color(1.0, 0.58, 0.40, 0.55)
++
+ ## 这些标点不能出现在行首，折行时跟着上一行走。
+ const NO_LINE_START := "，。、；：！？）》」』）】%,.;:!?)]}"
+ 
+@@ -72,7 +81,7 @@
+ 	var e: Fighter = arena.enemy
+ 
+ 	# 玩家：从左向右。
+-	_draw_bar(Vector2(44, 44), p.hp_ratio(), float(_hp_shown["p"]), false, p.display_name, true)
++	_draw_bar_v2(Vector2(44, 44), p.hp_ratio(), float(_hp_shown["p"]), false, p.display_name, true)
+ 	_draw_meter(Vector2(44, 76), p.meter_ratio(), 5)
+ 	draw_string(
+ 		font, Vector2(44, 104), "气 %d/5" % int(p.meter), HORIZONTAL_ALIGNMENT_LEFT, -1, 13,
+@@ -80,7 +89,7 @@
+ 	)
+ 
+ 	# 对手：镜像。
+-	_draw_bar(Vector2(1280 - 44 - BAR_W, 44), e.hp_ratio(), float(_hp_shown["e"]), true, e.display_name, false)
++	_draw_bar_v2(Vector2(1280 - 44 - BAR_W, 44), e.hp_ratio(), float(_hp_shown["e"]), true, e.display_name, false)
+ 	_draw_meter(Vector2(1280 - 44 - BAR_W, 76), e.meter_ratio(), 5)
+ 	var meter_label := "气 %d/5" % int(e.meter)
+ 	var ml_w := font.get_string_size(meter_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
+@@ -118,6 +127,79 @@
+ 	draw_string(font, Vector2(tx, pos.y - 8), label, HORIZONTAL_ALIGNMENT_LEFT, -1, size, Color(0.92, 0.94, 1.0))
+ 
+ 
++## 血条 V2。原 _draw_bar() 完整保留作兜底：把 _draw_hud_bars() 里的两处
++## 调用换回 _draw_bar 即可回到旧样式，不需要动绘制逻辑。
++func _draw_bar_v2(pos: Vector2, ratio: float, ghost: float, mirrored: bool, who: String, is_player: bool) -> void:
++	var r := clampf(ratio, 0.0, 1.0)
++	var g := clampf(ghost, 0.0, 1.0)
++
++	# 外框 / 背板比旧版更暗，让填充成为画面里唯一的高亮横条。
++	draw_rect(Rect2(pos + Vector2(-4, -4), Vector2(BAR_W + 8, BAR_H + 8)), Color(0, 0, 0, 0.48))
++	draw_rect(Rect2(pos + Vector2(-1, -1), Vector2(BAR_W + 2, BAR_H + 2)), Color(0.42, 0.40, 0.56, 0.42))
++	draw_rect(Rect2(pos, Vector2(BAR_W, BAR_H)), Color(0.055, 0.06, 0.095, 0.95))
++
++	# 残影：刚掉的那一截用统一的伤害橙；白色容易读成「还没扣」。
++	if g > 0.0:
++		draw_rect(_bar_fill_rect(pos, BAR_W * g, mirrored), HP_GHOST)
++
++	# 填充：6 条横向色带做竖向渐变，不再是一整块死色。
++	var w := BAR_W * r
++	if w > 0.0:
++		var top := HP_PLAYER_TOP if is_player else HP_ENEMY_TOP
++		var bottom := HP_PLAYER_BOTTOM if is_player else HP_ENEMY_BOTTOM
++		if r < 0.3:
++			var pulse := 0.55 + 0.25 * sin(_time * 9.0)
++			top = top.lerp(HP_DANGER, pulse)
++			bottom = bottom.lerp(HP_DANGER, pulse)
++		var origin := (pos.x + BAR_W - w) if mirrored else pos.x
++		var bands := 6
++		for i in range(bands):
++			var t := (float(i) + 0.5) / float(bands)
++			draw_rect(
++				Rect2(origin, pos.y + BAR_H * float(i) / float(bands), w, BAR_H / float(bands) + 1.0),
++				bottom.lerp(top, 1.0 - t)
++			)
++		# 内高光只覆盖已填充部分，空槽不再发白。
++		draw_rect(Rect2(origin, pos.y, w, 2), Color(1, 1, 1, 0.22))
++		# 血量指针：填充末端的亮竖线，格斗游戏里读当前血量最省眼。
++		var edge_x := origin if mirrored else origin + w
++		draw_line(Vector2(edge_x, pos.y), Vector2(edge_x, pos.y + BAR_H), Color(1, 1, 1, 0.75), 2.0)
++
++	# 20 点一格刻度画在最上层：亮填充上是细暗分隔，暗背板上不抢眼。
++	for i in range(1, 5):
++		var tx := pos.x + BAR_W * float(i) / 5.0
++		draw_line(Vector2(tx, pos.y + 1), Vector2(tx, pos.y + BAR_H - 1), Color(0.02, 0.02, 0.06, 0.22), 1.0)
++
++	# 低血量红框脉冲：双方同色，红色只表示危险。
++	# 谷值必须留够：旧式 0.35+0.30*sin 最低只有 0.05，引擎内截帧反推到
++	# alpha≈0.19 那一帧肉眼几乎看不见红框，危险提示会在脉冲低谷消失。
++	# 现在是 0.30..0.80，最暗的一帧也读得出来。
++	if r < 0.3:
++		draw_rect(
++			Rect2(pos + Vector2(-1, -1), Vector2(BAR_W + 2, BAR_H + 2)),
++			Color(0.98, 0.24, 0.22, 0.55 + 0.25 * sin(_time * 9.0)), false, 2.0
++		)
++
++	# 名字与数值分层次：名字小一档偏灰，数值大一号纯白并带阴影。
++	var name_size := 15
++	var num_size := 22
++	var num_text := str(int(round(r * 100.0)))
++	var nw := font.get_string_size(who, HORIZONTAL_ALIGNMENT_LEFT, -1, name_size).x
++	var vw := font.get_string_size(num_text, HORIZONTAL_ALIGNMENT_LEFT, -1, num_size).x
++	var gap := 10.0
++	var x0 := (pos.x + BAR_W - (nw + gap + vw)) if mirrored else pos.x
++	draw_string(font, Vector2(x0 + 1, pos.y - 9), who, HORIZONTAL_ALIGNMENT_LEFT, -1, name_size, Color(0, 0, 0, 0.6))
++	draw_string(font, Vector2(x0, pos.y - 10), who, HORIZONTAL_ALIGNMENT_LEFT, -1, name_size, Color(0.76, 0.79, 0.90))
++	var nx := x0 + nw + gap
++	draw_string(font, Vector2(nx + 1, pos.y - 7), num_text, HORIZONTAL_ALIGNMENT_LEFT, -1, num_size, Color(0, 0, 0, 0.65))
++	draw_string(font, Vector2(nx, pos.y - 8), num_text, HORIZONTAL_ALIGNMENT_LEFT, -1, num_size, Color(1, 1, 1))
++
++
++func _bar_fill_rect(pos: Vector2, width: float, mirrored: bool) -> Rect2:
++	var x := (pos.x + BAR_W - width) if mirrored else pos.x
++	return Rect2(Vector2(x, pos.y), Vector2(width, BAR_H))
++
++
+ func _draw_meter(pos: Vector2, ratio: float, segs: int) -> void:
+ 	var seg_w := (BAR_W - float(segs - 1) * 6.0) / float(segs)
+ 	for i in range(segs):

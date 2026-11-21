@@ -1,0 +1,68 @@
+{
+  "passed": 10,
+  "total": 10,
+  "checks": [
+    {
+      "name": "pngs_valid",
+      "ok": true,
+      "detail": "8/8 PNG, 512x512, manifest sizes match"
+    },
+    {
+      "name": "renders_nonempty",
+      "ok": true,
+      "detail": "all 8 renders have >8000 non-white pixels"
+    },
+    {
+      "name": "repeat_pixels_identical",
+      "ok": true,
+      "detail": "ImageChops.difference bbox=None (None == pixel-identical)"
+    },
+    {
+      "name": "repeat_sha_diff_is_metadata_only",
+      "ok": true,
+      "detail": "chunk types equal=True; IDAT equal=True; tEXt differs=True; bytes 146511 vs 146511"
+    },
+    {
+      "name": "pose_frames_distinct",
+      "ok": true,
+      "detail": "min pairwise changed pixels = 27404; stance-vs-motion = jab_impact.png=40515, sweep_impact.png=57699, throw_impact.png=41072, hit_heavy_mid.png=27404"
+    },
+    {
+      "name": "palette_and_angle_live",
+      "ok": true,
+      "detail": "palette changed px=4403; angle12 changed px=15720"
+    },
+    {
+      "name": "manifest_joints_traceable",
+      "ok": true,
+      "detail": "8/8 recomputed from baked2.json; 2d5-stance.png:OK, 2d5-jab_impact.png:OK, 2d5-sweep_impact.png:OK, 2d5-throw_impact.png:OK, 2d5-hit_heavy_mid.png:OK, 2d5-stance_enemy.png:OK, 2d5-stance_angle12.png:OK, 2d5-stance_repeat.png:OK"
+    },
+    {
+      "name": "table_sha256_matches",
+      "ok": true,
+      "detail": "manifest=b6a7f8435b08... disk=b6a7f8435b08..."
+    },
+    {
+      "name": "ortho_coordinate_bridge",
+      "ok": true,
+      "detail": "shoe centers L=131.0 R=289.0 span=158.0px (n=3036); predicted from stance f_foot/b_foot = 157.5px; tol=25px"
+    },
+    {
+      "name": "lighting_fix_effective",
+      "ok": true,
+      "detail": "run1 dark=268 final dark=6255; changed px=36767"
+    }
+  ],
+  "reports": {
+    "shoe_span_px": 158,
+    "shoe_span_predicted_px": 157.5,
+    "face_region_155_330_100_185": {
+      "warm_skin": 2606,
+      "dark": 306,
+      "gold": 1343
+    },
+    "face_readable_by_eye": "two half-lidded dark eyes + mouth line + gold hair clip visible; D_FACE=-0.155 moved face details in front of the head sphere"
+  },
+  "table_sha256": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55",
+  "script_sha256": "fbd9418780a029e4b90c000029a44380e3c5c8f56df700d6d1efe0b06d14ba14"
+}

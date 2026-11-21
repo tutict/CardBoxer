@@ -1,0 +1,60 @@
+{
+  "tol": 6,
+  "allowed_regions": {
+    "avatar_player": [
+      0,
+      0,
+      46,
+      46
+    ],
+    "avatar_foe": [
+      1232,
+      0,
+      1280,
+      46
+    ],
+    "card_1": [
+      238,
+      552,
+      386,
+      702
+    ],
+    "card_5": [
+      894,
+      552,
+      1042,
+      702
+    ]
+  },
+  "changed_px_per_region": {
+    "avatar_player": 1236,
+    "avatar_foe": 1250,
+    "card_1": 2529,
+    "card_5": 2355
+  },
+  "changed_px_outside_allowed": 0,
+  "changed_px_B_vs_E": 0,
+  "changed_px_B_vs_C_profile": 463273,
+  "changed_px_B_vs_D_profile": 437586,
+  "changed_px_C_vs_D_profile": 376902,
+  "profile_box": [
+    56,
+    44,
+    1224,
+    676
+  ],
+  "profile_area": 738176
+}
+  OK sizes_1280x720
+  OK outside_allowed_zero
+  OK card_1_visible
+  OK card_5_visible
+  OK avatar_player_visible
+  OK avatar_foe_visible
+  OK two_avatars_distinct
+  OK back_is_identical
+  OK profile_page1_visible
+  OK profile_page2_visible
+  OK profile_pages_differ
+  OK clean_shot_not_blank
+SHOTS_VERIFIED

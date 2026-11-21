@@ -1,0 +1,38 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\World3D接线修复\run_world3d_min.py:46: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  for r, g, b, a in im.getdata():
+MODE none  rc=0 5.943s script_err=0 scenario_err=0 engine_err_lines=0
+       player world 0 own False pixels {'opaque_px': 71959, 'near_white_px': 17602, 'cyan_px': 2766, 'white_ratio': 0.244612} sha b319cd891b54
+       foe world 0 own False pixels {'opaque_px': 74953, 'near_white_px': 14643, 'cyan_px': 2480, 'white_ratio': 0.195362} sha f0b0904bc39d
+MODE own   rc=0 5.207s script_err=0 scenario_err=0 engine_err_lines=0
+       player world 0 own True pixels {'opaque_px': 42788, 'near_white_px': 13197, 'cyan_px': 2435, 'white_ratio': 0.308428} sha 53067e3de95d
+       foe world 0 own True pixels {'opaque_px': 70393, 'near_white_px': 937, 'cyan_px': 412, 'white_ratio': 0.013311} sha 12d9f0c7a226
+MODE world rc=0 4.951s script_err=0 scenario_err=0 engine_err_lines=0
+       player world -9223371998334286351 own False pixels {'opaque_px': 42788, 'near_white_px': 13197, 'cyan_px': 2435, 'white_ratio': 0.308428} sha 53067e3de95d
+       foe world -9223371998317509134 own False pixels {'opaque_px': 70393, 'near_white_px': 937, 'cyan_px': 412, 'white_ratio': 0.013311} sha 12d9f0c7a226
+MODE both  rc=0 5.087s script_err=0 scenario_err=2 engine_err_lines=2
+       player world -9223371998351063568 own True pixels {'opaque_px': 42788, 'near_white_px': 13197, 'cyan_px': 2435, 'white_ratio': 0.308428} sha 53067e3de95d
+       foe world -9223371998283954702 own True pixels {'opaque_px': 70393, 'near_white_px': 937, 'cyan_px': 412, 'white_ratio': 0.013311} sha 12d9f0c7a226
+CHECK four_modes_ran True
+CHECK all_rc_zero True
+CHECK no_script_errors True
+CHECK two_layers_each True
+CHECK four_groups_eight_sv True
+CHECK all_sv_nonblank True
+CHECK none_world3d_null True
+CHECK none_own_false True
+CHECK none_both_viewports_white True
+CHECK own_world3d_getter_null_is_expected True
+CHECK own_flag_true True
+CHECK own_apply_readback_true True
+CHECK own_foe_clean True
+CHECK own_player_white True
+CHECK own_png_sha_equals_both True
+CHECK world_only_png_sha_equals_own True
+CHECK none_png_sha_differs True
+CHECK own_scenario_error_zero True
+CHECK own_equals_both_opaque True
+CHECK own_equals_both_white True
+CHECK both_foe_clean True
+CHECK four_live_frames True
+CHECK own_scenario_not_worse_than_both True
+WORLD3D_MIN_OK

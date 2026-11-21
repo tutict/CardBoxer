@@ -1,0 +1,14 @@
+GLB {'gltf_version': 2, 'declared_length': 30197712, 'file_bytes': 30197712, 'bin_chunk_bytes': 30195744}
+COUNTS {'scenes': 1, 'nodes': 1, 'meshes': 1, 'materials': 1, 'textures': 3, 'images': 3, 'skins': 0, 'animations': 0, 'accessors': 4, 'bufferViews': 7, 'buffers': 1, 'samplers': 1, 'cameras': 0}
+GEOMETRY vertices=51587 triangles=79996 primitives=1 meshes=1
+MATERIALS texture_refs=3 images=3 embedded=3
+RIG has_skin=False has_animation=False rig_like_nodes=0
+ZIP entries=6
+  texture_pbr_20250901.png 13311804 B
+  texture_pbr_20250901_metallic.png 3628530 B
+  texture_pbr_20250901_roughness.png 4072465 B
+  texture_pbr_20250901_normal.png 4405583 B
+  63a2e3cdf2853c0ede42c909746947d4.obj 5204075 B
+  material.mtl 245 B
+FBX_TOKENS {'LimbNode': 0, 'Deformer': 0, 'Skin': 0, 'Skeleton': 0, 'BindPose': 0, 'Geometry': 4, 'Material': 12, 'Texture': 27, 'Animation': 0}
+INSPECT_OK

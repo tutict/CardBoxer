@@ -1,0 +1,102 @@
+{
+  "roi": [
+    361,
+    280,
+    487,
+    545
+  ],
+  "size": [
+    126,
+    265
+  ],
+  "threshold_sum_rgb": 18,
+  "changed_px": 7940,
+  "changed_ratio": 0.2378,
+  "mean_delta_on_minus_plain": [
+    -25.03,
+    -25.77,
+    -23.39
+  ],
+  "row_span": [
+    42,
+    251
+  ],
+  "col_span": [
+    0,
+    114
+  ],
+  "top_10px_blocks": [
+    {
+      "block": [
+        70,
+        100
+      ],
+      "changed_px": 100
+    },
+    {
+      "block": [
+        60,
+        110
+      ],
+      "changed_px": 100
+    },
+    {
+      "block": [
+        100,
+        190
+      ],
+      "changed_px": 100
+    },
+    {
+      "block": [
+        70,
+        60
+      ],
+      "changed_px": 99
+    },
+    {
+      "block": [
+        60,
+        120
+      ],
+      "changed_px": 99
+    },
+    {
+      "block": [
+        60,
+        170
+      ],
+      "changed_px": 99
+    },
+    {
+      "block": [
+        60,
+        100
+      ],
+      "changed_px": 97
+    },
+    {
+      "block": [
+        60,
+        180
+      ],
+      "changed_px": 96
+    },
+    {
+      "block": [
+        70,
+        230
+      ],
+      "changed_px": 96
+    },
+    {
+      "block": [
+        70,
+        110
+      ],
+      "changed_px": 95
+    }
+  ],
+  "max_row": 66,
+  "max_col": 136
+}

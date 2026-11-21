@@ -1,0 +1,32 @@
+MARKERS shipped 104.793852|-154.116978 legacy 66.000000|-154.000000
+ROWS 30 MARKER_BAD 0 DELTA_BAD 0 MF_BAD 0
+EDITED_DIFF_MAX 33884 NONZERO 16 / 16
+UNCHANGED_DIFFS {'shipped_vs_rolled_back:stance00:player': 0, 'shipped_vs_rolled_back:stance00:foe': 0, 'shipped_vs_rolled_back:jab06:player': 0, 'shipped_vs_rolled_back:jab06:foe': 0}
+REAPPLIED_NONZERO []
+DELTA_SAME [] UNCHANGED_DELTA_BAD []
+TWO_D {"cards": 12, "changed_frames": 42, "checks": {"all_legacy_cards_present": true, "cardmotion_loaded": true, "cards_and_frames_positive": true, "changed_frame_count_is_42": true, "jab_track_unchanged_in_engine": true, "max_joint_delta_is_40px": true, "mf_peaks_match_independent_readback": true, "only_wave_cross_four_arm_joints_changed": true}, "frames": 228, "jab_changes": 0, "max_joint_delta_px": 40.0, "mf_mismatches": [], "mf_peaks_engine": {"cross": {"frame": 8, "peak": 36.0}, "jab": {"frame": 6, "peak": 80.2247}, "wave": {"frame": 17, "peak": 60.823}}, "missing": [], "ok": true, "scope_viol
+CHECK frames_file_has_10_scenes_2_unchanged True
+CHECK main_marker_parsed True
+CHECK frames_loaded_in_engine True
+CHECK main_no_script_errors True
+CHECK main_no_scenario_errors True
+CHECK use_3d_and_15_cards True
+CHECK shipped_mapping_still_atan12 True
+CHECK shipped_and_legacy_table_markers_differ True
+CHECK table_marker_matches_every_scene True
+CHECK hp_unchanged True
+CHECK delta_matches_python_formula_per_table True
+CHECK all_edited_frame_arm_deltas_differ_between_tables True
+CHECK unchanged_frame_arm_deltas_identical True
+CHECK mf_live_matches_independent_readback True
+CHECK edited_pixel_diffs_present True
+CHECK edited_pixel_diffs_majority True
+CHECK stance_and_jab_pixel_identical True
+CHECK shipped_reapplied_identical_same_process True
+CHECK all_sv_pngs_nonempty True
+CHECK two_d_readback_ok True
+CHECK two_d_no_script_errors True
+CHECK default_zero_pollution True
+CHECK default_no_script_errors True
+CHECK default_two_pngs True
+P5_PROBE_OK

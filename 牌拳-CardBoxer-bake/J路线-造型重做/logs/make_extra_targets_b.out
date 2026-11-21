@@ -1,0 +1,10 @@
+COUNTS {'head_cyan': 44, 'lower_cyan': 23, 'total': 67, 'verts': 1773}
+CHECK isolate_probe_ok True
+CHECK targets_probe_ok True
+CHECK no_overlap_with_round1 True
+CHECK all_ids_in_table True
+CHECK head_cyan_found True
+CHECK lower_cyan_found True
+CHECK all_are_small_shells True
+CHECK all_have_cyan_uv True
+EXTRA_TARGETS_B_OK

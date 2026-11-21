@@ -1,0 +1,21 @@
+; D 路线：Creative Review + Godot 引擎内 3D 截帧专用隔离工程
+; 与可运行游戏工程、C 路线探针工程三者完全分离。
+; 只做视觉复核，不是生产导入，无玩法代码。
+
+config_version=5
+
+[application]
+
+config/name="D Route 3D Render Review"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+run/main_scene=""
+
+[display]
+
+window/size/viewport_width=900
+window/size/viewport_height=1100
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

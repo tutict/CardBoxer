@@ -1,0 +1,54 @@
+test_bridge_refuses_baseline_overwrite_and_unknown_joint (__main__.CanonicalTests.test_bridge_refuses_baseline_overwrite_and_unknown_joint) ... FAIL
+test_checker_detects_rig_drift_and_body_morph_leak (__main__.CanonicalTests.test_checker_detects_rig_drift_and_body_morph_leak) ... FAIL
+test_checker_rejects_baseline_missing_hand_morphs (__main__.CanonicalTests.test_checker_rejects_baseline_missing_hand_morphs) ... FAIL
+test_fixture_nonidentity_frame_and_reordered_joints_preserve_original_basis (__main__.CanonicalTests.test_fixture_nonidentity_frame_and_reordered_joints_preserve_original_basis) ... FAIL
+test_original_acceptance_red_missing_hand_morphs (__main__.CanonicalTests.test_original_acceptance_red_missing_hand_morphs) ... expected failure
+
+======================================================================
+FAIL: test_bridge_refuses_baseline_overwrite_and_unknown_joint (__main__.CanonicalTests.test_bridge_refuses_baseline_overwrite_and_unknown_joint)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 135, in test_bridge_refuses_baseline_overwrite_and_unknown_joint
+    api=self.module("canonical_glb")
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 102, in module
+    self.assertTrue(spec and spec.loader and Path(spec.origin).is_file(), "missing canonical pipeline API")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing canonical pipeline API
+
+======================================================================
+FAIL: test_checker_detects_rig_drift_and_body_morph_leak (__main__.CanonicalTests.test_checker_detects_rig_drift_and_body_morph_leak)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 148, in test_checker_detects_rig_drift_and_body_morph_leak
+    checker=self.module("check_retopology_assets")
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 102, in module
+    self.assertTrue(spec and spec.loader and Path(spec.origin).is_file(), "missing canonical pipeline API")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing canonical pipeline API
+
+======================================================================
+FAIL: test_checker_rejects_baseline_missing_hand_morphs (__main__.CanonicalTests.test_checker_rejects_baseline_missing_hand_morphs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 142, in test_checker_rejects_baseline_missing_hand_morphs
+    checker=self.module("check_retopology_assets")
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 102, in module
+    self.assertTrue(spec and spec.loader and Path(spec.origin).is_file(), "missing canonical pipeline API")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing canonical pipeline API
+
+======================================================================
+FAIL: test_fixture_nonidentity_frame_and_reordered_joints_preserve_original_basis (__main__.CanonicalTests.test_fixture_nonidentity_frame_and_reordered_joints_preserve_original_basis)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 114, in test_fixture_nonidentity_frame_and_reordered_joints_preserve_original_basis
+    api = self.module("canonical_glb")
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 102, in module
+    self.assertTrue(spec and spec.loader and Path(spec.origin).is_file(), "missing canonical pipeline API")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing canonical pipeline API
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.024s
+
+FAILED (failures=4, expected failures=1)

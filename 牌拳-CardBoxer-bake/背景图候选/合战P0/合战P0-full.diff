@@ -1,0 +1,768 @@
+
+===== scripts/card_data.gd =====
+--- /c/Users/tutic/Desktop/学习资料/牌拳-CardBoxer-bake/orig/pre-taikou/card_data.gd	2026-11-06 00:22:49.792109000 +0800
++++ /c/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/scripts/card_data.gd	2026-11-06 00:24:47.152471800 +0800
+@@ -16,8 +16,11 @@
+ const KIND_POWER := "power"
+ 
+ ## 一套牌。字段单位：时间用帧（60fps），距离用像素，气用整点。
++## rank 是太阁 IV 合战模式的数字点数（1..9），与实时模式的伤害/气耗无关；
++## 回合制只按 rank 比三同/三连/散牌，牌名与动作只作表现。
+ const CARDS := {
+ 	"jab": {
++		"rank": 1,
+ 		"name": "刺拳",
+ 		"tag": "刺",
+ 		"kind": KIND_ATTACK,
+@@ -31,6 +34,7 @@
+ 		"text": "最快的起手。0 气，收招短，能接任何招。",
+ 	},
+ 	"cross": {
++		"rank": 2,
+ 		"name": "交叉反击",
+ 		"tag": "反",
+ 		"kind": KIND_ATTACK,
+@@ -44,6 +48,7 @@
+ 		"text": "对手出招时打中，伤害翻倍。",
+ 	},
+ 	"uppercut": {
++		"rank": 3,
+ 		"name": "上勾拳",
+ 		"tag": "升",
+ 		"kind": KIND_ATTACK,
+@@ -57,6 +62,7 @@
+ 		"text": "起手慢，命中把人打离地面。连招核心。",
+ 	},
+ 	"sweep": {
++		"rank": 4,
+ 		"name": "扫腿",
+ 		"tag": "扫",
+ 		"kind": KIND_ATTACK,
+@@ -74,6 +80,7 @@
+ 		"text": "从身后贴地扫到身前，脚到才打得到，命中造成长硬直。",
+ 	},
+ 	"wave": {
++		"rank": 5,
+ 		"name": "气功波",
+ 		"tag": "波",
+ 		"kind": KIND_ATTACK,
+@@ -87,6 +94,7 @@
+ 		"text": "唯一能打到全屏的牌。前摇长，会被读。",
+ 	},
+ 	"throw": {
++		"rank": 6,
+ 		"name": "投技",
+ 		"tag": "投",
+ 		"kind": KIND_ATTACK,
+@@ -100,6 +108,7 @@
+ 		"text": "无视格挡。必须贴身，远了打空。",
+ 	},
+ 	"rush": {
++		"rank": 7,
+ 		"name": "突进",
+ 		"tag": "进",
+ 		"kind": KIND_MOVE,
+@@ -113,6 +122,7 @@
+ 		"text": "向前冲 170 像素。把距离变成资源。",
+ 	},
+ 	"backstep": {
++		"rank": 8,
+ 		"name": "后撤",
+ 		"tag": "退",
+ 		"kind": KIND_MOVE,
+@@ -126,6 +136,7 @@
+ 		"text": "退 150 像素。退完立刻发波是经典套路。",
+ 	},
+ 	"guard": {
++		"rank": 9,
+ 		"name": "格挡",
+ 		"tag": "守",
+ 		"kind": KIND_GUARD,
+@@ -139,6 +150,7 @@
+ 		"text": "0.55 秒内受伤减 80%。投技挡不住。",
+ 	},
+ 	"sidestep": {
++		"rank": 2,
+ 		"name": "侧闪",
+ 		"tag": "闪",
+ 		"kind": KIND_GUARD,
+@@ -152,6 +164,7 @@
+ 		"text": "0.18 秒无敌。闪过之后反击有额外伤害。",
+ 	},
+ 	"focus": {
++		"rank": 3,
+ 		"name": "蓄势",
+ 		"tag": "蓄",
+ 		"kind": KIND_POWER,
+@@ -165,6 +178,7 @@
+ 		"text": "原地凝神，+2 气。贪这一下要付出位置。",
+ 	},
+ 	"recover": {
++		"rank": 4,
+ 		"name": "卸力",
+ 		"tag": "卸",
+ 		"kind": KIND_POWER,
+
+===== scripts/fighter.gd =====
+--- /c/Users/tutic/Desktop/学习资料/牌拳-CardBoxer-bake/orig/pre-taikou/fighter.gd	2026-11-06 00:22:49.838972800 +0800
++++ /c/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/scripts/fighter.gd	2026-11-06 00:24:47.157783300 +0800
+@@ -69,6 +69,8 @@
+ var _action_phase := ""
+ var _phase_time := 0.0
+ var _has_hit := false
++## 回合制合战：只播招式动画，不跑实时命中结算（伤害由 arena 统一结算）。
++var _visual_only := false
+ var _combo_bonus := 0
+ var _combo_name := ""
+ var _combo_extra := ""
+@@ -115,6 +117,7 @@
+ 	_action_phase = ""
+ 	_phase_time = 0.0
+ 	_has_hit = false
++	_visual_only = false
+ 	_combo_bonus = 0
+ 	_combo_name = ""
+ 	_combo_extra = ""
+@@ -185,6 +188,31 @@
+ 	return true
+ 
+ 
++## 回合制合战专用：只把招式动画放出来，不做任何实时结算。
++## play_card() 那条链（扣气 / 连招 / 前摇命中判定 / 位移）一步都不走，
++## 伤害由 arena 在比牌后统一调 apply_hit()，避免双重结算。
++func perform_visual(id: String) -> void:
++	var card: Dictionary = Defs.card(id)
++	if card.is_empty():
++		return
++	_visual_only = true
++	_combo_bonus = 0
++	_combo_name = ""
++	_combo_extra = ""
++	_is_super = false
++	_guard_hold = 0.0
++	_sidestep_time = 0.0
++	_clear_slide()
++	_action = card.duplicate()
++	_action["id"] = id
++	_action_phase = "windup"
++	_phase_time = 0.0
++	_has_hit = false
++	state = State.ACTION
++	state_time = 0.0
++	card_played.emit(id, is_player)
++
++
+ func _resolve_combo(current_id: String, current_cost: int) -> void:
+ 	_combo_bonus = 0
+ 	_combo_name = ""
+@@ -309,6 +337,8 @@
+ 
+ 
+ func _on_active_start() -> void:
++	if _visual_only:
++		return
+ 	var card := _action
+ 	var id := String(card.get("id", ""))
+ 	var kind := String(card.get("kind", ""))
+@@ -359,6 +389,8 @@
+ 
+ 
+ func _resolve_active_hit() -> void:
++	if _visual_only:
++		return
+ 	var card := _action
+ 	if String(card.get("kind", "")) != Defs.KIND_ATTACK:
+ 		return
+@@ -484,6 +516,7 @@
+ 	_action = {}
+ 	_action_phase = ""
+ 	_phase_time = 0.0
++	_visual_only = false
+ 	_clear_slide()
+ 	state = State.IDLE
+ 	state_time = 0.0
+@@ -493,6 +526,7 @@
+ func freeze() -> void:
+ 	_action = {}
+ 	_action_phase = ""
++	_visual_only = false
+ 	_clear_slide()
+ 	state = State.IDLE if hp > 0 else State.KO
+ 
+
+===== scripts/arena.gd =====
+--- /c/Users/tutic/Desktop/学习资料/牌拳-CardBoxer-bake/orig/pre-taikou/arena.gd	2026-11-06 00:22:49.886240400 +0800
++++ /c/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/scripts/arena.gd	2026-11-06 00:37:21.228904500 +0800
+@@ -1,8 +1,10 @@
+ extends Node2D
+ ## 牌拳 / CARD BOXER —— 主控制器。
+ ##
+-## 一场对局：三局两胜，每回合 60 秒。玩家与对手各有 5 张手牌，出牌即出招；
+-## 牌序命中连招表就有加成，三张特定牌 + 3 点气触发大招。
++## 一场对局：三局两胜，双方各有 5 张手牌。
++## 玩法骨架由 BATTLE_MODE 决定：
++##   "taikou"（默认）= 太阁 IV 合战，回合制同时亮 3 张比牌型；
++##   "realtime"      = 原实时格斗，出牌即出招，按牌序结算连招与大招。
+ ##
+ ## 这里承担四件事：回合流程、手牌经济、命中后的表现（震屏/火花/停帧）、
+ ## 以及背景的整套绘制。角色自己画自己（fighter.gd），界面自己画自己（hud.gd）。
+@@ -13,6 +15,15 @@
+ const HUDScript = preload("res://scripts/hud.gd")
+ const FxLayerScript = preload("res://scripts/fx_layer.gd")
+ const BackdropTexture = preload("res://background/arena.png")
++const Rules = preload("res://scripts/taikou_rules.gd")
++const TaikouAI = preload("res://scripts/taikou_ai.gd")
++
++## 玩法骨架："taikou" = 太阁 IV 回合制比牌（默认）；"realtime" = 原实时格斗兜底。
++## 改成 realtime 即可完整回到改造前的玩法，不需要回滚任何代码。
++const BATTLE_MODE := "taikou"
++const TK_PLAY := 3
++const TK_DISCARD_MAX := 3
++const TK_MAX_TURNS := 12
+ 
+ const HAND_SIZE := 5
+ const COOLDOWN_TOTAL := 2.0
+@@ -79,6 +90,22 @@
+ # 演示模式：把玩家侧也交给 AI，用于自动跑完整局（只看流程，不算玩法）。
+ var demo_ai = null
+ 
++## 太阁 IV 合战（回合制）状态。
++var battle_mode: String = BATTLE_MODE
++var tk_phase := "discard"        # discard / select / reveal / resolve
++var tk_turn := 1
++var tk_phase_time := 0.0
++var tk_marks: Array = []          # 当前阶段勾选的手牌下标
++var tk_player_reveal: Array = []  # 亮出的 3 个 rank
++var tk_enemy_reveal: Array = []
++var tk_player_ids: Array = []     # 亮出的牌 id，只用于播动画
++var tk_enemy_ids: Array = []
++var tk_player_result: Dictionary = {}
++var tk_enemy_result: Dictionary = {}
++var tk_winner := ""
++var tk_damage := 0
++var tk_bot := false               # CARD_BOXER_TAIKOU_BOT：无输入自动对战，仅供验收
++
+ 
+ func _ready() -> void:
+ 	world = Node2D.new()
+@@ -133,6 +160,7 @@
+ 		_capture_times.sort()
+ 	if OS.get_environment("CARD_BOXER_BOT") != "":
+ 		demo_ai = AIScript.new(player, 3)
++	tk_bot = OS.get_environment("CARD_BOXER_TAIKOU_BOT") != ""
+ 	_start_match()
+ 
+ 
+@@ -156,7 +184,10 @@
+ 	_intro_label = ""
+ 	_fill_hand(hand, cooldowns, _deck, false)
+ 	_fill_hand(enemy_hand, enemy_cooldowns, _enemy_deck, true)
+-	_banner("第 %d 回合" % round_index, "1-5 出牌 · A/D 移动", Color(0.96, 0.90, 0.74), 1.0)
++	if battle_mode == "taikou":
++		_reset_taikou_turn(true)
++	else:
++		_banner("第 %d 回合" % round_index, "1-5 出牌 · A/D 移动", Color(0.96, 0.90, 0.74), 1.0)
+ 
+ 
+ func _fill_hand(target_hand: Array, target_cd: Array, deck: Array, is_ai: bool) -> void:
+@@ -367,7 +398,8 @@
+ 		var color := Color(0.96, 0.90, 0.74)
+ 		if step == labels.size() - 1:
+ 			color = Color(1.0, 0.66, 0.28)
+-		_banner(_intro_label, "" if step > 0 else "1-5 出牌 · A/D 移动", color, 0.8)
++		var intro_hint := "1-5 选牌 · 空格确认" if battle_mode == "taikou" else "1-5 出牌 · A/D 移动"
++		_banner(_intro_label, "" if step > 0 else intro_hint, color, 0.8)
+ 	player.tick(dt, 0.0, false)
+ 	enemy.tick(dt, 0.0, false)
+ 	if phase_time > 0.85 * 4.0 + 0.35:
+@@ -376,6 +408,9 @@
+ 
+ 
+ func _tick_fight(dt: float) -> void:
++	if battle_mode == "taikou":
++		_tick_taikou(dt)
++		return
+ 	round_time_left = maxf(0.0, round_time_left - dt)
+ 
+ 	# 气会自己慢慢涨：出牌经济不该被一次坏抽牌锁死。
+@@ -444,7 +479,223 @@
+ 			_end_round("draw", "时间到")
+ 
+ 
+-# ── 出牌 ────────────────────────────────────────────────────
++
++# ── 太阁 IV 合战：回合制比牌 ─────────────────────────────────
++#
++# 一轮 = 弃牌换牌 → 选 3 张 → 双方同时亮牌 → 比牌型 → 赢家结算伤害 → 补牌。
++# 实时格斗那套（前摇 / 距离 / 气 / 读牌 AI）在这条分支里一步都不跑，
++# 角色只借 perform_visual() 播动画，伤害统一由 apply_hit() 结算。
++# 把 BATTLE_MODE 改回 "realtime" 就完整回到原玩法，不需要回滚代码。
++
++func _reset_taikou_turn(new_round: bool) -> void:
++	if new_round:
++		tk_turn = 1
++	tk_phase = "discard"
++	tk_phase_time = 0.0
++	tk_marks.clear()
++	tk_player_reveal.clear()
++	tk_enemy_reveal.clear()
++	tk_player_ids.clear()
++	tk_enemy_ids.clear()
++	tk_player_result = {}
++	tk_enemy_result = {}
++	tk_winner = ""
++	tk_damage = 0
++	_banner(
++		"第 %d 轮 · 弃牌" % tk_turn,
++		"1-5 标记要换掉的牌（可 0 张） · 空格确认",
++		Color(0.96, 0.90, 0.74), 0.9
++	)
++
++
++func _tick_taikou(dt: float) -> void:
++	tk_phase_time += dt
++	# 动画照常驱动；回合制不允许移动，也不跑实时 AI / 实时出牌 / 冷却补牌。
++	player.tick(dt, 0.0, false)
++	enemy.tick(dt, 0.0, false)
++	player.face_toward(enemy.position.x)
++	enemy.face_toward(player.position.x)
++
++	# 无输入自动对战：只用于验收与截帧，不介入玩法决策。
++	if tk_bot and (tk_phase == "discard" or tk_phase == "select") and tk_phase_time > 0.8:
++		_taikou_confirm()
++
++	match tk_phase:
++		"reveal":
++			if tk_phase_time >= 1.5:
++				_resolve_taikou()
++		"resolve":
++			if tk_phase_time >= 1.9:
++				_finish_taikou_turn()
++
++	if player.hp <= 0 or enemy.hp <= 0:
++		_end_taikou_round()
++
++
++func _taikou_toggle(index: int) -> void:
++	if round_phase != "fight" or index < 0 or index >= hand.size():
++		return
++	if hand[index] == null:
++		return
++	if tk_marks.has(index):
++		tk_marks.erase(index)
++		return
++	var limit := TK_DISCARD_MAX if tk_phase == "discard" else TK_PLAY
++	if tk_marks.size() >= limit:
++		_push_float_text(
++			player.position + Vector2(0, -210),
++			"最多 %d 张" % limit, Color(0.85, 0.42, 0.42)
++		)
++		return
++	tk_marks.append(index)
++
++
++func _taikou_confirm() -> void:
++	if round_phase != "fight":
++		return
++	match tk_phase:
++		"discard":
++			_do_taikou_discard()
++		"select":
++			if not tk_bot and tk_marks.size() != TK_PLAY:
++				_push_float_text(
++					player.position + Vector2(0, -210),
++					"请选满 3 张", Color(0.85, 0.42, 0.42)
++				)
++				return
++			_do_taikou_reveal()
++
++
++func _do_taikou_discard() -> void:
++	# 弃牌 = 把该槽位换成一张新牌，等价于太阁 IV 的「每轮弃最多 3 张再补」。
++	var mine: Array = TaikouAI.choose_discards(hand) if tk_bot else tk_marks.duplicate()
++	for i in mine:
++		hand[i] = _draw_from(_deck)
++	var theirs: Array = TaikouAI.choose_discards(enemy_hand)
++	for i in theirs:
++		enemy_hand[i] = _draw_from(_enemy_deck)
++	tk_marks.clear()
++	tk_phase = "select"
++	tk_phase_time = 0.0
++	_banner(
++		"第 %d 轮 · 选牌" % tk_turn,
++		"1-5 选 3 张凑牌型 · 空格亮牌",
++		Color(0.96, 0.90, 0.74), 0.9
++	)
++
++
++func _do_taikou_reveal() -> void:
++	var pidx: Array = TaikouAI.choose_play(hand) if tk_bot else tk_marks.duplicate()
++	var eidx: Array = TaikouAI.choose_play(enemy_hand)
++	pidx.sort()
++	eidx.sort()
++	tk_player_ids.clear()
++	tk_enemy_ids.clear()
++	tk_player_reveal.clear()
++	tk_enemy_reveal.clear()
++	for i in pidx:
++		var card: Dictionary = Defs.card(String(hand[i]))
++		tk_player_reveal.append(int(card.get("rank", 1)))
++		tk_player_ids.append(String(hand[i]))
++	for i in eidx:
++		var card2: Dictionary = Defs.card(String(enemy_hand[i]))
++		tk_enemy_reveal.append(int(card2.get("rank", 1)))
++		tk_enemy_ids.append(String(enemy_hand[i]))
++	tk_player_result = Rules.evaluate(tk_player_reveal)
++	tk_enemy_result = Rules.evaluate(tk_enemy_reveal)
++	for i in pidx:
++		hand[i] = null
++	for i in eidx:
++		enemy_hand[i] = null
++	# 只播动画：perform_visual 不走实时命中判定，伤害留到 _resolve_taikou。
++	if tk_player_ids.size() > 0:
++		player.perform_visual(String(tk_player_ids[0]))
++	if tk_enemy_ids.size() > 0:
++		enemy.perform_visual(String(tk_enemy_ids[0]))
++	tk_marks.clear()
++	tk_phase = "reveal"
++	tk_phase_time = 0.0
++	_banner(
++		"亮牌",
++		"你 %s   ·   青岚 %s" % [String(tk_player_result["name"]), String(tk_enemy_result["name"])],
++		Color(0.92, 0.92, 0.98), 1.4
++	)
++
++
++func _resolve_taikou() -> void:
++	var cmp: int = Rules.compare(tk_player_result, tk_enemy_result)
++	if cmp > 0:
++		tk_winner = "player"
++		tk_damage = Rules.damage_of(tk_player_result)
++		enemy.apply_hit(tk_damage, "taikou", "", false)
++		_banner(
++			"你赢下这一轮",
++			"%s · 造成 %d 伤害" % [String(tk_player_result["name"]), tk_damage],
++			Color(0.99, 0.76, 0.36), 1.6
++		)
++	elif cmp < 0:
++		tk_winner = "enemy"
++		tk_damage = Rules.damage_of(tk_enemy_result)
++		player.apply_hit(tk_damage, "taikou", "", false)
++		_banner(
++			"青岚赢下这一轮",
++			"%s · 受到 %d 伤害" % [String(tk_enemy_result["name"]), tk_damage],
++			Color(0.42, 0.80, 0.98), 1.6
++		)
++	else:
++		tk_winner = "draw"
++		tk_damage = 3
++		player.apply_hit(3, "taikou", "", false)
++		enemy.apply_hit(3, "taikou", "", false)
++		_banner("平局", "双方各受 3 点", Color(0.86, 0.88, 0.95), 1.6)
++	# 验收钩子：只有无输入自动对战才打，正常游玩不产生日志噪音。
++	if tk_bot:
++		print("[TAIKOU] turn=%d hp=%d/%d | 你 %s %s vs 青岚 %s %s | winner=%s dmg=%d" % [
++			tk_turn, player.hp, enemy.hp,
++			String(tk_player_result["name"]), str(tk_player_reveal),
++			String(tk_enemy_result["name"]), str(tk_enemy_reveal),
++			tk_winner, tk_damage
++		])
++	tk_phase = "resolve"
++	tk_phase_time = 0.0
++
++
++func _finish_taikou_turn() -> void:
++	# 出掉的 3 张统一补回，手牌始终 5 张 —— AI 的穷举才不会读到空格。
++	for i in range(hand.size()):
++		if hand[i] == null:
++			hand[i] = _draw_from(_deck)
++	for i in range(enemy_hand.size()):
++		if enemy_hand[i] == null:
++			enemy_hand[i] = _draw_from(_enemy_deck)
++	combo_count = 0
++	combo_shown = 0.0
++	if player.hp <= 0 or enemy.hp <= 0:
++		_end_taikou_round()
++		return
++	tk_turn += 1
++	if tk_turn > TK_MAX_TURNS:
++		var winner := "draw"
++		if player.hp > enemy.hp:
++			winner = "player"
++		elif enemy.hp > player.hp:
++			winner = "enemy"
++		_end_round(winner, "轮数耗尽 · 按兵力判定")
++		return
++	_reset_taikou_turn(false)
++
++
++func _end_taikou_round() -> void:
++	var winner := "player"
++	if player.hp <= 0 and enemy.hp <= 0:
++		winner = "player" if player.hp >= enemy.hp else "enemy"
++	elif player.hp <= 0:
++		winner = "enemy"
++	_end_round(winner, "K.O.")
++
++
++
++# ── 实时格斗：出牌（realtime 兜底） ────────────────────
+ 
+ func _try_play(index: int) -> void:
+ 	if round_phase != "fight" or paused:
+@@ -640,6 +891,19 @@
+ 	if not (event is InputEventKey) or not event.pressed or event.echo:
+ 		return
+ 	var key: int = (event as InputEventKey).keycode
++	if battle_mode == "taikou" and round_phase == "fight":
++		match key:
++			KEY_1, KEY_2, KEY_3, KEY_4, KEY_5:
++				if not tk_bot:
++					_taikou_toggle(key - KEY_1)
++			KEY_SPACE, KEY_ENTER:
++				if not tk_bot:
++					_taikou_confirm()
++			KEY_R:
++				_start_match()
++			KEY_P:
++				paused = not paused
++		return
+ 	match key:
+ 		KEY_1, KEY_2, KEY_3, KEY_4, KEY_5:
+ 			_try_play(key - KEY_1)
+
+===== scripts/hud.gd =====
+--- /c/Users/tutic/Desktop/学习资料/牌拳-CardBoxer-bake/orig/pre-taikou/hud.gd	2026-11-06 00:22:49.932679400 +0800
++++ /c/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/scripts/hud.gd	2026-11-06 00:35:51.615557400 +0800
+@@ -70,6 +70,7 @@
+ 	_draw_hud_bars()
+ 	_draw_center()
+ 	_draw_hand()
++	_draw_taikou_reveal()
+ 	_draw_banner()
+ 	_draw_hints()
+ 
+@@ -82,21 +83,35 @@
+ 
+ 	# 玩家：从左向右。
+ 	_draw_bar_v2(Vector2(44, 44), p.hp_ratio(), float(_hp_shown["p"]), false, p.display_name, true)
+-	_draw_meter(Vector2(44, 76), p.meter_ratio(), 5)
+-	draw_string(
+-		font, Vector2(44, 104), "气 %d/5" % int(p.meter), HORIZONTAL_ALIGNMENT_LEFT, -1, 13,
+-		Color(0.60, 0.72, 0.88)
+-	)
++	if arena.battle_mode == "taikou":
++		draw_string(
++			font, Vector2(44, 104), "第 %d 轮 / 共 %d 轮" % [int(arena.tk_turn), int(arena.TK_MAX_TURNS)],
++			HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Color(0.84, 0.89, 0.98)
++		)
++	else:
++		_draw_meter(Vector2(44, 76), p.meter_ratio(), 5)
++		draw_string(
++			font, Vector2(44, 104), "气 %d/5" % int(p.meter), HORIZONTAL_ALIGNMENT_LEFT, -1, 13,
++			Color(0.60, 0.72, 0.88)
++		)
+ 
+ 	# 对手：镜像。
+ 	_draw_bar_v2(Vector2(1280 - 44 - BAR_W, 44), e.hp_ratio(), float(_hp_shown["e"]), true, e.display_name, false)
+-	_draw_meter(Vector2(1280 - 44 - BAR_W, 76), e.meter_ratio(), 5)
+-	var meter_label := "气 %d/5" % int(e.meter)
+-	var ml_w := font.get_string_size(meter_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
+-	draw_string(
+-		font, Vector2(1280 - 44 - ml_w, 104), meter_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 13,
+-		Color(0.60, 0.72, 0.88)
+-	)
++	if arena.battle_mode == "taikou":
++		var turn_label := "第 %d 轮 / 共 %d 轮" % [int(arena.tk_turn), int(arena.TK_MAX_TURNS)]
++		var tl_w := font.get_string_size(turn_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
++		draw_string(
++			font, Vector2(1280 - 44 - tl_w, 104), turn_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 15,
++			Color(0.84, 0.89, 0.98)
++		)
++	else:
++		_draw_meter(Vector2(1280 - 44 - BAR_W, 76), e.meter_ratio(), 5)
++		var meter_label := "气 %d/5" % int(e.meter)
++		var ml_w := font.get_string_size(meter_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
++		draw_string(
++			font, Vector2(1280 - 44 - ml_w, 104), meter_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 13,
++			Color(0.60, 0.72, 0.88)
++		)
+ 
+ 
+ func _draw_bar(pos: Vector2, ratio: float, ghost: float, mirrored: bool, who: String, is_player: bool) -> void:
+@@ -225,10 +240,14 @@
+ 	draw_arc(center, 40.0, 0.0, TAU, 40, Color(0.55, 0.60, 0.78, 0.55), 2.0)
+ 	var secs: int = int(ceil(maxf(0.0, float(arena.round_time_left))))
+ 	var t := "%02d" % secs
++	var num_color := Color(0.94, 0.95, 1.0)
++	if arena.battle_mode == "taikou":
++		t = "%d" % int(arena.tk_turn)
++	elif secs <= 10:
++		num_color = Color(1.0, 0.28, 0.28)
+ 	var tw := font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, 30).x
+ 	draw_string(
+-		font, center + Vector2(-tw * 0.5, 11), t, HORIZONTAL_ALIGNMENT_LEFT, -1, 30,
+-		Color(1.0, 0.28, 0.28) if secs <= 10 else Color(0.94, 0.95, 1.0)
++		font, center + Vector2(-tw * 0.5, 11), t, HORIZONTAL_ALIGNMENT_LEFT, -1, 30, num_color
+ 	)
+ 
+ 	# 回合点：先到 2 胜。玩家在左、对手在右，与血条同侧。
+@@ -266,9 +285,10 @@
+ 	var kind := String(card["kind"])
+ 	var accent := _kind_color(kind)
+ 	var cost := int(card["cost"])
+-	var affordable := int(arena.player.meter) >= cost
++	var affordable := true if arena.battle_mode == "taikou" else int(arena.player.meter) >= cost
+ 	var hover := float(arena.selected_index) == float(index)
+-	var lift := -10.0 if hover else 0.0
++	var marked: bool = arena.battle_mode == "taikou" and arena.tk_marks.has(index)
++	var lift := -22.0 if marked else (-10.0 if hover else 0.0)
+ 	var rect := Rect2(pos + Vector2(0, lift), Vector2(CARD_W, CARD_H))
+ 
+ 	draw_rect(Rect2(rect.position + Vector2(3, 5), rect.size), Color(0, 0, 0, 0.45))
+@@ -277,6 +297,14 @@
+ 	draw_rect(rect, Color(0.30, 0.33, 0.44), false, 1.5)
+ 	if hover:
+ 		draw_rect(rect.grow(3.0), accent, false, 2.0)
++	if marked:
++		var mark_color := Color(0.98, 0.42, 0.36) if arena.tk_phase == "discard" else Color(0.98, 0.80, 0.36)
++		draw_rect(rect.grow(4.0), mark_color, false, 3.0)
++		var tag := "换" if arena.tk_phase == "discard" else "出"
++		draw_string(
++			font, rect.position + Vector2(CARD_W - 30, 52), tag,
++			HORIZONTAL_ALIGNMENT_LEFT, -1, 20, mark_color
++		)
+ 
+ 	# 序号：键盘 1-5 直接出这张。
+ 	draw_circle(rect.position + Vector2(18, 26), 12.0, Color(0.06, 0.07, 0.11, 0.95))
+@@ -285,12 +313,20 @@
+ 	var nw := font.get_string_size(num, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x
+ 	draw_string(font, rect.position + Vector2(18 - nw * 0.5, 31), num, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Color(0.95, 0.95, 1.0))
+ 
+-	# 气耗
+-	var cost_text := "%d气" % cost if cost > 0 else "免费"
+-	draw_string(
+-		font, rect.position + Vector2(CARD_W - 48, 30), cost_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 14,
+-		accent if affordable else Color(0.55, 0.30, 0.30)
+-	)
++	# 回合制显示点数 rank（比牌只看它）；实时模式显示气耗。
++	if arena.battle_mode == "taikou":
++		var rank_text := str(int(card.get("rank", 0)))
++		var rw := font.get_string_size(rank_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 30).x
++		draw_string(
++			font, rect.position + Vector2(CARD_W - rw - 14, 40), rank_text,
++			HORIZONTAL_ALIGNMENT_LEFT, -1, 30, Color(1.0, 0.90, 0.62)
++		)
++	else:
++		var cost_text := "%d气" % cost if cost > 0 else "免费"
++		draw_string(
++			font, rect.position + Vector2(CARD_W - 48, 30), cost_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 14,
++			accent if affordable else Color(0.55, 0.30, 0.30)
++		)
+ 
+ 	# 牌名
+ 	draw_string(
+@@ -336,7 +372,57 @@
+ 	)
+ 
+ 
+-# ── 大字横幅：连招 / 大招 / 回合结果 ──────────────────────────
++
++# ── 太阁 IV 合战：亮牌区 ─────────────────────────────────────
++
++func _draw_taikou_reveal() -> void:
++	if arena.battle_mode != "taikou":
++		return
++	if arena.tk_phase != "reveal" and arena.tk_phase != "resolve":
++		return
++	var y := 132.0
++	_draw_reveal_side(Vector2(44, y), arena.tk_player_reveal, arena.tk_player_result, "你", Color(0.98, 0.76, 0.36), false)
++	_draw_reveal_side(Vector2(1236, y), arena.tk_enemy_reveal, arena.tk_enemy_result, "青岚", Color(0.42, 0.80, 0.98), true)
++
++
++func _draw_reveal_side(pos: Vector2, ranks: Array, result: Dictionary, who: String, accent: Color, mirrored: bool) -> void:
++	if ranks.is_empty():
++		return
++	var box_w := 70.0
++	var gap := 8.0
++	var total := float(ranks.size()) * box_w + float(ranks.size() - 1) * gap
++	var x0 := (pos.x - total) if mirrored else pos.x
++	draw_string(font, Vector2(x0, pos.y - 8), who, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, accent)
++
++	# 赢的一侧给亮边，输的一侧压暗；平局两边保持中性。
++	var own := "player" if not mirrored else "enemy"
++	# arena 是 untyped，从它的属性做 := 推不出 bool，必须显式标注。
++	var won: bool = arena.tk_winner == own
++	var lost: bool = arena.tk_phase == "resolve" and not won and arena.tk_winner != "draw"
++	for i in range(ranks.size()):
++		var x := x0 + float(i) * (box_w + gap)
++		var rect := Rect2(x, pos.y, box_w, 62.0)
++		draw_rect(rect, Color(0.09, 0.10, 0.15, 0.95))
++		var edge := accent
++		if lost:
++			edge = Color(0.36, 0.38, 0.46)
++		elif won and arena.tk_phase == "resolve":
++			edge = Color(1.0, 0.92, 0.62)
++		draw_rect(rect, edge, false, 2.0)
++		var num := str(int(ranks[i]))
++		var nw := font.get_string_size(num, HORIZONTAL_ALIGNMENT_LEFT, -1, 38).x
++		draw_string(
++			font, Vector2(x + box_w * 0.5 - nw * 0.5, pos.y + 45), num,
++			HORIZONTAL_ALIGNMENT_LEFT, -1, 38,
++			Color(0.55, 0.57, 0.65) if lost else Color(0.97, 0.97, 1.0)
++		)
++
++	var label := String(result.get("name", ""))
++	var lw := font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 18).x
++	var lx := (x0 + total - lw) if mirrored else x0
++	draw_string(font, Vector2(lx, pos.y + 84), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, accent)
++
++
+ 
+ func _draw_banner() -> void:
+ 	if arena.banner_time <= 0.0 or arena.banner_text == "":
+@@ -365,9 +451,21 @@
+ 
+ func _draw_hints() -> void:
+ 	var hint := "1-5 出牌    A/D 或 ←/→ 移动    R 重开    空格 暂停"
++	if arena.battle_mode == "taikou":
++		match arena.tk_phase:
++			"discard":
++				hint = "弃牌：1-5 标记要换的牌（最多 3 张，可不换）   空格确认   R 重开   P 暂停"
++			"select":
++				hint = "选牌：1-5 选 3 张凑牌型   空格亮牌   R 重开   P 暂停"
++			"reveal":
++				hint = "比牌：三同 > 三连 > 散牌   111 最大 · 123 最大 · 同张恒压连张"
++			"resolve":
++				hint = "结算：牌型底数 + 点数和零头"
++			_:
++				hint = "回合制合战"
+ 	draw_string(font, Vector2(44, 712), hint, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Color(0.62, 0.66, 0.78))
+ 
+-	if arena.combo_shown > 0:
++	if arena.combo_shown > 0 and arena.battle_mode != "taikou":
+ 		var text := "%d 连击" % arena.combo_count
+ 		var size := 26
+ 		var tw := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x
+
+===== scripts/ai_controller.gd =====
+
+===== project.godot =====
+--- /c/Users/tutic/Desktop/学习资料/牌拳-CardBoxer-bake/orig/pre-taikou/project.godot	2026-11-06 00:22:50.027739700 +0800
++++ /c/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/project.godot	2026-11-06 00:29:58.466951500 +0800
+@@ -1,5 +1,5 @@
+ ; 牌拳 / CARD BOXER
+-; 2D 横版格斗，出招完全由手牌驱动。
++; 手牌驱动的对战；玩法骨架见 arena.gd 的 BATTLE_MODE。
+ ; 引擎：Godot 4.5 (GL Compatibility；角色与玩法图层代码自绘，擂台背景图见 background/arena.png)
+ 
+ config_version=5
+@@ -7,7 +7,7 @@
+ [application]
+ 
+ config/name="牌拳 Card Boxer"
+-config/description="卡牌驱动的 2D 横版格斗：打牌出招，连招按序结算，三张特定牌触发大招。"
++config/description="卡牌对战：默认太阁 IV 回合制合战（同时亮 3 张比三同/三连牌型）；BATTLE_MODE=realtime 可切回实时格斗出招。"
+ run/main_scene="res://scenes/main.tscn"
+ config/features=PackedStringArray("4.5", "GL Compatibility")
+ 

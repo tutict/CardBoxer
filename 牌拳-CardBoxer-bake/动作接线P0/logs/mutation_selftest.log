@@ -1,0 +1,14 @@
+[M1] CAUGHT rc=1 failed=['V05_spec_winner_card_matches_bindings']
+[M2] CAUGHT rc=1 failed=['V06_spec_react_and_extra_match_bindings', 'V07_damage_tiers_match_bindings_and_draw']
+[M3] DID NOT RUN anchor_count=0 in game/scripts/battle_motion_p0.gd
+[M4] CAUGHT rc=1 failed=['V12_new_wiring_forms_all_present']
+[M5] CAUGHT rc=1 failed=['V11_old_wiring_forms_retired', 'V12_new_wiring_forms_all_present']
+[M6] CAUGHT rc=1 failed=['V11_old_wiring_forms_retired', 'V12_new_wiring_forms_all_present']
+[M7] CAUGHT rc=1 failed=['V14_hud_wiring_form_present']
+[M8] CAUGHT rc=1 failed=['V15_draw_banner_uses_label_variable']
+[M9] CAUGHT rc=1 failed=['V16_all_eleven_engine_checks_green']
+[M10] CAUGHT rc=1 failed=['V17_five_engine_frames_and_taikou_log']
+[M11] CAUGHT rc=1 failed=['V18_pixel_evidence_recomputed_from_png']
+[M12] CAUGHT rc=1 failed=['V13_damage_formula_untouched']
+[M13] CAUGHT rc=1 failed=['V04_two_new_sources_present']
+RESULT: 12/13 CAUGHT / did_not_run=1 / escaped=0 / restore=12/13 / clean=GREEN / MUTATION_P0_FAILED

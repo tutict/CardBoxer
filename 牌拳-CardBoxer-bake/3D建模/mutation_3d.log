@@ -1,0 +1,6 @@
+M1 CAUGHT rc=1 expected=['repeat_pixels_identical', 'repeat_bytes_fully_explained'] got_fails=['pngs_valid', 'repeat_pixels_identical', 'repeat_bytes_fully_explained'] restored=True sha=4aaafac942a8
+M2 CAUGHT rc=1 expected=['rig_is_real'] got_fails=['rig_is_real'] restored=True sha=11d5a3de7091
+M3 CAUGHT rc=1 expected=['mesh_has_depth'] got_fails=['mesh_has_depth'] restored=True sha=11d5a3de7091
+FINAL rc=0 fails=[] green=True
+MUTATIONS 3/3 CAUGHT
+MUTATION_OK

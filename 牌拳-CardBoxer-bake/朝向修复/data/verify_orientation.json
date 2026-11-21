@@ -1,0 +1,25 @@
+{
+  "checks": {
+    "A_side_yaw_minus55": true,
+    "A_foe_yaw_plus55": true,
+    "A_flip_false": true,
+    "A_yaw_signs_opposite_equal_abs": true,
+    "A_arena_uses_foe_constant": true,
+    "A_arena_player_layer_still_default": true,
+    "A_old_comment_corrected": true,
+    "B_engine_rc_and_no_errors": true,
+    "B_engine_use_3d_and_both_layers": true,
+    "B_engine_both_overrides": true,
+    "B_engine_player_yaw_minus55": true,
+    "B_engine_foe_yaw_plus55": true,
+    "B_engine_both_no_flip": true,
+    "C_before_after_pixels_changed": true,
+    "C_final_pngs_valid": true,
+    "C_scan_probe_ok": true,
+    "C_sv_originals_exist": true,
+    "C_backup_has_old_values": true
+  },
+  "failed": [],
+  "changed_pixels": 38695,
+  "ok": true
+}

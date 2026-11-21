@@ -1,0 +1,6 @@
+PANELS 42 / 42
+CHECK strip_written True
+CHECK all_panels_present True
+CHECK three_groups True
+CHECK seven_frames_each True
+TRANSITION_STRIP_OK

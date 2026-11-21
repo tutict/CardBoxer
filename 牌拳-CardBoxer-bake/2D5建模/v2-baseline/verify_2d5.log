@@ -1,0 +1,13 @@
+CHECKS 10/10
+PASS pngs_valid: 8/8 PNG, 512x512, manifest sizes match
+PASS renders_nonempty: all 8 renders have >8000 non-white pixels
+PASS repeat_pixels_identical: ImageChops.difference bbox=None (None == pixel-identical)
+PASS repeat_sha_diff_is_metadata_only: chunk types equal=True; IDAT equal=True; tEXt differs=True; bytes 150336 vs 150336
+PASS pose_frames_distinct: min pairwise changed pixels = 26537; stance-vs-motion = jab_impact.png=47793, sweep_impact.png=57173, throw_impact.png=45379, hit_heavy_mid.png=26537
+PASS palette_and_angle_live: palette changed px=1681; angle12 changed px=14369
+PASS manifest_joints_traceable: 8/8 recomputed from baked2.json; 2d5-stance.png:OK, 2d5-jab_impact.png:OK, 2d5-sweep_impact.png:OK, 2d5-throw_impact.png:OK, 2d5-hit_heavy_mid.png:OK, 2d5-stance_enemy.png:OK, 2d5-stance_angle12.png:OK, 2d5-stance_repeat.png:OK
+PASS table_sha256_matches: manifest=b6a7f8435b08... disk=b6a7f8435b08...
+PASS ortho_coordinate_bridge: shoe centers L=131.0 R=288.0 span=157.0px (n=2122); predicted from stance f_foot/b_foot = 157.5px; tol=25px
+PASS differs_from_v1_baseline: V1 run1 dark=268 -> V2 final dark=880; changed px=42242 (crosses the geometry rewrite, not a pure lighting A/B)
+REPORTS {"shoe_span_px": 157, "shoe_span_predicted_px": 157.5, "face_region_175_45_260_140": {"warm_skin": 554, "dark": 47, "gold": 0}, "face_readable_by_eye": "V2 egg-shaped face ribbon + hair cap; two half-lidded eyes, mouth line and gold hair clip visible. (V1's D_FACE / head-sphere note no longer applies.)", "face_stats_caveat": "these colour buckets are coarse report-only numbers; gold=0 means the bucket missed the lit highlight, NOT that the clip is absent -- that is read by eye"}
+MODEL_2D5_VERIFIED

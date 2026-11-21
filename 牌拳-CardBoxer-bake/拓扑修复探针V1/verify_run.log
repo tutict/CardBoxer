@@ -1,0 +1,16 @@
+PASS  source_blend_unchanged  sha=76004e212759
+PASS  baseline_bone_heat_really_zero  shells=2809 coverage=0.0
+PASS  voxel_020_collapses_shells  2809 -> 3
+PASS  voxel_020_autoweight_recovered  19998/20006 = 0.9996
+PASS  voxel_035_collapses_shells  2809 -> 2
+PASS  voxel_035_autoweight_full  6446/6446
+PASS  independent_shell_crosscheck  v0p02: indep=3 blender=3; v0p035: indep=2 blender=2
+PASS  transfer_keeps_original_assets  coverage=0.99972 uv=1 textures=3 same=True
+PASS  transfer_reduces_max_displacement  A=0.47922 m -> B=0.39142 m
+PASS  transfer_spreads_influence  A=10780 -> B=22252
+PASS  renders_nonblank_and_nonuniform  set_equal=True proxy-front.png:768x768/c840 transfer-compare-rigid.png:768x768/c1315 transfer-compare-transfer.png:768x768/c1272 transfer-rest-front.png:768x768/c1369
+PASS  negative_result_not_hidden  caveat=覆盖率与位移数字只证明链路可动；变形质量必须看两... note_has_both=True
+PASS  probe_outputs_are_isolated  engine_files=[]
+PASS  runtime_is_negligible  total=5.62s (two Blender runs)
+
+14/14 PASS  VOXEL_PROBE_VERIFIED

@@ -1,0 +1,25 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\B路线-资产层去重\run_world3d_probe.py:33: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  for r, g, b, a in im.getdata():
+RUN 5.92s rc=0 errors=0
+before player world 0 own False pixels {'opaque_px': 71959, 'near_white_px': 17602, 'cyan_px': 2766, 'white_ratio': 0.244612} sha b319cd891b54
+before foe world 0 own False pixels {'opaque_px': 74953, 'near_white_px': 14643, 'cyan_px': 2480, 'white_ratio': 0.195362} sha f0b0904bc39d
+after player world -9223371997814192639 own True pixels {'opaque_px': 42788, 'near_white_px': 13197, 'cyan_px': 2435, 'white_ratio': 0.308428} sha 53067e3de95d
+after foe world -9223371997747083773 own True pixels {'opaque_px': 70393, 'near_white_px': 937, 'cyan_px': 412, 'white_ratio': 0.013311} sha 12d9f0c7a226
+CHECK rc True
+CHECK no_script_errors True
+CHECK no_payload_error True
+CHECK two_states True
+CHECK four_sv_written True
+CHECK four_sv_nonblank True
+CHECK before_world3d_is_null True
+CHECK after_world3d_distinct True
+CHECK before_shared_world True
+CHECK own_world_3d_before_false True
+CHECK own_world_3d_after_true True
+CHECK world_ids_changed True
+CHECK before_both_viewports_white True
+CHECK after_foe_white_drops True
+CHECK after_player_white_stays True
+CHECK after_foe_matches_single_layer True
+CHECK after_player_matches_single_layer True
+WORLD3D_PROBE_OK

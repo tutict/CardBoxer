@@ -1,0 +1,24 @@
+{
+  "cases": 1,
+  "caught": 0,
+  "dnr": 1,
+  "broken": 0,
+  "missed": 0,
+  "restored": 0,
+  "clean_ok": true,
+  "clean_line": "LIVE_P4_VERIFY 60/60 ALL GREEN",
+  "selftest": true,
+  "ok": true,
+  "rows": [
+    {
+      "name": "DNR_SELFTEST",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\实机验收P4\\data\\live_p4.json",
+      "expect": [
+        "upstream_live_all_green"
+      ],
+      "anchor_hits": 0,
+      "status": "DID NOT RUN",
+      "why": "anchor hits 0"
+    }
+  ]
+}

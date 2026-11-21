@@ -1,0 +1,77 @@
+test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure) ... 
+  test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure) (case='indexed_without_palette') ... FAIL
+  test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure) (case='unknown_critical') ... FAIL
+  test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure) (case='noncontiguous_idat') ... FAIL
+  test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure) (case='late_palette') ... FAIL
+  test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure) (case='invalid_palette_length') ... FAIL
+  test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure) (case='rgba_transparency') ... FAIL
+test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure) ... FAIL
+test_f3_rgb_rgba_8_and_16_bit_atlases_remain_decodable (__main__.CanonicalTests.test_f3_rgb_rgba_8_and_16_bit_atlases_remain_decodable) ... ok
+
+======================================================================
+FAIL: test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure) (case='indexed_without_palette')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 414, in test_f3_png_requires_supported_colour_and_legal_chunk_structure
+    with self.assertRaises(ValueError):checker.image_dimensions(data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure) (case='unknown_critical')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 414, in test_f3_png_requires_supported_colour_and_legal_chunk_structure
+    with self.assertRaises(ValueError):checker.image_dimensions(data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure) (case='noncontiguous_idat')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 414, in test_f3_png_requires_supported_colour_and_legal_chunk_structure
+    with self.assertRaises(ValueError):checker.image_dimensions(data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure) (case='late_palette')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 414, in test_f3_png_requires_supported_colour_and_legal_chunk_structure
+    with self.assertRaises(ValueError):checker.image_dimensions(data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure) (case='invalid_palette_length')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 414, in test_f3_png_requires_supported_colour_and_legal_chunk_structure
+    with self.assertRaises(ValueError):checker.image_dimensions(data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure) (case='rgba_transparency')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 414, in test_f3_png_requires_supported_colour_and_legal_chunk_structure
+    with self.assertRaises(ValueError):checker.image_dimensions(data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f3_png_requires_supported_colour_and_legal_chunk_structure (__main__.CanonicalTests.test_f3_png_requires_supported_colour_and_legal_chunk_structure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 417, in test_f3_png_requires_supported_colour_and_legal_chunk_structure
+    self.assertIn("pbr_image",[e["code"] for e in checker.check_asset(src,candidate)["errors"]])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'pbr_image' not found in []
+
+----------------------------------------------------------------------
+Ran 2 tests in 3.002s
+
+FAILED (failures=7)

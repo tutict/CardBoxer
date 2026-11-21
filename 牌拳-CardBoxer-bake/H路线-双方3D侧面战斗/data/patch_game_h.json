@@ -1,0 +1,94 @@
+{
+  "before": {
+    "scripts/arena.gd": {
+      "sha256": "a0964e2ec6431e0b92980f0e3dc578c8aa5b24010e3d9038c9b1c70b05c1d09e",
+      "backup_sha256": "a0964e2ec6431e0b92980f0e3dc578c8aa5b24010e3d9038c9b1c70b05c1d09e",
+      "backup_matches": true
+    },
+    "scripts/fighter_3d_layer.gd": {
+      "sha256": "4e1fdbb3ef1913d88ab487fc31b3e1f1ec773e0e88a650cf93b70eb1640d1b5f",
+      "backup_sha256": "4e1fdbb3ef1913d88ab487fc31b3e1f1ec773e0e88a650cf93b70eb1640d1b5f",
+      "backup_matches": true
+    },
+    "scripts/fighter.gd": {
+      "sha256": "0ad8b0c3d94e0f0bd02ac9b2566bbbcd9d3bf7ee9a0c0e82333651e9659fe1c8",
+      "backup_sha256": "0ad8b0c3d94e0f0bd02ac9b2566bbbcd9d3bf7ee9a0c0e82333651e9659fe1c8",
+      "backup_matches": true
+    }
+  },
+  "after": {
+    "scripts/arena.gd": "c5dd4a3056a52e77f2269832bd898d8fbd03f2a61b81cc97b01d38e4c057e38e",
+    "scripts/fighter_3d_layer.gd": "0a116003ae5d6f0646853caccd560b1b66ad8cac71dbd3f4d17a12281bd2788e",
+    "scripts/fighter.gd": "0ad8b0c3d94e0f0bd02ac9b2566bbbcd9d3bf7ee9a0c0e82333651e9659fe1c8"
+  },
+  "applied": [
+    {
+      "file": "fighter_3d_layer.gd",
+      "patch": "foe_glb_const",
+      "eol": "LF"
+    },
+    {
+      "file": "fighter_3d_layer.gd",
+      "patch": "foe_yaw_const",
+      "eol": "LF"
+    },
+    {
+      "file": "fighter_3d_layer.gd",
+      "patch": "role_vars",
+      "eol": "LF"
+    },
+    {
+      "file": "fighter_3d_layer.gd",
+      "patch": "configure_hook",
+      "eol": "LF"
+    },
+    {
+      "file": "fighter_3d_layer.gd",
+      "patch": "probe_env_player_only",
+      "eol": "LF"
+    },
+    {
+      "file": "fighter_3d_layer.gd",
+      "patch": "load_glb_path",
+      "eol": "LF"
+    },
+    {
+      "file": "arena.gd",
+      "patch": "foe_vars",
+      "eol": "LF"
+    },
+    {
+      "file": "arena.gd",
+      "patch": "create_two_layers",
+      "eol": "LF"
+    },
+    {
+      "file": "arena.gd",
+      "patch": "sync_two_layers",
+      "eol": "LF"
+    }
+  ],
+  "checks": {
+    "fighter_gd_untouched": true,
+    "switch_default_off": true,
+    "override_default_false": true,
+    "sync_hook_count": true,
+    "G_shape_side_yaw_55": true,
+    "G_shape_side_flip_false": true,
+    "G_shape_stance_bias": true,
+    "G_shape_apply_frame_before_bias": true,
+    "G_shape_bone_pose_rotation": true,
+    "H_foe_yaw": true,
+    "H_foe_glb": true,
+    "H_configure": true,
+    "H_two_layers": true,
+    "H_two_motions": true,
+    "H_arena_uses_layer_constants": true,
+    "H_sync_early_return_preserved": true,
+    "H_enemy_override": true,
+    "H_enemy_winner_branch": true,
+    "H_layer_loads_glb_path": true
+  },
+  "failed": [],
+  "ok": true
+}

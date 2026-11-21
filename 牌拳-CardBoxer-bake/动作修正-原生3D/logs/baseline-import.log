@@ -1,0 +1,185 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+[   0% ] first_scan_filesystem | Started 项目初始化 (5 steps)
+[   0% ] first_scan_filesystem | 正在扫描文件结构……
+[  16% ] first_scan_filesystem | 正在加载全局类名……
+[  33% ] first_scan_filesystem | 正在校验 GDExtension……
+[  50% ] first_scan_filesystem | 正在创建自动加载脚本……
+[  66% ] first_scan_filesystem | 正在初始化插件……
+[  83% ] first_scan_filesystem | 正在启动文件扫描……
+[ DONE ] first_scan_filesystem
+
+[   0% ] update_scripts_classes | Started 正在注册全局类…… (67 steps)
+[   0% ] update_scripts_classes | AIController
+[   1% ] update_scripts_classes | 
+[   2% ] update_scripts_classes | 
+[   4% ] update_scripts_classes | 
+[   5% ] update_scripts_classes | CardDefs
+[   7% ] update_scripts_classes | CardMotion
+[   8% ] update_scripts_classes | 
+[  10% ] update_scripts_classes | Fighter
+[  11% ] update_scripts_classes | 
+[  13% ] update_scripts_classes | 
+[  14% ] update_scripts_classes | 
+[  16% ] update_scripts_classes | FightHUD
+[  17% ] update_scripts_classes | RigDriver
+[  19% ] update_scripts_classes | 
+[  20% ] update_scripts_classes | 
+[  22% ] update_scripts_classes | 
+[  23% ] update_scripts_classes | 
+[  25% ] update_scripts_classes | 
+[  26% ] update_scripts_classes | 
+[  27% ] update_scripts_classes | 
+[  29% ] update_scripts_classes | 
+[  30% ] update_scripts_classes | 
+[  32% ] update_scripts_classes | 
+[  33% ] update_scripts_classes | 
+[  35% ] update_scripts_classes | 
+[  36% ] update_scripts_classes | 
+[  38% ] update_scripts_classes | 
+[  39% ] update_scripts_classes | 
+[  41% ] update_scripts_classes | 
+[  42% ] update_scripts_classes | 
+[  44% ] update_scripts_classes | 
+[  45% ] update_scripts_classes | 
+[  47% ] update_scripts_classes | 
+[  48% ] update_scripts_classes | 
+[  50% ] update_scripts_classes | 
+[  51% ] update_scripts_classes | 
+[  52% ] update_scripts_classes | 
+[  54% ] update_scripts_classes | 
+[  55% ] update_scripts_classes | 
+[  57% ] update_scripts_classes | 
+[  58% ] update_scripts_classes | 
+[  60% ] update_scripts_classes | 
+[  61% ] update_scripts_classes | 
+[  63% ] update_scripts_classes | 
+[  64% ] update_scripts_classes | 
+[  66% ] update_scripts_classes | 
+[  67% ] update_scripts_classes | 
+[  69% ] update_scripts_classes | 
+[  70% ] update_scripts_classes | 
+[  72% ] update_scripts_classes | 
+[  73% ] update_scripts_classes | 
+[  75% ] update_scripts_classes | 
+[  76% ] update_scripts_classes | 
+[  77% ] update_scripts_classes | 
+[  79% ] update_scripts_classes | 
+[  80% ] update_scripts_classes | 
+[  82% ] update_scripts_classes | 
+[  83% ] update_scripts_classes | 
+[  85% ] update_scripts_classes | 
+[  86% ] update_scripts_classes | 
+[  88% ] update_scripts_classes | 
+[  89% ] update_scripts_classes | 
+[  91% ] update_scripts_classes | 
+[  92% ] update_scripts_classes | 
+[  94% ] update_scripts_classes | 
+[  95% ] update_scripts_classes | 
+[  97% ] update_scripts_classes | 
+[ DONE ] update_scripts_classes
+
+[   0% ] _update_scan_actions | Started 正在扫描动作…… (21 steps)
+[   0% ] _update_scan_actions | foe-rigged.glb
+[   4% ] _update_scan_actions | foe-rigged_texture_pbr_20250901.png
+[   9% ] _update_scan_actions | foe-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png
+[  13% ] _update_scan_actions | foe-rigged_texture_pbr_20250901_normal.png
+[  18% ] _update_scan_actions | player-rigged.glb
+[  22% ] _update_scan_actions | player-rigged_texture_pbr_20250901.png
+[  27% ] _update_scan_actions | player-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png
+[  31% ] _update_scan_actions | player-rigged_texture_pbr_20250901_normal.png
+[  36% ] _update_scan_actions | avatar_foe.png
+[  40% ] _update_scan_actions | avatar_player.png
+[  45% ] _update_scan_actions | card_p1.png
+[  50% ] _update_scan_actions | card_p55.png
+[  54% ] _update_scan_actions | profile_25.png
+[  59% ] _update_scan_actions | profile_55.png
+[  63% ] _update_scan_actions | profile_back35.png
+[  68% ] _update_scan_actions | profile_front.png
+[  72% ] _update_scan_actions | arena.png
+[  77% ] _update_scan_actions | arena.png
+[  81% ] _update_scan_actions | fight.png
+[  86% ] _update_scan_actions | hit.png
+[  90% ] _update_scan_actions | round_start.png
+[ DONE ] _update_scan_actions
+
+[   0% ] reimport | Started 正在导入或重新导入资产 (21 steps)
+[   0% ] reimport | 正在准备重新加载文件……
+[   4% ] reimport | 正在准备重新加载文件……
+[   9% ] reimport | 正在准备重新加载文件……
+[  13% ] reimport | 正在准备重新加载文件……
+[  18% ] reimport | 正在准备重新加载文件……
+[  22% ] reimport | 正在准备重新加载文件……
+[  27% ] reimport | 正在准备重新加载文件……
+[  31% ] reimport | 正在准备重新加载文件……
+[  36% ] reimport | 正在准备重新加载文件……
+[  40% ] reimport | 正在准备重新加载文件……
+[  45% ] reimport | 正在准备重新加载文件……
+[  50% ] reimport | 正在准备重新加载文件……
+[  54% ] reimport | 正在准备重新加载文件……
+[  59% ] reimport | 正在准备重新加载文件……
+[  63% ] reimport | 正在准备重新加载文件……
+[  68% ] reimport | 正在准备重新加载文件……
+[  72% ] reimport | 正在准备重新加载文件……
+[  77% ] reimport | 正在准备重新加载文件……
+[  81% ] reimport | 正在准备重新加载文件……
+[  86% ] reimport | 正在准备重新加载文件……
+[  90% ] reimport | 正在准备重新加载文件……
+[   0% ] reimport | 正在执行重新加载前的操作……
+[   0% ] preload_reimporting_scene | Started 正在准备场景重新加载 (1 steps)
+[   0% ] preload_reimporting_scene | 正在分析场景 [空]
+[  50% ] preload_reimporting_scene | 准备完成。
+[ DONE ] preload_reimporting_scene
+
+[   0% ] reimport | round_start.png
+[   4% ] reimport | hit.png
+[   9% ] reimport | fight.png
+[  13% ] reimport | arena.png
+[  18% ] reimport | arena.png
+[  22% ] reimport | profile_front.png
+[  27% ] reimport | profile_back35.png
+[  31% ] reimport | profile_55.png
+[  36% ] reimport | profile_25.png
+[  40% ] reimport | card_p55.png
+[  45% ] reimport | card_p1.png
+[  50% ] reimport | avatar_player.png
+[  54% ] reimport | avatar_foe.png
+[  59% ] reimport | player-rigged_texture_pbr_20250901_normal.png
+[  59% ] reimport | player-rigged_texture_pbr_20250901_normal.png
+[  59% ] reimport | player-rigged_texture_pbr_20250901_normal.png
+[  63% ] reimport | player-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png
+[  68% ] reimport | player-rigged_texture_pbr_20250901.png
+[  72% ] reimport | foe-rigged_texture_pbr_20250901_normal.png
+[  77% ] reimport | foe-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png
+[  81% ] reimport | foe-rigged_texture_pbr_20250901.png
+[  86% ] reimport | player-rigged.glb
+[   0% ] import | Started 导入场景 (104 steps)
+[   0% ] import | 导入场景中...
+[   1% ] import | 执行自定义脚本...
+[  99% ] import | 保存中...
+[ DONE ] import
+
+[  90% ] reimport | foe-rigged.glb
+[   0% ] import | Started 导入场景 (104 steps)
+[   0% ] import | 导入场景中...
+[   1% ] import | 执行自定义脚本...
+[  99% ] import | 保存中...
+[ DONE ] import
+
+[  95% ] reimport | 正在结束资产导入……
+[ DONE ] reimport
+
+[   0% ] reimport | Started 正在导入或重新导入资产 (21 steps)
+[   0% ] reimport | 正在执行重新加载后的操作……
+[ DONE ] reimport
+
+[   0% ] loading_editor_layout | Started 正在加载编辑器 (5 steps)
+[   0% ] loading_editor_layout | 正在加载编辑器布局……
+[ DONE ] loading_editor_layout
+
+ERROR: Cannot save file 'C:/Users/tutic/AppData/Roaming/Godot/editor_settings-4.5.tres'.
+   at: save (scene/resources/resource_format_text.cpp:1715)
+ERROR: Error saving editor settings to C:/Users/tutic/AppData/Roaming/Godot/editor_settings-4.5.tres
+   at: save (editor/settings/editor_settings.cpp:1387)

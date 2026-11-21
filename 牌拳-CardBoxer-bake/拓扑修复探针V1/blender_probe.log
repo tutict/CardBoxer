@@ -1,0 +1,17 @@
+00:01.032  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\对手怪V1.blend"
+OPEN src=node_0 verts=64024 faces=79998 rig=foe_rig bones=13
+RAW {'verts': 64024, 'faces': 79998, 'uv_layers': 1, 'materials': 1, 'shells': 2809, 'bbox': ([-0.60843, -0.36025, 0.0], [0.60843, 0.36025, 1.72])}
+Warning: Bone Heat Weighting: failed to find solution for one or more bones
+CASE raw_no_remesh {'groups': 13, 'covered': 0, 'total': 64024, 'coverage': 0.0}
+REMESH v0p02 op=bpy.ops.object.voxel_remesh {'verts': 20204, 'faces': 20198, 'shells': 3}
+DECIMATE v0p02 {'applied': True, 'faces_before': 20198, 'faces_after': 20476} -> {'verts': 20006, 'faces': 20476, 'shells': 3}
+AUTO_WEIGHT v0p02 {'groups': 13, 'covered': 19998, 'total': 20006, 'coverage': 0.9996}
+00:03.282  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\拓扑修复探针V1\proxy-front.png'
+RENDER proxy-front.png 312151 B
+REMESH v0p035 op=bpy.ops.object.voxel_remesh {'verts': 6446, 'faces': 6452, 'shells': 2}
+DECIMATE v0p035 {'applied': False, 'faces_before': 6452, 'faces_after': 6452} -> {'verts': 6446, 'faces': 6452, 'shells': 2}
+AUTO_WEIGHT v0p035 {'groups': 13, 'covered': 6446, 'total': 6446, 'coverage': 1.0}
+VOXEL_PROBE_OK 2.64 s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit

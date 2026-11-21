@@ -1,0 +1,19 @@
+00:00.797  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\对手怪-可变形连续壳.blend"
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\H路线-双方3D侧面战斗\build_foe_rigged_h.py:48: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if mat and mat.use_nodes:
+OPEN node_0 64024 verts / a_continuous_shell 20204 verts / a_apose_rig 13 bones
+WEIGHTS 64006 / 64024 99.9719 %
+ASSETS {'uv_layers': 1, 'materials': 1, 'textures': [{'image': 'texture_pbr_20250901', 'size': [4096, 4096]}, {'image': 'texture_pbr_20250901_metallic-texture_pbr_20250901_roughness', 'size': [4096, 4096]}, {'image': 'texture_pbr_20250901_normal', 'size': [4096, 4096]}], 'uv_same': True, 'textures_same': True}
+INFO Draco is available, use library at D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+16:49:07 | INFO: Starting glTF 2.0 export
+16:49:07 | WARNING: Armature must be the parent of skinned meshArmature is selected by its name, but may be false in case of instances
+16:49:07 | INFO: Extracting primitive: node_0.002
+16:49:08 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+16:49:08 | INFO: Primitives created: 1
+16:49:08 | WARNING: There are more than 4 joint vertex influences.The 4 with highest weight will be used (and normalized).
+16:49:08 | INFO: Finished glTF 2.0 export in 0.4369494915008545 s
+
+EXPORT ['FINISHED'] 42914328 B
+FOE_RIGGED_GLB_OK 99.9719 %
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

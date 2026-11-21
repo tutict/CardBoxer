@@ -1,0 +1,22 @@
+{
+  "project_id": "cardboxer-background",
+  "plan_version": 1,
+  "plan": {
+    "plan_name": "cardboxer-arena-backdrop",
+    "endpoint": "http://127.0.0.1:8188",
+    "jobs": [
+      {
+        "job_id": "arena-bg",
+        "purpose": "concept_reference",
+        "prompt": "night boxing arena backdrop",
+        "negative_prompt": "text, watermark",
+        "workflow_template": "templates/comfyui/ui-reference.json",
+        "output_path": "generated/comfyui/arena-bg.png",
+        "gameplay_constraint": "2D side-view fighting game arena background"
+      }
+    ],
+    "workflow_templates": ["templates/comfyui/ui-reference.json"],
+    "handoff_artifacts": [],
+    "usage_rules": []
+  }
+}

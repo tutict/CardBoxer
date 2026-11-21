@@ -1,0 +1,74 @@
+{
+  "pair": {
+    "player": {
+      "file": "player-rigged.glb",
+      "bytes": 38478140,
+      "images": [
+        {
+          "name": "texture_pbr_20250901_normal",
+          "bytes": 5638722,
+          "sha256": "cce269cfbcd6c32a459bd2aa147fe447d6d2f8c5f67666543e8bf13408fb2dc0"
+        },
+        {
+          "name": "texture_pbr_20250901",
+          "bytes": 16637843,
+          "sha256": "9fc25cf63871573f4e80686c3a178f2cf93c733538a8df1b7ee84dbc3537fdb3"
+        },
+        {
+          "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+          "bytes": 12703501,
+          "sha256": "ee2ab849bba394baf31b3eeca9203f0efc7a1cd057491645e8755031be45b258"
+        }
+      ],
+      "verts": 57934,
+      "pos_min": [
+        -0.6272372603416443,
+        0,
+        -0.384692519903183
+      ],
+      "pos_max": [
+        0.6272372603416443,
+        1.7200000286102295,
+        0.384692519903183
+      ],
+      "skin_joints": 14
+    },
+    "foe": {
+      "file": "foe-rigged.glb",
+      "bytes": 42914328,
+      "images": [
+        {
+          "name": "texture_pbr_20250901_normal",
+          "bytes": 8934769,
+          "sha256": "ed4d58cd90dd1419746a26926e80e0912f23ed83fdae8a9d881629e7e848cd9f"
+        },
+        {
+          "name": "texture_pbr_20250901",
+          "bytes": 15782150,
+          "sha256": "3c1076596ef22f2e45c6509e459f7e262053724ce05b803874ed53a927473d6a"
+        },
+        {
+          "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+          "bytes": 14380706,
+          "sha256": "c87454eacff12946de4b70254b0dbe0fe822fd93d8896efa79af5663f2cdff7e"
+        }
+      ],
+      "verts": 64059,
+      "pos_min": [
+        -0.6084343791007996,
+        0,
+        -0.36025306582450867
+      ],
+      "pos_max": [
+        0.6084343791007996,
+        1.7200000286102295,
+        0.36025306582450867
+      ],
+      "skin_joints": 14
+    }
+  },
+  "image_sets_identical": false,
+  "shared_image_count": 0,
+  "bbox_different": true,
+  "verts_different": true
+}

@@ -1,0 +1,27 @@
+== V2 候选扫描（R1 口径：mf 主指标，端点帧不动） ==
+baseline mf_peak: wave 22.09 / cross 0.0 / jab 80.22
+
+[conservative] passed=False changed=42 帧
+  mf_peak  wave 51.131 / cross 26.000 / jab 80.225  wave>=55=False cross>=25=True jab不动=True
+  mf peak phase: {'cross': 'active', 'jab': 'active', 'sweep': 'active', 'throw': 'active', 'uppercut': 'active', 'wave': 'active'}
+  cross recoil=10.000 arc=0.400 / wave arc=10.812
+  holds=0 drift=1.1000(sweep last) 2D=30.000(wave:15:f_hand) 3D=13.5350°(wave:15:upperarm_f)
+  L8 min pair=92.011 (jab|uppercut) failed=['wave_arm_drive_strong']
+
+[balanced] passed=True changed=42 帧
+  mf_peak  wave 60.823 / cross 36.000 / jab 80.225  wave>=55=True cross>=25=True jab不动=True
+  mf peak phase: {'cross': 'active', 'jab': 'active', 'sweep': 'active', 'throw': 'active', 'uppercut': 'active', 'wave': 'active'}
+  cross recoil=12.000 arc=0.480 / wave arc=10.672
+  holds=0 drift=1.1000(sweep last) 2D=40.000(wave:15:f_hand) 3D=18.0617°(wave:15:upperarm_f)
+  L8 min pair=92.011 (jab|uppercut) failed=[]
+
+[bold] passed=True changed=42 帧
+  mf_peak  wave 70.517 / cross 46.000 / jab 80.225  wave>=55=True cross>=25=True jab不动=True
+  mf peak phase: {'cross': 'active', 'jab': 'active', 'sweep': 'active', 'throw': 'active', 'uppercut': 'active', 'wave': 'active'}
+  cross recoil=16.000 arc=0.639 / wave arc=10.574
+  holds=0 drift=1.1000(sweep last) 2D=50.000(wave:15:f_hand) 3D=20.8533°(cross:8:upperarm_f)
+  L8 min pair=92.011 (jab|uppercut) failed=[]
+
+RECOMMENDED balanced
+POSE_PLAN_OK cases=2 poses=568 frames=284
+POSE_CANDIDATES_V2_OK

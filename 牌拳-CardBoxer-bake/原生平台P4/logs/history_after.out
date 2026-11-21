@@ -1,0 +1,33 @@
+motion_p1    rc=1 failed=4 MOTION_P1_VERIFY 48/52 FAILED
+   RED ten_untouched_unchanged
+   RED original_three_unchanged_both
+   RED non_cards_fields_equal_backup_both
+   RED mapping_gains_unchanged_both
+motion_p2    rc=1 failed=6 MOTION_P2_VERIFY 53/59 FAILED
+   RED player_cap_is_9
+   RED foe_cap_is_9
+   RED only_one_diff_path_player
+   RED only_one_diff_path_foe
+   RED other_12_watched_files_unchanged
+   RED three_core_scripts_sha_unchanged
+live_match   rc=1 failed=3 LIVE_VERIFY 65/68 FAILED
+   RED shipped_cap_still_9_both
+   RED jump_numeric_fields_match_recomputation
+   RED peak_stats_match_recomputation
+plateau_p3   rc=1 failed=5 PLATEAU_VERIFY 75/80 FAILED
+   RED only_two_diff_paths_player
+   RED only_two_diff_paths_foe
+   RED other_11_watched_files_unchanged
+   RED delta_13_bones_independently_recomputed
+   RED timeline_flat_stats_independently_recomputed
+NEW_RED motion_p1 ['original_three_unchanged_both']
+NEW_RED motion_p2 []
+NEW_RED live_match ['jump_numeric_fields_match_recomputation', 'peak_stats_match_recomputation']
+NEW_RED plateau_p3 ['delta_13_bones_independently_recomputed', 'only_two_diff_paths_foe', 'only_two_diff_paths_player', 'other_11_watched_files_unchanged', 'timeline_flat_stats_independently_recomputed']
+CHECK all_reports_present_and_parsed True
+CHECK all_restored_bytewise True
+CHECK no_verify_crashed True
+CHECK all_verdict_lines_present True
+CHECK venv_python_has_pil True
+CHECK no_history_script_modified True
+HISTORY_GATES_P4_AFTER_OK

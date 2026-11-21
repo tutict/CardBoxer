@@ -1,0 +1,11 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\B路线-资产层去重\run_single_layers.py:50: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  for r, g, b, a in im.getdata():
+foe rc 0 errs 0 verts 64059 albedo res://assets/3d/foe-rigged_texture_pbr_20250901.png pixels {'opaque_px': 70249, 'near_white_px': 725, 'cyan_px': 424, 'bright_px': 1077, 'white_ratio': 0.01032} sha 4e1dd5089934
+player rc 0 errs 0 verts 57934 albedo res://assets/3d/player-rigged_texture_pbr_20250901.png pixels {'opaque_px': 44628, 'near_white_px': 13902, 'cyan_px': 2611, 'bright_px': 17395, 'white_ratio': 0.311508} sha 946c0682b785
+CHECK both_runs_ok True
+CHECK two_pngs_distinct True
+CHECK two_albedo_distinct True
+CHECK foe_and_player_verts_distinct True
+CHECK player_is_the_white_one True
+CHECK player_is_the_cyan_one True
+SINGLE_LAYERS_OK

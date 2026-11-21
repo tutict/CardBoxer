@@ -1,0 +1,137 @@
+{
+  "checks": [
+    {
+      "name": "A-01_baseline_inputs_intact",
+      "ok": true,
+      "detail": "checked=12 drift=[] missing=[]"
+    },
+    {
+      "name": "A-02_game_source_unchanged",
+      "ok": true,
+      "detail": "checked=56 drift=[]"
+    },
+    {
+      "name": "A-03_source_mesh_diagnosis",
+      "ok": true,
+      "detail": "verts=64024 faces=79998 uv=1 packed4096=3 mods=['ARMATURE']"
+    },
+    {
+      "name": "A-04_pbr_node_links",
+      "ok": true,
+      "detail": "links=7 missing=[]"
+    },
+    {
+      "name": "A-05_bake_api_available",
+      "ok": true,
+      "detail": "render_bake=True surfacedeform_poll=True smart_uv_poll=False"
+    },
+    {
+      "name": "A-06_bake_probe_nonblank",
+      "ok": true,
+      "detail": "bake_ok=True engine=CYCLES png=ok stddev=13.69"
+    },
+    {
+      "name": "A-07_a1_is_not_texture_transfer",
+      "ok": true,
+      "detail": "selected_to_active=False uv_same=True textures_same=True"
+    },
+    {
+      "name": "A-08_surfdeform_probe_bind",
+      "ok": true,
+      "detail": "bound=True drift=1.92e-06 shells=3 coverage=0.99960"
+    },
+    {
+      "name": "A-09_probe_assets_preserved",
+      "ok": true,
+      "detail": "uv=1 tex=3 same=True/True"
+    },
+    {
+      "name": "A-10_probe_frames_valid",
+      "ok": true,
+      "detail": "frames=3 bad=[]"
+    },
+    {
+      "name": "A-11_export_blend_intact",
+      "ok": true,
+      "detail": "bytes=59118499 expected=59118499"
+    },
+    {
+      "name": "A-12_reopen_is_driveable",
+      "ok": true,
+      "detail": "bound=True bones=13 drive=0.81099"
+    },
+    {
+      "name": "A-13_frame_shape",
+      "ok": true,
+      "detail": "rows=72 cards={'jab': 14, 'cross': 22, 'wave': 36}"
+    },
+    {
+      "name": "A-14_no_penetration",
+      "ok": true,
+      "detail": "worst=0.0"
+    },
+    {
+      "name": "A-15_foot_grounded",
+      "ok": true,
+      "detail": "worst_a2=0.02301 worst_v2=0.02301 cap=0.05m"
+    },
+    {
+      "name": "A-16_reach_nonnegative_all_frames",
+      "ok": true,
+      "detail": "non_negative=72/72"
+    },
+    {
+      "name": "A-17_gain_ratio_double_computed",
+      "ok": true,
+      "detail": "rows=1.4513 summary=1.4514 threshold>1.3"
+    },
+    {
+      "name": "A-18_tear_improved_over_v2",
+      "ok": true,
+      "detail": "worst=0.8758 mean=0.8937 summary=0.8758"
+    },
+    {
+      "name": "A-19_ab_counts_double_computed",
+      "ok": true,
+      "detail": "tear=65/65 foot=72/72 reach=72/72"
+    },
+    {
+      "name": "A-20_reach_parity_no_loss",
+      "ok": true,
+      "detail": "rows=0.9995 summary=0.9996"
+    },
+    {
+      "name": "A-21_shot_files_intact",
+      "ok": true,
+      "detail": "shots=14 bad=[] missing=[]"
+    },
+    {
+      "name": "A-22_boards_nonblank",
+      "ok": true,
+      "detail": "boards=4 bad=[]"
+    },
+    {
+      "name": "A-23_params_match_source",
+      "ok": true,
+      "detail": "report={'voxel_size': 0.02, 'arm_only_gain': 1.5} source={'voxel_size': 0.02, 'arm_only_gain': 1.5}"
+    },
+    {
+      "name": "A-24_source_wiring",
+      "ok": true,
+      "detail": "needles=7 missing=[]"
+    },
+    {
+      "name": "A-25_original_topology_not_claimed_fixed",
+      "ok": true,
+      "detail": "source_shells=2809 delivered_shells=2809 proxy_shells=3 high_poly_verts=64024"
+    },
+    {
+      "name": "A-26_shard_closeup_measured",
+      "ok": true,
+      "detail": "v2=21347 a2=19830"
+    }
+  ],
+  "total": 26,
+  "passed": 26,
+  "failed": []
+}

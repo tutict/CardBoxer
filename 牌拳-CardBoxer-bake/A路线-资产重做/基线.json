@@ -1,0 +1,279 @@
+{
+  "inputs": {
+    "baked2.json": {
+      "bytes": 226918,
+      "sha256": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55"
+    },
+    "3D攻击GIF/apose_joints.json": {
+      "bytes": 1198,
+      "sha256": "56add4f491d580fdd2394c3226f32bd2560a27e28a9c78e0ed1cd29d36ecfd28"
+    },
+    "3D攻击GIF/puppet_mapping.json": {
+      "bytes": 2070,
+      "sha256": "7ce408d9efb648ceb57d86619dbb3504057e4b1cb9095bf3ca8f00662f709547"
+    },
+    "对手怪Blender建模V1/对手怪V1.blend": {
+      "bytes": 42300798,
+      "sha256": "76004e212759c76f8f84a5d8fbab58680eedc4ebcd11d663e783f8c234e13165"
+    },
+    "对手怪Blender建模V1/foe-front.png": {
+      "bytes": 451628,
+      "sha256": "e695093959c39cfc6a66da933044ba75f0472cbe448f3a5b3c0556397d673f8f"
+    },
+    "C路线-真3D修复/c_build.py": {
+      "bytes": 26131,
+      "sha256": "5bfe0589d385dfc03cbba4727fa86ba93fdc37b81c70ab4ee1a0b9a2d4b30e46"
+    },
+    "C路线-变形质量V2/c2_build.py": {
+      "bytes": 18353,
+      "sha256": "5d9dcc0ad704c943ade55939b92bbf7002d888f60c90b0df57c5552a2ef605f1"
+    },
+    "C路线-变形质量V2/c2_build.json": {
+      "bytes": 122501,
+      "sha256": "2adfd9435117acc655141296e232de83c300bdce2636468f5939d64e3a06f0f3"
+    },
+    "C路线-变形质量V2/基线.json": {
+      "bytes": 3167,
+      "sha256": "5effbb0cdd5e96872cbbf7b0513b58a2f12ee580f20a540a58ac8c0e0e83b3e4"
+    },
+    "C路线-变形质量V2/frames/jab07-B_x15.png": {
+      "bytes": 455478,
+      "sha256": "3badef53740a5a0cb2693bc567c40c5c9d17509e2cc514d4040bffa85949fdb5"
+    },
+    "C路线-变形质量V2/frames/cross11-B_x15.png": {
+      "bytes": 457554,
+      "sha256": "b05cad5c84cd6ab88b93991873a12778e0bcc737fca16b2ce41f6a632759b445"
+    },
+    "C路线-变形质量V2/frames/wave18-B_x15.png": {
+      "bytes": 456986,
+      "sha256": "03d626459f395d0f4880a6f7329b53bb08e053e15476e2d4abc27c0da12115c3"
+    }
+  },
+  "game": {
+    "scripts/ai_controller.gd": {
+      "bytes": 7001,
+      "sha256": "846ec8a77d6c39e6b49cf603ad419dd2809bdf937aca0172f21f301935997920"
+    },
+    "scripts/arena.gd": {
+      "bytes": 47194,
+      "sha256": "ae5ab3382f0a6da19b3882b9bd403c22c19da6b2e9b43f50c49c49f5d2d46145"
+    },
+    "scripts/battle_motion_p0.gd": {
+      "bytes": 3021,
+      "sha256": "d958c71ae74ad2fefc7c7cb6574cb15a138c5a2cdfcfd7612d0daa85b7833460"
+    },
+    "scripts/battle_rhythm.gd": {
+      "bytes": 3848,
+      "sha256": "48c56db4aca20ddd4bacd7703d21546f4482137c2ac4a2f07ec2b92f6c7f4c84"
+    },
+    "scripts/card_data.gd": {
+      "bytes": 6365,
+      "sha256": "2d2a3dfe7dde22ebe337a243f06dd1199b5272f9904750a21b31202f8e6cf87f"
+    },
+    "scripts/card_motion.gd": {
+      "bytes": 5324,
+      "sha256": "417201008f7deed9f6de942311b5e4048a5ad6d58828309ce9b52f32068e6050"
+    },
+    "scripts/combo_check.gd": {
+      "bytes": 1988,
+      "sha256": "01137c8d04b3d20f4f1f35d0db69c25504d590a2a4f67aa92f63e0811a036000"
+    },
+    "scripts/fighter.gd": {
+      "bytes": 40685,
+      "sha256": "df9b5e99e8c7c3b4bb6f163150ed87574205fd9a266bd6b1bc20e85818d9b81b"
+    },
+    "scripts/fighter_skin.gd": {
+      "bytes": 1783,
+      "sha256": "fda41d2da24f2a37896e6d3223482cb96f56c8aad45d020bb02c4e804b445c41"
+    },
+    "scripts/fx_layer.gd": {
+      "bytes": 642,
+      "sha256": "e57f3c0e8604e9ffa704edfba1d070ee3eb947b3c8630bdefd46d8db3e9bba50"
+    },
+    "scripts/hud.gd": {
+      "bytes": 32962,
+      "sha256": "d7220e8b8aedf0fe99fc194e79a61dd55ab70f26821f33c1d934d28e64d72a68"
+    },
+    "scripts/taikou_ai.gd": {
+      "bytes": 1184,
+      "sha256": "ba5d66094c53fdcd1bc5810b85a451d56c1dcd98c2c49bfa798c9d6c81404f42"
+    },
+    "scripts/taikou_rage.gd": {
+      "bytes": 2224,
+      "sha256": "83e6509f78b3a469247de47e28f471e492c8cd7d955f800676efb55caadc3172"
+    },
+    "scripts/taikou_rules.gd": {
+      "bytes": 3362,
+      "sha256": "d16a4b16668b60d929b0eab318e98d0a2acffefd503f17e8d344cb55a599bce1"
+    },
+    "tests/battle_motion_p0_check.gd": {
+      "bytes": 9447,
+      "sha256": "57ffad11f7a331debec7e0298d47a558a44fb512f12965a2722cd8cb9a5ec9db"
+    },
+    "tests/battle_rhythm_check.gd": {
+      "bytes": 10076,
+      "sha256": "9dff302e84257b56b7857f48c0fef2dbda3342817e8f7a6b169f5143bc511e16"
+    },
+    "tests/duel_probe.gd": {
+      "bytes": 5719,
+      "sha256": "ef32f2da0e93caed6f5263b986f46fe09a67eb32b53852b6cbeed3027983eb02"
+    },
+    "tests/engine_opt_check.gd": {
+      "bytes": 4488,
+      "sha256": "aff5f7b127bd690255777c948f92b182d721d6f15c81c98e538d905effa14733"
+    },
+    "tests/feet_probe.gd": {
+      "bytes": 7181,
+      "sha256": "647f35f80b9a814174c2dc3a7355f8b35a11ceea930349b3261e35c003082bc2"
+    },
+    "tests/fighter_skin_check.gd": {
+      "bytes": 5869,
+      "sha256": "0b408724b8e968c34ce6164c20f2adb35fc099072ec9a9db4a365bbff1f9163d"
+    },
+    "tests/key_bench.gd": {
+      "bytes": 970,
+      "sha256": "92c170b4be344998189f85e887a3d502cc84c1d32d724ca851deb08dbe83386a"
+    },
+    "tests/motion_check.gd": {
+      "bytes": 5045,
+      "sha256": "582874947e6f78f2ce14a3017b010efc308bd9892773c4573a2e3a8d1db68e80"
+    },
+    "tests/motion_strip.gd": {
+      "bytes": 2163,
+      "sha256": "415d4f0c34ca4b988b514933a70760b952c943a50c8ced30d19b81cdc5bf342d"
+    },
+    "tests/perf_probe.gd": {
+      "bytes": 3301,
+      "sha256": "23ed9e421a3dc077560c405f0d7bd62d90cfb0f4d0398887e115d54c7b745654"
+    },
+    "tests/portrait_shot_probe.gd": {
+      "bytes": 4997,
+      "sha256": "590e44f151fa3131afa81754c6f78973845f9ff773603572600ea8060fd5c849"
+    },
+    "tests/portrait_wiring_check.gd": {
+      "bytes": 8835,
+      "sha256": "7c356b1efd70a3c01fb10c59ea63c8ffb96ad32111e05725b9869feab5f455c2"
+    },
+    "tests/pose_probe.gd": {
+      "bytes": 8144,
+      "sha256": "fab0068b319731602099ed2214d19928dc2f85748a107fe2c18ecc0c8030058e"
+    },
+    "tests/reach_probe.gd": {
+      "bytes": 4136,
+      "sha256": "cc2ba6312a1f7410e1912954afefbddcd97491e4432df0fa536723801cd39d58"
+    },
+    "tests/redraw_gate_check.gd": {
+      "bytes": 6484,
+      "sha256": "79db89c73a7d00f7df3a4f76af16cacd9864c3b0737aaddde03a59e9761d6bec"
+    },
+    "tests/redraw_perf_probe.gd": {
+      "bytes": 3575,
+      "sha256": "ec70e2980cd0aa8e9566de128c7908ae8c1f75d4c8e780b3cb699cb1b020c65f"
+    },
+    "tests/redraw_probe.gd": {
+      "bytes": 5724,
+      "sha256": "c1d0ab3276d52dbe3344df8716e32b16b2f8f07fc9df17bee1a1b20e885f3dd3"
+    },
+    "tests/rng_probe.gd": {
+      "bytes": 795,
+      "sha256": "b6311ac700afc9efe0b6bcdcd08f9facfb584c27c1306e4d869af1be979df380"
+    },
+    "tests/taikou_flow_check.gd": {
+      "bytes": 9067,
+      "sha256": "7cdcf3c3b66cedc03e5f19e29dcf11fa505a27506af8f79f22aaee50230295be"
+    },
+    "tests/taikou_rage_check.gd": {
+      "bytes": 3530,
+      "sha256": "25f471d7074a788eb4c3ff90b6b8439743f122080c8f1c677b3c64be3b30bc77"
+    },
+    "tests/taikou_rules_check.gd": {
+      "bytes": 5334,
+      "sha256": "ef5be1ca8bd00726213be726a0bd8230f3598871291af28edcaef0624d2e4227"
+    },
+    "tests/walk_strip.gd": {
+      "bytes": 1806,
+      "sha256": "cd6c6459838a388eb57ace11346d28f47da4b4075701d10f6395fc3716243139"
+    },
+    "tests/window_probe.gd": {
+      "bytes": 2114,
+      "sha256": "bcc605691148dbfa053f439dcf651e9d5034f6d5f5afc6c299d53e032e35e4f0"
+    },
+    "data/card_motion.json": {
+      "bytes": 226918,
+      "sha256": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55"
+    },
+    "scenes/main.tscn": {
+      "bytes": 173,
+      "sha256": "2bcbdc9f31b8c7f38185699210b0b47c1b342063a6c9c6b86d6327f1e28619fd"
+    },
+    "project.godot": {
+      "bytes": 1290,
+      "sha256": "a4bb56358694fc1dcb83babd4603866a8c541906859cab8b6ef5db64bfa27522"
+    },
+    "assets/portraits/avatar_foe.png": {
+      "bytes": 4068,
+      "sha256": "09ddb7e1f7a4b7fa0aa2bfedc393fcbb884bfdaed8bcfd722e2dfe67c84a4e8f"
+    },
+    "assets/portraits/avatar_player.png": {
+      "bytes": 4204,
+      "sha256": "385354bb495801bed95ec9115c35c514bdf35a65de6cc4acfcfd3aa45173b3ad"
+    },
+    "assets/portraits/card_p1.png": {
+      "bytes": 16432,
+      "sha256": "d314725edb9f3c1b7ffbfa3a3e17980048c789dde8878ac485396975f9c83556"
+    },
+    "assets/portraits/card_p55.png": {
+      "bytes": 16841,
+      "sha256": "1ae19c65674f2cda836592d77f731faa81753cf5daf79eb5659bb06883c8e35a"
+    },
+    "assets/portraits/profile_25.png": {
+      "bytes": 66096,
+      "sha256": "96c4011196c15685fd16c00f695238a731bbdd4b4f7f0ff66a896082a6f9ef07"
+    },
+    "assets/portraits/profile_55.png": {
+      "bytes": 63936,
+      "sha256": "d3be45d4af5e23d3ea79ded0512e0e6249f4db6df57695f8dfe63054f1611dd4"
+    },
+    "assets/portraits/profile_back35.png": {
+      "bytes": 57205,
+      "sha256": "0fb293913838ae03357eab334b4ce99f9bd523420011c8fdcbedb77e5a572455"
+    },
+    "assets/portraits/profile_front.png": {
+      "bytes": 153640,
+      "sha256": "131a54cd129a963cf53b11ff2f9eec7b1b56fde923674616dcc0d243f7498198"
+    },
+    "assets/portraits/avatar_foe.png.import": {
+      "bytes": 951,
+      "sha256": "c0081880056de8b1bb978de1baeba81bdccb4b200ebfeba74631e5ac2e229f93"
+    },
+    "assets/portraits/avatar_player.png.import": {
+      "bytes": 960,
+      "sha256": "99066d0e868f715720a66f239b95e5d39dad8e534f1d54a254d96903dd1ff597"
+    },
+    "assets/portraits/card_p1.png.import": {
+      "bytes": 942,
+      "sha256": "1921a7c8a6cb4a0a491232f577bd38080cbd43bca7fa69d6f9ec276f550e8ec6"
+    },
+    "assets/portraits/card_p55.png.import": {
+      "bytes": 944,
+      "sha256": "23c0277c0d6781a0f97d7610109baad86b2e09fa0f22c91f683b04020a238e46"
+    },
+    "assets/portraits/profile_25.png.import": {
+      "bytes": 951,
+      "sha256": "9e55864c3059bc31fb07636fa1ac2d80ffd9abac287168f842edbc4e2adcf019"
+    },
+    "assets/portraits/profile_55.png.import": {
+      "bytes": 951,
+      "sha256": "3078cad08633c8a7694546382b23fbf167c9980f08c56616b338606726a15c99"
+    },
+    "assets/portraits/profile_back35.png.import": {
+      "bytes": 963,
+      "sha256": "e724a2832b9e7131a76cc3b6563d061015e8fbde4b0b3c2674d069179d61aea8"
+    },
+    "assets/portraits/profile_front.png.import": {
+      "bytes": 960,
+      "sha256": "ca53021549a4bf0851f16962e575f2c760e72ef85d689552dfa7faf41a62979e"
+    }
+  },
+  "missing": []
+}

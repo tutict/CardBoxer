@@ -1,0 +1,22 @@
+--- orig/pre-p1/fighter_3d_layer.gd	2026-11-14 16:49:02.542715200 +0800
++++ C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/scripts/fighter_3d_layer.gd	2026-11-14 17:20:22.694184200 +0800
+@@ -229,7 +229,9 @@
+ 	return true
+ 
+ 
+-## card 只认 73 帧表里的三档；其余（含平局 ""）一律 stance。
++## card 只认动作表里有的卡；stance 是兜底值，本身不在 cards 里。
++## P1：动作表从 3 卡扩到 15 卡（12 招 + 3 受击），白名单改由数据决定，
++## 以后加轨道不必再改这里；平局 "" 仍由 arena 决定播哪条受击轨道。
+ ## 站架偏置只加在 driver 算完的 pose 上，逐帧重新叠加（driver 每帧都会
+ ## 覆写全部 13 骨），因此不会累积、不会污染 retarget 公式。
+ func set_stance_bias(p_bias: Dictionary) -> void:
+@@ -301,7 +303,7 @@
+ 	if drv == null:
+ 		return
+ 	var c := card
+-	if c != "jab" and c != "cross" and c != "wave":
++	if c != "stance" and not motion["cards"].has(c):
+ 		c = "stance"
+ 	var f := 0
+ 	if c != "stance":

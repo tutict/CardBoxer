@@ -1,0 +1,9 @@
+[player] mesh_grid=1024 far_vertices=813
+[player/S1] guard=5946 diff=57142 bbox=[198, 95, 573, 676] maxdeg=45.0
+[player/S2] guard=5634 diff=65582 bbox=[198, 95, 557, 675] maxdeg=70.0
+[player/S3] guard=5543 diff=68219 bbox=[198, 96, 543, 672] maxdeg=92.0
+[foe] mesh_grid=1024 far_vertices=816
+[foe/S1] guard=9288 diff=62973 bbox=[238, 96, 576, 676] maxdeg=45.0
+[foe/S2] guard=8281 diff=71777 bbox=[238, 97, 560, 677] maxdeg=70.0
+[foe/S3] guard=7577 diff=77954 bbox=[238, 98, 545, 677] maxdeg=92.0
+STANCE_PROBE_OK

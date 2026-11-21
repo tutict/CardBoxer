@@ -1,0 +1,14 @@
+micro2  worst_p999=0.042681 over=0 mean=0.015717 peak=6.7323
+baseline 0.042737  hybrid   0.043500  micro05  0.042737
+BACKFILL landing_decision.micro_2.worst_p999_m 0.042681
+CHECK poses_284 True
+CHECK plan_frame_pairs_match True
+CHECK glb_mesh_shape True
+CHECK pose_matrices_readback_accurate True
+CHECK within_external_anchor True
+CHECK no_frame_over_anchor True
+CHECK single_case True
+CHECK micro2_not_worse_than_hybrid True
+CHECK micro2_delta_under_1mm True
+CHECK max_edge_artifact_diagnostic_only True
+MICRO2_TEAR_OK

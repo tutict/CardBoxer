@@ -1,0 +1,19 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\diag_motif_j.py:65: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  px = list(small.getdata())
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\diag_motif_j.py:95: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  a = list(im.getchannel("A").getdata())
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\diag_motif_j.py:119: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  rgb = list(im.convert("RGB").getdata())
+TEX player {'near_white': 0.149801, 'cyan': 0.016624, 'hot_red': 0.012238} grid_max 52972
+  grid [[52972, 18190, 3218, 9402], [30854, 20715, 3884, 4093], [1866, 5135, 3449, 4881], [9873, 8782, 5114, 4889]]
+TEX foe {'near_white': 0.0, 'cyan': 0.001405, 'hot_red': 1e-05} grid_max 480
+  grid [[7, 20, 25, 86], [29, 53, 30, 155], [28, 38, 171, 29], [28, 108, 480, 196]]
+SV player alpha>127 mask_px 74953 white 0.170427 cyan 0.030086 hot_red 0.006204 shoulder/h 0.51068
+SV foe alpha>127 mask_px 71959 white 0.208647 cyan 0.034256 hot_red 0.003919 shoulder/h 0.44276
+SILHOUETTE iou_upper 0.90236 shoulder_delta 0.06792 J01 False
+CHECK both_textures_4096 True
+CHECK both_sv_masks_nonempty True
+CHECK foe_texture_has_no_large_white True
+CHECK player_texture_has_large_white True
+CHECK board_written True
+MOTIF_BASELINE_J_OK

@@ -1,0 +1,321 @@
+{
+  "rule": "apose[u] = Blender bone.head_local/tail_local (x, z)",
+  "player_worst_abs_diff": 1.000000000139778e-06,
+  "rows": [
+    {
+      "key": "A",
+      "rebuilt": [
+        0.0,
+        1.051667
+      ],
+      "expected": [
+        0.0,
+        1.051667
+      ],
+      "max_abs_diff": 0.0
+    },
+    {
+      "key": "B",
+      "rebuilt": [
+        0.0,
+        1.127974
+      ],
+      "expected": [
+        0.0,
+        1.127974
+      ],
+      "max_abs_diff": 0.0
+    },
+    {
+      "key": "C",
+      "rebuilt": [
+        0.0,
+        1.22776
+      ],
+      "expected": [
+        0.0,
+        1.22776
+      ],
+      "max_abs_diff": 0.0
+    },
+    {
+      "key": "D",
+      "rebuilt": [
+        0.0,
+        1.345156
+      ],
+      "expected": [
+        0.0,
+        1.345156
+      ],
+      "max_abs_diff": 0.0
+    },
+    {
+      "key": "E",
+      "rebuilt": [
+        0.0,
+        1.564016
+      ],
+      "expected": [
+        0.0,
+        1.564016
+      ],
+      "max_abs_diff": 0.0
+    },
+    {
+      "key": "F",
+      "rebuilt": [
+        0.0,
+        1.7225
+      ],
+      "expected": [
+        0.0,
+        1.7225
+      ],
+      "max_abs_diff": 0.0
+    },
+    {
+      "key": "b_elbow",
+      "rebuilt": [
+        -0.317448,
+        1.111562
+      ],
+      "expected": [
+        -0.317448,
+        1.111563
+      ],
+      "max_abs_diff": 1.000000000139778e-06
+    },
+    {
+      "key": "b_foot",
+      "rebuilt": [
+        -0.317448,
+        0.018464
+      ],
+      "expected": [
+        -0.317448,
+        0.018464
+      ],
+      "max_abs_diff": 0.0
+    },
+    {
+      "key": "b_hand",
+      "rebuilt": [
+        -0.595964,
+        0.886953
+      ],
+      "expected": [
+        -0.595964,
+        0.886953
+      ],
+      "max_abs_diff": 0.0
+    },
+    {
+      "key": "b_knee",
+      "rebuilt": [
+        -0.191667,
+        0.512604
+      ],
+      "expected": [
+        -0.191667,
+        0.512604
+      ],
+      "max_abs_diff": 0.0
+    },
+    {
+      "key": "f_elbow",
+      "rebuilt": [
+        0.323438,
+        1.111562
+      ],
+      "expected": [
+        0.323437,
+        1.111563
+      ],
+      "max_abs_diff": 1.000000000139778e-06
+    },
+    {
+      "key": "f_foot",
+      "rebuilt": [
+        0.323438,
+        0.018464
+      ],
+      "expected": [
+        0.323437,
+        0.018464
+      ],
+      "max_abs_diff": 1.0000000000287557e-06
+    },
+    {
+      "key": "f_hand",
+      "rebuilt": [
+        0.610937,
+        0.886953
+      ],
+      "expected": [
+        0.610938,
+        0.886953
+      ],
+      "max_abs_diff": 1.0000000000287557e-06
+    },
+    {
+      "key": "f_knee",
+      "rebuilt": [
+        0.197656,
+        0.512604
+      ],
+      "expected": [
+        0.197656,
+        0.512604
+      ],
+      "max_abs_diff": 0.0
+    },
+    {
+      "key": "head",
+      "rebuilt": [
+        0.0,
+        1.7225
+      ],
+      "expected": [
+        0.0,
+        1.7225
+      ],
+      "max_abs_diff": 0.0
+    },
+    {
+      "key": "hip",
+      "rebuilt": [
+        0.0,
+        1.051667
+      ],
+      "expected": [
+        0.0,
+        1.051667
+      ],
+      "max_abs_diff": 0.0
+    },
+    {
+      "key": "shoulder",
+      "rebuilt": [
+        0.0,
+        1.345156
+      ],
+      "expected": [
+        0.0,
+        1.345156
+      ],
+      "max_abs_diff": 0.0
+    },
+    {
+      "key": "tb_head",
+      "rebuilt": [
+        -0.04,
+        1.051667
+      ],
+      "expected": [
+        -0.04,
+        1.051667
+      ],
+      "max_abs_diff": 0.0
+    },
+    {
+      "key": "tf_head",
+      "rebuilt": [
+        0.04,
+        1.051667
+      ],
+      "expected": [
+        0.04,
+        1.051667
+      ],
+      "max_abs_diff": 0.0
+    }
+  ],
+  "foe_apose": {
+    "A": [
+      0.0,
+      0.842031
+    ],
+    "B": [
+      0.0,
+      0.978294
+    ],
+    "C": [
+      0.0,
+      1.156484
+    ],
+    "D": [
+      0.0,
+      1.36612
+    ],
+    "E": [
+      0.0,
+      1.565872
+    ],
+    "F": [
+      0.0,
+      1.710521
+    ],
+    "f_elbow": [
+      0.43125,
+      1.021719
+    ],
+    "f_hand": [
+      0.482161,
+      0.72224
+    ],
+    "b_elbow": [
+      -0.43125,
+      1.021719
+    ],
+    "b_hand": [
+      -0.476172,
+      0.72224
+    ],
+    "f_knee": [
+      0.257552,
+      0.407786
+    ],
+    "f_foot": [
+      0.36237,
+      0.018464
+    ],
+    "b_knee": [
+      -0.251563,
+      0.407786
+    ],
+    "b_foot": [
+      -0.341406,
+      0.018464
+    ],
+    "tf_head": [
+      0.04,
+      0.842031
+    ],
+    "tb_head": [
+      -0.04,
+      0.842031
+    ],
+    "hip": [
+      0.0,
+      0.842031
+    ],
+    "shoulder": [
+      0.0,
+      1.36612
+    ],
+    "head": [
+      0.0,
+      1.710521
+    ]
+  },
+  "keys_other_than_apose_identical": true,
+  "checks": {
+    "apose_key_set_identical": true,
+    "player_rebuild_matches_F": true,
+    "foe_rest_differs_from_player": true,
+    "foe_apose_not_equal_player": true
+  },
+  "failed": [],
+  "ok": true
+}

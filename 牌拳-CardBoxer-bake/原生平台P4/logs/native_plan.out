@@ -1,0 +1,10 @@
+CASES 3 FRAMES 284 POSES 852
+HYBRID_CHANGED_FRAMES 82
+CHECK three_cases True
+CHECK frames_284 True
+CHECK poses_852 True
+CHECK tracks_15 True
+CHECK hybrid_changes_some_frames True
+CHECK hybrid_keeps_frame_counts True
+CHECK no_nan_in_deltas True
+NATIVE_PLAN_OK

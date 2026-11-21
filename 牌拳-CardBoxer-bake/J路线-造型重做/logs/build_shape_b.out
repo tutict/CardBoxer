@@ -1,0 +1,38 @@
+00:00.937  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\对手怪-可变形连续壳.blend"
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\build_shape_b.py:61: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if mat and mat.use_nodes:
+00:02.875  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\after_b\b-after-front.png'
+00:02.906  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\after_b\b-after-back.png'
+00:02.937  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\after_b\b-after-side.png'
+00:02.968  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\shots\after_b\b-after-angle45.png'
+INFO Draco is available, use library at D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+22:46:35 | INFO: Starting glTF 2.0 export
+22:46:35 | WARNING: Armature must be the parent of skinned meshArmature is selected by its name, but may be false in case of instances
+22:46:35 | INFO: Extracting primitive: node_0.002
+22:46:35 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+22:46:35 | INFO: Primitives created: 1
+22:46:35 | WARNING: There are more than 4 joint vertex influences.The 4 with highest weight will be used (and normalized).
+22:46:35 | INFO: Finished glTF 2.0 export in 0.4475588798522949 s
+
+TARGETS {'shells': 262, 'verts': 10526, 'verts_ratio': 0.164407, 'round1_shells': 195, 'extra_shells': 67, 'round1_verts': 8753, 'extra_verts': 1773, 'by_group': {'G0_CAPE': 2122, 'G1_SKIRT': 1684, 'G2_HEAD_SMALL': 4947}}
+INTEGRITY {'verts_before': 64024, 'verts_after': 64024, 'polygons_before': 79998, 'polygons_after': 79998, 'uv_layers': 1, 'materials': 1, 'textures_same': True, 'weighted_before': 64006, 'weighted_after': 64013, 'targets_all_hips_weight_1': True, 'non_target_vertices_bytewise_unchanged': True, 'target_verts_collapsed': 10526, 'max_distance_to_centroid': 1.4184e-05}
+PREVIEW 4 shots
+EXPORT 42917552 B 96d383eec6286efb
+CHECK p0_targets_verified True
+CHECK extra_targets_verified True
+CHECK round_sets_disjoint True
+CHECK shell_ids_match_p0 True
+CHECK shell_count_2809 True
+CHECK verts_conserved True
+CHECK polygons_conserved True
+CHECK uv_and_textures_conserved True
+CHECK weights_not_reduced True
+CHECK targets_all_single_bone True
+CHECK non_target_unchanged True
+CHECK targets_collapsed_tightly True
+CHECK target_verts_match_combined True
+CHECK preview_shots_written True
+CHECK glb_exported True
+BUILD_SHAPE_B_OK
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

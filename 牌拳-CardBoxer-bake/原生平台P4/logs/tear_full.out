@@ -1,0 +1,40 @@
+16:32:37 | INFO: Data are loaded, start creating Blender stuff
+16:32:37 | INFO: Blender create Mesh node node_0.002
+16:32:37 | INFO: glTF import finished in 0.24s
+PROGRESS 25/852 elapsed=4.9s
+PROGRESS 50/852 elapsed=9.9s
+PROGRESS 75/852 elapsed=14.9s
+PROGRESS 100/852 elapsed=19.6s
+PROGRESS 125/852 elapsed=23.6s
+PROGRESS 150/852 elapsed=27.5s
+PROGRESS 175/852 elapsed=32.2s
+PROGRESS 200/852 elapsed=36.5s
+PROGRESS 225/852 elapsed=41.3s
+PROGRESS 250/852 elapsed=45.9s
+PROGRESS 275/852 elapsed=50.0s
+PROGRESS 300/852 elapsed=54.9s
+PROGRESS 325/852 elapsed=59.0s
+PROGRESS 350/852 elapsed=63.2s
+PROGRESS 375/852 elapsed=67.5s
+PROGRESS 400/852 elapsed=72.1s
+PROGRESS 425/852 elapsed=76.5s
+PROGRESS 450/852 elapsed=81.0s
+PROGRESS 475/852 elapsed=85.6s
+PROGRESS 500/852 elapsed=90.4s
+PROGRESS 525/852 elapsed=95.7s
+PROGRESS 550/852 elapsed=101.0s
+PROGRESS 575/852 elapsed=105.9s
+PROGRESS 600/852 elapsed=111.3s
+PROGRESS 625/852 elapsed=116.8s
+PROGRESS 650/852 elapsed=122.9s
+PROGRESS 675/852 elapsed=128.6s
+PROGRESS 700/852 elapsed=133.6s
+PROGRESS 725/852 elapsed=139.3s
+PROGRESS 750/852 elapsed=145.1s
+PROGRESS 775/852 elapsed=151.1s
+PROGRESS 800/852 elapsed=156.3s
+PROGRESS 825/852 elapsed=162.0s
+PROGRESS 850/852 elapsed=167.6s
+PROGRESS 852/852 elapsed=168.0s
+Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:35:40)
+TEAR_SWEEP_BLENDER_OK rows=852 edges=136092 max_pose_err=3.58e-07

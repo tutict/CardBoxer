@@ -1,0 +1,219 @@
+test_f4_unique_staging_preserves_source_named_as_legacy_temporary_file (__main__.CanonicalTests.test_f4_unique_staging_preserves_source_named_as_legacy_temporary_file) ... ERROR
+test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) ... 
+  test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='raw', resource='image', destination='glb') ... FAIL
+  test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='raw', resource='image', destination='profile') ... FAIL
+  test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='raw', resource='buffer', destination='glb') ... FAIL
+  test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='raw', resource='buffer', destination='profile') ... FAIL
+  test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='source', resource='image', destination='glb') ... FAIL
+  test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='source', resource='image', destination='profile') ... FAIL
+  test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='source', resource='buffer', destination='glb') ... FAIL
+  test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='source', resource='buffer', destination='profile') ... FAIL
+test_f4_cli_report_collision_is_rejected_before_any_output_write (__main__.CanonicalTests.test_f4_cli_report_collision_is_rejected_before_any_output_write) ... 
+  test_f4_cli_report_collision_is_rejected_before_any_output_write (__main__.CanonicalTests.test_f4_cli_report_collision_is_rejected_before_any_output_write) (target='source') ... FAIL
+  test_f4_cli_report_collision_is_rejected_before_any_output_write (__main__.CanonicalTests.test_f4_cli_report_collision_is_rejected_before_any_output_write) (target='raw') ... FAIL
+  test_f4_cli_report_collision_is_rejected_before_any_output_write (__main__.CanonicalTests.test_f4_cli_report_collision_is_rejected_before_any_output_write) (target='sockets') ... FAIL
+  test_f4_cli_report_collision_is_rejected_before_any_output_write (__main__.CanonicalTests.test_f4_cli_report_collision_is_rejected_before_any_output_write) (target='output') ... FAIL
+  test_f4_cli_report_collision_is_rejected_before_any_output_write (__main__.CanonicalTests.test_f4_cli_report_collision_is_rejected_before_any_output_write) (target='profile') ... FAIL
+test_f4_report_writes_protect_external_dependencies_and_checker_inputs (__main__.CanonicalTests.test_f4_report_writes_protect_external_dependencies_and_checker_inputs) ... 
+  test_f4_report_writes_protect_external_dependencies_and_checker_inputs (__main__.CanonicalTests.test_f4_report_writes_protect_external_dependencies_and_checker_inputs) (consumer='bridge_report') ... FAIL
+  test_f4_report_writes_protect_external_dependencies_and_checker_inputs (__main__.CanonicalTests.test_f4_report_writes_protect_external_dependencies_and_checker_inputs) (consumer='checker_report', target='source') ... FAIL
+  test_f4_report_writes_protect_external_dependencies_and_checker_inputs (__main__.CanonicalTests.test_f4_report_writes_protect_external_dependencies_and_checker_inputs) (consumer='checker_report', target='candidate') ... FAIL
+  test_f4_report_writes_protect_external_dependencies_and_checker_inputs (__main__.CanonicalTests.test_f4_report_writes_protect_external_dependencies_and_checker_inputs) (consumer='checker_report', target='profile') ... FAIL
+test_f4_percent_encoded_external_image_resolves_without_mutation (__main__.CanonicalTests.test_f4_percent_encoded_external_image_resolves_without_mutation) ... ERROR
+
+======================================================================
+ERROR: test_f4_unique_staging_preserves_source_named_as_legacy_temporary_file (__main__.CanonicalTests.test_f4_unique_staging_preserves_source_named_as_legacy_temporary_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 431, in test_f4_unique_staging_preserves_source_named_as_legacy_temporary_file
+    before=src.read_bytes();api.canonicalize(src,raw,tmp/"out.glb",sockets,tmp/"profile.json")
+                            ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\canonical_glb.py", line 324, in canonicalize
+    "source_sha256":sha256(source_glb),"raw_sha256":sha256(raw_glb),"output_sha256":sha256(output_glb),
+                    ~~~~~~^^^^^^^^^^^^
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\canonical_glb.py", line 25, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Blender Foundation\Blender 5.2\5.2\python\Lib\pathlib\_abc.py", line 625, in read_bytes
+    with self.open(mode='rb') as f:
+         ~~~~~~~~~^^^^^^^^^^^
+  File "C:\Program Files\Blender Foundation\Blender 5.2\5.2\python\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\tutic\\Desktop\\ѧϰ����\\��ȭ-CardBoxer-bake\\ģ�;���-ȫ��������\\tools\\pipeline_fixture_tsc9nxsa\\out.glb.tmp'
+
+======================================================================
+ERROR: test_f4_percent_encoded_external_image_resolves_without_mutation (__main__.CanonicalTests.test_f4_percent_encoded_external_image_resolves_without_mutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 497, in test_f4_percent_encoded_external_image_resolves_without_mutation
+    api.canonicalize(src,raw,tmp/"out.glb",sockets,tmp/"profile.json")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\canonical_glb.py", line 301, in canonicalize
+    uri=image.pop("uri");data=base64.b64decode(uri.split(",",1)[1]) if uri.startswith("data:") else (raw.path.parent/uri).read_bytes()
+                                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Blender Foundation\Blender 5.2\5.2\python\Lib\pathlib\_abc.py", line 625, in read_bytes
+    with self.open(mode='rb') as f:
+         ~~~~~~~~~^^^^^^^^^^^
+  File "C:\Program Files\Blender Foundation\Blender 5.2\5.2\python\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\tutic\\Desktop\\ѧϰ����\\��ȭ-CardBoxer-bake\\ģ�;���-ȫ��������\\tools\\pipeline_fixture_5lzdu4yw\\image%20space.png'
+
+======================================================================
+FAIL: test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='raw', resource='image', destination='glb')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 454, in test_f4_external_buffers_and_images_are_protected_from_both_outputs
+    with self.assertRaisesRegex(ValueError,"overwrite"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='raw', resource='image', destination='profile')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 454, in test_f4_external_buffers_and_images_are_protected_from_both_outputs
+    with self.assertRaisesRegex(ValueError,"overwrite"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='raw', resource='buffer', destination='glb')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 454, in test_f4_external_buffers_and_images_are_protected_from_both_outputs
+    with self.assertRaisesRegex(ValueError,"overwrite"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='raw', resource='buffer', destination='profile')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 454, in test_f4_external_buffers_and_images_are_protected_from_both_outputs
+    with self.assertRaisesRegex(ValueError,"overwrite"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='source', resource='image', destination='glb')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 454, in test_f4_external_buffers_and_images_are_protected_from_both_outputs
+    with self.assertRaisesRegex(ValueError,"overwrite"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='source', resource='image', destination='profile')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 454, in test_f4_external_buffers_and_images_are_protected_from_both_outputs
+    with self.assertRaisesRegex(ValueError,"overwrite"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='source', resource='buffer', destination='glb')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 454, in test_f4_external_buffers_and_images_are_protected_from_both_outputs
+    with self.assertRaisesRegex(ValueError,"overwrite"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f4_external_buffers_and_images_are_protected_from_both_outputs (__main__.CanonicalTests.test_f4_external_buffers_and_images_are_protected_from_both_outputs) (owner='source', resource='buffer', destination='profile')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 454, in test_f4_external_buffers_and_images_are_protected_from_both_outputs
+    with self.assertRaisesRegex(ValueError,"overwrite"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_f4_cli_report_collision_is_rejected_before_any_output_write (__main__.CanonicalTests.test_f4_cli_report_collision_is_rejected_before_any_output_write) (target='source')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 466, in test_f4_cli_report_collision_is_rejected_before_any_output_write
+    self.assertNotEqual(process.returncode,0)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0
+
+======================================================================
+FAIL: test_f4_cli_report_collision_is_rejected_before_any_output_write (__main__.CanonicalTests.test_f4_cli_report_collision_is_rejected_before_any_output_write) (target='raw')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 466, in test_f4_cli_report_collision_is_rejected_before_any_output_write
+    self.assertNotEqual(process.returncode,0)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0
+
+======================================================================
+FAIL: test_f4_cli_report_collision_is_rejected_before_any_output_write (__main__.CanonicalTests.test_f4_cli_report_collision_is_rejected_before_any_output_write) (target='sockets')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 466, in test_f4_cli_report_collision_is_rejected_before_any_output_write
+    self.assertNotEqual(process.returncode,0)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0
+
+======================================================================
+FAIL: test_f4_cli_report_collision_is_rejected_before_any_output_write (__main__.CanonicalTests.test_f4_cli_report_collision_is_rejected_before_any_output_write) (target='output')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 466, in test_f4_cli_report_collision_is_rejected_before_any_output_write
+    self.assertNotEqual(process.returncode,0)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0
+
+======================================================================
+FAIL: test_f4_cli_report_collision_is_rejected_before_any_output_write (__main__.CanonicalTests.test_f4_cli_report_collision_is_rejected_before_any_output_write) (target='profile')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 466, in test_f4_cli_report_collision_is_rejected_before_any_output_write
+    self.assertNotEqual(process.returncode,0)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0
+
+======================================================================
+FAIL: test_f4_report_writes_protect_external_dependencies_and_checker_inputs (__main__.CanonicalTests.test_f4_report_writes_protect_external_dependencies_and_checker_inputs) (consumer='bridge_report')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 480, in test_f4_report_writes_protect_external_dependencies_and_checker_inputs
+    self.assertNotEqual(process.returncode,0)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 == 0
+
+======================================================================
+FAIL: test_f4_report_writes_protect_external_dependencies_and_checker_inputs (__main__.CanonicalTests.test_f4_report_writes_protect_external_dependencies_and_checker_inputs) (consumer='checker_report', target='source')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 488, in test_f4_report_writes_protect_external_dependencies_and_checker_inputs
+    for p,data in before.items():self.assertEqual(p.read_bytes(),data)
+                                 ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'{\r\n  "version": 1,\r\n  "source": "C:\\[2539 chars]\r\n' != b'glTF\x02\x00\x00\x00P\xd9\x02\x00\x94\r\x[702202 chars]\x00'
+
+======================================================================
+FAIL: test_f4_report_writes_protect_external_dependencies_and_checker_inputs (__main__.CanonicalTests.test_f4_report_writes_protect_external_dependencies_and_checker_inputs) (consumer='checker_report', target='candidate')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 488, in test_f4_report_writes_protect_external_dependencies_and_checker_inputs
+    for p,data in before.items():self.assertEqual(p.read_bytes(),data)
+                                 ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'{\r\n  "version": 1,\r\n  "source": "C:\\[2539 chars]\r\n' != b'glTF\x02\x00\x00\x00\xcc\xdf\x02\x00\xf4\[705280 chars]\x00'
+
+======================================================================
+FAIL: test_f4_report_writes_protect_external_dependencies_and_checker_inputs (__main__.CanonicalTests.test_f4_report_writes_protect_external_dependencies_and_checker_inputs) (consumer='checker_report', target='profile')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 488, in test_f4_report_writes_protect_external_dependencies_and_checker_inputs
+    for p,data in before.items():self.assertEqual(p.read_bytes(),data)
+                                 ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'{\r\n  "version": 1,\r\n  "source": "C:\\\[2538 chars]\r\n' != b'{}'
+
+----------------------------------------------------------------------
+Ran 5 tests in 6.022s
+
+FAILED (failures=17, errors=2)

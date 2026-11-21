@@ -1,0 +1,16 @@
+CAUGHT      M1 删掉一个来源 id（L7 引用悬空）                            language_rules_complete_and_traceable,spec_text_covers_rules_and_sources
+CAUGHT      M2 改 stance 快照一个关节值                              coordinate_matches_live_table
+CAUGHT      M3 改坐标系 units                                    coordinate_matches_live_table
+CAUGHT      M4 把 L3 峰值段改成 windup                             hard_rules_are_explicit
+CAUGHT      M5 允许重新引入精确平台                                    hard_rules_are_explicit
+CAUGHT      M6 把 triple 绑到 focus                             tiers_match_p0_binding
+CAUGHT      M7 删掉 C1 冲突编号                                    conflicts_named_and_p4_not_retired
+CAUGHT      M8 抹掉不复刻 IP 的边界                                  boundaries_declared
+CAUGHT      M9 篡改 wave 实测数字                                  provisional_findings_independently_recomputed
+CAUGHT      M10 改源码基线的一个 sha                                 game_sources_untouched
+CAUGHT      M11 让精确平台公式恒 +1                                  provisional_findings_independently_recomputed
+CAUGHT      M12 把 reach 默认侧改成后手                              provisional_findings_independently_recomputed
+CAUGHT      M13 说明文档里删掉 L8 规则                                spec_text_covers_rules_and_sources
+CAUGHT      M14 真改游戏源码 units                                 coordinate_matches_live_table,game_sources_untouched
+
+MUTATION_POSE_SPEC 14/14 CAUGHT / DNR 0 / BROKEN 0 / MISSED 0 / RESTORE 14/14 / expect_hit 14/14 / clean 14/14 ALL GREEN

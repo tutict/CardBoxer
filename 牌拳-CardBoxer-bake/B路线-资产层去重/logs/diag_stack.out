@@ -1,0 +1,24 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\B路线-资产层去重\diag_stack.py:226: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  pal = list(im.resize((S, S), Image.LANCZOS).getdata())
+GLB I {'verts': 64059, 'faces': 79998, 'meshes': 1, 'primitives': 1} B {'verts': 64121, 'faces': 79998, 'meshes': 1, 'primitives': 1}
+UV_FLIP False RAW {'cyan': 268, 'warm': 4, 'white': 0} FLIPPED {'cyan': 240, 'warm': 9, 'white': 0}
+SHELLS 2809 DELETED 253 DEL_VERTS 10495
+FACES cyan/white/warm 268 0 4
+CYAN kept/deleted 10 258 kept_share 0.0373
+TALL_STRIPS 4 deleted 4 HEAD 344 deleted 211
+CYAN_TOP5 [(34412, 23, 1.0), (36964, 21, 1.0), (42737, 18, 1.0), (43354, 18, 1.0), (47631, 17, 0.888889)]
+CHECK i_glb_is_baseline True
+CHECK b_glb_is_round2 True
+CHECK basecolor_unchanged True
+CHECK both_glbs_single_primitive True
+CHECK shell_count_2809 True
+CHECK deleted_shell_count_in_range True
+CHECK deleted_verts_in_range True
+CHECK no_shells_in_ambiguous_band True
+CHECK near_white_faces_absent True
+CHECK cyan_faces_present True
+CHECK cyan_mostly_on_deleted_shells True
+CHECK tall_strips_all_deleted True
+CHECK head_ornaments_mostly_deleted True
+CHECK board_written True
+STACK_DIAG_OK []

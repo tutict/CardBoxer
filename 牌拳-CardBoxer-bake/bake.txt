@@ -1,0 +1,16 @@
+[jab] 14 frames, impact @7, held 3/13, readback err 0.000 px
+[cross] 22 frames, impact @10, held 4/21, readback err 0.000 px
+[uppercut] 24 frames, impact @11, held 4/23, readback err 0.000 px
+[sweep] 28 frames, impact @13, held 5/27, readback err 0.000 px
+[wave] 36 frames, impact @18, held 8/35, readback err 0.000 px
+[throw] 20 frames, impact @9, held 4/19, readback err 0.000 px
+[rush] 13 frames, impact @5, held 3/12, readback err 0.000 px
+[backstep] 11 frames, impact @4, held 2/10, readback err 0.000 px
+[guard] 14 frames, impact @3, held 5/13, readback err 0.000 px
+[sidestep] 10 frames, impact @3, held 2/9, readback err 0.000 px
+[focus] 22 frames, impact @11, held 7/21, readback err 0.000 px
+[recover] 14 frames, impact @5, held 4/13, readback err 0.000 px
+wrote baked.json (12 cards)
+Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:35:40)
+
+Blender quit

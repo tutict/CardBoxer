@@ -1,0 +1,17 @@
+PASS  spec_structure_complete  missing=[]
+PASS  sources_complete_and_unique  sources=12 unique=12 kinds=['encyclopedia_secondary', 'industry_article', 'industry_tutorial', 'practitioner_tutorial_primary', 'project_accepted_evidence', 'reference_mapping', 'secondary_article']
+PASS  language_rules_complete_and_traceable  rules=8 bad=[]
+PASS  hard_rules_are_explicit  L3="hard_rule: peak_reach_phase == 'active' for every attack tra" L4='hard_rule: 用非零微小差异制造低速段，exact_hold_pairs 必须保持 0；不得引入整帧完全相同的定' L5='recover_overshoot_px > 0，且 end_drift_px 不得超过 pose_probe.gd 的'
+PASS  coordinate_matches_live_table  units_eq=True joints_eq=True stance_eq=True metrics=13
+PASS  metrics_computable_on_all_tracks  tracks=15 metrics_each=13 attacks=6 pairs=15 bad=[]
+PASS  tiers_match_p0_binding  triple:wave/wave sequence:cross/cross scatter:jab/jab draw_null=True
+PASS  conflicts_named_and_p4_not_retired  conflicts=5 keywords_ok=True c1='用非零微小差异的低速段制造视觉停顿，exact_hold_pairs 保持 0。不退役、不篡改 P4'
+PASS  boundaries_declared  boundaries=8
+FAIL  provisional_findings_independently_recomputed  recomputed={"track_count": 15, "attack_track_count": 6, "three_tier_reach_gain_px": {"wave": 41.4248, "cross": 13.0093, "jab": 44.0145}, "three_tier_order_is_inverted": false, "cross_peak_reach_phase": "windup", "cross_peak_reach_argmax": 5, mismatched=['three_tier_reach_gain_px', 'three_tier_order_is_inverted', 'cross_peak_reach_argmax', 'wave_peak_bbox_gain_pct', 'attack_recover_overshoot_all_zero'] gap_conflict=True
+PASS  spec_text_covers_rules_and_sources  bytes=7600 lang=8 sources=12
+FAIL  game_sources_untouched  files=14 mismatch=['data/card_motion.json', 'data/motion_input.json', 'data/motion_input_foe.json']
+FAIL  no_engine_wiring_in_spec_stage  engine_files=['p5_2d_readback.gd', 'p5_pose_probe.gd']
+PASS  external_frame_numbers_not_used_as_thresholds  caveat_len=128 cost_items=6
+
+11/14 PASS  POSE_SPEC_FAILED
+

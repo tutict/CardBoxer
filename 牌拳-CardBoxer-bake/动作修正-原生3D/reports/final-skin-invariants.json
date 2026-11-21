@@ -1,0 +1,3282 @@
+{
+  "player": {
+    "inspection": {
+      "vertices": 57934,
+      "triangles": 79986,
+      "components": 2035,
+      "coincident_groups": 39921,
+      "coincident_weight_disagreement_groups": 0,
+      "bones": [
+        "hips",
+        "spine",
+        "chest",
+        "neck",
+        "head",
+        "upperarm_b",
+        "forearm_b",
+        "upperarm_f",
+        "forearm_f",
+        "thigh_b",
+        "shin_b",
+        "thigh_f",
+        "shin_f",
+        "neutral_bone"
+      ],
+      "dominant_counts": {
+        "hips": 0,
+        "spine": 992,
+        "chest": 0,
+        "neck": 2951,
+        "head": 6482,
+        "upperarm_b": 4334,
+        "forearm_b": 2376,
+        "upperarm_f": 7994,
+        "forearm_f": 2406,
+        "thigh_b": 7743,
+        "shin_b": 7975,
+        "thigh_f": 6900,
+        "shin_f": 7781,
+        "neutral_bone": 0
+      },
+      "weight_sum_max_error": 1.4156103134155273e-07,
+      "rest_max_error_m": 7.060049576778299e-07
+    },
+    "preservation": {
+      "bytes_outside_skin_preserved": true,
+      "json_preserved": true,
+      "changed_vertices": 28,
+      "changed_bytes": 216,
+      "rest_max_error_m": 7.060049576778299e-07,
+      "sha256_before": "80e5a1a03f446dd8a080e69524d4e78d97191fe56fcb30f86ed7e8c945fcab28",
+      "sha256_after": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b"
+    },
+    "before": {
+      "samples": [
+        {
+          "clip": "stance",
+          "frame": 0,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "jab",
+          "frame": 0,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "jab",
+          "frame": 3,
+          "edges_over_4x": 796,
+          "edges_over_10cm_excess": 99,
+          "max_edge_excess_m": 0.17738695261777077,
+          "max_useful_edge_ratio": 30.602741576716646
+        },
+        {
+          "clip": "jab",
+          "frame": 6,
+          "edges_over_4x": 943,
+          "edges_over_10cm_excess": 126,
+          "max_edge_excess_m": 0.1968579078746735,
+          "max_useful_edge_ratio": 38.34751500972512
+        },
+        {
+          "clip": "jab",
+          "frame": 8,
+          "edges_over_4x": 801,
+          "edges_over_10cm_excess": 99,
+          "max_edge_excess_m": 0.17961978222511513,
+          "max_useful_edge_ratio": 34.87975182955054
+        },
+        {
+          "clip": "jab",
+          "frame": 13,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "cross",
+          "frame": 0,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "cross",
+          "frame": 5,
+          "edges_over_4x": 792,
+          "edges_over_10cm_excess": 99,
+          "max_edge_excess_m": 0.20105967287047194,
+          "max_useful_edge_ratio": 39.07860730507477
+        },
+        {
+          "clip": "cross",
+          "frame": 9,
+          "edges_over_4x": 998,
+          "edges_over_10cm_excess": 112,
+          "max_edge_excess_m": 0.17752343001281282,
+          "max_useful_edge_ratio": 22.53507600391661
+        },
+        {
+          "clip": "cross",
+          "frame": 13,
+          "edges_over_4x": 866,
+          "edges_over_10cm_excess": 95,
+          "max_edge_excess_m": 0.17813394556273004,
+          "max_useful_edge_ratio": 27.119374346050435
+        },
+        {
+          "clip": "cross",
+          "frame": 19,
+          "edges_over_4x": 778,
+          "edges_over_10cm_excess": 101,
+          "max_edge_excess_m": 0.17738695261777077,
+          "max_useful_edge_ratio": 31.078638495498097
+        },
+        {
+          "clip": "cross",
+          "frame": 21,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "sweep",
+          "frame": 0,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "sweep",
+          "frame": 7,
+          "edges_over_4x": 928,
+          "edges_over_10cm_excess": 178,
+          "max_edge_excess_m": 0.40731833041353294,
+          "max_useful_edge_ratio": 78.89003616632982
+        },
+        {
+          "clip": "sweep",
+          "frame": 8,
+          "edges_over_4x": 1080,
+          "edges_over_10cm_excess": 170,
+          "max_edge_excess_m": 0.45262582486664155,
+          "max_useful_edge_ratio": 87.74389083603826
+        },
+        {
+          "clip": "sweep",
+          "frame": 12,
+          "edges_over_4x": 844,
+          "edges_over_10cm_excess": 119,
+          "max_edge_excess_m": 0.4102869457890237,
+          "max_useful_edge_ratio": 76.42190969131518
+        },
+        {
+          "clip": "sweep",
+          "frame": 17,
+          "edges_over_4x": 1004,
+          "edges_over_10cm_excess": 147,
+          "max_edge_excess_m": 0.34719475870321487,
+          "max_useful_edge_ratio": 63.09445857759908
+        },
+        {
+          "clip": "sweep",
+          "frame": 25,
+          "edges_over_4x": 894,
+          "edges_over_10cm_excess": 128,
+          "max_edge_excess_m": 0.2135239743373593,
+          "max_useful_edge_ratio": 41.68154766656692
+        },
+        {
+          "clip": "sweep",
+          "frame": 27,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "uppercut",
+          "frame": 0,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "uppercut",
+          "frame": 6,
+          "edges_over_4x": 1034,
+          "edges_over_10cm_excess": 182,
+          "max_edge_excess_m": 0.35051101041017385,
+          "max_useful_edge_ratio": 67.94547863694922
+        },
+        {
+          "clip": "uppercut",
+          "frame": 10,
+          "edges_over_4x": 834,
+          "edges_over_10cm_excess": 163,
+          "max_edge_excess_m": 0.170989121356711,
+          "max_useful_edge_ratio": 32.05986756408564
+        },
+        {
+          "clip": "uppercut",
+          "frame": 14,
+          "edges_over_4x": 727,
+          "edges_over_10cm_excess": 148,
+          "max_edge_excess_m": 0.17219871033127704,
+          "max_useful_edge_ratio": 33.73226451455055
+        },
+        {
+          "clip": "uppercut",
+          "frame": 21,
+          "edges_over_4x": 844,
+          "edges_over_10cm_excess": 111,
+          "max_edge_excess_m": 0.19532168621989116,
+          "max_useful_edge_ratio": 38.07636434340965
+        },
+        {
+          "clip": "uppercut",
+          "frame": 23,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "wave",
+          "frame": 0,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "wave",
+          "frame": 9,
+          "edges_over_4x": 979,
+          "edges_over_10cm_excess": 121,
+          "max_edge_excess_m": 0.24117636807936732,
+          "max_useful_edge_ratio": 46.87656746239549
+        },
+        {
+          "clip": "wave",
+          "frame": 10,
+          "edges_over_4x": 839,
+          "edges_over_10cm_excess": 98,
+          "max_edge_excess_m": 0.2074593003781216,
+          "max_useful_edge_ratio": 40.52556717296761
+        },
+        {
+          "clip": "wave",
+          "frame": 17,
+          "edges_over_4x": 880,
+          "edges_over_10cm_excess": 98,
+          "max_edge_excess_m": 0.21589629330114293,
+          "max_useful_edge_ratio": 42.162804444196034
+        },
+        {
+          "clip": "wave",
+          "frame": 23,
+          "edges_over_4x": 889,
+          "edges_over_10cm_excess": 121,
+          "max_edge_excess_m": 0.25343818567038023,
+          "max_useful_edge_ratio": 49.410059754734384
+        },
+        {
+          "clip": "wave",
+          "frame": 33,
+          "edges_over_4x": 753,
+          "edges_over_10cm_excess": 96,
+          "max_edge_excess_m": 0.18241686215050124,
+          "max_useful_edge_ratio": 30.022019321194662
+        },
+        {
+          "clip": "wave",
+          "frame": 35,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "throw",
+          "frame": 0,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "throw",
+          "frame": 4,
+          "edges_over_4x": 806,
+          "edges_over_10cm_excess": 89,
+          "max_edge_excess_m": 0.19518036066692618,
+          "max_useful_edge_ratio": 37.9337788595309
+        },
+        {
+          "clip": "throw",
+          "frame": 5,
+          "edges_over_4x": 942,
+          "edges_over_10cm_excess": 109,
+          "max_edge_excess_m": 0.24000030874460096,
+          "max_useful_edge_ratio": 46.79658503417727
+        },
+        {
+          "clip": "throw",
+          "frame": 8,
+          "edges_over_4x": 1013,
+          "edges_over_10cm_excess": 147,
+          "max_edge_excess_m": 0.21107902859069294,
+          "max_useful_edge_ratio": 40.80333809741281
+        },
+        {
+          "clip": "throw",
+          "frame": 11,
+          "edges_over_4x": 1070,
+          "edges_over_10cm_excess": 196,
+          "max_edge_excess_m": 0.21587714995720825,
+          "max_useful_edge_ratio": 42.54539179113884
+        },
+        {
+          "clip": "throw",
+          "frame": 17,
+          "edges_over_4x": 795,
+          "edges_over_10cm_excess": 99,
+          "max_edge_excess_m": 0.17738695261777077,
+          "max_useful_edge_ratio": 30.929306675168178
+        },
+        {
+          "clip": "throw",
+          "frame": 19,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "rush",
+          "frame": 0,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "rush",
+          "frame": 3,
+          "edges_over_4x": 870,
+          "edges_over_10cm_excess": 118,
+          "max_edge_excess_m": 0.29599887453500884,
+          "max_useful_edge_ratio": 57.419984322697154
+        },
+        {
+          "clip": "rush",
+          "frame": 7,
+          "edges_over_4x": 868,
+          "edges_over_10cm_excess": 115,
+          "max_edge_excess_m": 0.35475469244313557,
+          "max_useful_edge_ratio": 68.63375804776356
+        },
+        {
+          "clip": "rush",
+          "frame": 10,
+          "edges_over_4x": 906,
+          "edges_over_10cm_excess": 129,
+          "max_edge_excess_m": 0.1912066098259439,
+          "max_useful_edge_ratio": 36.82377121957138
+        },
+        {
+          "clip": "rush",
+          "frame": 12,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "backstep",
+          "frame": 0,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "backstep",
+          "frame": 2,
+          "edges_over_4x": 792,
+          "edges_over_10cm_excess": 105,
+          "max_edge_excess_m": 0.20976461345486663,
+          "max_useful_edge_ratio": 40.93174411987569
+        },
+        {
+          "clip": "backstep",
+          "frame": 5,
+          "edges_over_4x": 773,
+          "edges_over_10cm_excess": 117,
+          "max_edge_excess_m": 0.22553300753143377,
+          "max_useful_edge_ratio": 40.21161416858654
+        },
+        {
+          "clip": "backstep",
+          "frame": 7,
+          "edges_over_4x": 811,
+          "edges_over_10cm_excess": 112,
+          "max_edge_excess_m": 0.18063694383619922,
+          "max_useful_edge_ratio": 24.54392627824263
+        },
+        {
+          "clip": "backstep",
+          "frame": 10,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "guard",
+          "frame": 0,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "guard",
+          "frame": 1,
+          "edges_over_4x": 957,
+          "edges_over_10cm_excess": 152,
+          "max_edge_excess_m": 0.23578566128237788,
+          "max_useful_edge_ratio": 45.93811634477243
+        },
+        {
+          "clip": "guard",
+          "frame": 6,
+          "edges_over_4x": 989,
+          "edges_over_10cm_excess": 163,
+          "max_edge_excess_m": 0.26339719597854977,
+          "max_useful_edge_ratio": 50.98660879209065
+        },
+        {
+          "clip": "guard",
+          "frame": 10,
+          "edges_over_4x": 888,
+          "edges_over_10cm_excess": 135,
+          "max_edge_excess_m": 0.1821756279864494,
+          "max_useful_edge_ratio": 33.860588250907824
+        },
+        {
+          "clip": "guard",
+          "frame": 13,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "sidestep",
+          "frame": 0,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "sidestep",
+          "frame": 1,
+          "edges_over_4x": 930,
+          "edges_over_10cm_excess": 109,
+          "max_edge_excess_m": 0.23640367178636426,
+          "max_useful_edge_ratio": 46.19223450625077
+        },
+        {
+          "clip": "sidestep",
+          "frame": 4,
+          "edges_over_4x": 1004,
+          "edges_over_10cm_excess": 146,
+          "max_edge_excess_m": 0.3137006270775261,
+          "max_useful_edge_ratio": 60.93969258680986
+        },
+        {
+          "clip": "sidestep",
+          "frame": 6,
+          "edges_over_4x": 865,
+          "edges_over_10cm_excess": 114,
+          "max_edge_excess_m": 0.18816462552949947,
+          "max_useful_edge_ratio": 36.71816357394877
+        },
+        {
+          "clip": "sidestep",
+          "frame": 9,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "focus",
+          "frame": 0,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "focus",
+          "frame": 9,
+          "edges_over_4x": 868,
+          "edges_over_10cm_excess": 112,
+          "max_edge_excess_m": 0.18972850443750322,
+          "max_useful_edge_ratio": 36.58450114747432
+        },
+        {
+          "clip": "focus",
+          "frame": 14,
+          "edges_over_4x": 815,
+          "edges_over_10cm_excess": 93,
+          "max_edge_excess_m": 0.18279723964429284,
+          "max_useful_edge_ratio": 31.468579508835994
+        },
+        {
+          "clip": "focus",
+          "frame": 18,
+          "edges_over_4x": 765,
+          "edges_over_10cm_excess": 96,
+          "max_edge_excess_m": 0.18539940406074557,
+          "max_useful_edge_ratio": 32.493188760396556
+        },
+        {
+          "clip": "focus",
+          "frame": 21,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "recover",
+          "frame": 0,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "recover",
+          "frame": 3,
+          "edges_over_4x": 911,
+          "edges_over_10cm_excess": 125,
+          "max_edge_excess_m": 0.3207327377423478,
+          "max_useful_edge_ratio": 62.31532954514776
+        },
+        {
+          "clip": "recover",
+          "frame": 7,
+          "edges_over_4x": 716,
+          "edges_over_10cm_excess": 97,
+          "max_edge_excess_m": 0.24224306711896765,
+          "max_useful_edge_ratio": 45.713831522585195
+        },
+        {
+          "clip": "recover",
+          "frame": 10,
+          "edges_over_4x": 753,
+          "edges_over_10cm_excess": 94,
+          "max_edge_excess_m": 0.18093243763441405,
+          "max_useful_edge_ratio": 30.805001774383438
+        },
+        {
+          "clip": "recover",
+          "frame": 13,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "hit_light",
+          "frame": 0,
+          "edges_over_4x": 795,
+          "edges_over_10cm_excess": 108,
+          "max_edge_excess_m": 0.32157086511614386,
+          "max_useful_edge_ratio": 58.17577040932775
+        },
+        {
+          "clip": "hit_light",
+          "frame": 3,
+          "edges_over_4x": 828,
+          "edges_over_10cm_excess": 104,
+          "max_edge_excess_m": 0.2896834510571136,
+          "max_useful_edge_ratio": 55.92753368097012
+        },
+        {
+          "clip": "hit_light",
+          "frame": 9,
+          "edges_over_4x": 901,
+          "edges_over_10cm_excess": 126,
+          "max_edge_excess_m": 0.18699059579850985,
+          "max_useful_edge_ratio": 36.638748575102326
+        },
+        {
+          "clip": "hit_light",
+          "frame": 15,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 0,
+          "edges_over_4x": 918,
+          "edges_over_10cm_excess": 98,
+          "max_edge_excess_m": 0.5450296540832295,
+          "max_useful_edge_ratio": 102.90706142684782
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 5,
+          "edges_over_4x": 981,
+          "edges_over_10cm_excess": 99,
+          "max_edge_excess_m": 0.5438434618575504,
+          "max_useful_edge_ratio": 105.4613074980955
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 15,
+          "edges_over_4x": 925,
+          "edges_over_10cm_excess": 137,
+          "max_edge_excess_m": 0.38229640810823684,
+          "max_useful_edge_ratio": 74.12366663658516
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 24,
+          "edges_over_4x": 807,
+          "edges_over_10cm_excess": 110,
+          "max_edge_excess_m": 0.18115672606664265,
+          "max_useful_edge_ratio": 27.82600884187583
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 29,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "block",
+          "frame": 0,
+          "edges_over_4x": 934,
+          "edges_over_10cm_excess": 157,
+          "max_edge_excess_m": 0.2915789078200397,
+          "max_useful_edge_ratio": 54.685234462573185
+        },
+        {
+          "clip": "block",
+          "frame": 2,
+          "edges_over_4x": 937,
+          "edges_over_10cm_excess": 161,
+          "max_edge_excess_m": 0.34842540223087753,
+          "max_useful_edge_ratio": 65.08770180425729
+        },
+        {
+          "clip": "block",
+          "frame": 6,
+          "edges_over_4x": 927,
+          "edges_over_10cm_excess": 145,
+          "max_edge_excess_m": 0.19816843878972237,
+          "max_useful_edge_ratio": 38.7742121202861
+        },
+        {
+          "clip": "block",
+          "frame": 9,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "idle",
+          "frame": 0,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "idle",
+          "frame": 9,
+          "edges_over_4x": 801,
+          "edges_over_10cm_excess": 105,
+          "max_edge_excess_m": 0.17413086204635705,
+          "max_useful_edge_ratio": 24.953356691237815
+        },
+        {
+          "clip": "idle",
+          "frame": 18,
+          "edges_over_4x": 826,
+          "edges_over_10cm_excess": 109,
+          "max_edge_excess_m": 0.17891763582822043,
+          "max_useful_edge_ratio": 27.893771888525638
+        },
+        {
+          "clip": "idle",
+          "frame": 27,
+          "edges_over_4x": 797,
+          "edges_over_10cm_excess": 104,
+          "max_edge_excess_m": 0.17413086204635705,
+          "max_useful_edge_ratio": 24.988755674846953
+        },
+        {
+          "clip": "idle",
+          "frame": 35,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "walk",
+          "frame": 0,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "walk",
+          "frame": 8,
+          "edges_over_4x": 794,
+          "edges_over_10cm_excess": 90,
+          "max_edge_excess_m": 0.16413302527462975,
+          "max_useful_edge_ratio": 29.037193933135335
+        },
+        {
+          "clip": "walk",
+          "frame": 17,
+          "edges_over_4x": 839,
+          "edges_over_10cm_excess": 114,
+          "max_edge_excess_m": 0.18061968121822208,
+          "max_useful_edge_ratio": 28.846381379215995
+        },
+        {
+          "clip": "walk",
+          "frame": 26,
+          "edges_over_4x": 832,
+          "edges_over_10cm_excess": 110,
+          "max_edge_excess_m": 0.18356398461965662,
+          "max_useful_edge_ratio": 24.23275504033861
+        },
+        {
+          "clip": "walk",
+          "frame": 35,
+          "edges_over_4x": 820,
+          "edges_over_10cm_excess": 107,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 26.67240098934202
+        },
+        {
+          "clip": "ko",
+          "frame": 0,
+          "edges_over_4x": 918,
+          "edges_over_10cm_excess": 98,
+          "max_edge_excess_m": 0.5450296540832295,
+          "max_useful_edge_ratio": 102.90706142684782
+        },
+        {
+          "clip": "ko",
+          "frame": 7,
+          "edges_over_4x": 1066,
+          "edges_over_10cm_excess": 104,
+          "max_edge_excess_m": 0.6807081692853693,
+          "max_useful_edge_ratio": 131.68871862572053
+        },
+        {
+          "clip": "ko",
+          "frame": 11,
+          "edges_over_4x": 891,
+          "edges_over_10cm_excess": 118,
+          "max_edge_excess_m": 0.6188087238911355,
+          "max_useful_edge_ratio": 119.25283099918448
+        },
+        {
+          "clip": "ko",
+          "frame": 15,
+          "edges_over_4x": 1208,
+          "edges_over_10cm_excess": 78,
+          "max_edge_excess_m": 0.9636510249730997,
+          "max_useful_edge_ratio": 181.01457863204737
+        },
+        {
+          "clip": "ko",
+          "frame": 21,
+          "edges_over_4x": 1467,
+          "edges_over_10cm_excess": 104,
+          "max_edge_excess_m": 1.2447258170864424,
+          "max_useful_edge_ratio": 236.4277952583462
+        },
+        {
+          "clip": "ko",
+          "frame": 27,
+          "edges_over_4x": 1413,
+          "edges_over_10cm_excess": 106,
+          "max_edge_excess_m": 1.196563885491276,
+          "max_useful_edge_ratio": 226.85979391977273
+        }
+      ],
+      "distinct_edges_over_10cm_excess": 370,
+      "max_edge_excess_m": 1.2447258170864424,
+      "worst_contact_edges": []
+    },
+    "after": {
+      "samples": [
+        {
+          "clip": "stance",
+          "frame": 0,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "jab",
+          "frame": 0,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "jab",
+          "frame": 3,
+          "edges_over_4x": 760,
+          "edges_over_10cm_excess": 63,
+          "max_edge_excess_m": 0.17738695261777077,
+          "max_useful_edge_ratio": 19.724269054045873
+        },
+        {
+          "clip": "jab",
+          "frame": 6,
+          "edges_over_4x": 911,
+          "edges_over_10cm_excess": 90,
+          "max_edge_excess_m": 0.17714999766959347,
+          "max_useful_edge_ratio": 19.74302114611032
+        },
+        {
+          "clip": "jab",
+          "frame": 8,
+          "edges_over_4x": 765,
+          "edges_over_10cm_excess": 63,
+          "max_edge_excess_m": 0.1774650962370417,
+          "max_useful_edge_ratio": 19.70205573033151
+        },
+        {
+          "clip": "jab",
+          "frame": 13,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "cross",
+          "frame": 0,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "cross",
+          "frame": 5,
+          "edges_over_4x": 762,
+          "edges_over_10cm_excess": 63,
+          "max_edge_excess_m": 0.17799571752719778,
+          "max_useful_edge_ratio": 19.623867858418862
+        },
+        {
+          "clip": "cross",
+          "frame": 9,
+          "edges_over_4x": 966,
+          "edges_over_10cm_excess": 80,
+          "max_edge_excess_m": 0.17752343001281282,
+          "max_useful_edge_ratio": 20.29393629284999
+        },
+        {
+          "clip": "cross",
+          "frame": 13,
+          "edges_over_4x": 839,
+          "edges_over_10cm_excess": 59,
+          "max_edge_excess_m": 0.17813394556273004,
+          "max_useful_edge_ratio": 20.44503794850229
+        },
+        {
+          "clip": "cross",
+          "frame": 19,
+          "edges_over_4x": 742,
+          "edges_over_10cm_excess": 65,
+          "max_edge_excess_m": 0.17738695261777077,
+          "max_useful_edge_ratio": 19.724269054045873
+        },
+        {
+          "clip": "cross",
+          "frame": 21,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "sweep",
+          "frame": 0,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "sweep",
+          "frame": 7,
+          "edges_over_4x": 895,
+          "edges_over_10cm_excess": 142,
+          "max_edge_excess_m": 0.16596127878025627,
+          "max_useful_edge_ratio": 21.3758019001054
+        },
+        {
+          "clip": "sweep",
+          "frame": 8,
+          "edges_over_4x": 1044,
+          "edges_over_10cm_excess": 134,
+          "max_edge_excess_m": 0.19735625440154858,
+          "max_useful_edge_ratio": 21.702288657351485
+        },
+        {
+          "clip": "sweep",
+          "frame": 12,
+          "edges_over_4x": 808,
+          "edges_over_10cm_excess": 83,
+          "max_edge_excess_m": 0.17911797622817907,
+          "max_useful_edge_ratio": 25.755231119365977
+        },
+        {
+          "clip": "sweep",
+          "frame": 17,
+          "edges_over_4x": 972,
+          "edges_over_10cm_excess": 111,
+          "max_edge_excess_m": 0.1844605880873542,
+          "max_useful_edge_ratio": 25.027026246373012
+        },
+        {
+          "clip": "sweep",
+          "frame": 25,
+          "edges_over_4x": 858,
+          "edges_over_10cm_excess": 92,
+          "max_edge_excess_m": 0.18887559721411362,
+          "max_useful_edge_ratio": 21.63271510908035
+        },
+        {
+          "clip": "sweep",
+          "frame": 27,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "uppercut",
+          "frame": 0,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "uppercut",
+          "frame": 6,
+          "edges_over_4x": 1004,
+          "edges_over_10cm_excess": 146,
+          "max_edge_excess_m": 0.19382517096453009,
+          "max_useful_edge_ratio": 22.661356793527165
+        },
+        {
+          "clip": "uppercut",
+          "frame": 10,
+          "edges_over_4x": 798,
+          "edges_over_10cm_excess": 127,
+          "max_edge_excess_m": 0.16503292434982458,
+          "max_useful_edge_ratio": 20.42086505521135
+        },
+        {
+          "clip": "uppercut",
+          "frame": 14,
+          "edges_over_4x": 697,
+          "edges_over_10cm_excess": 112,
+          "max_edge_excess_m": 0.1582766497958325,
+          "max_useful_edge_ratio": 20.37581195296689
+        },
+        {
+          "clip": "uppercut",
+          "frame": 21,
+          "edges_over_4x": 808,
+          "edges_over_10cm_excess": 75,
+          "max_edge_excess_m": 0.18387716747131122,
+          "max_useful_edge_ratio": 20.756493463953113
+        },
+        {
+          "clip": "uppercut",
+          "frame": 23,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "wave",
+          "frame": 0,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "wave",
+          "frame": 9,
+          "edges_over_4x": 947,
+          "edges_over_10cm_excess": 85,
+          "max_edge_excess_m": 0.19028938530274628,
+          "max_useful_edge_ratio": 21.79742394817236
+        },
+        {
+          "clip": "wave",
+          "frame": 10,
+          "edges_over_4x": 819,
+          "edges_over_10cm_excess": 62,
+          "max_edge_excess_m": 0.18640524989486784,
+          "max_useful_edge_ratio": 21.33951328803275
+        },
+        {
+          "clip": "wave",
+          "frame": 17,
+          "edges_over_4x": 860,
+          "edges_over_10cm_excess": 62,
+          "max_edge_excess_m": 0.1849407972697153,
+          "max_useful_edge_ratio": 21.140974464155775
+        },
+        {
+          "clip": "wave",
+          "frame": 23,
+          "edges_over_4x": 869,
+          "edges_over_10cm_excess": 85,
+          "max_edge_excess_m": 0.1906818445194757,
+          "max_useful_edge_ratio": 22.229424180138487
+        },
+        {
+          "clip": "wave",
+          "frame": 33,
+          "edges_over_4x": 717,
+          "edges_over_10cm_excess": 60,
+          "max_edge_excess_m": 0.18241686215050124,
+          "max_useful_edge_ratio": 20.62853133848655
+        },
+        {
+          "clip": "wave",
+          "frame": 35,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "throw",
+          "frame": 0,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "throw",
+          "frame": 4,
+          "edges_over_4x": 770,
+          "edges_over_10cm_excess": 53,
+          "max_edge_excess_m": 0.17719145892694907,
+          "max_useful_edge_ratio": 19.700408179885176
+        },
+        {
+          "clip": "throw",
+          "frame": 5,
+          "edges_over_4x": 914,
+          "edges_over_10cm_excess": 73,
+          "max_edge_excess_m": 0.1886031906908332,
+          "max_useful_edge_ratio": 21.781160270420067
+        },
+        {
+          "clip": "throw",
+          "frame": 8,
+          "edges_over_4x": 998,
+          "edges_over_10cm_excess": 111,
+          "max_edge_excess_m": 0.1917645934118709,
+          "max_useful_edge_ratio": 23.283200998792537
+        },
+        {
+          "clip": "throw",
+          "frame": 11,
+          "edges_over_4x": 1063,
+          "edges_over_10cm_excess": 160,
+          "max_edge_excess_m": 0.18901257996505,
+          "max_useful_edge_ratio": 25.495306196633702
+        },
+        {
+          "clip": "throw",
+          "frame": 17,
+          "edges_over_4x": 759,
+          "edges_over_10cm_excess": 63,
+          "max_edge_excess_m": 0.17738695261777077,
+          "max_useful_edge_ratio": 19.724269054045873
+        },
+        {
+          "clip": "throw",
+          "frame": 19,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "rush",
+          "frame": 0,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "rush",
+          "frame": 3,
+          "edges_over_4x": 834,
+          "edges_over_10cm_excess": 82,
+          "max_edge_excess_m": 0.19300133250967522,
+          "max_useful_edge_ratio": 22.745274436410362
+        },
+        {
+          "clip": "rush",
+          "frame": 7,
+          "edges_over_4x": 832,
+          "edges_over_10cm_excess": 79,
+          "max_edge_excess_m": 0.17675588760829453,
+          "max_useful_edge_ratio": 22.45901009661068
+        },
+        {
+          "clip": "rush",
+          "frame": 10,
+          "edges_over_4x": 870,
+          "edges_over_10cm_excess": 93,
+          "max_edge_excess_m": 0.1912066098259439,
+          "max_useful_edge_ratio": 19.931552069371083
+        },
+        {
+          "clip": "rush",
+          "frame": 12,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "backstep",
+          "frame": 0,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "backstep",
+          "frame": 2,
+          "edges_over_4x": 756,
+          "edges_over_10cm_excess": 69,
+          "max_edge_excess_m": 0.1904911569332777,
+          "max_useful_edge_ratio": 21.97521812016449
+        },
+        {
+          "clip": "backstep",
+          "frame": 5,
+          "edges_over_4x": 737,
+          "edges_over_10cm_excess": 81,
+          "max_edge_excess_m": 0.19335991930571814,
+          "max_useful_edge_ratio": 22.503884135406
+        },
+        {
+          "clip": "backstep",
+          "frame": 7,
+          "edges_over_4x": 775,
+          "edges_over_10cm_excess": 76,
+          "max_edge_excess_m": 0.18063694383619922,
+          "max_useful_edge_ratio": 20.51117184058942
+        },
+        {
+          "clip": "backstep",
+          "frame": 10,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "guard",
+          "frame": 0,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "guard",
+          "frame": 1,
+          "edges_over_4x": 921,
+          "edges_over_10cm_excess": 116,
+          "max_edge_excess_m": 0.18864900711532376,
+          "max_useful_edge_ratio": 21.690984340575458
+        },
+        {
+          "clip": "guard",
+          "frame": 6,
+          "edges_over_4x": 954,
+          "edges_over_10cm_excess": 127,
+          "max_edge_excess_m": 0.1905761880657656,
+          "max_useful_edge_ratio": 22.063512240862654
+        },
+        {
+          "clip": "guard",
+          "frame": 10,
+          "edges_over_4x": 852,
+          "edges_over_10cm_excess": 99,
+          "max_edge_excess_m": 0.1821756279864494,
+          "max_useful_edge_ratio": 20.598781317404477
+        },
+        {
+          "clip": "guard",
+          "frame": 13,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "sidestep",
+          "frame": 0,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "sidestep",
+          "frame": 1,
+          "edges_over_4x": 896,
+          "edges_over_10cm_excess": 73,
+          "max_edge_excess_m": 0.1883808817982182,
+          "max_useful_edge_ratio": 21.722396696285696
+        },
+        {
+          "clip": "sidestep",
+          "frame": 4,
+          "edges_over_4x": 976,
+          "edges_over_10cm_excess": 110,
+          "max_edge_excess_m": 0.19100269759886615,
+          "max_useful_edge_ratio": 22.289310124647507
+        },
+        {
+          "clip": "sidestep",
+          "frame": 6,
+          "edges_over_4x": 829,
+          "edges_over_10cm_excess": 78,
+          "max_edge_excess_m": 0.18402985599945193,
+          "max_useful_edge_ratio": 20.853311204230412
+        },
+        {
+          "clip": "sidestep",
+          "frame": 9,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "focus",
+          "frame": 0,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "focus",
+          "frame": 9,
+          "edges_over_4x": 836,
+          "edges_over_10cm_excess": 76,
+          "max_edge_excess_m": 0.18939735472651328,
+          "max_useful_edge_ratio": 21.892954917364072
+        },
+        {
+          "clip": "focus",
+          "frame": 14,
+          "edges_over_4x": 785,
+          "edges_over_10cm_excess": 57,
+          "max_edge_excess_m": 0.18279723964429284,
+          "max_useful_edge_ratio": 20.79754259780116
+        },
+        {
+          "clip": "focus",
+          "frame": 18,
+          "edges_over_4x": 729,
+          "edges_over_10cm_excess": 60,
+          "max_edge_excess_m": 0.18539940406074557,
+          "max_useful_edge_ratio": 21.167104002432463
+        },
+        {
+          "clip": "focus",
+          "frame": 21,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "recover",
+          "frame": 0,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "recover",
+          "frame": 3,
+          "edges_over_4x": 875,
+          "edges_over_10cm_excess": 89,
+          "max_edge_excess_m": 0.19328705678431232,
+          "max_useful_edge_ratio": 22.54805126088448
+        },
+        {
+          "clip": "recover",
+          "frame": 7,
+          "edges_over_4x": 680,
+          "edges_over_10cm_excess": 61,
+          "max_edge_excess_m": 0.18867821899437334,
+          "max_useful_edge_ratio": 21.794781871071688
+        },
+        {
+          "clip": "recover",
+          "frame": 10,
+          "edges_over_4x": 717,
+          "edges_over_10cm_excess": 58,
+          "max_edge_excess_m": 0.18093243763441405,
+          "max_useful_edge_ratio": 20.309575065384426
+        },
+        {
+          "clip": "recover",
+          "frame": 13,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "hit_light",
+          "frame": 0,
+          "edges_over_4x": 763,
+          "edges_over_10cm_excess": 72,
+          "max_edge_excess_m": 0.18634955018638258,
+          "max_useful_edge_ratio": 21.000756068914487
+        },
+        {
+          "clip": "hit_light",
+          "frame": 3,
+          "edges_over_4x": 794,
+          "edges_over_10cm_excess": 68,
+          "max_edge_excess_m": 0.18813407277542507,
+          "max_useful_edge_ratio": 21.1764919672967
+        },
+        {
+          "clip": "hit_light",
+          "frame": 9,
+          "edges_over_4x": 865,
+          "edges_over_10cm_excess": 90,
+          "max_edge_excess_m": 0.18502758776765088,
+          "max_useful_edge_ratio": 21.138478066456322
+        },
+        {
+          "clip": "hit_light",
+          "frame": 15,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 0,
+          "edges_over_4x": 890,
+          "edges_over_10cm_excess": 62,
+          "max_edge_excess_m": 0.19613370069135458,
+          "max_useful_edge_ratio": 23.34001171291786
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 5,
+          "edges_over_4x": 950,
+          "edges_over_10cm_excess": 63,
+          "max_edge_excess_m": 0.20001155085776193,
+          "max_useful_edge_ratio": 23.870424753637526
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 15,
+          "edges_over_4x": 891,
+          "edges_over_10cm_excess": 101,
+          "max_edge_excess_m": 0.1946458493890972,
+          "max_useful_edge_ratio": 23.167512321344216
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 24,
+          "edges_over_4x": 771,
+          "edges_over_10cm_excess": 74,
+          "max_edge_excess_m": 0.18115672606664265,
+          "max_useful_edge_ratio": 20.337048067141964
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 29,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "block",
+          "frame": 0,
+          "edges_over_4x": 902,
+          "edges_over_10cm_excess": 121,
+          "max_edge_excess_m": 0.1937754075828715,
+          "max_useful_edge_ratio": 22.580658635085435
+        },
+        {
+          "clip": "block",
+          "frame": 2,
+          "edges_over_4x": 905,
+          "edges_over_10cm_excess": 125,
+          "max_edge_excess_m": 0.19564749048775196,
+          "max_useful_edge_ratio": 22.99159170023478
+        },
+        {
+          "clip": "block",
+          "frame": 6,
+          "edges_over_4x": 891,
+          "edges_over_10cm_excess": 109,
+          "max_edge_excess_m": 0.18634976053946975,
+          "max_useful_edge_ratio": 21.285966597515017
+        },
+        {
+          "clip": "block",
+          "frame": 9,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "idle",
+          "frame": 0,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "idle",
+          "frame": 9,
+          "edges_over_4x": 765,
+          "edges_over_10cm_excess": 69,
+          "max_edge_excess_m": 0.17413086204635705,
+          "max_useful_edge_ratio": 19.3532284029087
+        },
+        {
+          "clip": "idle",
+          "frame": 18,
+          "edges_over_4x": 790,
+          "edges_over_10cm_excess": 73,
+          "max_edge_excess_m": 0.17891763582822043,
+          "max_useful_edge_ratio": 20.119701614910834
+        },
+        {
+          "clip": "idle",
+          "frame": 27,
+          "edges_over_4x": 761,
+          "edges_over_10cm_excess": 68,
+          "max_edge_excess_m": 0.17413086204635705,
+          "max_useful_edge_ratio": 19.3532284029087
+        },
+        {
+          "clip": "idle",
+          "frame": 35,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "walk",
+          "frame": 0,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "walk",
+          "frame": 8,
+          "edges_over_4x": 758,
+          "edges_over_10cm_excess": 54,
+          "max_edge_excess_m": 0.16413302527462975,
+          "max_useful_edge_ratio": 18.88583989541315
+        },
+        {
+          "clip": "walk",
+          "frame": 17,
+          "edges_over_4x": 803,
+          "edges_over_10cm_excess": 78,
+          "max_edge_excess_m": 0.18061968121822208,
+          "max_useful_edge_ratio": 20.397891459702013
+        },
+        {
+          "clip": "walk",
+          "frame": 26,
+          "edges_over_4x": 796,
+          "edges_over_10cm_excess": 74,
+          "max_edge_excess_m": 0.18356398461965662,
+          "max_useful_edge_ratio": 18.541565783477225
+        },
+        {
+          "clip": "walk",
+          "frame": 35,
+          "edges_over_4x": 784,
+          "edges_over_10cm_excess": 71,
+          "max_edge_excess_m": 0.17713508543754689,
+          "max_useful_edge_ratio": 19.819940745994217
+        },
+        {
+          "clip": "ko",
+          "frame": 0,
+          "edges_over_4x": 890,
+          "edges_over_10cm_excess": 62,
+          "max_edge_excess_m": 0.19613370069135458,
+          "max_useful_edge_ratio": 23.34001171291786
+        },
+        {
+          "clip": "ko",
+          "frame": 7,
+          "edges_over_4x": 1041,
+          "edges_over_10cm_excess": 68,
+          "max_edge_excess_m": 0.207440011217437,
+          "max_useful_edge_ratio": 24.81982163626297
+        },
+        {
+          "clip": "ko",
+          "frame": 11,
+          "edges_over_4x": 855,
+          "edges_over_10cm_excess": 82,
+          "max_edge_excess_m": 0.18671526922576115,
+          "max_useful_edge_ratio": 22.47055753546402
+        },
+        {
+          "clip": "ko",
+          "frame": 15,
+          "edges_over_4x": 1172,
+          "edges_over_10cm_excess": 42,
+          "max_edge_excess_m": 0.14336703285713018,
+          "max_useful_edge_ratio": 19.297035261318292
+        },
+        {
+          "clip": "ko",
+          "frame": 21,
+          "edges_over_4x": 1438,
+          "edges_over_10cm_excess": 68,
+          "max_edge_excess_m": 0.14933877732248266,
+          "max_useful_edge_ratio": 24.083034807573995
+        },
+        {
+          "clip": "ko",
+          "frame": 27,
+          "edges_over_4x": 1381,
+          "edges_over_10cm_excess": 70,
+          "max_edge_excess_m": 0.15090951246002043,
+          "max_useful_edge_ratio": 23.609769942893724
+        }
+      ],
+      "distinct_edges_over_10cm_excess": 334,
+      "max_edge_excess_m": 0.207440011217437,
+      "worst_contact_edges": []
+    },
+    "imported_godot": {
+      "bone_count": 14,
+      "names_parents_and_rests_preserved": true,
+      "neutral_bone_rest_preserved": true,
+      "log": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作修正-原生3D\\logs\\skin-import-check-engine.log"
+    }
+  },
+  "foe": {
+    "inspection": {
+      "vertices": 64059,
+      "triangles": 79998,
+      "components": 2809,
+      "coincident_groups": 39867,
+      "coincident_weight_disagreement_groups": 0,
+      "bones": [
+        "hips",
+        "spine",
+        "chest",
+        "neck",
+        "head",
+        "upperarm_b",
+        "forearm_b",
+        "upperarm_f",
+        "forearm_f",
+        "thigh_b",
+        "shin_b",
+        "thigh_f",
+        "shin_f",
+        "neutral_bone"
+      ],
+      "dominant_counts": {
+        "hips": 135,
+        "spine": 3031,
+        "chest": 296,
+        "neck": 3684,
+        "head": 13,
+        "upperarm_b": 11668,
+        "forearm_b": 4460,
+        "upperarm_f": 10720,
+        "forearm_f": 4239,
+        "thigh_b": 8041,
+        "shin_b": 4564,
+        "thigh_f": 8617,
+        "shin_f": 4591,
+        "neutral_bone": 0
+      },
+      "weight_sum_max_error": 1.341104507446289e-07,
+      "rest_max_error_m": 4.454004141736528e-07
+    },
+    "preservation": {
+      "bytes_outside_skin_preserved": true,
+      "json_preserved": true,
+      "changed_vertices": 18,
+      "changed_bytes": 324,
+      "rest_max_error_m": 4.454004141736528e-07,
+      "sha256_before": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+      "sha256_after": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18"
+    },
+    "before": {
+      "samples": [
+        {
+          "clip": "stance",
+          "frame": 0,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "jab",
+          "frame": 0,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "jab",
+          "frame": 3,
+          "edges_over_4x": 320,
+          "edges_over_10cm_excess": 23,
+          "max_edge_excess_m": 0.47638050498760004,
+          "max_useful_edge_ratio": 55.12629248075323
+        },
+        {
+          "clip": "jab",
+          "frame": 6,
+          "edges_over_4x": 482,
+          "edges_over_10cm_excess": 28,
+          "max_edge_excess_m": 0.4733476064485935,
+          "max_useful_edge_ratio": 54.7816949339015
+        },
+        {
+          "clip": "jab",
+          "frame": 8,
+          "edges_over_4x": 345,
+          "edges_over_10cm_excess": 23,
+          "max_edge_excess_m": 0.47729967695694153,
+          "max_useful_edge_ratio": 55.23072868318343
+        },
+        {
+          "clip": "jab",
+          "frame": 13,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "cross",
+          "frame": 0,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "cross",
+          "frame": 5,
+          "edges_over_4x": 316,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.48276716791021745,
+          "max_useful_edge_ratio": 55.85194431097363
+        },
+        {
+          "clip": "cross",
+          "frame": 9,
+          "edges_over_4x": 489,
+          "edges_over_10cm_excess": 36,
+          "max_edge_excess_m": 0.45742486669739185,
+          "max_useful_edge_ratio": 52.9725552654113
+        },
+        {
+          "clip": "cross",
+          "frame": 13,
+          "edges_over_4x": 405,
+          "edges_over_10cm_excess": 30,
+          "max_edge_excess_m": 0.45679157317741675,
+          "max_useful_edge_ratio": 52.900600536094174
+        },
+        {
+          "clip": "cross",
+          "frame": 19,
+          "edges_over_4x": 362,
+          "edges_over_10cm_excess": 22,
+          "max_edge_excess_m": 0.47638050498760004,
+          "max_useful_edge_ratio": 55.12629248075323
+        },
+        {
+          "clip": "cross",
+          "frame": 21,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "sweep",
+          "frame": 0,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "sweep",
+          "frame": 7,
+          "edges_over_4x": 316,
+          "edges_over_10cm_excess": 45,
+          "max_edge_excess_m": 0.17453900007081957,
+          "max_useful_edge_ratio": 20.83109902320057
+        },
+        {
+          "clip": "sweep",
+          "frame": 8,
+          "edges_over_4x": 555,
+          "edges_over_10cm_excess": 45,
+          "max_edge_excess_m": 0.6051512977960285,
+          "max_useful_edge_ratio": 69.75721360694183
+        },
+        {
+          "clip": "sweep",
+          "frame": 12,
+          "edges_over_4x": 498,
+          "edges_over_10cm_excess": 75,
+          "max_edge_excess_m": 0.7026761381138906,
+          "max_useful_edge_ratio": 80.83797357910056
+        },
+        {
+          "clip": "sweep",
+          "frame": 17,
+          "edges_over_4x": 546,
+          "edges_over_10cm_excess": 80,
+          "max_edge_excess_m": 0.6864657376187109,
+          "max_useful_edge_ratio": 78.99614993340984
+        },
+        {
+          "clip": "sweep",
+          "frame": 25,
+          "edges_over_4x": 414,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.5452802538764285,
+          "max_useful_edge_ratio": 62.9546731998682
+        },
+        {
+          "clip": "sweep",
+          "frame": 27,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "uppercut",
+          "frame": 0,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "uppercut",
+          "frame": 6,
+          "edges_over_4x": 413,
+          "edges_over_10cm_excess": 36,
+          "max_edge_excess_m": 0.5734046046265997,
+          "max_useful_edge_ratio": 66.15015836056907
+        },
+        {
+          "clip": "uppercut",
+          "frame": 10,
+          "edges_over_4x": 401,
+          "edges_over_10cm_excess": 29,
+          "max_edge_excess_m": 0.4278377671702859,
+          "max_useful_edge_ratio": 49.61087277443074
+        },
+        {
+          "clip": "uppercut",
+          "frame": 14,
+          "edges_over_4x": 328,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.40120964509794593,
+          "max_useful_edge_ratio": 46.5853889260978
+        },
+        {
+          "clip": "uppercut",
+          "frame": 21,
+          "edges_over_4x": 351,
+          "edges_over_10cm_excess": 23,
+          "max_edge_excess_m": 0.5190025289787152,
+          "max_useful_edge_ratio": 59.969001434019134
+        },
+        {
+          "clip": "uppercut",
+          "frame": 23,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "wave",
+          "frame": 0,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "wave",
+          "frame": 9,
+          "edges_over_4x": 210,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.556685745410008,
+          "max_useful_edge_ratio": 64.2505636995211
+        },
+        {
+          "clip": "wave",
+          "frame": 10,
+          "edges_over_4x": 329,
+          "edges_over_10cm_excess": 28,
+          "max_edge_excess_m": 0.5267686572911723,
+          "max_useful_edge_ratio": 60.851387946653716
+        },
+        {
+          "clip": "wave",
+          "frame": 17,
+          "edges_over_4x": 391,
+          "edges_over_10cm_excess": 40,
+          "max_edge_excess_m": 0.5170700003420536,
+          "max_useful_edge_ratio": 59.74942777573497
+        },
+        {
+          "clip": "wave",
+          "frame": 23,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 33,
+          "max_edge_excess_m": 0.5424361715654182,
+          "max_useful_edge_ratio": 62.63152892886348
+        },
+        {
+          "clip": "wave",
+          "frame": 33,
+          "edges_over_4x": 289,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.5114539164247105,
+          "max_useful_edge_ratio": 59.11132903423741
+        },
+        {
+          "clip": "wave",
+          "frame": 35,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "throw",
+          "frame": 0,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "throw",
+          "frame": 4,
+          "edges_over_4x": 386,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.4738955016088263,
+          "max_useful_edge_ratio": 54.843946712429506
+        },
+        {
+          "clip": "throw",
+          "frame": 5,
+          "edges_over_4x": 458,
+          "edges_over_10cm_excess": 34,
+          "max_edge_excess_m": 0.5341684308997645,
+          "max_useful_edge_ratio": 61.69214928435885
+        },
+        {
+          "clip": "throw",
+          "frame": 8,
+          "edges_over_4x": 461,
+          "edges_over_10cm_excess": 41,
+          "max_edge_excess_m": 0.5356849204547713,
+          "max_useful_edge_ratio": 61.86445263501851
+        },
+        {
+          "clip": "throw",
+          "frame": 11,
+          "edges_over_4x": 455,
+          "edges_over_10cm_excess": 48,
+          "max_edge_excess_m": 0.5116688882249036,
+          "max_useful_edge_ratio": 59.1357541028759
+        },
+        {
+          "clip": "throw",
+          "frame": 17,
+          "edges_over_4x": 335,
+          "edges_over_10cm_excess": 23,
+          "max_edge_excess_m": 0.47638050498760004,
+          "max_useful_edge_ratio": 55.12629248075323
+        },
+        {
+          "clip": "throw",
+          "frame": 19,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "rush",
+          "frame": 0,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "rush",
+          "frame": 3,
+          "edges_over_4x": 398,
+          "edges_over_10cm_excess": 28,
+          "max_edge_excess_m": 0.4950132634250571,
+          "max_useful_edge_ratio": 57.24334412822833
+        },
+        {
+          "clip": "rush",
+          "frame": 7,
+          "edges_over_4x": 428,
+          "edges_over_10cm_excess": 42,
+          "max_edge_excess_m": 0.5470250537301751,
+          "max_useful_edge_ratio": 63.15291713767737
+        },
+        {
+          "clip": "rush",
+          "frame": 10,
+          "edges_over_4x": 487,
+          "edges_over_10cm_excess": 86,
+          "max_edge_excess_m": 0.6180718407839787,
+          "max_useful_edge_ratio": 71.22524406044275
+        },
+        {
+          "clip": "rush",
+          "frame": 12,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "backstep",
+          "frame": 0,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "backstep",
+          "frame": 2,
+          "edges_over_4x": 300,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.5529868203023227,
+          "max_useful_edge_ratio": 63.83029229851531
+        },
+        {
+          "clip": "backstep",
+          "frame": 5,
+          "edges_over_4x": 208,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.43769117017322035,
+          "max_useful_edge_ratio": 50.7304151723327
+        },
+        {
+          "clip": "backstep",
+          "frame": 7,
+          "edges_over_4x": 332,
+          "edges_over_10cm_excess": 22,
+          "max_edge_excess_m": 0.48236402911779563,
+          "max_useful_edge_ratio": 55.80613973257358
+        },
+        {
+          "clip": "backstep",
+          "frame": 10,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "guard",
+          "frame": 0,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "guard",
+          "frame": 1,
+          "edges_over_4x": 512,
+          "edges_over_10cm_excess": 42,
+          "max_edge_excess_m": 0.5393804166211755,
+          "max_useful_edge_ratio": 62.284334440151355
+        },
+        {
+          "clip": "guard",
+          "frame": 6,
+          "edges_over_4x": 526,
+          "edges_over_10cm_excess": 44,
+          "max_edge_excess_m": 0.5489822266424338,
+          "max_useful_edge_ratio": 63.37529087542527
+        },
+        {
+          "clip": "guard",
+          "frame": 10,
+          "edges_over_4x": 457,
+          "edges_over_10cm_excess": 35,
+          "max_edge_excess_m": 0.5084628388910317,
+          "max_useful_edge_ratio": 58.77148318470013
+        },
+        {
+          "clip": "guard",
+          "frame": 13,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "sidestep",
+          "frame": 0,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "sidestep",
+          "frame": 1,
+          "edges_over_4x": 435,
+          "edges_over_10cm_excess": 34,
+          "max_edge_excess_m": 0.5727473119175137,
+          "max_useful_edge_ratio": 66.07547684643284
+        },
+        {
+          "clip": "sidestep",
+          "frame": 4,
+          "edges_over_4x": 468,
+          "edges_over_10cm_excess": 45,
+          "max_edge_excess_m": 0.5995108471233952,
+          "max_useful_edge_ratio": 69.11634631780254
+        },
+        {
+          "clip": "sidestep",
+          "frame": 6,
+          "edges_over_4x": 383,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.5073825869722746,
+          "max_useful_edge_ratio": 58.648745098872986
+        },
+        {
+          "clip": "sidestep",
+          "frame": 9,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "focus",
+          "frame": 0,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "focus",
+          "frame": 9,
+          "edges_over_4x": 193,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.5415827021570865,
+          "max_useful_edge_ratio": 62.534557843071575
+        },
+        {
+          "clip": "focus",
+          "frame": 14,
+          "edges_over_4x": 181,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.5105556991441795,
+          "max_useful_edge_ratio": 59.009273700888805
+        },
+        {
+          "clip": "focus",
+          "frame": 18,
+          "edges_over_4x": 251,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.5233874333386936,
+          "max_useful_edge_ratio": 60.4672137105574
+        },
+        {
+          "clip": "focus",
+          "frame": 21,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "recover",
+          "frame": 0,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "recover",
+          "frame": 3,
+          "edges_over_4x": 416,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.5688599005756749,
+          "max_useful_edge_ratio": 65.63378966343855
+        },
+        {
+          "clip": "recover",
+          "frame": 7,
+          "edges_over_4x": 219,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.5366205157164343,
+          "max_useful_edge_ratio": 61.970754849836666
+        },
+        {
+          "clip": "recover",
+          "frame": 10,
+          "edges_over_4x": 312,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.5056081262032812,
+          "max_useful_edge_ratio": 58.44713109164013
+        },
+        {
+          "clip": "recover",
+          "frame": 13,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "hit_light",
+          "frame": 0,
+          "edges_over_4x": 197,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.538451432384061,
+          "max_useful_edge_ratio": 62.17878336910286
+        },
+        {
+          "clip": "hit_light",
+          "frame": 3,
+          "edges_over_4x": 216,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.5492777770048076,
+          "max_useful_edge_ratio": 63.408871270065994
+        },
+        {
+          "clip": "hit_light",
+          "frame": 9,
+          "edges_over_4x": 446,
+          "edges_over_10cm_excess": 29,
+          "max_edge_excess_m": 0.5187138427479037,
+          "max_useful_edge_ratio": 59.936200941134814
+        },
+        {
+          "clip": "hit_light",
+          "frame": 15,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 0,
+          "edges_over_4x": 177,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.582238710649851,
+          "max_useful_edge_ratio": 67.15388836508075
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 5,
+          "edges_over_4x": 195,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.5940134368184451,
+          "max_useful_edge_ratio": 68.4917312570746
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 15,
+          "edges_over_4x": 403,
+          "edges_over_10cm_excess": 30,
+          "max_edge_excess_m": 0.5745841946497652,
+          "max_useful_edge_ratio": 66.28418322920403
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 24,
+          "edges_over_4x": 334,
+          "edges_over_10cm_excess": 22,
+          "max_edge_excess_m": 0.5081763536341963,
+          "max_useful_edge_ratio": 58.73893276619948
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 29,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "block",
+          "frame": 0,
+          "edges_over_4x": 408,
+          "edges_over_10cm_excess": 29,
+          "max_edge_excess_m": 0.5746284113606013,
+          "max_useful_edge_ratio": 66.28920712627414
+        },
+        {
+          "clip": "block",
+          "frame": 2,
+          "edges_over_4x": 401,
+          "edges_over_10cm_excess": 23,
+          "max_edge_excess_m": 0.589557966243828,
+          "max_useful_edge_ratio": 67.98550125619033
+        },
+        {
+          "clip": "block",
+          "frame": 6,
+          "edges_over_4x": 472,
+          "edges_over_10cm_excess": 36,
+          "max_edge_excess_m": 0.5283710839524873,
+          "max_useful_edge_ratio": 61.033455460418885
+        },
+        {
+          "clip": "block",
+          "frame": 9,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "idle",
+          "frame": 0,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "idle",
+          "frame": 9,
+          "edges_over_4x": 367,
+          "edges_over_10cm_excess": 25,
+          "max_edge_excess_m": 0.46146291908381426,
+          "max_useful_edge_ratio": 53.431358264761144
+        },
+        {
+          "clip": "idle",
+          "frame": 18,
+          "edges_over_4x": 380,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.4806667349991333,
+          "max_useful_edge_ratio": 55.61329339035189
+        },
+        {
+          "clip": "idle",
+          "frame": 27,
+          "edges_over_4x": 363,
+          "edges_over_10cm_excess": 23,
+          "max_edge_excess_m": 0.46146291908381426,
+          "max_useful_edge_ratio": 53.431358264761144
+        },
+        {
+          "clip": "idle",
+          "frame": 35,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "walk",
+          "frame": 0,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "walk",
+          "frame": 8,
+          "edges_over_4x": 404,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47807578168383114,
+          "max_useful_edge_ratio": 55.31890960369447
+        },
+        {
+          "clip": "walk",
+          "frame": 17,
+          "edges_over_4x": 384,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.48462533879796166,
+          "max_useful_edge_ratio": 56.06306945126853
+        },
+        {
+          "clip": "walk",
+          "frame": 26,
+          "edges_over_4x": 459,
+          "edges_over_10cm_excess": 89,
+          "max_edge_excess_m": 0.5817974031076993,
+          "max_useful_edge_ratio": 67.10374705818346
+        },
+        {
+          "clip": "walk",
+          "frame": 35,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.47281720897018886,
+          "max_useful_edge_ratio": 54.721431239760754
+        },
+        {
+          "clip": "ko",
+          "frame": 0,
+          "edges_over_4x": 177,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.582238710649851,
+          "max_useful_edge_ratio": 67.15388836508075
+        },
+        {
+          "clip": "ko",
+          "frame": 7,
+          "edges_over_4x": 289,
+          "edges_over_10cm_excess": 22,
+          "max_edge_excess_m": 0.6138316738744991,
+          "max_useful_edge_ratio": 70.74347683464983
+        },
+        {
+          "clip": "ko",
+          "frame": 11,
+          "edges_over_4x": 179,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.4003610491631266,
+          "max_useful_edge_ratio": 46.4889715637475
+        },
+        {
+          "clip": "ko",
+          "frame": 15,
+          "edges_over_4x": 448,
+          "edges_over_10cm_excess": 26,
+          "max_edge_excess_m": 0.1899918491374979,
+          "max_useful_edge_ratio": 22.337007878194367
+        },
+        {
+          "clip": "ko",
+          "frame": 21,
+          "edges_over_4x": 638,
+          "edges_over_10cm_excess": 66,
+          "max_edge_excess_m": 0.16146830734611028,
+          "max_useful_edge_ratio": 19.885486792227642
+        },
+        {
+          "clip": "ko",
+          "frame": 27,
+          "edges_over_4x": 586,
+          "edges_over_10cm_excess": 48,
+          "max_edge_excess_m": 0.15511230304514098,
+          "max_useful_edge_ratio": 19.587712628001526
+        }
+      ],
+      "distinct_edges_over_10cm_excess": 164,
+      "max_edge_excess_m": 0.7026761381138906,
+      "worst_contact_edges": []
+    },
+    "after": {
+      "samples": [
+        {
+          "clip": "stance",
+          "frame": 0,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "jab",
+          "frame": 0,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "jab",
+          "frame": 3,
+          "edges_over_4x": 299,
+          "edges_over_10cm_excess": 2,
+          "max_edge_excess_m": 0.11722109740130052,
+          "max_useful_edge_ratio": 16.47992591069023
+        },
+        {
+          "clip": "jab",
+          "frame": 6,
+          "edges_over_4x": 461,
+          "edges_over_10cm_excess": 7,
+          "max_edge_excess_m": 0.12447369909696826,
+          "max_useful_edge_ratio": 16.73399257178835
+        },
+        {
+          "clip": "jab",
+          "frame": 8,
+          "edges_over_4x": 324,
+          "edges_over_10cm_excess": 2,
+          "max_edge_excess_m": 0.11632704963822826,
+          "max_useful_edge_ratio": 16.56585886504531
+        },
+        {
+          "clip": "jab",
+          "frame": 13,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "cross",
+          "frame": 0,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "cross",
+          "frame": 5,
+          "edges_over_4x": 295,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.09841466894124325,
+          "max_useful_edge_ratio": 16.86177947497674
+        },
+        {
+          "clip": "cross",
+          "frame": 9,
+          "edges_over_4x": 468,
+          "edges_over_10cm_excess": 15,
+          "max_edge_excess_m": 0.13979999029508677,
+          "max_useful_edge_ratio": 18.479036156771794
+        },
+        {
+          "clip": "cross",
+          "frame": 13,
+          "edges_over_4x": 384,
+          "edges_over_10cm_excess": 9,
+          "max_edge_excess_m": 0.10725272588704717,
+          "max_useful_edge_ratio": 19.006352203557118
+        },
+        {
+          "clip": "cross",
+          "frame": 19,
+          "edges_over_4x": 341,
+          "edges_over_10cm_excess": 1,
+          "max_edge_excess_m": 0.1001090964196455,
+          "max_useful_edge_ratio": 16.47992591069023
+        },
+        {
+          "clip": "cross",
+          "frame": 21,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "sweep",
+          "frame": 0,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "sweep",
+          "frame": 7,
+          "edges_over_4x": 298,
+          "edges_over_10cm_excess": 24,
+          "max_edge_excess_m": 0.11887175075591655,
+          "max_useful_edge_ratio": 19.55278217081096
+        },
+        {
+          "clip": "sweep",
+          "frame": 8,
+          "edges_over_4x": 534,
+          "edges_over_10cm_excess": 24,
+          "max_edge_excess_m": 0.1493544685293239,
+          "max_useful_edge_ratio": 17.277980931391824
+        },
+        {
+          "clip": "sweep",
+          "frame": 12,
+          "edges_over_4x": 477,
+          "edges_over_10cm_excess": 54,
+          "max_edge_excess_m": 0.12980464827732066,
+          "max_useful_edge_ratio": 21.984044599298056
+        },
+        {
+          "clip": "sweep",
+          "frame": 17,
+          "edges_over_4x": 525,
+          "edges_over_10cm_excess": 59,
+          "max_edge_excess_m": 0.1403840592157455,
+          "max_useful_edge_ratio": 23.474080850677744
+        },
+        {
+          "clip": "sweep",
+          "frame": 25,
+          "edges_over_4x": 393,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.12092901678121312,
+          "max_useful_edge_ratio": 16.382451942792375
+        },
+        {
+          "clip": "sweep",
+          "frame": 27,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "uppercut",
+          "frame": 0,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "uppercut",
+          "frame": 6,
+          "edges_over_4x": 392,
+          "edges_over_10cm_excess": 15,
+          "max_edge_excess_m": 0.14796776012282942,
+          "max_useful_edge_ratio": 17.386540441769185
+        },
+        {
+          "clip": "uppercut",
+          "frame": 10,
+          "edges_over_4x": 380,
+          "edges_over_10cm_excess": 8,
+          "max_edge_excess_m": 0.12037877615344025,
+          "max_useful_edge_ratio": 16.10837512281341
+        },
+        {
+          "clip": "uppercut",
+          "frame": 14,
+          "edges_over_4x": 307,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11221868792457779,
+          "max_useful_edge_ratio": 16.073172608769337
+        },
+        {
+          "clip": "uppercut",
+          "frame": 21,
+          "edges_over_4x": 330,
+          "edges_over_10cm_excess": 2,
+          "max_edge_excess_m": 0.12472723570352315,
+          "max_useful_edge_ratio": 16.821818668454377
+        },
+        {
+          "clip": "uppercut",
+          "frame": 23,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "wave",
+          "frame": 0,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "wave",
+          "frame": 9,
+          "edges_over_4x": 189,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.09268637650911096,
+          "max_useful_edge_ratio": 15.790176970244802
+        },
+        {
+          "clip": "wave",
+          "frame": 10,
+          "edges_over_4x": 308,
+          "edges_over_10cm_excess": 7,
+          "max_edge_excess_m": 0.1286648262344913,
+          "max_useful_edge_ratio": 16.929204738369588
+        },
+        {
+          "clip": "wave",
+          "frame": 17,
+          "edges_over_4x": 370,
+          "edges_over_10cm_excess": 19,
+          "max_edge_excess_m": 0.14936788207281407,
+          "max_useful_edge_ratio": 17.4780109509951
+        },
+        {
+          "clip": "wave",
+          "frame": 23,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 12,
+          "max_edge_excess_m": 0.14083439100954664,
+          "max_useful_edge_ratio": 17.890276199260885
+        },
+        {
+          "clip": "wave",
+          "frame": 33,
+          "edges_over_4x": 268,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.09430845188292386,
+          "max_useful_edge_ratio": 16.215185886163948
+        },
+        {
+          "clip": "wave",
+          "frame": 35,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "throw",
+          "frame": 0,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "throw",
+          "frame": 4,
+          "edges_over_4x": 365,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.09861998981531109,
+          "max_useful_edge_ratio": 17.022623723593018
+        },
+        {
+          "clip": "throw",
+          "frame": 5,
+          "edges_over_4x": 437,
+          "edges_over_10cm_excess": 13,
+          "max_edge_excess_m": 0.1451942355773014,
+          "max_useful_edge_ratio": 17.64886135497874
+        },
+        {
+          "clip": "throw",
+          "frame": 8,
+          "edges_over_4x": 440,
+          "edges_over_10cm_excess": 20,
+          "max_edge_excess_m": 0.13015405456695076,
+          "max_useful_edge_ratio": 20.166866796500525
+        },
+        {
+          "clip": "throw",
+          "frame": 11,
+          "edges_over_4x": 434,
+          "edges_over_10cm_excess": 27,
+          "max_edge_excess_m": 0.12831449439342804,
+          "max_useful_edge_ratio": 22.34470583489403
+        },
+        {
+          "clip": "throw",
+          "frame": 17,
+          "edges_over_4x": 314,
+          "edges_over_10cm_excess": 2,
+          "max_edge_excess_m": 0.11722109740130052,
+          "max_useful_edge_ratio": 16.47992591069023
+        },
+        {
+          "clip": "throw",
+          "frame": 19,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "rush",
+          "frame": 0,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "rush",
+          "frame": 3,
+          "edges_over_4x": 377,
+          "edges_over_10cm_excess": 7,
+          "max_edge_excess_m": 0.10193550193129283,
+          "max_useful_edge_ratio": 15.046427593654936
+        },
+        {
+          "clip": "rush",
+          "frame": 7,
+          "edges_over_4x": 407,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.11162179393659002,
+          "max_useful_edge_ratio": 16.85781005595126
+        },
+        {
+          "clip": "rush",
+          "frame": 10,
+          "edges_over_4x": 466,
+          "edges_over_10cm_excess": 65,
+          "max_edge_excess_m": 0.14340839471152073,
+          "max_useful_edge_ratio": 25.02298015736658
+        },
+        {
+          "clip": "rush",
+          "frame": 12,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "backstep",
+          "frame": 0,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "backstep",
+          "frame": 2,
+          "edges_over_4x": 279,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.0936318424670203,
+          "max_useful_edge_ratio": 15.353987464694953
+        },
+        {
+          "clip": "backstep",
+          "frame": 5,
+          "edges_over_4x": 187,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.07110547775333781,
+          "max_useful_edge_ratio": 12.209792604202375
+        },
+        {
+          "clip": "backstep",
+          "frame": 7,
+          "edges_over_4x": 311,
+          "edges_over_10cm_excess": 1,
+          "max_edge_excess_m": 0.10696212680228484,
+          "max_useful_edge_ratio": 14.672501159852114
+        },
+        {
+          "clip": "backstep",
+          "frame": 10,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "guard",
+          "frame": 0,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "guard",
+          "frame": 1,
+          "edges_over_4x": 491,
+          "edges_over_10cm_excess": 21,
+          "max_edge_excess_m": 0.15341340178341892,
+          "max_useful_edge_ratio": 16.991184144267066
+        },
+        {
+          "clip": "guard",
+          "frame": 6,
+          "edges_over_4x": 505,
+          "edges_over_10cm_excess": 23,
+          "max_edge_excess_m": 0.1598195854107444,
+          "max_useful_edge_ratio": 17.048177496293324
+        },
+        {
+          "clip": "guard",
+          "frame": 10,
+          "edges_over_4x": 436,
+          "edges_over_10cm_excess": 14,
+          "max_edge_excess_m": 0.14177553601600137,
+          "max_useful_edge_ratio": 16.825322080497138
+        },
+        {
+          "clip": "guard",
+          "frame": 13,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "sidestep",
+          "frame": 0,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "sidestep",
+          "frame": 1,
+          "edges_over_4x": 414,
+          "edges_over_10cm_excess": 13,
+          "max_edge_excess_m": 0.1363874456338821,
+          "max_useful_edge_ratio": 18.612381628756612
+        },
+        {
+          "clip": "sidestep",
+          "frame": 4,
+          "edges_over_4x": 447,
+          "edges_over_10cm_excess": 24,
+          "max_edge_excess_m": 0.14534001341634906,
+          "max_useful_edge_ratio": 19.584590349847357
+        },
+        {
+          "clip": "sidestep",
+          "frame": 6,
+          "edges_over_4x": 362,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11528704178314517,
+          "max_useful_edge_ratio": 16.117249286389185
+        },
+        {
+          "clip": "sidestep",
+          "frame": 9,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "focus",
+          "frame": 0,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "focus",
+          "frame": 9,
+          "edges_over_4x": 172,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.09316920091954008,
+          "max_useful_edge_ratio": 16.061511147380543
+        },
+        {
+          "clip": "focus",
+          "frame": 14,
+          "edges_over_4x": 160,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.09098467381415526,
+          "max_useful_edge_ratio": 15.823461659263659
+        },
+        {
+          "clip": "focus",
+          "frame": 18,
+          "edges_over_4x": 230,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.09420445388840769,
+          "max_useful_edge_ratio": 16.264763803720083
+        },
+        {
+          "clip": "focus",
+          "frame": 21,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "recover",
+          "frame": 0,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "recover",
+          "frame": 3,
+          "edges_over_4x": 395,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.12066081793817837,
+          "max_useful_edge_ratio": 17.358296739131973
+        },
+        {
+          "clip": "recover",
+          "frame": 7,
+          "edges_over_4x": 198,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.0917550067564699,
+          "max_useful_edge_ratio": 15.89366119283025
+        },
+        {
+          "clip": "recover",
+          "frame": 10,
+          "edges_over_4x": 291,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.09675905023499737,
+          "max_useful_edge_ratio": 16.345959780569594
+        },
+        {
+          "clip": "recover",
+          "frame": 13,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "hit_light",
+          "frame": 0,
+          "edges_over_4x": 176,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.08797074642821416,
+          "max_useful_edge_ratio": 15.083901015186534
+        },
+        {
+          "clip": "hit_light",
+          "frame": 3,
+          "edges_over_4x": 195,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.08789584926716683,
+          "max_useful_edge_ratio": 15.014823632397082
+        },
+        {
+          "clip": "hit_light",
+          "frame": 9,
+          "edges_over_4x": 425,
+          "edges_over_10cm_excess": 8,
+          "max_edge_excess_m": 0.13246720816635923,
+          "max_useful_edge_ratio": 17.167322519203253
+        },
+        {
+          "clip": "hit_light",
+          "frame": 15,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 0,
+          "edges_over_4x": 156,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.09108494028385346,
+          "max_useful_edge_ratio": 15.760334497701967
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 5,
+          "edges_over_4x": 174,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.09621236775301491,
+          "max_useful_edge_ratio": 16.627718542170605
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 15,
+          "edges_over_4x": 382,
+          "edges_over_10cm_excess": 9,
+          "max_edge_excess_m": 0.1062580358087806,
+          "max_useful_edge_ratio": 17.688086762996235
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 24,
+          "edges_over_4x": 313,
+          "edges_over_10cm_excess": 1,
+          "max_edge_excess_m": 0.10556534854750246,
+          "max_useful_edge_ratio": 15.857322033809298
+        },
+        {
+          "clip": "hit_heavy",
+          "frame": 29,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "block",
+          "frame": 0,
+          "edges_over_4x": 387,
+          "edges_over_10cm_excess": 8,
+          "max_edge_excess_m": 0.12367999130185844,
+          "max_useful_edge_ratio": 14.95532863119874
+        },
+        {
+          "clip": "block",
+          "frame": 2,
+          "edges_over_4x": 380,
+          "edges_over_10cm_excess": 2,
+          "max_edge_excess_m": 0.11588070243364812,
+          "max_useful_edge_ratio": 14.333316928843773
+        },
+        {
+          "clip": "block",
+          "frame": 6,
+          "edges_over_4x": 451,
+          "edges_over_10cm_excess": 15,
+          "max_edge_excess_m": 0.14557714545659112,
+          "max_useful_edge_ratio": 16.884970271556266
+        },
+        {
+          "clip": "block",
+          "frame": 9,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "idle",
+          "frame": 0,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "idle",
+          "frame": 9,
+          "edges_over_4x": 346,
+          "edges_over_10cm_excess": 4,
+          "max_edge_excess_m": 0.1173711350123259,
+          "max_useful_edge_ratio": 16.102538640969474
+        },
+        {
+          "clip": "idle",
+          "frame": 18,
+          "edges_over_4x": 359,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11905828739545643,
+          "max_useful_edge_ratio": 16.42317085523342
+        },
+        {
+          "clip": "idle",
+          "frame": 27,
+          "edges_over_4x": 342,
+          "edges_over_10cm_excess": 2,
+          "max_edge_excess_m": 0.11566350998627362,
+          "max_useful_edge_ratio": 16.102538640969474
+        },
+        {
+          "clip": "idle",
+          "frame": 35,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "walk",
+          "frame": 0,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "walk",
+          "frame": 8,
+          "edges_over_4x": 383,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.12662762034522335,
+          "max_useful_edge_ratio": 16.991443838987113
+        },
+        {
+          "clip": "walk",
+          "frame": 17,
+          "edges_over_4x": 363,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.1211209325528862,
+          "max_useful_edge_ratio": 16.45515343335592
+        },
+        {
+          "clip": "walk",
+          "frame": 26,
+          "edges_over_4x": 438,
+          "edges_over_10cm_excess": 68,
+          "max_edge_excess_m": 0.14648104215802285,
+          "max_useful_edge_ratio": 25.903047422002814
+        },
+        {
+          "clip": "walk",
+          "frame": 35,
+          "edges_over_4x": 356,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.11835415653550649,
+          "max_useful_edge_ratio": 16.275455541527776
+        },
+        {
+          "clip": "ko",
+          "frame": 0,
+          "edges_over_4x": 156,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.09108494028385346,
+          "max_useful_edge_ratio": 15.760334497701967
+        },
+        {
+          "clip": "ko",
+          "frame": 7,
+          "edges_over_4x": 268,
+          "edges_over_10cm_excess": 1,
+          "max_edge_excess_m": 0.10420908083057168,
+          "max_useful_edge_ratio": 17.673714287722742
+        },
+        {
+          "clip": "ko",
+          "frame": 11,
+          "edges_over_4x": 158,
+          "edges_over_10cm_excess": 0,
+          "max_edge_excess_m": 0.0751723096227638,
+          "max_useful_edge_ratio": 12.207273226854328
+        },
+        {
+          "clip": "ko",
+          "frame": 15,
+          "edges_over_4x": 430,
+          "edges_over_10cm_excess": 5,
+          "max_edge_excess_m": 0.13397405729501166,
+          "max_useful_edge_ratio": 16.17875244357972
+        },
+        {
+          "clip": "ko",
+          "frame": 21,
+          "edges_over_4x": 620,
+          "edges_over_10cm_excess": 46,
+          "max_edge_excess_m": 0.16146830734611028,
+          "max_useful_edge_ratio": 19.885486792227642
+        },
+        {
+          "clip": "ko",
+          "frame": 27,
+          "edges_over_4x": 568,
+          "edges_over_10cm_excess": 28,
+          "max_edge_excess_m": 0.15511230304514098,
+          "max_useful_edge_ratio": 19.587712628001526
+        }
+      ],
+      "distinct_edges_over_10cm_excess": 143,
+      "max_edge_excess_m": 0.16146830734611028,
+      "worst_contact_edges": []
+    },
+    "imported_godot": {
+      "bone_count": 14,
+      "names_parents_and_rests_preserved": true,
+      "neutral_bone_rest_preserved": true,
+      "log": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作修正-原生3D\\logs\\skin-import-check-engine.log"
+    }
+  }
+}

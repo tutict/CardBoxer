@@ -1,0 +1,10 @@
+RUN 6.978s rc=0 errors=0
+ENV none FOE_INITIAL False
+STATE {'foe_materials': 0, 'foe_visual': False, 'light_rows': 4, 'mesh_rows': 1, 'role': 'foe', 'tag': 'off1'}
+STATE {'foe_materials': 0, 'foe_visual': True, 'light_rows': 4, 'mesh_rows': 1, 'role': 'foe', 'tag': 'forced'}
+STATE {'foe_materials': 0, 'foe_visual': False, 'light_rows': 4, 'mesh_rows': 1, 'role': 'foe', 'tag': 'restored'}
+DIFF off1_vs_off2_full {'changed_px': 0, 'total_px': 921600, 'ratio': 0.0}
+DIFF off1_vs_restored_full {'changed_px': 0, 'total_px': 921600, 'ratio': 0.0}
+DIFF off1_vs_forced_foe_roi {'changed_px': 16810, 'total_px': 33920, 'ratio': 0.4956}
+DIFF off1_vs_forced_player_roi {'changed_px': 0, 'total_px': 33390, 'ratio': 0.0}
+OFF_SWITCH_I_OK

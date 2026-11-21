@@ -1,0 +1,53 @@
+{
+  "cases": [
+    {
+      "id": "M1",
+      "desc": "A 图换成原截帧（角色根本没换）",
+      "verdict": "CAUGHT",
+      "target_red": "a_subject_region_actually_replaced",
+      "target_was_red": true,
+      "sentinel": "outputs_not_blank",
+      "sentinel_was_green": true,
+      "total_passed": 14,
+      "restored_sha_ok": true
+    },
+    {
+      "id": "M2",
+      "desc": "B 图第 2 张卡被涂改（越界改动）",
+      "verdict": "CAUGHT",
+      "target_red": "b_middle_three_cards_pixel_identical",
+      "target_was_red": true,
+      "sentinel": "b_card1_and_card5_actually_replaced",
+      "sentinel_was_green": true,
+      "total_passed": 13,
+      "restored_sha_ok": true
+    },
+    {
+      "id": "M3",
+      "desc": "manifest 里 CARD_W 改成 200（几何过期）",
+      "verdict": "CAUGHT",
+      "target_red": "geometry_matches_game_source",
+      "target_was_red": true,
+      "sentinel": "output_sha_matches_manifest",
+      "sentinel_was_green": true,
+      "total_passed": 15,
+      "restored_sha_ok": true
+    },
+    {
+      "id": "M4",
+      "desc": "A 图顶部 HUD 被涂改（越界改动）",
+      "verdict": "CAUGHT",
+      "target_red": "a_hud_untouched",
+      "target_was_red": true,
+      "sentinel": "a_subject_region_actually_replaced",
+      "sentinel_was_green": true,
+      "total_passed": 13,
+      "restored_sha_ok": true
+    }
+  ],
+  "caught": 4,
+  "total": 4,
+  "clean_rerun": true,
+  "clean_passed": 16,
+  "verdict": "MUTATION_OK"
+}

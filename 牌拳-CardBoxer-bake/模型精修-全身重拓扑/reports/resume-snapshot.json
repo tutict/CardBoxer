@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "task": "双角色全身重拓扑与精细化继续",
+  "captured": "2026-11-20T22:13:05.5597880+08:00",
+  "files": [
+    {
+      "path": "tools\\author_player.py",
+      "bytes": 33428,
+      "sha256": "010aaa101b9ddeb2f258d37b7a31b10f7f7d075f6705585ab613daf865b061d9",
+      "modified": "2026-11-20T17:00:30.5301354+08:00"
+    },
+    {
+      "path": "tools\\author_foe.py",
+      "bytes": 34932,
+      "sha256": "b263bd4e30d4f9625151497f7e8d513f112c823b55b282dd856e3d112c2639bb",
+      "modified": "2026-11-20T17:25:23.2253759+08:00"
+    },
+    {
+      "path": "tools\\canonical_glb.py",
+      "bytes": 16782,
+      "sha256": "85eb0df3fa38e3d9f81025ff6c2f093114a677c96469a24c485b66a1a9b0a482",
+      "modified": "2026-11-20T16:13:16.0627677+08:00"
+    },
+    {
+      "path": "tools\\check_retopology_assets.py",
+      "bytes": 12968,
+      "sha256": "9427caa80bc758897b8c074f480a38123aff0027e4d4327e6cb546bbca4ee833",
+      "modified": "2026-11-20T16:14:58.8719763+08:00"
+    },
+    {
+      "path": "tools\\pipeline_test.py",
+      "bytes": 8739,
+      "sha256": "c969865e7783cffb9facbfc86c27b2ce51da76b427a2c2b7bbf5a3c672077f18",
+      "modified": "2026-11-20T16:15:49.6367504+08:00"
+    },
+    {
+      "path": "authoring\\player\\player-raw.glb",
+      "bytes": 29851928,
+      "sha256": "4320e2bb2940d967af5b39dd2e76ed8cec21fb22e7388fe7d110b675d0c6927b",
+      "modified": "2026-11-20T17:26:28.1235346+08:00"
+    },
+    {
+      "path": "authoring\\foe\\foe-raw.glb",
+      "bytes": 36516292,
+      "sha256": "f25abddf501a257ab00283e205984ed10a433d8716f52cacad2640a5996ad824",
+      "modified": "2026-11-20T17:28:06.2351111+08:00"
+    },
+    {
+      "path": "authoring\\player\\player-retopology.blend",
+      "bytes": 72855979,
+      "sha256": "794b4852dd1701ff1518b4fc5e5e11a5d09c1264ed6e55edb307bc677938eed4",
+      "modified": "2026-11-20T17:26:28.2156835+08:00"
+    },
+    {
+      "path": "authoring\\foe\\foe-retopology.blend",
+      "bytes": 88339141,
+      "sha256": "c0c5f97c4826109c9101edc7ce418b46d1ab0f64cab84e5c62a05fd5ece88fb8",
+      "modified": "2026-11-20T17:28:04.8959453+08:00"
+    }
+  ]
+}

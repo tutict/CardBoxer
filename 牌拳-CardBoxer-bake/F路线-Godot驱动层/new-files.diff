@@ -1,0 +1,3023 @@
+===== build_rigged_glb.py =====
+"""阶段 2：给玩家高模补 skin，导出 Godot 能驱动的 GLB。
+
+E 路线的 player-full.glb 里 57,934 顶点高模没有 JOINTS_0/WEIGHTS_0，
+只有 14,070 顶点的 Voxel 代理壳挂了 13 骨 skin；Godot 里转骨架只会动
+那层溶蚀灰壳。这里把代理壳的 ARMATURE_AUTO 平滑权重用 Data Transfer
+回传原高模，再加 ARMATURE modifier，导出只含「高模 + 13 骨」的 GLB。
+
+复用拓扑修复探针V1 已验证的链（对手怪上覆盖 99.97%），不重新 Voxel：
+E 路线交付的 .blend 里代理壳已经是 3 壳 + 14,062/14,070 权重。
+
+只读 E 路线 .blend，不回写任何归档，不改游戏源码。
+用法：blender.exe -b --python build_rigged_glb.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import sys
+from pathlib import Path
+
+sys.dont_write_bytecode = True
+import bpy
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+E = BAKE / "E路线-玩家3D绑骨"
+BLEND = E / "玩家V4b-可变形连续壳.blend"
+OUT_GLB = HERE / "player-rigged.glb"
+OUT_JSON = HERE / "data" / "rigged_build.json"
+
+
+def log(*a):
+    print(*a, flush=True)
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def texture_inventory(obj) -> list[dict]:
+    out = []
+    for slot in obj.material_slots:
+        mat = slot.material
+        if mat and mat.use_nodes:
+            for n in mat.node_tree.nodes:
+                if n.type == "TEX_IMAGE" and n.image:
+                    out.append({"image": n.image.name,
+                                "size": list(n.image.size)})
+    return out
+
+
+def fresh_copy(src, name):
+    obj = src.copy()
+    obj.data = src.data.copy()
+    bpy.context.scene.collection.objects.link(obj)
+    obj.name = name
+    for m in list(obj.modifiers):
+        obj.modifiers.remove(m)
+    obj.vertex_groups.clear()
+    obj.parent = None
+    obj.hide_render = True
+    return obj
+
+
+def main() -> int:
+    assert BLEND.is_file(), BLEND
+    blend_sha = sha256(BLEND)
+    bpy.ops.wm.open_mainfile(filepath=str(BLEND))
+    scene = bpy.context.scene
+
+    src = next(o for o in scene.objects
+               if o.type == "MESH"
+               and any(m.type == "SURFACE_DEFORM" for m in o.modifiers))
+    shell = next(m for m in src.modifiers
+                 if m.type == "SURFACE_DEFORM").target
+    rig = next(o for o in scene.objects if o.type == "ARMATURE")
+
+    src_uv = len(src.data.uv_layers)
+    src_tex = texture_inventory(src)
+    bone_names = [b.name for b in rig.data.bones]
+    shell_groups = [g.name for g in shell.vertex_groups]
+    log("OPEN", src.name, len(src.data.vertices), "verts /",
+        shell.name, len(shell.data.vertices), "verts /",
+        rig.name, len(bone_names), "bones")
+    log("SHELL_GROUPS", shell_groups)
+    assert set(bone_names) == set(shell_groups), (
+        bone_names, shell_groups)
+
+    final = fresh_copy(src, "player_HI_skinned")
+    for name in bone_names:
+        final.vertex_groups.new(name=name)
+
+    mod = final.modifiers.new("weights_from_continuous_shell",
+                              "DATA_TRANSFER")
+    mod.object = shell
+    mod.use_vert_data = True
+    mod.data_types_verts = {"VGROUP_WEIGHTS"}
+    mod.vert_mapping = "POLYINTERP_NEAREST"
+    mod.layers_vgroup_select_src = "ALL"
+    mod.layers_vgroup_select_dst = "NAME"
+    bpy.ops.object.select_all(action="DESELECT")
+    final.select_set(True)
+    bpy.context.view_layer.objects.active = final
+    bpy.ops.object.modifier_apply(modifier=mod.name)
+
+    arm_mod = final.modifiers.new("player_rig", "ARMATURE")
+    arm_mod.object = rig
+
+    covered = sum(1 for v in final.data.vertices
+                  if any(g.weight > 1e-6 for g in v.groups))
+    total = len(final.data.vertices)
+    log("WEIGHTS", covered, "/", total,
+        round(covered / total * 100, 4), "%")
+    assets = {
+        "uv_layers": len(final.data.uv_layers),
+        "materials": len(final.data.materials),
+        "textures": texture_inventory(final),
+        "uv_same": len(final.data.uv_layers) == src_uv,
+        "textures_same": texture_inventory(final) == src_tex,
+    }
+    log("ASSETS", assets)
+    assert assets["uv_same"] and assets["textures_same"]
+    assert covered / total > 0.99, covered
+
+    # 只导出高模 + 骨架；原高模/代理壳/相机/灯都不选。
+    bpy.ops.object.select_all(action="DESELECT")
+    final.select_set(True)
+    rig.select_set(True)
+    bpy.context.view_layer.objects.active = final
+    result = bpy.ops.export_scene.gltf(
+        filepath=str(OUT_GLB),
+        export_format="GLB",
+        use_selection=True,
+        export_apply=False,          # 关键：不烘焙 ARMATURE，保留 skin
+        export_skins=True,
+        export_animations=False,
+        export_materials="EXPORT",
+        export_yup=True,
+        export_cameras=False,
+        export_lights=False,
+    )
+    log("EXPORT", list(result), OUT_GLB.stat().st_size, "B")
+    assert list(result) == ["FINISHED"]
+    assert OUT_GLB.is_file() and OUT_GLB.stat().st_size > 1_000_000
+
+    report = {
+        "blender": bpy.app.version_string,
+        "source_blend": str(BLEND),
+        "source_blend_sha256": blend_sha,
+        "source": {"object": src.name, "verts": len(src.data.vertices),
+                   "shells_before": None,
+                   "uv_layers": src_uv, "textures": src_tex,
+                   "vertex_groups": len(src.vertex_groups)},
+        "weight_source": {"object": shell.name,
+                          "verts": len(shell.data.vertices),
+                          "groups": shell_groups},
+        "rig": {"object": rig.name, "bones": bone_names},
+        "skinned": {"object": final.name, "verts": total,
+                    "weighted_verts": covered,
+                    "coverage_pct": round(covered / total * 100, 4),
+                    "assets": assets,
+                    "modifiers": [{"name": m.name, "type": m.type}
+                                  for m in final.modifiers]},
+        "export": {"file": OUT_GLB.name,
+                   "bytes": OUT_GLB.stat().st_size,
+                   "sha256": sha256(OUT_GLB),
+                   "export_apply": False,
+                   "export_skins": True,
+                   "operator_result": list(result)},
+    }
+    OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
+    OUT_JSON.write_text(json.dumps(report, ensure_ascii=False,
+                                   indent=2) + "\n", encoding="utf-8")
+    log("RIGGED_GLB_OK", report["skinned"]["coverage_pct"], "%")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== export_rig_frames.py =====
+"""阶段 3：导出 Godot 驱动层的「输入」与 Blender 端「基准」。
+
+分工（这是本方案的关键边界）：
+  · motion_input.json  = Godot 运行时真正读的输入：stance + 三卡逐帧
+    11 关节 + retarget mapping + 13 骨顺序。GDScript 自己实现
+    make_points / angle / retarget_delta / root 位移，不读烘死的动画。
+  · rig_frames.json    = Blender 端独立基准：pose_frame 每帧产出的
+    delta 角度、matrix_basis 的 quat/loc/scale、global pose translation。
+    Godot 侧只拿它做数值校验，不拿来驱动。
+
+用法：blender.exe -b --python export_rig_frames.py
+"""
+from __future__ import annotations
+
+import json
+import math
+import sys
+from pathlib import Path
+
+sys.dont_write_bytecode = True
+import bpy
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+E = BAKE / "E路线-玩家3D绑骨"
+sys.path.insert(0, str(BAKE / "C路线-真3D修复"))
+import c_build as C  # noqa: E402
+
+BLEND = E / "玩家V4b-可变形连续壳.blend"
+TABLE = BAKE / "baked2.json"
+SPEC = BAKE / "3D攻击GIF" / "apose_joints.json"
+MAPPING = BAKE / "3D攻击GIF" / "puppet_mapping.json"
+OUT_INPUT = HERE / "data" / "motion_input.json"
+OUT_FRAMES = HERE / "data" / "rig_frames.json"
+CARDS = (("jab", 14), ("cross", 22), ("wave", 36))
+
+
+def log(*a):
+    print(*a, flush=True)
+
+
+def main() -> int:
+    table = json.loads(TABLE.read_text(encoding="utf-8"))
+    mapping = json.loads(MAPPING.read_text(encoding="utf-8"))
+    spec = json.loads(SPEC.read_text(encoding="utf-8"))
+    stance = C.joints_of(table, None, 0)
+    P = C.apose_points({"foe": spec["player"]})
+
+    # 1) 运行时输入：只给原始 2D 关节表与 mapping，不给任何烘好的 pose。
+    tracks = {}
+    for card, n in CARDS:
+        src = table["cards"] if card in table["cards"] else table["motions"]
+        track = src[card]["track"]
+        assert len(track) >= n, (card, len(track), n)
+        tracks[card] = [
+            {k: [round(float(v[0]), 4), round(float(v[1]), 4)]
+             for k, v in C.joints_of(table, card, f).items()}
+            for f in range(n)]
+    motion = {
+        "source": "baked2.json",
+        "joint_names": list(C.JOINTS),
+        "stance": {k: [round(float(v[0]), 4), round(float(v[1]), 4)]
+                   for k, v in stance.items()},
+        "cards": {card: {"frames": n, "track": tracks[card]}
+                  for card, n in CARDS},
+        "mapping": {k: v for k, v in mapping.items()
+                    if not k.startswith("_")},
+        "bones": [n for n, _p, _u, _v in C.CHAIN],
+        "chain": [[n, p, u, v] for n, p, u, v in C.CHAIN],
+        "apose_points": {k: [round(float(v[0]), 6), round(float(v[1]), 6)]
+                         for k, v in P.items()},
+        "px_to_m": 0.01,
+    }
+    OUT_INPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT_INPUT.write_text(json.dumps(motion, ensure_ascii=False,
+                                    separators=(",", ":")) + "\n",
+                         encoding="utf-8")
+
+    # 2) Blender 端基准：逐帧 pose_frame 的 delta 与 matrix_basis。
+    bpy.ops.wm.open_mainfile(filepath=str(BLEND))
+    rig = next(o for o in bpy.context.scene.objects
+               if o.type == "ARMATURE")
+    frames = []
+    for card, frame in [(None, 0)] + [(c, f) for c, n in CARDS
+                                      for f in range(n)]:
+        delta, root, signals = C.pose_frame(
+            rig, P, table, stance, card, frame, mapping)
+        bones = {}
+        for name in motion["bones"]:
+            pb = rig.pose.bones[name]
+            loc, rot, scale = pb.matrix_basis.decompose()
+            bones[name] = {
+                "delta_deg": round(math.degrees(delta[name]), 5),
+                "quat": [round(float(v), 7) for v in
+                         (rot.w, rot.x, rot.y, rot.z)],
+                "loc": [round(float(v), 7) for v in loc],
+                "scale": [round(float(v), 7) for v in scale],
+                "global_pos": [round(float(v), 6) for v in
+                               pb.matrix.translation],
+            }
+        frames.append({
+            "card": card if card else "stance", "frame": frame,
+            "root_m": [round(float(v), 6) for v in root],
+            "signals": signals, "bones": bones,
+        })
+    baseline = {
+        "source_blend": str(BLEND),
+        "blender": bpy.app.version_string,
+        "algorithm": "c_build.pose_frame / retarget_delta",
+        "frame_count": len(frames),
+        "bones": motion["bones"],
+        "frames": frames,
+    }
+    OUT_FRAMES.write_text(json.dumps(baseline, ensure_ascii=False,
+                                     separators=(",", ":")) + "\n",
+                          encoding="utf-8")
+    log("MOTION_INPUT", OUT_INPUT.stat().st_size, "B")
+    log("RIG_FRAMES", OUT_FRAMES.stat().st_size, "B",
+        "frames", len(frames))
+    assert len(frames) == 1 + sum(n for _c, n in CARDS) == 73
+    log("RIG_FRAMES_OK")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== crosscheck_motion_input.py =====
+"""纯 Python 独立复算：motion_input.json 是否足以重建 retarget_delta。
+
+不 import c_build、不依赖 Blender；算法按公式重写，逐帧逐骨与
+rig_frames.json 的 Blender 基准 delta_deg 比对。这份实现同时是
+GDScript RigDriver.gd 的算法蓝本。
+"""
+from __future__ import annotations
+
+import json
+import math
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+DATA = HERE / "data"
+OUT = HERE / "data" / "motion_crosscheck.json"
+
+
+def lerp(a, b, t):
+    return (a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t)
+
+
+def angle(p, q):
+    return math.atan2(q[1] - p[1], q[0] - p[0])
+
+
+def wrap_pi(a):
+    return (a + math.pi) % (2 * math.pi) - math.pi
+
+
+def clamp(v, cap):
+    return max(-cap, min(cap, v))
+
+
+def make_points(j):
+    hip, sh, hd = j["hip"], j["shoulder"], j["head"]
+    return {
+        "A": hip, "B": lerp(hip, sh, 0.26), "C": lerp(hip, sh, 0.60),
+        "D": sh, "E": lerp(sh, hd, 0.58), "F": hd,
+        "f_elbow": j["f_elbow"], "f_hand": j["f_hand"],
+        "b_elbow": j["b_elbow"], "b_hand": j["b_hand"],
+        "f_knee": j["f_knee"], "f_foot": j["f_foot"],
+        "b_knee": j["b_knee"], "b_foot": j["b_foot"],
+        "tf_head": (hip[0] + 4.0, hip[1]),
+        "tb_head": (hip[0] - 4.0, hip[1]),
+    }
+
+
+def retarget(frame_j, stance_j, chain, mapping):
+    fp, sp = make_points(frame_j), make_points(stance_j)
+    raw = {n: math.degrees(wrap_pi(angle(fp[u], fp[v]) -
+                                   angle(sp[u], sp[v])))
+           for n, _p, u, v in chain}
+    torso = math.degrees(wrap_pi(angle(fp["A"], fp["D"]) -
+                                 angle(sp["A"], sp["D"])))
+    used = clamp(torso * mapping["torso_gain"], mapping["torso_cap_deg"])
+    mf = math.dist(frame_j["f_hand"], stance_j["f_hand"])
+    mb = math.dist(frame_j["b_hand"], stance_j["b_hand"])
+    tf = min(1.0, mf / mapping["reach_norm_px"])
+    tb = min(1.0, mb / mapping["reach_norm_px"])
+    tw = (min(1.0, min(mf, mb) / mapping["wave_min_norm_px"])
+          * mapping["wave_arm_weight"])
+    af, ab = max(tf, tw), max(tb, tw)
+    g, cap = mapping["arm_gain_deg"], mapping["leg_cap_deg"]
+    return {
+        "hips": 0.0, "spine": used, "chest": 0.0, "neck": 0.0,
+        "head": -used * mapping["head_compensation"],
+        "upperarm_f": -g["f_upper"] * af,
+        "forearm_f": -g["f_fore"] * af,
+        "upperarm_b": g["b_upper"] * ab,
+        "forearm_b": g["b_fore"] * ab,
+        "thigh_f": clamp(raw["thigh_f"], cap),
+        "shin_f": clamp(raw["shin_f"], cap),
+        "thigh_b": clamp(raw["thigh_b"], cap),
+        "shin_b": clamp(raw["shin_b"], cap),
+    }
+
+
+def main() -> int:
+    motion = json.loads((DATA / "motion_input.json").read_text(
+        encoding="utf-8"))
+    baseline = json.loads((DATA / "rig_frames.json").read_text(
+        encoding="utf-8"))
+    chain = motion["chain"]
+    mapping = motion["mapping"]
+    stance = motion["stance"]
+    assert len(baseline["frames"]) == 73
+
+    worst = 0.0
+    rows = []
+    for f in baseline["frames"]:
+        card = f["card"]
+        if card == "stance":
+            frame_j = stance
+        else:
+            frame_j = motion["cards"][card]["track"][f["frame"]]
+        calc = retarget(frame_j, stance, chain, mapping)
+        diffs = {n: abs(calc[n] - f["bones"][n]["delta_deg"])
+                 for n in motion["bones"]}
+        mx = max(diffs.values())
+        worst = max(worst, mx)
+        rows.append({"card": card, "frame": f["frame"],
+                     "max_abs_delta_deg": round(mx, 6)})
+        # root 位移也独立复算
+        dx = (frame_j["hip"][0] - stance["hip"][0]) * motion["px_to_m"]
+        dz = -(frame_j["hip"][1] - stance["hip"][1]) * motion["px_to_m"]
+        assert abs(dx - f["root_m"][0]) < 1e-6
+        assert abs(dz - f["root_m"][1]) < 1e-6
+    ok = worst < 1e-4 and len(rows) == 73
+    OUT.write_text(json.dumps({
+        "frames": len(rows), "worst_abs_delta_deg": round(worst, 7),
+        "tolerance_deg": 1e-4, "root_recomputed": True,
+        "ok": ok, "rows": rows,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"FRAMES={len(rows)} WORST_ABS_DELTA_DEG={worst:.7f} "
+          f"TOL=1e-4 ROOT_OK=True")
+    print("MOTION_INPUT_OK" if ok else "MOTION_INPUT_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== inspect_rigged_glb.py =====
+"""纯 Python 复核 player-rigged.glb：skin 是否真的挂在高模上。
+
+不依赖 Blender；解析 GLB 的 JSON chunk + BIN chunk，逐项验证
+primitive 属性、skin joints、贴图零重编码，并与 E 路线 player-full.glb
+对照。导出器警告「Armature must be the parent of skinned mesh」必须由
+这里的 node.skin / JOINTS_0 实据来判定有没有造成实际损害。
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import struct
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+E = BAKE / "E路线-玩家3D绑骨"
+GLB = HERE / "player-rigged.glb"
+REF = E / "player-full.glb"
+OUT = HERE / "data" / "rigged_gltf_inspection.json"
+
+
+def sha(b: bytes) -> str:
+    return hashlib.sha256(b).hexdigest()
+
+
+def parse(path: Path):
+    data = path.read_bytes()
+    assert struct.unpack_from("<I", data, 0)[0] == 0x46546C67, path
+    version, length = struct.unpack_from("<II", data, 4)
+    assert version == 2 and length == len(data)
+    off, chunks = 12, []
+    while off < len(data):
+        clen, ctype = struct.unpack_from("<I4s", data, off)
+        off += 8
+        chunks.append((ctype, data[off:off + clen]))
+        off += clen
+    js = json.loads(next(p for t, p in chunks if t == b"JSON").decode("utf-8"))
+    binary = next(p for t, p in chunks if t == b"BIN\x00")
+    return js, binary, len(data)
+
+
+def image_blobs(js, binary):
+    out = []
+    for i, im in enumerate(js.get("images", [])):
+        bv = js["bufferViews"][im["bufferView"]]
+        off = bv.get("byteOffset", 0)
+        blob = binary[off:off + bv["byteLength"]]
+        out.append({"index": i, "bytes": len(blob), "sha256": sha(blob),
+                    "name": im.get("name")})
+    return out
+
+
+def summarize(path: Path) -> dict:
+    js, binary, size = parse(path)
+    prims = []
+    for mi, mesh in enumerate(js.get("meshes", [])):
+        for pi, prim in enumerate(mesh.get("primitives", [])):
+            acc = js["accessors"][prim["attributes"]["POSITION"]]
+            prims.append({
+                "mesh": mi, "primitive": pi,
+                "attributes": sorted(prim["attributes"].keys()),
+                "verts": acc["count"],
+                "has_joints": "JOINTS_0" in prim["attributes"],
+                "has_weights": "WEIGHTS_0" in prim["attributes"],
+                "pos_min": acc.get("min"), "pos_max": acc.get("max"),
+            })
+    skinned_nodes = [
+        {"node": i, "name": n.get("name"),
+         "skin": n.get("skin"), "mesh": n.get("mesh")}
+        for i, n in enumerate(js.get("nodes", []))
+        if "skin" in n]
+    skins = [{"joints": len(s.get("joints", [])),
+              "inverse_bind": len(s.get("inverseBindMatrices", [])) if isinstance(
+                  s.get("inverseBindMatrices"), list) else "accessor"}
+             for s in js.get("skins", [])]
+    return {
+        "file": path.name, "bytes": size, "sha256": sha(path.read_bytes()),
+        "counts": {k: len(js.get(k, [])) for k in
+                   ("scenes", "nodes", "meshes", "materials", "textures",
+                    "images", "skins", "animations", "accessors")},
+        "primitives": prims,
+        "skinned_nodes": skinned_nodes,
+        "skins": skins,
+        "images": image_blobs(js, binary),
+        "joint_node_names": [js["nodes"][j].get("name")
+                             for j in js.get("skins", [{}])[0].get("joints", [])]
+        if js.get("skins") else [],
+    }
+
+
+def main() -> int:
+    rigged = summarize(GLB)
+    ref = summarize(REF)
+    out = {"rigged": rigged, "reference_player_full": ref,
+           "verdict": {}}
+    skinned_hi = [p for p in rigged["primitives"]
+                  if p["has_joints"] and p["verts"] > 50000]
+    out["verdict"] = {
+        "highpoly_has_skin": bool(skinned_hi),
+        "highpoly_verts": skinned_hi[0]["verts"] if skinned_hi else None,
+        "skinned_nodes": len(rigged["skinned_nodes"]),
+        "skin_joints": rigged["skins"][0]["joints"] if rigged["skins"] else 0,
+        "images_zero_reencode": all(
+            any(i["sha256"] == r["sha256"] for r in ref["images"])
+            for i in rigged["images"]),
+        "reference_highpoly_has_skin": any(
+            p["has_joints"] and p["verts"] > 50000
+            for p in ref["primitives"]),
+    }
+    v = out["verdict"]
+    ok = (v["highpoly_has_skin"] and v["skinned_nodes"] >= 1
+          and v["skin_joints"] >= 13
+          and v["images_zero_reencode"]
+          and not v["reference_highpoly_has_skin"])
+    out["ok"] = ok
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    print("RIGGED", json.dumps(v, ensure_ascii=False))
+    print("SKINNED_NODES", rigged["skinned_nodes"])
+    print("JOINTS", rigged["joint_node_names"])
+    print("PRIMS", [(p["verts"], p["has_joints"]) for p in
+                    rigged["primitives"]])
+    print("RIGGED_GLTF_OK" if ok else "RIGGED_GLTF_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== probe_rig_basis.py =====
+"""阶段 1 诊断：Blender 端 pose_frame 产出的骨骼局部变换长什么样。
+
+要回答三个问题，决定 GDScript 驱动层怎么写：
+  1. A-pose rest 13 骨在 armature space 的 head/tail 坐标；
+  2. 一帧驱动后每根骨的 matrix_basis（loc/quat/scale）形态；
+  3. matrix_basis 的旋转轴/角度是否就是 retarget_delta 的 delta。
+
+只读 E 路线交付的 .blend，不回写任何归档。
+用法：blender.exe -b --python probe_rig_basis.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import math
+import sys
+from pathlib import Path
+
+sys.dont_write_bytecode = True
+import bpy
+from mathutils import Vector
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+E = BAKE / "E路线-玩家3D绑骨"
+sys.path.insert(0, str(BAKE / "C路线-真3D修复"))
+import c_build as C  # noqa: E402
+
+BLEND = E / "玩家V4b-可变形连续壳.blend"
+TABLE = BAKE / "baked2.json"
+SPEC = BAKE / "3D攻击GIF" / "apose_joints.json"
+MAPPING = BAKE / "3D攻击GIF" / "puppet_mapping.json"
+OUT = HERE / "data" / "rig_basis_probe.json"
+
+
+def q_row(name: str, pb, delta: float) -> dict:
+    loc, rot, scale = pb.matrix_basis.decompose()
+    axis = rot.axis
+    ang = math.degrees(rot.angle)
+    return {
+        "bone": name,
+        "delta_deg": round(math.degrees(delta), 4),
+        "loc": [round(v, 6) for v in loc],
+        "quat": [round(v, 6) for v in (rot.w, rot.x, rot.y, rot.z)],
+        "quat_axis": [round(v, 5) for v in axis],
+        "quat_angle_deg": round(ang, 4),
+        "scale": [round(v, 6) for v in scale],
+        "rest_head": [round(v, 5) for v in pb.bone.head_local],
+        "rest_tail": [round(v, 5) for v in pb.bone.tail_local],
+        "global_pose_translation": [
+            round(v, 6) for v in pb.matrix.translation],
+    }
+
+
+def main() -> int:
+    spec = json.loads(SPEC.read_text(encoding="utf-8"))
+    table = json.loads(TABLE.read_text(encoding="utf-8"))
+    mapping = json.loads(MAPPING.read_text(encoding="utf-8"))
+    P = C.apose_points({"foe": spec["player"]})
+    stance = C.joints_of(table, None, 0)
+
+    bpy.ops.wm.open_mainfile(filepath=str(BLEND))
+    scene = bpy.context.scene
+    rig = next(o for o in scene.objects if o.type == "ARMATURE")
+    hi = next(o for o in scene.objects
+              if o.type == "MESH"
+              and any(m.type == "SURFACE_DEFORM" for m in o.modifiers))
+    shell = next(m for m in hi.modifiers
+                 if m.type == "SURFACE_DEFORM").target
+    print("OPEN", BLEND.name, "rig", rig.name,
+          "bones", len(rig.pose.bones),
+          "hi_verts", len(hi.data.vertices),
+          "shell_verts", len(shell.data.vertices))
+    print("SHELL_GROUPS", [g.name for g in shell.vertex_groups])
+    print("HI_GROUPS", [g.name for g in hi.vertex_groups])
+
+    frames = []
+    for card, frame in ((None, 0), ("jab", 6), ("cross", 10),
+                        ("wave", 17)):
+        delta, root, signals = C.pose_frame(
+            rig, P, table, stance, card, frame, mapping)
+        rows = [q_row(n, rig.pose.bones[n], delta[n])
+                for n, _p, _u, _v in C.CHAIN]
+        frames.append({"card": card, "frame": frame, "root": root,
+                       "signals": signals, "bones": rows})
+        print("FRAME", card, frame,
+              "max_abs_quat_deg",
+              round(max(abs(r["quat_angle_deg"]) for r in rows), 3),
+              "max_abs_delta_deg",
+              round(max(abs(r["delta_deg"]) for r in rows), 3))
+
+    out = {
+        "blend": str(BLEND),
+        "blend_sha256": hashlib.sha256(BLEND.read_bytes()).hexdigest(),
+        "bone_names": [b.name for b in rig.data.bones],
+        "hi_verts": len(hi.data.vertices),
+        "shell_verts": len(shell.data.vertices),
+        "shell_groups": [g.name for g in shell.vertex_groups],
+        "hi_groups": [g.name for g in hi.vertex_groups],
+        "apose_points": {k: [round(v, 6) for v in p]
+                         for k, p in P.items()},
+        "frames": frames,
+    }
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    print("RIG_BASIS_PROBE_OK", OUT.stat().st_size)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== run_probe_rig.py =====
+"""阶段 4a：把带 skin 的 GLB 与运动输入放进隔离工程，headless 量骨骼基底。
+
+只读 F 路线已交付的 player-rigged.glb / motion_input.json，不回写归档；
+Godot 编辑器导入可以 headless，渲染才需要带窗口。
+用法：python run_probe_rig.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+PROJECT = HERE / "probe_project_f"
+ASSETS = PROJECT / "assets"
+DATA = PROJECT / "data"
+LOGS = HERE / "logs"
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+GLB = "player-rigged.glb"
+MOTION = "motion_input.json"
+OUT = HERE / "data" / "godot_rig_probe.json"
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def run(cmd: list[str], env: dict, timeout: int, log: Path):
+    t0 = time.perf_counter()
+    try:
+        r = subprocess.run(cmd, env=env, capture_output=True, timeout=timeout)
+        code, out, err = r.returncode, r.stdout, r.stderr
+    except subprocess.TimeoutExpired as exc:
+        code = -1
+        out = exc.stdout or b""
+        err = (exc.stderr or b"") + b"\n=== TIMEOUT ===\n"
+    text = (out + b"\n=== STDERR ===\n" + err).decode("utf-8", "replace")
+    log.write_text(text, encoding="utf-8")
+    return round(time.perf_counter() - t0, 3), code, text
+
+
+def main() -> int:
+    assert GODOT.is_file(), GODOT
+    for d in (ASSETS, DATA, LOGS, OUT.parent):
+        d.mkdir(parents=True, exist_ok=True)
+
+    copies = []
+    for src, dst in ((HERE / GLB, ASSETS / GLB),
+                     (HERE / "data" / MOTION, DATA / MOTION)):
+        assert src.is_file(), src
+        shutil.copyfile(src, dst)
+        copies.append({"src": str(src), "dst": str(dst),
+                       "bytes": dst.stat().st_size,
+                       "sha256": sha256(src),
+                       "identical": sha256(src) == sha256(dst)})
+    assert all(c["identical"] for c in copies), copies
+
+    env = os.environ.copy()
+    dt_import, rc_import, _ = run(
+        [str(GODOT), "--headless", "--editor", "--quit",
+         "--path", str(PROJECT)],
+        env, 300, LOGS / "godot_editor_import_f.log")
+    import_ok = (ASSETS / (GLB + ".import")).is_file()
+
+    dt_probe, rc_probe, log_probe = run(
+        [str(GODOT), "--headless", "--path", str(PROJECT),
+         "--script", "res://probes/probe_rig.gd"],
+        env, 300, LOGS / "godot_probe_rig.log")
+
+    marker = "RIG_JSON "
+    line = next((l for l in log_probe.splitlines()
+                 if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no RIG_JSON"}
+    errors = log_probe.count("SCRIPT ERROR")
+    ok = (rc_import == 0 and import_ok and rc_probe == 0 and errors == 0
+          and payload.get("load_ok") is True
+          and payload.get("skeleton_found") is True
+          and payload.get("bone_count") == 14
+          and payload.get("pose_writable") is True)
+    out = {
+        "godot": str(GODOT),
+        "probe_project": str(PROJECT),
+        "copies": copies,
+        "editor_import": {"seconds": dt_import, "returncode": rc_import,
+                          "import_file": import_ok},
+        "probe": {"seconds": dt_probe, "returncode": rc_probe,
+                  "script_errors": errors, "headless": True},
+        "rig": payload,
+        "ok": ok,
+    }
+    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    print(f"IMPORT rc={rc_import} {dt_import}s file={import_ok}")
+    print(f"PROBE  rc={rc_probe} {dt_probe}s errors={errors}")
+    print(f"BONES  {payload.get('bone_count')} "
+          f"writable={payload.get('pose_writable')} "
+          f"meshes={len(payload.get('meshes', []))}")
+    print("GODOT_RIG_PROBE_OK" if ok else "GODOT_RIG_PROBE_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== run_probe_drive.py =====
+"""阶段 4b 驱动：带窗口跑 73 帧驱动探针，落盘数值结果。
+
+必须带窗口：headless 不发 frame_post_draw，Skeleton3D 的 global pose
+脏标记不刷新，get_bone_global_pose 会一直返回 rest。
+用法：python run_probe_drive.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import subprocess
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+PROJECT = HERE / "probe_project_f"
+LOGS = HERE / "logs"
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+OUT = HERE / "data" / "godot_drive_probe.json"
+
+
+def run(cmd: list[str], env: dict, timeout: int, log: Path):
+    t0 = time.perf_counter()
+    try:
+        r = subprocess.run(cmd, env=env, capture_output=True, timeout=timeout)
+        code, out, err = r.returncode, r.stdout, r.stderr
+    except subprocess.TimeoutExpired as exc:
+        code = -1
+        out = exc.stdout or b""
+        err = (exc.stderr or b"") + b"\n=== TIMEOUT ===\n"
+    text = (out + b"\n=== STDERR ===\n" + err).decode("utf-8", "replace")
+    log.write_text(text, encoding="utf-8")
+    return round(time.perf_counter() - t0, 3), code, text
+
+
+def main() -> int:
+    assert GODOT.is_file(), GODOT
+    LOGS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    dt, rc, log = run(
+        [str(GODOT), "--path", str(PROJECT),
+         "--resolution", "900x1100",
+         "--script", "res://probes/probe_drive.gd",
+         "--quit-after", "120000"],
+        env, 300, LOGS / "godot_probe_drive.log")
+    marker = "DRIVE_JSON "
+    line = next((l for l in log.splitlines() if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no DRIVE_JSON"}
+    errors = log.count("SCRIPT ERROR")
+    has_gl = "OpenGL API" in log
+    ok = (rc == 0 and errors == 0 and has_gl
+          and payload.get("frame_count") == 73
+          and payload.get("frames_applied") == 73
+          and payload.get("bone_count") == 14)
+    OUT.write_text(json.dumps({
+        "godot": str(GODOT),
+        "probe": {"seconds": dt, "returncode": rc,
+                  "script_errors": errors, "headless": False,
+                  "has_opengl": has_gl},
+        "result": payload,
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"DRIVE rc={rc} {dt}s errors={errors} gl={has_gl} "
+          f"frames={payload.get('frame_count')} "
+          f"bones={payload.get('bone_count')} "
+          f"applied={payload.get('frames_applied')}")
+    print("GODOT_DRIVE_PROBE_OK" if ok else "GODOT_DRIVE_PROBE_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== crosscheck_godot_pose.py =====
+"""纯 Python 独立复算：Godot 运行时驱动层是否与 Blender 端数学等价。
+
+三重对账，任一超差即判失败：
+  ① delta_deg      : GDScript 现算 vs rig_frames.json 的 Blender 基准
+  ② calc vs engine : GDScript 自算 global origin vs Godot 引擎读回 global pose
+  ③ engine vs base : Godot 引擎读回 vs Blender global_pos（坐标映射 x,z,-y）
+
+另外两条承重判据：
+  ④ neutral_bone 驱动前后 pose 完全不变（其初值不是 identity，是一个
+     -90° X 旋转；第一版拿 identity 当基准，误报过一次）。
+  ⑤ pose_readback 逐帧随驱动变化，证明不是「只算不写」。
+
+坐标口径由 data/godot_rig_probe.json 实测：
+  Godot (X,Y,Z) = Blender (x, z, -y)，即 export_yup=True 的 Z-up -> Y-up。
+
+不 import Blender/c_build，不依赖 Godot，只读 JSON 独立算。
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+DATA = HERE / "data"
+DRIVE = DATA / "godot_drive_probe.json"
+BASELINE = DATA / "rig_frames.json"
+RIG = DATA / "godot_rig_probe.json"
+OUT = DATA / "godot_pose_crosscheck.json"
+
+TOL_DEG = 1e-4
+TOL_M = 2e-4       # 6 位小数 JSON + float32 骨骼矩阵，实测余量见报告
+
+
+def mapped(bpos):
+    """Blender [x,y,z] -> Godot [x,z,-y]."""
+    return [bpos[0], bpos[2], -bpos[1]]
+
+
+def max_abs(a, b):
+    return max(abs(x - y) for x, y in zip(a, b))
+
+
+def main() -> int:
+    drive = json.loads(DRIVE.read_text(encoding="utf-8"))
+    baseline = json.loads(BASELINE.read_text(encoding="utf-8"))
+    rig = json.loads(RIG.read_text(encoding="utf-8"))
+    result = drive["result"]
+    frames = result["frames"]
+    base_frames = baseline["frames"]
+    assert drive["ok"] is True
+    assert len(frames) == len(base_frames) == 73
+    assert rig["ok"] is True
+
+    bones = result["bones"]
+    worst_delta = 0.0
+    worst_calc_engine = 0.0
+    worst_engine_base = 0.0
+    rows = []
+    for got, ref in zip(frames, base_frames):
+        assert got["card"] == ref["card"], (got["card"], ref["card"])
+        assert got["frame"] == ref["frame"]
+        d_delta = max(abs(got["delta_deg"][n] - ref["bones"][n]["delta_deg"])
+                      for n in bones)
+        d_ce = max(max_abs(got["calc_global_origin"][n],
+                           got["engine_global_origin"][n]) for n in bones)
+        d_eb = max(max_abs(got["engine_global_origin"][n],
+                           mapped(ref["bones"][n]["global_pos"]))
+                   for n in bones)
+        worst_delta = max(worst_delta, d_delta)
+        worst_calc_engine = max(worst_calc_engine, d_ce)
+        worst_engine_base = max(worst_engine_base, d_eb)
+        rows.append({"card": got["card"], "frame": got["frame"],
+                     "delta_deg": round(d_delta, 7),
+                     "calc_vs_engine_m": round(d_ce, 7),
+                     "engine_vs_blender_m": round(d_eb, 7)})
+
+    worst_root = max(max_abs(g["root_m"], r["root_m"])
+                     for g, r in zip(frames, base_frames))
+
+    # neutral_bone：驱动前后 must be identical（不是 identity）。
+    ns, ne = result["neutral_start"], result["neutral_end"]
+    neutral_ok = (len(ns) == 10 and ns == ne
+                  and abs(ns[0] - 0.707107) < 1e-5
+                  and abs(ns[1] + 0.707107) < 1e-5)
+    neutral_matches_import = (len(ns) == 10
+                              and max_abs(ns[:4],
+                                          rig["rig"]["bones"][13]["pose_rotation"])
+                              < 1e-5
+                              and max_abs(ns[4:7],
+                                          rig["rig"]["bones"][13]["pose_position"])
+                              < 1e-5)
+
+    # pose_readback：每张卡挑 |delta| 最大的那一帧与 stance 比。
+    # 不能挑卡的第 0 帧——三卡首帧 delta 全是 0（动作起始），
+    # 拿它比 stance 只会误报「没写进去」。
+    def pose_of(i):
+        return [v for n in bones for v in frames[i]["pose_readback"][n]]
+    stance_pose = pose_of(0)
+    pick = {}
+    for card in ("jab", "cross", "wave"):
+        candidates = [(i, f) for i, f in enumerate(frames)
+                      if f["card"] == card]
+        i, _f = max(candidates, key=lambda t: max(
+            abs(v) for v in t[1]["delta_deg"].values()))
+        pick[card] = i
+    changed = {c: max_abs(stance_pose, pose_of(i)) > 1e-4
+               for c, i in pick.items()}
+    all_cards_changed = (len(changed) == 3 and all(changed.values()))
+    # 写入即读回：每骨 pose_readback 长度 = quat4 + pos3
+    readback_shape_ok = all(len(frames[i]["pose_readback"][n]) == 7
+                            for i in range(len(frames)) for n in bones)
+
+    checks = {
+        "frame_count_73": len(frames) == 73,
+        "frames_applied_73": result["frames_applied"] == 73,
+        "bone_count_14": result["bone_count"] == 14,
+        "bones_driven_13": len(bones) == 13,
+        "delta_matches_blender": worst_delta < TOL_DEG,
+        "calc_matches_engine": worst_calc_engine < TOL_M,
+        "engine_matches_blender": worst_engine_base < TOL_M,
+        "root_matches_blender": worst_root < TOL_M,
+        "neutral_bone_untouched": neutral_ok,
+        "neutral_matches_import": neutral_matches_import,
+        "pose_actually_written": all_cards_changed,
+        "pose_readback_shape": readback_shape_ok,
+        "windowed_render": drive["probe"]["has_opengl"] is True
+                           and drive["probe"]["headless"] is False,
+    }
+    ok = all(checks.values())
+    OUT.write_text(json.dumps({
+        "tolerances": {"deg": TOL_DEG, "m": TOL_M},
+        "worst": {
+            "delta_deg": round(worst_delta, 7),
+            "calc_vs_engine_m": round(worst_calc_engine, 7),
+            "engine_vs_blender_m": round(worst_engine_base, 7),
+            "root_m": round(worst_root, 7),
+        },
+        "cards_pose_changed": changed,
+        "neutral_start": ns,
+        "neutral_end": ne,
+        "checks": checks,
+        "frames": len(rows),
+        "rows": rows,
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    for k, v in checks.items():
+        print(f"  {'PASS' if v else 'FAIL'}  {k}")
+    print(f"WORST delta={worst_delta:.7f}deg "
+          f"calc_vs_engine={worst_calc_engine:.7f}m "
+          f"engine_vs_blender={worst_engine_base:.7f}m "
+          f"root={worst_root:.7f}m")
+    print("GODOT_POSE_CROSSCHECK_OK" if ok else "GODOT_POSE_CROSSCHECK_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== run_render_f.py =====
+"""阶段 5 驱动：带窗口跑引擎内 9 帧截帧，落盘 PNG 与报告。
+
+用法：python run_render_f.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import subprocess
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+PROJECT = HERE / "probe_project_f"
+SHOTS = HERE / "shots"
+LOGS = HERE / "logs"
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+OUT = HERE / "data" / "godot_render_f.json"
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def run(cmd: list[str], env: dict, timeout: int, log: Path):
+    t0 = time.perf_counter()
+    try:
+        r = subprocess.run(cmd, env=env, capture_output=True, timeout=timeout)
+        code, out, err = r.returncode, r.stdout, r.stderr
+    except subprocess.TimeoutExpired as exc:
+        code = -1
+        out = exc.stdout or b""
+        err = (exc.stderr or b"") + b"\n=== TIMEOUT ===\n"
+    text = (out + b"\n=== STDERR ===\n" + err).decode("utf-8", "replace")
+    log.write_text(text, encoding="utf-8")
+    return round(time.perf_counter() - t0, 3), code, text
+
+
+def main() -> int:
+    assert GODOT.is_file(), GODOT
+    SHOTS.mkdir(parents=True, exist_ok=True)
+    LOGS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    env["F_SHOT_DIR"] = str(SHOTS)
+    dt, rc, log = run(
+        [str(GODOT), "--path", str(PROJECT),
+         "--resolution", "900x1100",
+         "--script", "res://probes/render_driven.gd",
+         "--quit-after", "6000"],
+        env, 300, LOGS / "godot_render_driven.log")
+    marker = "RENDER_JSON "
+    line = next((l for l in log.splitlines() if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no RENDER_JSON"}
+    rows = payload.get("shots", [])
+    pngs = []
+    for row in rows:
+        p = Path(row["path"])
+        pngs.append({
+            "name": row["name"], "seq": row["seq"], "yaw": row["yaw"],
+            "card": row["card"], "frame": row["frame"],
+            "root_m": row["root_m"],
+            "path": str(p), "exists": p.is_file(),
+            "bytes": p.stat().st_size if p.is_file() else 0,
+            "sha256": sha256(p) if p.is_file() else "",
+            "w": row.get("w"), "h": row.get("h"),
+            "save_error": row.get("save_error"),
+        })
+    has_gl = "OpenGL API" in log
+    errors = log.count("SCRIPT ERROR")
+    ok = (rc == 0 and has_gl and errors == 0 and "error" not in payload
+          and payload.get("stage_ready") is True
+          and len(pngs) == 9
+          and all(x["exists"] and x["bytes"] > 20000
+                  and x["save_error"] == 0
+                  and x["w"] == 900 and x["h"] == 1100 for x in pngs))
+    OUT.write_text(json.dumps({
+        "godot": str(GODOT),
+        "probe_project": str(PROJECT),
+        "main_scene": "res://scenes/player_driven.tscn",
+        "render": {"seconds": dt, "returncode": rc,
+                   "has_opengl": has_gl, "script_errors": errors,
+                   "headless": False},
+        "stage_ready": payload.get("stage_ready"),
+        "frames_applied": payload.get("frames_applied"),
+        "pngs": pngs,
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    for x in pngs:
+        print(f"SHOT {x['name']:<20} {x['w']}x{x['h']} "
+              f"{x['bytes']:>8} B err={x['save_error']} "
+              f"card={x['card']}/{x['frame']}")
+    print(f"RENDER seconds={dt} rc={rc} gl={has_gl} errs={errors} "
+          f"stage_ready={payload.get('stage_ready')} shots={len(pngs)}")
+    print("GODOT_RENDER_F_OK" if ok else "GODOT_RENDER_F_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== verify_f.py =====
+"""F 路线承重判据：Godot 侧 14 骨运行时驱动层。
+
+四层判据，任一 FAIL 即整体验证失败：
+  A 源码形状  —— 驱动层必须现算 retarget、不得读烘死 pose/动画
+  B 资产      —— player-rigged.glb 带 skin / 14 joints / 0 animations
+  C 数值      —— 73 帧三重对账（delta / calc-engine / engine-Blender）
+  D 像素      —— 引擎内 9 帧 PNG 真实变化、重复帧确定性、非空白
+
+另外三条边界：
+  E 可运行游戏工程零改动（3D 资产数 0）
+  F 交付文件清单稳定（不含自身日志/清单）
+用法：python verify_f.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import math
+from pathlib import Path
+
+from PIL import Image, ImageChops, ImageStat
+
+HERE = Path(__file__).resolve().parent
+BAKE = HERE.parent
+DATA = HERE / "data"
+PROBE = HERE / "probe_project_f"
+SHOTS = HERE / "shots"
+LOGS = HERE / "logs"
+GAME = BAKE.parent / "牌拳-CardBoxer"
+GAME_BASELINE = BAKE / "E路线-玩家3D绑骨" / "baseline_e.json"
+# 结论写 logs/（清单已排除）——否则判据自己重写被清单钉住的文件，
+# 会让「清单逐项 sha 自洽」永远假绿。
+OUT = LOGS / "verify_f.json"
+
+
+def read(p: Path) -> str:
+    return p.read_text(encoding="utf-8")
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def j(p: Path):
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def changed_px(a: Image.Image, b: Image.Image, thr: int = 6) -> int:
+    d = ImageChops.difference(a.convert("RGB"), b.convert("RGB"))
+    m = d.convert("L").point(lambda x: 255 if x > thr else 0)
+    return m.histogram()[255]
+
+
+def mean_abs(a: Image.Image, b: Image.Image) -> float:
+    d = ImageChops.difference(a.convert("RGB"), b.convert("RGB"))
+    st = ImageStat.Stat(d)
+    return round(sum(st.mean) / 3.0, 4)
+
+
+def main() -> int:
+    checks: dict[str, bool] = {}
+    notes: dict = {}
+
+    # ---------- A 源码形状 ----------
+    drv = read(PROBE / "scenes" / "rig_driver.gd")
+    scene = read(PROBE / "scenes" / "player_driven.gd")
+    drive_probe = read(PROBE / "probes" / "probe_drive.gd")
+    render_probe = read(PROBE / "probes" / "render_driven.gd")
+    motion_in_probe = PROBE / "data" / "motion_input.json"
+
+    checks["A01_driver_exists"] = len(drv) > 3000
+    checks["A02_retarget_in_gdscript"] = all(
+        k in drv for k in ("func retarget_delta", "func make_points",
+                           "wrap_pi", "torso_gain", "arm_gain_deg",
+                           "leg_cap_deg", "reach_norm_px"))
+    checks["A03_no_baked_pose_in_driver"] = all(
+        k not in drv for k in ("rig_frames", "quat_", "animation",
+                               "AnimationPlayer", "get_bone_pose_rotation("))
+    checks["A04_correct_pose_basis"] = (
+        "gr_parent.affine_inverse() * local * gr" in drv
+        and "pose_mat = c * gr" in drv)
+    checks["A05_z_axis_neg_delta"] = (
+        "Quaternion(Vector3(0.0, 0.0, 1.0), theta)" in drv
+        and "var theta := -deg_to_rad" in drv)
+    checks["A06_13_bones_only"] = (
+        "bone_names.size() == 13 and chain.size() == 13" in drv
+        and "neutral_bone" in drv)
+    checks["A07_scene_preloads_driver"] = (
+        'preload("res://scenes/rig_driver.gd")' in scene
+        and "RigDriverScript.new()" in scene)
+    checks["A08_scene_reads_motion_only"] = (
+        'MOTION_PATH := "res://data/motion_input.json"' in scene
+        and "rig_frames" not in scene and "AnimationPlayer" not in scene)
+    checks["A09_scene_autoplay"] = (
+        "auto_play" in scene and "PLAY_FPS" in scene
+        and "func apply(index: int)" in scene)
+    checks["A10_motion_copy_identical"] = (
+        motion_in_probe.is_file()
+        and sha256(motion_in_probe) == sha256(DATA / "motion_input.json"))
+    checks["A11_drive_probe_has_73"] = (
+        '["stance", 0]' in drive_probe
+        and 'for card in ["jab", "cross", "wave"]' in drive_probe)
+    checks["A12_render_uses_main_scene"] = (
+        'SCENE_PATH := "res://scenes/player_driven.tscn"' in render_probe
+        and "stage.set(\"auto_play\", false)" in render_probe)
+    # 驱动层不得自己 import Blender 侧算法模块
+    checks["A13_no_blender_import"] = (
+        "import c_build" not in drv and "bpy" not in drv)
+
+    # 独立复算 motion_input 自洽（内联实现，不写任何文件、不依赖
+    # Godot / Blender / crosscheck_motion_input.py 的产物 JSON）。
+    motion = j(DATA / "motion_input.json")
+    frames_ref = j(DATA / "rig_frames.json")["frames"]
+    chain, mp = motion["chain"], motion["mapping"]
+    st = motion["stance"]
+
+    def lerp2(a, b, t):
+        return (a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t)
+
+    def ang(p, q):
+        return math.atan2(q[1] - p[1], q[0] - p[0])
+
+    def wrapi(a):
+        return (a + math.pi) % (2 * math.pi) - math.pi
+
+    def pts(x):
+        hip, sh, hd = x["hip"], x["shoulder"], x["head"]
+        return {"A": hip, "B": lerp2(hip, sh, 0.26),
+                "C": lerp2(hip, sh, 0.60), "D": sh,
+                "E": lerp2(sh, hd, 0.58), "F": hd,
+                "f_elbow": x["f_elbow"], "f_hand": x["f_hand"],
+                "b_elbow": x["b_elbow"], "b_hand": x["b_hand"],
+                "f_knee": x["f_knee"], "f_foot": x["f_foot"],
+                "b_knee": x["b_knee"], "b_foot": x["b_foot"],
+                "tf_head": (hip[0] + 4.0, hip[1]),
+                "tb_head": (hip[0] - 4.0, hip[1])}
+
+    def retarget(fj):
+        fp, sp = pts(fj), pts(st)
+        raw = {n: math.degrees(wrapi(ang(fp[u], fp[v]) -
+                                    ang(sp[u], sp[v])))
+               for n, _p, u, v in chain}
+        torso = math.degrees(wrapi(ang(fp["A"], fp["D"]) -
+                                  ang(sp["A"], sp["D"])))
+        used = max(-mp["torso_cap_deg"],
+                   min(mp["torso_cap_deg"], torso * mp["torso_gain"]))
+        mf = math.dist(fj["f_hand"], st["f_hand"])
+        mb = math.dist(fj["b_hand"], st["b_hand"])
+        tf = min(1.0, mf / mp["reach_norm_px"])
+        tb = min(1.0, mb / mp["reach_norm_px"])
+        tw = (min(1.0, min(mf, mb) / mp["wave_min_norm_px"])
+              * mp["wave_arm_weight"])
+        af, ab = max(tf, tw), max(tb, tw)
+        g, cap = mp["arm_gain_deg"], mp["leg_cap_deg"]
+        cl = lambda v: max(-cap, min(cap, v))
+        return {"hips": 0.0, "spine": used, "chest": 0.0, "neck": 0.0,
+                "head": -used * mp["head_compensation"],
+                "upperarm_f": -g["f_upper"] * af,
+                "forearm_f": -g["f_fore"] * af,
+                "upperarm_b": g["b_upper"] * ab,
+                "forearm_b": g["b_fore"] * ab,
+                "thigh_f": cl(raw["thigh_f"]),
+                "shin_f": cl(raw["shin_f"]),
+                "thigh_b": cl(raw["thigh_b"]),
+                "shin_b": cl(raw["shin_b"])}
+
+    worst_motion = 0.0
+    for ref in frames_ref:
+        card = ref["card"]
+        if card == "stance":
+            fj = st
+        else:
+            fj = motion["cards"][card]["track"][ref["frame"]]
+        calc = retarget(fj)
+        worst_motion = max(worst_motion, max(
+            abs(calc[n] - ref["bones"][n]["delta_deg"])
+            for n in motion["bones"]))
+    checks["A14_motion_input_recompute"] = worst_motion < 1e-4
+    notes["motion_recompute_worst_deg"] = round(worst_motion, 7)
+
+    # ---------- B 资产 ----------
+    insp = j(DATA / "rigged_gltf_inspection.json")
+    rig = insp["rigged"]
+    checks["B01_glb_exists"] = (HERE / "player-rigged.glb").is_file()
+    checks["B02_glb_sha_matches_export"] = (
+        sha256(HERE / "player-rigged.glb") == rig["sha256"])
+    checks["B03_highpoly_has_skin"] = insp["verdict"]["highpoly_has_skin"] is True
+    checks["B04_skin_14_joints"] = insp["verdict"]["skin_joints"] == 14
+    checks["B05_zero_animations"] = rig["counts"]["animations"] == 0
+    checks["B06_images_not_reencoded"] = insp["verdict"]["images_zero_reencode"] is True
+    checks["B07_old_glb_highpoly_unskinned"] = (
+        insp["verdict"]["reference_highpoly_has_skin"] is False)
+    rig_probe = j(DATA / "godot_rig_probe.json")
+    checks["B08_godot_import_ok"] = rig_probe["ok"] is True
+    checks["B09_godot_14_bones"] = rig_probe["rig"]["bone_count"] == 14
+    checks["B10_godot_mesh_skinned"] = all(
+        m["skin_present"] and m["skeleton_path"] != ""
+        for m in rig_probe["rig"]["meshes"])
+    checks["B11_neutral_bone_present"] = any(
+        b["name"] == "neutral_bone" for b in rig_probe["rig"]["bones"])
+
+    # ---------- C 数值 ----------
+    drive = j(DATA / "godot_drive_probe.json")
+    cc_pose = j(DATA / "godot_pose_crosscheck.json")
+    checks["C01_drive_probe_ok"] = drive["ok"] is True
+    checks["C02_windowed"] = (drive["probe"]["headless"] is False
+                              and drive["probe"]["has_opengl"] is True)
+    checks["C03_no_script_errors"] = drive["probe"]["script_errors"] == 0
+    checks["C04_73_frames"] = drive["result"]["frame_count"] == 73
+    checks["C05_73_applied"] = drive["result"]["frames_applied"] == 73
+    checks["C06_crosscheck_all_green"] = cc_pose["ok"] is True
+    worst = cc_pose["worst"]
+    checks["C07_delta_tolerance"] = worst["delta_deg"] < 1e-4
+    checks["C08_calc_engine_tolerance"] = worst["calc_vs_engine_m"] < 2e-4
+    checks["C09_engine_blender_tolerance"] = worst["engine_vs_blender_m"] < 2e-4
+    checks["C10_neutral_untouched"] = (
+        cc_pose["checks"]["neutral_bone_untouched"] is True)
+    checks["C11_pose_written"] = (
+        cc_pose["checks"]["pose_actually_written"] is True)
+    checks["C12_root_matches"] = worst["root_m"] < 1e-6
+    # 驱动层要真的驱动三卡，不是只跑 stance
+    cards = {f["card"] for f in drive["result"]["frames"]}
+    checks["C13_three_cards_driven"] = cards == {"stance", "jab", "cross", "wave"}
+    nonzero = sum(1 for f in drive["result"]["frames"]
+                  if any(abs(v) > 1e-6 for v in f["delta_deg"].values()))
+    checks["C14_nonzero_motion_frames"] = nonzero >= 60
+    notes["nonzero_motion_frames"] = nonzero
+
+    # ---------- D 像素 ----------
+    render = j(DATA / "godot_render_f.json")
+    checks["D01_render_ok"] = render["ok"] is True
+    checks["D02_no_script_errors"] = render["render"]["script_errors"] == 0
+    checks["D03_stage_ready"] = render["stage_ready"] is True
+    pngs = render["pngs"]
+    checks["D04_nine_shots"] = len(pngs) == 9
+    checks["D05_all_png_valid"] = all(
+        p["exists"] and p["bytes"] > 20000 and p["save_error"] == 0
+        and p["w"] == 900 and p["h"] == 1100 for p in pngs)
+    by = {p["name"]: p for p in pngs}
+    checks["D06_repeat_byte_identical"] = (
+        by["stance-front"]["sha256"] == by["stance-front-repeat"]["sha256"])
+    imgs = {name: Image.open(Path(row["path"])) for name, row in by.items()}
+    # 每张图都不是纯色 / 空白
+    checks["D07_all_nonblank"] = all(
+        len(im.convert("RGB").getcolors(maxcolors=1_000_000) or []) > 500
+        for im in imgs.values())
+    stance = imgs["stance-front"]
+    diffs = {}
+    for name in ("jab06-front", "cross07-front", "wave17-front",
+                 "wave35-front"):
+        diffs[name] = {"changed_px": changed_px(stance, imgs[name]),
+                       "mean_abs": mean_abs(stance, imgs[name])}
+    notes["attack_vs_stance"] = diffs
+    checks["D08_attack_pixels_changed"] = all(
+        d["changed_px"] > 12000 and d["mean_abs"] > 1.0
+        for d in diffs.values())
+    yaw_diffs = {}
+    for name in ("jab06", "cross07", "wave17"):
+        yaw_diffs[name] = changed_px(imgs[name + "-front"],
+                                     imgs[name + "-angle35"])
+    notes["yaw_changed_px"] = yaw_diffs
+    checks["D09_yaw_pixels_changed"] = all(v > 20000 for v in yaw_diffs.values())
+    # 三卡互相不同（不是同一帧复制三次）
+    pair = {
+        "jab_vs_cross": changed_px(imgs["jab06-front"], imgs["cross07-front"]),
+        "jab_vs_wave": changed_px(imgs["jab06-front"], imgs["wave17-front"]),
+        "cross_vs_wave": changed_px(imgs["cross07-front"], imgs["wave17-front"]),
+    }
+    notes["card_pair_changed_px"] = pair
+    checks["D10_cards_mutually_distinct"] = all(v > 12000 for v in pair.values())
+    # 收势帧应回到接近 stance
+    back = changed_px(stance, imgs["wave35-front"])
+    notes["wave35_vs_stance_changed_px"] = back
+    checks["D11_last_frame_returns"] = back < max(
+        d["changed_px"] for d in diffs.values())
+
+    # ---------- E 游戏工程零改动 ----------
+    game_files = []
+    if GAME.is_dir():
+        for p in sorted(GAME.rglob("*")):
+            if p.is_file() and not any(x in p.parts for x in (".godot", ".git")):
+                rel = str(p.relative_to(GAME)).replace("\\", "/")
+                game_files.append((rel, sha256(p)))
+    notes["game_file_count"] = len(game_files)
+    if GAME_BASELINE.is_file():
+        base = j(GAME_BASELINE)
+        # E 路线基线格式：{"game": {rel_path: {"bytes", "sha256"}}, ...}
+        base_map = {k: v["sha256"] for k, v in base["game"].items()}
+        cur = dict(game_files)
+        drift = sorted(k for k in base_map if cur.get(k) != base_map[k])
+        extra = sorted(set(cur) - set(base_map))
+        checks["E01_game_unchanged"] = (not drift and not extra
+                                        and len(base_map) == 105)
+        notes["game_drift"] = drift[:10]
+        notes["game_extra"] = extra[:10]
+        notes["game_baseline_count"] = len(base_map)
+    else:
+        checks["E01_game_unchanged"] = False
+        notes["game_baseline"] = "absent"
+    three_d = [p for p in GAME.rglob("*")
+               if p.is_file() and p.suffix.lower() in
+               (".glb", ".gltf", ".obj", ".fbx", ".blend", ".dae", ".vrm")]
+    checks["E02_game_has_no_3d_asset"] = len(three_d) == 0
+    notes["game_3d_asset_count"] = len(three_d)
+
+    # ---------- F 清单稳定 ----------
+    fl = HERE / "文件清单.txt"
+    checks["F01_filelist_exists"] = fl.is_file()
+    data_rows = []
+    if fl.is_file():
+        rows = [l for l in read(fl).splitlines() if l.strip()]
+        data_rows = [l for l in rows if not l.startswith("#")]
+        checks["F02_filelist_nonempty"] = len(data_rows) >= 20
+        notes["filelist_rows"] = len(data_rows)
+        # 清单逐项自洽：路径 / 字节 / sha256 都必须与盘上一致。
+        bad = []
+        for line in data_rows:
+            parts = line.split("\t")
+            if len(parts) != 3:
+                bad.append(line)
+                continue
+            rel, size, digest = parts
+            p = HERE / rel
+            if (not p.is_file() or p.stat().st_size != int(size)
+                    or sha256(p) != digest):
+                bad.append(rel)
+        checks["F03_filelist_sha_selfconsistent"] = not bad
+        notes["filelist_bad"] = bad[:10]
+        # 实际交付文件不能漏进清单（排除项与 make_filelist_f.py 同口径）。
+        exclude_names = {"文件清单.txt", "new-files.diff"}
+        exclude_dirs = {"logs", ".godot", "__pycache__"}
+        actual = set()
+        for p in HERE.rglob("*"):
+            if not p.is_file():
+                continue
+            relp = p.relative_to(HERE)
+            if p.name in exclude_names:
+                continue
+            if any(x in exclude_dirs for x in relp.parts):
+                continue
+            actual.add(str(relp).replace("\\", "/"))
+        listed = {l.split("\t")[0] for l in data_rows}
+        missing = sorted(actual - listed)
+        extra_files = sorted(listed - actual)
+        checks["F04_filelist_covers_all"] = not missing and not extra_files
+        notes["filelist_missing"] = missing[:10]
+        notes["filelist_extra"] = extra_files[:10]
+    else:
+        checks["F02_filelist_nonempty"] = False
+        notes["filelist_rows"] = 0
+        checks["F03_filelist_sha_selfconsistent"] = False
+        checks["F04_filelist_covers_all"] = False
+    diff = HERE / "new-files.diff"
+    checks["F05_diff_nonempty"] = diff.is_file() and diff.stat().st_size > 10000
+    notes["diff_bytes"] = diff.stat().st_size if diff.is_file() else 0
+
+    ok = all(checks.values())
+    LOGS.mkdir(parents=True, exist_ok=True)
+    failed = [k for k, v in checks.items() if not v]
+    OUT.write_text(json.dumps({
+        "checks": checks, "failed": failed,
+        "total": len(checks), "passed": len(checks) - len(failed),
+        "notes": notes, "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    for k, v in checks.items():
+        if not v:
+            print(f"  FAIL  {k}")
+    print(f"VERIFY_F {len(checks) - len(failed)}/{len(checks)} "
+          f"failed={len(failed)}")
+    print("F_VERIFIED" if ok else "F_VERIFY_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== mutation_f.py =====
+"""F 路线变异验证：改坏东西，确认判据真的报红。
+
+两层，各自独立：
+  · 静态层  —— 改源码形状 / 数据 JSON / 清单，跑 verify_f.py 应红。
+  · 运行时层 —— 只改 GDScript 的**公式数值**（不改关键字形状），
+    静态形状守卫不该红；但重跑带窗口 Godot 驱动探针 +
+    crosscheck_godot_pose.py 必须红。这证明「Blender 基准真的是独立锚点」，
+    不是「守卫只会对着字符串叫」。
+
+纪律（本机踩过的坑，全部写进实现）：
+  · needle / mutant 只能是 ASCII bytes，含中文会 SyntaxError。
+  · 锚点失配 = DID NOT RUN 并计入未证明，不崩、不跳过 clean re-run。
+  · 还原必须逐字节 + sha256 证明（read_text/write_text 会转换换行）。
+  · 运行时重跑会覆盖 data/ 下两个产物 JSON，必须一并备份还原，
+    否则清单 sha 判据会连锁变红，掩盖真实原因。
+  · 守卫跑禁字节码（PYTHONDONTWRITEBYTECODE=1）。
+  · 负对照必须选清单外且 verify 不读的文件（logs/），否则会被 F03 抓到，
+    负对照就假了。
+
+用法：python mutation_f.py [--selftest]
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+LOGS = HERE / "logs"
+OUT_MAIN = LOGS / "mutation_f_result.json"
+OUT_SELFTEST = LOGS / "mutation_f_selftest_result.json"
+PY = sys.executable
+
+DRIVE_JSON = HERE / "data/godot_drive_probe.json"
+POSE_JSON = HERE / "data/godot_pose_crosscheck.json"
+
+# id, 相对路径, needle(bytes ASCII), mutant(bytes ASCII), 说明
+STATIC_CASES = [
+    ("M01", "probe_project_f/scenes/rig_driver.gd",
+     b"var theta := -deg_to_rad(", b"var theta := deg_to_rad(",
+     "A05 旋转轴符号"),
+    ("M02", "probe_project_f/scenes/rig_driver.gd",
+     b"gr_parent.affine_inverse() * local * gr",
+     b"gr.affine_inverse() * local * gr",
+     "A04 pose 基底（真实修过的 bug）"),
+    ("M03", "probe_project_f/scenes/rig_driver.gd",
+     b"pose_mat = c * gr", b"pose_mat = gr",
+     "A04 根骨 root 平移"),
+    # 不改成函数名：那会让调用处解析失败，证明的是「文件坏了」，
+    # 不是「守卫有牙」。这里只改一个常量断言，语法仍成立。
+    ("M04", "probe_project_f/scenes/rig_driver.gd",
+     b"bone_names.size() == 13 and chain.size() == 13",
+     b"bone_names.size() == 12 and chain.size() == 12",
+     "A06 13 骨形状"),
+    ("M05", "probe_project_f/scenes/player_driven.gd",
+     b'MOTION_PATH := "res://data/motion_input.json"',
+     b'MOTION_PATH := "res://data/motion_input_BROKEN.json"',
+     "A08 场景只读运动输入"),
+    ("M06", "probe_project_f/scenes/player_driven.gd",
+     b'preload("res://scenes/rig_driver.gd")',
+     b'preload("res://scenes/rig_driver_BROKEN.gd")',
+     "A07 场景 preload 驱动层"),
+    ("M07", "data/motion_input.json",
+     b'"torso_gain":0.35', b'"torso_gain":0.95',
+     "A14 运动输入独立复算"),
+    ("M08", "data/rigged_gltf_inspection.json",
+     b'"highpoly_has_skin": true', b'"highpoly_has_skin": false',
+     "B03 高模带 skin"),
+    ("M09", "data/godot_rig_probe.json",
+     b'"bone_count": 14', b'"bone_count": 13',
+     "B09 Godot 14 骨"),
+    ("M10", "data/godot_drive_probe.json",
+     b'"frame_count": 73', b'"frame_count": 72',
+     "C04 73 帧"),
+    ("M11", "data/godot_pose_crosscheck.json",
+     b'"ok": true', b'"ok": false',
+     "C06 三重对账全绿"),
+    ("M12", "data/godot_render_f.json",
+     b'"stage_ready": true', b'"stage_ready": false',
+     "D03 主场景 ready"),
+    ("M13", "probe_project_f/probes/render_driven.gd",
+     b'SCENE_PATH := "res://scenes/player_driven.tscn"',
+     b'SCENE_PATH := "res://scenes/player_driven_BROKEN.tscn"',
+     "A12 截帧走同一条场景链"),
+    ("M14", "probe_project_f/probes/probe_drive.gd",
+     b'["stance", 0]', b'["stance", 1]',
+     "A11 探针帧表"),
+    ("M15", "data/board_stats_f.json",
+     b'"count": 4', b'"count": 3',
+     "F03 清单 sha 自洽（改了交付文件就应报红）"),
+]
+
+# 运行时层：改公式数值，不改任何被 verify 检查的形状关键字。
+RUNTIME_CASES = [
+    # 注意：motion.get("px_to_m", 0.01) 只是 fallback，JSON 里有这个键，
+    # 改它不会改变任何运行时数值；必须改真正执行的 dx/dz 公式。
+    ("R01", "probe_project_f/scenes/rig_driver.gd",
+     b'var dx: float = (frame_j["hip"].x - stance["hip"].x) * px_to_m',
+     b'var dx: float = (frame_j["hip"].x - stance["hip"].x) * px_to_m * 2.0',
+     "root 位移比例翻倍 -> root_matches_blender 应红"),
+    ("R02", "probe_project_f/scenes/rig_driver.gd",
+     b'var tf := minf(1.0, mf / float(mapping["reach_norm_px"]))',
+     b'var tf := minf(1.0, mf / float(mapping["wave_min_norm_px"]))',
+     "手臂归一常数被换 -> delta_matches_blender 应红"),
+    ("R03", "probe_project_f/scenes/rig_driver.gd",
+     b'var used := clampf(torso * float(mapping["torso_gain"]), -cap, cap)',
+     b'var used := clampf(torso * float(mapping["torso_gain"]) * 2.0, -cap, cap)',
+     "躯干增益翻倍 -> delta_matches_blender 应红"),
+    ("R04", "probe_project_f/scenes/rig_driver.gd",
+     b'var theta := -deg_to_rad(float(delta_deg[n]))',
+     b'var theta := -deg_to_rad(float(delta_deg[n])) * 0.5',
+     "旋转角折半 -> engine_vs_blender 应红"),
+]
+
+# 负对照：logs/ 被清单排除，verify 也不读它；改了不该报红。
+NEGATIVE = ("N01", "logs/run_probe_rig.out",
+            b"IMPORT rc=0", b"IMPORT rc=9",
+            "负对照：清单外且 verify 不读")
+
+ALL_CASES = STATIC_CASES + RUNTIME_CASES + [NEGATIVE]
+
+
+def sha256(b: bytes) -> str:
+    return hashlib.sha256(b).hexdigest()
+
+
+def env_no_bytecode() -> dict:
+    e = os.environ.copy()
+    e["PYTHONDONTWRITEBYTECODE"] = "1"
+    return e
+
+
+def run(cmd: list[str], timeout: int = 240) -> tuple[int, str]:
+    r = subprocess.run(cmd, cwd=str(HERE), capture_output=True,
+                       text=True, env=env_no_bytecode(), timeout=timeout)
+    return r.returncode, (r.stdout or "") + (r.stderr or "")
+
+
+def run_verify() -> tuple[int, str]:
+    return run([PY, str(HERE / "verify_f.py")])
+
+
+def run_runtime_chain() -> tuple[bool, str]:
+    """重跑带窗口驱动探针 + 三重对账；返回 (是否报红, 摘要)。"""
+    r1, o1 = run([PY, str(HERE / "run_probe_drive.py")])
+    r2, o2 = run([PY, str(HERE / "crosscheck_godot_pose.py")])
+    red = (r1 != 0 or r2 != 0
+           or "GODOT_POSE_CROSSCHECK_FAILED" in o2
+           or "MOTION_INPUT_FAILED" in o2)
+    summary = []
+    for line in (o1 + o2).splitlines():
+        if ("FAILED" in line or "WORST" in line
+                or line.strip().startswith("FAIL")):
+            summary.append(line.strip())
+    return red, " | ".join(summary[:6])
+
+
+def main() -> int:
+    selftest = "--selftest" in sys.argv
+    LOGS.mkdir(parents=True, exist_ok=True)
+    # 运行时重跑会覆盖这两个产物，先备份原始字节。
+    saved_drive = DRIVE_JSON.read_bytes()
+    saved_pose = POSE_JSON.read_bytes()
+    saved_sha = {"drive": sha256(saved_drive), "pose": sha256(saved_pose)}
+
+    results = []
+    for cid, rel, needle, mutant, desc in ALL_CASES:
+        if selftest and cid == "M01":
+            needle = b"__THIS_ANCHOR_DOES_NOT_EXIST__"
+        p = HERE / rel
+        original = p.read_bytes()
+        digest = sha256(original)
+        count = original.count(needle)
+        if count != 1:
+            results.append({"id": cid, "file": rel, "status": "DID NOT RUN",
+                            "reason": f"anchor count={count}", "desc": desc})
+            print(f"{cid} DID NOT RUN  anchor count={count}  {rel}")
+            continue
+        p.write_bytes(original.replace(needle, mutant, 1))
+        is_runtime = cid.startswith("R")
+        is_negative = cid.startswith("N")
+        try:
+            rc, out = run_verify()
+            static_red = rc != 0 and "F_VERIFY_FAILED" in out
+            failed = [l.strip().split()[-1] for l in out.splitlines()
+                      if l.strip().startswith("FAIL")]
+            row = {"id": cid, "file": rel, "static_red": static_red,
+                   "static_returncode": rc,
+                   "failed_checks": failed[:8], "desc": desc}
+            if is_runtime:
+                runtime_red, summary = run_runtime_chain()
+                row["runtime_red"] = runtime_red
+                row["runtime_summary"] = summary
+                row["status"] = "CAUGHT" if runtime_red else "MISSED"
+            elif is_negative:
+                row["status"] = "MISSED" if not static_red else "CAUGHT"
+            else:
+                row["status"] = "CAUGHT" if static_red else "MISSED"
+            results.append(row)
+            print(f"{cid} {row['status']:<11} static={'RED' if static_red else 'GREEN'} "
+                  + (f"runtime={'RED' if row.get('runtime_red') else 'GREEN'} "
+                     if is_runtime else "")
+                  + f" failed={failed[:3]}  {desc}")
+        finally:
+            p.write_bytes(original)
+            DRIVE_JSON.write_bytes(saved_drive)
+            POSE_JSON.write_bytes(saved_pose)
+        restored = (sha256(p.read_bytes()) == digest
+                    and sha256(DRIVE_JSON.read_bytes()) == saved_sha["drive"]
+                    and sha256(POSE_JSON.read_bytes()) == saved_sha["pose"])
+        results[-1]["restored"] = restored
+        if not restored:
+            print(f"{cid} RESTORE FAILED  {rel}")
+
+    # clean re-run：源码与产物都已还原，静态验收必须全绿；
+    # 运行时链也要重跑一次，证明还原后引擎输出仍与 Blender 等价。
+    clean_rc, clean_out = run_verify()
+    clean_green = (clean_rc == 0 and "F_VERIFIED" in clean_out
+                   and "F_VERIFY_FAILED" not in clean_out)
+    runtime_clean_red, _ = run_runtime_chain()
+    DRIVE_JSON.write_bytes(saved_drive)
+    POSE_JSON.write_bytes(saved_pose)
+    runtime_clean_green = not runtime_clean_red
+
+    caught = sum(1 for r in results if r["status"] == "CAUGHT")
+    did_not_run = sum(1 for r in results if r["status"] == "DID NOT RUN")
+    missed = sum(1 for r in results if r["status"] == "MISSED")
+    restored = sum(1 for r in results if r.get("restored", True))
+    n_static = len(STATIC_CASES)
+    n_runtime = len(RUNTIME_CASES)
+    expect_caught = n_static + n_runtime - (1 if selftest else 0)
+    negative = next((r for r in results if r["id"] == "N01"), None)
+    negative_ok = negative is not None and negative["status"] == "MISSED"
+    # 任何 DID NOT RUN 都计入未证明，整体验收必须失败；
+    # selftest 正是靠这条拿到「not ok」，证明失配分支有牙。
+    ok = (caught == expect_caught and did_not_run == 0
+          and missed == 1  # 只有负对照 N01 允许 MISSED
+          and restored == len(results)
+          and clean_green and runtime_clean_green and negative_ok)
+    payload = {
+        "selftest": selftest,
+        "cases": len(ALL_CASES),
+        "static_cases": n_static, "runtime_cases": n_runtime,
+        "caught": caught, "did_not_run": did_not_run, "missed": missed,
+        "restored": restored, "expect_caught": expect_caught,
+        "negative_control_ok": negative_ok,
+        "clean_rerun_green": clean_green,
+        "runtime_clean_green": runtime_clean_green,
+        "clean_returncode": clean_rc,
+        "ok": ok, "results": results,
+    }
+    (OUT_SELFTEST if selftest else OUT_MAIN).write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8")
+    print(f"SUMMARY caught={caught}/{expect_caught} "
+          f"did_not_run={did_not_run} missed={missed} "
+          f"restored={restored}/{len(results)} "
+          f"clean={'GREEN' if clean_green else 'RED'} "
+          f"runtime_clean={'GREEN' if runtime_clean_green else 'RED'} "
+          f"negative={'OK' if negative_ok else 'BAD'}")
+    if selftest:
+        good = did_not_run == 1 and not ok
+        print("SELFTEST_ASSERTION_OK" if good else "SELFTEST_ASSERTION_FAILED")
+        return 0 if good else 1
+    print("MUTATION_F_OK" if ok else "MUTATION_F_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== make_boards_f.py =====
+"""把引擎内 9 帧截帧整理成对照板，并落盘版面统计。
+
+用法：python make_boards_f.py
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from PIL import Image, ImageDraw, ImageFont
+
+HERE = Path(__file__).resolve().parent
+SHOTS = HERE / "shots"
+BOARDS = HERE / "boards"
+OUT = HERE / "data" / "board_stats_f.json"
+
+BG = (17, 21, 31)
+FG = (232, 236, 245)
+SUB = (150, 162, 184)
+ACC = (120, 214, 196)
+
+
+def font(sz: int):
+    for name in ("C:/Windows/Fonts/msyh.ttc",
+                 "C:/Windows/Fonts/msyhbd.ttc",
+                 "C:/Windows/Fonts/simhei.ttf"):
+        p = Path(name)
+        if p.is_file():
+            try:
+                return ImageFont.truetype(str(p), sz)
+            except OSError:
+                pass
+    return ImageFont.load_default()
+
+
+def load(name: str) -> Image.Image:
+    p = SHOTS / f"f-{name}.png"
+    return Image.open(p).convert("RGB")
+
+
+def thumb(name: str, w: int, h: int) -> Image.Image:
+    return load(name).resize((w, h), Image.LANCZOS)
+
+
+def main() -> int:
+    BOARDS.mkdir(parents=True, exist_ok=True)
+    f_title = font(34)
+    f_sub = font(19)
+    f_tag = font(17)
+    made = []
+
+    # 板 1：九帧总览 3x3
+    tw, th = 300, 367
+    pad, gap, top, bot = 28, 16, 112, 46
+    W = pad * 2 + tw * 3 + gap * 2
+    H = top + th * 3 + 34 * 3 + gap * 2 + bot
+    b = Image.new("RGB", (W, H), BG)
+    d = ImageDraw.Draw(b)
+    d.text((pad, 22), "F 路线 · Godot 运行时 14 骨驱动层 · 引擎内九帧",
+           font=f_title, fill=FG)
+    d.text((pad, 68), "同一份 player-rigged.glb，同一条 main_scene；"
+           "逐帧由 GDScript 现算 retarget，不播烘死动画",
+           font=f_sub, fill=SUB)
+    grid = [
+        ("stance-front", "站架 / stance · yaw 0"),
+        ("stance-front-repeat", "站架重渲 · 确定性样本"),
+        ("jab06-front", "jab f6 · 21.39°"),
+        ("cross07-front", "cross f7 · 28.00°"),
+        ("wave17-front", "wave f17 · 13.57°"),
+        ("wave35-front", "wave f35 · 收势"),
+        ("jab06-angle35", "jab f6 · yaw 35°"),
+        ("cross07-angle35", "cross f7 · yaw 35°"),
+        ("wave17-angle35", "wave f17 · yaw 35°"),
+    ]
+    for i, (name, label) in enumerate(grid):
+        r, c = divmod(i, 3)
+        x = pad + c * (tw + gap)
+        y = top + r * (th + 34 + gap)
+        b.paste(thumb(name, tw, th), (x, y))
+        d.rectangle((x, y, x + tw, y + th), outline=(70, 80, 100), width=1)
+        d.text((x + 2, y + th + 6), label, font=f_tag, fill=ACC)
+    p1 = BOARDS / "F-九帧动作总览.png"
+    b.save(p1)
+    made.append({"name": p1.name, "bytes": p1.stat().st_size,
+                 "w": b.width, "h": b.height, "cells": len(grid)})
+
+    # 板 2：正视角四关键帧一排
+    tw2, th2 = 360, 440
+    pad2, gap2, top2 = 28, 18, 112
+    W2 = pad2 * 2 + tw2 * 4 + gap2 * 3
+    H2 = top2 + th2 + 96
+    b2 = Image.new("RGB", (W2, H2), BG)
+    d2 = ImageDraw.Draw(b2)
+    d2.text((pad2, 22), "F 路线 · 站架 vs 三档攻击（引擎内正视）",
+            font=f_title, fill=FG)
+    d2.text((pad2, 68), "同一相机、同一灯光；差别只来自逐帧骨骼驱动",
+            font=f_sub, fill=SUB)
+    line = [
+        ("stance-front", "stance / 站架", "root 0.00 m"),
+        ("jab06-front", "jab f6 / 直拳", "root +0.13 m"),
+        ("cross07-front", "cross f7 / 后手", "root +0.19 m"),
+        ("wave17-front", "wave f17 / 双手", "root +0.09 m"),
+    ]
+    for i, (name, label, sub) in enumerate(line):
+        x = pad2 + i * (tw2 + gap2)
+        b2.paste(thumb(name, tw2, th2), (x, top2))
+        d2.rectangle((x, top2, x + tw2, top2 + th2),
+                     outline=(70, 80, 100), width=1)
+        d2.text((x + 2, top2 + th2 + 8), label, font=f_tag, fill=ACC)
+        d2.text((x + 2, top2 + th2 + 34), sub, font=f_tag, fill=SUB)
+    p2 = BOARDS / "F-站架与三档攻击.png"
+    b2.save(p2)
+    made.append({"name": p2.name, "bytes": p2.stat().st_size,
+                 "w": b2.width, "h": b2.height, "cells": len(line)})
+
+    # 板 3：正/侧视角对照（体积证据）
+    tw3, th3 = 330, 403
+    pad3, gap3, top3 = 28, 20, 112
+    W3 = pad3 * 2 + tw3 * 3 + gap3 * 2
+    H3 = top3 + (th3 + 38) * 2 + 60
+    b3 = Image.new("RGB", (W3, H3), BG)
+    d3 = ImageDraw.Draw(b3)
+    d3.text((pad3, 22), "F 路线 · 正视 / 35° 侧视对照",
+            font=f_title, fill=FG)
+    d3.text((pad3, 68), "侧视可见长衫、披肩与发束的真实厚度，不是纸片",
+            font=f_sub, fill=SUB)
+    pairs = [
+        (0, ("jab06-front", "jab06-angle35"), "jab f6"),
+        (1, ("cross07-front", "cross07-angle35"), "cross f7"),
+        (2, ("wave17-front", "wave17-angle35"), "wave f17"),
+    ]
+    for c, (front, angle), label in pairs:
+        x = pad3 + c * (tw3 + gap3)
+        for r, nm in enumerate((front, angle)):
+            y = top3 + r * (th3 + 38)
+            b3.paste(thumb(nm, tw3, th3), (x, y))
+            d3.rectangle((x, y, x + tw3, y + th3),
+                         outline=(70, 80, 100), width=1)
+            d3.text((x + 2, y + th3 + 6),
+                    "%s · %s" % (label, "正视" if r == 0 else "35° 侧视"),
+                    font=f_tag, fill=ACC)
+    p3 = BOARDS / "F-正视与侧视体积.png"
+    b3.save(p3)
+    made.append({"name": p3.name, "bytes": p3.stat().st_size,
+                 "w": b3.width, "h": b3.height, "cells": 6})
+
+    # 板 4：四层数字成本账（纯文字）
+    W4, H4 = 1180, 760
+    b4 = Image.new("RGB", (W4, H4), BG)
+    d4 = ImageDraw.Draw(b4)
+    d4.text((36, 24), "F 路线 · 驱动链成本账与边界", font=f_title, fill=FG)
+    rows = [
+        ("资产", "player-rigged.glb  38,478,140 B",
+         "57,934 顶点高模带 JOINTS_0/WEIGHTS_0；14 joints；0 animations"),
+        ("导入", "Godot 4.5  Skeleton3D 14 骨",
+         "player_HI_skinned  skeleton_path='..'  skin_present=true"),
+        ("输入", "motion_input.json  19,771 B",
+         "原始 2D 关节表 + retarget 参数，无任何烘死 pose / quat"),
+        ("驱动", "RigDriver.gd  GDScript 现算",
+         "make_points / angle / wrap_pi / retarget_delta / root 位移"),
+        ("口径", "Godot (X,Y,Z) = Blender (x,z,-y)",
+         "RotY(delta)_Blender == RotZ(-delta)_Godot"),
+        ("对账", "73 帧 × 13 骨 × 三重",
+         "delta 1e-5° / calc-engine 1e-6 m / engine-Blender 1e-6 m"),
+        ("截帧", "引擎内 9 帧 900×1100  5.086 s",
+         "重复帧字节相同；攻击帧 28–33 万像素变化"),
+        ("边界", "可运行游戏工程 105 文件 0 drift",
+         "游戏内 3D 资产 0；本工程是隔离探针，不是生产导入"),
+        ("未解", "动作幅度偏小，仍像 A-pose 摆臂",
+         "侧视 2D 动作表重定向到正视 A-pose 的固有语义损失"),
+    ]
+    y = 96
+    for i, (k, v, note) in enumerate(rows):
+        d4.rectangle((36, y - 6, W4 - 36, y + 62),
+                     fill=(24, 29, 42) if i % 2 == 0 else (20, 25, 36))
+        d4.text((52, y + 2), k, font=f_tag, fill=ACC)
+        d4.text((148, y + 2), v, font=f_sub, fill=FG)
+        d4.text((148, y + 30), note, font=f_tag, fill=SUB)
+        y += 70
+    p4 = BOARDS / "F-驱动链成本账.png"
+    b4.save(p4)
+    made.append({"name": p4.name, "bytes": p4.stat().st_size,
+                 "w": b4.width, "h": b4.height, "rows": len(rows)})
+
+    OUT.write_text(json.dumps({"boards": made, "count": len(made)},
+                              ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for m in made:
+        print(f"BOARD {m['name']:<28} {m['w']}x{m['h']} {m['bytes']} B")
+    print("BOARDS_F_OK")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== make_filelist_f.py =====
+"""生成 F 路线交付文件清单与新增脚本 diff。
+
+自指纪律：清单本身、diff 本身、logs/ 与 .godot/ 全部排除，
+否则「清单写好后重跑」会自己把自己算进去，清单永远不稳定。
+用法：python make_filelist_f.py
+"""
+from __future__ import annotations
+
+import hashlib
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+LIST = HERE / "文件清单.txt"
+DIFF = HERE / "new-files.diff"
+EXCLUDE_NAMES = {"文件清单.txt", "new-files.diff"}
+EXCLUDE_DIRS = {"logs", ".godot", "__pycache__"}
+DIFF_SCRIPTS = [
+    "build_rigged_glb.py", "export_rig_frames.py",
+    "crosscheck_motion_input.py", "inspect_rigged_glb.py",
+    "probe_rig_basis.py", "run_probe_rig.py", "run_probe_drive.py",
+    "crosscheck_godot_pose.py", "run_render_f.py", "verify_f.py",
+    "mutation_f.py", "make_boards_f.py", "make_filelist_f.py",
+    "crosscheck_filelist_f.py", "selftest_did_not_run_f.py",
+]
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def entries() -> list[Path]:
+    out = []
+    for p in sorted(HERE.rglob("*")):
+        if not p.is_file():
+            continue
+        rel = p.relative_to(HERE)
+        if p.name in EXCLUDE_NAMES:
+            continue
+        if any(part in EXCLUDE_DIRS for part in rel.parts):
+            continue
+        out.append(p)
+    return out
+
+
+def main() -> int:
+    rows = []
+    for p in entries():
+        rel = str(p.relative_to(HERE)).replace("\\", "/")
+        rows.append(f"{rel}\t{p.stat().st_size}\t{sha256(p)}")
+    header = [
+        "# F 路线 · Godot 运行时 14 骨驱动层 · 交付文件清单",
+        "# 格式: 相对路径<TAB>字节<TAB>sha256",
+        "# 排除: 本清单 / new-files.diff / logs / .godot / __pycache__",
+        "",
+    ]
+    # 二进制写：Windows 下 write_text 会把 \n 转 CRLF，而下面用 bytes
+    # 逐字节比对稳定性，两者换行口径不一致会永远报 STABLE=False。
+    LIST.write_bytes(("\n".join(header + rows) + "\n").encode("utf-8"))
+
+    parts = []
+    for name in DIFF_SCRIPTS:
+        p = HERE / name
+        if not p.is_file():
+            continue
+        parts.append(f"===== {name} =====\n" + p.read_text(encoding="utf-8"))
+    for rel in ["probe_project_f/project.godot",
+                "probe_project_f/probes/probe_rig.gd",
+                "probe_project_f/probes/probe_drive.gd",
+                "probe_project_f/probes/render_driven.gd",
+                "probe_project_f/scenes/rig_driver.gd",
+                "probe_project_f/scenes/player_driven.gd",
+                "probe_project_f/scenes/player_driven.tscn"]:
+        p = HERE / rel
+        if p.is_file():
+            parts.append(f"===== {rel} =====\n" + p.read_text(encoding="utf-8"))
+    DIFF.write_text("\n\n".join(parts) + "\n", encoding="utf-8")
+
+    # 稳定性：同一份清单连写两次内容必须逐字节相同
+    again = "\n".join(header + ["%s\t%s\t%s" % (
+        str(p.relative_to(HERE)).replace("\\", "/"),
+        p.stat().st_size, sha256(p)) for p in entries()]) + "\n"
+    stable = LIST.read_bytes() == again.encode("utf-8")
+    print(f"FILELIST_ENTRIES={len(rows)} DIFF_BYTES={DIFF.stat().st_size} "
+          f"STABLE={stable}")
+    print("FILELIST_F_STABLE_OK" if stable else "FILELIST_F_UNSTABLE")
+    return 0 if stable else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== crosscheck_filelist_f.py =====
+"""外部独立复核文件清单：不 import make_filelist_f.py，自己遍历+算 sha。
+
+用法：python crosscheck_filelist_f.py
+"""
+from __future__ import annotations
+
+import hashlib
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+LIST = HERE / "文件清单.txt"
+EXCLUDE_NAMES = {"文件清单.txt", "new-files.diff"}
+EXCLUDE_DIRS = {"logs", ".godot", "__pycache__"}
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def main() -> int:
+    rows = [l for l in LIST.read_text(encoding="utf-8").splitlines()
+            if l.strip() and not l.startswith("#")]
+    listed = {}
+    for line in rows:
+        rel, size, digest = line.split("\t")
+        listed[rel] = (int(size), digest)
+    actual = {}
+    for p in HERE.rglob("*"):
+        if not p.is_file() or p.name in EXCLUDE_NAMES:
+            continue
+        relp = p.relative_to(HERE)
+        if any(x in EXCLUDE_DIRS for x in relp.parts):
+            continue
+        rel = str(relp).replace("\\", "/")
+        actual[rel] = (p.stat().st_size, sha256(p))
+    bad = sorted(k for k in listed
+                 if k not in actual or actual[k] != listed[k])
+    extra = sorted(set(actual) - set(listed))
+    ok = not bad and not extra and len(rows) >= 20
+    print(f"ROWS={len(rows)} ACTUAL={len(actual)} "
+          f"BAD={len(bad)} EXTRA={len(extra)}")
+    for k in bad[:10]:
+        print("  BAD", k)
+    for k in extra[:10]:
+        print("  EXTRA", k)
+    print("CROSSCHECK_OK" if ok else "CROSSCHECK_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== selftest_did_not_run_f.py =====
+"""失配自检：故意让一个变异锚点不存在，证明 DID NOT RUN 分支有牙。
+
+这是变异 harness 自身的承重判据：如果锚点失配被静默当成 CAUGHT，
+整个变异验证就是假的（本机踩过：CRLF + indent=2 让单行 needle 匹配 0 次，
+脚本却照样打印 4/4）。
+
+断言：
+  · mutation_f.py --selftest 退出码 0（自检本身跑完）
+  · 结果里 did_not_run == 1
+  · 整体验收 ok == false（失配计入未证明）
+  · 其余 case 仍照跑、clean re-run 仍 GREEN
+用法：python selftest_did_not_run_f.py
+"""
+from __future__ import annotations
+
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+RESULT = HERE / "logs" / "mutation_f_selftest_result.json"
+OUT = HERE / "logs" / "selftest_did_not_run_f.json"
+
+
+def main() -> int:
+    r = subprocess.run([sys.executable, str(HERE / "mutation_f.py"),
+                        "--selftest"],
+                       cwd=str(HERE), capture_output=True, text=True,
+                       timeout=600)
+    text = (r.stdout or "") + (r.stderr or "")
+    data = json.loads(RESULT.read_text(encoding="utf-8"))
+    checks = {
+        "selftest_exit_0": r.returncode == 0,
+        "marker_printed": "SELFTEST_ASSERTION_OK" in text,
+        "did_not_run_one": data["did_not_run"] == 1,
+        "overall_not_proven": data["ok"] is False,
+        "other_cases_still_ran": len(data["results"]) == data["cases"],
+        "clean_rerun_green": data["clean_rerun_green"] is True,
+        "runtime_clean_green": data["runtime_clean_green"] is True,
+        "negative_control_ok": data["negative_control_ok"] is True,
+    }
+    ok = all(checks.values())
+    OUT.write_text(json.dumps({"checks": checks, "ok": ok,
+                               "stdout_tail": text.strip().splitlines()[-6:]},
+                              ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for k, v in checks.items():
+        print(f"  {'PASS' if v else 'FAIL'}  {k}")
+    print(f"SELFTEST_DID_NOT_RUN {sum(checks.values())}/{len(checks)}")
+    print("DID_NOT_RUN_BRANCH_OK" if ok else "DID_NOT_RUN_BRANCH_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== probe_project_f/project.godot =====
+; F 路线：Godot 4.5 运行时 14 骨驱动层专用隔离工程。
+; 与可运行游戏工程、C/D/E 路线探针工程完全分离；
+; 只放一份带 skin 的 player-rigged.glb 与一份 motion_input.json。
+
+config_version=5
+
+[application]
+
+config/name="F Route Godot Rig Driver"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+run/main_scene="res://scenes/player_driven.tscn"
+
+[display]
+
+window/size/viewport_width=900
+window/size/viewport_height=1100
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+
+
+===== probe_project_f/probes/probe_rig.gd =====
+extends SceneTree
+## F 路线阶段 4 前置：headless 数值探针，量出 Godot 4.5 导入 GLB 后
+## Skeleton3D 的 rest 基底、骨骼层级、mesh/skin 绑定关系。
+##
+## 目的：Blender 的 pb.matrix = D[name] @ bone.matrix_local 是 armature
+## space 的层级增量；glTF export_yup=True 之后，Godot 里骨骼 rest 的轴
+## 朝向必须由实测决定，不能手推。这里把 origin / basis / parent /
+## global_transform 全部读回，交给 crosscheck_godot_rest.py 做独立对账。
+##
+## 注意：headless 单帧里 get_bone_global_pose 的脏标记可能没刷新，本探针
+## 只读 rest（静态数据）与 pose 的「写入即读回」，不拿 global pose 当证据。
+
+const GLB_PATH := "res://assets/player-rigged.glb"
+
+
+func _v3(v: Vector3) -> Array:
+	return [round(v.x * 1000000.0) / 1000000.0,
+			round(v.y * 1000000.0) / 1000000.0,
+			round(v.z * 1000000.0) / 1000000.0]
+
+
+func _q4(q: Quaternion) -> Array:
+	return [round(q.w * 1000000.0) / 1000000.0,
+			round(q.x * 1000000.0) / 1000000.0,
+			round(q.y * 1000000.0) / 1000000.0,
+			round(q.z * 1000000.0) / 1000000.0]
+
+
+func _t3(t: Transform3D) -> Dictionary:
+	return {
+		"origin": _v3(t.origin),
+		"quat": _q4(t.basis.get_rotation_quaternion()),
+		"scale": _v3(t.basis.get_scale()),
+		"basis_rows": [_v3(t.basis.x), _v3(t.basis.y), _v3(t.basis.z)],
+	}
+
+
+func _find_skel(n: Node) -> Skeleton3D:
+	if n is Skeleton3D:
+		return n as Skeleton3D
+	for c in n.get_children():
+		var r := _find_skel(c)
+		if r != null:
+			return r
+	return null
+
+
+func _collect_meshes(n: Node, out: Array) -> void:
+	if n is MeshInstance3D:
+		var mi := n as MeshInstance3D
+		var aabb := AABB()
+		if mi.mesh != null:
+			aabb = mi.mesh.get_aabb()
+		out.append({
+			"name": String(n.name),
+			"skeleton_path": String(mi.get_skeleton_path()),
+			"skin_present": mi.skin != null,
+			"verts": mi.mesh.get_faces().size() if mi.mesh != null else 0,
+			"aabb_pos": _v3(aabb.position),
+			"aabb_size": _v3(aabb.size),
+		})
+	for c in n.get_children():
+		_collect_meshes(c, out)
+
+
+func _init() -> void:
+	var out := {"path": GLB_PATH, "load_ok": false}
+	var res := load(GLB_PATH)
+	if res == null or not (res is PackedScene):
+		out["error"] = "GLB load failed"
+		print("RIG_JSON " + JSON.stringify(out))
+		quit(1)
+		return
+	var inst := (res as PackedScene).instantiate()
+	root.add_child(inst)
+	out["load_ok"] = true
+	var sk := _find_skel(inst)
+	out["skeleton_found"] = sk != null
+	if sk == null:
+		print("RIG_JSON " + JSON.stringify(out))
+		quit(1)
+		return
+	out["skeleton_name"] = String(sk.name)
+	out["skeleton_global_transform"] = _t3(sk.global_transform)
+	out["bone_count"] = sk.get_bone_count()
+	var bones := []
+	for i in range(sk.get_bone_count()):
+		var gr := sk.get_bone_global_rest(i)
+		var lr := sk.get_bone_rest(i)
+		var has_force := sk.has_method("force_update_all_bone_transforms")
+		bones.append({
+			"index": i,
+			"name": String(sk.get_bone_name(i)),
+			"parent": sk.get_bone_parent(i),
+			"global_rest": _t3(gr),
+			"local_rest": _t3(lr),
+			"pose_rotation": _q4(sk.get_bone_pose_rotation(i)),
+			"pose_position": _v3(sk.get_bone_pose_position(i)),
+			"pose_scale": _v3(sk.get_bone_pose_scale(i)),
+		})
+		if i == 0:
+			out["has_force_update"] = has_force
+	out["bones"] = bones
+
+	# pose 可写性：写入即读回（不依赖 global pose 刷新）。
+	var idx := sk.find_bone("upperarm_f")
+	out["upperarm_f_index"] = idx
+	if idx >= 0:
+		var probe_q := Quaternion(Vector3(0.0, 0.0, 1.0), deg_to_rad(30.0))
+		sk.set_bone_pose_rotation(idx, probe_q)
+		out["pose_writable"] = sk.get_bone_pose_rotation(idx).is_equal_approx(probe_q)
+		sk.set_bone_pose_rotation(idx, Quaternion.IDENTITY)
+
+	var meshes := []
+	_collect_meshes(inst, meshes)
+	out["meshes"] = meshes
+	print("RIG_JSON " + JSON.stringify(out))
+	quit(0)
+
+
+===== probe_project_f/probes/probe_drive.gd =====
+extends SceneTree
+## 阶段 4b：带窗口数值探针 —— 验证运行时驱动层的数学口径。
+##
+## 为什么必须带窗口：headless 的 dummy driver 不发 frame_post_draw，
+## Skeleton3D 的 global pose 脏标记不刷新，get_bone_global_pose 会一直
+## 返回 rest（C 路线 pose_probe.gd 已实测）。这里每帧驱动后等一帧真实
+## 渲染，再读 engine global pose，才是真的「引擎算出来的骨架」。
+##
+## 三重对账（crosscheck_godot_pose.py 独立复算）：
+##   ① GDScript 现算 delta_deg      vs rig_frames.json Blender 基准
+##   ② GDScript 算 calc_global_origin vs 引擎 get_bone_global_pose
+##   ③ 引擎 global_pose             vs Blender global_pos（映射 x,z,-y）
+## 另外逐帧记录 pose 的「写入即读回」，证明驱动层真的写进了 Skeleton3D。
+##
+## 用法：F_SHOT_DIR=<abs> godot --path <proj> --script res://probes/probe_drive.gd
+##       本探针不存图，只输出 DRIVE_JSON。
+
+const GLB_PATH := "res://assets/player-rigged.glb"
+const MOTION_PATH := "res://data/motion_input.json"
+const RigDriverScript := preload("res://scenes/rig_driver.gd")
+
+
+class Driver:
+	extends Node
+
+	var sk: Skeleton3D
+	var drv
+	var seq: Array = []
+	var idx := 0
+	var busy := false
+	var frames: Array = []
+	var neutral_start: Array = []
+
+	func _v3(v: Vector3) -> Array:
+		return [round(v.x * 1000000.0) / 1000000.0,
+				round(v.y * 1000000.0) / 1000000.0,
+				round(v.z * 1000000.0) / 1000000.0]
+
+	func _q4(q: Quaternion) -> Array:
+		return [round(q.w * 1000000.0) / 1000000.0,
+				round(q.x * 1000000.0) / 1000000.0,
+				round(q.y * 1000000.0) / 1000000.0,
+				round(q.z * 1000000.0) / 1000000.0]
+
+	func _neutral_pose() -> Array:
+		var i := sk.find_bone("neutral_bone")
+		if i < 0:
+			return []
+		return _q4(sk.get_bone_pose_rotation(i)) + \
+			_v3(sk.get_bone_pose_position(i)) + \
+			_v3(sk.get_bone_pose_scale(i))
+
+	func _process(_delta: float) -> void:
+		if busy:
+			return
+		if idx >= seq.size():
+			busy = true
+			var out := {
+				"bone_count": sk.get_bone_count(),
+				"bones": drv.bone_names,
+				"frames_applied": drv.frame_count_applied,
+				"frame_count": frames.size(),
+				"neutral_start": neutral_start,
+				"neutral_end": _neutral_pose(),
+				"frames": frames,
+			}
+			print("DRIVE_JSON " + JSON.stringify(out))
+			get_tree().quit(0)
+			return
+		busy = true
+		var card := String(seq[idx][0])
+		var f := int(seq[idx][1])
+		var r = drv.apply_frame(card, f)
+		# 等真实帧渲染，骨骼 global pose 才会刷新。
+		await RenderingServer.frame_post_draw
+		var engine_origin := {}
+		var pose_readback := {}
+		for n in drv.bone_names:
+			var key := String(n)
+			var i: int = drv.bone_idx[key]
+			engine_origin[key] = _v3(sk.get_bone_global_pose(i).origin)
+			pose_readback[key] = _q4(sk.get_bone_pose_rotation(i)) + \
+				_v3(sk.get_bone_pose_position(i))
+		frames.append({
+			"card": card, "frame": f,
+			"root_m": r["root_m"],
+			"delta_deg": r["delta_deg"],
+			"calc_global_origin": r["calc_global_origin"],
+			"engine_global_origin": engine_origin,
+			"pose_readback": pose_readback,
+		})
+		idx += 1
+		busy = false
+
+
+func _find_skel(n: Node) -> Skeleton3D:
+	if n is Skeleton3D:
+		return n as Skeleton3D
+	for c in n.get_children():
+		var r := _find_skel(c)
+		if r != null:
+			return r
+	return null
+
+
+func _build_stage() -> Camera3D:
+	var we := WorldEnvironment.new()
+	var env := Environment.new()
+	env.background_mode = Environment.BG_COLOR
+	env.background_color = Color(0.075, 0.090, 0.125)
+	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+	env.ambient_light_color = Color(0.42, 0.48, 0.62)
+	env.ambient_light_energy = 0.68
+	we.environment = env
+	root.add_child(we)
+	var l := DirectionalLight3D.new()
+	l.rotation_degrees = Vector3(-38.0, -32.0, 0.0)
+	l.light_energy = 1.9
+	root.add_child(l)
+	var cam := Camera3D.new()
+	cam.current = true
+	cam.position = Vector3(0.0, 1.12, 3.55)
+	cam.fov = 33.0
+	cam.look_at(Vector3(0.0, 0.86, 0.0), Vector3.UP)
+	root.add_child(cam)
+	return cam
+
+
+func _init() -> void:
+	var glb := load(GLB_PATH)
+	var mf := FileAccess.open(MOTION_PATH, FileAccess.READ)
+	if glb == null or mf == null:
+		print("DRIVE_JSON " + JSON.stringify({"error": "resource load failed"}))
+		quit(1)
+		return
+	var motion: Dictionary = JSON.parse_string(mf.get_as_text())
+	mf.close()
+	var inst := (glb as PackedScene).instantiate()
+	root.add_child(inst)
+	var sk := _find_skel(inst)
+	if sk == null:
+		print("DRIVE_JSON " + JSON.stringify({"error": "skeleton missing"}))
+		quit(1)
+		return
+	var drv := RigDriverScript.new()
+	if not drv.setup(sk, motion):
+		print("DRIVE_JSON " + JSON.stringify({"error": "RigDriver.setup failed"}))
+		quit(1)
+		return
+	_build_stage()
+
+	var seq: Array = [["stance", 0]]
+	for card in ["jab", "cross", "wave"]:
+		var n: int = motion["cards"][card]["frames"]
+		for f in range(n):
+			seq.append([card, f])
+
+	var d := Driver.new()
+	d.sk = sk
+	d.drv = drv
+	d.seq = seq
+	d.neutral_start = d._neutral_pose()
+	root.add_child(d)
+	print("DRIVE_START frames=%d" % seq.size())
+
+
+===== probe_project_f/probes/render_driven.gd =====
+extends SceneTree
+## 阶段 5：引擎内多帧截帧 —— 证明「骨骼数值动了」真的变成了「像素动了」。
+##
+## 加载 project.godot 的 main_scene（player_driven.tscn），关掉 auto_play，
+## 逐帧由同一个 RigDriver 驱动并抓帧；「用户 F5 打开能看见」与
+## 「自动截图」走同一条场景链，不是两套口径。
+##
+## 帧表刻意含 stance 两次（repeat，确定性判据）与两种 yaw（体积判据）。
+## 不能 --headless：dummy driver 不发 RenderingServer.frame_post_draw。
+##
+## 用法：F_SHOT_DIR=<abs> godot --path <proj> --resolution 900x1100 \
+##         --script res://probes/render_driven.gd --quit-after 30000
+
+const SCENE_PATH := "res://scenes/player_driven.tscn"
+
+# name, seq_index, camera_yaw_deg
+const SHOTS := [
+	{"name": "stance-front",        "seq": 0,  "yaw": 0.0},
+	{"name": "stance-front-repeat", "seq": 0,  "yaw": 0.0},
+	{"name": "jab06-front",         "seq": 7,  "yaw": 0.0},
+	{"name": "cross07-front",       "seq": 22, "yaw": 0.0},
+	{"name": "wave17-front",        "seq": 54, "yaw": 0.0},
+	{"name": "wave35-front",        "seq": 72, "yaw": 0.0},
+	{"name": "jab06-angle35",       "seq": 7,  "yaw": 35.0},
+	{"name": "cross07-angle35",     "seq": 22, "yaw": 35.0},
+	{"name": "wave17-angle35",      "seq": 54, "yaw": 35.0},
+]
+
+
+class Driver:
+	extends Node
+	const SETTLE := 5
+
+	var stage: Node3D
+	var cam: Camera3D
+	var shots: Array = []
+	var out_dir := ""
+	var idx := 0
+	var busy := false
+	var checked := false
+	var report: Array = []
+
+	func _place(yaw_deg: float) -> void:
+		var yaw := deg_to_rad(yaw_deg)
+		var r := 3.55
+		cam.position = Vector3(r * sin(yaw), 1.12, r * cos(yaw))
+		cam.fov = 33.0
+		cam.look_at(Vector3(0.0, 0.86, 0.0), Vector3.UP)
+
+	func _process(_delta: float) -> void:
+		if busy:
+			return
+		if idx >= shots.size():
+			busy = true
+			print("RENDER_JSON " + JSON.stringify({"shots": report,
+					"stage_ready": stage.get("ready_ok"),
+					"frames_applied": stage.get("frames_applied")}))
+			get_tree().quit(0)
+			return
+		busy = true
+		var s: Dictionary = shots[idx]
+		# _init() 里 add_child 后子场景 _ready() 还没跑，必须抓帧前复核。
+		if not checked:
+			for _i in range(SETTLE):
+				await RenderingServer.frame_post_draw
+			checked = true
+			if not bool(stage.get("ready_ok")):
+				print("STAGE_NOT_READY")
+				get_tree().quit(1)
+				return
+		stage.set("auto_play", false)
+		_place(float(s["yaw"]))
+		var r: Dictionary = stage.call("apply", int(s["seq"]))
+		for _i in range(SETTLE):
+			await RenderingServer.frame_post_draw
+		var img := get_viewport().get_texture().get_image()
+		var path := "%s/f-%s.png" % [out_dir, String(s["name"])]
+		var err := img.save_png(path)
+		report.append({
+			"name": String(s["name"]), "seq": int(s["seq"]),
+			"yaw": float(s["yaw"]),
+			"card": r.get("card", ""), "frame": r.get("frame", -1),
+			"root_m": r.get("root_m", []),
+			"delta_deg": r.get("delta_deg", {}),
+			"path": path, "w": img.get_width(), "h": img.get_height(),
+			"save_error": int(err),
+		})
+		idx += 1
+		busy = false
+
+
+func _init() -> void:
+	var shot_dir := OS.get_environment("F_SHOT_DIR")
+	if shot_dir == "":
+		print("RENDER_JSON " + JSON.stringify({"error": "F_SHOT_DIR missing"}))
+		quit(1)
+		return
+	DirAccess.make_dir_recursive_absolute(shot_dir)
+	var res := load(SCENE_PATH)
+	if res == null or not (res is PackedScene):
+		print("RENDER_JSON " + JSON.stringify({"error": "main_scene load failed"}))
+		quit(1)
+		return
+	var inst: Node3D = (res as PackedScene).instantiate()
+	inst.set("auto_play", false)
+	root.add_child(inst)
+	var cam := inst.get_node_or_null("Camera3D") as Camera3D
+	if cam == null:
+		print("RENDER_JSON " + JSON.stringify({"error": "camera missing"}))
+		quit(1)
+		return
+	var d := Driver.new()
+	d.stage = inst
+	d.cam = cam
+	d.shots = SHOTS
+	d.out_dir = shot_dir
+	root.add_child(d)
+	print("RENDER_START shots=%d out=%s" % [SHOTS.size(), shot_dir])
+
+
+===== probe_project_f/scenes/rig_driver.gd =====
+class_name RigDriver
+extends RefCounted
+## F 路线核心：Godot 4.5 运行时 14 骨驱动层。
+##
+## 输入只有 res://data/motion_input.json —— 原始 2D 关节表 + retarget
+## 参数 + A-pose 关节点（米）。**不读任何烘死的 pose / quat / 动画**：
+## make_points / angle / wrap_pi / retarget_delta / root 位移全部在
+## GDScript 里现算，与 crosscheck_motion_input.py 同公式。
+##
+## 坐标口径由 data/godot_rig_probe.json 实测确定（Blender export_yup）：
+##   Godot (X, Y, Z) = Blender (x, z, -y)。
+##   apose_points[u] = (hx, hz)_Blender -> hv = (hx, hz, 0)_Godot。
+##   mRotY(theta)_Blender == RotZ(-theta)_Godot。
+##
+## Blender: pb.matrix = D[name] @ bone.matrix_local,
+##          D[name] = D[parent] @ local, local = T(hv) @ R @ T(-hv)。
+##
+## Godot 4 实测（data/godot_rig_probe.json）：bone_pose 的初值 == local_rest，
+## 即 pose[i] 是「相对父骨的绝对变换」，不是相对 rest 的增量；
+##   global_pose[i] = global_pose[parent] @ pose[i]。
+## 令目标 global_pose[i] = D[i] @ GR[i]，且 D[i] = D[parent] @ local[i]：
+##   pose[i] = GR[parent]^-1 @ local[i] @ GR[i]      （非根骨）
+##   pose[root] = D[root] @ GR[root]                  （根骨含 root 平移）
+## 注意基底是 **父骨** 的 global_rest，不是本骨的；第一版用 GR[i]^-1
+## 会把 pose 写成相对本骨 rest 的增量，实测引擎骨架完全不动。
+##
+## 第 14 根 neutral_bone 是 glTF 导入器生成的独立根骨，不参与驱动，
+## 保持导入时的 pose（其初值不是 identity，是一个 -90° X 旋转）。
+
+var skel: Skeleton3D
+var motion: Dictionary = {}
+var bone_names: Array = []
+var chain: Array = []
+var mapping: Dictionary = {}
+var stance: Dictionary = {}
+var stance_points: Dictionary = {}
+var apose: Dictionary = {}
+var px_to_m: float = 0.01
+var global_rest: Dictionary = {}
+var bone_idx: Dictionary = {}
+
+var frame_count_applied: int = 0
+var last_delta_deg: Dictionary = {}
+var last_root_m: Array = [0.0, 0.0]
+
+
+func _v2(a: Array) -> Vector2:
+	return Vector2(float(a[0]), float(a[1]))
+
+
+func setup(p_skel: Skeleton3D, p_motion: Dictionary) -> bool:
+	skel = p_skel
+	motion = p_motion
+	if skel == null:
+		return false
+	bone_names = motion.get("bones", [])
+	chain = motion.get("chain", [])
+	mapping = motion.get("mapping", {})
+	apose = motion.get("apose_points", {})
+	px_to_m = float(motion.get("px_to_m", 0.01))
+	for k in motion["stance"].keys():
+		stance[k] = _v2(motion["stance"][k])
+	stance_points = make_points(stance)
+	for n in bone_names:
+		var key := String(n)
+		var i := skel.find_bone(key)
+		if i < 0:
+			return false
+		bone_idx[key] = i
+		global_rest[key] = skel.get_bone_global_rest(i)
+	return bone_names.size() == 13 and chain.size() == 13
+
+
+func _lerp2(a: Vector2, b: Vector2, t: float) -> Vector2:
+	return a.lerp(b, t)
+
+
+func angle(p: Vector2, q: Vector2) -> float:
+	return atan2(q.y - p.y, q.x - p.x)
+
+
+func wrap_pi(a: float) -> float:
+	return fposmod(a + PI, TAU) - PI
+
+
+func make_points(j: Dictionary) -> Dictionary:
+	var hip: Vector2 = j["hip"]
+	var sh: Vector2 = j["shoulder"]
+	var hd: Vector2 = j["head"]
+	return {
+		"A": hip,
+		"B": _lerp2(hip, sh, 0.26),
+		"C": _lerp2(hip, sh, 0.60),
+		"D": sh,
+		"E": _lerp2(sh, hd, 0.58),
+		"F": hd,
+		"f_elbow": j["f_elbow"], "f_hand": j["f_hand"],
+		"b_elbow": j["b_elbow"], "b_hand": j["b_hand"],
+		"f_knee": j["f_knee"], "f_foot": j["f_foot"],
+		"b_knee": j["b_knee"], "b_foot": j["b_foot"],
+		"tf_head": Vector2(hip.x + 4.0, hip.y),
+		"tb_head": Vector2(hip.x - 4.0, hip.y),
+	}
+
+
+## 与 F路线/crosscheck_motion_input.py:retarget 逐字同公式，返回「度」。
+func retarget_delta(frame_j: Dictionary) -> Dictionary:
+	var fp := make_points(frame_j)
+	var raw := {}
+	for e in chain:
+		var n := String(e[0])
+		var u := String(e[2])
+		var v := String(e[3])
+		raw[n] = rad_to_deg(wrap_pi(
+			angle(fp[u], fp[v]) - angle(stance_points[u], stance_points[v])))
+	var torso := rad_to_deg(wrap_pi(
+		angle(fp["A"], fp["D"]) - angle(stance_points["A"], stance_points["D"])))
+	var cap := float(mapping["torso_cap_deg"])
+	var used := clampf(torso * float(mapping["torso_gain"]), -cap, cap)
+	var mf: float = (frame_j["f_hand"] as Vector2).distance_to(
+		stance["f_hand"] as Vector2)
+	var mb: float = (frame_j["b_hand"] as Vector2).distance_to(
+		stance["b_hand"] as Vector2)
+	var tf := minf(1.0, mf / float(mapping["reach_norm_px"]))
+	var tb := minf(1.0, mb / float(mapping["reach_norm_px"]))
+	var tw: float = minf(1.0, minf(mf, mb) /
+		float(mapping["wave_min_norm_px"])) * float(mapping["wave_arm_weight"])
+	var af := maxf(tf, tw)
+	var ab := maxf(tb, tw)
+	var g: Dictionary = mapping["arm_gain_deg"]
+	var leg_cap := float(mapping["leg_cap_deg"])
+	return {
+		"hips": 0.0,
+		"spine": used,
+		"chest": 0.0,
+		"neck": 0.0,
+		"head": -used * float(mapping["head_compensation"]),
+		"upperarm_f": -float(g["f_upper"]) * af,
+		"forearm_f": -float(g["f_fore"]) * af,
+		"upperarm_b": float(g["b_upper"]) * ab,
+		"forearm_b": float(g["b_fore"]) * ab,
+		"thigh_f": clampf(float(raw["thigh_f"]), -leg_cap, leg_cap),
+		"shin_f": clampf(float(raw["shin_f"]), -leg_cap, leg_cap),
+		"thigh_b": clampf(float(raw["thigh_b"]), -leg_cap, leg_cap),
+		"shin_b": clampf(float(raw["shin_b"]), -leg_cap, leg_cap),
+	}
+
+
+func _joints_of(card: String, frame: int) -> Dictionary:
+	if card == "stance" or card == "":
+		return stance
+	var raw: Dictionary = motion["cards"][card]["track"][frame]
+	var out := {}
+	for k in raw.keys():
+		out[k] = _v2(raw[k])
+	return out
+
+
+func _v3(v: Vector3) -> Array:
+	return [round(v.x * 1000000.0) / 1000000.0,
+			round(v.y * 1000000.0) / 1000000.0,
+			round(v.z * 1000000.0) / 1000000.0]
+
+
+## 驱动一帧；返回可供数值对账的 13 骨 global pose 与 delta。
+func apply_frame(card: String, frame: int) -> Dictionary:
+	var frame_j := _joints_of(card, frame)
+	var delta_deg := retarget_delta(frame_j)
+	var dx: float = (frame_j["hip"].x - stance["hip"].x) * px_to_m
+	var dz: float = -(frame_j["hip"].y - stance["hip"].y) * px_to_m
+	last_delta_deg = delta_deg
+	last_root_m = [dx, dz]
+
+	var cum: Dictionary = {}
+	var calc_global: Dictionary = {}
+	var delta_rows: Dictionary = {}
+	for e in chain:
+		var n := String(e[0])
+		var parent: Variant = e[1]
+		var u := String(e[2])
+		var hv := Vector3(float(apose[u][0]), float(apose[u][1]), 0.0)
+		var theta := -deg_to_rad(float(delta_deg[n]))
+		var rot := Quaternion(Vector3(0.0, 0.0, 1.0), theta)
+		# T(hv) @ R @ T(-hv) —— 绕 A-pose 关节点的全局增量旋转。
+		var local := (Transform3D(Basis.IDENTITY, hv)
+			* Transform3D(Basis(rot), Vector3.ZERO)
+			* Transform3D(Basis.IDENTITY, -hv))
+		var c: Transform3D
+		if parent == null:
+			c = Transform3D(Basis.IDENTITY, Vector3(dx, dz, 0.0)) * local
+		else:
+			c = (cum[String(parent)] as Transform3D) * local
+		cum[n] = c
+		var gr: Transform3D = global_rest[n]
+		calc_global[n] = c * gr
+
+		# pose = GR[parent]^-1 @ local @ GR[i]；根骨用 D[root] @ GR[root]。
+		var gr_parent: Transform3D
+		if parent == null:
+			gr_parent = Transform3D.IDENTITY
+		else:
+			gr_parent = global_rest[String(parent)]
+		var pose_mat := gr_parent.affine_inverse() * local * gr
+		if parent == null:
+			pose_mat = c * gr
+		var i: int = bone_idx[n]
+		skel.set_bone_pose_position(i, pose_mat.origin)
+		skel.set_bone_pose_rotation(i, pose_mat.basis.get_rotation_quaternion())
+		skel.set_bone_pose_scale(i, pose_mat.basis.get_scale())
+		delta_rows[n] = round(float(delta_deg[n]) * 100000.0) / 100000.0
+
+	frame_count_applied += 1
+	var out_global := {}
+	for n in bone_names:
+		out_global[String(n)] = _v3((calc_global[n] as Transform3D).origin)
+	return {
+		"card": card, "frame": frame,
+		"root_m": [round(dx * 1000000.0) / 1000000.0,
+				   round(dz * 1000000.0) / 1000000.0],
+		"delta_deg": delta_rows,
+		"calc_global_origin": out_global,
+		"bones_driven": chain.size(),
+	}
+
+
+===== probe_project_f/scenes/player_driven.gd =====
+extends Node3D
+## F 路线主场景：打开工程（F5）就能看到女角色循环播放三档攻击。
+##
+## 驱动只依赖 res://data/motion_input.json 的原始 2D 关节表；
+## 不加载任何烘死的动画/pose。RigDriver 是 GDScript 运行时现算的
+## 14 骨驱动层，见 scenes/rig_driver.gd。
+##
+## 渲染探针会把 auto_play 关掉后自己逐帧驱动并截帧，
+## 保证「打开能看见」与「自动截图」走的是同一条场景链。
+
+const MOTION_PATH := "res://data/motion_input.json"
+const PLAY_FPS := 12.0
+# 不用 class_name 全局注册：--script 启动路径不扫全局类缓存，
+# 用 preload 与 probes/probe_drive.gd 保持同一口径。
+const RigDriverScript := preload("res://scenes/rig_driver.gd")
+
+@export var auto_play: bool = true
+
+var drv
+var skel: Skeleton3D
+var seq: Array = []
+var play_index: int = 0
+var frames_applied: int = 0
+var ready_ok: bool = false
+
+var _acc := 0.0
+
+
+func _find_skel(n: Node) -> Skeleton3D:
+	if n is Skeleton3D:
+		return n as Skeleton3D
+	for c in n.get_children():
+		var r := _find_skel(c)
+		if r != null:
+			return r
+	return null
+
+
+func _build_stage() -> void:
+	var we := WorldEnvironment.new()
+	var env := Environment.new()
+	env.background_mode = Environment.BG_COLOR
+	env.background_color = Color(0.075, 0.090, 0.125)
+	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+	env.ambient_light_color = Color(0.42, 0.48, 0.62)
+	env.ambient_light_energy = 0.68
+	we.environment = env
+	add_child(we)
+	var ground := get_node_or_null("Ground") as MeshInstance3D
+	if ground != null:
+		var plane := PlaneMesh.new()
+		plane.size = Vector2(12.0, 12.0)
+		ground.mesh = plane
+		var mat := StandardMaterial3D.new()
+		mat.albedo_color = Color(0.10, 0.12, 0.16)
+		mat.roughness = 0.95
+		ground.material_override = mat
+
+
+func _ready() -> void:
+	_build_stage()
+	var mf := FileAccess.open(MOTION_PATH, FileAccess.READ)
+	if mf == null:
+		push_error("F: motion_input.json missing")
+		return
+	var motion: Dictionary = JSON.parse_string(mf.get_as_text())
+	mf.close()
+	skel = _find_skel(self)
+	if skel == null:
+		push_error("F: Skeleton3D missing")
+		return
+	drv = RigDriverScript.new()
+	if not drv.setup(skel, motion):
+		push_error("F: RigDriver.setup failed")
+		return
+	seq = [["stance", 0]]
+	for card in ["jab", "cross", "wave"]:
+		var n: int = motion["cards"][card]["frames"]
+		for f in range(n):
+			seq.append([card, f])
+	apply(0)
+	ready_ok = true
+	print("F_READY bones=%d frames=%d auto_play=%s" %
+			[skel.get_bone_count(), seq.size(), str(auto_play)])
+
+
+func apply(index: int) -> Dictionary:
+	if drv == null or seq.is_empty():
+		return {}
+	var i := index % seq.size()
+	play_index = i
+	var r: Dictionary = drv.apply_frame(String(seq[i][0]), int(seq[i][1]))
+	frames_applied += 1
+	return r
+
+
+func _process(delta: float) -> void:
+	if not auto_play or not ready_ok:
+		return
+	_acc += delta
+	var step := 1.0 / PLAY_FPS
+	while _acc >= step:
+		_acc -= step
+		apply(play_index + 1)
+
+
+===== probe_project_f/scenes/player_driven.tscn =====
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/player-rigged.glb" id="1_glb"]
+[ext_resource type="Script" path="res://scenes/player_driven.gd" id="2_drive"]
+
+[node name="PlayerDriven" type="Node3D"]
+script = ExtResource("2_drive")
+
+[node name="Player" parent="." instance=ExtResource("1_glb")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12, 3.55)
+fov = 33.0
+near = 0.05
+far = 100.0
+current = true
+
+[node name="Key" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-38, -32, 0)
+light_color = Color(1, 0.96, 0.9, 1)
+light_energy = 1.9
+shadow_enabled = true
+
+[node name="Fill" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-20, 145, 0)
+light_color = Color(0.68, 0.79, 1, 1)
+light_energy = 0.75
+
+[node name="Warm" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-12, 75, 0)
+light_color = Color(1, 0.85, 0.7, 1)
+light_energy = 0.55
+
+[node name="Rim" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-25, 200, 0)
+light_color = Color(0.76, 0.85, 1, 1)
+light_energy = 0.95
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.012, 0)
+

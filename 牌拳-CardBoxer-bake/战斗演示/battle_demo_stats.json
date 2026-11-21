@@ -1,0 +1,172 @@
+{
+  "canvas": [
+    880,
+    500
+  ],
+  "fps": 12.5,
+  "frame_ms": 80,
+  "turn_frames": 42,
+  "outro_frames": 14,
+  "total_frames": 140,
+  "segments": {
+    "idle": [
+      0,
+      6
+    ],
+    "reveal": [
+      6,
+      18
+    ],
+    "judge": [
+      18,
+      21
+    ],
+    "attack": [
+      21,
+      35
+    ],
+    "settle": [
+      35,
+      42
+    ]
+  },
+  "rounds": [
+    {
+      "n": 1,
+      "player_cards": [
+        2,
+        5,
+        8
+      ],
+      "foe_cards": [
+        1,
+        4,
+        7
+      ],
+      "player_type": "scatter",
+      "foe_type": "scatter",
+      "winner": "player",
+      "attack": "jab",
+      "damage": 5,
+      "note": "同为散牌，rank_sum 15 > 12，玩家先手刺拳"
+    },
+    {
+      "n": 2,
+      "player_cards": [
+        4,
+        5,
+        6
+      ],
+      "foe_cards": [
+        8,
+        8,
+        8
+      ],
+      "player_type": "sequence",
+      "foe_type": "triple",
+      "winner": "foe",
+      "attack": "wave",
+      "damage": 14,
+      "note": "三同压三连，对手怪气功波反击"
+    },
+    {
+      "n": 3,
+      "player_cards": [
+        9,
+        9,
+        9
+      ],
+      "foe_cards": [
+        1,
+        2,
+        3
+      ],
+      "player_type": "triple",
+      "foe_type": "sequence",
+      "winner": "player",
+      "attack": "wave",
+      "damage": 14,
+      "note": "三同压三连，玩家气功波收尾"
+    }
+  ],
+  "hp_track": [
+    {
+      "after_round": 0,
+      "player": 100,
+      "foe": 100,
+      "rage_player": 0,
+      "rage_foe": 0
+    },
+    {
+      "after_round": 1,
+      "player": 100,
+      "foe": 95,
+      "rage_player": 0,
+      "rage_foe": 34
+    },
+    {
+      "after_round": 2,
+      "player": 86,
+      "foe": 95,
+      "rage_player": 34,
+      "rage_foe": 34
+    },
+    {
+      "after_round": 3,
+      "player": 86,
+      "foe": 81,
+      "rage_player": 34,
+      "rage_foe": 68
+    }
+  ],
+  "outcome": {
+    "winner": "player",
+    "player_hp": 86,
+    "foe_hp": 81,
+    "text": "三回结束 · 按剩余兵力结算"
+  },
+  "modes": {
+    "puppet": {
+      "file": "战斗演示-立绘版.gif",
+      "bytes": 4548354,
+      "src_frames": 140,
+      "encoded_frames": 73,
+      "duration_sum_ms": 11200,
+      "expected_duration_ms": 11200,
+      "sha256": "a3da532c3ec7537897ac14d861fec8445bf3853ba376aa50299b233597c155a8"
+    },
+    "c3d": {
+      "file": "战斗演示-真3D版.gif",
+      "bytes": 4533038,
+      "src_frames": 140,
+      "encoded_frames": 73,
+      "duration_sum_ms": 11200,
+      "expected_duration_ms": 11200,
+      "sha256": "2d8e8508718c64f24fb3ee24f341d5e62f34ec4b326477cd18b21a1cd2bd956b"
+    }
+  },
+  "key_indices": [
+    12,
+    19,
+    27,
+    39,
+    54,
+    61,
+    69,
+    81,
+    96,
+    103,
+    111,
+    123
+  ],
+  "sources": {
+    "player_frames": "3D攻击GIF/frames/puppet_player",
+    "foe_puppet_frames": "3D攻击GIF/frames/puppet_foe",
+    "foe_c3d_frames": "C路线-真3D修复/frames",
+    "background": "牌拳-CardBoxer/background/arena.png",
+    "spec_sha256": "2e878e282dc66d838ede50d1d3d218177687e4f18917de163c6e5da8211116bd",
+    "table_sha256": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55",
+    "script_sha256": "e7de6f9dace35ad6d59754577f53deae57ac626383b8984821f028862acf76e2"
+  },
+  "not_claimed": "compare 是演示用简化规则，不等同游戏内 taikou_rules.gd 的完整太阁 IV 比较（111>999>...>222 等）；受击是离线表现层（击退/闪白/抖动/冲击环），不是新烘动作帧，规格里 hit_crush 本就标 new 未烘。"
+}

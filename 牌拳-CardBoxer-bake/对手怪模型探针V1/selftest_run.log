@@ -1,0 +1,18 @@
+PASS  selftest_process_exits_nonzero
+PASS  m4_reports_did_not_run
+PASS  did_not_run_counted_in_summary
+PASS  whole_run_failed_not_fake_green
+PASS  m4_flagged_in_result_json
+PASS  other_cases_still_reported
+PASS  clean_rerun_still_executed
+PASS  all_targets_still_restored
+
+M1 CAUGHT  red=True sentinel_green=True restore=True  prompt.txt 改一个词（规格与校验不再自洽）
+M2 CAUGHT  red=True sentinel_green=True restore=True  gen_stdout.json 的 429 改成 200（假装生成成功）
+M3 CAUGHT  red=True sentinel_green=True restore=True  对照板换成概念图副本（尺寸不对）
+M4 DID NOT RUN  red=False sentinel_green=False restore=True  对照板 stats 的玩家 bbox 改错一个坐标（假装有实测）  [M4 锚点失配]
+
+3/4 CAUGHT  restore=4/4  did_not_run=1  clean_rerun=GREEN  MUTATION_CONCEPT_FAILED
+
+8/8 PASS  SELFTEST_DID_NOT_RUN_OK
+restore_sha256=True  5fde8f5d727b0937427377e7cb46e66a1e3a62c842b40f613ed87ba16b1d62f9

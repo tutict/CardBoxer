@@ -1,0 +1,27 @@
+PASS  outputs_exist_and_1280x720  {'A': (1280, 720), 'B': (1280, 720), 'C': (1280, 720), 'D': (1280, 720), 'E': (1280, 720)}
+PASS  outputs_not_blank  {'A': 7862, 'B': 8006, 'C': 2550, 'D': 1309, 'E': 4452}
+PASS  output_sha_matches_manifest  
+PASS  source_shot_sha_matches_manifest  
+PASS  geometry_matches_game_source  source={'arena.gd': {'GROUND_Y': 520.0, 'player_x': 430.0, 'enemy_x': 850.0}, 'hud.gd': {'CARD_W': 148.0, 'CARD_H': 150.0, 'CARD_GAP': 16.0, 'HAND_Y': 552.0}} manifest={'arena.gd': {'GROUND_Y': 520, 'player_x': 430, 'enemy_x': 850}, 'hud.gd': {'CARD_W': 148, 'CARD_H': 150, 'CARD_GAP': 16, 'HAND_Y': 552}}
+PASS  geometry_matches_script_constants  
+PASS  a_no_changes_outside_subject_boxes  outside_px=0
+PASS  a_subject_region_actually_replaced  changed_px=14828
+PASS  a_hud_untouched  
+PASS  a_cards_untouched  
+PASS  b_no_changes_outside_allowed_boxes  outside_px=0
+PASS  b_middle_three_cards_pixel_identical  [0, 0, 0]
+PASS  b_card1_and_card5_actually_replaced  card1=12477 card5=12435
+PASS  b_card_matches_recomputed_asset  
+PASS  offline_tag_does_not_overlap_card1  tag_right=234 card1_left=238
+PASS  erase_fill_uses_clean_center_patch  erase_calls=2 source_x_ranges=[(560, 760), (560, 760)]
+PASS  manifest_erase_boxes_match_script  [[330, 310, 530, 518], [750, 310, 950, 518]]
+PASS  subject_bbox_matches_measured_probe  {'front': (174, 96, 594, 672), 'angle25': (156, 96, 569, 672), 'angle55': (188, 96, 569, 672), 'back35': (255, 96, 608, 672)}
+PASS  v4b_source_sha_matches_manifest  sources=4
+PASS  face_source_sha_matches_manifest  face_sources=['v4b-face-25.png', 'v4b-face-front.png']
+PASS  face_shot_mapping_is_wired  {'front': 'v4b-face-front.png', 'angle25': 'v4b-face-25.png', 'angle55': 'v4b-face-25.png', 'back35': 'v4b-face-front.png'}
+PASS  avatar_mother_is_600px_transparent_face_shot  size=(600, 600) corner_alpha=[0, 0, 0, 0]
+PASS  not_a_copy_of_v3_preview  {'A': 65154, 'B': 16427, 'D': 48794}
+PASS  game_sources_not_modified  newer_files=[]
+
+24/24 PASS  PREVIEW_V4B_VERIFIED
+

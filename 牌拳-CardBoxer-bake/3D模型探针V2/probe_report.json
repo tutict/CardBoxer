@@ -1,0 +1,67 @@
+{
+  "job_id": "1510546865849843712",
+  "status": "DONE",
+  "resumed_after_connection_drop": true,
+  "transient_queries": 0,
+  "raw_result": {
+    "ErrorCode": "",
+    "ErrorMessage": "",
+    "ResultCreditDetails": "{\"FaceCount\":10,\"Format\":5,\"GenerateType-Normal\":20,\"Pbr\":10}",
+    "ResultCreditConsumed": 45,
+    "RequestId": "08c1605c-3eb8-4faf-8da2-cdd927cb06ed",
+    "Status": "DONE",
+    "ResultFile3Ds": [
+      {
+        "PreviewImageUrl": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/preview_21acef66-e2b4-4d6d-989f-bdad58e288ab_0.png?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794037024%3B1794123424&q-key-time=1794037024%3B1794123424&q-header-list=host&q-url-param-list=&q-signature=8ac9f74aac3bdeed428bb19d5f3ef487d4834e22",
+        "Type": "OBJ",
+        "Url": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/21acef66-e2b4-4d6d-989f-bdad58e288ab_0.zip?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794037024%3B1794123424&q-key-time=1794037024%3B1794123424&q-header-list=host&q-url-param-list=&q-signature=23939dfb4d272bdf655da1021f7a03b673641c4b"
+      },
+      {
+        "PreviewImageUrl": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/preview_21acef66-e2b4-4d6d-989f-bdad58e288ab_0.png?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794037024%3B1794123424&q-key-time=1794037024%3B1794123424&q-header-list=host&q-url-param-list=&q-signature=8ac9f74aac3bdeed428bb19d5f3ef487d4834e22",
+        "Type": "GLB",
+        "Url": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/21acef66-e2b4-4d6d-989f-bdad58e288ab_0.glb?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794037024%3B1794123424&q-key-time=1794037024%3B1794123424&q-header-list=host&q-url-param-list=&q-signature=8f6c1cad33baafba5613c081689c79d93975dca2"
+      },
+      {
+        "Type": "FBX",
+        "Url": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/21acef66-e2b4-4d6d-989f-bdad58e288ab_0.fbx?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794037024%3B1794123424&q-key-time=1794037024%3B1794123424&q-header-list=host&q-url-param-list=&q-signature=af87d5e3f344270b6f5080d63437d9a3ce51fa9b",
+        "PreviewImageUrl": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/preview_21acef66-e2b4-4d6d-989f-bdad58e288ab_0.png?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794037024%3B1794123424&q-key-time=1794037024%3B1794123424&q-header-list=host&q-url-param-list=&q-signature=8ac9f74aac3bdeed428bb19d5f3ef487d4834e22"
+      }
+    ]
+  },
+  "prompt_sha256": "eecde4bb2aff87c758273d172f9014372606123a6dc3b4487fdeab1cf91b6c61",
+  "settings": {
+    "enable_pbr": true,
+    "face_count": 80000,
+    "result_format": "FBX",
+    "model": "3.1",
+    "generate_type": "Normal(default)"
+  },
+  "artifacts": [
+    {
+      "file": "artifact_01.png",
+      "bytes": 61777,
+      "sha256": "61dc485a163b8f80205ac700809b6bec1ee8ebef6625a2567f7293361d9378a3",
+      "source_url_path": "preview_21acef66-e2b4-4d6d-989f-bdad58e288ab_0.png"
+    },
+    {
+      "file": "artifact_02.zip",
+      "bytes": 26208537,
+      "sha256": "005c551af1f1fea58df83704d75530aee362b3b96ebe051a346ae66ef032b8bd",
+      "source_url_path": "21acef66-e2b4-4d6d-989f-bdad58e288ab_0.zip"
+    },
+    {
+      "file": "artifact_03.glb",
+      "bytes": 30790380,
+      "sha256": "19bcb5625b326318f2e3fc0029770274844833552b9bdce01a896df43301ae71",
+      "source_url_path": "21acef66-e2b4-4d6d-989f-bdad58e288ab_0.glb"
+    },
+    {
+      "file": "artifact_04.fbx",
+      "bytes": 31265868,
+      "sha256": "1bc4875b0652873ab36b9e2ef26e5031ee4cf1702d3d465c0e24c3e3d1f68c68",
+      "source_url_path": "21acef66-e2b4-4d6d-989f-bdad58e288ab_0.fbx"
+    }
+  ],
+  "glb": "artifact_03.glb",
+  "viewer_html": "generated_model_20261107-153706_viewer.html"
+}

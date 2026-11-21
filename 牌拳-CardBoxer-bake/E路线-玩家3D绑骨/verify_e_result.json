@@ -1,0 +1,138 @@
+{
+  "route": "E",
+  "total": 26,
+  "passed": 26,
+  "failed": [],
+  "checks": [
+    {
+      "name": "E-01_baseline_inputs_intact",
+      "ok": true,
+      "detail": "game=105 singles=10 drift=0 []"
+    },
+    {
+      "name": "E-02_game_has_zero_3d_assets",
+      "ok": true,
+      "detail": "3d_assets_in_game=0 []"
+    },
+    {
+      "name": "E-03_source_asset_structure",
+      "ok": true,
+      "detail": "verts=57901 shells=2035 height=1.72000 pbr=3"
+    },
+    {
+      "name": "E-04_chain_params_recomputable",
+      "ok": true,
+      "detail": "build={'voxel_size': 0.02, 'arm_only_gain': 1.5, 'apose_table': 'player'} probe={'voxel_size': 0.02, 'arm_only_gain': 1.5, 'apose_table': 'player'} method=player V4b A-pose rest 13 bones (apose_joints.player) + Voxel continuous shell (triangulated) + ARMATURE_AUTO + SURFACE_DEFORM bind; original 2,035-shell high-poly keeps UV / 3 packed 4096 PBR textures"
+    },
+    {
+      "name": "E-05_voxel_shell_collapses_2035_shells",
+      "ok": true,
+      "detail": "2035 -> 3 shells, weights=14062/14070"
+    },
+    {
+      "name": "E-06_uv_and_pbr_untouched",
+      "ok": true,
+      "detail": "uv=1 mats=1 reopen_pbr=3"
+    },
+    {
+      "name": "E-07_surface_deform_bound_and_reopened",
+      "ok": true,
+      "detail": "bound=True drift=4.79e-06 reopen_target=e_continuous_shell bones=13"
+    },
+    {
+      "name": "E-08_stance_is_identity",
+      "ok": true,
+      "detail": "build=9.828e-06 probe=9.828e-06"
+    },
+    {
+      "name": "E-09_reopen_still_drives",
+      "ok": true,
+      "detail": "reopen_drive=0.82539"
+    },
+    {
+      "name": "E-10_72_frames_ledger",
+      "ok": true,
+      "detail": "count=72 rows=72 cards={'jab': 14, 'cross': 22, 'wave': 36}"
+    },
+    {
+      "name": "E-11_metrics_recomputed_from_raw_rows",
+      "ok": true,
+      "detail": "stat_diffs=0 [] worst=1.84941"
+    },
+    {
+      "name": "E-12_gain_x15_amplifies_deformation",
+      "ok": true,
+      "detail": "disp x1=0.58383 x15=0.82423"
+    },
+    {
+      "name": "E-13_negative_result_not_sugarcoated",
+      "ok": true,
+      "detail": "mean=1.27632 better=4/72 verdict=WORSE_THAN_FOE"
+    },
+    {
+      "name": "E-14_conclusion_recomputable",
+      "ok": true,
+      "detail": "calc=small_sprite_sample_first listed=small_sprite_sample_first reasons=4"
+    },
+    {
+      "name": "E-15_all_16_frames_sha_matched",
+      "ok": true,
+      "detail": "shots=16 disk=16 bad=0 distinct=16"
+    },
+    {
+      "name": "E-16_four_boards_shape_and_distinct",
+      "ok": true,
+      "detail": "bad=[] distinct=4"
+    },
+    {
+      "name": "E-17_board_ledger_and_source_wiring",
+      "ok": true,
+      "detail": "boards=4 frames=16 ledger_match=True"
+    },
+    {
+      "name": "E-18_four_glb_exports_intact",
+      "ok": true,
+      "detail": "exports=4 bad=[]"
+    },
+    {
+      "name": "E-19_glb_structure_skin_and_animation",
+      "ok": true,
+      "detail": "full skins=1 animations=all0 skinned_verts=14070"
+    },
+    {
+      "name": "E-20_pbr_zero_reencode",
+      "ok": true,
+      "detail": "all_match=True bytes=34980066 share=0.91521"
+    },
+    {
+      "name": "E-21_export_is_static_snapshot",
+      "ok": true,
+      "detail": "stance_vs_cross_delta=0.169804 skins=0"
+    },
+    {
+      "name": "E-22_godot_import_clean",
+      "ok": true,
+      "detail": "import_rc=0 imported=12 script_errors=0"
+    },
+    {
+      "name": "E-23_godot_skeleton_only_on_proxy",
+      "ok": true,
+      "detail": "targets=3 node_0_skeleton='' bones=14"
+    },
+    {
+      "name": "E-24_pipeline_source_wiring",
+      "ok": true,
+      "detail": "py_files=8 ast_ok=True wiring=True"
+    },
+    {
+      "name": "E-25_logs_have_no_errors",
+      "ok": true,
+      "detail": "pipeline_logs=7 noisy=[]"
+    },
+    {
+      "name": "E-26_upstream_routes_still_green",
+      "ok": true,
+      "detail": "verify_c=25/25 verify_d=18/18"
+    }
+  ]
+}

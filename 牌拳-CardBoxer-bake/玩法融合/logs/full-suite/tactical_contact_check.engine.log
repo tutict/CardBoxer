@@ -1,0 +1,8 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+F3D_READY bones=13 cards=15
+F3D_FOE_READY bones=13
+TACTICAL CONTACT: dx=0.000 fist=(880.2154, 389.2838) body=(880.2154, 405.8893)
+TACTICAL CONTACT CHECK: 1/1 passed

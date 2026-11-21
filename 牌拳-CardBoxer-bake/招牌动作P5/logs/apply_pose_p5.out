@@ -1,0 +1,11 @@
+APPLIED data/card_motion.json edits=3124 diff_paths=230 bytes=228610->229358
+APPLIED data/motion_input.json edits=3124 diff_paths=230 bytes=74632->75380
+APPLIED data/motion_input_foe.json edits=3124 diff_paths=230 bytes=74630->75378
+CHECK three_files_changed True
+CHECK all_round_trip_identity True
+CHECK three_tables_11_joints_in_sync True
+CHECK non_joint_metadata_unchanged True
+CHECK other_11_monitored_files_sha_unchanged True
+CHECK diff_paths_confined_to_allowed_scope True
+CHECK changed_frame_total_matches_scan True
+APPLY_POSE_P5_OK compared=6248 disagree=0 diff_paths=690

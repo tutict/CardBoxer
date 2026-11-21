@@ -1,0 +1,6 @@
+M1 CAUGHT  red=True sentinel_green=True restore=True  prompt.txt 改一个词（规格与校验不再自洽）
+M2 CAUGHT  red=True sentinel_green=True restore=True  gen_stdout.json 的 429 改成 200（假装生成成功）
+M3 CAUGHT  red=True sentinel_green=True restore=True  对照板换成概念图副本（尺寸不对）
+M4 CAUGHT  red=True sentinel_green=True restore=True  对照板 stats 的玩家 bbox 改错一个坐标（假装有实测）
+
+4/4 CAUGHT  restore=4/4  did_not_run=0  clean_rerun=GREEN  MUTATION_CONCEPT_OK

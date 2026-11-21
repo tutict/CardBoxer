@@ -1,0 +1,44 @@
+{
+  "rows": [
+    {
+      "case": "M1",
+      "status": "CAUGHT",
+      "expect": "new_bat_has_3d_switch",
+      "restore_sha_ok": true,
+      "failed_line": "FAILED new_bat_has_3d_switch"
+    },
+    {
+      "case": "M2",
+      "status": "CAUGHT",
+      "expect": "new_bat_has_utf8_codepage",
+      "restore_sha_ok": true,
+      "failed_line": "FAILED new_bat_has_utf8_codepage"
+    },
+    {
+      "case": "M3",
+      "status": "CAUGHT",
+      "expect": "default_probe_off",
+      "restore_sha_ok": true,
+      "failed_line": "FAILED default_probe_off"
+    },
+    {
+      "case": "M4",
+      "status": "CAUGHT",
+      "expect": "3d_probe_on",
+      "restore_sha_ok": true,
+      "failed_line": "FAILED 3d_probe_on"
+    },
+    {
+      "case": "M5",
+      "status": "CAUGHT",
+      "expect": "glb_sha_is_i_baseline,b_round2_glb_removed",
+      "restore_sha_ok": true,
+      "failed_line": "FAILED glb_sha_is_i_baseline,glb_size_is_i_baseline,b_round2_glb_removed"
+    }
+  ],
+  "caught": 5,
+  "did_not_run": 0,
+  "restored": 5,
+  "clean_rerun_green": true,
+  "ok": true
+}

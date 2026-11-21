@@ -1,0 +1,15 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 621.24 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5080 Laptop GPU
+
+COLD SAMPLE player us=982348
+COLD SAMPLE foe us=998266
+CPU SAMPLE player {"count":480,"max_us":6412,"mean_us":3951.05,"p50_us":4219,"p95_us":5057}
+CPU PRESERVE SUPPORT player {"count":480,"max_us":5395,"mean_us":3463.61666666667,"p50_us":3373,"p95_us":3943}
+CPU SAMPLE foe {"count":480,"max_us":6716,"mean_us":4225.24791666667,"p50_us":4512,"p95_us":5357}
+CPU PRESERVE SUPPORT foe {"count":480,"max_us":5024,"mean_us":3715.15833333333,"p50_us":3629,"p95_us":4204}
+F3D_READY bones=13 cards=15
+F3D_FOE_READY bones=13
+RENDER START driver=opengl3 display=Windows cap=60
+REAL RENDER FPS {"fps":60.0024172402374,"frame_intervals":{"count":420,"max_us":17116,"mean_us":16665.9952380952,"p50_us":16666,"p95_us":16682},"frames":420,"seconds":6.999718}
+RENDER SAMPLE player {"count":421,"max_us":6335,"mean_us":4189.00237529691,"p50_us":4452,"p95_us":5053}
+RENDER SAMPLE foe {"count":421,"max_us":5950,"mean_us":4356.59144893112,"p50_us":4629,"p95_us":5231}

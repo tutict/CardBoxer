@@ -1,0 +1,11 @@
+RUN 5.476s rc=0 gl=True errors=0
+LAYERS player=True foe=True bones=13/13 yaw=55.0/-55.0
+DIAG glb= res://assets/3d/player-rigged.glb / res://assets/3d/foe-rigged.glb  mesh= player_HI_skinned / foe_HI_skinned  sv_same= False  tex_same= False
+MESH_SIG player= player_HI_skinned|res://assets/3d/player-rigged.glb::ArrayMesh_mi4ok|57934|albedo=res://assets/3d/player-rigged_texture_pbr_20250901.png
+MESH_SIG foe=    foe_HI_skinned|res://assets/3d/foe-rigged.glb::ArrayMesh_4uj0o|64059|albedo=res://assets/3d/foe-rigged_texture_pbr_20250901.png
+SHOT off            1280x720 err=0 prims=5136 calls=117.0
+SHOT both-stance    1280x720 err=0 prims=1104816 calls=33.0
+SHOT player-jab6    1280x720 err=0 prims=1104816 calls=33.0
+SHOT foe-cross11    1280x720 err=0 prims=1104816 calls=33.0
+SHOT both-wave17    1280x720 err=0 prims=1104816 calls=33.0
+TWO_SIDE_AB_OK

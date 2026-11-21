@@ -1,0 +1,48 @@
+{
+  "recommended_case": "balanced",
+  "metric_revision": "R1",
+  "changed_frame_total": 42,
+  "files": {
+    "data/card_motion.json": {
+      "sha_before": "ca4060d75ccc4621dc00ccae85c4eaab8751de50a016f1ca4ab43cf5ad3a2f93",
+      "sha_after": "22f0e0210460d93adc6460078dcd5cd3c5d5835291bbfee6dab2564b22f4c432",
+      "bytes_before": 228610,
+      "bytes_after": 229358,
+      "joint_values_written": 3124,
+      "diff_path_count": 230,
+      "round_trip_identity": true
+    },
+    "data/motion_input.json": {
+      "sha_before": "61f8a14ea7b9ec60ff44d0d57f520357d03e258219d94bf7d9512a980dd244be",
+      "sha_after": "e14538522f1d44501c8c928d746a24c48cbc302d14be52b37374b8d031fa85b9",
+      "bytes_before": 74632,
+      "bytes_after": 75380,
+      "joint_values_written": 3124,
+      "diff_path_count": 230,
+      "round_trip_identity": true
+    },
+    "data/motion_input_foe.json": {
+      "sha_before": "fa5960b79faf26b3f2dd2f6f0dfea493a6c2f2ed0f6856656df37737fcb65aae",
+      "sha_after": "d83f310af6087467bf3a1dd41025d15cfa44434732d40985cfd91bb00fb6ab6e",
+      "bytes_before": 74630,
+      "bytes_after": 75378,
+      "joint_values_written": 3124,
+      "diff_path_count": 230,
+      "round_trip_identity": true
+    }
+  },
+  "checks": {
+    "three_files_changed": true,
+    "all_round_trip_identity": true,
+    "three_tables_11_joints_in_sync": true,
+    "non_joint_metadata_unchanged": true,
+    "other_11_monitored_files_sha_unchanged": true,
+    "diff_paths_confined_to_allowed_scope": true,
+    "changed_frame_total_matches_scan": true
+  },
+  "joint_values_compared": 6248,
+  "joint_disagreements": 0,
+  "metadata_diffs": [],
+  "diff_path_total": 690,
+  "ok": true
+}

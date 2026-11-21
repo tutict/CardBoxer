@@ -1,0 +1,25 @@
+CASE cap03_hard_g100 worst_p999 0.040791 max_edge 0.367047 gt5cm 44 leg_gain 1.0 pass True
+CASE cap06_hard_g100 worst_p999 0.042073 max_edge 0.367047 gt5cm 53 leg_gain 2.0 pass True
+CASE cap09_hard_g100 worst_p999 0.043694 max_edge 0.367047 gt5cm 71 leg_gain 3.0 pass True
+CASE cap12_hard_g100 worst_p999 0.044522 max_edge 0.367047 gt5cm 83 leg_gain 3.9225 pass True
+CASE cap09_hard_g125 worst_p999 0.054293 max_edge 0.367047 gt5cm 214 leg_gain 3.0 pass True
+CASE cap09_hard_g150 worst_p999 0.064582 max_edge 0.367047 gt5cm 289 leg_gain 3.0 pass True
+CASE cap12_hard_g125 worst_p999 0.055423 max_edge 0.367047 gt5cm 221 leg_gain 3.9225 pass True
+CASE cap09_soft_g125 worst_p999 0.053426 max_edge 0.367047 gt5cm 209 leg_gain 2.8783 pass True
+CASE cap09_soft_g150 worst_p999 0.063677 max_edge 0.367047 gt5cm 286 leg_gain 2.8783 pass True
+CASE cap12_soft_g150 worst_p999 0.064519 max_edge 0.367047 gt5cm 289 leg_gain 3.66 pass True
+PASSING ['cap03_hard_g100', 'cap06_hard_g100', 'cap09_hard_g100', 'cap09_hard_g125', 'cap09_hard_g150', 'cap12_hard_g100', 'cap12_hard_g125']
+CHECK all_poses_evaluated True
+CHECK all_ten_cases_present True
+CHECK all_cases_have_26_rows True
+CHECK edges_match_glb True
+CHECK vertices_match_glb True
+CHECK no_missing_bones True
+CHECK pose_matrices_readback_accurate True
+CHECK max_edge_artifact_is_preexisting True
+CHECK shipped_baseline_within_anchor True
+CHECK baseline_is_current_shipped_mapping True
+CHECK higher_leg_cap_raises_leg_amplitude True
+CHECK monotonic_leg_gain True
+CHECK at_least_one_candidate_passes True
+TEAR_SWEEP_OK

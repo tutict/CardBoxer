@@ -1,0 +1,23 @@
+; G 路线 P0 技术探针：gl_compatibility 下 2D 主视口叠 3D SubViewport。
+; 与可运行游戏工程同渲染器、同画布尺寸；只验证渲染通道，不碰游戏源码。
+
+config_version=5
+
+[application]
+
+config/name="G Route SubViewport Probe"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+run/main_scene=""
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.04, 0.05, 0.09, 1)

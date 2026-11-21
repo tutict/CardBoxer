@@ -1,0 +1,17 @@
+PATCH ALREADY_APPLIED
+CHECK arena_untouched True
+CHECK fighter_untouched True
+CHECK three_patches_or_idempotent True
+CHECK no_runtime_light_energy_write True
+CHECK no_runtime_light_color_write True
+CHECK light_creation_assignments_present True
+CHECK retired_constants_gone True
+CHECK canvas_shader_present True
+CHECK canvas_material_set True
+CHECK canvas_material_cleared True
+CHECK shader_tint_matches_spec True
+CHECK still_has_3d_tint True
+CHECK still_has_draw_scale True
+CHECK restore_clears_override True
+CHECK G_shape_preserved True
+PATCH_VISUAL_V2_I_OK

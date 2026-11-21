@@ -1,0 +1,54 @@
+{
+  "present_panels": 42,
+  "expected_panels": 42,
+  "groups": [
+    {
+      "title": "A 亮牌平台段 focus（idx 17-23）",
+      "idx": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ]
+    },
+    {
+      "title": "B 玩家归零前后（idx 76-82，cap9 残差 5.26°）",
+      "idx": [
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82
+      ]
+    },
+    {
+      "title": "C 对手最大跳变前后（idx 111-117，14.86°）",
+      "idx": [
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117
+      ]
+    }
+  ],
+  "size": [
+    1180,
+    1450
+  ],
+  "bytes": 566232,
+  "checks": {
+    "strip_written": true,
+    "all_panels_present": true,
+    "three_groups": true,
+    "seven_frames_each": true
+  },
+  "ok": true
+}

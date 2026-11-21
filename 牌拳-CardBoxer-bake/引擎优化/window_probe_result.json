@@ -1,0 +1,34 @@
+{
+  "probe": {
+    "aspect_match": true,
+    "logical": [
+      1280,
+      720
+    ],
+    "physical": [
+      1600,
+      900
+    ],
+    "render_image": [
+      1600,
+      900
+    ],
+    "scale_x": 1.25,
+    "scale_y": 1.25,
+    "stretch_aspect": "keep",
+    "stretch_mode": "canvas_items",
+    "viewport_px": [
+      1600,
+      900
+    ]
+  },
+  "checks": {
+    "physical_1600x900": true,
+    "logical_1280x720": true,
+    "scale_1_25_both_axes": true,
+    "stretch_canvas_items": true,
+    "aspect_keep": true,
+    "aspect_match_16_9": true
+  },
+  "result": "WINDOW_ENLARGED_OK"
+}

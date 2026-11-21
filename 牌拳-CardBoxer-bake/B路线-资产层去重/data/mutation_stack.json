@@ -1,0 +1,104 @@
+{
+  "cases": [
+    {
+      "id": "M1",
+      "target": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\B路线-资产层去重\\data\\stack_pixels.json",
+      "expect_fail": "pix_s1_all_zero",
+      "status": "CAUGHT",
+      "restore": true,
+      "rc": 1,
+      "fails": [
+        "FAIL pix_s1_all_zero"
+      ]
+    },
+    {
+      "id": "M2",
+      "target": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\B路线-资产层去重\\data\\stack_pixels.json",
+      "expect_fail": "pix_s4_white_668_cyan_449",
+      "status": "CAUGHT",
+      "restore": true,
+      "rc": 1,
+      "fails": [
+        "FAIL pix_s4_white_668_cyan_449",
+        "FAIL pix_yaw_not_the_cause"
+      ]
+    },
+    {
+      "id": "M3",
+      "target": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\B路线-资产层去重\\data\\stack_diagnosis.json",
+      "expect_fail": "diag_cyan_on_deleted_258",
+      "status": "CAUGHT",
+      "restore": true,
+      "rc": 1,
+      "fails": [
+        "FAIL diag_cyan_on_deleted_258"
+      ]
+    },
+    {
+      "id": "M4",
+      "target": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\B路线-资产层去重\\data\\current_pair.json",
+      "expect_fail": "pair_report_ok",
+      "status": "CAUGHT",
+      "restore": true,
+      "rc": 1,
+      "fails": [
+        "FAIL pair_report_ok"
+      ]
+    },
+    {
+      "id": "M5",
+      "target": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\B路线-资产层去重\\shots\\current_pair\\pair-sv-foe.png",
+      "expect_fail": "historical_sv_labels_swapped",
+      "status": "CAUGHT",
+      "restore": true,
+      "rc": 1,
+      "fails": [
+        "FAIL historical_sv_labels_swapped",
+        "FAIL historical_sv_not_selfequal"
+      ]
+    },
+    {
+      "id": "M6",
+      "target": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\B路线-资产层去重\\data\\single_layers.json",
+      "expect_fail": "single_report_ok",
+      "status": "CAUGHT",
+      "restore": true,
+      "rc": 1,
+      "fails": [
+        "FAIL single_report_ok"
+      ]
+    },
+    {
+      "id": "M7",
+      "target": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\B路线-资产层去重\\data\\world3d_probe.json",
+      "expect_fail": "w3d_report_ok",
+      "status": "CAUGHT",
+      "restore": true,
+      "rc": 1,
+      "fails": [
+        "FAIL w3d_report_ok"
+      ]
+    },
+    {
+      "id": "M8",
+      "target": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\B路线-资产层去重\\data\\world3d_probe.json",
+      "expect_fail": "w3d_after_foe_white_937",
+      "status": "CAUGHT",
+      "restore": true,
+      "rc": 1,
+      "fails": [
+        "FAIL w3d_after_foe_white_937"
+      ]
+    }
+  ],
+  "total": 8,
+  "caught": 8,
+  "did_not_run": 0,
+  "restored": 8,
+  "clean_rerun_rc": 0,
+  "clean_rerun_green": true,
+  "clean_rerun_tail": [
+    "VERIFY_STACK 57/57 ALL GREEN"
+  ],
+  "ok": true
+}

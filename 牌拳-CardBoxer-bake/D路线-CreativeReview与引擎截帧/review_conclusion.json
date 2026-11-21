@@ -1,0 +1,29 @@
+{
+  "verdict": "STATIC_ONLY",
+  "human_visual_review": true,
+  "static_visual_in_engine": "PASS",
+  "pbr_materials_in_engine": "PASS",
+  "six_views_are_camera_only": true,
+  "glb_animations": 0,
+  "highpoly_unbound_meshes": 1,
+  "game_character_px": 172.0,
+  "scale_mae_strictly_increasing": true,
+  "side_view_cape": {
+    "degenerate_at_90deg": true,
+    "evidence_views": [
+      "angle35",
+      "side90",
+      "back"
+    ],
+    "root_cause": "zero-thickness single-sided cape shell",
+    "not_a_floating_shard": true
+  },
+  "recommendation": "B",
+  "reject_C_reasons": [
+    "GLB 0 animation / source .blend 0 Action",
+    "highpoly mesh has empty skeleton_path, only voxel proxy is skinned",
+    "SURFACE_DEFORM has no glTF equivalent, export bakes a static snapshot",
+    "baked2.json is 2D (x,z) joints, Godot needs 14-bone Y-up poses",
+    "zero-thickness cape degenerates at side view; needs mesh repair"
+  ]
+}

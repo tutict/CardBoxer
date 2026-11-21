@@ -1,0 +1,23 @@
+3D cards {'jab': 14, 'cross': 22, 'wave': 36} total 72 | 2D cards 12 frames 228 react 3 56
+whitelist ['cross', 'jab', 'wave'] | ATTACK_S 1.12 TOTAL_S 1.9 round 3.4 winner_window_ratio 0.3294
+cap_hits {'leg': 57, 'torso': 4}
+BONE upperarm_f {'min': -21.39, 'max': -0.0, 'range': 21.39}
+BONE forearm_f {'min': -17.38, 'max': -0.0, 'range': 17.38}
+BONE spine {'min': -3.07, 'max': 8.0, 'range': 11.07}
+BONE head {'min': -4.8, 'max': 1.84, 'range': 6.64}
+BONE thigh_f {'min': -3.0, 'max': 3.0, 'range': 6.0}
+BONE shin_f {'min': -3.0, 'max': 3.0, 'range': 6.0}
+BONE thigh_b {'min': -0.12, 'max': 3.0, 'range': 3.12}
+BONE shin_b {'min': -3.0, 'max': 3.0, 'range': 6.0}
+CARD jab frames 14 hand_max_px 80.22 snap_back_deg 1.42
+CARD cross frames 22 hand_max_px 0.0 snap_back_deg 0.43
+CARD wave frames 36 hand_max_px 22.09 snap_back_deg 0.29
+CHECK read_3d_cards True
+CHECK read_3d_frames True
+CHECK read_13_bones True
+CHECK read_2d_bigger_than_3d True
+CHECK read_attack_window True
+CHECK read_whitelist_is_three True
+CHECK apply_fallback_recorded True
+CHECK leg_cap_actually_clamps True
+DIAG_OK

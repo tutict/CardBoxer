@@ -1,0 +1,19 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 621.24 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5080 Laptop GPU
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+SETUP PREPARE SUPPORT player us=1859277
+COLD SAMPLE player us=1645
+SETUP PREPARE SUPPORT foe us=7
+COLD SAMPLE foe us=1486
+CPU SAMPLE player {"count":480,"max_us":2181,"mean_us":1193.13958333333,"p50_us":1264,"p95_us":1392}
+CPU PRESERVE SUPPORT player {"count":480,"max_us":1710,"mean_us":1136.4,"p50_us":1124,"p95_us":1233}
+CPU SAMPLE foe {"count":480,"max_us":2138,"mean_us":1227.24791666667,"p50_us":1296,"p95_us":1477}
+CPU PRESERVE SUPPORT foe {"count":480,"max_us":1951,"mean_us":1172.08958333333,"p50_us":1157,"p95_us":1271}
+F3D_READY bones=13 cards=15
+F3D_FOE_READY bones=13
+RENDER START driver=opengl3 display=Windows cap=60
+REAL RENDER FPS {"fps":60.0024086681194,"frame_intervals":{"count":420,"max_us":17063,"mean_us":16665.9976190476,"p50_us":16666,"p95_us":16684},"frames":420,"seconds":6.999719}
+RENDER SAMPLE player {"count":421,"max_us":2344,"mean_us":1550.83135391924,"p50_us":1629,"p95_us":1920}
+RENDER SAMPLE foe {"count":421,"max_us":1907,"mean_us":1439.90023752969,"p50_us":1533,"p95_us":1672}

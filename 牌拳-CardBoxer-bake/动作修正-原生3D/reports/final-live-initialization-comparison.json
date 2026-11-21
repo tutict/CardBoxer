@@ -1,0 +1,10 @@
+{
+  "left": "shots\\final-live6",
+  "right": "shots\\final-live6-reviewed",
+  "checked": 6,
+  "equal": true,
+  "differences": [],
+  "settled_rules_equal": true,
+  "settled_rules_differences": [],
+  "comparison_scope": "Exact gameplay includes hands, timers and hitstop. Settled comparison checks ordered card/hit/super events excluding tick, HP, round wins, ranks, winner, damage, rage and EX."
+}

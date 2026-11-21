@@ -1,0 +1,23 @@
+READBACK atan 12.0 atan 12.0
+ROWS 48 MODE_BAD 0 DELTA_BAD 0
+ACTION_DIFF_MAX 17608 ACTION_GT_200 22 / 22
+STANCE_DIFF [0, 0]
+REAPPLIED_NONZERO []
+LEGACY_MISMATCH []
+CHECK main_marker_parsed True
+CHECK main_no_script_errors True
+CHECK main_no_scenario_errors True
+CHECK use_3d_and_15_cards True
+CHECK shipped_readback_atan_12_both_sides True
+CHECK live_mode_and_cap_match_each_scene True
+CHECK hp_unchanged True
+CHECK delta_matches_python_formula True
+CHECK every_action_frame_changed_both_sides True
+CHECK stance_untouched True
+CHECK shipped_reapplied_identical_same_process True
+CHECK legacy_compat_equals_rollback_bytewise True
+CHECK all_sv_pngs_nonempty True
+CHECK default_zero_pollution True
+CHECK default_no_script_errors True
+CHECK default_two_pngs True
+P3_PROBE_OK

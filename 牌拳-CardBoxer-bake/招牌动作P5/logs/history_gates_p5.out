@@ -1,0 +1,40 @@
+motion_p1      rc=1   failed=4   baseline=p4_after     MOTION_P1_VERIFY 48/52 FAILED
+   RED ten_untouched_unchanged
+   RED original_three_unchanged_both
+   RED non_cards_fields_equal_backup_both
+   RED mapping_gains_unchanged_both
+motion_p2      rc=1   failed=6   baseline=p4_after     MOTION_P2_VERIFY 53/59 FAILED
+   RED player_cap_is_9
+   RED foe_cap_is_9
+   RED only_one_diff_path_player
+   RED only_one_diff_path_foe
+   RED other_12_watched_files_unchanged
+   RED three_core_scripts_sha_unchanged
+live_match     rc=1   failed=3   baseline=p4_after     LIVE_VERIFY 65/68 FAILED
+   RED shipped_cap_still_9_both
+   RED jump_numeric_fields_match_recomputation
+   RED peak_stats_match_recomputation
+plateau_p3     rc=1   failed=5   baseline=p4_after     PLATEAU_VERIFY 75/80 FAILED
+   RED only_two_diff_paths_player
+   RED only_two_diff_paths_foe
+   RED other_11_watched_files_unchanged
+   RED delta_13_bones_independently_recomputed
+   RED timeline_flat_stats_independently_recomputed
+native_p4      rc=1   failed=4   baseline=no_baseline  NATIVE_VERIFY 87/91 FAILED
+   RED only_four_leg_joints_in_diff_paths
+   RED diff_paths_bounded_by_edits
+   RED three_shipped_sha_match_apply_report
+   RED delta_13_bones_recomputed_all_rows_both_sides
+live_p4        rc=0   failed=0   baseline=no_baseline  LIVE_P4_VERIFY 60/60 ALL GREEN
+pose_spec_p5   rc=1   failed=3   baseline=no_baseline  11/14 PASS  POSE_SPEC_FAILED
+   RED provisional_findings_independently_recomputed
+   RED game_sources_untouched
+   RED no_engine_wiring_in_spec_stage
+CHECK all_reports_present_and_parsed True
+CHECK all_restored_bytewise True
+CHECK no_history_script_modified True
+CHECK no_verify_crashed True
+CHECK all_verdict_lines_present True
+CHECK venv_python_has_pil True
+CHECK p4_baseline_used True
+HISTORY_GATES_P5_OK

@@ -1,0 +1,13 @@
+V4B {"file": "v4b-front.png", "size": [768, 768], "alpha_bbox": [173, 96, 595, 672], "strict_bbox": [174, 96, 594, 672], "opaque_px": 93260, "bytes": 365239}
+V4B {"file": "v4b-angle25.png", "size": [768, 768], "alpha_bbox": [155, 96, 569, 672], "strict_bbox": [156, 96, 569, 672], "opaque_px": 93355, "bytes": 365517}
+V4B {"file": "v4b-angle55.png", "size": [768, 768], "alpha_bbox": [187, 96, 570, 672], "strict_bbox": [188, 96, 569, 672], "opaque_px": 81883, "bytes": 344638}
+V4B {"file": "v4b-back35.png", "size": [768, 768], "alpha_bbox": [255, 96, 608, 672], "strict_bbox": [255, 96, 608, 672], "opaque_px": 83138, "bytes": 338781}
+V3 {"file": "zzz-front.png", "size": [768, 768], "alpha_bbox": [265, 96, 503, 672], "strict_bbox": [265, 96, 503, 672], "opaque_px": 77658, "bytes": 319947}
+V3 {"file": "zzz-angle25.png", "size": [768, 768], "alpha_bbox": [263, 96, 522, 672], "strict_bbox": [263, 96, 522, 672], "opaque_px": 75476, "bytes": 316807}
+V3 {"file": "zzz-angle55.png", "size": [768, 768], "alpha_bbox": [271, 96, 512, 672], "strict_bbox": [271, 96, 512, 672], "opaque_px": 65411, "bytes": 298438}
+V3 {"file": "zzz-back35.png", "size": [768, 768], "alpha_bbox": [293, 96, 503, 672], "strict_bbox": [294, 96, 502, 672], "opaque_px": 72873, "bytes": 307977}
+FACE {"file": "v4b-face-front.png", "size": [1024, 1024], "alpha_0_pct": 0.4891, "alpha_255_pct": 0.4983, "alpha_bbox": [45, 132, 1024, 1024], "corners_rgba": [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]}
+FACE {"file": "v4b-face-25.png", "size": [1024, 1024], "alpha_0_pct": 0.4702, "alpha_255_pct": 0.5158, "alpha_bbox": [0, 132, 1024, 1024], "corners_rgba": [[0, 0, 0, 0], [0, 0, 0, 0], [234, 197, 137, 255], [0, 0, 0, 0]]}
+SUGGEST_FACE [208, 92, 560, 269]
+SUGGEST_SUBJECT {"front": [174, 96, 594, 672], "angle25": [156, 96, 569, 672], "angle55": [188, 96, 569, 672], "back35": [255, 96, 608, 672]}
+PROBE_V4B_OK

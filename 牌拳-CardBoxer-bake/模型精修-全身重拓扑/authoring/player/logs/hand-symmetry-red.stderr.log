@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\hand_acceptance.py", line 14, in <module>
+    assert max(out.values())<1e-6,'FAIL: rear-hand normal frame is not a reflection of front hand'
+           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: FAIL: rear-hand normal frame is not a reflection of front hand

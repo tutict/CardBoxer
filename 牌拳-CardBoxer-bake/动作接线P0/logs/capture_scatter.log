@@ -1,0 +1,7 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 621.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5080 Laptop GPU
+
+[TAIKOU] turn=1 hp=100/90 rage=0/50 ex=-/- | 你 散牌·和15 [2, 5, 8] vs 青岚 散牌·和4 [1, 1, 2] | winner=player dmg=10 motion=jab react=hit_light extra=
+[P0_SHOT] mode=scatter tk_phase=resolve motion=jab label=刺拳 winner=player hp=100/90
+
+--- STDERR ---

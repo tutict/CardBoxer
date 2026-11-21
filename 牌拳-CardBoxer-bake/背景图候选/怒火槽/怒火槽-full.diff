@@ -1,0 +1,491 @@
+=== 新增 scripts/taikou_rage.gd ===
+--- /dev/null	2026-11-06 11:25:04.000000000 +0800
++++ C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/scripts/taikou_rage.gd	2026-11-06 11:14:13.363358500 +0800
+@@ -0,0 +1,58 @@
++extends RefCounted
++## 怒火槽（Rage / EX gauge）—— 格斗游戏式资源，不是太阁 IV 的「士气」。
++##
++## 原作士气是第二败北资源（被打光就输）；工程师把它换成怒火槽：
++##   * 只有挨打才攒怒（赢的那一回不攒，平局双方各攒）
++##   * 攒满后，本回亮出的 3 张牌升 EX：rank 各 +1（封顶 9）再判牌型
++##   * 升级反而变弱时保底用原牌（三连·123=700 → 234=602 就是反例）
++##   * 触发即清空，只影响这一回；怒火跨局保留，新一场比赛才清零
++##
++## 纯函数，无节点、无状态：arena.gd 持有双方数值，HUD 只读，实时格斗不碰它。
++
++const Rules = preload("res://scripts/taikou_rules.gd")
++
++const MAX := 100.0
++## 每受 1 点伤害攒多少怒火。三回制一局总伤害约 30~50，取 5 让连输两回
++## 基本能攒满，不至于整场都用不上 EX。这是平衡参数，改它只需重跑自检。
++const PER_DAMAGE := 5.0
++const RANK_CAP := 9
++
++
++static func gain(current: float, damage: int) -> float:
++	return clampf(current + float(maxi(damage, 0)) * PER_DAMAGE, 0.0, MAX)
++
++
++static func is_full(current: float) -> bool:
++	return current >= MAX
++
++
++static func ratio(current: float) -> float:
++	return clampf(current / MAX, 0.0, 1.0)
++
++
++static func upgrade(ranks: Array) -> Array:
++	var out: Array = []
++	for v: Variant in ranks:
++		out.append(mini(int(v) + 1, RANK_CAP))
++	return out
++
++
++static func _same(a: Array, b: Array) -> bool:
++	if a.size() != b.size():
++		return false
++	for i in range(a.size()):
++		if int(a[i]) != int(b[i]):
++			return false
++	return true
++
++
++## 满槽时调用：返回实际参与判定的 rank 数组、判定结果、是否真的升级了。
++## 保底不变量：result.score 恒不低于原牌的 score（1..9 全组合由自检穷举钉死）。
++static func best(ranks: Array) -> Dictionary:
++	var original: Dictionary = Rules.evaluate(ranks)
++	var upgraded: Array = upgrade(ranks)
++	var ex: Dictionary = Rules.evaluate(upgraded)
++	var use_ex: bool = Rules.compare(ex, original) >= 0 and not _same(upgraded, ranks)
++	if use_ex:
++		return {"ranks": upgraded, "result": ex, "boosted": true}
++	return {"ranks": ranks.duplicate(), "result": original, "boosted": false}
+
+=== 新增 tests/taikou_rage_check.gd ===
+--- /dev/null	2026-11-06 11:25:04.000000000 +0800
++++ C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/tests/taikou_rage_check.gd	2026-11-06 11:14:29.180186000 +0800
+@@ -0,0 +1,95 @@
++extends SceneTree
++## 怒火槽纯函数自检：攒怒、封顶、EX 升级、保底不变弱。
++##
++## 跑法：godot --headless --path . --script res://tests/taikou_rage_check.gd
++## 退出码 0 = 全过，1 = 有断言失败。
++##
++## 最重要的一条是 _check_invariant()：穷举 rank 1..9 的全部有序三元组，
++## 钉死「EX 判定结果恒不低于原牌」——否则 123 这种最强牌会因为升 EX 反而变弱。
++
++const Rage = preload("res://scripts/taikou_rage.gd")
++const Rules = preload("res://scripts/taikou_rules.gd")
++
++var _failures: Array = []
++var _total := 0
++
++
++func _expect(ok: bool, label: String) -> void:
++	_total += 1
++	if not ok:
++		_failures.append(label)
++
++
++func _initialize() -> void:
++	_check_gain()
++	_check_upgrade()
++	_check_best()
++	_check_invariant()
++	if _failures.is_empty():
++		print("TAIKOU RAGE CHECK: %d/%d passed" % [_total, _total])
++		quit(0)
++	else:
++		for line: String in _failures:
++			print("FAIL: ", line)
++		print("TAIKOU RAGE CHECK: %d/%d failed" % [_failures.size(), _total])
++		quit(1)
++
++
++func _check_gain() -> void:
++	_expect(Rage.gain(0.0, 0) == 0.0, "不受伤不攒怒")
++	_expect(Rage.gain(0.0, 4) == 20.0, "每点伤害攒 PER_DAMAGE，实际 %f" % Rage.gain(0.0, 4))
++	_expect(Rage.gain(95.0, 10) == Rage.MAX, "怒火应封顶 100")
++	_expect(Rage.gain(0.0, -3) == 0.0, "负伤害不该倒扣怒火")
++	_expect(not Rage.is_full(99.9), "未满不算满槽")
++	_expect(Rage.is_full(100.0), "100 算满槽")
++	_expect(Rage.ratio(0.0) == 0.0, "ratio 0 -> 0")
++	_expect(Rage.ratio(50.0) == 0.5, "ratio 50 -> 0.5")
++	_expect(Rage.ratio(200.0) == 1.0, "ratio 上限 1")
++
++
++func _check_upgrade() -> void:
++	_expect(Rage.upgrade([1, 2, 3]) == [2, 3, 4], "rank 各 +1")
++	_expect(Rage.upgrade([9, 9, 9]) == [9, 9, 9], "rank 封顶 9")
++	_expect(Rage.upgrade([8, 9, 1]) == [9, 9, 2], "混合封顶")
++	_expect(Rage.upgrade([1, 1, 1]) == [2, 2, 2], "111 升级成 222")
++
++
++func _check_best() -> void:
++	var a: Dictionary = Rage.best([1, 2, 3])
++	_expect(not bool(a["boosted"]), "123 升级成 234 反而变弱，应保底")
++	_expect(a["ranks"] == [1, 2, 3], "保底时应显示原牌")
++	_expect(int(a["result"]["score"]) == 700, "保底后仍是三连·123 的 700 分")
++
++	var b: Dictionary = Rage.best([2, 2, 2])
++	_expect(bool(b["boosted"]), "222 -> 333 变强，应升级")
++	_expect(b["ranks"] == [3, 3, 3], "升级后 rank 为 333")
++	_expect(int(b["result"]["score"]) == 703, "333 分数应为 703")
++
++	var c: Dictionary = Rage.best([9, 9, 9])
++	_expect(not bool(c["boosted"]), "全 9 升级无变化，不应算 boosted")
++	_expect(c["ranks"] == [9, 9, 9], "全 9 保底仍显示原牌")
++
++	var d: Dictionary = Rage.best([4, 6, 9])
++	_expect(bool(d["boosted"]), "散牌升级后点数和更大，应升级")
++	_expect(d["ranks"] == [5, 7, 9], "散牌升级后 rank")
++
++	var e: Dictionary = Rage.best([7, 8, 9])
++	_expect(not bool(e["boosted"]), "789 升级后掉成散牌，应保底")
++
++
++func _check_invariant() -> void:
++	# 729 组有序三元组：EX 结果分数恒不低于原牌，且返回的 result 与 ranks 自洽。
++	for x in range(1, 10):
++		for y in range(1, 10):
++			for z in range(1, 10):
++				var ranks: Array = [x, y, z]
++				var original: Dictionary = Rules.evaluate(ranks)
++				var got: Dictionary = Rage.best(ranks)
++				_expect(
++					Rules.compare(got["result"], original) >= 0,
++					"保底不变量被破坏 %s" % str(ranks)
++				)
++				_expect(
++					Rules.compare(got["result"], Rules.evaluate(got["ranks"])) == 0,
++					"返回的 result 必须与实际显示的 ranks 一致 %s" % str(ranks)
++				)
+
+=== 修改 scripts/arena.gd ===
+--- C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer-bake/orig/pre-rage/arena.gd	2026-11-06 11:14:01.171957400 +0800
++++ C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/scripts/arena.gd	2026-11-06 11:15:46.427872300 +0800
+@@ -17,6 +17,7 @@
+ const BackdropTexture = preload("res://background/arena.png")
+ const Rules = preload("res://scripts/taikou_rules.gd")
+ const TaikouAI = preload("res://scripts/taikou_ai.gd")
++const Rage = preload("res://scripts/taikou_rage.gd")
+ 
+ ## 玩法骨架："taikou" = 太阁 IV 回合制比牌（默认）；"realtime" = 原实时格斗兜底。
+ ## 改成 realtime 即可完整回到改造前的玩法，不需要回滚任何代码。
+@@ -107,6 +108,15 @@
+ var tk_damage := 0
+ var tk_bot := false               # CARD_BOXER_TAIKOU_BOT：无输入自动对战，仅供验收
+ 
++## 怒火槽：挨打攒怒，满槽时本回亮出的 3 张牌升 EX（见 taikou_rage.gd）。
++## 跨「局」保留、只在 _start_match() 清零——三回制一局太短，每局清零就几乎用不上。
++var tk_player_rage := 0.0
++var tk_enemy_rage := 0.0
++var tk_player_ex := false          # 本回是否消耗怒火触发了 EX
++var tk_enemy_ex := false
++var tk_player_ex_boosted := false # 升级是否真被采用（保底时 false）
++var tk_enemy_ex_boosted := false
++
+ 
+ func _ready() -> void:
+ 	world = Node2D.new()
+@@ -163,6 +173,11 @@
+ 		demo_ai = AIScript.new(player, 3)
+ 	tk_bot = OS.get_environment("CARD_BOXER_TAIKOU_BOT") != ""
+ 	_start_match()
++	# 验收钩子：只在设了环境变量时把双方怒火直接灌满，用来截 EX 亮牌帧。
++	var rage_start := OS.get_environment("CARD_BOXER_RAGE_START")
++	if rage_start != "":
++		tk_player_rage = clampf(float(rage_start), 0.0, Rage.MAX)
++		tk_enemy_rage = tk_player_rage
+ 
+ 
+ # ── 对局流程 ────────────────────────────────────────────────
+@@ -170,6 +185,8 @@
+ func _start_match() -> void:
+ 	round_wins = [0, 0]
+ 	round_index = 1
++	tk_player_rage = 0.0
++	tk_enemy_rage = 0.0
+ 	_deck = _shuffled_deck()
+ 	_enemy_deck = _shuffled_deck()
+ 	_start_round()
+@@ -502,6 +519,10 @@
+ 	tk_enemy_result = {}
+ 	tk_winner = ""
+ 	tk_damage = 0
++	tk_player_ex = false
++	tk_enemy_ex = false
++	tk_player_ex_boosted = false
++	tk_enemy_ex_boosted = false
+ 	_banner(
+ 		"第 %d 轮 · 弃牌" % tk_turn,
+ 		"1-5 标记要换掉的牌（可 0 张） · 空格确认",
+@@ -602,8 +623,27 @@
+ 		var card2: Dictionary = Defs.card(String(enemy_hand[i]))
+ 		tk_enemy_reveal.append(int(card2.get("rank", 1)))
+ 		tk_enemy_ids.append(String(enemy_hand[i]))
+-	tk_player_result = Rules.evaluate(tk_player_reveal)
+-	tk_enemy_result = Rules.evaluate(tk_enemy_reveal)
++	# 满槽 → 本回 3 张牌升 EX（rank+1 封顶 9），消耗后清空；保底见 Rage.best()。
++	tk_player_ex = Rage.is_full(tk_player_rage)
++	tk_enemy_ex = Rage.is_full(tk_enemy_rage)
++	if tk_player_ex:
++		var p_ex: Dictionary = Rage.best(tk_player_reveal)
++		tk_player_reveal = p_ex["ranks"]
++		tk_player_result = p_ex["result"]
++		tk_player_ex_boosted = bool(p_ex["boosted"])
++		tk_player_rage = 0.0
++	else:
++		tk_player_result = Rules.evaluate(tk_player_reveal)
++		tk_player_ex_boosted = false
++	if tk_enemy_ex:
++		var e_ex: Dictionary = Rage.best(tk_enemy_reveal)
++		tk_enemy_reveal = e_ex["ranks"]
++		tk_enemy_result = e_ex["result"]
++		tk_enemy_ex_boosted = bool(e_ex["boosted"])
++		tk_enemy_rage = 0.0
++	else:
++		tk_enemy_result = Rules.evaluate(tk_enemy_reveal)
++		tk_enemy_ex_boosted = false
+ 	for i in pidx:
+ 		hand[i] = null
+ 	for i in eidx:
+@@ -617,7 +657,7 @@
+ 	tk_phase = "reveal"
+ 	tk_phase_time = 0.0
+ 	_banner(
+-		"亮牌",
++		"EX 亮牌" if tk_player_ex or tk_enemy_ex else "亮牌",
+ 		"你 %s   ·   青岚 %s" % [String(tk_player_result["name"]), String(tk_enemy_result["name"])],
+ 		Color(0.92, 0.92, 0.98), 1.4
+ 	)
+@@ -629,6 +669,7 @@
+ 		tk_winner = "player"
+ 		tk_damage = Rules.damage_of(tk_player_result)
+ 		enemy.apply_hit(tk_damage, "taikou", "", false)
++		tk_enemy_rage = Rage.gain(tk_enemy_rage, tk_damage)
+ 		_banner(
+ 			"你赢下这一轮",
+ 			"%s · 造成 %d 伤害" % [String(tk_player_result["name"]), tk_damage],
+@@ -638,6 +679,7 @@
+ 		tk_winner = "enemy"
+ 		tk_damage = Rules.damage_of(tk_enemy_result)
+ 		player.apply_hit(tk_damage, "taikou", "", false)
++		tk_player_rage = Rage.gain(tk_player_rage, tk_damage)
+ 		_banner(
+ 			"青岚赢下这一轮",
+ 			"%s · 受到 %d 伤害" % [String(tk_enemy_result["name"]), tk_damage],
+@@ -648,11 +690,15 @@
+ 		tk_damage = 3
+ 		player.apply_hit(3, "taikou", "", false)
+ 		enemy.apply_hit(3, "taikou", "", false)
++		tk_player_rage = Rage.gain(tk_player_rage, 3)
++		tk_enemy_rage = Rage.gain(tk_enemy_rage, 3)
+ 		_banner("平局", "双方各受 3 点", Color(0.86, 0.88, 0.95), 1.6)
+ 	# 验收钩子：只有无输入自动对战才打，正常游玩不产生日志噪音。
+ 	if tk_bot:
+-		print("[TAIKOU] turn=%d hp=%d/%d | 你 %s %s vs 青岚 %s %s | winner=%s dmg=%d" % [
++		print("[TAIKOU] turn=%d hp=%d/%d rage=%d/%d ex=%s/%s | 你 %s %s vs 青岚 %s %s | winner=%s dmg=%d" % [
+ 			tk_turn, player.hp, enemy.hp,
++			int(tk_player_rage), int(tk_enemy_rage),
++			"EX" if tk_player_ex else "-", "EX" if tk_enemy_ex else "-",
+ 			String(tk_player_result["name"]), str(tk_player_reveal),
+ 			String(tk_enemy_result["name"]), str(tk_enemy_reveal),
+ 			tk_winner, tk_damage
+
+=== 修改 scripts/hud.gd ===
+--- C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer-bake/orig/pre-rage/hud.gd	2026-11-06 11:14:01.502597000 +0800
++++ C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/scripts/hud.gd	2026-11-06 11:21:45.113001900 +0800
+@@ -6,6 +6,7 @@
+ ## 会渲染成空心方块。系统字体名按优先级回退，四个里总能命中一个。
+ 
+ const Defs = preload("res://scripts/card_data.gd")
++const Rage = preload("res://scripts/taikou_rage.gd")
+ 
+ const BAR_W := 452.0
+ const BAR_H := 24.0
+@@ -28,6 +29,14 @@
+ const HP_DANGER := Color(0.98, 0.24, 0.22)
+ const HP_GHOST := Color(1.0, 0.58, 0.40, 0.55)
+ 
++## 怒火槽：暖橙→氧化红，满槽转金。与血条的阵营色词汇分开，
++## 也不复用实时模式那个蓝色分格气槽（两套资源语义不同）。
++const RAGE_EMPTY := Color(0.14, 0.11, 0.13, 0.95)
++const RAGE_LOW := Color(0.92, 0.48, 0.20)
++const RAGE_HIGH := Color(0.90, 0.20, 0.16)
++const RAGE_FULL := Color(1.0, 0.86, 0.45)
++const RAGE_H := 10.0
++
+ ## 这些标点不能出现在行首，折行时跟着上一行走。
+ const NO_LINE_START := "，。、；：！？）》」』）】%,.;:!?)]}"
+ 
+@@ -84,8 +93,10 @@
+ 	# 玩家：从左向右。
+ 	_draw_bar_v2(Vector2(44, 44), p.hp_ratio(), float(_hp_shown["p"]), false, p.display_name, true)
+ 	if arena.battle_mode == "taikou":
++		_draw_rage_bar(Vector2(44, 76), Rage.ratio(float(arena.tk_player_rage)), false)
++		var p_rage_label: String = "EX READY" if Rage.is_full(float(arena.tk_player_rage)) else "%d%%" % int(round(Rage.ratio(float(arena.tk_player_rage)) * 100.0))
+ 		draw_string(
+-			font, Vector2(44, 104), "第 %d 轮 / 共 %d 轮" % [int(arena.tk_turn), int(arena.TK_MAX_TURNS)],
++			font, Vector2(44, 104), "第 %d 轮 / 共 %d 轮   ·   怒火 %s" % [int(arena.tk_turn), int(arena.TK_MAX_TURNS), p_rage_label],
+ 			HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Color(0.84, 0.89, 0.98)
+ 		)
+ 	else:
+@@ -98,7 +109,9 @@
+ 	# 对手：镜像。
+ 	_draw_bar_v2(Vector2(1280 - 44 - BAR_W, 44), e.hp_ratio(), float(_hp_shown["e"]), true, e.display_name, false)
+ 	if arena.battle_mode == "taikou":
+-		var turn_label := "第 %d 轮 / 共 %d 轮" % [int(arena.tk_turn), int(arena.TK_MAX_TURNS)]
++		_draw_rage_bar(Vector2(1280 - 44 - BAR_W, 76), Rage.ratio(float(arena.tk_enemy_rage)), true)
++		var e_rage_label: String = "EX READY" if Rage.is_full(float(arena.tk_enemy_rage)) else "%d%%" % int(round(Rage.ratio(float(arena.tk_enemy_rage)) * 100.0))
++		var turn_label := "第 %d 轮 / 共 %d 轮   ·   怒火 %s" % [int(arena.tk_turn), int(arena.TK_MAX_TURNS), e_rage_label]
+ 		var tl_w := font.get_string_size(turn_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
+ 		draw_string(
+ 			font, Vector2(1280 - 44 - tl_w, 104), turn_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 15,
+@@ -232,6 +245,32 @@
+ 		draw_rect(Rect2(Vector2(x + 1, pos.y + 1), Vector2((seg_w - 2.0) * filled, 8)), color)
+ 
+ 
++## 回合制专用：y=76 那条原本空着的槽位画怒火；实时模式的 _draw_meter 原样不动。
++func _draw_rage_bar(pos: Vector2, ratio: float, mirrored: bool) -> void:
++	var full: bool = ratio >= 1.0
++	draw_rect(Rect2(pos, Vector2(BAR_W, RAGE_H)), RAGE_EMPTY)
++	var fill_w: float = BAR_W * clampf(ratio, 0.0, 1.0)
++	if fill_w > 0.0:
++		var bands: int = 5
++		for i in range(bands):
++			var t: float = float(i) / float(bands - 1)
++			var col: Color = RAGE_LOW.lerp(RAGE_HIGH, t)
++			if full:
++				col = col.lerp(RAGE_FULL, 0.55)
++			var y: float = pos.y + float(i) * (RAGE_H / float(bands))
++			var x: float = (pos.x + BAR_W - fill_w) if mirrored else pos.x
++			draw_rect(Rect2(Vector2(x, y), Vector2(fill_w, RAGE_H / float(bands) + 0.5)), col)
++	var edge: Color = Color(0.45, 0.32, 0.28, 0.85)
++	var edge_w: float = 1.0
++	if full:
++		var pulse: float = 0.55 + 0.35 * sin(_time * 9.0)
++		edge = Color(RAGE_FULL.r, RAGE_FULL.g, RAGE_FULL.b, pulse)
++		edge_w = 2.0
++	draw_rect(Rect2(pos, Vector2(BAR_W, RAGE_H)), edge, false, edge_w)
++	# 数值并到 y=104 的轮次行里：槽只有 10px 高，塞不下 12px 的字，
++	# 硬画会同时压住填充色和上方血条。槽本身保持纯色带 + 满槽脉冲边框。
++
++
+ # ── 中央：计时与回合点 ────────────────────────────────────────
+ 
+ func _draw_center() -> void:
+@@ -396,6 +435,15 @@
+ 
+ 	# 赢的一侧给亮边，输的一侧压暗；平局两边保持中性。
+ 	var own := "player" if not mirrored else "enemy"
++	# arena 是 untyped，属性读回来是 Variant，显式转 bool 免得 := 推不出类型。
++	var ex: bool = false
++	var boosted: bool = false
++	if mirrored:
++		ex = bool(arena.tk_enemy_ex)
++		boosted = bool(arena.tk_enemy_ex_boosted)
++	else:
++		ex = bool(arena.tk_player_ex)
++		boosted = bool(arena.tk_player_ex_boosted)
+ 	# arena 是 untyped，从它的属性做 := 推不出 bool，必须显式标注。
+ 	var won: bool = arena.tk_winner == own
+ 	var lost: bool = arena.tk_phase == "resolve" and not won and arena.tk_winner != "draw"
+@@ -409,6 +457,9 @@
+ 		elif won and arena.tk_phase == "resolve":
+ 			edge = Color(1.0, 0.92, 0.62)
+ 		draw_rect(rect, edge, false, 2.0)
++		if ex:
++			draw_rect(rect.grow(-3.0), Color(RAGE_FULL.r, RAGE_FULL.g, RAGE_FULL.b, 0.80), false, 1.5)
++			draw_string(font, Vector2(x + 5, pos.y + 16), "EX", HORIZONTAL_ALIGNMENT_LEFT, -1, 13, RAGE_FULL)
+ 		var num := str(int(ranks[i]))
+ 		var nw := font.get_string_size(num, HORIZONTAL_ALIGNMENT_LEFT, -1, 38).x
+ 		draw_string(
+@@ -418,6 +469,8 @@
+ 		)
+ 
+ 	var label := String(result.get("name", ""))
++	if ex:
++		label = label + (" · EX" if boosted else " · EX 保底")
+ 	var lw := font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 18).x
+ 	var lx := (x0 + total - lw) if mirrored else x0
+ 	draw_string(font, Vector2(lx, pos.y + 84), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 18, accent)
+
+=== 修改 tests/taikou_flow_check.gd ===
+--- C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer-bake/orig/pre-rage/taikou_flow_check.gd	2026-11-06 11:14:01.827336300 +0800
++++ C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/tests/taikou_flow_check.gd	2026-11-06 11:19:07.678289400 +0800
+@@ -13,6 +13,7 @@
+ 
+ const ArenaScript = preload("res://scripts/arena.gd")
+ const Rules = preload("res://scripts/taikou_rules.gd")
++const Rage = preload("res://scripts/taikou_rage.gd")
+ 
+ var _failures: Array = []
+ var _total := 0
+@@ -35,6 +36,7 @@
+ 	_check_finish()
+ 	_check_draw()
+ 	_check_turn_limit()
++	_check_rage()
+ 	_check_mode_switch()
+ 
+ 	if _failures.is_empty():
+@@ -171,3 +173,58 @@
+ 	a.battle_mode = "realtime"
+ 	_expect(a.battle_mode == "realtime", "应能切回实时兜底模式")
+ 	a.battle_mode = "taikou"
++
++## 怒火槽：只有挨打攒怒、满槽本回升 EX、触发即清空、跨局保留、新一场清零。
++func _check_rage() -> void:
++	a.round_phase = "fight"
++	a.player.reset_for_round(430, 1)
++	a.enemy.reset_for_round(850, -1)
++	a.tk_player_rage = 0.0
++	a.tk_enemy_rage = 0.0
++
++	# 对手赢：玩家挨打攒怒，赢家不攒。
++	a.tk_player_result = Rules.evaluate([2, 3, 4])
++	a.tk_enemy_result = Rules.evaluate([1, 1, 1])
++	a._resolve_taikou()
++	_expect(a.tk_winner == "enemy", "构造的牌型应判对手赢")
++	_expect(
++		a.tk_player_rage == float(a.tk_damage) * Rage.PER_DAMAGE,
++		"挨打应按伤害攒怒，实际 %f / dmg=%d" % [a.tk_player_rage, a.tk_damage]
++	)
++	_expect(a.tk_enemy_rage == 0.0, "赢家不该攒怒")
++
++	# 平局：双方各受 3 点，双方都攒。
++	a.tk_player_rage = 0.0
++	a.tk_enemy_rage = 0.0
++	a.tk_player_result = Rules.evaluate([1, 1, 1])
++	a.tk_enemy_result = Rules.evaluate([1, 1, 1])
++	a._resolve_taikou()
++	_expect(a.tk_winner == "draw", "同分应判平局")
++	_expect(
++		a.tk_player_rage == 3.0 * Rage.PER_DAMAGE and a.tk_enemy_rage == 3.0 * Rage.PER_DAMAGE,
++		"平局双方都该攒怒，实际 %f/%f" % [a.tk_player_rage, a.tk_enemy_rage]
++	)
++
++	# 满槽 → 亮牌触发 EX 并清空；未攒满的一方不触发。
++	a.tk_player_rage = Rage.MAX
++	a.tk_enemy_rage = 0.0
++	a.tk_bot = true
++	a._do_taikou_reveal()
++	_expect(bool(a.tk_player_ex), "满槽亮牌应触发 EX")
++	_expect(not bool(a.tk_enemy_ex), "未攒满的一方不该触发 EX")
++	_expect(a.tk_player_rage == 0.0, "触发 EX 后怒火应清空")
++	_expect(a.tk_player_reveal.size() == 3, "EX 后仍是 3 张牌")
++	_expect(
++		Rules.compare(a.tk_player_result, Rules.evaluate(a.tk_player_reveal)) == 0,
++		"EX 后的判定结果必须与实际显示的 rank 一致"
++	)
++	a._reset_taikou_turn(false)
++	_expect(not bool(a.tk_player_ex), "下一回不该残留 EX 标志")
++	a.tk_bot = false
++
++	# 跨局保留，新一场清零。
++	a.tk_player_rage = 55.0
++	a._start_round()
++	_expect(a.tk_player_rage == 55.0, "怒火应跨局保留，实际 %f" % a.tk_player_rage)
++	a._start_match()
++	_expect(a.tk_player_rage == 0.0, "新一场比赛应清空怒火")

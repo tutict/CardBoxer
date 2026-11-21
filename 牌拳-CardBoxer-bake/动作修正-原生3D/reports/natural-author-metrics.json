@@ -1,0 +1,58 @@
+{
+  "player": {
+    "guard_f": {
+      "reach_ratio": 0.4676804467888307,
+      "elbow_angle_deg": 55.55069861514363,
+      "wrist_y_relative_head_m": -0.045804948890446395
+    },
+    "guard_b": {
+      "reach_ratio": 0.38948684169065345,
+      "elbow_angle_deg": 45.527241523602235,
+      "wrist_y_relative_head_m": -0.037198361845919514
+    },
+    "sweep": {
+      "knee_angle_deg": 162.32852261213253,
+      "contact_sole_y": 0.04001543663554527
+    },
+    "jab": {
+      "maximum_hand_pullback_m": 0.05474772511444409,
+      "late_hand_guard_error_m": 3.614278803063881e-10,
+      "late_root_residual_m": 0.008544003745317531
+    },
+    "cross": {
+      "maximum_hand_pullback_m": 0.0343763745481776,
+      "late_hand_guard_error_m": 5.741301507910207e-10,
+      "late_root_residual_m": 0.01861315996619531,
+      "early_active_hip_progress": 0.8108108141336009,
+      "early_active_fist_progress": 0.21384455551629766
+    }
+  },
+  "foe": {
+    "guard_f": {
+      "reach_ratio": 0.4457858232815264,
+      "elbow_angle_deg": 41.438373946750986,
+      "wrist_y_relative_head_m": -0.04891716010798475
+    },
+    "guard_b": {
+      "reach_ratio": 0.4467941365235484,
+      "elbow_angle_deg": 41.47123560232625,
+      "wrist_y_relative_head_m": -0.06190360661793215
+    },
+    "sweep": {
+      "knee_angle_deg": 164.2030049966994,
+      "contact_sole_y": 0.03998597097809152
+    },
+    "jab": {
+      "maximum_hand_pullback_m": 0.06019605103605924,
+      "late_hand_guard_error_m": 3.926671773201096e-10,
+      "late_root_residual_m": 0.019697715603592212
+    },
+    "cross": {
+      "maximum_hand_pullback_m": 0.14003684996872867,
+      "late_hand_guard_error_m": 7.072989500731499e-10,
+      "late_root_residual_m": 0.03182049815427194,
+      "early_active_hip_progress": 0.8108108141336009,
+      "early_active_fist_progress": 0.21384455665630844
+    }
+  }
+}

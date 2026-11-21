@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "selftest_exit_0": true,
+    "marker_printed": true,
+    "did_not_run_one": true,
+    "overall_not_proven": true,
+    "other_cases_still_ran": true,
+    "clean_rerun_green": true,
+    "runtime_clean_green": true,
+    "negative_control_ok": true
+  },
+  "ok": true,
+  "stdout_tail": [
+    "R02 CAUGHT      static=RED runtime=RED  failed=['F03_filelist_sha_selfconsistent']  手臂归一常数被换 -> delta_matches_blender 应红",
+    "R03 CAUGHT      static=RED runtime=RED  failed=['F03_filelist_sha_selfconsistent']  躯干增益翻倍 -> delta_matches_blender 应红",
+    "R04 CAUGHT      static=RED runtime=RED  failed=['F03_filelist_sha_selfconsistent']  旋转角折半 -> engine_vs_blender 应红",
+    "N01 MISSED      static=GREEN  failed=[]  负对照：清单外且 verify 不读",
+    "SUMMARY caught=18/18 did_not_run=1 missed=1 restored=20/20 clean=GREEN runtime_clean=GREEN negative=OK",
+    "SELFTEST_ASSERTION_OK"
+  ]
+}

@@ -1,0 +1,10 @@
+  PASS  selftest_exit_0
+  PASS  marker_printed
+  PASS  did_not_run_one
+  PASS  overall_not_proven
+  PASS  other_cases_still_ran
+  PASS  clean_rerun_green
+  PASS  runtime_clean_green
+  PASS  negative_control_ok
+SELFTEST_DID_NOT_RUN 8/8
+DID_NOT_RUN_BRANCH_OK

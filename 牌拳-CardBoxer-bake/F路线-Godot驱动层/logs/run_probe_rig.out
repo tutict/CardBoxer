@@ -1,0 +1,4 @@
+IMPORT rc=0 18.78s file=True
+PROBE  rc=0 0.943s errors=0
+BONES  14 writable=True meshes=1
+GODOT_RIG_PROBE_OK

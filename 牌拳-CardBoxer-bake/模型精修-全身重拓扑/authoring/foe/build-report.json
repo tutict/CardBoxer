@@ -1,0 +1,197 @@
+{
+  "version": 1,
+  "role": "foe",
+  "blender": "5.2.0 LTS",
+  "baseline": {
+    "sha256": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+    "geometry": {
+      "vertices": 64059,
+      "edges": 141529,
+      "polygons": 79998,
+      "triangles": 79998,
+      "quads": 0,
+      "boundary_edges": 43064,
+      "nonmanifold_edges": 43064,
+      "component_count": 2809,
+      "components": [
+        1136,
+        989,
+        345,
+        309,
+        280,
+        261,
+        234,
+        227,
+        209,
+        202,
+        199,
+        193,
+        190,
+        185,
+        184,
+        182,
+        182,
+        181,
+        178,
+        174,
+        173,
+        173,
+        171,
+        165
+      ]
+    },
+    "missing_acceptance": [
+      "all four progressive hand morphs",
+      "full-body editable quad topology",
+      "independent segmented glove finger loops",
+      "new UV atlas"
+    ],
+    "coordinate_welded_geometry": {
+      "vertices": 39867,
+      "edges": 119997,
+      "polygons": 79998,
+      "triangles": 79998,
+      "quads": 0,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "component_count": 1,
+      "components": [
+        39867
+      ]
+    }
+  },
+  "base_method": "source_surface_coarsening_and_quad_pairing",
+  "base_file": {
+    "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\authoring\\foe\\surface-pair-probe.blend",
+    "sha256": "1aaf9dbfb899429c0192faa2e10ccd1528c017888e0388b569044d9239b0b35c"
+  },
+  "base_geometry": {
+    "vertices": 35867,
+    "edges": 79583,
+    "polygons": 43584,
+    "triangles": 71998,
+    "quads": 28414,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "component_count": 1,
+    "components": [
+      35867
+    ]
+  },
+  "surface_detail_vertex_range": [
+    32350,
+    33070
+  ],
+  "mask_refinement": "two 40x6 supported goggle gasket rings and 40x6 breather perimeter, ray conformed to immutable mask silhouette",
+  "hand_vertex_ranges": {
+    "f": [
+      33070,
+      33700
+    ],
+    "b": [
+      33852,
+      34482
+    ]
+  },
+  "body_vertices_before_hands": 33070,
+  "skin": {
+    "max_influences": 4,
+    "normalization_error": 2.220446049250313e-16,
+    "neutral_influence_vertices": 0,
+    "spatial_repairs": 6543,
+    "method": "nearest triangle barycentric from baseline plus head/chest/sole repairs, gloves rigid to exact forearm group"
+  },
+  "crystal_refinement": {
+    "cyan_faces_with_flat_facets": 606,
+    "masked_vertices": 790,
+    "method": "source-albedo cyan mask, new low quad surfaces with explicit sharp-edge attributes and flat high bake facets"
+  },
+  "uv": {
+    "name": "Foe_4K_Atlas",
+    "new_atlas": true,
+    "method": "angle islands, .003 island margin, area weighted",
+    "runtime_channel": 0,
+    "uv_layers": 1,
+    "normal_basis": "tangent space UV0"
+  },
+  "occlusion": "4096x4096 selected-high AO baked and packed into ORM red",
+  "textures": {
+    "base-color": {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\authoring\\foe\\textures\\foe-base-color.png",
+      "width": 4096,
+      "height": 4096,
+      "sha256": "51291000909449a55f4c5f051f725a3c9c2956ad6af468dfb3e7b67a6a3bbeee"
+    },
+    "normal": {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\authoring\\foe\\textures\\foe-normal.png",
+      "width": 4096,
+      "height": 4096,
+      "sha256": "438524f7ea32f667e1c6e4857e80ced178edbc62d29d47ed6b3641ab2ec7e482"
+    },
+    "orm": {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\authoring\\foe\\textures\\foe-orm.png",
+      "width": 4096,
+      "height": 4096,
+      "sha256": "242344c0fb73ef7776ad192f026c8d05047210112fcdc61e6fd2554280ef697e"
+    }
+  },
+  "geometry": {
+    "vertices": 34634,
+    "edges": 76511,
+    "polygons": 41777,
+    "triangles": 69468,
+    "quads": 27589,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "component_count": 14,
+    "components": [
+      33610,
+      240,
+      240,
+      240,
+      48,
+      48,
+      26,
+      26,
+      26,
+      26,
+      26,
+      26,
+      26,
+      26
+    ],
+    "quad_fraction": 0.6603872944443114
+  },
+  "morphs": {
+    "grip_half_f": {
+      "moved_vertices": 512,
+      "max_delta": 0.07927534798926877,
+      "outside_hand_moved": 0
+    },
+    "grip_f": {
+      "moved_vertices": 512,
+      "max_delta": 0.15643874629667665,
+      "outside_hand_moved": 0
+    },
+    "grip_half_b": {
+      "moved_vertices": 512,
+      "max_delta": 0.07927534798926877,
+      "outside_hand_moved": 0
+    },
+    "grip_b": {
+      "moved_vertices": 512,
+      "max_delta": 0.15643874629667665,
+      "outside_hand_moved": 0
+    }
+  },
+  "elapsed_seconds": 160.8069031238556,
+  "output_sha256": {
+    "foe-retopology.blend": "c0c5f97c4826109c9101edc7ce418b46d1ab0f64cab84e5c62a05fd5ece88fb8",
+    "foe-raw.glb": "f25abddf501a257ab00283e205984ed10a433d8716f52cacad2640a5996ad824",
+    "contact-sockets.json": "1cd73c039f3531a82a0ebef6fc23a03e724b80298db5956e27437353bef7735b"
+  },
+  "limits": [
+    "Full-body source-aware coarsening and quad pairing preserves thin armor/cloth better than the rejected QuadriFlow seeds. New hand root/web/finger/thumb and mask loops are procedural authored geometry. Dorsal plates, rivets and mask gaskets are enclosed shells; thumbs/fingers connect to the body.",
+    "Game clip/framerate/sole/contact verification is owned by root after canonical export."
+  ]
+}

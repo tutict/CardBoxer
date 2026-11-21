@@ -1,0 +1,8 @@
+{
+  "project_id": "project-14362d7428064bcbb94991d2700add0b",
+  "plan_version": 0,
+  "actions": [
+    {"tool_name": "run_visual_reference_workflow", "arguments": {}}
+  ],
+  "ttl_seconds": 600
+}

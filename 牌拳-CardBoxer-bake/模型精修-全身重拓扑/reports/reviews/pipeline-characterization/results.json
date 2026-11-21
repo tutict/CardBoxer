@@ -1,0 +1,341 @@
+{
+  "hash_boundary": [
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\canonical_glb.py",
+      "matches": true
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\check_retopology_assets.py",
+      "matches": true
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\pipeline_author_audit.py",
+      "matches": true
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\pipeline_blender_roundtrip.py",
+      "matches": true
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\pipeline_roundtrip_test.py",
+      "matches": true
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\pipeline_test.py",
+      "matches": true
+    }
+  ],
+  "probes": [
+    {
+      "name": "fractional_float_triangle_indices",
+      "ok": true,
+      "errors": [],
+      "metrics": {
+        "vertices": 9,
+        "triangles": 3,
+        "joints": 14,
+        "surfaces": 1,
+        "materials": 1,
+        "degenerate_triangles": 0,
+        "weight_sum_error": 0.0,
+        "neutral_max_weight": 0.0,
+        "rest_bind_error_m": 5.960464455334602e-09,
+        "sole_y_deviation_m": 0.0,
+        "front_hand_distal_start_local_m": 0.1499999940395355,
+        "front_source_hand_bounds_local_m": [
+          [
+            -0.02,
+            0.23000000596046447,
+            -0.02
+          ],
+          [
+            0.07000000074505806,
+            0.31999998807907104,
+            0.02
+          ]
+        ],
+        "front_hand_envelope_vertices": 3,
+        "rear_hand_distal_start_local_m": 0.14999999821186066,
+        "rear_source_hand_bounds_local_m": [
+          [
+            -0.02,
+            0.23000001430511477,
+            0.08000000149011612
+          ],
+          [
+            0.07000000074505806,
+            0.31999999642372134,
+            0.12000000149011612
+          ]
+        ],
+        "rear_hand_envelope_vertices": 3,
+        "morph_names": [
+          "grip_half_f",
+          "grip_f",
+          "grip_half_b",
+          "grip_b"
+        ],
+        "grip_half_f_active_vertices": 3,
+        "grip_f_active_vertices": 3,
+        "grip_half_b_active_vertices": 3,
+        "grip_b_active_vertices": 3,
+        "image_sizes": [
+          [
+            4096,
+            4096
+          ],
+          [
+            4096,
+            4096
+          ],
+          [
+            4096,
+            4096
+          ]
+        ]
+      }
+    },
+    {
+      "name": "vec3_triangle_indices",
+      "ok": true,
+      "errors": [],
+      "metrics": {
+        "vertices": 9,
+        "triangles": 3,
+        "joints": 14,
+        "surfaces": 1,
+        "materials": 1,
+        "degenerate_triangles": 0,
+        "weight_sum_error": 0.0,
+        "neutral_max_weight": 0.0,
+        "rest_bind_error_m": 5.960464455334602e-09,
+        "sole_y_deviation_m": 0.0,
+        "front_hand_distal_start_local_m": 0.1499999940395355,
+        "front_source_hand_bounds_local_m": [
+          [
+            -0.02,
+            0.23000000596046447,
+            -0.02
+          ],
+          [
+            0.07000000074505806,
+            0.31999998807907104,
+            0.02
+          ]
+        ],
+        "front_hand_envelope_vertices": 3,
+        "rear_hand_distal_start_local_m": 0.14999999821186066,
+        "rear_source_hand_bounds_local_m": [
+          [
+            -0.02,
+            0.23000001430511477,
+            0.08000000149011612
+          ],
+          [
+            0.07000000074505806,
+            0.31999999642372134,
+            0.12000000149011612
+          ]
+        ],
+        "rear_hand_envelope_vertices": 3,
+        "morph_names": [
+          "grip_half_f",
+          "grip_f",
+          "grip_half_b",
+          "grip_b"
+        ],
+        "grip_half_f_active_vertices": 3,
+        "grip_f_active_vertices": 3,
+        "grip_half_b_active_vertices": 3,
+        "grip_b_active_vertices": 3,
+        "image_sizes": [
+          [
+            4096,
+            4096
+          ],
+          [
+            4096,
+            4096
+          ],
+          [
+            4096,
+            4096
+          ]
+        ]
+      }
+    },
+    {
+      "name": "position_accessor_crosses_view_boundary",
+      "ok": true,
+      "errors": [],
+      "metrics": {
+        "vertices": 9,
+        "triangles": 3,
+        "joints": 14,
+        "surfaces": 1,
+        "materials": 1,
+        "degenerate_triangles": 0,
+        "weight_sum_error": 0.0,
+        "neutral_max_weight": 0.0,
+        "rest_bind_error_m": 5.960464455334602e-09,
+        "sole_y_deviation_m": 0.0,
+        "front_hand_distal_start_local_m": 0.1499999940395355,
+        "front_source_hand_bounds_local_m": [
+          [
+            -0.02,
+            0.23000000596046447,
+            -0.02
+          ],
+          [
+            0.07000000074505806,
+            0.31999998807907104,
+            0.02
+          ]
+        ],
+        "front_hand_envelope_vertices": 3,
+        "rear_hand_distal_start_local_m": 0.14999999821186066,
+        "rear_source_hand_bounds_local_m": [
+          [
+            -0.02,
+            0.23000001430511477,
+            0.08000000149011612
+          ],
+          [
+            0.07000000074505806,
+            0.31999999642372134,
+            0.12000000149011612
+          ]
+        ],
+        "rear_hand_envelope_vertices": 3,
+        "morph_names": [
+          "grip_half_f",
+          "grip_f",
+          "grip_half_b",
+          "grip_b"
+        ],
+        "grip_half_f_active_vertices": 3,
+        "grip_f_active_vertices": 3,
+        "grip_half_b_active_vertices": 3,
+        "grip_b_active_vertices": 3,
+        "image_sizes": [
+          [
+            4096,
+            4096
+          ],
+          [
+            4096,
+            4096
+          ],
+          [
+            4096,
+            4096
+          ]
+        ]
+      }
+    },
+    {
+      "name": "indexed_png_missing_required_palette",
+      "ok": true,
+      "errors": [],
+      "metrics": {
+        "vertices": 9,
+        "triangles": 3,
+        "joints": 14,
+        "surfaces": 1,
+        "materials": 1,
+        "degenerate_triangles": 0,
+        "weight_sum_error": 0.0,
+        "neutral_max_weight": 0.0,
+        "rest_bind_error_m": 5.960464455334602e-09,
+        "sole_y_deviation_m": 0.0,
+        "front_hand_distal_start_local_m": 0.1499999940395355,
+        "front_source_hand_bounds_local_m": [
+          [
+            -0.02,
+            0.23000000596046447,
+            -0.02
+          ],
+          [
+            0.07000000074505806,
+            0.31999998807907104,
+            0.02
+          ]
+        ],
+        "front_hand_envelope_vertices": 3,
+        "rear_hand_distal_start_local_m": 0.14999999821186066,
+        "rear_source_hand_bounds_local_m": [
+          [
+            -0.02,
+            0.23000001430511477,
+            0.08000000149011612
+          ],
+          [
+            0.07000000074505806,
+            0.31999999642372134,
+            0.12000000149011612
+          ]
+        ],
+        "rear_hand_envelope_vertices": 3,
+        "morph_names": [
+          "grip_half_f",
+          "grip_f",
+          "grip_half_b",
+          "grip_b"
+        ],
+        "grip_half_f_active_vertices": 3,
+        "grip_f_active_vertices": 3,
+        "grip_half_b_active_vertices": 3,
+        "grip_b_active_vertices": 3,
+        "image_sizes": [
+          [
+            4096,
+            4096
+          ],
+          [
+            4096,
+            4096
+          ],
+          [
+            4096,
+            4096
+          ]
+        ]
+      }
+    },
+    {
+      "name": "source_is_output_temporary_path",
+      "exception": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\tutic\\\\Desktop\\\\\u5b66\u4e60\u8d44\u6599\\\\\u724c\u62f3-CardBoxer-bake\\\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\\\reports\\\\reviews\\\\pipeline-characterization\\\\collision-output.glb.tmp'",
+      "source_existed_before": true,
+      "source_exists_after": false,
+      "source_sha256_before": "24c979a455c2884cb5e73831a45cb4b72b9112c8131dc33ac5772bbb346254c7",
+      "output_exists": true
+    },
+    {
+      "name": "output_overwrites_raw_external_image",
+      "exception": null,
+      "image_sha256_before": "98fdfd98c91d55205d88064ee12c786013b7a52942856d3c816e65b977c66262",
+      "image_sha256_after": "86b912041befb012e9e9305002d8b3e603ae7a0b1651244cc0dc7dfeb56bc391",
+      "image_magic_after": "glTF"
+    }
+  ],
+  "control": {
+    "ok": true,
+    "errors": []
+  },
+  "roundtrip_hashes": [
+    {
+      "role": "player",
+      "source_matches_provenance": true,
+      "raw_matches_provenance": true,
+      "canonical_matches_report": true,
+      "bridge_matches_report": true
+    },
+    {
+      "role": "foe",
+      "source_matches_provenance": true,
+      "raw_matches_provenance": true,
+      "canonical_matches_report": true,
+      "bridge_matches_report": true
+    }
+  ]
+}

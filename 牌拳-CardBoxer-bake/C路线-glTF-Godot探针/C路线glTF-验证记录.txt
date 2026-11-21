@@ -1,0 +1,200 @@
+《牌拳》C 路线 · glTF → Godot 4.5 导入成本量测
+验证记录 / 2026-11-10
+工作区：C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\C路线-glTF-Godot探针
+
+====================================================================
+0. 一句话结论
+====================================================================
+**静态资产能搬，驱动链全丢。** glTF 把 64k 高模、UV、3 张 4096² PBR、
+13 骨骨架都完整搬进 Godot 4.5（导入零报错），但 SURFACE_DEFORM 没有
+glTF 对应物，导出即烘焙成「当前帧静态快照」；228 帧动作表在源 .blend
+里本来就没有 Action，于是 GLB 0 animation、Godot 0 AnimationPlayer；
+高模在 Godot 里 `skeleton_path=''` / `skin_present=False`，手动转骨架
+只会动那个 20k 顶点的体素化代理壳，不是角色本体。
+
+结论：C 路线作为「导入可行性」是通的，作为「把可驱动角色接进游戏」
+不成立。要真进游戏，得在 Godot 侧重建整套驱动层，或退回 C 路线渲
+2D 精灵图集。本轮没做 Creative Review、没进可运行游戏工程。
+
+====================================================================
+1. 这轮要回答什么 / 边界
+====================================================================
+工程师从上一轮 A/B/C/D 里选 C：「把这份可驱动 .blend 直接导出 glTF
+试 Godot 导入，量一次成本」。
+
+隔离设计：探针工程在 WORK/probe_project/，与可运行游戏工程
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer 完全分离；
+游戏工程全量 105 个文件 sha256 冻结，本轮 0 drift；工程内 0 个
+.glb/.gltf。A 路线归档只读不回写，其 26/26 守卫复跑仍全绿。
+
+====================================================================
+2. 导出前诊断（blend_structure.json）
+====================================================================
+6 个对象：a_apose_rig（ARMATURE / 13 骨）、a_continuous_shell
+（MESH 20,204 顶点 / ARMATURE modifier）、node_0（MESH 64,024 顶点 /
+SURFACE_DEFORM modifier，is_bound=True）、foe_cam、foe_fill、foe_key。
+3 张 packed 4096² PBR（baseColor / metallic-roughness / normal）。
+**bpy.data.actions = []** —— 228 帧动作表从来没做成 Action，A 路线
+是逐帧 C.pose_frame() 驱动的，这是 0 animation 的根因，不是导出器丢的。
+glTF 导出算子 poll=True，16 个所需参数全部可用。
+
+====================================================================
+3. 四口径 GLB（export_report.json / gltf_inspection.json）
+====================================================================
+口径                   体积          meshes skins anims imgs skinned verts  耗时
+foe-full.glb           42,926,956   2      1     0     3    1       84,263 1.237s
+foe-stance.glb          2,531,012   1      0     0     0    0       64,062 0.066s
+foe-posed.glb           2,533,600   1      0     0     0    0       64,143 0.085s
+foe-proxy-rig.glb       1,297,744   1      1     0     0    1       20,204 0.118s
+合计                   49,289,312 B，四次导出共 2.731s，operator 均 FINISHED
+
+· foe-full 的两个 primitive：高模只有 [NORMAL, POSITION, TEXCOORD_0]；
+  代理壳才有 [JOINTS_0, NORMAL, POSITION, TEXCOORD_0, WEIGHTS_0]。
+· skin joints = 14 = 13 骨 + glTF 导出器自动加的 neutral_bone。
+· PBR 三通道实测全在：baseColorTexture=1 / metallicRoughnessTexture=2
+  / normalTexture=0；extensionsUsed=['KHR_materials_specular']。
+· 站架 vs cross#10（增益 x1.5）两份都 export_apply=True：
+  POSITION min/max 最大分量差 0.187166 m，而两者 skins=0 / anims=0。
+  → SURFACE_DEFORM 被烘焙成两个不同的静态姿势，不是可驱动网格。
+  顶点数 64,062 → 64,143 不相等，是应用修改器后 glTF 拆顶点所致，
+  判据只要求「有非零位移」，不假装拓扑守恒。
+
+**订正一处预判**：我原以为 3 张 4096² 会被重编码。实测
+源 packed 合计 39,097,625 B，GLB 内 image bufferView 合计
+39,097,625 B，**逐字节相同、零重编码、零降分辨率**，占
+foe-full.glb 的 91.08%。想省体积只能换贴图分辨率/压缩格式，
+和 glTF 导出器无关。
+
+**订正第二处预判**：导出器两条告警都不能当成「丢东西」——
+「More than one shader node tex image used for a texture」只是采样器
+参数取第一个，三通道在 GLB 和 Godot 里都在；「more than 4 joint
+vertex influences」只影响代理壳权重精度（截断到 4 并归一化），
+不影响角色本体（本体根本没 skin）。
+
+====================================================================
+4. Godot 4.5 导入实测（godot_import_result.json / godot_pose_result.json）
+====================================================================
+引擎 4.5-stable (official)。3 份 GLB（46,755,712 B）复制进隔离工程：
+· --headless --editor --quit 首次导入 16.835s，rc=0，3 份 .import 全生成；
+  .godot/imported 12 文件 / 44,728,238 B（42.66 MB），是 GLB 体积的 0.9566×。
+· SceneTree 探针读回 1.044s；总墙钟 17.879s。三份日志 0 个 SCRIPT ERROR。
+· 三份全部 load_ok=True / PackedScene。
+· foe-full 读回：5 节点 = 2 MeshInstance3D + 2 Node3D + 1 Skeleton3D，
+  14 骨（hips/spine/chest/neck/head/upperarm_b/.../neutral_bone），
+  **0 AnimationPlayer**；两个 mesh 的材质都是 StandardMaterial3D，
+  albedo / normal / metallic / roughness 四张全 4096² 且 present。
+· skeleton 绑定分裂（最硬的一条）：
+    a_continuous_shell  skeleton_path='..'  skin_present=True
+    node_0（高模）      skeleton_path=''   skin_present=False
+· 引擎内手动 set_bone_pose_rotation(upperarm_f, 35°)：
+  get_bone_pose_rotation 直读确实变了（pose_local_changed=True），
+  但 global pose 在 headless 单帧里未刷新（global_pose_changed_in_headless
+  =False，如实记录，不冒充视觉变形证据）。
+  绑到骨架的网格 1 个、未绑 1 个 —— 转骨架不会动高模。
+
+====================================================================
+5. 丢失清单（要进游戏必须补的工作）
+====================================================================
+1. SURFACE_DEFORM：glTF 无对应概念，导出即烘焙成当前帧静态网格，
+   高模不再跟随代理壳。
+2. 228 帧动作表：源 .blend 无 Action → GLB 0 animation → Godot
+   0 AnimationPlayer。整套驱动层需在 Godot 侧重建。
+3. 高模蒙皮：Godot 里 node_0 skeleton_path='' / skin_present=False；
+   动骨架只会动体素化的 20k 代理壳，不是角色本体。
+4. 2D 关节表 → 3D 骨骼坐标桥：baked2.json 是 11 个 2D (x,z) 关节，
+   Godot 是 14 骨 Y-up Skeleton3D，逐帧重定向尚未实现。
+
+**没丢的**：静态网格、UV、3 张 4096² PBR（零重编码原样搬运）、
+13 骨 + neutral_bone、代理壳的 skin、材质节点链。
+
+====================================================================
+6. 承重判据与变异验证
+====================================================================
+verify_c.py → 25/25 PASS / C_VERIFIED
+  分组：C-01~04 输入零污染 + 源 .blend 五处哈希同一真相 + A 路线 26/26 仍绿；
+        C-05~06 源资产结构与导出算子；
+        C-07~14 GLB 文件头/结构/贴图零重编码/PBR 三通道/14 joints 对账/
+                 0 animation 三处对账/静态快照；
+        C-15~20 Godot 导入、场景树、4096² 材质、skeleton 分裂、pose 可写；
+        C-21~25 两张成本账板、9 条源码针脚、隔离与日志洁净、
+                 非生产导入声明、导入体积同量级。
+
+mutation_c.py → 11/11 CAUGHT / DID_NOT_RUN=0 / 逐字节还原 11/11 /
+                clean re-run 25/25 / MUTATION_C_OK
+  失配自检 C_MUTATION_SELFTEST=1 → 10/11 CAUGHT + DID_NOT_RUN=1 +
+  MUTATION_C_FAILED，证明「锚点没匹配到」不会被静默算成已证明。
+
+复算命令（在本工作区目录下，Blender 5.2.3 / Godot 4.5）：
+  <venv>\Scripts\python.exe -u make_baseline_c.py
+  blender.exe -b --python probe_blend_structure.py
+  blender.exe -b --python export_gltf.py
+  <venv>\Scripts\python.exe -u inspect_gltf.py
+  <venv>\Scripts\python.exe -u run_godot_import.py
+  <venv>\Scripts\python.exe -u run_pose_probe.py
+  <venv>\Scripts\python.exe -u make_cost_board.py
+  <venv>\Scripts\python.exe -u verify_c.py
+  <venv>\Scripts\python.exe -u mutation_c.py
+  <venv>\Scripts\python.exe -u make_filelist_c.py
+
+====================================================================
+7. 踩坑（可复用）
+====================================================================
+· Godot 4.5 的 Skeleton3D **没有** Godot 3 的
+  force_update_all_dirty_bones()。GDScript 里调它会在 _init() 抛
+  SCRIPT ERROR，导致 quit() 不执行、SceneTree 无限空转（第一次跑挂了
+  180s）。驱动脚本因此加了 60s timeout + 部分 stdout/stderr 落盘，
+  否则根因会被「挂住」两个字盖掉。
+· 「能不能驱动」的判据必须用 get_bone_pose_rotation（本地 pose，写入
+  即读回）；get_bone_global_pose 在 headless 单帧里脏标记未刷新，
+  且绕骨骼自身轴旋转本就不改 origin。第一版拿 global Transform3D
+  判等得到 false，是判据口径错，不是数据坏。
+· 成本账板第二列第一版按 9 项算固定行距，实际列了 14 项，尾部两段
+  文字直接压在一起；看图复核抓到，改成三段各自显式推进 y。
+· 文件清单必须排除 probe_project/.godot/（引擎缓存含时间戳）和生成器
+  自身 stdout 日志；否则 STABLE_OK 会「一致地」记下易变文件的哈希。
+  另用 %TEMP%\fa-run\ 外部脚本逐行重算清单 size + sha256。
+
+====================================================================
+8. 边界（必须记住）
+====================================================================
+· 这是**导入可行性量测探针**，不是生产导入：未做 Creative Review，
+  资产没进可运行游戏工程，没有视觉验收，没有渲 Godot 内 3D 截帧
+  （板里那张角色图是 Blender 端渲染，板内已标注）。
+· 游戏工程 105 个文件 sha256 零漂移；A 路线归档只读；源 .blend 未被改写。
+· 玩家 V4b 仍 0 skins / 静态 A-pose，本轮完全没碰。
+· 没渲 228 帧图集、没导 glTF 之外的格式、没做 IP 合规。
+· 25 条判据量的是「导出/导入结构与零污染」，不评审美、不证明
+  GPU skinning 的视觉变形（CPU 侧 mesh 顶点不随 skinning 改变）。
+
+====================================================================
+9. 下一步候选（等工程师定）
+====================================================================
+A 收口存档：C 路线结论是「静态能进、驱动链要重做」，据此把角色视觉
+  继续放在静态 UI 立绘 + 代码自绘战斗层，不再投真 3D 进引擎。
+B 走 2D 精灵图集：回 Blender 用已验证的 72 帧驱动链渲 8~16 帧小样本，
+  绕过 glTF 的驱动缺失（这是 A 路线第九节的 A 选项）。
+C 在 Godot 侧重建驱动层：把 228 帧 2D 关节表转成 14 骨 pose 动画资源，
+  成本最高，但能保留真 3D。
+D 先补 Creative Review 与 Godot 内 3D 截帧，再谈是否值得投 B/C。
+
+====================================================================
+10. 文件清单与自洽复核（收口补记）
+====================================================================
+make_filelist_c.py 实测：FILELIST_ENTRIES=58 /
+new-files.diff=76,944 B / FILELIST_STABLE_OK（连续两次生成逐字节一致）。
+
+**STABLE_OK 只证「两次生成一致」，不证「清单与实物一致」**，所以另写
+独立脚本 crosscheck_filelist_c.py（不 import 生成器、不复用其枚举），
+逐行重算 58 条的 size + sha256，并反向枚举目录查漏项：
+  ROWS=58 BAD=0 EXTRA=0 / CROSSCHECK_OK
+该脚本已固化进本工作区，复算命令：
+  <venv>\Scripts\python.exe -u make_filelist_c.py
+  <venv>\Scripts\python.exe -u crosscheck_filelist_c.py
+排除口径两边一致：probe_project/.godot/ 引擎缓存（含时间戳）、
+logs/make_filelist_c.log 生成器自身 stdout、清单与 diff 自身。
+new-files.diff 是 14 个新增脚本/探针源码的 /dev/null → b/... diff，
+便于按文件审阅本轮新增代码。
+
+注：本节写完后清单会重跑一次（验证记录自身在清单内），重跑只改
+该文件自身的 size/hash 行，条目数与 DIFF_BYTES 不变；最终仍以
+logs/make_filelist_c.log 与 crosscheck 输出为准，不以本节手写数字为证。

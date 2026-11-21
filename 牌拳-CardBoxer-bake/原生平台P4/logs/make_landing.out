@@ -1,0 +1,18 @@
+CASE micro_2 AMPLITUDE 2.0
+ROUNDTRIP {'motion_input.json': True, 'motion_input_foe.json': True, 'card_motion.json': True}
+RECOMPUTED {'exact_flat_pairs': 0, 'perceptual_flat_pairs': 200, 'changed_frames': 109, 'max_joint_delta_px': 1.7778, 'max_adjacent_jump_px': 112.0179, 'baseline_max_adjacent_jump_px': 112.0179}
+SCAN {'exact_flat_pairs': 0, 'perceptual_flat_pairs': 180, 'changed_frames': 80, 'max_joint_delta_px': 1.9616, 'max_adjacent_jump_px': 112.0179, 'baseline_max_adjacent_jump_px': 112.0179}
+POSES 284 CHANGED_FRAMES 109
+CHECK all_three_roundtrip_identical True
+CHECK all_track_endpoints_untouched True
+CHECK no_endpoint_frame_in_edits True
+CHECK exact_flat_reaches_zero True
+CHECK perceptual_below_baseline True
+CHECK max_displacement_under_2px True
+CHECK hybrid_displacement_much_larger True
+CHECK no_worsened_adjacent_jump True
+CHECK plan_284_poses True
+CHECK plan_tracks_15 True
+CHECK no_nan_in_plan_deltas True
+CHECK segments_nonempty True
+LANDING_OK

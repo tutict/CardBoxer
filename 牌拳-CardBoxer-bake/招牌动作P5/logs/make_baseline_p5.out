@@ -1,0 +1,16 @@
+BASELINE_P5_OK files=14
+  scripts/arena.gd                        52843  59fae145dc86
+  scripts/fighter_3d_layer.gd             13760  560cb46fa8b8
+  scripts/fighter.gd                      41208  0ad8b0c3d94e
+  scripts/rig_driver.gd                    8208  567688f635f5
+  scripts/battle_motion_p0.gd              3021  d958c71ae74a
+  scripts/battle_rhythm.gd                 3848  48c56db4aca2
+  scripts/card_motion.gd                   5324  417201008f7d
+  scripts/hud.gd                          32962  d7220e8b8aed
+  data/card_motion.json                  228610  ca4060d75ccc
+  data/motion_input.json                  74632  61f8a14ea7b9
+  data/motion_input_foe.json              74630  fa5960b79faf
+  project.godot                            1290  a4bb56358694
+  assets/3d/player-rigged.glb          38478140  80e5a1a03f44
+  assets/3d/foe-rigged.glb             42914328  0edcfe9e455f
+WROTE C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\招牌动作P5\orig\基线-规格阶段.json

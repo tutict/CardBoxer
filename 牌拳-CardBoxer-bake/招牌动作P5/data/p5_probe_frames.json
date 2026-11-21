@@ -1,0 +1,72 @@
+{
+  "source": "p5_readback.json + recommended_tracks.json (R1+R2)",
+  "frames": [
+    {
+      "card": "stance",
+      "frame": 0,
+      "role": "unchanged_stance"
+    },
+    {
+      "card": "jab",
+      "frame": 6,
+      "role": "unchanged_jab"
+    },
+    {
+      "card": "wave",
+      "frame": 10,
+      "role": "edited"
+    },
+    {
+      "card": "wave",
+      "frame": 15,
+      "role": "edited"
+    },
+    {
+      "card": "wave",
+      "frame": 17,
+      "role": "edited_peak"
+    },
+    {
+      "card": "wave",
+      "frame": 27,
+      "role": "edited"
+    },
+    {
+      "card": "wave",
+      "frame": 32,
+      "role": "edited"
+    },
+    {
+      "card": "cross",
+      "frame": 1,
+      "role": "edited"
+    },
+    {
+      "card": "cross",
+      "frame": 5,
+      "role": "edited"
+    },
+    {
+      "card": "cross",
+      "frame": 8,
+      "role": "edited_peak"
+    }
+  ],
+  "marker": {
+    "card": "wave",
+    "frame": 17,
+    "joint": "f_hand"
+  },
+  "edited_cards": [
+    "wave",
+    "cross"
+  ],
+  "expected_mf_peaks": {
+    "wave": 60.823,
+    "cross": 36.0,
+    "jab": 80.2247,
+    "sweep": 78.6384,
+    "throw": 54.9181,
+    "uppercut": 71.4703
+  }
+}

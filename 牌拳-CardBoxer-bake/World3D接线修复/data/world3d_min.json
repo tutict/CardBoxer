@@ -1,0 +1,461 @@
+{
+  "landed": true,
+  "premise": "post",
+  "not_applicable": [
+    "pre_own_png_sha_equals_both",
+    "pre_world_only_png_sha_equals_own",
+    "pre_own_equals_both_opaque",
+    "pre_own_equals_both_white"
+  ],
+  "modes": {
+    "none": {
+      "mode": "none",
+      "seconds": 5.354,
+      "returncode": 0,
+      "script_errors": 0,
+      "scenario_errors": 2,
+      "engine_error_lines": 2,
+      "layers": {
+        "player": {
+          "label": "player",
+          "own_world_3d": false,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\none/min-none-sv-player.png",
+          "world3d_id": 0,
+          "yaw": -55.0,
+          "pixels": {
+            "opaque_px": 72493,
+            "near_white_px": 16881,
+            "cyan_px": 3146,
+            "white_ratio": 0.232864
+          },
+          "png_sha256": "e1c344699c95a47d3835fe60f7f43d7ba1f9635c952ef29c8a99c97c222a2ed6"
+        },
+        "foe": {
+          "label": "foe",
+          "own_world_3d": false,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\none/min-none-sv-foe.png",
+          "world3d_id": 0,
+          "yaw": 55.0,
+          "pixels": {
+            "opaque_px": 74910,
+            "near_white_px": 14404,
+            "cyan_px": 2747,
+            "white_ratio": 0.192284
+          },
+          "png_sha256": "6e142fd93232ed26774e99991b90bc799ae10d69c680a94d005e5d6b30f35bd7"
+        }
+      },
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\none\\min-none-live.png",
+      "live_sha256": "070850747af7d59cb689d4d5efc79b3a5ec80b9c7a81be50cec5a1cb77a76b02",
+      "live_size": [
+        1280,
+        720
+      ]
+    },
+    "own": {
+      "mode": "own",
+      "seconds": 4.743,
+      "returncode": 0,
+      "script_errors": 0,
+      "scenario_errors": 0,
+      "engine_error_lines": 0,
+      "layers": {
+        "player": {
+          "label": "player",
+          "own_world_3d": true,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\own/min-own-sv-player.png",
+          "world3d_id": 0,
+          "yaw": -55.0,
+          "pixels": {
+            "opaque_px": 44628,
+            "near_white_px": 13902,
+            "cyan_px": 2611,
+            "white_ratio": 0.311508
+          },
+          "png_sha256": "946c0682b7855467f22140151d39da48871354025185a269b710fcf3aef96ddc"
+        },
+        "foe": {
+          "label": "foe",
+          "own_world_3d": true,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\own/min-own-sv-foe.png",
+          "world3d_id": 0,
+          "yaw": 55.0,
+          "pixels": {
+            "opaque_px": 70249,
+            "near_white_px": 725,
+            "cyan_px": 424,
+            "white_ratio": 0.01032
+          },
+          "png_sha256": "4e1dd508993423650a6c7418350ff4f335f64606a9a9cd4540a74d417b9ee3cf"
+        }
+      },
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\own\\min-own-live.png",
+      "live_sha256": "56f2348ec5f2296267759e21875f72eebcaf93f5a2e6b8f2640b310a80a6baee",
+      "live_size": [
+        1280,
+        720
+      ]
+    },
+    "world": {
+      "mode": "world",
+      "seconds": 4.458,
+      "returncode": 0,
+      "script_errors": 0,
+      "scenario_errors": 2,
+      "engine_error_lines": 2,
+      "layers": {
+        "player": {
+          "label": "player",
+          "own_world_3d": true,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\world/min-world-sv-player.png",
+          "world3d_id": -9223371998233623049,
+          "yaw": -55.0,
+          "pixels": {
+            "opaque_px": 42788,
+            "near_white_px": 13197,
+            "cyan_px": 2435,
+            "white_ratio": 0.308428
+          },
+          "png_sha256": "53067e3de95dacd99d323720bac4cb8bf0e525b4e8cb52c3bf6bcc2dfe852065"
+        },
+        "foe": {
+          "label": "foe",
+          "own_world_3d": true,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\world/min-world-sv-foe.png",
+          "world3d_id": -9223371998183291494,
+          "yaw": 55.0,
+          "pixels": {
+            "opaque_px": 70393,
+            "near_white_px": 937,
+            "cyan_px": 412,
+            "white_ratio": 0.013311
+          },
+          "png_sha256": "12d9f0c7a226e9a9c07a34133d38f8451b94d07e6f2b0b9b5d2ec83f6c4c0f56"
+        }
+      },
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\world\\min-world-live.png",
+      "live_sha256": "36e065286d371588a1eb259084fee0ce37c2fe44d1b3237b24123f51f00266e4",
+      "live_size": [
+        1280,
+        720
+      ]
+    },
+    "both": {
+      "mode": "both",
+      "seconds": 4.571,
+      "returncode": 0,
+      "script_errors": 0,
+      "scenario_errors": 2,
+      "engine_error_lines": 2,
+      "layers": {
+        "player": {
+          "label": "player",
+          "own_world_3d": true,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\both/min-both-sv-player.png",
+          "world3d_id": -9223371998233623049,
+          "yaw": -55.0,
+          "pixels": {
+            "opaque_px": 42788,
+            "near_white_px": 13197,
+            "cyan_px": 2435,
+            "white_ratio": 0.308428
+          },
+          "png_sha256": "53067e3de95dacd99d323720bac4cb8bf0e525b4e8cb52c3bf6bcc2dfe852065"
+        },
+        "foe": {
+          "label": "foe",
+          "own_world_3d": true,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\both/min-both-sv-foe.png",
+          "world3d_id": -9223371998183291494,
+          "yaw": 55.0,
+          "pixels": {
+            "opaque_px": 70393,
+            "near_white_px": 937,
+            "cyan_px": 412,
+            "white_ratio": 0.013311
+          },
+          "png_sha256": "12d9f0c7a226e9a9c07a34133d38f8451b94d07e6f2b0b9b5d2ec83f6c4c0f56"
+        }
+      },
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\both\\min-both-live.png",
+      "live_sha256": "01f22a8eb144d136f462cfe2ea36335da8d0d5cc6f3fd854df5fc50643961630",
+      "live_size": [
+        1280,
+        720
+      ]
+    }
+  },
+  "payloads": {
+    "none": {
+      "apply_rows": [
+        {
+          "label": "player",
+          "mode": "none",
+          "own_after_apply": false,
+          "present": true,
+          "world_id_after_apply": 0
+        },
+        {
+          "label": "foe",
+          "mode": "none",
+          "own_after_apply": false,
+          "present": true,
+          "world_id_after_apply": 0
+        }
+      ],
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\none/min-none-live.png",
+      "mode": "none",
+      "state": {
+        "layers": [
+          {
+            "label": "player",
+            "own_world_3d": false,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\none/min-none-sv-player.png",
+            "world3d_id": 0,
+            "yaw": -55.0,
+            "pixels": {
+              "opaque_px": 72493,
+              "near_white_px": 16881,
+              "cyan_px": 3146,
+              "white_ratio": 0.232864
+            },
+            "png_sha256": "e1c344699c95a47d3835fe60f7f43d7ba1f9635c952ef29c8a99c97c222a2ed6"
+          },
+          {
+            "label": "foe",
+            "own_world_3d": false,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\none/min-none-sv-foe.png",
+            "world3d_id": 0,
+            "yaw": 55.0,
+            "pixels": {
+              "opaque_px": 74910,
+              "near_white_px": 14404,
+              "cyan_px": 2747,
+              "white_ratio": 0.192284
+            },
+            "png_sha256": "6e142fd93232ed26774e99991b90bc799ae10d69c680a94d005e5d6b30f35bd7"
+          }
+        ]
+      },
+      "use_3d": true
+    },
+    "own": {
+      "apply_rows": [
+        {
+          "label": "player",
+          "mode": "own",
+          "own_after_apply": true,
+          "present": true,
+          "world_id_after_apply": 0
+        },
+        {
+          "label": "foe",
+          "mode": "own",
+          "own_after_apply": true,
+          "present": true,
+          "world_id_after_apply": 0
+        }
+      ],
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\own/min-own-live.png",
+      "mode": "own",
+      "state": {
+        "layers": [
+          {
+            "label": "player",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\own/min-own-sv-player.png",
+            "world3d_id": 0,
+            "yaw": -55.0,
+            "pixels": {
+              "opaque_px": 44628,
+              "near_white_px": 13902,
+              "cyan_px": 2611,
+              "white_ratio": 0.311508
+            },
+            "png_sha256": "946c0682b7855467f22140151d39da48871354025185a269b710fcf3aef96ddc"
+          },
+          {
+            "label": "foe",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\own/min-own-sv-foe.png",
+            "world3d_id": 0,
+            "yaw": 55.0,
+            "pixels": {
+              "opaque_px": 70249,
+              "near_white_px": 725,
+              "cyan_px": 424,
+              "white_ratio": 0.01032
+            },
+            "png_sha256": "4e1dd508993423650a6c7418350ff4f335f64606a9a9cd4540a74d417b9ee3cf"
+          }
+        ]
+      },
+      "use_3d": true
+    },
+    "world": {
+      "apply_rows": [
+        {
+          "label": "player",
+          "mode": "world",
+          "own_after_apply": true,
+          "present": true,
+          "world_id_after_apply": -9223371998233623049
+        },
+        {
+          "label": "foe",
+          "mode": "world",
+          "own_after_apply": true,
+          "present": true,
+          "world_id_after_apply": -9223371998183291494
+        }
+      ],
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\world/min-world-live.png",
+      "mode": "world",
+      "state": {
+        "layers": [
+          {
+            "label": "player",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\world/min-world-sv-player.png",
+            "world3d_id": -9223371998233623049,
+            "yaw": -55.0,
+            "pixels": {
+              "opaque_px": 42788,
+              "near_white_px": 13197,
+              "cyan_px": 2435,
+              "white_ratio": 0.308428
+            },
+            "png_sha256": "53067e3de95dacd99d323720bac4cb8bf0e525b4e8cb52c3bf6bcc2dfe852065"
+          },
+          {
+            "label": "foe",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\world/min-world-sv-foe.png",
+            "world3d_id": -9223371998183291494,
+            "yaw": 55.0,
+            "pixels": {
+              "opaque_px": 70393,
+              "near_white_px": 937,
+              "cyan_px": 412,
+              "white_ratio": 0.013311
+            },
+            "png_sha256": "12d9f0c7a226e9a9c07a34133d38f8451b94d07e6f2b0b9b5d2ec83f6c4c0f56"
+          }
+        ]
+      },
+      "use_3d": true
+    },
+    "both": {
+      "apply_rows": [
+        {
+          "label": "player",
+          "mode": "both",
+          "own_after_apply": true,
+          "present": true,
+          "world_id_after_apply": -9223371998233623049
+        },
+        {
+          "label": "foe",
+          "mode": "both",
+          "own_after_apply": true,
+          "present": true,
+          "world_id_after_apply": -9223371998183291494
+        }
+      ],
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\both/min-both-live.png",
+      "mode": "both",
+      "state": {
+        "layers": [
+          {
+            "label": "player",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\both/min-both-sv-player.png",
+            "world3d_id": -9223371998233623049,
+            "yaw": -55.0,
+            "pixels": {
+              "opaque_px": 42788,
+              "near_white_px": 13197,
+              "cyan_px": 2435,
+              "white_ratio": 0.308428
+            },
+            "png_sha256": "53067e3de95dacd99d323720bac4cb8bf0e525b4e8cb52c3bf6bcc2dfe852065"
+          },
+          {
+            "label": "foe",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\World3D接线修复\\shots\\world3d_min\\both/min-both-sv-foe.png",
+            "world3d_id": -9223371998183291494,
+            "yaw": 55.0,
+            "pixels": {
+              "opaque_px": 70393,
+              "near_white_px": 937,
+              "cyan_px": 412,
+              "white_ratio": 0.013311
+            },
+            "png_sha256": "12d9f0c7a226e9a9c07a34133d38f8451b94d07e6f2b0b9b5d2ec83f6c4c0f56"
+          }
+        ]
+      },
+      "use_3d": true
+    }
+  },
+  "checks": {
+    "four_modes_ran": true,
+    "all_rc_zero": true,
+    "no_script_errors": true,
+    "two_layers_each": true,
+    "four_groups_eight_sv": true,
+    "all_sv_nonblank": true,
+    "none_world3d_null": true,
+    "none_own_false": true,
+    "none_both_viewports_white": true,
+    "own_world3d_getter_null_is_expected": true,
+    "own_flag_true": true,
+    "own_apply_readback_true": true,
+    "own_foe_clean": true,
+    "own_player_white": true,
+    "none_png_sha_differs": true,
+    "own_scenario_error_zero": true,
+    "both_foe_clean": true,
+    "four_live_frames": true,
+    "own_scenario_not_worse_than_both": true,
+    "post_shipped_matches_single_layer_bytewise": true,
+    "post_shipped_pixels_match_single_layer": true,
+    "post_legacy_differs_from_single_layer": true
+  },
+  "failed": [],
+  "ok": true,
+  "conclusion": "落地前：own / world / both 三种写法渲出的两层 SubViewport PNG 逐字节相同，setup() 只需一行 sv.own_world_3d = true；显式 World3D.new() 是冗余，且运行时替换会触发 scenario is null。落地后：源码自带 own，own 组即真实落生态，与 P0「一次只挂一层」单层真值逐字节相同（重叠彻底消失）；world/both 变成二次替换，不再等价属预期，相关判据点名 N/A。注意 sv.world_3d getter 在 own 组仍为 null，这是 Godot 4.5 的显式覆盖属性语义。"
+}

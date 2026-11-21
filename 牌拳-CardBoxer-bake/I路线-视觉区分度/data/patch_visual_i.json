@@ -1,0 +1,46 @@
+{
+  "before": {
+    "scripts/fighter_3d_layer.gd": "0a116003ae5d6f0646853caccd560b1b66ad8cac71dbd3f4d17a12281bd2788e",
+    "scripts/arena.gd": "c5dd4a3056a52e77f2269832bd898d8fbd03f2a61b81cc97b01d38e4c057e38e",
+    "scripts/fighter.gd": "0ad8b0c3d94e0f0bd02ac9b2566bbbcd9d3bf7ee9a0c0e82333651e9659fe1c8"
+  },
+  "backup": {
+    "scripts/fighter_3d_layer.gd": "0a116003ae5d6f0646853caccd560b1b66ad8cac71dbd3f4d17a12281bd2788e",
+    "scripts/arena.gd": "c5dd4a3056a52e77f2269832bd898d8fbd03f2a61b81cc97b01d38e4c057e38e",
+    "scripts/fighter.gd": "0ad8b0c3d94e0f0bd02ac9b2566bbbcd9d3bf7ee9a0c0e82333651e9659fe1c8"
+  },
+  "after": {
+    "scripts/fighter_3d_layer.gd": "447f30325b51cd7732bfd6aef2325740d41fed63dab7e9ee619f2e28f5fcfb12",
+    "scripts/arena.gd": "c5dd4a3056a52e77f2269832bd898d8fbd03f2a61b81cc97b01d38e4c057e38e",
+    "scripts/fighter.gd": "0ad8b0c3d94e0f0bd02ac9b2566bbbcd9d3bf7ee9a0c0e82333651e9659fe1c8"
+  },
+  "applied": [
+    "foe_visual_constants",
+    "foe_visual_state_vars",
+    "light_rows_recorded",
+    "configure_enables_foe_visual",
+    "collect_meshes_after_instantiate",
+    "apply_visual_after_lights",
+    "visual_methods_inserted",
+    "draw_scaled_only_for_foe"
+  ],
+  "eol": "LF",
+  "checks": {
+    "arena_untouched": true,
+    "fighter_untouched": true,
+    "backup_matches_before": true,
+    "eight_patches_applied": true,
+    "switch_default_off": true,
+    "foe_visual_auto_on": true,
+    "off_switch_present": true,
+    "tint_uses_duplicate": true,
+    "restore_clears_override": true,
+    "lights_restored": true,
+    "draw_scale_conditional": true,
+    "spec_values_present": true,
+    "visual_state_probe": true,
+    "G_shape_preserved": true
+  },
+  "failed": [],
+  "ok": true
+}

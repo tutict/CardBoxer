@@ -1,0 +1,8 @@
+[M1] CAUGHT rc=1 failed=['C04_smooth_weight_coverage']
+[M2] CAUGHT rc=1 failed=['C07_tear_improvement']
+[M3] CAUGHT rc=1 failed=['C11_gif_duration_conservation']
+[M4] CAUGHT rc=1 failed=['C14_sweep_monotonic']
+[M5] CAUGHT rc=1 failed=['C01_source_wiring']
+[M6] CAUGHT rc=1 failed=['C16_usable_gain_range_named']
+[M7] CAUGHT rc=1 failed=['C13_sweep_blender_shape']
+MUTATION_C 7/7 CAUGHT did_not_run=0 escaped=0 restore=7/7 clean=GREEN MUTATION_C_OK

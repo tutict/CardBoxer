@@ -1,0 +1,284 @@
+{
+  "spec_version": "1.0",
+  "date": "2026-11-08",
+  "mode": "taikou",
+  "scope": "《牌拳》回合制战斗动作表现设计（规格层）。本轮不改游戏源码、不烘新帧、不导 Godot。",
+  "source_of_truth": {
+    "state_machine": "scripts/arena.gd",
+    "performer": "scripts/fighter.gd",
+    "motion_table": "data/card_motion.json",
+    "card_defs": "scripts/card_data.gd",
+    "rules": "scripts/taikou_rules.gd",
+    "rage": "scripts/taikou_rage.gd"
+  },
+  "constants": {
+    "frame_seconds": 0.016666666666666666,
+    "tk_max_turns": 3,
+    "tk_play": 3,
+    "tk_discard_max": 3,
+    "reveal_seconds": 1.5,
+    "resolve_seconds": 1.9,
+    "reveal_frames": 90,
+    "resolve_frames": 114,
+    "hitstun_default_s": 0.26,
+    "hitstun_launch_s": 0.42,
+    "hitstun_stagger_s": 0.5,
+    "hitstun_super_s": 0.75
+  },
+  "principles": [
+    "P1 亮牌阶段不打架：reveal 只做同时亮牌的仪式，赢家攻击与输家受击一律放到 resolve，与太阁 IV「同时亮牌→比牌型→结算」同构。",
+    "P2 动作强度由牌型决定（triple>sequence>scatter），不由手牌第一张的 id 决定；现状 perform_visual(tk_player_ids[0]) 与胜负完全脱钩，必须退役。",
+    "P3 输赢决定谁播攻击、谁播受击；平局双方对峙后各吃一下，不出现赢家在播后撤、输家在播气功波。",
+    "P4 EX 是独立分支，要有蓄力与爆发两段动作，不能只换 HUD 的「EX 亮牌」文字。",
+    "P5 动作时长必须落在阶段时长内（reveal 1.5s / resolve 1.9s），播完定格到阶段结束，不留站桩空转；现有最长动作 wave 36 帧=0.6s，比 1.5s 阶段短 0.9s。",
+    "P6 复用与新增分开标注。new 项尚未烘，且 3D 骨架可用性未证（35 度驱动右臂不可见），不得假装已有资产。"
+  ],
+  "asset_ref_prefix": {
+    "reuse:card:<id>": "card_motion.json 的 cards 里已有逐帧轨道",
+    "reuse:react:<name>": "card_motion.json 的 motions 里已有受击轨道",
+    "reuse:stance": "card_motion.json 的 stance 11 关节站架",
+    "new:<id>": "尚未烘，列在 asset_plan.new，需先解决骨架可用性"
+  },
+  "events": [
+    {
+      "id": "discard.idle",
+      "phase": "discard",
+      "phase_bound": "input_wait",
+      "actors": "both",
+      "motion": "stance",
+      "asset": "reuse:stance",
+      "priority": 0,
+      "trigger": "_reset_taikou_turn",
+      "note": "等玩家弃牌，时长不定；保持站架呼吸，不播任何招式。"
+    },
+    {
+      "id": "select.focus",
+      "phase": "select",
+      "phase_bound": "input_wait",
+      "actors": "player",
+      "motion": "select_focus",
+      "asset": "reuse:card:focus",
+      "priority": 5,
+      "trigger": "_do_taikou_discard",
+      "note": "勾选手牌时的轻微凝神；复用 focus 的 windup 段并定格，不进 active/recover（该卡 active=0）。"
+    },
+    {
+      "id": "reveal.ready",
+      "phase": "reveal",
+      "phase_bound": "timed",
+      "at_s": 0.0,
+      "until_s": 0.18,
+      "actors": "both",
+      "motion": "reveal_ready",
+      "asset": "new:reveal_ready",
+      "priority": 10,
+      "trigger": "_do_taikou_reveal",
+      "note": "同时亮牌的起势；EX 时被 ex.charge 以更高优先级覆盖。"
+    },
+    {
+      "id": "reveal.present",
+      "phase": "reveal",
+      "phase_bound": "timed",
+      "at_s": 0.18,
+      "until_s": 1.15,
+      "actors": "both",
+      "motion": "reveal_present",
+      "asset": "new:reveal_present",
+      "priority": 10,
+      "trigger": "_do_taikou_reveal",
+      "note": "亮牌定格姿态，按牌型分三档（triple 最张扬 / sequence 居中 / scatter 最收敛）；0.97s 内一次播完再定格。"
+    },
+    {
+      "id": "reveal.hold",
+      "phase": "reveal",
+      "phase_bound": "timed",
+      "at_s": 1.15,
+      "until_s": 1.5,
+      "actors": "both",
+      "motion": "reveal_hold",
+      "asset": "new:reveal_hold",
+      "priority": 10,
+      "trigger": "_tick_taikou",
+      "note": "定格 0.35s 给 HUD 读牌型（_banner hold=1.4s）；不提前回站架。"
+    },
+    {
+      "id": "ex.charge",
+      "phase": "reveal",
+      "phase_bound": "timed",
+      "at_s": 0.0,
+      "until_s": 0.18,
+      "actors": "ex_side",
+      "motion": "ex_charge",
+      "asset": "new:ex_charge",
+      "priority": 20,
+      "trigger": "tk_player_ex or tk_enemy_ex",
+      "note": "怒火满槽触发 EX 的一侧专属蓄力，覆盖 reveal.ready；另一侧仍播普通起势。"
+    },
+    {
+      "id": "resolve.judge",
+      "phase": "resolve",
+      "phase_bound": "timed",
+      "at_s": 0.0,
+      "until_s": 0.12,
+      "actors": "both",
+      "motion": "judge_freeze",
+      "asset": "reuse:stance",
+      "priority": 10,
+      "trigger": "_resolve_taikou",
+      "note": "胜负判定瞬间短定格 0.12s，给撞击留视觉间隔。"
+    },
+    {
+      "id": "ex.burst",
+      "phase": "resolve",
+      "phase_bound": "timed",
+      "at_s": 0.0,
+      "until_s": 0.12,
+      "actors": "ex_side",
+      "motion": "ex_burst",
+      "asset": "new:ex_burst",
+      "priority": 20,
+      "trigger": "tk_player_ex or tk_enemy_ex",
+      "note": "EX 侧爆发闪帧，覆盖 resolve.judge；不改任何伤害数值。"
+    },
+    {
+      "id": "resolve.attack",
+      "phase": "resolve",
+      "phase_bound": "timed",
+      "at_s": 0.12,
+      "until_s": 0.72,
+      "actors": "winner",
+      "motion": "winner_followthrough",
+      "asset": "binding:card_type_binding.winner_card",
+      "priority": 30,
+      "trigger": "_resolve_taikou cmp != 0",
+      "note": "只有赢家播攻击；动作 id 由牌型绑定决定，不取 tk_*_ids[0]。0.6s 窗口，短招播完定格末帧。平局不播此事件。"
+    },
+    {
+      "id": "resolve.hit",
+      "phase": "resolve",
+      "phase_bound": "timed",
+      "at_s": 0.12,
+      "until_s": 0.72,
+      "actors": "loser",
+      "motion": "loser_react",
+      "asset": "binding:damage_tiers.react",
+      "priority": 30,
+      "trigger": "_resolve_taikou apply_hit",
+      "note": "输家受击，反应档由牌型/伤害档决定；平局时双方都播 draw 档。"
+    },
+    {
+      "id": "resolve.recover",
+      "phase": "resolve",
+      "phase_bound": "timed",
+      "at_s": 0.72,
+      "until_s": 1.5,
+      "actors": "both",
+      "motion": "recover_to_stance",
+      "asset": "reuse:react:hit_light",
+      "priority": 10,
+      "trigger": "_tick_taikou",
+      "note": "复用受击轨道尾段回到站架；现状 0.26s 硬直播完后剩 1.64s 站桩，本段把它显式占满。"
+    },
+    {
+      "id": "resolve.return",
+      "phase": "resolve",
+      "phase_bound": "timed",
+      "at_s": 1.5,
+      "until_s": 1.9,
+      "actors": "both",
+      "motion": "stance",
+      "asset": "reuse:stance",
+      "priority": 10,
+      "trigger": "_finish_taikou_turn",
+      "note": "阶段末尾 0.4s 稳定站架，保证切到下一回时无跳变。"
+    }
+  ],
+  "card_type_binding": {
+    "triple": {
+      "winner_card": "wave",
+      "winner_asset": "reuse:card:wave",
+      "loser_react": "hit_crush",
+      "loser_asset": "new:hit_crush",
+      "damage_extra": "super",
+      "present_variant": "triple",
+      "note": "最高牌型：36 帧气功波刚好填满 0.6s 攻击窗；受击走 0.75s 硬直档。"
+    },
+    "sequence": {
+      "winner_card": "cross",
+      "winner_asset": "reuse:card:cross",
+      "loser_react": "hit_heavy",
+      "loser_asset": "reuse:react:hit_heavy",
+      "damage_extra": "launch",
+      "present_variant": "sequence",
+      "note": "中档：22 帧交叉反击，播完定格末帧；受击走 0.42s 硬直档。"
+    },
+    "scatter": {
+      "winner_card": "jab",
+      "winner_asset": "reuse:card:jab",
+      "loser_react": "hit_light",
+      "loser_asset": "reuse:react:hit_light",
+      "damage_extra": "",
+      "present_variant": "scatter",
+      "note": "低档：14 帧刺拳，播完定格；受击沿用现有 0.26s 默认档。"
+    }
+  },
+  "damage_tiers": {
+    "triple": {"base": 14, "min": 15, "max": 23, "react": "hit_crush", "extra": "super"},
+    "sequence": {"base": 10, "min": 12, "max": 18, "react": "hit_heavy", "extra": "launch"},
+    "scatter": {"base": 5, "min": 6, "max": 13, "react": "hit_light", "extra": ""},
+    "draw": {"fixed": 3, "react": "hit_light", "extra": "", "both_sides": true}
+  },
+  "ex": {
+    "trigger": "Rage.is_full(rage) 且本回消耗怒火升 EX",
+    "rank_effect": "Rage.best(reveal) 把 3 张 rank 升级为最优组合；升级被采用才记 ex_boosted",
+    "motion_charge": "new:ex_charge",
+    "motion_burst": "new:ex_burst",
+    "visual_only": true,
+    "note": "EX 只改牌型与表现，不改伤害公式；现状除 HUD 文字外无任何专属动作。"
+  },
+  "outcomes": {
+    "round_player_win": {"actors": "player", "motion": "round_victory", "asset": "new:round_victory", "enemy": "new:round_defeat"},
+    "round_enemy_win": {"actors": "enemy", "motion": "round_victory", "asset": "new:round_victory", "player": "new:round_defeat"},
+    "round_draw": {"actors": "both", "motion": "round_draw_stance", "asset": "reuse:stance"},
+    "ko": {"loser": "new:ko_fall", "winner": "new:round_victory", "trigger": "_end_taikou_round / _check_ko"},
+    "three_turns_end": {"actors": "both", "motion": "round_settle", "asset": "new:round_settle", "trigger": "_finish_taikou_turn tk_turn >= TK_MAX_TURNS"}
+  },
+  "asset_plan": {
+    "reuse": [
+      "reuse:stance",
+      "reuse:card:focus",
+      "reuse:card:jab",
+      "reuse:card:cross",
+      "reuse:card:wave",
+      "reuse:react:hit_light",
+      "reuse:react:hit_heavy"
+    ],
+    "new": [
+      "new:reveal_ready",
+      "new:reveal_present",
+      "new:reveal_hold",
+      "new:ex_charge",
+      "new:ex_burst",
+      "new:hit_crush",
+      "new:round_victory",
+      "new:round_defeat",
+      "new:round_settle",
+      "new:ko_fall"
+    ],
+    "blocker": "new 项一律尚未烘；对手怪 3D 模型在 35 度驱动下右臂不可见，骨架可用性未证（见 拓扑修复探针V1）。P0 接线只允许用 reuse 项 + 现有 fighter.gd 播放器。",
+    "motion_table_note": "现有 12 卡共 228 帧、3 条受击轨道，全部按实时 windup/active/recover 相位烘；回合制没有判定帧，sample() 的 phase/progress 口径需按阶段时间重新映射。"
+  },
+  "gaps_fixed": [
+    "G1 现状 perform_visual(tk_player_ids[0]) 只播 3 张亮牌里的第 1 张，且与胜负无关 -> P2/P3 与 card_type_binding。",
+    "G2 赢家可能播后撤、输家可能播气功波 -> 赢家攻击只在 resolve，reveal 只做仪式。",
+    "G3 reveal 1.5s / resolve 1.9s 里动作只占 0.17~0.6s，其余站桩 -> events 用定格/恢复段显式占满。",
+    "G4 apply_hit 固定传 extra=\"\"，三同/三连/散牌/平局四种伤害共用 0.26s hit_light -> damage_tiers 分档 + damage_extra。",
+    "G5 弃牌/选牌/EX/三回结束/局结束/KO 全靠 HUD 文字 -> events 与 outcomes 全覆盖。"
+  ],
+  "integration_notes": {
+    "arena.gd:652-655": "perform_visual 改由牌型绑定驱动，不再取 tk_*_ids[0]；reveal 阶段只播仪式动作。",
+    "arena.gd:671,681,691-692": "apply_hit 的 extra 改传 card_type_binding.damage_extra；平局保持默认档。",
+    "fighter.gd:463-509": "extra 分支已有 0.26/0.42/0.5/0.75 四档硬直，不需要改 fighter.gd。",
+    "boundary": "以上均为接线方案，本轮一行源码都不改；规格成立与否由 verify_spec.py 判据证明，与是否接线无关。"
+  }
+}

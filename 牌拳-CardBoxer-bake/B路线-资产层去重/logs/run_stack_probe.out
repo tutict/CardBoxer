@@ -1,0 +1,15 @@
+RUN 4.848s rc=0 errors=0
+MATERIAL_SLOTS [{"albedo_color": [1.0, 1.0, 1.0], "albedo_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901.png", "class": "StandardMaterial3D", "emission_texture": "", "mesh": "foe_HI_skinned", "metallic": 1.0, "metallic_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png", "normal_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901_normal.png", "roughness": 1.0, "roughness_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png", "surface": 0}]
+LIGHTS 4 [1.89999997615814, 0.75, 0.550000011920929, 0.949999988079071]
+CHECK rc True
+CHECK no_script_errors True
+CHECK no_payload_error True
+CHECK five_states True
+CHECK final_yaw_is_neg55 True
+CHECK all_png_ok True
+CHECK glb_is_foe True
+CHECK role_is_foe True
+CHECK four_lights True
+CHECK one_mesh True
+CHECK slots_readback True
+STACK_PROBE_OK

@@ -1,0 +1,9 @@
+PASS  all_copies_byte_identical
+PASS  wipe_box_is_pure_background_not_art
+PASS  watermark_actually_removed
+PASS  board_size_exact
+PASS  detail_size_exact
+PASS  board_not_blank
+PASS  detail_not_blank
+PASS  six_crops_defined_and_distinct
+{"verdict": "FOE_DESIGN_OK", "wipe": {"box": [881, 1436, 1024, 1536], "fill_rgb": [202, 199, 197], "dark_ratio_before": 0.0, "dark_ratio_after": 0.0, "off_fill_before": 0.17224, "off_fill_after": 0.0}, "board": {"file": "对手怪V1-2D设计板.png", "size": [1800, 1500], "bytes": 1569615, "colors_120": 3082, "shown_crops": ["head", "crystal", "chest", "boots"]}, "detail": {"file": "对手怪V1-细节六格.png", "size": [1800, 1180], "bytes": 1452322, "colors_120": 3582}}

@@ -1,0 +1,17 @@
+CLIP clipboard-2026-11-07T08-20-33-060Z-2a2e87f1.png size=(208, 222) mode=RGBA
+CAND artifact_02.png size=(512, 512) mode=RGBA
+CAND zzz-front.png size=(768, 768) mode=RGBA
+CAND zzz-angle25.png size=(768, 768) mode=RGBA
+CAND 立绘-front.png size=(768, 768) mode=RGB
+CAND 立绘-angle25.png size=(768, 768) mode=RGB
+CAND ZZZ-四视角.png size=(804, 864) mode=RGB
+CAND 造型三版对照.png size=(1744, 610) mode=RGB
+--- mean_abs_diff (lower = closer) ---
+   6.069  artifact_02.png
+  13.295  zzz-angle25.png
+  15.572  zzz-front.png
+  82.224  造型三版对照.png
+ 170.328  ZZZ-四视角.png
+ 198.717  立绘-angle25.png
+ 198.765  立绘-front.png
+BEST_MATCH artifact_02.png

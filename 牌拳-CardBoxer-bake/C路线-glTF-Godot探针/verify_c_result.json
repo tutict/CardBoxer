@@ -1,0 +1,132 @@
+{
+  "checks": [
+    {
+      "name": "C-01_baseline_inputs_intact",
+      "ok": true,
+      "detail": "checked=10 drift=[] missing=[]"
+    },
+    {
+      "name": "C-02_game_source_unchanged",
+      "ok": true,
+      "detail": "checked=105 drift=[]"
+    },
+    {
+      "name": "C-03_source_blend_single_truth",
+      "ok": true,
+      "detail": "hashes={'baseline': '88dca6d28aa3', 'a_build': '88dca6d28aa3', 'export_report': '88dca6d28aa3', 'structure': '88dca6d28aa3', 'inspection': '88dca6d28aa3'}"
+    },
+    {
+      "name": "C-04_a_route_guard_still_green",
+      "ok": true,
+      "detail": "total=26 passed=26 failed=[]"
+    },
+    {
+      "name": "C-05_blend_structure_diagnosis",
+      "ok": true,
+      "detail": "objects=6 bones=13 actions=0 packed4096=3 hi=64024 shell=20204"
+    },
+    {
+      "name": "C-06_gltf_exporter_available",
+      "ok": true,
+      "detail": "poll=True props=16 missing=[]"
+    },
+    {
+      "name": "C-07_glb_files_intact",
+      "ok": true,
+      "detail": "exports=4 bad=[]"
+    },
+    {
+      "name": "C-08_foe_full_glb_shape",
+      "ok": true,
+      "detail": "meshes=2 skins=1 anims=0 imgs=3 skinned=1 verts=84263"
+    },
+    {
+      "name": "C-09_highpoly_has_no_skin_attrs",
+      "ok": true,
+      "detail": "highpoly_attrs=['NORMAL', 'POSITION', 'TEXCOORD_0'] shell_attrs=['JOINTS_0', 'NORMAL', 'POSITION', 'TEXCOORD_0', 'WEIGHTS_0']"
+    },
+    {
+      "name": "C-10_textures_not_reencoded",
+      "ok": true,
+      "detail": "src=39097625 glb=39097625 share=0.9108"
+    },
+    {
+      "name": "C-11_pbr_channels_all_present",
+      "ok": true,
+      "detail": "material={'name': 'Material.001', 'baseColorTexture': 1, 'metallicRoughnessTexture': 2, 'normalTexture': 0, 'occlusionTexture': None, 'alphaMode': None}"
+    },
+    {
+      "name": "C-12_skin_joint_count_accounting",
+      "ok": true,
+      "detail": "glb_joints=14 blender_bones=13 godot_bones=14"
+    },
+    {
+      "name": "C-13_animations_nowhere",
+      "ok": true,
+      "detail": "blend_actions=0 glb_anims=[0, 0, 0, 0] godot_players=[0, 0, 0]"
+    },
+    {
+      "name": "C-14_gltf_is_static_snapshot",
+      "ok": true,
+      "detail": "max_abs_delta=0.187166 vertex_count_equal=False stance/posed skins&anims=0"
+    },
+    {
+      "name": "C-15_editor_import_succeeded",
+      "ok": true,
+      "detail": "rc=0 imports=[{'file': 'foe-full.glb.import', 'exists': True, 'bytes': 1037}, {'file': 'foe-stance.glb.import', 'exists': True, 'bytes': 1043}, {'file': 'foe-proxy-rig.glb.import', 'exists': True, 'bytes': 1051}] imported=12 files / 44728238 B seconds=16.835"
+    },
+    {
+      "name": "C-16_all_targets_load_as_packedscene",
+      "ok": true,
+      "detail": "classes=['PackedScene', 'PackedScene', 'PackedScene'] ok=[True, True, True]"
+    },
+    {
+      "name": "C-17_foe_full_scene_tree",
+      "ok": true,
+      "detail": "types={'MeshInstance3D': 2, 'Node3D': 2, 'Skeleton3D': 1}"
+    },
+    {
+      "name": "C-18_godot_material_textures_4096",
+      "ok": true,
+      "detail": "materials=2 classes=['StandardMaterial3D', 'StandardMaterial3D']"
+    },
+    {
+      "name": "C-19_skeleton_binding_split",
+      "ok": true,
+      "detail": "bound=['a_continuous_shell'] unbound=['node_0']"
+    },
+    {
+      "name": "C-20_pose_writable_but_highpoly_unbound",
+      "ok": true,
+      "detail": "local_changed=True bound=1 unbound=1 global_refresh=False"
+    },
+    {
+      "name": "C-21_cost_boards_nonblank",
+      "ok": true,
+      "detail": "boards=['C-链路成本账.png', 'C-四口径对照.png'] bad=[]"
+    },
+    {
+      "name": "C-22_source_wiring",
+      "ok": true,
+      "detail": "needles=9 missing=[]"
+    },
+    {
+      "name": "C-23_isolation_and_clean_logs",
+      "ok": true,
+      "detail": "game_glb=[] err_hits=[('godot_editor_import.log', 0), ('godot_inspect_probe.log', 0), ('godot_pose_probe.log', 0)] project=probe_project"
+    },
+    {
+      "name": "C-24_not_a_production_import",
+      "ok": true,
+      "detail": "game_drift=0 game_glb=0 project=probe_project"
+    },
+    {
+      "name": "C-25_import_volume_same_order",
+      "ok": true,
+      "detail": "glb=46755712 imported=44728238 ratio=0.9566 wall=17.879s"
+    }
+  ],
+  "total": 25,
+  "passed": 25,
+  "failed": []
+}

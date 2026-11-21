@@ -1,0 +1,17 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+F3D_READY bones=13 cards=15
+F3D_FOE_READY bones=13
+CONTACT jab dx=0.0 fist=(773.9069, 389.2882) chest=(753.7303, 427.5169)
+CONTACT cross dx=0.16815185546875 fist=(772.3397, 393.3922) chest=(753.7303, 427.5169)
+CONTACT uppercut dx=0.0 fist=(773.9069, 332.0995) chest=(753.7303, 427.5169)
+CONTACT sweep dx=0.3758544921875 fist=(763.808, 409.8856) chest=(753.7303, 427.5169)
+SWEEP FOOT (794.505, 519.0052) defender base=(759.0, 520.0) spark=[{ "kind": "text", "pos": (758.1299, 417.36), "text": "格挡 -1", "t": 0.6, "life": 0.72, "color": (0.99, 0.73, 0.33, 1.0) }]
+CONTACT throw dx=0.734130859375 fist=(808.2271, 406.6312) chest=(775.8428, 426.2237)
+CONTACT guard_break dx=0.0 fist=(810.2154, 393.2796) chest=(775.8428, 426.2237)
+CONTACT armored_heavy dx=0.0 fist=(773.9069, 332.0995) chest=(753.7303, 427.5169)
+CONTACT pursuit dx=0.0 fist=(773.9069, 389.2882) chest=(753.7303, 427.5169)
+FORMULA LINES ["招式10 → 三同+4 → 蓄势+3 → 追击+3 → ", "确反+3 → EX牌型×1.35 → 三重奏+2 → 掠", "影+3 → 趁隙×1.25 → 格挡×0.20"]
+REVIEW EDGE CHECK failures=[]

@@ -1,0 +1,37 @@
+RECOMPUTE joint 6248 disagree 0 diffs 230 frames 42 endpoint 0.0
+RECOMPUTE mf {'wave': 60.823, 'cross': 36.0, 'jab': 80.2247, 'sweep': 78.6384, 'throw': 54.9181, 'uppercut': 71.4703}
+RECOMPUTE delta bones ['forearm_b', 'forearm_f', 'upperarm_b', 'upperarm_f'] frames 284
+RECOMPUTE probe rows 30 delta_bad 0 mf_bad 0 marker_bad 0 png_missing 0
+RECOMPUTE pixel keys 40 mismatch 0
+RECOMPUTE tear {'baseline': {'poses': 284, 'worst_p999_m': 0.042681, 'mean_p999_m': 0.015717, 'frames_over_anchor': 0}, 'pose_p5': {'poses': 284, 'worst_p999_m': 0.047884, 'mean_p999_m': 0.016817, 'frames_over_anchor': 0}} cost 0.005203 headroom 0.045766
+CHECK readback_report_self_consistent True
+CHECK probe_report_self_consistent True
+CHECK tear_report_self_consistent True
+CHECK apply_report_self_consistent True
+CHECK all_checks_15_of_15_independently True
+CHECK recommended_case_all_hard_constraints True
+CHECK three_tables_6248_sync_independent True
+CHECK jab_identical_to_baseline_independent True
+CHECK diffs_confined_to_wave_cross_four_arms_independent True
+CHECK endpoints_zero_drift_independent True
+CHECK changed_frames_42_independent True
+CHECK mf_thresholds_met_independent True
+CHECK all_attack_mf_peaks_in_active_independent True
+CHECK mf_direct_recompute_matches_axis_metrics True
+CHECK delta_changes_only_four_arm_bones_independent True
+CHECK probe_rows_delta_matches_formula_independent True
+CHECK probe_rows_mf_matches_formula_independent True
+CHECK probe_marker_matches_mode_independent True
+CHECK probe_sv_pngs_all_present_independent True
+CHECK probe_pixel_diffs_recomputed_match_report True
+CHECK edited_pixel_diffs_all_nonzero True
+CHECK stance_jab_pixels_zero_recomputed True
+CHECK reapplied_pixels_zero_recomputed True
+CHECK tear_568_rows_recomputed_match_report True
+CHECK tear_within_anchor_and_headroom_2x_cost True
+CHECK three_table_sha_match_apply_report True
+CHECK backup_sha_match_apply_report True
+CHECK other_11_watched_files_sha_unchanged True
+CHECK four_boards_present_and_dimensions_ok True
+CHECK spec_json_has_r1_and_r2_revisions True
+VERIFY_POSE_P5_OK 30/30

@@ -1,0 +1,33 @@
+{
+  "verdict": "MUTATION_SHOWCASE_OK",
+  "cases": [
+    {
+      "name": "M1",
+      "caught": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "all_img_src_exist_and_relative"
+      ],
+      "did_not_run": false,
+      "restore": true,
+      "error": ""
+    },
+    {
+      "name": "M2",
+      "caught": true,
+      "target_red": true,
+      "sentinel_green": true,
+      "red": [
+        "copies_match_sources_byte_for_byte"
+      ],
+      "did_not_run": false,
+      "restore": true,
+      "error": ""
+    }
+  ],
+  "clean": true,
+  "caught": 2,
+  "restored": 2,
+  "did_not_run": 0
+}

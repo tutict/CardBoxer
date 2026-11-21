@@ -1,0 +1,134 @@
+《牌拳》A 路线：V4-02 外观层落地（2026-11-06）
+================================================================
+
+一、目标与边界
+----------------------------------------------------------------
+工程师「走A路线」：给现有 11 关节做外观层，不换渲染骨架。
+造型基准 = `角色建模/琉音-拳手设定-V4-02.png`：
+黑白「白切黑」外层、黑交领、红中国结 / 腰带、金扣、双环发髻、
+厚底鞋、全覆盖战斗服、俏皮半睁眼。
+
+不改的东西（逐条核过）：
+  判定与命中框、HUD、AI、卡组、228 帧动作表、三回制、怒火槽、背景图。
+  旧自绘剪影**一行未删**，`SKIN_V2 = false` 整层回退。
+  造型按中性全覆盖处理，不画露肩 / 露腰 / 肚兜 / 丝袜特写。
+
+二、改动清单
+----------------------------------------------------------------
+| 文件 | 改动 |
+|---|---|
+| scripts/fighter.gd（改） | +2 常量（`SkinSpec` preload / `SKIN_V2`）；`_draw()` 用 if/else 包住原绘制；+9 个 `_skin_*` 绘制函数 |
+| scripts/fighter_skin.gd（新） | 规格常量 + 12 部件清单 + `spec()` / `part_names()`；只放数据不画东西 |
+| tests/fighter_skin_check.gd（新） | 70 项接线守卫 |
+| orig/pre-skin/fighter.gd（备份） | sha256 `5fa4f504…`，与改动前逐字节一致 |
+
+`fighter_skin.gd` 拆成独立规格模块的原因：外观数值要能被纯逻辑自检
+点名断言，而 CanvasItem 的 `draw_*` 只能在 `_draw()` 期间调用。
+
+三、承重判据与变异验证
+----------------------------------------------------------------
+守卫四组：
+  1) 规格色值 + 12 部件清单（**连长度一起断言**，只 has() 会让删件通过）
+  2) 接线：`SKIN_V2 == true`、源码里 `_draw_skin_v2` 出现恰好 2 次
+     （1 定义 + 1 调用）、调用落在开关之后、`Fighter` 真有这些方法
+  3) 回退：旧 `_draw_limb/_draw_torso/_draw_head/_draw_glove/_draw_foot` 仍在
+  4) 判定层：动作表 12 卡全在、`_build_pose()` 键集仍是 11 关节 + lean
+
+变异 3/3 CAUGHT，每个变异体语法都成立、无 Parse Error：
+  A `SKIN_V2 true → false`              → 2 条红（开关断言 + 源码断言）
+  B `_draw()` 里的调用 → `pass`          → 3 条红（调用 / 次数 / 位置）
+  C PARTS 删掉 `chinese_knot`            → 3 条红（长度 / 点名 / spec 同长）
+还原逐字节 + sha256 证明：`fighter.gd c453d735…`、`fighter_skin.gd fda41d2d…`。
+锚点失配报 DID NOT RUN 并计入未证明；汇总把 SKIPPED 算 FAIL。
+
+四、引擎内截帧 + 像素取证（真正证明「画出来了」）
+----------------------------------------------------------------
+两张同场景、同时间点（2.0s）、真实 GL 上下文（非 headless），
+rc=0 / `OpenGL API` 在日志里 / SCRIPT ERROR=0 / PNG > 100KB。
+`外观层-回退.png` 由临时 `SKIN_V2=false` 产生，finally 逐字节还原 + sha256。
+
+第一版像素取证 **FAIL 4 条**，两个根因都值得记：
+  ① 宽泛颜色桶把旧剪影的橙躯干误判成「金」、暗橙肢体误判成「红」，
+     而且 `amber_body` 排在 `gold` 后面永远命中不了。
+     改成按字面常量 RGB 近邻匹配（tol=28），且**只统计变化过的像素**，
+     共享背景自动抵消。
+  ② bot 每局重洗手牌 → 卡牌区 y=684 也有差异，整帧 diff bbox 被污染。
+     统计量限定在角色带 (250,280,1030,545)，避开 HUD 与卡牌行。
+  和血条 V2 那轮同源：**合并统计会骗人，判据要钉在同一片区域**。
+
+最终 EVIDENCE OK 9/9：
+  角色带变化 24558 / 206700 px（11.9%），diff 宽 544 覆盖左右两人
+  白 +10108 / 墨黑 +827 / 红 +631 / 金 +1022
+  旧橙 + 青躯干 14764 → 733（被白外套盖住）
+  旧剪影白色 = 0
+
+五、全量回归
+----------------------------------------------------------------
+10 套自检 ALL GREEN（明细见 `自检汇总.txt`）：
+  combo 8/8 · motion PASS · pose PASS · duel PASS · reach PASS · feet PASS
+  rules 90/90 · flow 51/51 · rage 1482/1482 · skin 70 项 PASS
+编辑器导入 exit=0 / SCRIPT ERROR=0（改名后重跑过）。
+
+收尾复核（证明工作树就是被验收那棵，不是「上次通过」）：
+  把 10 套自检在**当前磁盘**上原样复跑一遍 → 10/10 `ALL GREEN`；
+  `自检汇总.txt` 复跑后 sha256 仍 `a4377fd2…`（重写但内容一致）。
+  变异残留：`SKIN_V2 := false` 0 处、`_draw_skin_v2` 恰好 2 次、
+  `chinese_knot` 1 处、`_draw()` 内 `pass` 0 处。
+  `fighter.gd.diff` 重新生成后与归档 `cmp` 一致。
+
+六、踩的坑（跨会话）
+----------------------------------------------------------------
+* **GDScript 常量不能叫 `Skin`**：那是 Godot 内置的骨骼蒙皮类，同名报
+  `The member "Skin" shadows a native class`，导致 fighter / arena / hud /
+  ai_controller 整棵脚本树编译失败。改名 `SkinSpec`。
+  注意：这次编辑器导入 **exit=0 却带 6 条 SCRIPT ERROR** —— 必须 grep，
+  只看退出码会把「游戏根本起不来」当成通过。
+* 截帧必须带真实 GL：`--headless` 下 `RenderingServer.frame_post_draw`
+  不推进，`_maybe_capture()` 的 await 永久挂起。
+* `--quit-after N` 按主循环迭代不按秒：非 headless 高帧率 900 帧 ≈ 1.8s，
+  截 2.0s 的点会被提前退出。用 6000 作挂死保险，实际退出靠截帧后 quit()。
+* 单点截帧比多点稳（沿用上一轮结论）。
+* **归档 diff 不能直接用 `diff -u /dev/null <file>`**：`/dev/null` 的 mtime 是
+  「命令运行的当前时间」，会写进 diff 头部，导致每次复算都 MISMATCH，
+  但内容其实一字未变（本轮实测 8276 B 两份、仅 2 行时间戳不同）。
+  新增文件的归档统一用 `--label /dev/null --label <相对路径>` 固定头部；
+  两侧都是真实文件时 mtime 稳定，不必加。复核命令见第六节末。
+
+七、故意没做 / 已知问题
+----------------------------------------------------------------
+* 没改 HUD、判定、动作表；没做 Blender 精灵图集（B 路线）；
+  没把琉音的「猜拳 / 裁决官」做成玩法语言（下一步候选）。
+* 卡面描述文字溢出仍是 P1（上一轮已登记，不是本轮引入），截图里可见。
+* 外观层是 2D 自绘，不是 3D 模型；环刃只是腰侧两道弧线挂件。
+* 阵营色仍由 `PALETTE_PLAYER/ENEMY` 控制，拳套是唯一随阵营变色的部件。
+* `SKIN_V2` 是硬开关，没有做运行时配置。
+
+八、回退方式
+----------------------------------------------------------------
+  最小：`fighter.gd` 的 `const SKIN_V2 := true` 改 false，重启即回旧剪影。
+  彻底：拷回 `orig/pre-skin/fighter.gd`，删两个新增 .gd（含 .uid）。
+
+九、文件清单与 sha256
+----------------------------------------------------------------
+  源码
+    c453d735077b3f61053f999eb1be283de503ddd9ee0e77ccf3b4d638b86ef41a  scripts/fighter.gd
+    fda41d2da24f2a37896e6d3223482cb96f56c8aad45d020bb02c4e804b445c41  scripts/fighter_skin.gd
+    0b408724b8e968c34ce6164c20f2adb35fc099072ec9a9db4a365bbff1f9163d  tests/fighter_skin_check.gd
+    5fa4f50455ae40715ec3870ce0bdf0e37c1505d18eb32e5e8b42c14fcee80151  orig/pre-skin/fighter.gd
+  归档（外观层/）
+    c392a555d336dc2fc6f380e674e57b4230912481bb6aaeed184c5b792575fb11  外观层-开启.png
+    c8c18f52364dc896268c76e550df35a44fcf73199ebc55a503b78a56c8a527ff  外观层-回退.png
+    9af2421fda1d7e5a8c1be01787bbaf532ff5f81be23ae0c37fc0f203eb788fc3  capture_skin.py
+    5e533b3022ceff812ddc320fbbe2d7bd137104bf0eb57d1fcb04c8a5d4de6a7e  mutation_check.py
+    e3fd7d5ebb29e8248153ea8d85f805a88a3dd46d2f2373a2a17cb12bf11f7b4a  skin_evidence.py
+    fb0f538fd004831beadb2a86906cff81dcd4202c42fb3e734cad0bbdb56be603  run_all_checks.py
+    a4377fd2820bce951d7ad03d12ddfc3324b1d7ac86a0e416d6e81b50a14bd216  自检汇总.txt
+    cf6f2bae27a333d70329b91987aa02a94b43fde90412632a18a45b628cac6225  fighter.gd.diff
+    36972e96f0df03addf5222ec8e035e68992c6930568dd505f555605a2160cceb  new-files.diff
+    本文件：外观层-验证记录.txt
+
+可复算命令（头部已用 --label 固定，重复生成 sha256 不变）：
+  diff -u --label /dev/null --label scripts/fighter_skin.gd \
+      /dev/null scripts/fighter_skin.gd
+  diff -u --label /dev/null --label tests/fighter_skin_check.gd \
+      /dev/null tests/fighter_skin_check.gd

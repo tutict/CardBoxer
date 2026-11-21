@@ -1,0 +1,11 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+IMPORTED BOOT VERTICES 3001/2956
+GEOMETRY player guard_z=0.32988458871841/0.24242126941681 jab_z=0.79912269115448 cross_z=0.79668551683426 sweep_z=0.78999996185303
+GUARD player hand_above_shoulder=0.1718567609787/0.18046343326569 elbow_x=0.13161736726761/-0.17781980335712
+IMPORTED BOOT VERTICES 3204/3146
+GEOMETRY foe guard_z=0.38577055931091/0.38966581225395 jab_z=0.91766309738159 cross_z=0.93252021074295 sweep_z=0.67000007629395
+GUARD foe hand_above_shoulder=0.14974248409271/0.13675594329834 elbow_x=0.16222107410431/-0.18427932262421
+NATIVE MOTION CHECK: PASS failures=0 sampled=2966 support_max_m=0.00257098674774
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)

@@ -1,0 +1,6 @@
+CHECK all_watch_files_exist True
+CHECK backup_exists True
+CHECK backup_matches_source True
+CHECK two_glbs_present True
+CHECK asset_count_sane True
+BASELINE_OK files= 22 src_sha= 6504139c6c81

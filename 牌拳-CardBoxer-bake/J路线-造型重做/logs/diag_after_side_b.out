@@ -1,0 +1,7 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\J路线-造型重做\diag_after_side_b.py:26: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  px = list(im.getdata())
+COUNTS {'red': 0, 'gray': 68325, 'other': 0, 'transparent': 423195}
+BBOX {'red': [640, 768, 0, 0], 'gray': [188, 165, 451, 731]}
+STRIP {'red': 0, 'gray': 18449, 'other': 0}
+VERDICT gray=尚有未删的细长保留壳
+AFTER_SIDE_DIAG_OK

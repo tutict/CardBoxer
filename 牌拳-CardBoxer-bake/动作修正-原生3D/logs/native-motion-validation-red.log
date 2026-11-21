@@ -1,0 +1,12 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+GEOMETRY player guard_z=0.42917954921722/0.32513356208801 jab_z=0.78306484222412 cross_z=0.77973175048828 sweep_z=0.78999990224838
+GEOMETRY foe guard_z=0.4970078766346/0.3853922188282 jab_z=0.90378153324127 cross_z=0.91803354024887 sweep_z=0.67000007629395
+FAIL: reject invalid missing full-set clip with diagnostic
+FAIL: reject invalid stance duration with diagnostic
+FAIL: reject invalid open card endpoint with diagnostic
+FAIL: reject invalid open looping walk endpoint with diagnostic
+FAIL: reject invalid missing authored contact key with diagnostic
+NATIVE MOTION CHECK: FAIL failures=5
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)

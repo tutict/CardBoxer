@@ -1,0 +1,77 @@
+{
+  "godot_executable": "C:\\Users\\tutic\\Documents\\godot\\Godot_v4.5-stable_win64_console.exe",
+  "probe_project": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\女角色3D核查\\probe_project_player",
+  "main_scene": "res://scenes/player_showcase.tscn",
+  "source_glb": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\E路线-玩家3D绑骨\\player-full.glb",
+  "source_glb_sha256": "68fbb0c19f5faabe407dba396fb021f1d3259eef725217cfaa0450acdbe12493",
+  "copy_identical": true,
+  "editor_import": {
+    "seconds": 3.938,
+    "returncode": 0,
+    "import_file": true
+  },
+  "render": {
+    "seconds": 4.235,
+    "returncode": 0,
+    "has_opengl": true,
+    "script_errors": 0,
+    "headless": false
+  },
+  "scene": {
+    "init_before_ready": {
+      "hidden_proxy_shell": 0,
+      "visible_highpoly": 1
+    },
+    "after_ready": {
+      "hidden_proxy_shell": 1,
+      "visible_highpoly": -1
+    },
+    "at_capture": {
+      "hidden_proxy_shell": 1,
+      "visible_highpoly": 1
+    },
+    "hidden_proxy_shell": 1,
+    "visible_highpoly": 1,
+    "ready_ok": true
+  },
+  "views_requested": "ALL",
+  "pngs": [
+    {
+      "name": "front",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\女角色3D核查\\shots\\godot-player-front.png",
+      "exists": true,
+      "bytes": 428009,
+      "w": 900,
+      "h": 1100,
+      "save_error": 0
+    },
+    {
+      "name": "angle35",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\女角色3D核查\\shots\\godot-player-angle35.png",
+      "exists": true,
+      "bytes": 438122,
+      "w": 900,
+      "h": 1100,
+      "save_error": 0
+    },
+    {
+      "name": "side90",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\女角色3D核查\\shots\\godot-player-side90.png",
+      "exists": true,
+      "bytes": 285063,
+      "w": 900,
+      "h": 1100,
+      "save_error": 0
+    },
+    {
+      "name": "back",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\女角色3D核查\\shots\\godot-player-back.png",
+      "exists": true,
+      "bytes": 288621,
+      "w": 900,
+      "h": 1100,
+      "save_error": 0
+    }
+  ],
+  "ok": true
+}

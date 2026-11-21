@@ -1,0 +1,46 @@
+{
+  "boards": [
+    {
+      "file": "D-引擎内六视角.png",
+      "w": 1800,
+      "h": 1580,
+      "bytes": 1236419
+    },
+    {
+      "file": "D-三方对照.png",
+      "w": 1660,
+      "h": 1120,
+      "bytes": 573206
+    },
+    {
+      "file": "D-尺度可读性.png",
+      "w": 1660,
+      "h": 860,
+      "bytes": 391234
+    },
+    {
+      "file": "D-侧视退化诊断.png",
+      "w": 1660,
+      "h": 1060,
+      "bytes": 567887
+    }
+  ],
+  "game_character_px": 172.0,
+  "scale_steps": [
+    1100,
+    344,
+    172,
+    96
+  ],
+  "views": [
+    "front",
+    "angle35",
+    "side90",
+    "back",
+    "upper",
+    "wide"
+  ],
+  "glb_animations": 0,
+  "unbound_highpoly_meshes": 1,
+  "mesh_count": 2
+}

@@ -1,0 +1,77 @@
+{
+  "verdict": "FOE_BUILD_VERIFIED",
+  "passed": 14,
+  "total": 14,
+  "checks": [
+    {
+      "name": "image_probe_no_resubmit_and_done",
+      "ok": true,
+      "detail": "job=1510835580992241664 status=DONE artifacts=4"
+    },
+    {
+      "name": "input_image_is_approved_design",
+      "ok": true,
+      "detail": "sha=e8edf4871f21 prompt=None"
+    },
+    {
+      "name": "glb_signature_and_structure_honest",
+      "ok": true,
+      "detail": "64024 verts / 79998 tris / 2809 shells / 0 skins"
+    },
+    {
+      "name": "fbx_has_no_rig_data",
+      "ok": true,
+      "detail": "tokens={LimbNode:0, Deformer:0, Skin:0, Skeleton:0, BindPose:0, Animation:0}"
+    },
+    {
+      "name": "blender_normalized_to_game_bridge",
+      "ok": true,
+      "detail": "z=[0.0, 1.72] scale=1.695408"
+    },
+    {
+      "name": "armature_13_bones_full_rigid_coverage",
+      "ok": true,
+      "detail": "bones=13 coverage=1.0 assigned=64024/64024"
+    },
+    {
+      "name": "blend_file_is_real_editable_asset",
+      "ok": true,
+      "detail": "对手怪V1.blend 42300798 B head=28b52ffd reopened_by_blender=True"
+    },
+    {
+      "name": "five_renders_valid_and_nonblank",
+      "ok": true,
+      "detail": "shots=5 files=['foe-front.png', 'foe-angle25.png', 'foe-angle55.png', 'foe-back35.png', 'foe-upper.png']"
+    },
+    {
+      "name": "camera_params_match_player_v4b",
+      "ok": true,
+      "detail": "front:0/0.86/2.3; angle25:25/0.86/2.3; angle55:55/0.86/2.3; back35:-35/0.86/2.3; upper:0/1.24/1.0"
+    },
+    {
+      "name": "auto_weights_honestly_zero",
+      "ok": true,
+      "detail": "covered=0/64024"
+    },
+    {
+      "name": "deform_probe_shows_motion_and_caveat",
+      "ok": true,
+      "detail": "moved=10780 max=0.47922 m"
+    },
+    {
+      "name": "silhouette_measured_and_shortfall_not_hidden",
+      "ok": true,
+      "detail": "lum=0.5746 aspect=0.9713 shoulder=1.1561 verdict=SILHOUETTE_CONTRAST_SHORT"
+    },
+    {
+      "name": "compare_board_valid",
+      "ok": true,
+      "detail": "玩家V4b-对手怪3D-对照.png 468343 B"
+    },
+    {
+      "name": "game_sources_and_engine_untouched",
+      "ok": true,
+      "detail": "newer=[] no_engine_files=True"
+    }
+  ]
+}

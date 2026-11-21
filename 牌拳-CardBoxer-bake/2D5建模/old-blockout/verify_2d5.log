@@ -1,0 +1,13 @@
+CHECKS 10/10
+PASS pngs_valid: 8/8 PNG, 512x512, manifest sizes match
+PASS renders_nonempty: all 8 renders have >8000 non-white pixels
+PASS repeat_pixels_identical: ImageChops.difference bbox=None (None == pixel-identical)
+PASS repeat_sha_diff_is_metadata_only: chunk types equal=True; IDAT equal=True; tEXt differs=True; bytes 146511 vs 146511
+PASS pose_frames_distinct: min pairwise changed pixels = 27404; stance-vs-motion = jab_impact.png=40515, sweep_impact.png=57699, throw_impact.png=41072, hit_heavy_mid.png=27404
+PASS palette_and_angle_live: palette changed px=4403; angle12 changed px=15720
+PASS manifest_joints_traceable: 8/8 recomputed from baked2.json; 2d5-stance.png:OK, 2d5-jab_impact.png:OK, 2d5-sweep_impact.png:OK, 2d5-throw_impact.png:OK, 2d5-hit_heavy_mid.png:OK, 2d5-stance_enemy.png:OK, 2d5-stance_angle12.png:OK, 2d5-stance_repeat.png:OK
+PASS table_sha256_matches: manifest=b6a7f8435b08... disk=b6a7f8435b08...
+PASS ortho_coordinate_bridge: shoe centers L=131.0 R=289.0 span=158.0px (n=3036); predicted from stance f_foot/b_foot = 157.5px; tol=25px
+PASS lighting_fix_effective: run1 dark=268 final dark=6255; changed px=36767
+REPORTS {"shoe_span_px": 158, "shoe_span_predicted_px": 157.5, "face_region_155_330_100_185": {"warm_skin": 2606, "dark": 306, "gold": 1343}, "face_readable_by_eye": "two half-lidded dark eyes + mouth line + gold hair clip visible; D_FACE=-0.155 moved face details in front of the head sphere"}
+MODEL_2D5_VERIFIED

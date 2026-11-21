@@ -1,0 +1,264 @@
+《牌拳 / CARD BOXER》3D 建模验证记录  ——  B 路线「真骨架 + 蒙皮 3D 角色」P0
+工程师：「我想做B」（承接 2.5D V3 验证记录第七节的 B 选项）
+日期：2026-11-07  工具：Blender 5.2.3 LTS 便携版（D:\Tools\Blender-5.2.3\...）
+目录：C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D建模\
+边界：产物只在 bake 目录；未导入 Godot、未改游戏源码、未渲 228 帧图集、未做贴图
+
+====================================================================
+一、结论先行
+====================================================================
+交付一个**真 3D 角色**：13 骨 Armature + 13 段椭圆/圆截面蒙皮体块 +
+41 个刚性配件，由游戏自己的 baked2.json 逐帧驱动；8 张 512² 代表帧、
+一张 55° 侧视图、.blend、manifest、rig_stats.json、可复算验收。
+
+verify_3d.py **16/16 PASS / MODEL_3D_VERIFIED**；
+mutation_3d.py **3/3 CAUGHT**（逐字节还原 sha256 一致）。
+坐标桥仍成立：鞋距实测 **157.0 px** vs 预测 **157.5 px**。
+游戏目录 0 文件改动。
+
+**判据边界**：16/16 只证明骨架真实、蒙皮接线、数据驱动、确定性、坐标
+正确、卡通渲染接线、与 2.5D 不同。**不证明好看、不证明逐帧几何无自交、
+不证明 glTF 能导出、不证明能进 Godot**。B 的 P0 成立，B 的全部完成还差
+P1/P2（第八节）。
+
+====================================================================
+二、成本账订正：上一轮把 B 说贵了
+====================================================================
+2.5D V3 记录第七节写 B 是「会引入渲染帧 vs 判定帧同步问题，天级成本」。
+查盘后发现这条判断**过于悲观，须订正**：
+
+  - `boxer_rig.py` 已经是**真 Armature**：13 根 bone、解析式两骨 IK、
+    `inherit_scale="NONE"`、rest pose 就是游戏的格斗站架。
+  - `baked2.json` 是这套骨架**逐帧解算读回**的关节表（12 张牌 + 3 个
+    motion，每条 track 都有 `readback_error_px = 0.0`），游戏 `fighter.gd`
+    消费的正是同一份 JSON。
+  - 所以「渲染帧 ↔ 判定帧同步」**不是待解决问题，而是既有性质**：3D 皮肤
+    由同一张表驱动，不可能漂移。三帧数值复核最坏误差 0.14 px。
+
+真正缺的只有 mesh / 蒙皮 / 贴图三样，本轮补了前两样。
+**天级成本仍在，但在后面**：完整 UV 与贴图、Godot 侧接入（ShaderToRGB
+是 EEVEE 专有，卡通渲染 shader 得在 Godot 重写）、228 帧图集的抠底 /
+锚点 / 打包 / 引擎换帧。别把 P0 的 16/16 读成「B 做完了」。
+
+====================================================================
+三、技术实现（与 2.5D 的本质差别）
+====================================================================
+ 1. `boxer_rig.build()` 建 13 骨骨架；全部骨 `inherit_scale="NONE"`
+    （原 rig 只对 8 根 IK 骨设，本模型每根骨都显式按关节距离缩放）。
+ 2. 13 段体块在 **armature rest 空间建模一次**，截面是圆/椭圆，绝非每帧
+    重建的平面带：n1 在屏幕平面内垂直于骨轴，n2 = world +Y（侧向）。
+    `RY_RATIO=0.45` 让躯干成为扁椭圆（真人胸廓），四肢 = 1.0 圆截面。
+ 3. 每段 vertex group 全顶点权重 1.0 + ARMATURE modifier = rigid skin。
+    **逐帧不重建任何网格**，只摆骨骼。
+ 4. 逐帧从 baked2.json 取 11 关节 → 躯干按 hip/shoulder/head 插值出
+    A..F 六点 → `boxer_rig.place()` 摆 12 根骨（`pb.matrix` + `pb.scale.y`）。
+    游戏表的拉伸系数 k 就这样变成骨长缩放，刺拳 2.5x 前臂的剪影保留。
+    head 骨保持 scale=1，否则头骨会把脸拉成椭圆。
+ 5. 41 个刚性配件（头/五官/发髻/拳套/鞋/腰带/金扣/中国结/环刃/肩甲/
+    10 个关节球）按**同一张关节表**定位，不绑骨：肢体拉伸不该把球形拳套
+    拉成椭球。游戏自己的 `fighter.gd` 画配件也是这个思路。
+ 6. 沿用 V3 街霸 IV 卡通渲染：Diffuse → ShaderToRGB → ColorRamp
+    (CONSTANT 三档) → Emission；墨线/金扣不受光；11 个 toon 材质。
+ 7. 坐标桥一行未改：`(x, depth_y, z) = (gx/100, layer, -gy/100)`，
+    ORTHO `ortho_scale=2.6` @512px = 1.96923 px/game px，相机 y=-4。
+
+====================================================================
+四、探针先行，以及两次「判据钉错性质」的订正
+====================================================================
+ `probe_rig.py` 先单渲一根骨 + 一个圆截面圆柱，确认本机 EEVEE headless
+ 下「vertex group 全权重 + ARMATURE modifier + `pb.matrix`/`pb.scale`」
+ 组合真的让网格跟随，才动主脚本。最终 `RIG_PROBE_OK`：
+ 逐顶点最大位移 0.3752、顶点签名不同、rest 空间 **13 个不同 y 层**
+ （2.5D 平面挤出带只有 2 层）、权重和 1.0。
+
+ 两条踩过的坑，都是判据问题不是渲染问题：
+  - **探针必须复现真实调用形态**：第一版用 `Matrix.Rotation(52°,'Y')`，
+    其 Y 列仍是 world +Y → 骨长正对相机，渲出来只有一个圆端面。改用
+    `u.to_track_quat("Y","Z")` 才是 `place()` 的真实形状。
+  - **质心位移会被旋转+平移抵消**：改对调用形态后质心只动 0.0301，
+    旧判据误报 FAILED；逐顶点位移其实是 0.3752。判据换成
+    「顶点签名不同 且 最大逐顶点位移 > 0.15」。**要钉「顶点跟随骨骼」，
+    就别拿质心当代理量。**
+
+====================================================================
+五、三轮看图迭代 + 一次数值隔离（先诊断，不连试参数）
+====================================================================
+ 轮次   现象                        根因 / 处置
+ --------------------------------------------------------------------
+ v1   人形有体积，但**两只手臂完全   躯干用圆截面，chest r=0.30 m 使
+      看不见**，只剩两个橙色拳套     前表面 y=-0.30，比手臂 y=-0.07 更
+      浮在头两侧                    靠前 → 躯干挡住手臂。改躯干
+                                    RY_RATIO=0.45（扁椭圆）、袖色压暗、
+                                    加开襟/V 领/肩甲、环刃改不受光暗钢。
+ v2   手臂出现了，但 jab/sweep/     **写 diag_3d.py 做数值隔离**：
+      throw 冒出 4 块悬浮灰矩形，  三帧骨骼读回最坏误差 0.14 px、
+      与躯干有白隙                 ORPHANS=[]（网格中心与骨中点差
+                                    ≤16.4 px，都在半径量级）→ **骨架没错**。
+                                    真因两条：① ±0.19 深度偏移在
+                                    forearm_b 上被 pose 旋转翻到另一侧
+                                    （depth 实测 [-19.1,-4.2]，期望
+                                    [+12,+26]），前后臂分裂；② 短粗
+                                    圆柱的平端盖在肩/肘处没有过渡。
+ v3   **深度全部归零**，前后改用    八帧人形连贯、无悬浮部件；55°
+      明度编码（sleeve /           侧视图能看到侧面体积。
+      sleeve_back）；加肩甲 +
+      10 个关节球盖住端盖；手臂
+      半径收窄到 8.5/7.0 px
+
+ 这一轮最值钱的一句：**「看起来断开」先分清是骨架漂移还是造型接缝**。
+ 数值隔离证明是后者，就不用去改 `place()`。diag_3d.log 已纳入验收判据。
+
+====================================================================
+六、16 条硬判据与承重变异验证
+====================================================================
+ 判据                              实测
+ --------------------------------------------------------------------
+ pngs_valid                        8/8 PNG 512x512、manifest 大小一致
+ renders_nonempty                  8/8 非白像素 > 8000（不真空通过）
+ repeat_pixels_identical           changed px(>6)=0、max delta=1
+ repeat_bytes_fully_explained       chunk 类型一致、字节差已完整解释
+ pose_frames_distinct              最小帧差 26021 px
+ palette_and_angle_live           配色差 4049 px、55° 差 38717 px
+ manifest_joints_traceable         8/8 从 baked2.json 独立重算一致
+ table_sha256_matches              manifest/rig_stats/盘上三处一致
+ ortho_coordinate_bridge           鞋距 157.0 vs 157.5 px
+ rig_is_real                       13 骨 / 13 段全权重 1.0 / ARMATURE
+ mesh_has_depth                    最小 13 个 y 层、最小侧厚 0.136 m
+ toon_shader_is_wired              11 个 ShaderToRGB、11/11 CONSTANT
+ skeleton_is_wired                 源码接线齐备 + 探针通过
+ bone_readback_clean               3 帧最坏 0.14 px、孤儿列表全空
+ differs_from_2d5_v3               与 2d5-stance.png 差 42565 px
+ game_dir_unchanged                游戏目录 0 文件改动
+
+ 【判据订正，不是调阈值放水】
+  - 重复帧第一版用 `getbbox()`（阈值 >0），报了 122×60 的差异框。
+    `diag_repeat.py` 实测 **max delta=1、changed_px(>6)=0** —— 是
+    EEVEE 的 8-bit 量化 ±1 抖动，全文件其它差异判据都用 >6 抗锯齿
+    容差，**只有这条口径不一致**。统一到 >6，并额外断言 max delta≤1。
+  - 2.5D V3 的「sha 不同只因 tEXt，IDAT 完全相同」在本模型**退役**：
+    圆截面曲面让 cel shading 边界落在子像素上，±1 抖动进了 IDAT。
+    改为 `repeat_bytes_fully_explained`，如实写明 IDAT 不同、
+    chunk 类型一致、像素层面零可视差异。**证据描述必须跟着渲染模型更新。**
+
+ 【变异验证 3/3 CAUGHT】（mutation_3d.py，二进制还原 + sha256 核对）
+  M1 用 jab 帧冒充 repeat → repeat_pixels_identical /
+     repeat_bytes_fully_explained 双双报红（另带出 pngs_valid）
+  M2 把一段蒙皮权重改成 0.5 → rig_is_real 报红
+  M3 把所有部件压成 2 个 y 层（2.5D 带） → mesh_has_depth 报红
+  三次还原 sha256 均与变异前一致，末次全绿。
+
+====================================================================
+七、视觉评审（v3 最终八帧对照图）
+====================================================================
+ 【达到的】硬边三分明暗在圆柱面上落出明确的亮/中/暗，比 2.5D 纸片
+ 更有体积；粗墨线、大拳套、厚底金扣靴、宽肩、凶眉鼻影、双臂可见、
+ V 领 + 深色开襟 + 红腰带 + 金扣 + 圆结 + 双环发髻齐全；肩/肘/腕/
+ 髋/膝 10 个关节球把分段体块接成连续人形；八帧 stance / jab /
+ sweep / throw / hit_heavy 姿势可辨，enemy 配色与 55° 侧视生效。
+
+ 【已知遗留，不粉饰】
+  1. 仍是程序化几何：无手指、布料褶皱、肌肉分块、表情变化、**无贴图/UV**。
+  2. 躯干仍是长锥形（靠领口/开襟/腰带分段），白外套为避免融白底压成
+     浅灰白；纯白背景偏廉价。
+  3. 正面正交没有纵深，jab 只读作横向张臂（坐标桥红利换来的代价）。
+  4. 腰侧环刃仍像两个浅灰圆环；中国结是简化圆结。
+  5. 55° 侧视证明有厚度，但骨架全在 y=0 平面，**没有真正的转身/侧身姿**。
+  6. 16/16 判据不含「逐帧几何无自交」，极端膝折角是否仍有 V 形折角
+     需逐帧看图，本轮只看了 8 张代表帧。
+
+====================================================================
+八、下一步成本账（B 的 P1/P2）
+====================================================================
+ A. 贴图 / UV：程序化噪声贴图或 SDXL 出服装纹理再投影。成本中，
+    视觉收益中；能显著摆脱「塑料积木」感。
+ B. glTF 导出 + Godot 实时 3D 角色：最接近「真 3D 进游戏」，但要动
+    Godot 场景树 / 相机 / 动画播放器，且 **ShaderToRGB 是 EEVEE 专有**，
+    卡通渲染 shader 必须在 Godot 重写，视觉会先掉一档。成本高。
+ C. 渲 228 帧图集 → Godot 2D 精灵：不动现有 2D 判定 / HUD / 状态机，
+    但要 alpha 抠底、锚点、图集打包、引擎换帧；建议先渲 8~16 帧
+    小样本验证管线，再决定全量。成本中。
+ D. 到此为止：作为 3D 设定 / 预览，运行时继续用 A 路线代码自绘外观层。
+    成本 0。
+
+ **建议先做 C 的小样本**：它复用已验证的坐标桥与 228 帧表，风险最低，
+ 且能立刻回答「这套 3D 皮肤到底值不值得渲全量」。在此之前不要渲 228 帧。
+
+====================================================================
+九、复算命令
+====================================================================
+ 骨架蒙皮可行性探针：
+   "D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\blender.exe" \
+     --background --factory-startup --python .../3D建模/probe_rig.py
+ 重渲 8 帧 + 重建 .blend / manifest / rig_stats：
+   blender --background --factory-startup --python .../3D建模/boxer_3d.py
+ 八帧对照图 / 16 条判据 / 变异验证：
+   <项目 venv>/python.exe -u .../3D建模/make_contact_sheet_3d.py
+   <项目 venv>/python.exe -u .../3D建模/verify_3d.py
+   <项目 venv>/python.exe -u .../3D建模/mutation_3d.py
+ 三帧骨骼读回 + 对象级隔离：
+   blender --background --factory-startup --python .../3D建模/diag_3d.py
+ 证明没碰游戏源码：
+   find ".../牌拳-CardBoxer" -type f -newer ".../3D建模/boxer_3d.py" \
+     -not -path "*/.godot/*" | wc -l   => 0
+
+====================================================================
+十、文件清单与 sha256（顶层 40 项 = 1 目录 + 本记录 + 38 个文件）
+====================================================================
+ea8196d723233101007ad8c7722ae5fb73c27bcb28832e8a38152cd6637c9ba0  3d-hit_heavy_mid.png
+215da435cf9095b2a0ce68497495890d54f1ca7253555026c7e9462496441683  3d-jab_impact.png
+e38eb85a3da86a882c5f03cdb63b52178044bce78142ed26df5d3ec64ca281b1  3d-stance.png
+a1149b1be6bd6fbc0c584ec11594303c0f6306ca32094c7e1741567b18b7f017  3d-stance_angle55.png
+f1928d8c3d544084a85a74827712c0e6c94ef9d0e0cf8da1834eadfc5d3e3d5f  3d-stance_enemy.png
+4aaafac942a87e203fb1e23202c66067ddd95b8065cc7faea907342a3e4c3859  3d-stance_repeat.png
+1206eefff3ab15cf0d878dda8c1d9a6f04a067b2356d62cbbe9364fab4b7a7ec  3d-sweep_impact.png
+e1546a6271bb5198fc323a0c437088a68248235b98c29885524332fd49c3bc3c  3d-throw_impact.png
+7ba4737ffca8dcedd093a0ea2da0eb00e56d53cf2f5cab73d8b0c4d4cec5dc3e  3d-八帧对照.png
+e1a1f6b8b69891785e369c8b8c8b8e946b9bb78202b72143bfa8fe9595ad5d7d  boxer_3d.blend
+75fcffcdb7b0c17e92d28b5a5583ee212774c6edb13a397b1cf7cd56d5ea54fe  boxer_3d.blend1
+aca31735f7ee6109ef260e3c44d37fe0621642c76a3769c598bc0b578eac505c  boxer_3d.py
+c99d764d01aa4c33e25115cb1ce2d140f1e5d47b97397c098fbcb395334fda4a  diag3d-jab-all.png
+ec4a23f676c5ea176a78b6a6a02fd4bea3c1fc4a48cea3fb9bcf816bed770841  diag3d-jab-skin_only.png
+ce52efb304ffb84bf3b94d5d27831eab1ae8ee2eb0db2dbfe1c8fb62f923f11f  diag3d-stance-all.png
+7394bf6e9d8dd37d6c38b0b801987c9faa4cf4840e697fc7efcc4d9565c3a66d  diag3d-stance-skin_only.png
+94812ca21ff56712745740f2aeb4e8d4b1e42565b089b29217dc685a7ebbf9a6  diag3d-sweep-all.png
+459d0ba0d53228a130eb294781f093da00bf4e37d56b5811a2af3d6891ab5700  diag3d-sweep-skin_only.png
+ecbcfcb6253140f8b780be3464f8d17d58c6d41cfbb2d03b3db0220b75892cb7  diag_3d.log
+00075c021da10d8b886ef90e54248674e883eb9f5d6dbe5b052dc358a96ceffc  diag_3d.py
+b3d1750cf073f2c338b1c7eab09fa7a33eed344a0fe834e9241cabf78f72fd45  diag_repeat.log
+4b2cafd49ee6be126ca0fb2c5845d80a8e18b4b6bbc745dd8cb64a60029dc092  diag_repeat.py
+813fd5a4b80971b81a44b2d2e4bd4df037afd5fcc4af0e1b730f17cb85017e87  make_contact_sheet_3d.py
+f8d51dfc99d39af45d572dbdeb609a81a6042503083d710c3adc05aed5cc55a7  mutation_3d.log
+5f63b688ff25b7d7a65708d06037a97137f4460c1259fdfebfdad67169a531be  mutation_3d.py
+3dbb0f6f0a7ee5cd9bc1943fd7a3e4bab6674a4c4b051d1b7ee25c615246f7b0  probe_rig.json
+c96b709deaddc45130fa5179f69ae22be57da2161134e3df5603ea424e502306  probe_rig.log
+611bff4628f377faded0c9b283e117539b995cd1bffb1b3e1f32e1a9739142c0  probe_rig.py
+3271242524815c7bf761567f44460852c4843bc40df27ab74e40c8a7f74d9891  probe_rig_posed.png
+40dd2a44d2c96237676d07ac99db4a2845e92d72907f2cf3e30e9e80560f224e  probe_rig_rest.png
+96a0569b921c998e361bf4bebdd5cab9b51b3e7c621013996960fbf7dc0eae2d  render_manifest.json
+3da4785f177005c87e0ab0b270050a4ffe91d2bd53c304c6dc7d7c6c71ade592  render_v1.log
+1c34280e925a7af1470ab14c715b4fd6bf39c28c8853fad04de7c6df349f763e  render_v2.log
+d642b32e951a64f6a158cd58eb2c1cf9a5580a707352d67ee5354efd0a577d75  render_v3.log
+11d5a3de7091498eb90ee3c228e6c06f8216c9d28ba275e21e8671e1b530f5ba  rig_stats.json
+c7df6b8ec5406d026fd113f2714adf67146d645c23bd8d3088ab1eba9b393d8d  verify_3d.log
+b805323e251418015d9d892232b3f73cf2b8220f67c93f981e9ab80e32a1486c  verify_3d.py
+3574524d905e22629558d779d2018e266ac5bf521023ef03145de37ce39b1a91  verify_3d_result.json
+
+ 注：`probe_rig_rest.png` / `probe_rig_posed.png` 是判据
+     `skeleton_is_wired` 的依赖；`diag_3d.log` 是 `bone_readback_clean`
+     的依赖；`2D5建模/2d5-stance.png` 是 `differs_from_2d5_v3` 的依赖。
+     都别删。`__pycache__/` 是 import boxer_3d 产生的缓存，无关判据。
+
+====================================================================
+十一、回退与边界
+====================================================================
+ 回退：3D 是**全新目录**，`2D5建模/` 与游戏源码一行未动。删掉
+ `3D建模/` 即完全回退；V1/V2 的中间产物只保留在 render_v1/v2.log 与
+ diag 图里，模型代码以当前 `boxer_3d.py` 为准。
+
+ 边界：未导入 Godot、未做 glTF 导出、未做贴图/UV、未渲 228 帧图集、
+       未改 baked2.json、未改游戏源码（find -newer = 0）、
+       未改系统默认 Blender（仍 5.2.0）、未复刻任何 IP 资产。
+ 历史遗留：Blender 4.4 残留目录仍在（需管理员 PowerShell 走回收站）；
+           卡面描述文字溢出、平局无上限加赛仍是 P1；
+           2.5D V3 的 sweep 帧 V 形箭头与偏细手臂未修（本轮是另一条
+           建模路线，不混改）。

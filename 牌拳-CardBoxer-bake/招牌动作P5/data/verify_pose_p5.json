@@ -1,0 +1,157 @@
+{
+  "source": "independent recompute; upstream ok fields not trusted",
+  "recomputed": {
+    "joint_values_checked": 6248,
+    "ref_frames": 284,
+    "disagreements": 0,
+    "diff_count": 230,
+    "changed_frame_count": 42,
+    "endpoint_worst_px": 0.0,
+    "axis_metrics": {
+      "wave": {
+        "mf_peak_px": 60.823,
+        "mf_peak_frame": 17,
+        "mf_peak_phase": "active",
+        "mf_at_active_max_px": 60.823,
+        "forward_ext_peak_px": 84.0,
+        "forward_ext_gain_px": 42.0,
+        "forward_ext_peak_frame": 15,
+        "forward_ext_peak_phase": "active"
+      },
+      "cross": {
+        "mf_peak_px": 36.0,
+        "mf_peak_frame": 8,
+        "mf_peak_phase": "active",
+        "mf_at_active_max_px": 36.0,
+        "forward_ext_peak_px": 54.4,
+        "forward_ext_gain_px": 12.4,
+        "forward_ext_peak_frame": 5,
+        "forward_ext_peak_phase": "windup"
+      },
+      "jab": {
+        "mf_peak_px": 80.2247,
+        "mf_peak_frame": 6,
+        "mf_peak_phase": "active",
+        "mf_at_active_max_px": 80.2247,
+        "forward_ext_peak_px": 86.4,
+        "forward_ext_gain_px": 44.4,
+        "forward_ext_peak_frame": 6,
+        "forward_ext_peak_phase": "active"
+      },
+      "sweep": {
+        "mf_peak_px": 78.6384,
+        "mf_peak_frame": 12,
+        "mf_peak_phase": "active",
+        "mf_at_active_max_px": 78.6384,
+        "forward_ext_peak_px": 49.4,
+        "forward_ext_gain_px": 7.4,
+        "forward_ext_peak_frame": 3,
+        "forward_ext_peak_phase": "windup"
+      },
+      "throw": {
+        "mf_peak_px": 54.9181,
+        "mf_peak_frame": 8,
+        "mf_peak_phase": "active",
+        "mf_at_active_max_px": 54.9181,
+        "forward_ext_peak_px": 67.4,
+        "forward_ext_gain_px": 25.4,
+        "forward_ext_peak_frame": 8,
+        "forward_ext_peak_phase": "active"
+      },
+      "uppercut": {
+        "mf_peak_px": 71.4703,
+        "mf_peak_frame": 10,
+        "mf_peak_phase": "active",
+        "mf_at_active_max_px": 71.4703,
+        "forward_ext_peak_px": 79.8,
+        "forward_ext_gain_px": 37.8,
+        "forward_ext_peak_frame": 10,
+        "forward_ext_peak_phase": "active"
+      }
+    },
+    "mf_direct": {
+      "wave": 60.823,
+      "cross": 36.0,
+      "jab": 80.2247,
+      "sweep": 78.6384,
+      "throw": 54.9181,
+      "uppercut": 71.4703
+    },
+    "delta_changed_bones": [
+      "forearm_b",
+      "forearm_f",
+      "upperarm_b",
+      "upperarm_f"
+    ],
+    "delta_frames": 284,
+    "probe_rows": 30,
+    "pixel_keys_recomputed": 40,
+    "diff_mismatches": [],
+    "tear_per_case": {
+      "baseline": {
+        "poses": 284,
+        "worst_p999_m": 0.042681,
+        "mean_p999_m": 0.015717,
+        "frames_over_anchor": 0
+      },
+      "pose_p5": {
+        "poses": 284,
+        "worst_p999_m": 0.047884,
+        "mean_p999_m": 0.016817,
+        "frames_over_anchor": 0
+      }
+    },
+    "tear_cost_m": 0.005203,
+    "tear_headroom_m": 0.045766
+  },
+  "known_debts": [
+    {
+      "id": "D1",
+      "what": "data/apply_pose_p5.json 的 metric_revision 仍为 R1",
+      "why": "apply_pose_p5.py 首版把该字段写死成 R1；#218 已改为从 recommended_tracks.json 读取，但历史产物按项目约定不回写",
+      "proof": "p5_readback.json 证明 jab 逐值不变、mf 峰值是 R2 口径",
+      "apply_report_value": "R1",
+      "recommended_value": "R1+R2"
+    },
+    {
+      "id": "D2",
+      "what": "boards/候选姿态-成本权衡板.png 展示 R1 首版口径",
+      "why": "生成于 R2 之前，写有「三档递减」「只改 54 帧」",
+      "proof": "保留为负结果归档；终版为 候选姿态-成本权衡板-R2.png"
+    }
+  ],
+  "checks": {
+    "readback_report_self_consistent": true,
+    "probe_report_self_consistent": true,
+    "tear_report_self_consistent": true,
+    "apply_report_self_consistent": true,
+    "all_checks_15_of_15_independently": true,
+    "recommended_case_all_hard_constraints": true,
+    "three_tables_6248_sync_independent": true,
+    "jab_identical_to_baseline_independent": true,
+    "diffs_confined_to_wave_cross_four_arms_independent": true,
+    "endpoints_zero_drift_independent": true,
+    "changed_frames_42_independent": true,
+    "mf_thresholds_met_independent": true,
+    "all_attack_mf_peaks_in_active_independent": true,
+    "mf_direct_recompute_matches_axis_metrics": true,
+    "delta_changes_only_four_arm_bones_independent": true,
+    "probe_rows_delta_matches_formula_independent": true,
+    "probe_rows_mf_matches_formula_independent": true,
+    "probe_marker_matches_mode_independent": true,
+    "probe_sv_pngs_all_present_independent": true,
+    "probe_pixel_diffs_recomputed_match_report": true,
+    "edited_pixel_diffs_all_nonzero": true,
+    "stance_jab_pixels_zero_recomputed": true,
+    "reapplied_pixels_zero_recomputed": true,
+    "tear_568_rows_recomputed_match_report": true,
+    "tear_within_anchor_and_headroom_2x_cost": true,
+    "three_table_sha_match_apply_report": true,
+    "backup_sha_match_apply_report": true,
+    "other_11_watched_files_sha_unchanged": true,
+    "four_boards_present_and_dimensions_ok": true,
+    "spec_json_has_r1_and_r2_revisions": true
+  },
+  "failed": [],
+  "ok": true
+}

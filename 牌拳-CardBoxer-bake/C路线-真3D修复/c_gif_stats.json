@@ -1,0 +1,91 @@
+{
+  "box": [
+    90,
+    62,
+    741,
+    713
+  ],
+  "alpha_union": [
+    136,
+    92,
+    696,
+    683
+  ],
+  "gif_size": [
+    651,
+    651
+  ],
+  "frame_ms": 60,
+  "cards": {
+    "jab": {
+      "file": "真3D网格-攻击-jab.gif",
+      "bytes": 1253837,
+      "encoded_frames": 12,
+      "duration_sum_ms": 840,
+      "expected_duration_ms": 840,
+      "sha256": "6f9e7e3cf25ed393d8e8c6a0a644466c8a7d1f60786753a44ae1dde804765561",
+      "frames": 14,
+      "split": [
+        4,
+        3,
+        7
+      ],
+      "merged_duplicate_frames": 2
+    },
+    "cross": {
+      "file": "真3D网格-攻击-cross.gif",
+      "bytes": 2053015,
+      "encoded_frames": 19,
+      "duration_sum_ms": 1320,
+      "expected_duration_ms": 1320,
+      "sha256": "dd39a5cc647bf749e0e9b4bdd4cb44628afe438b22950a5beb5ddf7433f85a8d",
+      "frames": 22,
+      "split": [
+        6,
+        4,
+        12
+      ],
+      "merged_duplicate_frames": 3
+    },
+    "wave": {
+      "file": "真3D网格-攻击-wave.gif",
+      "bytes": 3219308,
+      "encoded_frames": 33,
+      "duration_sum_ms": 2160,
+      "expected_duration_ms": 2160,
+      "sha256": "8f1f68dad5327ba791faa798471333f5a5337e4b22410a16e59f3c9ff2198b9f",
+      "frames": 36,
+      "split": [
+        10,
+        8,
+        18
+      ],
+      "merged_duplicate_frames": 3
+    }
+  },
+  "combo": {
+    "file": "真3D网格-三档连播.gif",
+    "bytes": 4831500,
+    "encoded_frames": 65,
+    "duration_sum_ms": 5460,
+    "expected_duration_ms": 5460,
+    "sha256": "ad3e9358327ef31531977e0ae2fef8e69b40bbb0c94281199f3c28d40ea8dc8e",
+    "frames": 78
+  },
+  "sheet": {
+    "file": "真3D网格-关键帧对照.png",
+    "bytes": 506241,
+    "size": [
+      958,
+      930
+    ]
+  },
+  "board": {
+    "file": "C路线-四方对照板.png",
+    "bytes": 533745,
+    "size": [
+      1044,
+      922
+    ]
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "checks": [
+    {
+      "name": "C01_source_wiring",
+      "ok": true,
+      "detail": "needles=7 missing=[]"
+    },
+    {
+      "name": "C02_apose_13_bones",
+      "ok": true,
+      "detail": "bones=13 names_match=True"
+    },
+    {
+      "name": "C03_voxel_proxy_weights",
+      "ok": true,
+      "detail": "voxel=0.02 verts=20204 covered=20196"
+    },
+    {
+      "name": "C04_smooth_weight_coverage",
+      "ok": true,
+      "detail": "covered=64006/64024 (0.99972) multi_bone=57967 (0.9054)"
+    },
+    {
+      "name": "C05_assets_preserved",
+      "ok": true,
+      "detail": "uv=1 mat=1 tex=3 same=True/True"
+    },
+    {
+      "name": "C06_stance_identity",
+      "ok": true,
+      "detail": "max=6.43e-07 mean=6.2e-08 tol=1e-05"
+    },
+    {
+      "name": "C07_tear_improvement",
+      "ok": true,
+      "detail": "p999 0.01806 vs 0.28048 (x15.53); >5cm 21 vs 916 (x43.62)"
+    },
+    {
+      "name": "C08_mesh_actually_moves",
+      "ok": true,
+      "detail": "moved=64006 max=0.45259 m"
+    },
+    {
+      "name": "C09_shot_hashes",
+      "ok": true,
+      "detail": "shots=73 mismatched=0 []"
+    },
+    {
+      "name": "C10_frame_inventory",
+      "ok": true,
+      "detail": "png=98 sweep=21"
+    },
+    {
+      "name": "C11_gif_duration_conservation",
+      "ok": true,
+      "detail": "cards=3 combo=1 bad=[]"
+    },
+    {
+      "name": "C12_boards_nonempty",
+      "ok": true,
+      "detail": "boards=5 empty_or_missing=[]"
+    },
+    {
+      "name": "C13_sweep_blender_shape",
+      "ok": true,
+      "detail": "entries=7 all=4 arm_only=3 mapping_sha_ok=True"
+    },
+    {
+      "name": "C14_sweep_monotonic",
+      "ok": true,
+      "detail": "rows=21 arm_only=9 violations=[]"
+    },
+    {
+      "name": "C15_worst_tear_below_rigid",
+      "ok": true,
+      "detail": "worst=0.09365 rigid=0.28048 ratio=0.3339"
+    },
+    {
+      "name": "C16_usable_gain_range_named",
+      "ok": true,
+      "detail": "range='1.0 .. 1.5 (2.0 marginal)'"
+    },
+    {
+      "name": "C17_pixel_metrics_retired",
+      "ok": true,
+      "detail": "rejected=2 primary=max_delta_deg (pose_frame geometry)"
+    },
+    {
+      "name": "C18_game_sources_untouched",
+      "ok": true,
+      "detail": "files=7 changed=[]"
+    }
+  ],
+  "passed": 18,
+  "total": 18,
+  "verified": true
+}

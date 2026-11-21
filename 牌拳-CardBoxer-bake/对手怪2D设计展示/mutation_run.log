@@ -1,0 +1,4 @@
+M1 CAUGHT  red=True sentinel_green=True restore=True  查看器里把一个 img src 改成不存在的文件
+M2 CAUGHT  red=True sentinel_green=True restore=True  把「原图逐字节复制」换成另一张图的字节
+
+2/2 CAUGHT  restore=2/2  did_not_run=0  clean_rerun=GREEN  MUTATION_SHOWCASE_OK

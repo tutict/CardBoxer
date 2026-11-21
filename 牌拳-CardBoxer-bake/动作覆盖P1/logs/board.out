@@ -1,0 +1,6 @@
+CHECK board1_written True
+CHECK board2_written True
+CHECK board1_size True
+CHECK board2_size True
+CHECK all_sources_exist True
+MOTION_BOARD_OK

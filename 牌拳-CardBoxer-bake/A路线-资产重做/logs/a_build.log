@@ -1,0 +1,26 @@
+00:00.625  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\对手怪V1.blend"
+CHAIN {"src": {"verts": 64024, "shells": 2809, "uv": 1, "textures": 3}, "shell": {"verts": 20204, "faces": 40396, "shells": 3, "tri_ratio": 1.0, "auto_weight_covered": 20196}, "bind": {"is_bound": true, "rest_drift_m": 1.92e-06}, "assets": {"uv_layers": 1, "materials": 1, "textures": [{"image": "texture_pbr_20250901", "size": [4096, 4096]}, {"image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness", "size": [4096, 4096]}, {"image": "texture_pbr_20250901_normal", "size": [4096, 4096]}], "uv_same": true, "textures_same": true}}
+METRICS jab 14 frames elapsed=5.7s
+METRICS cross 22 frames elapsed=12.5s
+METRICS wave 36 frames elapsed=23.6s
+ALL_FRAMES rows=72
+00:25.047  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a-stance-x15.png'
+00:25.266  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a-jab01-x15.png'
+00:25.469  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a-jab07-x15.png'
+00:25.687  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a-jab13-x15.png'
+00:25.891  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a-cross01-x15.png'
+00:26.109  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a-cross11-x15.png'
+00:26.328  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a-cross21-x15.png'
+00:26.531  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a-wave01-x15.png'
+00:26.766  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a-wave18-x15.png'
+00:26.984  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a-wave35-x15.png'
+00:27.187  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a-jab07-x1.png'
+00:27.406  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a-cross11-x1.png'
+00:27.625  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a-wave18-x1.png'
+00:27.844  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\frames\a-stance-angle55.png'
+SHOTS=14
+00:28.500  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\对手怪-可变形连续壳.blend"
+Info: Saved as "对手怪-可变形连续壳.blend"
+REOPEN {"surface_deform_is_bound": true, "surface_deform_target": "a_continuous_shell", "rig_count": 1, "rig_bones": 13, "high_poly_verts": 64024, "high_poly_uv_layers": 1, "packed_4096_textures": 3, "textures_4096": 3, "reopen_drive_max_displacement_m": 0.81099}
+A_BUILD_OK frames=72 shots=14 blend_bytes=59118499 elapsed=29.23s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

@@ -1,0 +1,127 @@
+{
+  "source": "改后读盘 + orig/pre-p4 原字节备份",
+  "agg": {
+    "exact_flat_pairs": 0,
+    "perceptual_flat_pairs": 200,
+    "changed_frames": 109,
+    "max_joint_delta_px": 1.7778,
+    "max_adjacent_jump_px": 112.0179,
+    "baseline_max_adjacent_jump_px": 112.0179
+  },
+  "scan_micro_2": {
+    "exact_flat_pairs": 0,
+    "perceptual_flat_pairs": 180,
+    "changed_frames": 80,
+    "max_joint_delta_px": 1.9616,
+    "max_adjacent_jump_px": 112.0179,
+    "baseline_max_adjacent_jump_px": 112.0179
+  },
+  "scan_baseline": {
+    "exact_flat_pairs": 255,
+    "perceptual_flat_pairs": 308,
+    "changed_frames": 0,
+    "max_joint_delta_px": 0.0,
+    "max_adjacent_jump_px": 112.0179,
+    "baseline_max_adjacent_jump_px": 112.0179
+  },
+  "sync": {
+    "mi_vs_cm": true,
+    "mi_vs_mif": true
+  },
+  "edit_total_checked": 1308,
+  "edit_mismatches": [],
+  "endpoint_mismatches": [],
+  "metadata_mismatches": [],
+  "per_card": {
+    "jab": {
+      "exact": 0,
+      "perceptual": 5,
+      "changed": 6
+    },
+    "cross": {
+      "exact": 0,
+      "perceptual": 11,
+      "changed": 6
+    },
+    "uppercut": {
+      "exact": 0,
+      "perceptual": 10,
+      "changed": 7
+    },
+    "sweep": {
+      "exact": 0,
+      "perceptual": 23,
+      "changed": 9
+    },
+    "rush": {
+      "exact": 0,
+      "perceptual": 7,
+      "changed": 3
+    },
+    "backstep": {
+      "exact": 0,
+      "perceptual": 5,
+      "changed": 3
+    },
+    "guard": {
+      "exact": 0,
+      "perceptual": 15,
+      "changed": 7
+    },
+    "sidestep": {
+      "exact": 0,
+      "perceptual": 6,
+      "changed": 3
+    },
+    "focus": {
+      "exact": 0,
+      "perceptual": 30,
+      "changed": 8
+    },
+    "recover": {
+      "exact": 0,
+      "perceptual": 15,
+      "changed": 5
+    },
+    "wave": {
+      "exact": 0,
+      "perceptual": 26,
+      "changed": 22
+    },
+    "throw": {
+      "exact": 0,
+      "perceptual": 5,
+      "changed": 7
+    },
+    "hit_light": {
+      "exact": 0,
+      "perceptual": 8,
+      "changed": 7
+    },
+    "hit_heavy": {
+      "exact": 0,
+      "perceptual": 26,
+      "changed": 10
+    },
+    "block": {
+      "exact": 0,
+      "perceptual": 8,
+      "changed": 6
+    }
+  },
+  "checks": {
+    "fifteen_tracks_284_frames": true,
+    "exact_flat_pairs_zero": true,
+    "perceptual_below_baseline": true,
+    "agg_matches_landing_recomputed": true,
+    "changed_frames_matches_landing": true,
+    "all_track_endpoints_identical_to_orig": true,
+    "max_displacement_under_2px": true,
+    "three_tables_synchronized": true,
+    "all_edits_read_back_all_three": true,
+    "non_leg_metadata_unchanged": true,
+    "apply_report_ok": true
+  },
+  "failed": [],
+  "ok": true
+}

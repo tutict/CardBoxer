@@ -1,0 +1,15 @@
+00:00.656  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\玩家V4b-源.blend"
+APOSE_RIG_PLAYER bones=13 head_z=1.7225 hip_z=1.0517
+CHAIN {"src": {"verts": 57901, "shells": 2035, "uv": 1, "textures": 3}, "shell": {"verts": 14070, "faces": 28128, "shells": 3, "tri_ratio": 1.0, "auto_weight_covered": 14062}, "bind": {"is_bound": true, "rest_drift_m": 4.79e-06}, "assets": {"uv_layers": 1, "materials": 1, "textures": [{"image": "texture_pbr_20250901", "size": [4096, 4096]}, {"image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness", "size": [4096, 4096]}, {"image": "texture_pbr_20250901_normal", "size": [4096, 4096]}], "uv_same": true, "textures_same": true}, "apose": {"head_z": 1.7225, "hip_z": 1.05167, "shoulder_z": 1.34516}}
+STANCE_IDENTITY max=0.000009828 identical=True
+00:02.875  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\frames\e-stance-x15.png'
+SHOT e-stance-x15.png bytes=365305
+00:03.109  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\frames\e-jab07-x15.png'
+SHOT e-jab07-x15.png bytes=370754
+00:03.344  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\frames\e-cross11-x15.png'
+SHOT e-cross11-x15.png bytes=370980
+00:03.562  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\frames\e-wave18-x15.png'
+SHOT e-wave18-x15.png bytes=368584
+00:03.781  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\frames\e-stance-angle55.png'
+E_PROBE_OK shots=5 cross10={'tear_p999_m': 0.05588, 'tear_gt5cm': 198, 'max_displacement_m': 0.82423, 'moved_gt_1mm': 57873, 'reach_f_m': 0.17317, 'reach_b_m': 0.73905, 'reach_max_m': 0.73905, 'foot_gap_m': 0.00474, 'penetration_pct': 0.0} elapsed=3.3s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

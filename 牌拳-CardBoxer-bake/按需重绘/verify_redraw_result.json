@@ -1,0 +1,128 @@
+{
+  "total": 24,
+  "passed": 24,
+  "failed": [],
+  "skip_sha": false,
+  "checks": [
+    {
+      "id": "V01",
+      "ok": true,
+      "detail": "baseline 5 files byte-identical"
+    },
+    {
+      "id": "V02",
+      "ok": true,
+      "detail": "fighter.gd / project.godot untouched"
+    },
+    {
+      "id": "V03",
+      "ok": true,
+      "detail": "arena/hud/fx_layer actually changed"
+    },
+    {
+      "id": "V04",
+      "ok": true,
+      "detail": "gate defaults ON"
+    },
+    {
+      "id": "V05",
+      "ok": true,
+      "detail": "first-frame force + public force_redraw()"
+    },
+    {
+      "id": "V06",
+      "ok": true,
+      "detail": "3 branches gated, 0 bare queue_redraw in _process"
+    },
+    {
+      "id": "V07",
+      "ok": true,
+      "detail": "capture chain kept in hitstop + main"
+    },
+    {
+      "id": "V08",
+      "ok": true,
+      "detail": "_request_redraw body really queues/skips"
+    },
+    {
+      "id": "V09",
+      "ok": true,
+      "detail": "arena key covers all draw inputs (12 tokens)"
+    },
+    {
+      "id": "V10",
+      "ok": true,
+      "detail": "hud key covers arena.* fields (36, missing=[])"
+    },
+    {
+      "id": "V11",
+      "ok": true,
+      "detail": "pulse clock conditional + hud queue_redraw gated by key"
+    },
+    {
+      "id": "V12",
+      "ok": true,
+      "detail": "fighter.gd deliberately NOT gated"
+    },
+    {
+      "id": "V13",
+      "ok": true,
+      "detail": "fx_layer draw/时间 counters wired"
+    },
+    {
+      "id": "V14",
+      "ok": true,
+      "detail": "14/14 engine self-checks ALL GREEN"
+    },
+    {
+      "id": "V15",
+      "ok": true,
+      "detail": "5 injected-state PNGs valid 1280x720"
+    },
+    {
+      "id": "V16",
+      "ok": true,
+      "detail": "static frame: gate ON/OFF pixel-identical + byte-identical"
+    },
+    {
+      "id": "V17",
+      "ok": true,
+      "detail": "after change / after revert still pixel-identical"
+    },
+    {
+      "id": "V18",
+      "ok": true,
+      "detail": "state change is observable (no stale HUD)"
+    },
+    {
+      "id": "V19",
+      "ok": true,
+      "detail": "5-phase draw accounting: 270 -> 0, changes draw exactly once"
+    },
+    {
+      "id": "V20",
+      "ok": true,
+      "detail": "3-pair perf A/B: pixels equal, draw_us -> 0, TIME_PROCESS retired"
+    },
+    {
+      "id": "V21",
+      "ok": true,
+      "detail": "key cost measured: str 5.9862us / hash 0.1179us"
+    },
+    {
+      "id": "V22",
+      "ok": true,
+      "detail": "8/8 injected rhythm shots + arena.gd byte-restored"
+    },
+    {
+      "id": "V23",
+      "ok": true,
+      "detail": "current source sha matches frozen snapshot"
+    },
+    {
+      "id": "V24",
+      "ok": true,
+      "detail": "diagnosis doc + 4 new probe scripts present"
+    }
+  ]
+}

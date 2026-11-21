@@ -1,0 +1,162 @@
+{
+  "table": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\baked2.json",
+  "table_sha256": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55",
+  "parts": [
+    "chest",
+    "forearm_b",
+    "forearm_f",
+    "head",
+    "hips",
+    "neck",
+    "shin_b",
+    "shin_f",
+    "spine",
+    "thigh_b",
+    "thigh_f",
+    "upperarm_b",
+    "upperarm_f"
+  ],
+  "rigid_props": [
+    "belt",
+    "brow_l",
+    "brow_r",
+    "bun_l",
+    "bun_r",
+    "bun_ring_l",
+    "bun_ring_r",
+    "collar_l",
+    "collar_r",
+    "eye_l",
+    "eye_r",
+    "glove_b",
+    "glove_cuff_b",
+    "glove_cuff_f",
+    "glove_f",
+    "gold_clasp",
+    "hair_cap",
+    "hair_clip",
+    "head_ball",
+    "j_elbow_b",
+    "j_elbow_f",
+    "j_hip_b",
+    "j_hip_f",
+    "j_knee_b",
+    "j_knee_f",
+    "j_shoulder_b",
+    "j_shoulder_f",
+    "j_wrist_b",
+    "j_wrist_f",
+    "knot",
+    "lapel",
+    "mouth",
+    "nose",
+    "ring_blade_l",
+    "ring_blade_r",
+    "shoe_b",
+    "shoe_f",
+    "shoe_sole_b",
+    "shoe_sole_f",
+    "shoulder_plate",
+    "tassel"
+  ],
+  "joints": [
+    "hip",
+    "shoulder",
+    "head",
+    "f_elbow",
+    "f_hand",
+    "b_elbow",
+    "b_hand",
+    "f_knee",
+    "f_foot",
+    "b_knee",
+    "b_foot"
+  ],
+  "camera": {
+    "type": "ORTHO",
+    "ortho_scale": 2.6,
+    "res": [
+      512,
+      512
+    ],
+    "target_xy_z": [
+      0.25,
+      0.0,
+      0.95
+    ]
+  },
+  "shots": [
+    {
+      "file": "3d-stance.png",
+      "card": null,
+      "frame": 0,
+      "palette": "player",
+      "angle_deg": 0.0,
+      "joints_sha256": "575fe77560d61dad1d85263a0ff8d7fda2e8e71692b27317e58a46fa4a61e639",
+      "size_bytes": 136225
+    },
+    {
+      "file": "3d-jab_impact.png",
+      "card": "jab",
+      "frame": 7,
+      "palette": "player",
+      "angle_deg": 0.0,
+      "joints_sha256": "e818cf8b1ff8c56aee0f125e6bcc4b2e0d78bce16af06193dceae5ab2eaf66f0",
+      "size_bytes": 138047
+    },
+    {
+      "file": "3d-sweep_impact.png",
+      "card": "sweep",
+      "frame": 13,
+      "palette": "player",
+      "angle_deg": 0.0,
+      "joints_sha256": "9cebafcb92e3eb40dcf1b715ac7752e74bebe9704bcc9de533614ee84faee83a",
+      "size_bytes": 124473
+    },
+    {
+      "file": "3d-throw_impact.png",
+      "card": "throw",
+      "frame": 9,
+      "palette": "player",
+      "angle_deg": 0.0,
+      "joints_sha256": "942107b10e624dd7bee27a84dfaba0b086f458e233958d8d4c712161d389156d",
+      "size_bytes": 133145
+    },
+    {
+      "file": "3d-hit_heavy_mid.png",
+      "card": "hit_heavy",
+      "frame": 15,
+      "palette": "player",
+      "angle_deg": 0.0,
+      "joints_sha256": "25f07493ce6a127553944d641eb0123a44841d147c172861486a84ab00aa258c",
+      "size_bytes": 132487
+    },
+    {
+      "file": "3d-stance_enemy.png",
+      "card": null,
+      "frame": 0,
+      "palette": "enemy",
+      "angle_deg": 0.0,
+      "joints_sha256": "575fe77560d61dad1d85263a0ff8d7fda2e8e71692b27317e58a46fa4a61e639",
+      "size_bytes": 136028
+    },
+    {
+      "file": "3d-stance_angle55.png",
+      "card": null,
+      "frame": 0,
+      "palette": "player",
+      "angle_deg": 55.0,
+      "joints_sha256": "575fe77560d61dad1d85263a0ff8d7fda2e8e71692b27317e58a46fa4a61e639",
+      "size_bytes": 126248
+    },
+    {
+      "file": "3d-stance_repeat.png",
+      "card": null,
+      "frame": 0,
+      "palette": "player",
+      "angle_deg": 0.0,
+      "joints_sha256": "575fe77560d61dad1d85263a0ff8d7fda2e8e71692b27317e58a46fa4a61e639",
+      "size_bytes": 136252
+    }
+  ]
+}

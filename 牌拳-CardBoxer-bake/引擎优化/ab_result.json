@@ -1,0 +1,46 @@
+{
+  "before_bytes": 660210,
+  "after_bytes": 660210,
+  "size": [
+    1280,
+    720
+  ],
+  "changed_pixels": 0,
+  "diff_extrema": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ]
+  ],
+  "pixel_identical": true,
+  "comparable": true,
+  "deltas": {
+    "process_ms": {
+      "before": 4.27098333333334,
+      "after": 2.605,
+      "delta": -1.6659833333333398,
+      "pct": -39.0070202412404
+    },
+    "primitives": {
+      "before": 482.0,
+      "after": 188.0,
+      "delta": -294.0,
+      "pct": -60.99585062240664
+    },
+    "draw_calls": {
+      "before": 13.0,
+      "after": 9.0,
+      "delta": -4.0,
+      "pct": -30.76923076923077
+    }
+  },
+  "result": "ENGINE_OPT_AB_OK"
+}

@@ -1,0 +1,16 @@
+M01_retired_metric_renamed DID NOT RUN (anchor not found)
+M02_untouched_roi_not_zero CAUGHT rc=1
+M03_static_ab_pixels_changed CAUGHT rc=1
+M04_all_checks_not_green CAUGHT rc=1
+M05_foe_yaw_flipped CAUGHT rc=1
+M06_basecolor_identical CAUGHT rc=1
+M07_arena_uses_player_yaw CAUGHT rc=1
+M08_layer_loads_fixed_glb CAUGHT rc=1
+M09_copy_not_identical CAUGHT rc=1
+M10_v1_negative_result_erased CAUGHT rc=1
+M11_foe_apose_equals_player CAUGHT rc=1
+M12_glb_has_animations CAUGHT rc=1
+M13_roi_not_two_regions CAUGHT rc=1
+CAUGHT=12/13 DID_NOT_RUN=1 restore=12/12 clean=GREEN
+  DNR M01_retired_metric_renamed:ANCHOR_MISS
+MUTATION_H_FAILED

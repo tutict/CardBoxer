@@ -1,0 +1,164 @@
+{
+  "frames": 72,
+  "cards": {
+    "jab": 14,
+    "cross": 22,
+    "wave": 36
+  },
+  "per_tag": {
+    "E_x1": {
+      "tear_p999_m": {
+        "max": 0.03954,
+        "mean": 0.014947,
+        "min": 0.0
+      },
+      "tear_gt5cm": {
+        "max": 46,
+        "mean": 24.694444,
+        "min": 0
+      },
+      "max_displacement_m": {
+        "max": 0.58383,
+        "mean": 0.192144,
+        "min": 1e-05
+      },
+      "moved_gt_1mm": {
+        "max": 57873,
+        "mean": 53357.597222,
+        "min": 0
+      },
+      "reach_f_m": {
+        "max": 0.35391,
+        "mean": 0.097797,
+        "min": 0.0
+      },
+      "reach_b_m": {
+        "max": 0.52363,
+        "mean": 0.152885,
+        "min": 0.0
+      },
+      "reach_max_m": {
+        "max": 0.52363,
+        "mean": 0.171216,
+        "min": 0.0
+      },
+      "foot_gap_m": {
+        "max": 0.02409,
+        "mean": 0.008199,
+        "min": 0.0
+      },
+      "penetration_pct": {
+        "max": 0.0,
+        "mean": 0.0,
+        "min": 0.0
+      }
+    },
+    "E_x15": {
+      "tear_p999_m": {
+        "max": 0.05601,
+        "mean": 0.02137,
+        "min": 0.0
+      },
+      "tear_gt5cm": {
+        "max": 198,
+        "mean": 46.013889,
+        "min": 0
+      },
+      "max_displacement_m": {
+        "max": 0.82423,
+        "mean": 0.270186,
+        "min": 1e-05
+      },
+      "moved_gt_1mm": {
+        "max": 57873,
+        "mean": 53380.763889,
+        "min": 0
+      },
+      "reach_f_m": {
+        "max": 0.49395,
+        "mean": 0.128473,
+        "min": 0.0
+      },
+      "reach_b_m": {
+        "max": 0.73905,
+        "mean": 0.210907,
+        "min": 0.0
+      },
+      "reach_max_m": {
+        "max": 0.73905,
+        "mean": 0.24088,
+        "min": 0.0
+      },
+      "foot_gap_m": {
+        "max": 0.02409,
+        "mean": 0.008199,
+        "min": 0.0
+      },
+      "penetration_pct": {
+        "max": 0.0,
+        "mean": 0.0,
+        "min": 0.0
+      }
+    },
+    "A2_x15_foe": {
+      "tear_p999_m": {
+        "max": 0.04739,
+        "mean": 0.016299,
+        "min": 0.0
+      },
+      "tear_gt5cm": {
+        "max": 100,
+        "mean": 19.611111,
+        "min": 0
+      },
+      "max_displacement_m": {
+        "max": 0.82038,
+        "mean": 0.279786,
+        "min": 0.0
+      },
+      "moved_gt_1mm": {
+        "max": 64006,
+        "mean": 58994.194444,
+        "min": 0
+      },
+      "reach_f_m": {
+        "max": 0.57272,
+        "mean": 0.135034,
+        "min": 0.0
+      },
+      "reach_b_m": {
+        "max": 0.7495,
+        "mean": 0.21678,
+        "min": 0.0
+      },
+      "reach_max_m": {
+        "max": 0.7495,
+        "mean": 0.253149,
+        "min": 0.0
+      },
+      "foot_gap_m": {
+        "max": 0.02301,
+        "mean": 0.008081,
+        "min": 0.0
+      },
+      "penetration_pct": {
+        "max": 0.0,
+        "mean": 0.0,
+        "min": 0.0
+      }
+    }
+  },
+  "worst_tear_ratio": {
+    "card": "jab",
+    "frame": 4,
+    "tear_ratio": 1.84941,
+    "tear_e": 0.03586,
+    "tear_a": 0.01939,
+    "reach_e": 0.34907,
+    "reach_a": 0.39271
+  },
+  "frames_e_reach_not_less_than_foe": 22,
+  "frames_e_tear_lower_than_foe": 4,
+  "mean_tear_ratio": 1.27632,
+  "source": "e_build.json"
+}

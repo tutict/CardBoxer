@@ -1,0 +1,37 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+FAIL: player/uppercut full required coverage
+FAIL: player/wave full required coverage
+FAIL: player/throw full required coverage
+FAIL: player/rush full required coverage
+FAIL: player/backstep full required coverage
+FAIL: player/guard full required coverage
+FAIL: player/sidestep full required coverage
+FAIL: player/focus full required coverage
+FAIL: player/recover full required coverage
+FAIL: player/idle full required coverage
+FAIL: player/walk full required coverage
+FAIL: player/ko full required coverage
+FAIL: player/hit_light full required coverage
+FAIL: player/hit_heavy full required coverage
+FAIL: player/block full required coverage
+GEOMETRY player guard_z=0.42917954921722/0.32513356208801 jab_z=0.78306484222412 cross_z=0.77973175048828 sweep_z=0.78999990224838
+FAIL: foe/uppercut full required coverage
+FAIL: foe/wave full required coverage
+FAIL: foe/throw full required coverage
+FAIL: foe/rush full required coverage
+FAIL: foe/backstep full required coverage
+FAIL: foe/guard full required coverage
+FAIL: foe/sidestep full required coverage
+FAIL: foe/focus full required coverage
+FAIL: foe/recover full required coverage
+FAIL: foe/idle full required coverage
+FAIL: foe/walk full required coverage
+FAIL: foe/ko full required coverage
+FAIL: foe/hit_light full required coverage
+FAIL: foe/hit_heavy full required coverage
+FAIL: foe/block full required coverage
+GEOMETRY foe guard_z=0.4970078766346/0.3853922188282 jab_z=0.90378153324127 cross_z=0.91803354024887 sweep_z=0.67000007629395
+NATIVE MOTION CHECK: FAIL failures=30
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)

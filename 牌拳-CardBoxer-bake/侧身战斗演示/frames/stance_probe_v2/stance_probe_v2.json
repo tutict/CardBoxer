@@ -1,0 +1,246 @@
+{
+  "sources": {
+    "player": {
+      "path": "3D模型探针V4b/v4b-angle55.png",
+      "sha256": "caa7afb1a1f3e07bdb442090c1c0efad402d650d7e5bfcdf6e56fc2f722d28f8",
+      "flipped_png_sha256": "5147dff04bd4ba4b9e7100c09f1ef0935acb7c096b18380bf38e4418e27068cf",
+      "alpha_bbox": [
+        198,
+        96,
+        581,
+        672
+      ],
+      "mask_counts": [
+        432607,
+        1540,
+        635,
+        7075,
+        14665,
+        9999,
+        16233,
+        11095,
+        13117,
+        15779,
+        26227,
+        15414,
+        25438
+      ],
+      "far_pixels_pinned_to_hips": 431656,
+      "source_pixel_identical_to_flipped": true
+    },
+    "foe": {
+      "path": "对手怪Blender建模V1/foe-angle55.png",
+      "sha256": "0ccb7f9f90ca3e4d6430939e0b1884b878c6914b23d26f4f34a944513a83065f",
+      "flipped_png_sha256": "ea6dff9c1041f7c237b033c2040a3ede0861f3e0b5695bca71e89b579f0d0a44",
+      "alpha_bbox": [
+        238,
+        96,
+        574,
+        672
+      ],
+      "mask_counts": [
+        435672,
+        3039,
+        1243,
+        6543,
+        14176,
+        12966,
+        15053,
+        15208,
+        13794,
+        13710,
+        22966,
+        13438,
+        22016
+      ],
+      "far_pixels_pinned_to_hips": 433670,
+      "source_pixel_identical_to_flipped": true
+    }
+  },
+  "candidates": {
+    "S1": {
+      "player": {
+        "file": "player-S1.png",
+        "sha256": "4425906a1583d06f8153884b52d7be2719df9427043a2082c8b43a1e35418cd1",
+        "bytes": 156973,
+        "alpha_bbox": [
+          198,
+          95,
+          580,
+          678
+        ],
+        "alpha_pixels": 67912,
+        "guard_zone_alpha": 6004,
+        "diff_px_vs_A_pose": 61628,
+        "max_abs_delta_deg": 45.0,
+        "config": {
+          "label": "轻",
+          "torso_deg": 2.0,
+          "head_comp": 0.6,
+          "f_upper": 14.0,
+          "f_fore": -45.0,
+          "b_upper": -14.0,
+          "b_fore": 45.0,
+          "thigh_f": 8.0,
+          "shin_f": -5.0,
+          "thigh_b": -10.0,
+          "shin_b": 6.0
+        }
+      },
+      "foe": {
+        "file": "foe-S1.png",
+        "sha256": "73cea557f7d97d48d2d27fe490c97a5269645e9ce071aa8ce5b797e777f171bf",
+        "bytes": 238776,
+        "alpha_bbox": [
+          238,
+          96,
+          586,
+          682
+        ],
+        "alpha_pixels": 112698,
+        "guard_zone_alpha": 9278,
+        "diff_px_vs_A_pose": 74332,
+        "max_abs_delta_deg": 45.0,
+        "config": {
+          "label": "轻",
+          "torso_deg": 2.0,
+          "head_comp": 0.6,
+          "f_upper": 14.0,
+          "f_fore": -45.0,
+          "b_upper": -14.0,
+          "b_fore": 45.0,
+          "thigh_f": 8.0,
+          "shin_f": -5.0,
+          "thigh_b": -10.0,
+          "shin_b": 6.0
+        }
+      }
+    },
+    "S2": {
+      "player": {
+        "file": "player-S2.png",
+        "sha256": "5cff611335ef637dd2161ed8bf7addb9878a534c7ae5948c2514a794075bec87",
+        "bytes": 144278,
+        "alpha_bbox": [
+          198,
+          95,
+          559,
+          680
+        ],
+        "alpha_pixels": 60115,
+        "guard_zone_alpha": 5520,
+        "diff_px_vs_A_pose": 70418,
+        "max_abs_delta_deg": 70.0,
+        "config": {
+          "label": "中",
+          "torso_deg": 4.0,
+          "head_comp": 0.6,
+          "f_upper": 26.0,
+          "f_fore": -70.0,
+          "b_upper": -26.0,
+          "b_fore": 70.0,
+          "thigh_f": 12.0,
+          "shin_f": -7.0,
+          "thigh_b": -15.0,
+          "shin_b": 9.0
+        }
+      },
+      "foe": {
+        "file": "foe-S2.png",
+        "sha256": "fcc35a301f0649ee150c278bce5897d180bf7f68325df41609c5588b7cc21b77",
+        "bytes": 216375,
+        "alpha_bbox": [
+          238,
+          97,
+          571,
+          684
+        ],
+        "alpha_pixels": 99660,
+        "guard_zone_alpha": 8588,
+        "diff_px_vs_A_pose": 84141,
+        "max_abs_delta_deg": 70.0,
+        "config": {
+          "label": "中",
+          "torso_deg": 4.0,
+          "head_comp": 0.6,
+          "f_upper": 26.0,
+          "f_fore": -70.0,
+          "b_upper": -26.0,
+          "b_fore": 70.0,
+          "thigh_f": 12.0,
+          "shin_f": -7.0,
+          "thigh_b": -15.0,
+          "shin_b": 9.0
+        }
+      }
+    },
+    "S3": {
+      "player": {
+        "file": "player-S3.png",
+        "sha256": "e9d9161bb39978e1180b6c38f02365b4a38cbfa604643992f37786bbf4f820a2",
+        "bytes": 146099,
+        "alpha_bbox": [
+          198,
+          95,
+          538,
+          680
+        ],
+        "alpha_pixels": 60560,
+        "guard_zone_alpha": 5175,
+        "diff_px_vs_A_pose": 75516,
+        "max_abs_delta_deg": 92.0,
+        "config": {
+          "label": "重",
+          "torso_deg": 6.0,
+          "head_comp": 0.6,
+          "f_upper": 36.0,
+          "f_fore": -92.0,
+          "b_upper": -36.0,
+          "b_fore": 92.0,
+          "thigh_f": 16.0,
+          "shin_f": -9.0,
+          "thigh_b": -20.0,
+          "shin_b": 12.0
+        }
+      },
+      "foe": {
+        "file": "foe-S3.png",
+        "sha256": "b592464773f68ef136c0fd528352dca3005ad19843d88a564e760f0315c31e8c",
+        "bytes": 196999,
+        "alpha_bbox": [
+          238,
+          97,
+          556,
+          686
+        ],
+        "alpha_pixels": 88296,
+        "guard_zone_alpha": 8124,
+        "diff_px_vs_A_pose": 90639,
+        "max_abs_delta_deg": 92.0,
+        "config": {
+          "label": "重",
+          "torso_deg": 6.0,
+          "head_comp": 0.6,
+          "f_upper": 36.0,
+          "f_fore": -92.0,
+          "b_upper": -36.0,
+          "b_fore": 92.0,
+          "thigh_f": 16.0,
+          "shin_f": -9.0,
+          "thigh_b": -20.0,
+          "shin_b": 12.0
+        }
+      }
+    }
+  },
+  "guard_zone": [
+    420,
+    180,
+    540,
+    290
+  ],
+  "far_px": 72.0,
+  "mask_rule": "build_masks_safe",
+  "board": "站架三档对照.png",
+  "board_sha256": "1d721afbb8042ecfc2c1dfc4d722ad0b79555982b2b4c85e391110f726411e10"
+}

@@ -1,0 +1,7 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 621.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5080 Laptop GPU
+
+RENDER_START views=6 out=C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\D路线-CreativeReview与引擎截帧\shots
+RENDER_JSON {"views":[{"fov":33.0,"h":1100,"name":"front","path":"C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\D路线-CreativeReview与引擎截帧\\shots/godot-front.png","radius":3.55,"save_error":0,"w":900,"yaw":0.0},{"fov":33.0,"h":1100,"name":"angle35","path":"C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\D路线-CreativeReview与引擎截帧\\shots/godot-angle35.png","radius":3.55,"save_error":0,"w":900,"yaw":35.0},{"fov":33.0,"h":1100,"name":"side90","path":"C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\D路线-CreativeReview与引擎截帧\\shots/godot-side90.png","radius":3.55,"save_error":0,"w":900,"yaw":90.0},{"fov":33.0,"h":1100,"name":"back","path":"C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\D路线-CreativeReview与引擎截帧\\shots/godot-back.png","radius":3.55,"save_error":0,"w":900,"yaw":180.0},{"fov":32.0,"h":1100,"name":"upper","path":"C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\D路线-CreativeReview与引擎截帧\\shots/godot-upper.png","radius":1.7,"save_error":0,"w":900,"yaw":20.0},{"fov":38.0,"h":1100,"name":"wide","path":"C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\D路线-CreativeReview与引擎截帧\\shots/godot-wide.png","radius":4.8,"save_error":0,"w":900,"yaw":15.0}]}
+
+=== STDERR ===

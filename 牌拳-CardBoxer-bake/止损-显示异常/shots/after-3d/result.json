@@ -1,0 +1,36 @@
+{
+  "case": "3d",
+  "seconds": 5.255,
+  "returncode": 0,
+  "script_errors": 0,
+  "has_opengl": true,
+  "payload": {
+    "enemy_override": true,
+    "env_3d": "1",
+    "layer_3d": true,
+    "layer_3d_foe": true,
+    "player_override": true,
+    "shots": [
+      {
+        "h": 720,
+        "name": "live",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\止损-显示异常\\shots\\after-3d/display-live.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "frozen",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\止损-显示异常\\shots\\after-3d/display-frozen.png",
+        "save_error": 0,
+        "w": 1280
+      }
+    ],
+    "tk_phase": "discard",
+    "use_3d": true
+  },
+  "pngs": [
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\止损-显示异常\\shots\\after-3d\\display-frozen.png",
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\止损-显示异常\\shots\\after-3d\\display-live.png"
+  ]
+}

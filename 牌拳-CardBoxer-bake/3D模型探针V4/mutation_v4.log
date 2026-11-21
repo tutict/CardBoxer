@@ -1,0 +1,5 @@
+M1 CAUGHT  render_v4.json 的相机 target_z 被改（同相机判据失效）  red=True sentinel_green=True restore=True
+M2 CAUGHT  V4b 脸特写被换成 V3 的副本（三版不是不同模型）  red=True sentinel_green=True restore=True
+M3 CAUGHT  V4b model_inspection.json 的 skins 改成 1（假装能绑骨）  red=True sentinel_green=True restore=True
+
+3/3 CAUGHT  clean_rerun=17/17

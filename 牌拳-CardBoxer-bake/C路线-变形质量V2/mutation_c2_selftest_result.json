@@ -1,0 +1,100 @@
+{
+  "selftest": true,
+  "total": 9,
+  "caught": 8,
+  "did_not_run": 1,
+  "restore": {
+    "metrics_summary.json": true,
+    "c2_build.json": true,
+    "shells_probe.json": true,
+    "smooth_sweep.json": true,
+    "c2_build.py": true
+  },
+  "restore_all_ok": true,
+  "clean_rerun": {
+    "passed": 22,
+    "total": 22,
+    "green": true
+  },
+  "all_proven": false,
+  "rows": [
+    {
+      "id": "M1",
+      "status": "DID NOT RUN",
+      "reason": "anchor count=0 (need 1)",
+      "label": "M1"
+    },
+    {
+      "id": "M2",
+      "status": "CAUGHT",
+      "red": [
+        "V2-06_reach_ratio_double_computed"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    },
+    {
+      "id": "M3",
+      "status": "CAUGHT",
+      "red": [
+        "V2-07_reach_non_negative_every_frame"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    },
+    {
+      "id": "M4",
+      "status": "CAUGHT",
+      "red": [
+        "V2-04_stance_identity"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    },
+    {
+      "id": "M5",
+      "status": "CAUGHT",
+      "red": [
+        "V2-16_shells_small_holds_body"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    },
+    {
+      "id": "M6",
+      "status": "CAUGHT",
+      "red": [
+        "V2-17_smooth_sweep_no_real_improvement"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    },
+    {
+      "id": "M7",
+      "status": "CAUGHT",
+      "red": [
+        "V2-19_final_shots_single_variable"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    },
+    {
+      "id": "M8",
+      "status": "CAUGHT",
+      "red": [
+        "V2-21_params_match_source"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    },
+    {
+      "id": "M9",
+      "status": "CAUGHT",
+      "red": [
+        "V2-22_source_wiring"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    }
+  ]
+}

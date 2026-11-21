@@ -1,0 +1,10 @@
+player player-rigged.glb 38478140 B verts= 57934 bbox= [-0.6272372603416443, 0, -0.384692519903183] [0.6272372603416443, 1.7200000286102295, 0.384692519903183]
+   IMG texture_pbr_20250901_normal 5638722 cce269cfbcd6c32a
+   IMG texture_pbr_20250901 16637843 9fc25cf63871573f
+   IMG texture_pbr_20250901_metallic-texture_pbr_20250901_roughness 12703501 ee2ab849bba394ba
+foe foe-rigged.glb 42914328 B verts= 64059 bbox= [-0.6084343791007996, 0, -0.36025306582450867] [0.6084343791007996, 1.7200000286102295, 0.36025306582450867]
+   IMG texture_pbr_20250901_normal 8934769 ed4d58cd90dd1419
+   IMG texture_pbr_20250901 15782150 3c1076596ef22f2e
+   IMG texture_pbr_20250901_metallic-texture_pbr_20250901_roughness 14380706 c87454eacff12946
+image_sets_identical False shared 0 bbox_different True verts_different True
+GLB_PAIR_DISTINCT_OK

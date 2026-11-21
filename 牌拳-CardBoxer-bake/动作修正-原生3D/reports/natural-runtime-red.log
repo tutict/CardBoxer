@@ -1,0 +1,16 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+FAIL: non-contact intermediate quaternion keeps moving at frame2.0
+FAIL: root has continuous nonzero velocity at frame2.0
+FAIL: non-contact intermediate quaternion keeps moving at frame5.0
+FAIL: root has continuous nonzero velocity at frame5.0
+FAIL: authored key remains exact 5.0
+FAIL: player hand retracts before torso retreat
+FAIL: player return has backward stepping
+FAIL: player footwork follows signed visual travel
+FAIL: foe hand retracts before torso retreat
+FAIL: foe return has backward stepping
+FAIL: foe footwork follows signed visual travel
+NATURAL RUNTIME CHECK: 198/209 passed

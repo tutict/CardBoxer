@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "post_own_equals_single_layer_truth": true,
+    "post_own_pixels_equal_single_layer_truth": true,
+    "pre_own_differs_from_post_own": true,
+    "runtime_swap_path_stable": true,
+    "pre_own_differs_from_pre_none": true,
+    "post_own_differs_from_post_none": true
+  },
+  "failed": [],
+  "note": "落地前后 own 组 sha 不同是预期的：落地前是运行时切 world 的过渡态，落地后与单层真值逐字节相同。",
+  "ok": true
+}

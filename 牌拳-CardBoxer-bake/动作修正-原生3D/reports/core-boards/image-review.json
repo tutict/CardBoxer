@@ -1,0 +1,4148 @@
+{
+  "renderer": "NVIDIA GeForce RTX 5080 Laptop GPU",
+  "completed": true,
+  "boards": [
+    "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\reports\\core-boards\\stance-facing1-board.png",
+    "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\reports\\core-boards\\jab-facing1-board.png",
+    "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\reports\\core-boards\\cross-facing1-board.png",
+    "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\reports\\core-boards\\sweep-facing1-board.png"
+  ],
+  "gifs": [
+    "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\reports\\core-boards\\stance-facing1.gif",
+    "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\reports\\core-boards\\jab-facing1.gif",
+    "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\reports\\core-boards\\cross-facing1.gif",
+    "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\reports\\core-boards\\sweep-facing1.gif"
+  ],
+  "image_count": 188,
+  "empty_or_tiny_images": [],
+  "image_statistics": [
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-stance-facing1-f000.0.png",
+      "visible_pixels": 42797,
+      "rgb_std": 91.316720755862,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-stance-facing1-f000.0.png",
+      "visible_pixels": 57221,
+      "rgb_std": 36.565397193363886,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f000.0.png",
+      "visible_pixels": 42797,
+      "rgb_std": 91.316720755862,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f000.0.png",
+      "visible_pixels": 57221,
+      "rgb_std": 36.565397193363886,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f000.5.png",
+      "visible_pixels": 42769,
+      "rgb_std": 91.30642469189897,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f000.5.png",
+      "visible_pixels": 57280,
+      "rgb_std": 36.6207974671824,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f001.0.png",
+      "visible_pixels": 42715,
+      "rgb_std": 91.25684296773069,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f001.0.png",
+      "visible_pixels": 57404,
+      "rgb_std": 36.68645320263974,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f002.0.png",
+      "visible_pixels": 42601,
+      "rgb_std": 91.24654171710117,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f002.0.png",
+      "visible_pixels": 57728,
+      "rgb_std": 36.82396045807611,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f002.5.png",
+      "visible_pixels": 42586,
+      "rgb_std": 91.2855591161984,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f002.5.png",
+      "visible_pixels": 57922,
+      "rgb_std": 37.01603965462985,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f003.0.png",
+      "visible_pixels": 42572,
+      "rgb_std": 91.27168715817996,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f003.0.png",
+      "visible_pixels": 57984,
+      "rgb_std": 37.07900103309851,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f003.5.png",
+      "visible_pixels": 42736,
+      "rgb_std": 91.223976775032,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f003.5.png",
+      "visible_pixels": 57559,
+      "rgb_std": 37.134056051855346,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f004.0.png",
+      "visible_pixels": 43652,
+      "rgb_std": 91.38034559180358,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f004.0.png",
+      "visible_pixels": 56875,
+      "rgb_std": 37.349037733510734,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f005.0.png",
+      "visible_pixels": 44847,
+      "rgb_std": 91.51913849292949,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f005.0.png",
+      "visible_pixels": 57674,
+      "rgb_std": 34.34680544024905,
+      "border_pixels": {
+        "left": 3,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f005.5.png",
+      "visible_pixels": 45137,
+      "rgb_std": 91.86530153685513,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f005.5.png",
+      "visible_pixels": 58386,
+      "rgb_std": 33.4490504271143,
+      "border_pixels": {
+        "left": 52,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f006.0.png",
+      "visible_pixels": 45178,
+      "rgb_std": 92.0013581559992,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f006.0.png",
+      "visible_pixels": 58449,
+      "rgb_std": 33.31963576603767,
+      "border_pixels": {
+        "left": 53,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f006.5.png",
+      "visible_pixels": 45005,
+      "rgb_std": 91.76741183435482,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f006.5.png",
+      "visible_pixels": 58261,
+      "rgb_std": 33.595372234960344,
+      "border_pixels": {
+        "left": 44,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f007.0.png",
+      "visible_pixels": 44243,
+      "rgb_std": 91.50019338414039,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f007.0.png",
+      "visible_pixels": 56798,
+      "rgb_std": 35.276147290518956,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f007.5.png",
+      "visible_pixels": 43302,
+      "rgb_std": 91.42656677204934,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f007.5.png",
+      "visible_pixels": 56885,
+      "rgb_std": 37.259456972988126,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f008.0.png",
+      "visible_pixels": 42680,
+      "rgb_std": 91.1906214165404,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f008.0.png",
+      "visible_pixels": 57152,
+      "rgb_std": 37.03473582200822,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f008.5.png",
+      "visible_pixels": 42677,
+      "rgb_std": 91.18967204962273,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f008.5.png",
+      "visible_pixels": 57142,
+      "rgb_std": 37.03486866791733,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f009.0.png",
+      "visible_pixels": 42676,
+      "rgb_std": 91.17168337912216,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f009.0.png",
+      "visible_pixels": 57165,
+      "rgb_std": 36.949372195171925,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f010.0.png",
+      "visible_pixels": 42681,
+      "rgb_std": 91.18202704743699,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f010.0.png",
+      "visible_pixels": 57204,
+      "rgb_std": 36.82698180014081,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f011.0.png",
+      "visible_pixels": 42747,
+      "rgb_std": 91.29205029603,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f011.0.png",
+      "visible_pixels": 57253,
+      "rgb_std": 36.67693732140135,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f012.0.png",
+      "visible_pixels": 42785,
+      "rgb_std": 91.30466966741263,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f012.0.png",
+      "visible_pixels": 57240,
+      "rgb_std": 36.60346430083432,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f012.5.png",
+      "visible_pixels": 42792,
+      "rgb_std": 91.31321197539458,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f012.5.png",
+      "visible_pixels": 57232,
+      "rgb_std": 36.58976869067105,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f013.0.png",
+      "visible_pixels": 42797,
+      "rgb_std": 91.316720755862,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f013.0.png",
+      "visible_pixels": 57221,
+      "rgb_std": 36.565397193363886,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f000.0.png",
+      "visible_pixels": 42797,
+      "rgb_std": 91.316720755862,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f000.0.png",
+      "visible_pixels": 57221,
+      "rgb_std": 36.565397193363886,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f000.5.png",
+      "visible_pixels": 42874,
+      "rgb_std": 91.33193389936696,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f000.5.png",
+      "visible_pixels": 57195,
+      "rgb_std": 36.50275548519875,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f001.0.png",
+      "visible_pixels": 43006,
+      "rgb_std": 91.36628711823758,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f001.0.png",
+      "visible_pixels": 57086,
+      "rgb_std": 36.29397461979443,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f002.0.png",
+      "visible_pixels": 43506,
+      "rgb_std": 91.43725895550917,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f002.0.png",
+      "visible_pixels": 56699,
+      "rgb_std": 36.13283924884818,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f003.0.png",
+      "visible_pixels": 44089,
+      "rgb_std": 91.60693565962136,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f003.0.png",
+      "visible_pixels": 56192,
+      "rgb_std": 36.02135690706265,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f004.0.png",
+      "visible_pixels": 44553,
+      "rgb_std": 91.72917366041581,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f004.0.png",
+      "visible_pixels": 55679,
+      "rgb_std": 36.02775541813369,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f004.5.png",
+      "visible_pixels": 44721,
+      "rgb_std": 91.80829712657717,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f004.5.png",
+      "visible_pixels": 55518,
+      "rgb_std": 36.05580080973171,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f005.0.png",
+      "visible_pixels": 44781,
+      "rgb_std": 91.83848390190951,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f005.0.png",
+      "visible_pixels": 55449,
+      "rgb_std": 36.035942692125346,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f005.5.png",
+      "visible_pixels": 44424,
+      "rgb_std": 91.71643442604022,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f005.5.png",
+      "visible_pixels": 55732,
+      "rgb_std": 36.0664461471123,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f006.0.png",
+      "visible_pixels": 43544,
+      "rgb_std": 91.54115201387948,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f006.0.png",
+      "visible_pixels": 56495,
+      "rgb_std": 36.16570660685618,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f007.0.png",
+      "visible_pixels": 42246,
+      "rgb_std": 91.40588963611923,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f007.0.png",
+      "visible_pixels": 58479,
+      "rgb_std": 36.71909191938653,
+      "border_pixels": {
+        "left": 41,
+        "right": 0,
+        "top": 0,
+        "bottom": 60
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f008.0.png",
+      "visible_pixels": 43196,
+      "rgb_std": 91.29552582330213,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f008.0.png",
+      "visible_pixels": 58973,
+      "rgb_std": 36.50923148827574,
+      "border_pixels": {
+        "left": 54,
+        "right": 0,
+        "top": 0,
+        "bottom": 60
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f008.5.png",
+      "visible_pixels": 43740,
+      "rgb_std": 91.47117743476115,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f008.5.png",
+      "visible_pixels": 59040,
+      "rgb_std": 36.51314133890157,
+      "border_pixels": {
+        "left": 58,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f009.0.png",
+      "visible_pixels": 43872,
+      "rgb_std": 91.47427798652687,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f009.0.png",
+      "visible_pixels": 59039,
+      "rgb_std": 36.46201938257654,
+      "border_pixels": {
+        "left": 56,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f009.5.png",
+      "visible_pixels": 43799,
+      "rgb_std": 91.51425866388108,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f009.5.png",
+      "visible_pixels": 59106,
+      "rgb_std": 36.432449827760095,
+      "border_pixels": {
+        "left": 56,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f010.0.png",
+      "visible_pixels": 43533,
+      "rgb_std": 91.55236086530108,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f010.0.png",
+      "visible_pixels": 59317,
+      "rgb_std": 36.469163501626255,
+      "border_pixels": {
+        "left": 60,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f011.0.png",
+      "visible_pixels": 42563,
+      "rgb_std": 91.9230988985088,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f011.0.png",
+      "visible_pixels": 59529,
+      "rgb_std": 36.902079387723866,
+      "border_pixels": {
+        "left": 60,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f012.0.png",
+      "visible_pixels": 42012,
+      "rgb_std": 92.01075146215653,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f012.0.png",
+      "visible_pixels": 59473,
+      "rgb_std": 37.20768339628693,
+      "border_pixels": {
+        "left": 24,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f012.5.png",
+      "visible_pixels": 41789,
+      "rgb_std": 92.06935503408111,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f012.5.png",
+      "visible_pixels": 59214,
+      "rgb_std": 37.47236277345125,
+      "border_pixels": {
+        "left": 2,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f013.0.png",
+      "visible_pixels": 41737,
+      "rgb_std": 92.07546552016102,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f013.0.png",
+      "visible_pixels": 59085,
+      "rgb_std": 37.37552222185934,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f013.5.png",
+      "visible_pixels": 41764,
+      "rgb_std": 91.99469257946839,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f013.5.png",
+      "visible_pixels": 59074,
+      "rgb_std": 37.50392010785556,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f014.0.png",
+      "visible_pixels": 41778,
+      "rgb_std": 91.9419955250102,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f014.0.png",
+      "visible_pixels": 59069,
+      "rgb_std": 37.644234493382854,
+      "border_pixels": {
+        "left": 8,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f015.0.png",
+      "visible_pixels": 41934,
+      "rgb_std": 91.78088631412939,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f015.0.png",
+      "visible_pixels": 58868,
+      "rgb_std": 37.71816257857329,
+      "border_pixels": {
+        "left": 22,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f016.0.png",
+      "visible_pixels": 42226,
+      "rgb_std": 91.61077459852709,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f016.0.png",
+      "visible_pixels": 58467,
+      "rgb_std": 37.190087888728165,
+      "border_pixels": {
+        "left": 18,
+        "right": 0,
+        "top": 0,
+        "bottom": 60
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f017.0.png",
+      "visible_pixels": 42633,
+      "rgb_std": 91.36811279388559,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f017.0.png",
+      "visible_pixels": 57522,
+      "rgb_std": 36.69481255554285,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f018.0.png",
+      "visible_pixels": 43007,
+      "rgb_std": 91.3647024195065,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f018.0.png",
+      "visible_pixels": 56552,
+      "rgb_std": 36.473428754087756,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f018.5.png",
+      "visible_pixels": 43148,
+      "rgb_std": 91.35781068816344,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f018.5.png",
+      "visible_pixels": 56239,
+      "rgb_std": 36.485413662340875,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f019.0.png",
+      "visible_pixels": 43193,
+      "rgb_std": 91.3739538624317,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f019.0.png",
+      "visible_pixels": 56118,
+      "rgb_std": 36.41558951593925,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f019.5.png",
+      "visible_pixels": 43136,
+      "rgb_std": 91.34088662744709,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f019.5.png",
+      "visible_pixels": 56321,
+      "rgb_std": 36.491034920870746,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f020.0.png",
+      "visible_pixels": 42995,
+      "rgb_std": 91.29440212597757,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f020.0.png",
+      "visible_pixels": 56713,
+      "rgb_std": 36.629908800685094,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f020.5.png",
+      "visible_pixels": 42865,
+      "rgb_std": 91.33303464040664,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f020.5.png",
+      "visible_pixels": 57063,
+      "rgb_std": 36.47946826365173,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f021.0.png",
+      "visible_pixels": 42797,
+      "rgb_std": 91.316720755862,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f021.0.png",
+      "visible_pixels": 57221,
+      "rgb_std": 36.565397193363886,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f000.0.png",
+      "visible_pixels": 42797,
+      "rgb_std": 91.316720755862,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f000.0.png",
+      "visible_pixels": 57221,
+      "rgb_std": 36.565397193363886,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f000.5.png",
+      "visible_pixels": 42626,
+      "rgb_std": 91.325234714235,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f000.5.png",
+      "visible_pixels": 56950,
+      "rgb_std": 36.59722100589676,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 63
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f001.0.png",
+      "visible_pixels": 42083,
+      "rgb_std": 91.46264809697027,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f001.0.png",
+      "visible_pixels": 56351,
+      "rgb_std": 36.99851696650967,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 64
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f002.0.png",
+      "visible_pixels": 40262,
+      "rgb_std": 92.0785038072116,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f002.0.png",
+      "visible_pixels": 57089,
+      "rgb_std": 38.046498705584476,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 63
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f003.0.png",
+      "visible_pixels": 39015,
+      "rgb_std": 93.93490600707118,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 39
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f003.0.png",
+      "visible_pixels": 60221,
+      "rgb_std": 37.42216546998104,
+      "border_pixels": {
+        "left": 4,
+        "right": 0,
+        "top": 0,
+        "bottom": 56
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f004.0.png",
+      "visible_pixels": 35455,
+      "rgb_std": 93.94095800481597,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f004.0.png",
+      "visible_pixels": 60653,
+      "rgb_std": 38.20262538727578,
+      "border_pixels": {
+        "left": 2,
+        "right": 0,
+        "top": 0,
+        "bottom": 55
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f005.0.png",
+      "visible_pixels": 32914,
+      "rgb_std": 93.74515236389698,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f005.0.png",
+      "visible_pixels": 60541,
+      "rgb_std": 38.31376560830241,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 53
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f006.0.png",
+      "visible_pixels": 32401,
+      "rgb_std": 94.6752299446283,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f006.0.png",
+      "visible_pixels": 60386,
+      "rgb_std": 38.25682473033004,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 30
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f006.5.png",
+      "visible_pixels": 32423,
+      "rgb_std": 95.16896165757429,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f006.5.png",
+      "visible_pixels": 60128,
+      "rgb_std": 38.27881055768357,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 7
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f007.0.png",
+      "visible_pixels": 32392,
+      "rgb_std": 95.31287413323722,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f007.0.png",
+      "visible_pixels": 60008,
+      "rgb_std": 38.38528929567234,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f007.5.png",
+      "visible_pixels": 33952,
+      "rgb_std": 93.49550013315022,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f007.5.png",
+      "visible_pixels": 56623,
+      "rgb_std": 38.43678838329484,
+      "border_pixels": {
+        "left": 51,
+        "right": 0,
+        "top": 0,
+        "bottom": 92
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f008.0.png",
+      "visible_pixels": 37016,
+      "rgb_std": 91.45115405291358,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f008.0.png",
+      "visible_pixels": 51325,
+      "rgb_std": 39.197360047099174,
+      "border_pixels": {
+        "left": 48,
+        "right": 0,
+        "top": 0,
+        "bottom": 79
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f008.5.png",
+      "visible_pixels": 37369,
+      "rgb_std": 91.24422331022856,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f008.5.png",
+      "visible_pixels": 50772,
+      "rgb_std": 39.086575383545934,
+      "border_pixels": {
+        "left": 49,
+        "right": 0,
+        "top": 0,
+        "bottom": 74
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f009.0.png",
+      "visible_pixels": 38216,
+      "rgb_std": 90.93946659162279,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f009.0.png",
+      "visible_pixels": 49442,
+      "rgb_std": 38.84055687328577,
+      "border_pixels": {
+        "left": 50,
+        "right": 0,
+        "top": 0,
+        "bottom": 63
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f010.0.png",
+      "visible_pixels": 41630,
+      "rgb_std": 92.05793662621534,
+      "border_pixels": {
+        "left": 0,
+        "right": 29,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f010.0.png",
+      "visible_pixels": 49547,
+      "rgb_std": 40.47677219994079,
+      "border_pixels": {
+        "left": 54,
+        "right": 0,
+        "top": 0,
+        "bottom": 98
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f011.0.png",
+      "visible_pixels": 40839,
+      "rgb_std": 92.21746309094397,
+      "border_pixels": {
+        "left": 0,
+        "right": 52,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f011.0.png",
+      "visible_pixels": 51521,
+      "rgb_std": 42.84493601999494,
+      "border_pixels": {
+        "left": 57,
+        "right": 0,
+        "top": 0,
+        "bottom": 7
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f011.5.png",
+      "visible_pixels": 40168,
+      "rgb_std": 92.88318018027869,
+      "border_pixels": {
+        "left": 0,
+        "right": 72,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f011.5.png",
+      "visible_pixels": 52842,
+      "rgb_std": 43.41001039944138,
+      "border_pixels": {
+        "left": 56,
+        "right": 0,
+        "top": 0,
+        "bottom": 2
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f012.0.png",
+      "visible_pixels": 39861,
+      "rgb_std": 93.08244286738724,
+      "border_pixels": {
+        "left": 0,
+        "right": 76,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f012.0.png",
+      "visible_pixels": 53359,
+      "rgb_std": 43.48662581790447,
+      "border_pixels": {
+        "left": 72,
+        "right": 0,
+        "top": 0,
+        "bottom": 1
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f012.5.png",
+      "visible_pixels": 39962,
+      "rgb_std": 93.03673991322542,
+      "border_pixels": {
+        "left": 0,
+        "right": 73,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f012.5.png",
+      "visible_pixels": 53458,
+      "rgb_std": 43.378783019824674,
+      "border_pixels": {
+        "left": 74,
+        "right": 0,
+        "top": 0,
+        "bottom": 1
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f013.0.png",
+      "visible_pixels": 40240,
+      "rgb_std": 92.81976610349234,
+      "border_pixels": {
+        "left": 0,
+        "right": 63,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f013.0.png",
+      "visible_pixels": 53686,
+      "rgb_std": 42.91558937766549,
+      "border_pixels": {
+        "left": 76,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f014.0.png",
+      "visible_pixels": 40624,
+      "rgb_std": 91.9340871705609,
+      "border_pixels": {
+        "left": 0,
+        "right": 37,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f014.0.png",
+      "visible_pixels": 54192,
+      "rgb_std": 41.36997662479328,
+      "border_pixels": {
+        "left": 83,
+        "right": 0,
+        "top": 0,
+        "bottom": 1
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f015.0.png",
+      "visible_pixels": 40952,
+      "rgb_std": 91.5805754021095,
+      "border_pixels": {
+        "left": 0,
+        "right": 34,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f015.0.png",
+      "visible_pixels": 54172,
+      "rgb_std": 40.070905292796105,
+      "border_pixels": {
+        "left": 94,
+        "right": 0,
+        "top": 0,
+        "bottom": 1
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f016.0.png",
+      "visible_pixels": 40630,
+      "rgb_std": 92.04897594116086,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f016.0.png",
+      "visible_pixels": 53844,
+      "rgb_std": 39.87053528199387,
+      "border_pixels": {
+        "left": 73,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f016.5.png",
+      "visible_pixels": 40382,
+      "rgb_std": 92.11703180806194,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f016.5.png",
+      "visible_pixels": 53635,
+      "rgb_std": 39.575242894267596,
+      "border_pixels": {
+        "left": 57,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f017.0.png",
+      "visible_pixels": 40278,
+      "rgb_std": 92.21846372087143,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f017.0.png",
+      "visible_pixels": 53537,
+      "rgb_std": 39.66207726741242,
+      "border_pixels": {
+        "left": 54,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f017.5.png",
+      "visible_pixels": 40384,
+      "rgb_std": 92.15766340494356,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f017.5.png",
+      "visible_pixels": 53603,
+      "rgb_std": 39.716562811931055,
+      "border_pixels": {
+        "left": 53,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f018.0.png",
+      "visible_pixels": 40568,
+      "rgb_std": 92.04856485406029,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f018.0.png",
+      "visible_pixels": 53796,
+      "rgb_std": 39.495428651514416,
+      "border_pixels": {
+        "left": 48,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f019.0.png",
+      "visible_pixels": 41244,
+      "rgb_std": 91.66774543991127,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f019.0.png",
+      "visible_pixels": 54251,
+      "rgb_std": 38.817184861311034,
+      "border_pixels": {
+        "left": 23,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f020.0.png",
+      "visible_pixels": 41962,
+      "rgb_std": 91.23299325216558,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f020.0.png",
+      "visible_pixels": 54623,
+      "rgb_std": 38.108456477217224,
+      "border_pixels": {
+        "left": 2,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f021.0.png",
+      "visible_pixels": 42501,
+      "rgb_std": 90.77963790834772,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f021.0.png",
+      "visible_pixels": 54965,
+      "rgb_std": 37.45766833923506,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 21
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f022.0.png",
+      "visible_pixels": 42737,
+      "rgb_std": 90.4859463723764,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 34
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f022.0.png",
+      "visible_pixels": 54798,
+      "rgb_std": 36.81862841553097,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 60
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f023.0.png",
+      "visible_pixels": 42625,
+      "rgb_std": 90.79059744630266,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 33
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f023.0.png",
+      "visible_pixels": 54554,
+      "rgb_std": 37.019190635929846,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 64
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f024.0.png",
+      "visible_pixels": 42467,
+      "rgb_std": 91.11132866868654,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 33
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f024.0.png",
+      "visible_pixels": 54238,
+      "rgb_std": 37.14521251374109,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 64
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f024.5.png",
+      "visible_pixels": 42398,
+      "rgb_std": 91.2387135700529,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 34
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f024.5.png",
+      "visible_pixels": 54085,
+      "rgb_std": 37.04047713610919,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 64
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f025.0.png",
+      "visible_pixels": 42370,
+      "rgb_std": 91.2701268556274,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 33
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f025.0.png",
+      "visible_pixels": 54020,
+      "rgb_std": 37.12873535683337,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 64
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f025.5.png",
+      "visible_pixels": 42461,
+      "rgb_std": 91.2824581410418,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 34
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f025.5.png",
+      "visible_pixels": 54539,
+      "rgb_std": 36.965122578314656,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 64
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f026.0.png",
+      "visible_pixels": 42612,
+      "rgb_std": 91.2432570397528,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f026.0.png",
+      "visible_pixels": 55661,
+      "rgb_std": 36.64014812493021,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 64
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f026.5.png",
+      "visible_pixels": 42764,
+      "rgb_std": 91.25650369685279,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f026.5.png",
+      "visible_pixels": 56723,
+      "rgb_std": 36.4537824341306,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 63
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f027.0.png",
+      "visible_pixels": 42797,
+      "rgb_std": 91.316720755862,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f027.0.png",
+      "visible_pixels": 57221,
+      "rgb_std": 36.565397193363886,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    }
+  ],
+  "images_touching_viewport_border": [
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-stance-facing1-f000.0.png",
+      "visible_pixels": 42797,
+      "rgb_std": 91.316720755862,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-stance-facing1-f000.0.png",
+      "visible_pixels": 57221,
+      "rgb_std": 36.565397193363886,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f000.0.png",
+      "visible_pixels": 42797,
+      "rgb_std": 91.316720755862,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f000.0.png",
+      "visible_pixels": 57221,
+      "rgb_std": 36.565397193363886,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f000.5.png",
+      "visible_pixels": 42769,
+      "rgb_std": 91.30642469189897,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f000.5.png",
+      "visible_pixels": 57280,
+      "rgb_std": 36.6207974671824,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f001.0.png",
+      "visible_pixels": 42715,
+      "rgb_std": 91.25684296773069,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f001.0.png",
+      "visible_pixels": 57404,
+      "rgb_std": 36.68645320263974,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f002.0.png",
+      "visible_pixels": 42601,
+      "rgb_std": 91.24654171710117,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f002.0.png",
+      "visible_pixels": 57728,
+      "rgb_std": 36.82396045807611,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f002.5.png",
+      "visible_pixels": 42586,
+      "rgb_std": 91.2855591161984,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f002.5.png",
+      "visible_pixels": 57922,
+      "rgb_std": 37.01603965462985,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f003.0.png",
+      "visible_pixels": 42572,
+      "rgb_std": 91.27168715817996,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f003.0.png",
+      "visible_pixels": 57984,
+      "rgb_std": 37.07900103309851,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f003.5.png",
+      "visible_pixels": 42736,
+      "rgb_std": 91.223976775032,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f003.5.png",
+      "visible_pixels": 57559,
+      "rgb_std": 37.134056051855346,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f004.0.png",
+      "visible_pixels": 43652,
+      "rgb_std": 91.38034559180358,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f004.0.png",
+      "visible_pixels": 56875,
+      "rgb_std": 37.349037733510734,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f005.0.png",
+      "visible_pixels": 44847,
+      "rgb_std": 91.51913849292949,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f005.0.png",
+      "visible_pixels": 57674,
+      "rgb_std": 34.34680544024905,
+      "border_pixels": {
+        "left": 3,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f005.5.png",
+      "visible_pixels": 45137,
+      "rgb_std": 91.86530153685513,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f005.5.png",
+      "visible_pixels": 58386,
+      "rgb_std": 33.4490504271143,
+      "border_pixels": {
+        "left": 52,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f006.0.png",
+      "visible_pixels": 45178,
+      "rgb_std": 92.0013581559992,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f006.0.png",
+      "visible_pixels": 58449,
+      "rgb_std": 33.31963576603767,
+      "border_pixels": {
+        "left": 53,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f006.5.png",
+      "visible_pixels": 45005,
+      "rgb_std": 91.76741183435482,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f006.5.png",
+      "visible_pixels": 58261,
+      "rgb_std": 33.595372234960344,
+      "border_pixels": {
+        "left": 44,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f007.0.png",
+      "visible_pixels": 44243,
+      "rgb_std": 91.50019338414039,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f007.0.png",
+      "visible_pixels": 56798,
+      "rgb_std": 35.276147290518956,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f007.5.png",
+      "visible_pixels": 43302,
+      "rgb_std": 91.42656677204934,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f007.5.png",
+      "visible_pixels": 56885,
+      "rgb_std": 37.259456972988126,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f008.0.png",
+      "visible_pixels": 42680,
+      "rgb_std": 91.1906214165404,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f008.0.png",
+      "visible_pixels": 57152,
+      "rgb_std": 37.03473582200822,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f008.5.png",
+      "visible_pixels": 42677,
+      "rgb_std": 91.18967204962273,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f008.5.png",
+      "visible_pixels": 57142,
+      "rgb_std": 37.03486866791733,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f009.0.png",
+      "visible_pixels": 42676,
+      "rgb_std": 91.17168337912216,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f009.0.png",
+      "visible_pixels": 57165,
+      "rgb_std": 36.949372195171925,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f010.0.png",
+      "visible_pixels": 42681,
+      "rgb_std": 91.18202704743699,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f010.0.png",
+      "visible_pixels": 57204,
+      "rgb_std": 36.82698180014081,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f011.0.png",
+      "visible_pixels": 42747,
+      "rgb_std": 91.29205029603,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f011.0.png",
+      "visible_pixels": 57253,
+      "rgb_std": 36.67693732140135,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f012.0.png",
+      "visible_pixels": 42785,
+      "rgb_std": 91.30466966741263,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f012.0.png",
+      "visible_pixels": 57240,
+      "rgb_std": 36.60346430083432,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f012.5.png",
+      "visible_pixels": 42792,
+      "rgb_std": 91.31321197539458,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f012.5.png",
+      "visible_pixels": 57232,
+      "rgb_std": 36.58976869067105,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-jab-facing1-f013.0.png",
+      "visible_pixels": 42797,
+      "rgb_std": 91.316720755862,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-jab-facing1-f013.0.png",
+      "visible_pixels": 57221,
+      "rgb_std": 36.565397193363886,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f000.0.png",
+      "visible_pixels": 42797,
+      "rgb_std": 91.316720755862,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f000.0.png",
+      "visible_pixels": 57221,
+      "rgb_std": 36.565397193363886,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f000.5.png",
+      "visible_pixels": 42874,
+      "rgb_std": 91.33193389936696,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f000.5.png",
+      "visible_pixels": 57195,
+      "rgb_std": 36.50275548519875,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f001.0.png",
+      "visible_pixels": 43006,
+      "rgb_std": 91.36628711823758,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f001.0.png",
+      "visible_pixels": 57086,
+      "rgb_std": 36.29397461979443,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f002.0.png",
+      "visible_pixels": 43506,
+      "rgb_std": 91.43725895550917,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f002.0.png",
+      "visible_pixels": 56699,
+      "rgb_std": 36.13283924884818,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f003.0.png",
+      "visible_pixels": 44089,
+      "rgb_std": 91.60693565962136,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f003.0.png",
+      "visible_pixels": 56192,
+      "rgb_std": 36.02135690706265,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f004.0.png",
+      "visible_pixels": 44553,
+      "rgb_std": 91.72917366041581,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f004.0.png",
+      "visible_pixels": 55679,
+      "rgb_std": 36.02775541813369,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f004.5.png",
+      "visible_pixels": 44721,
+      "rgb_std": 91.80829712657717,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f004.5.png",
+      "visible_pixels": 55518,
+      "rgb_std": 36.05580080973171,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f005.0.png",
+      "visible_pixels": 44781,
+      "rgb_std": 91.83848390190951,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f005.0.png",
+      "visible_pixels": 55449,
+      "rgb_std": 36.035942692125346,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f005.5.png",
+      "visible_pixels": 44424,
+      "rgb_std": 91.71643442604022,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f005.5.png",
+      "visible_pixels": 55732,
+      "rgb_std": 36.0664461471123,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f006.0.png",
+      "visible_pixels": 43544,
+      "rgb_std": 91.54115201387948,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f006.0.png",
+      "visible_pixels": 56495,
+      "rgb_std": 36.16570660685618,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f007.0.png",
+      "visible_pixels": 42246,
+      "rgb_std": 91.40588963611923,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f007.0.png",
+      "visible_pixels": 58479,
+      "rgb_std": 36.71909191938653,
+      "border_pixels": {
+        "left": 41,
+        "right": 0,
+        "top": 0,
+        "bottom": 60
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f008.0.png",
+      "visible_pixels": 43196,
+      "rgb_std": 91.29552582330213,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f008.0.png",
+      "visible_pixels": 58973,
+      "rgb_std": 36.50923148827574,
+      "border_pixels": {
+        "left": 54,
+        "right": 0,
+        "top": 0,
+        "bottom": 60
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f008.5.png",
+      "visible_pixels": 43740,
+      "rgb_std": 91.47117743476115,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f008.5.png",
+      "visible_pixels": 59040,
+      "rgb_std": 36.51314133890157,
+      "border_pixels": {
+        "left": 58,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f009.0.png",
+      "visible_pixels": 43872,
+      "rgb_std": 91.47427798652687,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f009.0.png",
+      "visible_pixels": 59039,
+      "rgb_std": 36.46201938257654,
+      "border_pixels": {
+        "left": 56,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f009.5.png",
+      "visible_pixels": 43799,
+      "rgb_std": 91.51425866388108,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f009.5.png",
+      "visible_pixels": 59106,
+      "rgb_std": 36.432449827760095,
+      "border_pixels": {
+        "left": 56,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f010.0.png",
+      "visible_pixels": 43533,
+      "rgb_std": 91.55236086530108,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f010.0.png",
+      "visible_pixels": 59317,
+      "rgb_std": 36.469163501626255,
+      "border_pixels": {
+        "left": 60,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f011.0.png",
+      "visible_pixels": 42563,
+      "rgb_std": 91.9230988985088,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f011.0.png",
+      "visible_pixels": 59529,
+      "rgb_std": 36.902079387723866,
+      "border_pixels": {
+        "left": 60,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f012.0.png",
+      "visible_pixels": 42012,
+      "rgb_std": 92.01075146215653,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f012.0.png",
+      "visible_pixels": 59473,
+      "rgb_std": 37.20768339628693,
+      "border_pixels": {
+        "left": 24,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f012.5.png",
+      "visible_pixels": 41789,
+      "rgb_std": 92.06935503408111,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f012.5.png",
+      "visible_pixels": 59214,
+      "rgb_std": 37.47236277345125,
+      "border_pixels": {
+        "left": 2,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f013.0.png",
+      "visible_pixels": 41737,
+      "rgb_std": 92.07546552016102,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f013.0.png",
+      "visible_pixels": 59085,
+      "rgb_std": 37.37552222185934,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f013.5.png",
+      "visible_pixels": 41764,
+      "rgb_std": 91.99469257946839,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f013.5.png",
+      "visible_pixels": 59074,
+      "rgb_std": 37.50392010785556,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f014.0.png",
+      "visible_pixels": 41778,
+      "rgb_std": 91.9419955250102,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f014.0.png",
+      "visible_pixels": 59069,
+      "rgb_std": 37.644234493382854,
+      "border_pixels": {
+        "left": 8,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f015.0.png",
+      "visible_pixels": 41934,
+      "rgb_std": 91.78088631412939,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f015.0.png",
+      "visible_pixels": 58868,
+      "rgb_std": 37.71816257857329,
+      "border_pixels": {
+        "left": 22,
+        "right": 0,
+        "top": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f016.0.png",
+      "visible_pixels": 42226,
+      "rgb_std": 91.61077459852709,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f016.0.png",
+      "visible_pixels": 58467,
+      "rgb_std": 37.190087888728165,
+      "border_pixels": {
+        "left": 18,
+        "right": 0,
+        "top": 0,
+        "bottom": 60
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f017.0.png",
+      "visible_pixels": 42633,
+      "rgb_std": 91.36811279388559,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f017.0.png",
+      "visible_pixels": 57522,
+      "rgb_std": 36.69481255554285,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f018.0.png",
+      "visible_pixels": 43007,
+      "rgb_std": 91.3647024195065,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f018.0.png",
+      "visible_pixels": 56552,
+      "rgb_std": 36.473428754087756,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f018.5.png",
+      "visible_pixels": 43148,
+      "rgb_std": 91.35781068816344,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f018.5.png",
+      "visible_pixels": 56239,
+      "rgb_std": 36.485413662340875,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f019.0.png",
+      "visible_pixels": 43193,
+      "rgb_std": 91.3739538624317,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f019.0.png",
+      "visible_pixels": 56118,
+      "rgb_std": 36.41558951593925,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f019.5.png",
+      "visible_pixels": 43136,
+      "rgb_std": 91.34088662744709,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f019.5.png",
+      "visible_pixels": 56321,
+      "rgb_std": 36.491034920870746,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f020.0.png",
+      "visible_pixels": 42995,
+      "rgb_std": 91.29440212597757,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f020.0.png",
+      "visible_pixels": 56713,
+      "rgb_std": 36.629908800685094,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f020.5.png",
+      "visible_pixels": 42865,
+      "rgb_std": 91.33303464040664,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f020.5.png",
+      "visible_pixels": 57063,
+      "rgb_std": 36.47946826365173,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-cross-facing1-f021.0.png",
+      "visible_pixels": 42797,
+      "rgb_std": 91.316720755862,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-cross-facing1-f021.0.png",
+      "visible_pixels": 57221,
+      "rgb_std": 36.565397193363886,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f000.0.png",
+      "visible_pixels": 42797,
+      "rgb_std": 91.316720755862,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f000.0.png",
+      "visible_pixels": 57221,
+      "rgb_std": 36.565397193363886,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f000.5.png",
+      "visible_pixels": 42626,
+      "rgb_std": 91.325234714235,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f000.5.png",
+      "visible_pixels": 56950,
+      "rgb_std": 36.59722100589676,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 63
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f001.0.png",
+      "visible_pixels": 42083,
+      "rgb_std": 91.46264809697027,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f001.0.png",
+      "visible_pixels": 56351,
+      "rgb_std": 36.99851696650967,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 64
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f002.0.png",
+      "visible_pixels": 40262,
+      "rgb_std": 92.0785038072116,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f002.0.png",
+      "visible_pixels": 57089,
+      "rgb_std": 38.046498705584476,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 63
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f003.0.png",
+      "visible_pixels": 39015,
+      "rgb_std": 93.93490600707118,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 39
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f003.0.png",
+      "visible_pixels": 60221,
+      "rgb_std": 37.42216546998104,
+      "border_pixels": {
+        "left": 4,
+        "right": 0,
+        "top": 0,
+        "bottom": 56
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f004.0.png",
+      "visible_pixels": 35455,
+      "rgb_std": 93.94095800481597,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f004.0.png",
+      "visible_pixels": 60653,
+      "rgb_std": 38.20262538727578,
+      "border_pixels": {
+        "left": 2,
+        "right": 0,
+        "top": 0,
+        "bottom": 55
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f005.0.png",
+      "visible_pixels": 32914,
+      "rgb_std": 93.74515236389698,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f005.0.png",
+      "visible_pixels": 60541,
+      "rgb_std": 38.31376560830241,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 53
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f006.0.png",
+      "visible_pixels": 32401,
+      "rgb_std": 94.6752299446283,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f006.0.png",
+      "visible_pixels": 60386,
+      "rgb_std": 38.25682473033004,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 30
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f006.5.png",
+      "visible_pixels": 32423,
+      "rgb_std": 95.16896165757429,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f006.5.png",
+      "visible_pixels": 60128,
+      "rgb_std": 38.27881055768357,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 7
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f007.0.png",
+      "visible_pixels": 32392,
+      "rgb_std": 95.31287413323722,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f007.5.png",
+      "visible_pixels": 33952,
+      "rgb_std": 93.49550013315022,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f007.5.png",
+      "visible_pixels": 56623,
+      "rgb_std": 38.43678838329484,
+      "border_pixels": {
+        "left": 51,
+        "right": 0,
+        "top": 0,
+        "bottom": 92
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f008.0.png",
+      "visible_pixels": 37016,
+      "rgb_std": 91.45115405291358,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f008.0.png",
+      "visible_pixels": 51325,
+      "rgb_std": 39.197360047099174,
+      "border_pixels": {
+        "left": 48,
+        "right": 0,
+        "top": 0,
+        "bottom": 79
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f008.5.png",
+      "visible_pixels": 37369,
+      "rgb_std": 91.24422331022856,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f008.5.png",
+      "visible_pixels": 50772,
+      "rgb_std": 39.086575383545934,
+      "border_pixels": {
+        "left": 49,
+        "right": 0,
+        "top": 0,
+        "bottom": 74
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f009.0.png",
+      "visible_pixels": 38216,
+      "rgb_std": 90.93946659162279,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f009.0.png",
+      "visible_pixels": 49442,
+      "rgb_std": 38.84055687328577,
+      "border_pixels": {
+        "left": 50,
+        "right": 0,
+        "top": 0,
+        "bottom": 63
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f010.0.png",
+      "visible_pixels": 41630,
+      "rgb_std": 92.05793662621534,
+      "border_pixels": {
+        "left": 0,
+        "right": 29,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f010.0.png",
+      "visible_pixels": 49547,
+      "rgb_std": 40.47677219994079,
+      "border_pixels": {
+        "left": 54,
+        "right": 0,
+        "top": 0,
+        "bottom": 98
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f011.0.png",
+      "visible_pixels": 40839,
+      "rgb_std": 92.21746309094397,
+      "border_pixels": {
+        "left": 0,
+        "right": 52,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f011.0.png",
+      "visible_pixels": 51521,
+      "rgb_std": 42.84493601999494,
+      "border_pixels": {
+        "left": 57,
+        "right": 0,
+        "top": 0,
+        "bottom": 7
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f011.5.png",
+      "visible_pixels": 40168,
+      "rgb_std": 92.88318018027869,
+      "border_pixels": {
+        "left": 0,
+        "right": 72,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f011.5.png",
+      "visible_pixels": 52842,
+      "rgb_std": 43.41001039944138,
+      "border_pixels": {
+        "left": 56,
+        "right": 0,
+        "top": 0,
+        "bottom": 2
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f012.0.png",
+      "visible_pixels": 39861,
+      "rgb_std": 93.08244286738724,
+      "border_pixels": {
+        "left": 0,
+        "right": 76,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f012.0.png",
+      "visible_pixels": 53359,
+      "rgb_std": 43.48662581790447,
+      "border_pixels": {
+        "left": 72,
+        "right": 0,
+        "top": 0,
+        "bottom": 1
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f012.5.png",
+      "visible_pixels": 39962,
+      "rgb_std": 93.03673991322542,
+      "border_pixels": {
+        "left": 0,
+        "right": 73,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f012.5.png",
+      "visible_pixels": 53458,
+      "rgb_std": 43.378783019824674,
+      "border_pixels": {
+        "left": 74,
+        "right": 0,
+        "top": 0,
+        "bottom": 1
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f013.0.png",
+      "visible_pixels": 40240,
+      "rgb_std": 92.81976610349234,
+      "border_pixels": {
+        "left": 0,
+        "right": 63,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f013.0.png",
+      "visible_pixels": 53686,
+      "rgb_std": 42.91558937766549,
+      "border_pixels": {
+        "left": 76,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f014.0.png",
+      "visible_pixels": 40624,
+      "rgb_std": 91.9340871705609,
+      "border_pixels": {
+        "left": 0,
+        "right": 37,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f014.0.png",
+      "visible_pixels": 54192,
+      "rgb_std": 41.36997662479328,
+      "border_pixels": {
+        "left": 83,
+        "right": 0,
+        "top": 0,
+        "bottom": 1
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f015.0.png",
+      "visible_pixels": 40952,
+      "rgb_std": 91.5805754021095,
+      "border_pixels": {
+        "left": 0,
+        "right": 34,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f015.0.png",
+      "visible_pixels": 54172,
+      "rgb_std": 40.070905292796105,
+      "border_pixels": {
+        "left": 94,
+        "right": 0,
+        "top": 0,
+        "bottom": 1
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f016.0.png",
+      "visible_pixels": 40630,
+      "rgb_std": 92.04897594116086,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f016.0.png",
+      "visible_pixels": 53844,
+      "rgb_std": 39.87053528199387,
+      "border_pixels": {
+        "left": 73,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f016.5.png",
+      "visible_pixels": 40382,
+      "rgb_std": 92.11703180806194,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f016.5.png",
+      "visible_pixels": 53635,
+      "rgb_std": 39.575242894267596,
+      "border_pixels": {
+        "left": 57,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f017.0.png",
+      "visible_pixels": 40278,
+      "rgb_std": 92.21846372087143,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f017.0.png",
+      "visible_pixels": 53537,
+      "rgb_std": 39.66207726741242,
+      "border_pixels": {
+        "left": 54,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f017.5.png",
+      "visible_pixels": 40384,
+      "rgb_std": 92.15766340494356,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f017.5.png",
+      "visible_pixels": 53603,
+      "rgb_std": 39.716562811931055,
+      "border_pixels": {
+        "left": 53,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f018.0.png",
+      "visible_pixels": 40568,
+      "rgb_std": 92.04856485406029,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f018.0.png",
+      "visible_pixels": 53796,
+      "rgb_std": 39.495428651514416,
+      "border_pixels": {
+        "left": 48,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f019.0.png",
+      "visible_pixels": 41244,
+      "rgb_std": 91.66774543991127,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f019.0.png",
+      "visible_pixels": 54251,
+      "rgb_std": 38.817184861311034,
+      "border_pixels": {
+        "left": 23,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f020.0.png",
+      "visible_pixels": 41962,
+      "rgb_std": 91.23299325216558,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 31
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f020.0.png",
+      "visible_pixels": 54623,
+      "rgb_std": 38.108456477217224,
+      "border_pixels": {
+        "left": 2,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f021.0.png",
+      "visible_pixels": 42501,
+      "rgb_std": 90.77963790834772,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 32
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f021.0.png",
+      "visible_pixels": 54965,
+      "rgb_std": 37.45766833923506,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 21
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f022.0.png",
+      "visible_pixels": 42737,
+      "rgb_std": 90.4859463723764,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 34
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f022.0.png",
+      "visible_pixels": 54798,
+      "rgb_std": 36.81862841553097,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 60
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f023.0.png",
+      "visible_pixels": 42625,
+      "rgb_std": 90.79059744630266,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 33
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f023.0.png",
+      "visible_pixels": 54554,
+      "rgb_std": 37.019190635929846,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 64
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f024.0.png",
+      "visible_pixels": 42467,
+      "rgb_std": 91.11132866868654,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 33
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f024.0.png",
+      "visible_pixels": 54238,
+      "rgb_std": 37.14521251374109,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 64
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f024.5.png",
+      "visible_pixels": 42398,
+      "rgb_std": 91.2387135700529,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 34
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f024.5.png",
+      "visible_pixels": 54085,
+      "rgb_std": 37.04047713610919,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 64
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f025.0.png",
+      "visible_pixels": 42370,
+      "rgb_std": 91.2701268556274,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 33
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f025.0.png",
+      "visible_pixels": 54020,
+      "rgb_std": 37.12873535683337,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 64
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f025.5.png",
+      "visible_pixels": 42461,
+      "rgb_std": 91.2824581410418,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 34
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f025.5.png",
+      "visible_pixels": 54539,
+      "rgb_std": 36.965122578314656,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 64
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f026.0.png",
+      "visible_pixels": 42612,
+      "rgb_std": 91.2432570397528,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f026.0.png",
+      "visible_pixels": 55661,
+      "rgb_std": 36.64014812493021,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 64
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f026.5.png",
+      "visible_pixels": 42764,
+      "rgb_std": 91.25650369685279,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 35
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f026.5.png",
+      "visible_pixels": 56723,
+      "rgb_std": 36.4537824341306,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 63
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\player-sweep-facing1-f027.0.png",
+      "visible_pixels": 42797,
+      "rgb_std": 91.316720755862,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 36
+      }
+    },
+    {
+      "path": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u52a8\u4f5c\u4fee\u6b63-\u539f\u751f3D\\shots\\core\\foe-sweep-facing1-f027.0.png",
+      "visible_pixels": 57221,
+      "rgb_std": 36.565397193363886,
+      "border_pixels": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 61
+      }
+    }
+  ],
+  "limitations": "Rendered image presence only. Human review needed for seams, cloth, foot support, clipping and motion intent."
+}

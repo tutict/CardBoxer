@@ -1,0 +1,42 @@
+{
+  "scripts/arena.gd": {
+    "sha256": "8559c20d6a59df3164e3b5b8ba13c539ff64894cf4920484f2b48b8ddb727303",
+    "bytes": 45868
+  },
+  "scripts/fighter.gd": {
+    "sha256": "df9b5e99e8c7c3b4bb6f163150ed87574205fd9a266bd6b1bc20e85818d9b81b",
+    "bytes": 40685
+  },
+  "scripts/battle_rhythm.gd": {
+    "sha256": "48c56db4aca20ddd4bacd7703d21546f4482137c2ac4a2f07ec2b92f6c7f4c84",
+    "bytes": 3848
+  },
+  "scripts/hud.gd": {
+    "sha256": "0fca9b2ac80497254a7cd5f4c2fb6a58a7df99d2e6c1801aa39905ffd2b67bcf",
+    "bytes": 24522
+  },
+  "scripts/fx_layer.gd": {
+    "sha256": "b9192a3ba20d90062d6c0a829dcdc6c808126e70baf838f676a87290165572ed",
+    "bytes": 430
+  },
+  "scripts/battle_motion_p0.gd": {
+    "sha256": "d958c71ae74ad2fefc7c7cb6574cb15a138c5a2cdfcfd7612d0daa85b7833460",
+    "bytes": 3021
+  },
+  "scripts/taikou_rules.gd": {
+    "sha256": "d16a4b16668b60d929b0eab318e98d0a2acffefd503f17e8d344cb55a599bce1",
+    "bytes": 3362
+  },
+  "tests/battle_rhythm_check.gd": {
+    "sha256": "9dff302e84257b56b7857f48c0fef2dbda3342817e8f7a6b169f5143bc511e16",
+    "bytes": 10076
+  },
+  "tests/battle_motion_p0_check.gd": {
+    "sha256": "57ffad11f7a331debec7e0298d47a558a44fb512f12965a2722cd8cb9a5ec9db",
+    "bytes": 9447
+  },
+  "project.godot": {
+    "sha256": "72cdfe54dfad3c62160e684b237e40fa87eca22f2f5cdd7292cf309f6f806dc6",
+    "bytes": 861
+  }
+}

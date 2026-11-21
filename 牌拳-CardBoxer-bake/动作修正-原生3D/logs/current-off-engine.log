@@ -1,0 +1,47 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+NATIVE_LIVE_SCENARIO player-card-jab hits=1
+NATIVE_LIVE_SCENARIO player-card-cross hits=1
+NATIVE_LIVE_SCENARIO player-card-uppercut hits=1
+NATIVE_LIVE_SCENARIO player-card-sweep hits=0
+NATIVE_LIVE_SCENARIO player-card-wave hits=1
+NATIVE_LIVE_SCENARIO player-card-throw hits=0
+NATIVE_LIVE_SCENARIO player-card-rush hits=0
+NATIVE_LIVE_SCENARIO player-card-backstep hits=0
+NATIVE_LIVE_SCENARIO player-card-guard hits=0
+NATIVE_LIVE_SCENARIO player-card-sidestep hits=0
+NATIVE_LIVE_SCENARIO player-card-focus hits=0
+NATIVE_LIVE_SCENARIO player-card-recover hits=0
+NATIVE_LIVE_SCENARIO player-block hits=1
+NATIVE_LIVE_SCENARIO player-dodge hits=1
+NATIVE_LIVE_SCENARIO player-combo-super hits=3
+NATIVE_LIVE_SCENARIO player-melee-super hits=1
+NATIVE_LIVE_SCENARIO player-wave-new-action hits=1
+NATIVE_LIVE_SCENARIO player-late-wave-fatal hits=1
+NATIVE_LIVE_SCENARIO player-fatal-facing-reset hits=1
+NATIVE_LIVE_SCENARIO foe-card-jab hits=1
+NATIVE_LIVE_SCENARIO foe-card-cross hits=1
+NATIVE_LIVE_SCENARIO foe-card-uppercut hits=1
+NATIVE_LIVE_SCENARIO foe-card-sweep hits=0
+NATIVE_LIVE_SCENARIO foe-card-wave hits=1
+NATIVE_LIVE_SCENARIO foe-card-throw hits=0
+NATIVE_LIVE_SCENARIO foe-card-rush hits=0
+NATIVE_LIVE_SCENARIO foe-card-backstep hits=0
+NATIVE_LIVE_SCENARIO foe-card-guard hits=0
+NATIVE_LIVE_SCENARIO foe-card-sidestep hits=0
+NATIVE_LIVE_SCENARIO foe-card-focus hits=0
+NATIVE_LIVE_SCENARIO foe-card-recover hits=0
+NATIVE_LIVE_SCENARIO foe-block hits=1
+NATIVE_LIVE_SCENARIO foe-dodge hits=1
+NATIVE_LIVE_SCENARIO foe-combo-super hits=3
+NATIVE_LIVE_SCENARIO foe-melee-super hits=1
+NATIVE_LIVE_SCENARIO foe-wave-new-action hits=1
+NATIVE_LIVE_SCENARIO foe-late-wave-fatal hits=1
+NATIVE_LIVE_SCENARIO foe-fatal-facing-reset hits=1
+NATIVE_LIVE_SCENARIO taikou-player hits=1
+NATIVE_LIVE_SCENARIO taikou-enemy hits=1
+NATIVE_LIVE_SCENARIO taikou-draw hits=2
+NATIVE_LIVE_SCENARIO taikou-ex-fatal hits=1
+NATIVE_LIVE_RESULT {"evidence":"Production state machine, fixed input, no direct sampled-pose injection","failures":[],"fixed_dt":0.0166666666666667,"rendered":false,"scenario_count":42,"source_project":"C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer-bake/动作修正-原生3D/project/"}

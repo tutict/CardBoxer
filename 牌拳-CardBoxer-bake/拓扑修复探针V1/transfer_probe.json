@@ -1,0 +1,110 @@
+{
+  "blender": "5.2.3 LTS",
+  "source_blend_sha256": "76004e212759c76f8f84a5d8fbab58680eedc4ebcd11d663e783f8c234e13165",
+  "voxel_size": 0.02,
+  "bone": "upperarm_f",
+  "angle_deg": 35,
+  "source": {
+    "verts": 64024,
+    "uv_layers": 1,
+    "textures": [
+      {
+        "image": "texture_pbr_20250901",
+        "size": [
+          4096,
+          4096
+        ],
+        "linked_to": [
+          "Color"
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+        "size": [
+          4096,
+          4096
+        ],
+        "linked_to": [
+          "Color"
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_normal",
+        "size": [
+          4096,
+          4096
+        ],
+        "linked_to": [
+          "Color"
+        ]
+      }
+    ]
+  },
+  "proxy": {
+    "verts": 20204,
+    "faces": 20198,
+    "auto_weight_covered": 20196
+  },
+  "transfer": {
+    "verts": 64024,
+    "groups": 13,
+    "covered": 64006,
+    "coverage": 0.99972,
+    "assets_kept": {
+      "uv_layers": 1,
+      "materials": 1,
+      "textures": [
+        {
+          "image": "texture_pbr_20250901",
+          "size": [
+            4096,
+            4096
+          ],
+          "linked_to": [
+            "Color"
+          ]
+        },
+        {
+          "image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+          "size": [
+            4096,
+            4096
+          ],
+          "linked_to": [
+            "Color"
+          ]
+        },
+        {
+          "image": "texture_pbr_20250901_normal",
+          "size": [
+            4096,
+            4096
+          ],
+          "linked_to": [
+            "Color"
+          ]
+        }
+      ],
+      "uv_same_as_source": true,
+      "textures_same_as_source": true
+    }
+  },
+  "deform_a_rigid": {
+    "weight_mode": "nearest-segment rigid 1.0 (11-08 baseline)",
+    "vertices": 64024,
+    "moved_vertices_gt_0_1mm": 10780,
+    "moved_ratio": 0.16837,
+    "max_displacement_m": 0.47922,
+    "mean_displacement_m": 0.04068
+  },
+  "deform_b_transfer": {
+    "weight_mode": "voxel proxy -> Data Transfer smooth",
+    "vertices": 64024,
+    "moved_vertices_gt_0_1mm": 22252,
+    "moved_ratio": 0.34756,
+    "max_displacement_m": 0.39142,
+    "mean_displacement_m": 0.05677
+  },
+  "caveat": "覆盖率与位移数字只证明链路可动；变形质量必须看两张同条件图，脚本不评好看、不声称可用",
+  "elapsed_seconds": 2.98
+}

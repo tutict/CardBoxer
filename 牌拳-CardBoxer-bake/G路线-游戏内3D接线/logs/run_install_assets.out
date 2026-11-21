@@ -1,0 +1,5 @@
+COPY assets/3d/player-rigged.glb                  38478140 B sha=80e5a1a03f44 identical=True
+COPY data/motion_input.json                          19771 B sha=c3ff4f76f558 identical=True
+COPY scripts/rig_driver.gd                            7827 B sha=f287bf80a929 identical=True
+IMPORT rc=0 21.218s errors=0 generated=8 pngs=3
+INSTALL_ASSETS_G_OK

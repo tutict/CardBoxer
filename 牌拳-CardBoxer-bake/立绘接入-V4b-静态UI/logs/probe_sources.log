@@ -1,0 +1,15 @@
+v4b-front.png            [768, 768] RGBA  bbox=[173, 96, 595, 672] corners_a=[0, 0, 0, 0]
+v4b-angle25.png          [768, 768] RGBA  bbox=[155, 96, 569, 672] corners_a=[0, 0, 0, 0]
+v4b-angle55.png          [768, 768] RGBA  bbox=[187, 96, 570, 672] corners_a=[0, 0, 0, 0]
+v4b-back35.png           [768, 768] RGBA  bbox=[255, 96, 608, 672] corners_a=[0, 0, 0, 0]
+v4b-face-front.png       [1024, 1024] RGBA  bbox=[45, 132, 1024, 1024] corners_a=[0, 0, 0, 0]
+v4b-face-25.png          [1024, 1024] RGBA  bbox=[0, 132, 1024, 1024] corners_a=[0, 0, 255, 0]
+v4b-upper.png            [1024, 1024] RGBA  bbox=[0, 19, 1024, 1024] corners_a=[0, 0, 0, 0]
+foe-front.png            [768, 768] RGBA  bbox=[180, 96, 588, 672] corners_a=[0, 0, 0, 0]
+foe-angle25.png          [768, 768] RGBA  bbox=[170, 96, 554, 672] corners_a=[0, 0, 0, 0]
+foe-angle55.png          [768, 768] RGBA  bbox=[194, 96, 530, 672] corners_a=[0, 0, 0, 0]
+foe-back35.png           [768, 768] RGBA  bbox=[232, 96, 596, 672] corners_a=[0, 0, 0, 0]
+foe-upper.png            [1024, 1024] RGBA  bbox=[0, 19, 1024, 1024] corners_a=[0, 0, 255, 255]
+V4B_SOURCE_ALL_MATCH=True
+FOE_SILHOUETTE=see json
+PROBE_SOURCES_OK

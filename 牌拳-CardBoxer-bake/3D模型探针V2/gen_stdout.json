@@ -1,0 +1,4 @@
+{
+  "error": "CONNECTION_ERROR",
+  "message": "Failed to connect to the generation service. Please check your network and try again."
+}

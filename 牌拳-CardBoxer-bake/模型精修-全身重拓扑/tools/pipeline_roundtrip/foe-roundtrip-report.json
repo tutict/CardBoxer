@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\baseline\\assets\\3d\\foe-rigged.glb",
+  "raw": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\pipeline_roundtrip\\foe-roundtrip-raw.glb",
+  "output": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\pipeline_roundtrip\\foe-roundtrip-canonical.glb",
+  "source_sha256": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+  "raw_sha256": "3f1cc274567a3d098baf4530e9f076368a05eaa7be02a13068f7c46b85afc447",
+  "output_sha256": "8062a2314ec1bd81a8f43f6ccbe801f03d96f2b9a10913c8a88a0772f803f4e7",
+  "profile_sha256": "f033c38985469d4015634ca5b426d177be8c42623dee3d4038ae1adac6c7386e",
+  "vertices": 64065,
+  "triangles": 79998,
+  "skin_joints": 14,
+  "source_mesh_global": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "raw_mesh_global": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "raw_to_source_bind": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "raw_rest_bind_error_m": 2.3728003248704874e-07,
+  "canonical_rest_bind_error_m": 4.4540030216090904e-07,
+  "world_rest_transfer_error_m": 3.332641516059018e-07,
+  "original_nodes_exact": true,
+  "original_ibms_exact": true,
+  "sockets_source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\pipeline_roundtrip\\foe-diagnostic-sockets.json",
+  "sockets_source_sha256": "e404d70930f7d17904921659c5c6004a7d6faa8b73db3342b1276093fb471f94",
+  "pipeline_sha256": "734ff3ddbf55aba059ef998d4329a27b8421732960a038064005ae9011881667",
+  "immutable_input_sha256": {
+    "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\baseline\\assets\\3d\\foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+    "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\canonical_glb.py": "734ff3ddbf55aba059ef998d4329a27b8421732960a038064005ae9011881667",
+    "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\pipeline_roundtrip\\foe-diagnostic-sockets.json": "e404d70930f7d17904921659c5c6004a7d6faa8b73db3342b1276093fb471f94",
+    "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\pipeline_roundtrip\\foe-roundtrip-raw.glb": "3f1cc274567a3d098baf4530e9f076368a05eaa7be02a13068f7c46b85afc447"
+  },
+  "joint_remap": {
+    "hips": 0,
+    "spine": 1,
+    "chest": 2,
+    "neck": 3,
+    "head": 4,
+    "upperarm_b": 5,
+    "forearm_b": 6,
+    "upperarm_f": 7,
+    "forearm_f": 8,
+    "thigh_b": 9,
+    "shin_b": 10,
+    "thigh_f": 11,
+    "shin_f": 12,
+    "neutral_bone": 13
+  },
+  "image_sha256": [
+    "ed4d58cd90dd1419746a26926e80e0912f23ed83fdae8a9d881629e7e848cd9f",
+    "3c1076596ef22f2e45c6509e459f7e262053724ce05b803874ed53a927473d6a",
+    "c87454eacff12946de4b70254b0dbe0fe822fd93d8896efa79af5663f2cdff7e"
+  ],
+  "canonical_to_source_max_m": 9.177002766591613e-07,
+  "source_to_canonical_max_m": 9.177002766591613e-07,
+  "source_vertices": 64059,
+  "raw_nodes_equal_source": false,
+  "raw_ibms_equal_source": false,
+  "source_unchanged": true,
+  "diagnostic_sockets_only": true,
+  "test_script_sha256": "53aa71fb388ca3992492b75b9c507558375388bfbe29ca6ad2640c0f65e40c01"
+}

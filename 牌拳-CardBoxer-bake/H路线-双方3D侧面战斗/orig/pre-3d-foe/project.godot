@@ -1,0 +1,31 @@
+; 牌拳 / CARD BOXER
+; 手牌驱动的对战；玩法骨架见 arena.gd 的 BATTLE_MODE。
+; 引擎：Godot 4.5 (GL Compatibility；角色与玩法图层代码自绘，擂台背景图见 background/arena.png)
+
+config_version=5
+
+[application]
+
+config/name="牌拳 Card Boxer"
+config/description="卡牌对战：默认太阁 IV 回合制合战（同时亮 3 张比三同/三连牌型）；BATTLE_MODE=realtime 可切回实时格斗出招。"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+
+[display]
+
+; 逻辑画布仍是 1280x720：所有绘制坐标、角色站位、HUD 布局都按它写死。
+; 只把窗口物理尺寸放大到 1600x900（同为 16:9，缩放 1.25），
+; 由 stretch/mode="canvas_items" 等比放大，不改任何一行游戏代码。
+; 想再大就改下面两个 override，保持 16:9 即可（例如 1920x1080 = 1.5x）。
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1600
+window/size/window_height_override=900
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.04, 0.05, 0.09, 1)

@@ -1,0 +1,13 @@
+CASES 10 FRAMES 26 POSES 260
+CASE cap03_hard_g100 baseline
+CASE cap06_hard_g100 candidate
+CASE cap09_hard_g100 candidate
+CASE cap12_hard_g100 candidate
+CASE cap09_hard_g125 candidate
+CASE cap09_hard_g150 candidate
+CASE cap12_hard_g125 candidate
+CASE cap09_soft_g125 research
+CASE cap09_soft_g150 research
+CASE cap12_soft_g150 research
+FRAME_LIST [('jab', 1, 'leg_peak'), ('jab', 6, 'arm_peak'), ('cross', 3, 'leg_peak'), ('cross', 7, 'arm_peak'), ('uppercut', 4, 'leg_peak'), ('uppercut', 10, 'arm_peak'), ('sweep', 7, 'leg_peak'), ('sweep', 12, 'arm_peak'), ('rush', 4, 'leg_peak'), ('backstep', 4, 'leg_peak'), ('guard', 2, 'leg_peak'), ('sidestep', 3, 'leg_peak'), ('focus', 5, 'leg_peak'), ('recover', 3, 'leg_peak'), ('wave', 6, 'leg_peak'), ('wave', 17, 'arm_peak'), ('throw', 4, 'leg_peak'), ('throw', 8, 'arm_peak'), ('hit_light', 3, 'leg_peak'), ('hit_light', 2, 'arm_peak'), ('hit_heavy', 1, 'leg_peak'), ('hit_heavy', 4, 'arm_peak'), ('block', 1, 'leg_peak'), ('jab', 7, 'historical_anchor'), ('cross', 11, 'historical_anchor'), ('wave', 18, 'historical_anchor')]
+SWEEP_PLAN_OK

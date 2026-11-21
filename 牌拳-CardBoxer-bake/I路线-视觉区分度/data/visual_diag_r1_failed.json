@@ -1,0 +1,163 @@
+{
+  "threshold_sum_rgb": 18,
+  "left_roi": [
+    361,
+    280,
+    487,
+    545
+  ],
+  "right_roi": [
+    793,
+    280,
+    921,
+    545
+  ],
+  "diffs": {
+    "player_roi_noop": {
+      "changed_px": 0,
+      "total_px": 33390,
+      "ratio": 0.0,
+      "mae": 0.0
+    },
+    "foe_roi_noop": {
+      "changed_px": 0,
+      "total_px": 33920,
+      "ratio": 0.0,
+      "mae": 0.0
+    },
+    "player_roi_on_vs_plain": {
+      "changed_px": 0,
+      "total_px": 33390,
+      "ratio": 0.0,
+      "mae": 0.0
+    },
+    "foe_roi_on_vs_plain": {
+      "changed_px": 16249,
+      "total_px": 33920,
+      "ratio": 0.479,
+      "mae": 40.8328
+    },
+    "player_roi_on_vs_base": {
+      "changed_px": 18064,
+      "total_px": 33390,
+      "ratio": 0.541,
+      "mae": 55.5123
+    },
+    "foe_roi_on_vs_again": {
+      "changed_px": 0,
+      "total_px": 33920,
+      "ratio": 0.0,
+      "mae": 0.0
+    },
+    "full_frame_on_vs_plain": {
+      "changed_px": 16752,
+      "total_px": 921600,
+      "ratio": 0.0182,
+      "mae": 1.5228
+    }
+  },
+  "masks": {
+    "player_on": {
+      "mask_px": 18064,
+      "rgb": [
+        108.78,
+        100.08,
+        96.74
+      ],
+      "luma": 101.87,
+      "red_minus_blue": 12.04,
+      "width_px": 126,
+      "mask_ratio": 0.541
+    },
+    "player_plain": {
+      "mask_px": 18064,
+      "rgb": [
+        108.78,
+        100.08,
+        96.74
+      ],
+      "luma": 101.87,
+      "red_minus_blue": 12.04,
+      "width_px": 126,
+      "mask_ratio": 0.541
+    },
+    "foe_on": {
+      "mask_px": 18914,
+      "rgb": [
+        57.02,
+        42.9,
+        43.3
+      ],
+      "luma": 47.74,
+      "red_minus_blue": 13.72,
+      "width_px": 128,
+      "mask_ratio": 0.5576
+    },
+    "foe_plain": {
+      "mask_px": 17912,
+      "rgb": [
+        119.54,
+        114.98,
+        114.2
+      ],
+      "luma": 116.24,
+      "red_minus_blue": 5.34,
+      "width_px": 128,
+      "mask_ratio": 0.5281
+    },
+    "foe_on_wide": {
+      "mask_px": 19476,
+      "rgb": [
+        57.0,
+        42.83,
+        43.17
+      ],
+      "luma": 47.67,
+      "red_minus_blue": 13.83,
+      "width_px": 147,
+      "mask_ratio": 0.2882
+    },
+    "foe_plain_wide": {
+      "mask_px": 18006,
+      "rgb": [
+        119.31,
+        114.77,
+        114.05
+      ],
+      "luma": 116.04,
+      "red_minus_blue": 5.26,
+      "width_px": 135,
+      "mask_ratio": 0.2665
+    }
+  },
+  "metrics": {
+    "luma_gap_player_minus_foe_on": 54.13,
+    "luma_gap_player_minus_foe_plain": -14.37,
+    "foe_luma_drop_on_vs_plain": 68.5,
+    "red_blue_shift_delta": -8.38,
+    "foe_width_ratio_on_over_plain": 1.0,
+    "player_luma_change_on_vs_plain": 0.0,
+    "foe_width_ratio_wide": 1.0889
+  },
+  "checks": {
+    "noop_frames_identical": true,
+    "player_roi_pixel_identical": true,
+    "player_luma_unchanged": true,
+    "foe_roi_changed": true,
+    "luma_gap_above_target": true,
+    "foe_substantially_darker": true,
+    "color_shift_visible": true,
+    "repeat_switch_deterministic": true,
+    "wide_roi_wider_than_plain": false
+  },
+  "failed": [
+    "wide_roi_wider_than_plain"
+  ],
+  "ok": false,
+  "wide_foe_roi": [
+    730,
+    280,
+    985,
+    545
+  ]
+}

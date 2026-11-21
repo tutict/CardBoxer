@@ -1,0 +1,10 @@
+CHECK no_pycache True
+CHECK all_sha_nonempty True
+CHECK all_sizes_positive True
+CHECK key_files_present True
+CHECK two_boards_present True
+CHECK p1_shots_present True
+CHECK fifteen_check_logs True
+CHECK file_count_sane True
+CHECK enumeration_complete True
+FILELIST_OK files=76 bytes=6960784

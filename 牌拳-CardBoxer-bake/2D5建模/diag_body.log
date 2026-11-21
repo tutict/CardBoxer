@@ -1,0 +1,25 @@
+PARTS_OK spec=12 meshes=50
+  white_outer: white_outer,white_outer_outline
+  ink_collar: ink_collar,ink_collar_l,ink_collar_r
+  red_sash: red_sash
+  gold_clasp: gold_clasp_a,gold_clasp_b
+  chinese_knot: chinese_knot,chinese_knot_loop,chinese_knot_tassel_l,chinese_knot_tassel_r
+  double_bun: double_bun_l,double_bun_r
+  pom_pom: pom_pom_l,pom_pom_r
+  hair_clip: hair_clip
+  half_lidded_eye: half_lidded_eye_l,half_lidded_eye_r
+  glove: glove_b,glove_f
+  platform_shoe: platform_shoe_b,platform_shoe_f,platform_shoe_sole_b,platform_shoe_sole_f
+  ring_blade: ring_blade_l,ring_blade_r
+GEOM white_outer: verts=12 polys=10 x=(-0.047,0.655) z=(0.730,1.531) mats=['white_outer']
+GEOM white_outer_outline: verts=12 polys=10 x=(-0.084,0.692) z=(0.715,1.545) mats=['ink_collar']
+BANDS pos=0.00 rgb=(0.32,0.32,0.31), pos=0.38 rgb=(0.58,0.58,0.56), pos=0.68 rgb=(0.77,0.77,0.75)
+00:01.563  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\diag-body-only.png'
+DIAGBODY_OK diag-body-only.png
+00:01.657  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\diag-outline-only.png'
+DIAGBODY_OK diag-outline-only.png
+00:01.782  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\diag-body-red.png'
+DIAGBODY_OK diag-body-red.png
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit

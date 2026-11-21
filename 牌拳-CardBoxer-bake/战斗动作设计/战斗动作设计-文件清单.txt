@@ -1,0 +1,21 @@
+《牌拳》战斗动作设计 文件清单
+================================================================
+目录：战斗动作设计
+文件数：14（不含清单自身与生成脚本）
+
+battle_motion_spec.json                          11529  2e878e282dc66d838ede50d1d3d218177687e4f18917de163c6e5da8211116bd
+make_source_baseline.py                           1042  2f22aa2153ea6e4d47327f0efe177ec7a774fa547312d20efb91b7f22e130cf2
+make_timeline.py                                  7644  aa3518f7c3c4f729a5f218f7e9e5759edac7a999a8446f530b18108190918918
+mutation_run.log                                   567  6e19e28334b42a59f3699e089927dba718d4b9921b33624a0b03b308c805400d
+mutation_spec.py                                  4204  7ad31ef45b298d09addb20fb8f3b874f653f0ca1c8a6de395e963b7aca7b4dfb
+mutation_spec_result.json                         1566  644c711ac6ba6007ebf86e30544a9b5d4224cefcf1dc7d246f3c2593a617a56b
+timeline_stats.json                                272  65199146080c0568bdeac038dcec0a9d43896c4cc476c21526e7cd1dda758aa8
+verify_clean.log                                  1190  df41f0fe95c5cc7d27d30a2ac07fb834af252ad129933eaff2e9b8c8d4e215ea
+verify_run.log                                    1190  df41f0fe95c5cc7d27d30a2ac07fb834af252ad129933eaff2e9b8c8d4e215ea
+verify_spec.py                                    9807  885961a06e2d5333d1ecf6d41b708f3b6de3320ec24db61a0d9093c597c8b69a
+verify_spec_result.json                           2067  179e9309c980b73bf23418aa32a8394ff709ff202f8a8d1005220d538378ad8e
+战斗动作时间线.png                                     168142  f1b848c88ab53e409993294c93e44678bfea5e734f12bc66eb85e2930763a785
+战斗动作设计说明.txt                                     10246  0c680bfc29a19fcb2ca728fdc24582d6529a1c64efa17989852a5115d1f78b78
+源码基线.json                                         1119  ade3450efaa5300af2a9bcd570604b2524eb1ef1a0a71fe12c42a3ec8f7ad316
+
+复算： <venv>/python.exe make_filelist.py

@@ -1,0 +1,69 @@
+{
+  "dst": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\assets\\portraits",
+  "files": [
+    {
+      "file": "card_p1.png",
+      "src_sha256": "d314725edb9f3c1b7ffbfa3a3e17980048c789dde8878ac485396975f9c83556",
+      "dst_sha256": "d314725edb9f3c1b7ffbfa3a3e17980048c789dde8878ac485396975f9c83556",
+      "manifest_sha256": "d314725edb9f3c1b7ffbfa3a3e17980048c789dde8878ac485396975f9c83556",
+      "identical": true,
+      "bytes": 16432
+    },
+    {
+      "file": "card_p55.png",
+      "src_sha256": "1ae19c65674f2cda836592d77f731faa81753cf5daf79eb5659bb06883c8e35a",
+      "dst_sha256": "1ae19c65674f2cda836592d77f731faa81753cf5daf79eb5659bb06883c8e35a",
+      "manifest_sha256": "1ae19c65674f2cda836592d77f731faa81753cf5daf79eb5659bb06883c8e35a",
+      "identical": true,
+      "bytes": 16841
+    },
+    {
+      "file": "avatar_player.png",
+      "src_sha256": "385354bb495801bed95ec9115c35c514bdf35a65de6cc4acfcfd3aa45173b3ad",
+      "dst_sha256": "385354bb495801bed95ec9115c35c514bdf35a65de6cc4acfcfd3aa45173b3ad",
+      "manifest_sha256": "385354bb495801bed95ec9115c35c514bdf35a65de6cc4acfcfd3aa45173b3ad",
+      "identical": true,
+      "bytes": 4204
+    },
+    {
+      "file": "avatar_foe.png",
+      "src_sha256": "09ddb7e1f7a4b7fa0aa2bfedc393fcbb884bfdaed8bcfd722e2dfe67c84a4e8f",
+      "dst_sha256": "09ddb7e1f7a4b7fa0aa2bfedc393fcbb884bfdaed8bcfd722e2dfe67c84a4e8f",
+      "manifest_sha256": "09ddb7e1f7a4b7fa0aa2bfedc393fcbb884bfdaed8bcfd722e2dfe67c84a4e8f",
+      "identical": true,
+      "bytes": 4068
+    },
+    {
+      "file": "profile_front.png",
+      "src_sha256": "131a54cd129a963cf53b11ff2f9eec7b1b56fde923674616dcc0d243f7498198",
+      "dst_sha256": "131a54cd129a963cf53b11ff2f9eec7b1b56fde923674616dcc0d243f7498198",
+      "manifest_sha256": "131a54cd129a963cf53b11ff2f9eec7b1b56fde923674616dcc0d243f7498198",
+      "identical": true,
+      "bytes": 153640
+    },
+    {
+      "file": "profile_25.png",
+      "src_sha256": "96c4011196c15685fd16c00f695238a731bbdd4b4f7f0ff66a896082a6f9ef07",
+      "dst_sha256": "96c4011196c15685fd16c00f695238a731bbdd4b4f7f0ff66a896082a6f9ef07",
+      "manifest_sha256": "96c4011196c15685fd16c00f695238a731bbdd4b4f7f0ff66a896082a6f9ef07",
+      "identical": true,
+      "bytes": 66096
+    },
+    {
+      "file": "profile_55.png",
+      "src_sha256": "d3be45d4af5e23d3ea79ded0512e0e6249f4db6df57695f8dfe63054f1611dd4",
+      "dst_sha256": "d3be45d4af5e23d3ea79ded0512e0e6249f4db6df57695f8dfe63054f1611dd4",
+      "manifest_sha256": "d3be45d4af5e23d3ea79ded0512e0e6249f4db6df57695f8dfe63054f1611dd4",
+      "identical": true,
+      "bytes": 63936
+    },
+    {
+      "file": "profile_back35.png",
+      "src_sha256": "0fb293913838ae03357eab334b4ce99f9bd523420011c8fdcbedb77e5a572455",
+      "dst_sha256": "0fb293913838ae03357eab334b4ce99f9bd523420011c8fdcbedb77e5a572455",
+      "manifest_sha256": "0fb293913838ae03357eab334b4ce99f9bd523420011c8fdcbedb77e5a572455",
+      "identical": true,
+      "bytes": 57205
+    }
+  ]
+}

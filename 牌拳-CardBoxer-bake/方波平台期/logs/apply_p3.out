@@ -1,0 +1,8 @@
+CHECK baseline_ok True
+CHECK rig_driver_three_replacements_each_once True
+CHECK two_json_single_replace True
+CHECK two_json_only_two_diff_paths True
+CHECK both_mappings_identical True
+CHECK cards_still_15_284 True
+CHECK other_11_watched_files_unchanged True
+APPLY_P3_OK

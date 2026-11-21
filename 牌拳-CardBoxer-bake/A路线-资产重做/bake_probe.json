@@ -1,0 +1,21 @@
+{
+  "engine_before": "BLENDER_EEVEE",
+  "engine_used": "CYCLES",
+  "bake_poll_after_setup": true,
+  "image_size": [
+    512,
+    512
+  ],
+  "samples": 8,
+  "use_selected_to_active": false,
+  "bake_seconds": 0.5,
+  "bake_ok": true,
+  "error": null,
+  "png": {
+    "file": "a1-bake-probe.png",
+    "bytes": 378229,
+    "sha256": "b9aeb6a61836d768aaa59b85b732c18ad9d773a77ecdb904e081837688de9a88",
+    "valid_png": true
+  },
+  "elapsed_seconds": 0.6
+}

@@ -1,0 +1,8 @@
+{
+	"evidence": "Production state machine, fixed input, no direct sampled-pose injection",
+	"failures": [],
+	"fixed_dt": 0.0166666666666667,
+	"rendered": true,
+	"scenario_count": 6,
+	"source_project": "C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer-bake/动作修正-原生3D/project/"
+}

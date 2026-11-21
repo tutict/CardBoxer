@@ -1,0 +1,27 @@
+--- none ---
+  player sha  pre=b319cd891b54 post=e1c344699c95 DIFF
+         white pre= 17602 post= 16881  opaque pre= 71959 post= 72493  scenario pre=0 post=2
+  foe    sha  pre=f0b0904bc39d post=6e142fd93232 DIFF
+         white pre= 14643 post= 14404  opaque pre= 74953 post= 74910  scenario pre=0 post=2
+--- own ---
+  player sha  pre=53067e3de95d post=946c0682b785 DIFF
+         white pre= 13197 post= 13902  opaque pre= 42788 post= 44628  scenario pre=0 post=0
+  foe    sha  pre=12d9f0c7a226 post=4e1dd5089934 DIFF
+         white pre=   937 post=   725  opaque pre= 70393 post= 70249  scenario pre=0 post=0
+--- world ---
+  player sha  pre=53067e3de95d post=53067e3de95d SAME
+         white pre= 13197 post= 13197  opaque pre= 42788 post= 42788  scenario pre=0 post=2
+  foe    sha  pre=12d9f0c7a226 post=12d9f0c7a226 SAME
+         white pre=   937 post=   937  opaque pre= 70393 post= 70393  scenario pre=0 post=2
+--- both ---
+  player sha  pre=53067e3de95d post=53067e3de95d SAME
+         white pre= 13197 post= 13197  opaque pre= 42788 post= 42788  scenario pre=2 post=2
+  foe    sha  pre=12d9f0c7a226 post=12d9f0c7a226 SAME
+         white pre=   937 post=   937  opaque pre= 70393 post= 70393  scenario pre=2 post=2
+CHECK post_own_equals_single_layer_truth True
+CHECK post_own_pixels_equal_single_layer_truth True
+CHECK pre_own_differs_from_post_own True
+CHECK runtime_swap_path_stable True
+CHECK pre_own_differs_from_pre_none True
+CHECK post_own_differs_from_post_none True
+PREPOST_OK

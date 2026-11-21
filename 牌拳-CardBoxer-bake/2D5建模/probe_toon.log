@@ -1,0 +1,9 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\probe_toon.py:28: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\probe_toon.py:65: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+00:02.687  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\2D5建模\probe_toon.png'
+TOON_PROBE_OK
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit

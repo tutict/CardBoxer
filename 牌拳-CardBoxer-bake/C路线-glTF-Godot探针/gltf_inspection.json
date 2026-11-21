@@ -1,0 +1,420 @@
+{
+  "exports": [
+    {
+      "name": "foe-full",
+      "file": "foe-full.glb",
+      "bytes": 42926956,
+      "sha256": "a8440333353d2dbe46a042e0739bf68b5b959e5ba68fe6aae01316eecf896f45",
+      "description": "完整场景口径：高模 + 代理壳 + 13 骨，PBR 贴图导出",
+      "export_apply": false,
+      "export_materials": "EXPORT",
+      "glb_chunks": {
+        "json_bytes": 5540,
+        "bin_bytes": 42921388
+      },
+      "counts": {
+        "scenes": 1,
+        "nodes": 17,
+        "meshes": 2,
+        "materials": 1,
+        "textures": 3,
+        "images": 3,
+        "samplers": 1,
+        "skins": 1,
+        "animations": 0,
+        "cameras": 0,
+        "accessors": 11,
+        "bufferViews": 14,
+        "buffers": 1
+      },
+      "generator": "Khronos glTF Blender I/O v5.2.41",
+      "extensionsUsed": [
+        "KHR_materials_specular"
+      ],
+      "extensionsRequired": [],
+      "meshes": [
+        {
+          "mesh": "node_0.001",
+          "mode": null,
+          "material": 0,
+          "attributes": [
+            "JOINTS_0",
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0",
+            "WEIGHTS_0"
+          ],
+          "has_skin_attrs": true,
+          "position": {
+            "count": 20204,
+            "componentType": 5126,
+            "type": "VEC3",
+            "min": [
+              -0.6052385568618774,
+              6.692972965538502e-05,
+              -0.361724853515625
+            ],
+            "max": [
+              0.60566645860672,
+              1.7173938751220703,
+              0.3583563268184662
+            ]
+          },
+          "joints": {
+            "count": 20204,
+            "componentType": 5121,
+            "type": "VEC4"
+          },
+          "weights": {
+            "count": 20204,
+            "componentType": 5126,
+            "type": "VEC4"
+          }
+        },
+        {
+          "mesh": "node_0",
+          "mode": null,
+          "material": 0,
+          "attributes": [
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0"
+          ],
+          "has_skin_attrs": false,
+          "position": {
+            "count": 64059,
+            "componentType": 5126,
+            "type": "VEC3",
+            "min": [
+              -0.6084343791007996,
+              0,
+              -0.36025306582450867
+            ],
+            "max": [
+              0.6084343791007996,
+              1.7200000286102295,
+              0.36025306582450867
+            ]
+          },
+          "joints": null,
+          "weights": null
+        }
+      ],
+      "skins": [
+        {
+          "joints": 14,
+          "inverseBindMatrices": 6
+        }
+      ],
+      "animations": [],
+      "materials": [
+        {
+          "name": "Material.001",
+          "baseColorTexture": 1,
+          "metallicRoughnessTexture": 2,
+          "normalTexture": 0,
+          "occlusionTexture": null,
+          "alphaMode": null
+        }
+      ],
+      "images": [
+        {
+          "name": "texture_pbr_20250901_normal",
+          "mimeType": "image/png",
+          "bufferView": 6,
+          "bytes": 8934769,
+          "uri": null
+        },
+        {
+          "name": "texture_pbr_20250901",
+          "mimeType": "image/png",
+          "bufferView": 7,
+          "bytes": 15782150,
+          "uri": null
+        },
+        {
+          "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+          "mimeType": "image/png",
+          "bufferView": 8,
+          "bytes": 14380706,
+          "uri": null
+        }
+      ],
+      "image_bytes_total": 39097625,
+      "vertex_total": 84263,
+      "skinned_primitives": 1
+    },
+    {
+      "name": "foe-stance",
+      "file": "foe-stance.glb",
+      "bytes": 2531012,
+      "sha256": "5fa6d910383cad68ac3743daefaa4357b611c3858fb94d22bbff935416295087",
+      "description": "只高模 / 站架 / 烘焙 SURFACE_DEFORM / 无材质",
+      "export_apply": true,
+      "export_materials": "NONE",
+      "glb_chunks": {
+        "json_bytes": 1012,
+        "bin_bytes": 2529972
+      },
+      "counts": {
+        "scenes": 1,
+        "nodes": 1,
+        "meshes": 1,
+        "materials": 0,
+        "textures": 0,
+        "images": 0,
+        "samplers": 0,
+        "skins": 0,
+        "animations": 0,
+        "cameras": 0,
+        "accessors": 4,
+        "bufferViews": 4,
+        "buffers": 1
+      },
+      "generator": "Khronos glTF Blender I/O v5.2.41",
+      "extensionsUsed": [],
+      "extensionsRequired": [],
+      "meshes": [
+        {
+          "mesh": "node_0",
+          "mode": null,
+          "material": null,
+          "attributes": [
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0"
+          ],
+          "has_skin_attrs": false,
+          "position": {
+            "count": 64062,
+            "componentType": 5126,
+            "type": "VEC3",
+            "min": [
+              -0.6084343791007996,
+              -2.7864433604918304e-07,
+              -0.3602530360221863
+            ],
+            "max": [
+              0.6084343791007996,
+              1.720000147819519,
+              0.3602530062198639
+            ]
+          },
+          "joints": null,
+          "weights": null
+        }
+      ],
+      "skins": [],
+      "animations": [],
+      "materials": [],
+      "images": [],
+      "image_bytes_total": 0,
+      "vertex_total": 64062,
+      "skinned_primitives": 0
+    },
+    {
+      "name": "foe-posed",
+      "file": "foe-posed.glb",
+      "bytes": 2533600,
+      "sha256": "7336f17c1431cceeecd11745b6ca8e018a6bc6bf45cf54fcd6fa477d16cd10ce",
+      "description": "只高模 / cross#10 增益 x1.5 / 烘焙 SURFACE_DEFORM / 无材质",
+      "export_apply": true,
+      "export_materials": "NONE",
+      "glb_chunks": {
+        "json_bytes": 1008,
+        "bin_bytes": 2532564
+      },
+      "counts": {
+        "scenes": 1,
+        "nodes": 1,
+        "meshes": 1,
+        "materials": 0,
+        "textures": 0,
+        "images": 0,
+        "samplers": 0,
+        "skins": 0,
+        "animations": 0,
+        "cameras": 0,
+        "accessors": 4,
+        "bufferViews": 4,
+        "buffers": 1
+      },
+      "generator": "Khronos glTF Blender I/O v5.2.41",
+      "extensionsUsed": [],
+      "extensionsRequired": [],
+      "meshes": [
+        {
+          "mesh": "node_0",
+          "mode": null,
+          "material": null,
+          "attributes": [
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0"
+          ],
+          "has_skin_attrs": false,
+          "position": {
+            "count": 64143,
+            "componentType": 5126,
+            "type": "VEC3",
+            "min": [
+              -0.6492729783058167,
+              -0.0318400040268898,
+              -0.36025288701057434
+            ],
+            "max": [
+              0.7956001162528992,
+              1.7588777542114258,
+              0.3602530062198639
+            ]
+          },
+          "joints": null,
+          "weights": null
+        }
+      ],
+      "skins": [],
+      "animations": [],
+      "materials": [],
+      "images": [],
+      "image_bytes_total": 0,
+      "vertex_total": 64143,
+      "skinned_primitives": 0
+    },
+    {
+      "name": "foe-proxy-rig",
+      "file": "foe-proxy-rig.glb",
+      "bytes": 1297744,
+      "sha256": "a332a6d4aceca43b48aeae0bf0f149c0e351f4b8a4e43a029a48c0ebf4883944",
+      "description": "只代理壳 + 13 骨 / 无材质，检验 skin 是否随导出",
+      "export_apply": false,
+      "export_materials": "NONE",
+      "glb_chunks": {
+        "json_bytes": 3836,
+        "bin_bytes": 1293880
+      },
+      "counts": {
+        "scenes": 1,
+        "nodes": 16,
+        "meshes": 1,
+        "materials": 0,
+        "textures": 0,
+        "images": 0,
+        "samplers": 0,
+        "skins": 1,
+        "animations": 0,
+        "cameras": 0,
+        "accessors": 7,
+        "bufferViews": 7,
+        "buffers": 1
+      },
+      "generator": "Khronos glTF Blender I/O v5.2.41",
+      "extensionsUsed": [],
+      "extensionsRequired": [],
+      "meshes": [
+        {
+          "mesh": "node_0.001",
+          "mode": null,
+          "material": null,
+          "attributes": [
+            "JOINTS_0",
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0",
+            "WEIGHTS_0"
+          ],
+          "has_skin_attrs": true,
+          "position": {
+            "count": 20204,
+            "componentType": 5126,
+            "type": "VEC3",
+            "min": [
+              -0.6052385568618774,
+              6.692972965538502e-05,
+              -0.361724853515625
+            ],
+            "max": [
+              0.60566645860672,
+              1.7173938751220703,
+              0.3583563268184662
+            ]
+          },
+          "joints": {
+            "count": 20204,
+            "componentType": 5121,
+            "type": "VEC4"
+          },
+          "weights": {
+            "count": 20204,
+            "componentType": 5126,
+            "type": "VEC4"
+          }
+        }
+      ],
+      "skins": [
+        {
+          "joints": 14,
+          "inverseBindMatrices": 6
+        }
+      ],
+      "animations": [],
+      "materials": [],
+      "images": [],
+      "image_bytes_total": 0,
+      "vertex_total": 20204,
+      "skinned_primitives": 1
+    }
+  ],
+  "pose_delta": {
+    "stance_position_min_max": {
+      "min": [
+        -0.6084343791007996,
+        -2.7864433604918304e-07,
+        -0.3602530360221863
+      ],
+      "max": [
+        0.6084343791007996,
+        1.720000147819519,
+        0.3602530062198639
+      ]
+    },
+    "posed_position_min_max": {
+      "min": [
+        -0.6492729783058167,
+        -0.0318400040268898,
+        -0.36025288701057434
+      ],
+      "max": [
+        0.7956001162528992,
+        1.7588777542114258,
+        0.3602530062198639
+      ]
+    },
+    "componentwise_abs_delta": [
+      0.040839,
+      0.03184,
+      0.0,
+      0.187166,
+      0.038878,
+      0.0
+    ],
+    "max_abs_delta": 0.187166,
+    "vertex_count_equal": false,
+    "skins_stance": 0,
+    "skins_posed": 0,
+    "animations_stance": 0,
+    "animations_posed": 0
+  },
+  "texture_cost": {
+    "source_packed_4096_images": 3,
+    "source_packed_bytes_total": 39097625,
+    "glb_full_image_count": 3,
+    "glb_full_image_bytes_total": 39097625,
+    "glb_full_bytes": 42926956,
+    "image_share_of_glb": 0.9108
+  },
+  "source_blend": {
+    "sha256": "88dca6d28aa36caeda9f5af5564bf553aa8a9ee618846457b036fe3b1bd54239",
+    "bytes": 59118499,
+    "action_count": 0
+  }
+}

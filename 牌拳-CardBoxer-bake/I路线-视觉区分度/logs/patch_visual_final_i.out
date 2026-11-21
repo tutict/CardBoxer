@@ -1,0 +1,24 @@
+PATCH_FINAL SKIPPED_ALREADY_APPLIED
+CHANGED ['scripts/fighter_3d_layer.gd'] MISSING [] NEW ['tests/light_isolation_probe.gd', 'tests/material_probe.gd', 'tests/material_probe.gd.uid', 'tests/two_side_probe.gd.uid', 'tests/visual_diff_probe.gd', 'tests/vp_diag_probe.gd.uid']
+CHECK spec_revision_is_2 True
+CHECK only_existing_file_changed True
+CHECK arena_matches_h_baseline True
+CHECK fighter_matches_h_baseline True
+CHECK layer_differs_from_h_baseline True
+CHECK new_files_only_probe_scripts True
+CHECK no_surface_override_calls True
+CHECK no_3d_material_duplicate True
+CHECK no_light_energy_write True
+CHECK retired_constants_absent True
+CHECK canvas_shader_present True
+CHECK canvas_material_set True
+CHECK canvas_material_cleared True
+CHECK shader_tint_matches_spec True
+CHECK draw_scale_x_matches_spec True
+CHECK draw_scale_y_matches_spec True
+CHECK player_draw_path_pixel_identity_shape True
+CHECK off_switch_present True
+CHECK off_switch_scoped_to_foe True
+CHECK collect_meshes_kept_for_diagnostics True
+CHECK G_shape_preserved True
+PATCH_VISUAL_FINAL_I_OK

@@ -1,0 +1,286 @@
+Blender 4.4 卸载残留 —— 只读扫描清单（2026-11-06）
+==================================================================
+目标目录 : C:\Program Files\Blender Foundation\Blender 4.4
+规模     : 63 个目录 / 209 个文件 / 6.9 MB
+内容     : 100% .pyc（cpython-311 字节码），0 个 exe/dll/.blend/.msi/配置文件
+文件日期 : 全部 2025-07-06 09:35（安装时编译），目录 mtime 2025-12-17
+判断     : 卸载器漏删的 __pycache__ 运行时缓存，可再生成，无用户数据
+权限     : ADMIN=NO / DIR_WRITE=NO（当前会话无法删除）
+引用核查 : winget 仅记录 5.2.0；开始菜单无 4.4 快捷方式；无 Blender 进程
+未核实   : 注册表卸载项 —— reg.exe 被安全策略阻止，按规则未重试/未绕过
+
+--- 全部 63 个目录 ---
+/c/Program Files/Blender Foundation/Blender 4.4
+/c/Program Files/Blender Foundation/Blender 4.4/4.4
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/collections
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/collections/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/encodings
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/encodings/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/importlib
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/importlib/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/re
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/re/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/site-packages
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/site-packages/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/site-packages/_distutils_hack
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/site-packages/_distutils_hack/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/urllib
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/urllib/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/bl_pkg
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/bl_pkg/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/cycles
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/cycles/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_anim_bvh
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_anim_bvh/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_curve_svg
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_curve_svg/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_mesh_uv_layout
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_mesh_uv_layout/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_scene_fbx
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_scene_fbx/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_scene_gltf2
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_scene_gltf2/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_scene_gltf2/blender
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_scene_gltf2/blender/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_scene_gltf2/blender/com
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_scene_gltf2/blender/com/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/pose_library
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/pose_library/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/_bpy_internal
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/_bpy_internal/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/_bpy_internal/extensions
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/_bpy_internal/extensions/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bl_ui_utils
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bl_ui_utils/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy/utils
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy/utils/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy_extras
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy_extras/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/node_editor
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/node_editor/__pycache__
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui
+/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__
+
+--- 全部 209 个文件（字节 <TAB> 日期 <TAB> 路径） ---
+4954	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/__future__.cpython-311.pyc
+13180	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/_weakrefset.cpython-311.pyc
+109704	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/ast.cpython-311.pyc
+33110	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/contextlib.cpython-311.pyc
+11228	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/copy.cpython-311.pyc
+8221	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/copyreg.cpython-311.pyc
+47266	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/dataclasses.cpython-311.pyc
+36722	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/dis.cpython-311.pyc
+88037	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/enum.cpython-311.pyc
+7512	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/fnmatch.cpython-311.pyc
+46676	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/functools.cpython-311.pyc
+141689	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/inspect.cpython-311.pyc
+96951	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/ipaddress.cpython-311.pyc
+1111	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/keyword.cpython-311.pyc
+7487	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/linecache.cpython-311.pyc
+64442	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/locale.cpython-311.pyc
+13895	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/opcode.cpython-311.pyc
+18802	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/operator.cpython-311.pyc
+67763	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/pathlib.cpython-311.pyc
+43764	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/platform.cpython-311.pyc
+9721	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/reprlib.cpython-311.pyc
+28582	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/selectors.cpython-311.pyc
+5149	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/signal.cpython-311.pyc
+45726	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/socket.cpython-311.pyc
+84852	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/subprocess.cpython-311.pyc
+70354	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/threading.cpython-311.pyc
+3766	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/token.cpython-311.pyc
+30401	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/tokenize.cpython-311.pyc
+14862	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/types.cpython-311.pyc
+161698	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/typing.cpython-311.pyc
+25104	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/warnings.cpython-311.pyc
+35000	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/__pycache__/weakref.cpython-311.pyc
+78258	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/collections/__pycache__/__init__.cpython-311.pyc
+337	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/collections/__pycache__/abc.cpython-311.pyc
+6500	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/encodings/__pycache__/__init__.cpython-311.pyc
+12690	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/encodings/__pycache__/aliases.cpython-311.pyc
+2359	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/encodings/__pycache__/utf_8.cpython-311.pyc
+6703	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/importlib/__pycache__/__init__.cpython-311.pyc
+19357	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/re/__pycache__/__init__.cpython-311.pyc
+1889	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/re/__pycache__/_casefix.cpython-311.pyc
+31910	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/re/__pycache__/_compiler.cpython-311.pyc
+5993	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/re/__pycache__/_constants.cpython-311.pyc
+50184	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/re/__pycache__/_parser.cpython-311.pyc
+2460	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/site-packages/__pycache__/sitecustomize.cpython-311.pyc
+11178	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/site-packages/_distutils_hack/__pycache__/__init__.cpython-311.pyc
+190	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/urllib/__pycache__/__init__.cpython-311.pyc
+54944	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/python/lib/urllib/__pycache__/parse.cpython-311.pyc
+27796	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/bl_pkg/__pycache__/__init__.cpython-311.pyc
+154013	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/bl_pkg/__pycache__/bl_extension_ops.cpython-311.pyc
+77964	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/bl_pkg/__pycache__/bl_extension_ui.cpython-311.pyc
+8046	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/cycles/__pycache__/__init__.cpython-311.pyc
+4641	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/cycles/__pycache__/camera.cpython-311.pyc
+13062	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/cycles/__pycache__/engine.cpython-311.pyc
+6912	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/cycles/__pycache__/operators.cpython-311.pyc
+4133	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/cycles/__pycache__/presets.cpython-311.pyc
+73280	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/cycles/__pycache__/properties.cpython-311.pyc
+128911	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/cycles/__pycache__/ui.cpython-311.pyc
+11077	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/cycles/__pycache__/version_update.cpython-311.pyc
+14505	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_anim_bvh/__pycache__/__init__.cpython-311.pyc
+3035	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_curve_svg/__pycache__/__init__.cpython-311.pyc
+15568	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_mesh_uv_layout/__pycache__/__init__.cpython-311.pyc
+31115	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_scene_fbx/__pycache__/__init__.cpython-311.pyc
+90262	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_scene_gltf2/__pycache__/__init__.cpython-311.pyc
+215	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_scene_gltf2/blender/__pycache__/__init__.cpython-311.pyc
+48946	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_scene_gltf2/blender/com/__pycache__/gltf2_blender_ui.cpython-311.pyc
+1579	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/io_scene_gltf2/blender/com/__pycache__/material_helpers.cpython-311.pyc
+2498	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/pose_library/__pycache__/__init__.cpython-311.pyc
+4816	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/pose_library/__pycache__/asset_browser.cpython-311.pyc
+2641	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/pose_library/__pycache__/conversion.cpython-311.pyc
+2711	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/pose_library/__pycache__/functions.cpython-311.pyc
+13342	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/pose_library/__pycache__/gui.cpython-311.pyc
+2486	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/pose_library/__pycache__/keymaps.cpython-311.pyc
+19026	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/pose_library/__pycache__/operators.cpython-311.pyc
+18764	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/pose_library/__pycache__/pose_creation.cpython-311.pyc
+2883	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/addons_core/pose_library/__pycache__/pose_usage.cpython-311.pyc
+71842	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/__pycache__/addon_utils.cpython-311.pyc
+6655	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/__pycache__/bl_app_template_utils.cpython-311.pyc
+2303	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/__pycache__/bpy_restrict_state.cpython-311.pyc
+70980	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/__pycache__/bpy_types.cpython-311.pyc
+7980	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/__pycache__/keyingsets_utils.cpython-311.pyc
+8461	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/__pycache__/nodeitems_utils.cpython-311.pyc
+10503	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/__pycache__/rna_prop_ui.cpython-311.pyc
+202	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/_bpy_internal/__pycache__/__init__.cpython-311.pyc
+213	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/_bpy_internal/extensions/__pycache__/__init__.cpython-311.pyc
+7515	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/_bpy_internal/extensions/__pycache__/junction_module.cpython-311.pyc
+200	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bl_ui_utils/__pycache__/__init__.cpython-311.pyc
+795	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bl_ui_utils/__pycache__/layout.cpython-311.pyc
+1814	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy/__pycache__/__init__.cpython-311.pyc
+8142	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy/__pycache__/ops.cpython-311.pyc
+18767	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy/__pycache__/path.cpython-311.pyc
+51606	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy/utils/__pycache__/__init__.cpython-311.pyc
+417	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy_extras/__pycache__/__init__.cpython-311.pyc
+29107	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy_extras/__pycache__/anim_utils.cpython-311.pyc
+2675	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy_extras/__pycache__/asset_utils.cpython-311.pyc
+23918	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy_extras/__pycache__/io_utils.cpython-311.pyc
+3077	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy_extras/__pycache__/node_utils.cpython-311.pyc
+12426	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/modules/bpy_extras/__pycache__/object_utils.cpython-311.pyc
+23779	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/__pycache__/keyingsets_builtins.cpython-311.pyc
+2804	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/__pycache__/nodeitems_builtins.cpython-311.pyc
+2603	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/__init__.cpython-311.pyc
+9494	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/add_mesh_torus.cpython-311.pyc
+37073	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/anim.cpython-311.pyc
+7428	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/assets.cpython-311.pyc
+18856	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/bone_selection_sets.cpython-311.pyc
+49203	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/clip.cpython-311.pyc
+17109	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/connect_to_output.cpython-311.pyc
+6676	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/console.cpython-311.pyc
+5103	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/constraint.cpython-311.pyc
+12266	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/file.cpython-311.pyc
+11414	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/freestyle.cpython-311.pyc
+17272	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/geometry_nodes.cpython-311.pyc
+14513	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/image.cpython-311.pyc
+50606	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/image_as_planes.cpython-311.pyc
+11293	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/mesh.cpython-311.pyc
+23654	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/node.cpython-311.pyc
+42687	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/object.cpython-311.pyc
+11156	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/object_align.cpython-311.pyc
+29220	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/object_quick_effects.cpython-311.pyc
+6372	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/object_randomize_transform.cpython-311.pyc
+41682	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/presets.cpython-311.pyc
+12757	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/rigidbody.cpython-311.pyc
+9042	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/screen_play_rendered_anim.cpython-311.pyc
+20770	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/sequencer.cpython-311.pyc
+1977	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/spreadsheet.cpython-311.pyc
+56360	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/userpref.cpython-311.pyc
+11755	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/uvcalc_follow_active.cpython-311.pyc
+27220	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/uvcalc_lightmap.cpython-311.pyc
+17962	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/uvcalc_transform.cpython-311.pyc
+6561	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/vertexpaint_dirt.cpython-311.pyc
+12833	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/view3d.cpython-311.pyc
+159460	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/wm.cpython-311.pyc
+7896	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/__pycache__/world.cpython-311.pyc
+5282	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_operators/node_editor/__pycache__/node_functions.cpython-311.pyc
+11898	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/__init__.cpython-311.pyc
+2442	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/anim.cpython-311.pyc
+1549	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/asset_shelf.cpython-311.pyc
+10226	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/generic_ui_list.cpython-311.pyc
+5684	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/node_add_menu.cpython-311.pyc
+21034	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/node_add_menu_compositor.cpython-311.pyc
+57757	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/node_add_menu_geometry.cpython-311.pyc
+18197	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/node_add_menu_shader.cpython-311.pyc
+8422	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/node_add_menu_texture.cpython-311.pyc
+6034	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_animviz.cpython-311.pyc
+7169	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_collection.cpython-311.pyc
+93875	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_constraint.cpython-311.pyc
+22310	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_armature.cpython-311.pyc
+30582	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_bone.cpython-311.pyc
+28180	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_camera.cpython-311.pyc
+26826	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_curve.cpython-311.pyc
+9560	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_curves.cpython-311.pyc
+4976	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_empty.cpython-311.pyc
+28712	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_grease_pencil.cpython-311.pyc
+5070	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_lattice.cpython-311.pyc
+13603	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_light.cpython-311.pyc
+19284	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_lightprobe.cpython-311.pyc
+35997	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_mesh.cpython-311.pyc
+6654	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_metaball.cpython-311.pyc
+17356	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_modifier.cpython-311.pyc
+8034	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_pointcloud.cpython-311.pyc
+1475	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_shaderfx.cpython-311.pyc
+6209	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_speaker.cpython-311.pyc
+10360	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_data_volume.cpython-311.pyc
+64126	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_freestyle.cpython-311.pyc
+40583	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_grease_pencil_common.cpython-311.pyc
+22546	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_mask_common.cpython-311.pyc
+22238	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_material.cpython-311.pyc
+14150	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_material_gpencil.cpython-311.pyc
+28816	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_object.cpython-311.pyc
+27552	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_output.cpython-311.pyc
+87510	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_paint_common.cpython-311.pyc
+97977	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_particle.cpython-311.pyc
+23006	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_physics_cloth.cpython-311.pyc
+16749	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_physics_common.cpython-311.pyc
+41628	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_physics_dynamicpaint.cpython-311.pyc
+20330	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_physics_field.cpython-311.pyc
+73020	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_physics_fluid.cpython-311.pyc
+3399	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_physics_geometry_nodes.cpython-311.pyc
+13616	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_physics_rigidbody.cpython-311.pyc
+22971	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_physics_rigidbody_constraint.cpython-311.pyc
+18925	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_physics_softbody.cpython-311.pyc
+51035	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_render.cpython-311.pyc
+23314	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_scene.cpython-311.pyc
+43652	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_texture.cpython-311.pyc
+15357	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_view_layer.cpython-311.pyc
+9950	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_workspace.cpython-311.pyc
+12874	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/properties_world.cpython-311.pyc
+97146	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_clip.cpython-311.pyc
+7604	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_console.cpython-311.pyc
+49837	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_dopesheet.cpython-311.pyc
+45816	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_filebrowser.cpython-311.pyc
+30840	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_graph.cpython-311.pyc
+80997	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_image.cpython-311.pyc
+5497	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_info.cpython-311.pyc
+21773	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_nla.cpython-311.pyc
+50755	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_node.cpython-311.pyc
+28598	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_outliner.cpython-311.pyc
+6910	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_properties.cpython-311.pyc
+150995	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_sequencer.cpython-311.pyc
+7340	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_spreadsheet.cpython-311.pyc
+1503	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_statusbar.cpython-311.pyc
+23338	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_text.cpython-311.pyc
+17482	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_time.cpython-311.pyc
+44969	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_toolsystem_common.cpython-311.pyc
+143617	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_toolsystem_toolbar.cpython-311.pyc
+42124	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_topbar.cpython-311.pyc
+154157	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_userpref.cpython-311.pyc
+432403	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_view3d.cpython-311.pyc
+138686	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/space_view3d_toolbar.cpython-311.pyc
+1679	2025-07-06 09:35	/c/Program Files/Blender Foundation/Blender 4.4/4.4/scripts/startup/bl_ui/__pycache__/utils.cpython-311.pyc

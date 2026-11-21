@@ -1,0 +1,32 @@
+CAUGHT M01_player_cap_9_to_3 rc 1 restore True hit ['shipped_cap_still_9_both'] errors {}
+CAUGHT M02_foe_cap_9_to_3 rc 1 restore True hit ['shipped_cap_still_9_both'] errors {}
+CAUGHT M03_game_probe_out_of_sync rc 1 restore True hit ['game_probe_matches_source_bytewise'] errors {}
+CAUGHT M04_evidence_probe_code_line_changed rc 1 restore True hit ['comment_fix_changed_only_comment_lines'] errors {}
+CAUGHT M05_baseline_check_flipped rc 1 restore True hit ['baseline_live_report_all_checks_true'] errors {}
+CAUGHT M06_probe_frame_post_draw_removed rc 1 restore True hit ['probe_waits_frame_post_draw', 'comment_fix_changed_only_comment_lines'] errors {}
+CAUGHT M07_probe_pauses_scene_tree rc 1 restore True hit ['probe_never_pauses_arena'] errors {}
+CAUGHT M08_probe_writes_game_clock rc 1 restore True hit ['probe_never_advances_game_clock'] errors {}
+CAUGHT M09_probe_stops_reading_driver_state rc 1 restore True hit ['probe_reads_real_driver_state'] errors {}
+CAUGHT M10_probe_comment_lies_again rc 1 restore True hit ['probe_comment_matches_code'] errors {}
+CAUGHT M11_cap9_readback_faked rc 1 restore True hit ['cap9_cap_readback_matches_case'] errors {}
+CAUGHT M12_cap9_override_hidden rc 1 restore True hit ['cap9_uses_shipped_mapping_without_override'] errors {}
+CAUGHT M13_delta_mismatch_hidden rc 1 restore True hit ['all_rows_delta_match_python_formula'] errors {}
+CAUGHT M14_all_checks_result_faked rc 1 restore True hit ['all_checks_live_15_15'] errors {}
+CAUGHT M15_boards_check_flipped rc 1 restore True hit ['live_boards_report_all_checks_true'] errors {}
+CAUGHT M16_strip_panel_count_dropped rc 1 restore True hit ['transition_strip_42_panels_three_groups'] errors {}
+CAUGHT M17_first_solo_fingerprint_erased rc 1 restore True hit ['first_solo_run_fingerprint_logged'] errors {}
+CAUGHT M18_draw_react_state_flipped rc 1 restore True hit ['four_motion_states_match_analysis'] errors {}
+CAUGHT M19_phase_tolerance_widened rc 1 restore True hit ['phase_spec_pinned'] errors {}
+CAUGHT M20_phase_violation_injected rc 1 restore True hit ['no_phase_duration_violations'] errors {}
+CAUGHT M21_intra_jump_number_tampered rc 1 restore True hit ['jump_numeric_fields_match_recomputation'] errors {}
+CAUGHT M22_peak_mean_number_tampered rc 1 restore True hit ['peak_stats_match_recomputation'] errors {}
+CAUGHT M23_threshold_promoted_to_gate rc 1 restore True hit ['jump_threshold_is_not_a_release_gate'] errors {}
+CAUGHT M24_reproducibility_na_reversed rc 1 restore True hit ['reproducibility_na_pointed_not_folded_into_gate'] errors {}
+CAUGHT M25_homologous_source_swapped_to_cap3 rc 1 restore True hit ['homologous_frame_source_is_cap9_live_run'] errors {}
+CAUGHT M26_intro_exclusion_renamed rc 1 restore True hit ['turn1_discard_exclusion_recorded'] errors {}
+CAUGHT M27_keyframe_source_path_broken rc 1 restore True hit ['keyframes_board_sources_all_present'] errors {}
+CAUGHT M28_timeline_png_signature_broken rc 1 restore True hit ['three_png_boards_valid_signature'] errors {}
+CAUGHT M29_player_gif_signature_broken rc 1 restore True hit ['two_gifs_valid_signature_and_88_frames'] errors {}
+CAUGHT M30_live_shot_png_signature_broken rc 1 restore True hit ['cap9_all_shot_png_signatures_valid'] errors {}
+MUTATION_LIVE 30/30 CAUGHT / DNR 0 / MISSED 0 / RESTORE 30/30 / clean 68/68 ALL GREEN
+MUTATION_LIVE_OK

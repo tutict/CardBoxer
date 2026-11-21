@@ -1,0 +1,8 @@
+RESTORED 42914328 0edcfe9e455f3c8c
+CHECK glb_sha_matches_i_baseline True
+CHECK glb_size_matches True
+CHECK import_file_untouched True
+CHECK backup_still_intact True
+CHECK reimport_rc0 True
+CHECK no_script_errors True
+ROLLBACK_J_OK

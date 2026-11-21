@@ -1,0 +1,29 @@
+PATCH fighter_3d_layer.gd foe_glb_const LF
+PATCH fighter_3d_layer.gd foe_yaw_const LF
+PATCH fighter_3d_layer.gd role_vars LF
+PATCH fighter_3d_layer.gd configure_hook LF
+PATCH fighter_3d_layer.gd probe_env_player_only LF
+PATCH fighter_3d_layer.gd load_glb_path LF
+PATCH arena.gd foe_vars LF
+PATCH arena.gd create_two_layers LF
+PATCH arena.gd sync_two_layers LF
+CHECK fighter_gd_untouched True
+CHECK switch_default_off True
+CHECK override_default_false True
+CHECK sync_hook_count True
+CHECK G_shape_side_yaw_55 True
+CHECK G_shape_side_flip_false True
+CHECK G_shape_stance_bias True
+CHECK G_shape_apply_frame_before_bias True
+CHECK G_shape_bone_pose_rotation True
+CHECK H_foe_yaw True
+CHECK H_foe_glb True
+CHECK H_configure True
+CHECK H_two_layers True
+CHECK H_two_motions True
+CHECK H_arena_uses_layer_constants True
+CHECK H_sync_early_return_preserved True
+CHECK H_enemy_override True
+CHECK H_enemy_winner_branch True
+CHECK H_layer_loads_glb_path True
+PATCH_GAME_H_OK

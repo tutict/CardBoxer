@@ -1,0 +1,8 @@
+M1   CAUGHT      red=['S-05_godot_render_clean']
+M2   CAUGHT      red=['S-08_two_boards_valid']
+M3   CAUGHT      red=['S-04_godot_main_scene_wired']
+M4   CAUGHT      red=['S-10_offline_viewer_complete']
+M5   CAUGHT      red=['S-01_blend_contains_player_not_foe']
+M6   CAUGHT      red=['S-07_four_godot_shots_valid']
+CAUGHT=6/6 DID_NOT_RUN=0 MISSED=0 RESTORE=6/6 CLEAN=12/12
+MUTATION_SHOWCASE_OK

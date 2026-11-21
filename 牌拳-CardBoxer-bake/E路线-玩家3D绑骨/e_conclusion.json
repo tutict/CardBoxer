@@ -1,0 +1,25 @@
+{
+  "route": "E",
+  "target": "player V4b",
+  "chain": "player V4b A-pose rest 13 bones (apose_joints.player) + Voxel continuous shell (triangulated) + ARMATURE_AUTO + SURFACE_DEFORM bind; original 2,035-shell high-poly keeps UV / 3 packed 4096 PBR textures",
+  "source_shells": 2035,
+  "proxy_shells": 3,
+  "rig_bones": 13,
+  "frames": 72,
+  "mean_tear_ratio": 1.27632,
+  "worst_tear_ratio": 1.84941,
+  "frames_tear_better_than_foe": 4,
+  "frames_reach_not_less_than_foe": 22,
+  "deformation_verdict": "WORSE_THAN_FOE",
+  "gltf_animations": 0,
+  "gltf_verdict": "static_snapshot_only",
+  "recommendation": "small_sprite_sample_first",
+  "reasons": [
+    "SURFACE_DEFORM has no glTF equivalent; export bakes a static snapshot",
+    "high-poly mesh has no JOINTS_0 and empty skeleton_path in Godot",
+    "mean tear ratio above 1.0 versus the foe baseline",
+    "baked2.json is 2D (x,z) joints; Godot needs 14-bone Y-up poses"
+  ],
+  "game_source_changed": false,
+  "human_visual_review": true
+}

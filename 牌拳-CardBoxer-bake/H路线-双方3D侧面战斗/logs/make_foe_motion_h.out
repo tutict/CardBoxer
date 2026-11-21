@@ -1,0 +1,26 @@
+A          rebuilt=[0.0, 1.051667]          expected=[0.0, 1.051667]          diff=0.0
+B          rebuilt=[0.0, 1.127974]          expected=[0.0, 1.127974]          diff=0.0
+C          rebuilt=[0.0, 1.22776]           expected=[0.0, 1.22776]           diff=0.0
+D          rebuilt=[0.0, 1.345156]          expected=[0.0, 1.345156]          diff=0.0
+E          rebuilt=[0.0, 1.564016]          expected=[0.0, 1.564016]          diff=0.0
+F          rebuilt=[0.0, 1.7225]            expected=[0.0, 1.7225]            diff=0.0
+b_elbow    rebuilt=[-0.317448, 1.111562]    expected=[-0.317448, 1.111563]    diff=1.000000000139778e-06
+b_foot     rebuilt=[-0.317448, 0.018464]    expected=[-0.317448, 0.018464]    diff=0.0
+b_hand     rebuilt=[-0.595964, 0.886953]    expected=[-0.595964, 0.886953]    diff=0.0
+b_knee     rebuilt=[-0.191667, 0.512604]    expected=[-0.191667, 0.512604]    diff=0.0
+f_elbow    rebuilt=[0.323438, 1.111562]     expected=[0.323437, 1.111563]     diff=1.000000000139778e-06
+f_foot     rebuilt=[0.323438, 0.018464]     expected=[0.323437, 0.018464]     diff=1.0000000000287557e-06
+f_hand     rebuilt=[0.610937, 0.886953]     expected=[0.610938, 0.886953]     diff=1.0000000000287557e-06
+f_knee     rebuilt=[0.197656, 0.512604]     expected=[0.197656, 0.512604]     diff=0.0
+head       rebuilt=[0.0, 1.7225]            expected=[0.0, 1.7225]            diff=0.0
+hip        rebuilt=[0.0, 1.051667]          expected=[0.0, 1.051667]          diff=0.0
+shoulder   rebuilt=[0.0, 1.345156]          expected=[0.0, 1.345156]          diff=0.0
+tb_head    rebuilt=[-0.04, 1.051667]        expected=[-0.04, 1.051667]        diff=0.0
+tf_head    rebuilt=[0.04, 1.051667]         expected=[0.04, 1.051667]         diff=0.0
+WORST 1.000000000139778e-06 SAME_KEYS True
+CHECK apose_key_set_identical True
+CHECK player_rebuild_matches_F True
+CHECK foe_rest_differs_from_player True
+CHECK foe_apose_not_equal_player True
+WROTE motion_input_foe.json 19769 B
+APOSE_FOE_MOTION_OK

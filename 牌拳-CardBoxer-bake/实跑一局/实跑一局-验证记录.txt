@@ -1,0 +1,172 @@
+《牌拳》B 路线 · 游戏里实跑一局 · 验证记录
+时间：2026-11-15
+证据区：牌拳-CardBoxer-bake/实跑一局/
+
+────────────────────────────────────────────────────────────
+一、结论（先说结果）
+
+  已收口。这局是**真跑**：不冻结 paused、不注入 card/frame、不推进任何
+  游戏时钟，只开 CARD_BOXER_3D=1 + CARD_BOXER_TAIKOU_BOT=1，让 arena.gd
+  自己的 _tick_taikou() / _sync_3d_layer() 打完三回，探针每 0.12 s 只读回
+  运行时状态并截帧。整帧图里没有「暂停」字样，中文 HUD 无乱码，左右角色
+  分离无重叠。
+
+  P2 的 leg_cap_deg=9.0 在连续节奏里**没有引入可见抖动**：时间线上腿峰值
+  是方波（腿骨被 cap 钉住的数值特征），连续帧复核证明上身/手臂/重心仍逐帧
+  渐变，切回站架前的 5.26° 归零残差没有硬跳，对手 14.86° 最大跳变是一次
+  有力的前压出拳，无甩飞 / 穿模 / 出框。
+
+  **游戏既有文件零改动**：12 个受监控文件 sha 逐字等于 P2 基线，两份
+  motion_input*.json 等于 P2 上线后 sha。唯一新增是
+  牌拳-CardBoxer/tests/live_match_probe.gd（只读采样探针，游戏运行时不加载）。
+
+────────────────────────────────────────────────────────────
+二、跑法与取证
+
+  两次独立 Godot 进程，全局 RNG 种子固定 20261114：
+    cap9 —— 完全用落盘 leg_cap_deg=9.0，探针不覆盖任何 mapping；
+    cap3 —— 运行时通过 LIVE_MATCH_CAP=3.0 覆盖回 P2 上线前。
+  两次都是 --quit-after 6000 + 探针自动在 round_phase=over 时收局，
+  不是超时退出。
+
+  | 项 | cap9（落盘态） | cap3（回滚态） |
+  |---|---|---|
+  | 进程墙钟 | 25.352 s | 25.164 s |
+  | 游戏内总时长 | 19.458 s | 19.512 s |
+  | 采样点 | 129 | 129 |
+  | 收局原因 | round_over | round_over |
+  | 终局 HP / 胜回 | [70, 97] / [0, 1] | [71, 97] / [0, 1] |
+  | 整帧图 | 24 张，24 种 sha | 24 张，24 种 sha |
+  | SubViewport 原图 | 88 张 / 23 种 sha | 89 张 / 22 种 sha |
+
+  三回阶段序列两局都是
+  discard → select → reveal → resolve（×3），阶段规格
+  0.8 / 0.8 / 1.5 / 1.9 s，容差 0.25 s。
+
+  四表现态在真实对局里全部被采样到（不是静态注入）：
+    亮牌 focus、赢家攻击、输家受击、平局两侧同时受击，
+    受击采样行 16 条。第 1 回平局两侧 hit_light；第 2、3 回分出胜负，
+    输家 hit_heavy / hit_light、赢家 cross / jab / wave。
+
+────────────────────────────────────────────────────────────
+三、同源逐帧 A/B（cap9 帧序列，只换幅度档）
+
+  由于跨进程牌局不可复现（见 §五），逐帧像素 A/B 前提不成立。替代口径：
+  取 cap9 局真实跑出的 (card, frame) 序列，Python 侧用同一份动作表分别按
+  cap3 / cap9 复算 13 骨 delta —— 帧序列同源，只有幅度档不同。
+
+  | 侧 | 档 | 腿峰值均值 | 峰值上限 | 连续帧最大跳变 | 切回站架前最大残差 |
+  |---|---|---|---|---|---|
+  | 玩家 | cap3 | 1.1041° | 3.0° | 6.00° | 3.0000° |
+  | 玩家 | cap9 | 3.1209° | 9.0° | 10.5535° | 5.2634° |
+  | 对手 | cap3 | 1.2639° | 3.0° | 6.00° | 1.7166° |
+  | 对手 | cap9 | 3.5483° | 9.0° | 14.8585° | 1.7166° |
+
+  腿峰值均值倍率 2.8266（玩家）/ 2.8074（对手）。
+  这些是**首次量化、无历史外部锚**，只作观察值记录，明确不设放行阈值；
+  放行与否结合看图定性，判据里只钉「数字可被独立复算」和结构性事实。
+
+────────────────────────────────────────────────────────────
+四、看图复核（不是只有数字）
+
+  * 实跑一局-节奏时间线.png（1400×780）：三回色带 + 玩家/对手腿峰值双线
+    (cap3 灰 / cap9 橙) + 底部说明。标签无重叠 / 截断 / 缺字方框。
+    橙线呈方波 → 引出下面的连续帧复核，不是直接判过。
+  * 实跑一局-整帧关键帧.png（1360×610）：8 张真实整帧，开局「开打！」→
+    第 2 轮弃牌 → 第 3 轮选牌连续；无「暂停」字样。
+  * 实跑一局-玩家动作.gif / -对手动作.gif：各 88 帧 / 120 ms。
+  * 实跑一局-连续帧复核.png（1180×1450）：3 组 × 7 连续采样 × 双侧 = 42 格。
+      A 亮牌 focus 平台段（idx 17-23）：上身/手臂/重心逐帧渐变，腿保持外撇
+        但人物没锁死；
+      B 玩家 hit_heavy:24 → stance:0（idx 76-82）：第 79→80 格回正平顺，
+        5.26° 归零残差无可见硬跳；
+      C 对手 cross:4 → 7（idx 111-117，14.86° 跳变）：一次有力前压出拳，
+        无甩飞 / 穿模 / 出框。
+
+────────────────────────────────────────────────────────────
+五、本轮订正 / 发现的七件事
+
+  1. **同种子也没让两局牌局复现**。第一次单跑 cap9 与 A/B 的 cap9 结果不同
+     （回 3 一个玩家赢、一个对手赢），cap3 反而与第一次 cap9 相同；三次运行
+     三种牌局指纹。与项目里早记的「整帧不可跨进程比」是同一现象。
+     按纪律把「逐帧像素 A/B」点名 N/A，不硬比、不折进判据计数。
+  2. **渲染停滞帧**：首版探针不等 RenderingServer.frame_post_draw 就
+     get_image()，lm-0017..0020 四张 SV 图逐字节相同、后段 6 张整帧图全同
+     （767564 B），看图会把旧帧误当成当前局。补 await 后重跑，
+     24/24 整帧图全部不同；run_live_match.py 同时加了重跑前清空 shots 目录。
+  3. **SV 重复不等于停滞**：88 张里只有 23 种 sha。按「retarget 后 13 骨
+     delta」分组可全部解释 —— stance / focus 0 / hit 0 的 delta 全为 0，
+     focus 5..12 原始 2D 关节逐值不同但被 clamp 削平后 delta 完全相同。
+     首版拿 2D 原始关节数据分组，误报成「渲染停滞」，口径已订正。
+  4. **阶段时长两条口径订正**（不是放宽阈值）：
+      ① 回 1 discard 的 phase_change 在 intro 阶段就记下，4.34 s 含
+         3.75 s intro，不是 bot 推进的 0.8 s，按口径排除；
+      ② 非平局回有 KOF 式命中停顿 HITSTOP_S=0.24，hitstop 分支不跑
+         _tick_taikou，tk_phase_time 冻结，resolve 墙钟 = 1.9 + 0.24；
+         平局回不启节奏时钟、无 hitstop，仍是 1.9。实测平局 1.97~2.01、
+         非平局 2.22~2.24，正好对上。
+  5. **探针注释撒谎**：补 await 时只改了代码没改头部注释，注释仍写
+     「截图不 await frame_post_draw」。2026-11-15 订正：先把证据生成时的
+     探针原字节备份到 orig/live_match_probe-evidence.gd，再只改注释行，
+     verify_live.py 的 comment_fix_changed_only_comment_lines 逐行证明
+     「去掉注释行后可执行代码逐字相同」。
+  6. **判据真空通过（变异实测抓到）**：M06 删掉代码里的 await 后，
+     probe_waits_frame_post_draw 仍判绿 —— 因为它扫全文裸子串，被注释里
+     「截图必须 await RenderingServer.frame_post_draw」满足了。已改为只扫
+     code_lines（去掉 # 注释行），加固后 M06 同时命中两条判据。
+     同类加固：probe_reads_real_driver_state 也改成扫代码行。
+  7. **文件清单 0 字节自引用竞态**：P1/P2 都踩过（shell 重定向先创建空的
+     .out，枚举时它还是 0 字节）。本轮 make_filelist_live.py 一开始就按名
+     排除自身输出，并加 no_unexpected_zero_bytes 防漏断言，不是事后补救。
+
+────────────────────────────────────────────────────────────
+六、验收数字
+
+  | 项 | 结果 |
+  |---|---|
+  | 15 套引擎内全量自检 | ALL_CHECKS_LIVE 15/15 ALL GREEN（taikou_rage 1482/1482、portrait_wiring 157/157 等） |
+  | run_live_match.py 采集健全性 | LIVE_MATCH_OK 26/26，delta 逐行与 Python 同公式零差异 |
+  | analyze_live.py 节奏/连贯性 | LIVE_ANALYSIS_OK 7/7 |
+  | 落盘基线 | BASELINE_LIVE_OK 7/7 |
+  | 汇总承重判据 | LIVE_VERIFY 68/68 ALL GREEN |
+  | 变异验证 | MUTATION_LIVE 30/30 CAUGHT / DNR 0 / MISSED 0 / RESTORE 30/30 / clean 68/68 |
+  | DNR 分支自测 | --selftest-dnr 按设计 FAILED，SELFTEST_DNR_EFFECTIVE |
+  | 文件清单 | 见 文件清单.txt / data/filelist_live.json |
+
+  历史守卫债：本轮没有新增红因。P1 的 verify_motion_p1.py 预期红 2 条
+  （mapping_gains_unchanged_both、non_cards_fields_equal_backup_both）
+  是 P2 落地时留下的，按项目约定未篡改、也未折进本轮计数。
+
+────────────────────────────────────────────────────────────
+七、边界（故意没做 / 未解决）
+
+  * 看图是静态对照板 + 88 帧 GIF，不是人在游戏里实时观感；连续帧复核只能
+    定性「没有可见硬跳」，不能证明长时间播放的舒适度。
+  * 跳变 / 归零残差首次量化、无外部锚，只记录分布，不当放行线。
+  * 同源 A/B 是公式复算，不是两局逐帧像素对比（前提已证伪）。
+  * 阶段时长是墙钟口径，含 intro 与 hitstop 的影响，已逐项写明。
+  * 软压缩（tanh）仍只在 P2 研究扫描里，未实现未采纳。
+  * 游戏工程新增的 tests/live_match_probe.gd 保留作可复跑证据；它的源副本
+    在本证据区 tests/，证据生成时的原字节在 orig/。
+  * #53「后续待定：可变形 .blend 的下一步方向」仍 pending。
+
+────────────────────────────────────────────────────────────
+八、复跑命令（全部用项目 venv，Windows）
+
+  PY="C:/Users/tutic/IdeaProjects/Fantasy-Agent/.venv/Scripts/python.exe"
+  D="C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\实跑一局"
+
+  "$PY" -u -B "$D\\run_live_match.py"          # 重跑两局 A/B（会清空 shots）
+  "$PY" -u -B "$D\\analyze_live.py"            # 节奏 / 连贯性
+  "$PY" -u -B "$D\\make_live_board.py"         # 时间线 + 关键帧 + 两张 GIF
+  "$PY" -u -B "$D\\make_transition_strip.py"   # 连续帧复核条带
+  "$PY" -u -B "$D\\run_all_checks_live.py"     # 15 套引擎内自检
+  "$PY" -u -B "$D\\make_baseline_live.py"      # 落盘 sha 基线
+  "$PY" -u -B "$D\\verify_live.py"             # 68 条承重判据
+  "$PY" -u -B "$D\\mutation_live.py"           # 30 组变异
+  "$PY" -u -B "$D\\mutation_live.py" --selftest-dnr
+  "$PY" -u -B "$D\\make_filelist_live.py"      # 交付清单
+
+  注意：重跑 run_live_match.py 会因跨进程 RNG 漂移换一局牌，届时
+  live_analysis.json / 板子 / GIF / verify_live.py 的若干固定锚（129 行、
+  24 张整帧、42 格）需要同步重新生成，不能只重跑其中一步。

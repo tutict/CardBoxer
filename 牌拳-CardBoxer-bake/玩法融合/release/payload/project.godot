@@ -1,0 +1,30 @@
+; 牌拳 / CARD BOXER
+; 有序五拍攻防与小丑构筑；玩法骨架见 arena.gd 的 BATTLE_MODE。
+; 引擎：Godot 4.5 (GL Compatibility；角色与玩法图层代码自绘，擂台背景图见 background/arena.png)
+
+config_version=5
+
+[application]
+
+config/name="牌拳 Card Boxer"
+config/description="回合制卡牌格斗：8张手牌编排5拍，敌方明三暗二，闪避确反、打康与小丑连锁。可显式选择传统比牌或实时模式。"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+
+[display]
+
+; 战术 HUD 使用独立 1600x900 画布，原擂台按比例呈现。
+; 传统模式由 Arena 恢复 1280x720；窗口默认最大化并等比缩放。
+window/size/viewport_width=1600
+window/size/viewport_height=900
+window/size/window_width_override=1600
+window/size/window_height_override=900
+window/size/mode=2
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.04, 0.05, 0.09, 1)

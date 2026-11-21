@@ -1,0 +1,23 @@
+OUTCOMES {'three_d': {'final_hp': [85, 80], 'final_wins': [1, 0]}, 'default_off': {'final_hp': [97, 63], 'final_wins': [1, 0]}} distinct 2
+STATIC_BOUND {'frames_compared': 284, 'max_abs_delta_diff_deg': 1.870037, 'worst_at': ['wave', 34]} live_max_diff 1.653096
+JUMP player p3 exact 81 perceptual 81 max 13.661424 p95 8.8799 intra_max 13.661424 boundary_max 7.265674 peak_mean 3.336043
+JUMP player p4 exact 72 perceptual 81 max 13.642214 p95 8.8799 intra_max 13.642214 boundary_max 7.265674 peak_mean 3.341762
+EXTRA player max 0.726887 min -1.287525 p95 0.0621 mean 0.011393 max_delta_diff 1.653096
+JUMP foe p3 exact 83 perceptual 83 max 14.662057 p95 9.2288 intra_max 14.662057 boundary_max 7.265674 peak_mean 3.294358
+JUMP foe p4 exact 74 perceptual 83 max 14.633549 p95 9.2118 intra_max 14.633549 boundary_max 7.265674 peak_mean 3.296029
+EXTRA foe max 0.893446 min -0.401707 p95 0.0621 mean 0.01362 max_delta_diff 1.653096
+SV {'total': 87, 'unique_sha': 34, 'groups_with_mixed_delta': [], 'largest_group': 34}
+PHASE_VIOLATIONS []
+CHECK upstream_run_all_checks_true True
+CHECK all_live_frames_in_track_range True
+CHECK delta_recomputed_for_all_rows_both_tables True
+CHECK engine_delta_matches_shipped_recomputation True
+CHECK static_upper_bound_positive_and_recomputed True
+CHECK live_delta_diff_within_static_bound True
+CHECK exact_flat_pairs_not_worse_in_live True
+CHECK stance_delta_zero_both_tables True
+CHECK sv_duplicates_explained_by_delta True
+CHECK phase_durations_within_spec True
+CHECK framewise_pixel_ab_explicitly_not_applicable True
+CHECK extra_jump_distribution_recorded True
+LIVE_P4_ANALYSIS_OK

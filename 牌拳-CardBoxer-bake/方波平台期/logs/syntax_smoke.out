@@ -1,0 +1,8 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+OK 覆盖: 12 张牌全部有轨迹且帧数自洽
+OK 相位: 12 张牌的 split 与 windup/active/recover 完全一致
+OK 回读: 逐帧逐关节一致，最大误差 0.000006 px，镜像精确
+
+检查帧数 228，比对数值 5016 个，失败 0 项
+MOTION CHECK: PASS

@@ -1,0 +1,26 @@
+EDITS_PER_FILE 436 CHANGED_FRAMES 109
+TABLE data/card_motion.json paths 872 bytes 226918 -> 228610
+TABLE data/motion_input.json paths 872 bytes 72940 -> 74632
+TABLE data/motion_input_foe.json paths 872 bytes 72938 -> 74630
+SYNC {'mi_vs_cm': True, 'mi_vs_mif': True}
+CHECK landing_decision_ok True
+CHECK landing_case_is_micro2 True
+CHECK roundtrip_identity_all_three True
+CHECK micro2_full_tear_ok True
+CHECK micro2_tear_284_poses True
+CHECK micro2_no_frame_over_anchor True
+CHECK micro2_within_external_anchor True
+CHECK baseline_ok True
+CHECK three_roundtrip_identity_before True
+CHECK three_edits_applied_all True
+CHECK three_diff_only_four_leg_joints True
+CHECK three_diff_bounded_by_edits True
+CHECK three_readback_matches_edits True
+CHECK three_still_15_cards_284_frames True
+CHECK three_sha_changed True
+CHECK non_joint_metadata_unchanged True
+CHECK three_tables_11joints_still_synchronized True
+CHECK mapping_unchanged_all_three True
+CHECK other_watched_files_unchanged True
+CHECK backup_bytes_match_pre_apply True
+APPLY_NATIVE_OK

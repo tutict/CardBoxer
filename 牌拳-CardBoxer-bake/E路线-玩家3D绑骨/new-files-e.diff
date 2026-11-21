@@ -1,0 +1,2673 @@
+--- /dev/null
++++ b/make_baseline_e.py
+@@ -0,0 +1,72 @@
++"""E 路线开工前冻结输入指纹，供 verify_e.py 判「全程零污染」。
++
++冻结：可运行游戏工程逐文件 sha256、C/D 路线已交付文件清单整体 sha256、
++A 路线可变形 .blend、玩家 V4b GLB、以及复用的动作表/标定/映射/链路脚本。
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++GAME = BAKE.parent / "牌拳-CardBoxer"
++OUT = HERE / "baseline_e.json"
++
++SINGLES = {
++    "c_route_filelist": BAKE / "C路线-glTF-Godot探针" / "文件清单.txt",
++    "d_route_filelist": BAKE / "D路线-CreativeReview与引擎截帧" / "文件清单.txt",
++    "a_route_blend": BAKE / "A路线-资产重做" / "对手怪-可变形连续壳.blend",
++    "v4b_glb": BAKE / "3D模型探针V4b" / "artifact_03.glb",
++    "apose_joints": BAKE / "3D攻击GIF" / "apose_joints.json",
++    "puppet_mapping": BAKE / "3D攻击GIF" / "puppet_mapping.json",
++    "baked2": BAKE / "baked2.json",
++    "c_build": BAKE / "C路线-真3D修复" / "c_build.py",
++    "c2_build": BAKE / "C路线-变形质量V2" / "c2_build.py",
++    "a_build": BAKE / "A路线-资产重做" / "a_build.py",
++}
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def main() -> int:
++    game: dict[str, dict] = {}
++    for p in sorted(GAME.rglob("*")):
++        if not p.is_file():
++            continue
++        rel = p.relative_to(GAME).as_posix()
++        if rel.startswith(".godot/"):
++            continue
++        game[rel] = {"bytes": p.stat().st_size, "sha256": sha256(p)}
++
++    singles = {}
++    for key, p in SINGLES.items():
++        assert p.is_file(), f"missing {key}: {p}"
++        blob = p.read_bytes()
++        item = {"path": str(p), "bytes": len(blob),
++                "sha256": hashlib.sha256(blob).hexdigest()}
++        if key.endswith("filelist"):
++            item["entries"] = sum(
++                1 for line in blob.decode("utf-8").splitlines()
++                if line.startswith("WORK/"))
++        singles[key] = item
++
++    out = {"game": game, "game_root": str(GAME), "singles": singles}
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    print(f"GAME_FILES={len(game)} SINGLES={len(singles)} "
++          f"C_ENTRIES={singles['c_route_filelist']['entries']} "
++          f"D_ENTRIES={singles['d_route_filelist']['entries']} "
++          f"V4B_GLB={singles['v4b_glb']['bytes']} BASELINE_E_OK")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/probe_v4b_source.py
+@@ -0,0 +1,214 @@
++"""E 路线源资产探针：把玩家 V4b GLB 变成可直接打开/驱动的 Blender 源 .blend。
++
++与 A 路线源（对手怪V1.blend）对齐的四件事：
++  · 归一化到 1.72 m 高、脚底 z=0、x/y 居中（同 render_character.py 公式）；
++  · 3 张 embedded PBR 全部 pack 进 .blend，不依赖外部临时路径；
++  · 场景里必须有 CAMERA + 灯，否则 C.setup_camera / 渲染链会崩；
++  · 只读源 GLB，不回写 3D模型探针V4b/ 归档。
++
++用法：blender.exe -b --python probe_v4b_source.py
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import math
++import sys
++import time
++from pathlib import Path
++
++sys.dont_write_bytecode = True
++
++import bpy
++from mathutils import Vector
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++GLB = BAKE / "3D模型探针V4b" / "artifact_03.glb"
++OUT_BLEND = HERE / "玩家V4b-源.blend"
++OUT_JSON = HERE / "source_probe.json"
++FRONT = HERE / "frames" / "e-source-front.png"
++TARGET_HEIGHT = 1.72
++
++
++def log(*a):
++    print(*a, flush=True)
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def bounds(meshes):
++    pts = [o.matrix_world @ v.co for o in meshes for v in o.data.vertices]
++    lo = [min(p[i] for p in pts) for i in range(3)]
++    hi = [max(p[i] for p in pts) for i in range(3)]
++    return lo, hi, len(pts)
++
++
++def shell_count(mesh):
++    n = len(mesh.vertices)
++    parent = list(range(n))
++
++    def find(x):
++        while parent[x] != x:
++            parent[x] = parent[parent[x]]
++            x = parent[x]
++        return x
++
++    for e in mesh.edges:
++        a, b = find(e.vertices[0]), find(e.vertices[1])
++        if a != b:
++            parent[b] = a
++    return len({find(i) for i in range(n)})
++
++
++def texture_inventory(meshes):
++    out = []
++    for obj in meshes:
++        for slot in obj.material_slots:
++            mat = slot.material
++            if mat and mat.use_nodes:
++                for n in mat.node_tree.nodes:
++                    if n.type == "TEX_IMAGE" and n.image:
++                        out.append({
++                            "image": n.image.name,
++                            "size": list(n.image.size),
++                            "packed": bool(n.image.packed_file),
++                            "source": n.image.source,
++                        })
++    return out
++
++
++def add_stage(scene):
++    world = bpy.data.worlds.new("e_world")
++    world.use_nodes = True
++    bg = world.node_tree.nodes["Background"]
++    bg.inputs["Color"].default_value = (0.55, 0.59, 0.68, 1.0)
++    bg.inputs["Strength"].default_value = 0.80
++    scene.world = world
++
++    sun_data = bpy.data.lights.new("e_key", "SUN")
++    sun_data.energy = 2.2
++    sun = bpy.data.objects.new("e_key", sun_data)
++    scene.collection.objects.link(sun)
++    sun.rotation_euler = (math.radians(30), math.radians(-36),
++                          math.radians(22))
++
++    fill_data = bpy.data.lights.new("e_fill", "AREA")
++    fill_data.energy = 260
++    fill_data.shape = "DISK"
++    fill_data.size = 5.0
++    fill = bpy.data.objects.new("e_fill", fill_data)
++    scene.collection.objects.link(fill)
++    fill.location = (-2.2, -3.0, 2.6)
++    fill.rotation_euler = (Vector((0, 0, 1.2)) - fill.location
++                           ).to_track_quat("-Z", "Y").to_euler()
++
++    cam_data = bpy.data.cameras.new("e_cam")
++    cam_data.type = "ORTHO"
++    cam_data.ortho_scale = 2.30
++    cam = bpy.data.objects.new("e_cam", cam_data)
++    scene.collection.objects.link(cam)
++    cam.location = (0.0, -4.0, 0.86)
++    cam.rotation_euler = (Vector((0.0, 0.0, 0.86)) - cam.location
++                          ).to_track_quat("-Z", "Y").to_euler()
++    scene.camera = cam
++    scene.render.engine = "BLENDER_EEVEE"
++    scene.render.image_settings.file_format = "PNG"
++    scene.render.image_settings.color_mode = "RGBA"
++    scene.render.film_transparent = True
++    scene.render.resolution_x = scene.render.resolution_y = 768
++    scene.render.resolution_percentage = 100
++    scene.view_settings.view_transform = "Standard"
++    return cam
++
++
++def main() -> int:
++    t0 = time.time()
++    assert GLB.is_file(), GLB
++    glb_sha = sha256(GLB)
++    bpy.ops.wm.read_factory_settings(use_empty=True)
++    bpy.ops.import_scene.gltf(filepath=str(GLB))
++    scene = bpy.context.scene
++    meshes = [o for o in scene.objects if o.type == "MESH"]
++    assert meshes, "no mesh imported"
++    log(f"IMPORT meshes={len(meshes)} names={[o.name for o in meshes]}")
++
++    raw_lo, raw_hi, nverts = bounds(meshes)
++    bpy.ops.object.select_all(action="DESELECT")
++    for o in meshes:
++        o.select_set(True)
++    bpy.context.view_layer.objects.active = meshes[0]
++    bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
++    lo, hi, _ = bounds(meshes)
++    height = hi[2] - lo[2]
++    scale = TARGET_HEIGHT / height
++    cx, cy = (lo[0] + hi[0]) / 2.0, (lo[1] + hi[1]) / 2.0
++    for o in meshes:
++        for v in o.data.vertices:
++            v.co = Vector(((v.co.x - cx) * scale,
++                           (v.co.y - cy) * scale,
++                           (v.co.z - lo[2]) * scale))
++        o.data.update()
++    nlo, nhi, _ = bounds(meshes)
++    log(f"NORMALIZE scale={scale:.6f} raw_height={height:.5f} "
++        f"bbox={[round(v, 4) for v in nlo]}..{[round(v, 4) for v in nhi]}")
++
++    bpy.ops.file.pack_all()
++    tex = texture_inventory(meshes)
++    shell = shell_count(meshes[0].data)
++    struct = {
++        "verts": nverts,
++        "faces": sum(len(o.data.polygons) for o in meshes),
++        "shells": shell,
++        "uv_layers": sum(len(o.data.uv_layers) for o in meshes),
++        "materials": sum(len(o.data.materials) for o in meshes),
++        "textures": tex,
++        "packed_textures": sum(1 for t in tex if t["packed"]),
++    }
++    log("STRUCT " + json.dumps(struct, ensure_ascii=False)[:500])
++
++    add_stage(scene)
++    FRONT.parent.mkdir(parents=True, exist_ok=True)
++    scene.render.filepath = str(FRONT)
++    bpy.ops.render.render(write_still=True)
++    front_bytes = FRONT.read_bytes()
++    assert front_bytes[:8] == b"\x89PNG\r\n\x1a\n" and len(front_bytes) > 10000
++
++    bpy.ops.wm.save_as_mainfile(filepath=str(OUT_BLEND), compress=True)
++    blend_bytes = OUT_BLEND.read_bytes()
++    report = {
++        "blender": bpy.app.version_string,
++        "glb": {"path": str(GLB), "bytes": GLB.stat().st_size,
++                "sha256": glb_sha},
++        "raw_bbox": {"min": [round(v, 5) for v in raw_lo],
++                     "max": [round(v, 5) for v in raw_hi]},
++        "normalize": {"target_height_m": TARGET_HEIGHT,
++                      "scale": round(scale, 6),
++                      "bbox_min": [round(v, 5) for v in nlo],
++                      "bbox_max": [round(v, 5) for v in nhi]},
++        "structure": struct,
++        "stage": {"camera": scene.camera.name,
++                  "lights": sorted(o.name for o in scene.objects
++                                   if o.type == "LIGHT")},
++        "front_render": {"file": FRONT.name, "bytes": len(front_bytes),
++                         "sha256": hashlib.sha256(front_bytes).hexdigest()},
++        "source_blend": {"file": OUT_BLEND.name, "bytes": len(blend_bytes),
++                         "sha256": sha256(OUT_BLEND)},
++        "elapsed_seconds": round(time.time() - t0, 2),
++    }
++    OUT_JSON.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
++                        encoding="utf-8")
++    log(f"SOURCE_PROBE_OK verts={nverts} shells={shell} "
++        f"packed={struct['packed_textures']}/{len(tex)} "
++        f"blend={len(blend_bytes)}B elapsed={report['elapsed_seconds']}s")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/e_build.py
+@@ -0,0 +1,343 @@
++"""E 路线主链：给玩家 V4b 复刻 A 路线的「可变形连续壳」资产。
++
++与 A 路线（对手怪）完全相同的链：
++  A-pose rest 13 骨 → Voxel 连续壳(三角化) → ARMATURE_AUTO 平滑权重
++  → 原高模 SURFACE_DEFORM bind → 相对 rest 的增量逐帧驱动。
++三处专属差异：
++  1. 源是 probe_v4b_source.py 产出的「玩家V4b-源.blend」（GLB 已归一化
++     到 1.72 m、3 张 4096² PBR 已 packed、场景自带相机与灯）；
++  2. A-pose 点表用 apose_joints.json["player"]，不是 ["foe"]；
++  3. 网格 57,901 顶点 / 2,035 壳，且多了长发、长衫下摆、披肩、流苏等
++     悬垂薄件 —— Voxel 会溶掉多少、SURFACE_DEFORM 还能不能 bind，
++     由本脚本的探针与全帧质量度量实测，不预设结论。
++
++复用而非复制：C.apose_points 只按 spec["foe"] 取表，把 player 的表喂成
++{"foe": ...} 即可零复制地拿到同一套 0.26/0.60/0.58/0.04 换算公式。
++
++用法：
++  blender.exe -b --python e_build.py -- --probe   # 小样本看图
++  blender.exe -b --python e_build.py              # 全 72 帧 + 交付 .blend
++"""
++from __future__ import annotations
++
++import argparse
++import copy
++import hashlib
++import json
++import sys
++import time
++from pathlib import Path
++
++sys.dont_write_bytecode = True
++
++import bmesh
++import bpy
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++sys.path.insert(0, str(BAKE / "C路线-变形质量V2"))
++sys.path.insert(0, str(BAKE / "C路线-真3D修复"))
++sys.path.insert(0, str(BAKE / "A路线-资产重做"))
++import a_build as A  # noqa: E402  - shell_count 唯一真相
++import c2_build as C2  # noqa: E402  - clusters / frame_metrics
++import c_build as C  # noqa: E402  - 整条驱动链
++
++BLEND = HERE / "玩家V4b-源.blend"
++TABLE = BAKE / "baked2.json"
++SPEC = BAKE / "3D攻击GIF" / "apose_joints.json"
++MAPPING = BAKE / "3D攻击GIF" / "puppet_mapping.json"
++A_REPORT = BAKE / "A路线-资产重做" / "a_build.json"
++OUT_BLEND = HERE / "玩家V4b-可变形连续壳.blend"
++OUT_JSON = HERE / "e_build.json"
++PROBE_JSON = HERE / "e_probe.json"
++
++VOXEL = 0.020
++ARM_GAIN = 1.5
++CARDS = (("jab", 14), ("cross", 22), ("wave", 36))
++KEY_SHOTS = [
++    ("stance", None, 0, 0.0), ("jab01", "jab", 0, 0.0),
++    ("jab07", "jab", 6, 0.0), ("jab13", "jab", 12, 0.0),
++    ("cross01", "cross", 0, 0.0), ("cross11", "cross", 10, 0.0),
++    ("cross21", "cross", 20, 0.0), ("wave01", "wave", 0, 0.0),
++    ("wave18", "wave", 17, 0.0), ("wave35", "wave", 34, 0.0),
++]
++PROBE_SHOTS = [
++    ("stance", None, 0, 0.0), ("jab07", "jab", 6, 0.0),
++    ("cross11", "cross", 10, 0.0), ("wave18", "wave", 17, 0.0),
++]
++
++
++def log(*a):
++    print(*a, flush=True)
++
++
++def player_apose_points(spec):
++    """零复制复用 C.apose_points：它只按 spec["foe"] 取表。"""
++    return C.apose_points({"foe": spec["player"]})
++
++
++def build_chain():
++    spec = json.loads(SPEC.read_text(encoding="utf-8"))
++    table = json.loads(TABLE.read_text(encoding="utf-8"))
++    stance = C.joints_of(table, None, 0)
++    P = player_apose_points(spec)
++    bpy.ops.wm.open_mainfile(filepath=str(BLEND))
++    scene = bpy.context.scene
++    src = next(o for o in scene.objects if o.type == "MESH")
++    for o in list(scene.objects):
++        if o.type == "ARMATURE":
++            bpy.data.objects.remove(o, do_unlink=True)
++    for m in list(src.modifiers):
++        src.modifiers.remove(m)
++    src.hide_render = False
++    src_uv = len(src.data.uv_layers)
++    src_tex = C.texture_inventory(src)
++    src_shells = A.shell_count(src.data)
++
++    arm_data = bpy.data.armatures.new("e_apose_rig")
++    rig = bpy.data.objects.new("e_apose_rig", arm_data)
++    scene.collection.objects.link(rig)
++    bpy.context.view_layer.objects.active = rig
++    rig.select_set(True)
++    bpy.ops.object.mode_set(mode="EDIT")
++    made = {}
++    for name, parent, u, v in C.CHAIN:
++        eb = arm_data.edit_bones.new(name)
++        hx, hz = P[u]
++        tx, tz = P[v]
++        eb.head, eb.tail = (hx, 0.0, hz), (tx, 0.0, tz)
++        assert (eb.tail - eb.head).length > 1e-4, f"zero-length bone {name}"
++        if parent:
++            eb.parent = made[parent]
++        made[name] = eb
++    bpy.ops.object.mode_set(mode="OBJECT")
++    for pb in rig.pose.bones:
++        pb.bone.inherit_scale = "NONE"
++    bpy.context.view_layer.update()
++    log(f"APOSE_RIG_PLAYER bones={len(rig.pose.bones)} "
++        f"head_z={P['head'][1]:.4f} hip_z={P['hip'][1]:.4f}")
++
++    shell = C.fresh_copy(src, "e_continuous_shell")
++    shell.data.remesh_voxel_size = VOXEL
++    shell.data.remesh_voxel_adaptivity = 0.0
++    bpy.ops.object.select_all(action="DESELECT")
++    shell.select_set(True)
++    bpy.context.view_layer.objects.active = shell
++    assert bpy.ops.object.voxel_remesh.poll()
++    bpy.ops.object.voxel_remesh()
++    bm = bmesh.new()
++    bm.from_mesh(shell.data)
++    bmesh.ops.triangulate(bm, faces=list(bm.faces))
++    bm.to_mesh(shell.data)
++    bm.free()
++    shell.data.update()
++    tri_ratio = sum(1 for f in shell.data.polygons if len(f.vertices) == 3) \
++        / len(shell.data.polygons)
++    C.auto_weight(shell, rig)
++    shell_covered = sum(1 for v in shell.data.vertices
++                        if any(g.weight > 1e-6 for g in v.groups))
++
++    bpy.ops.object.select_all(action="DESELECT")
++    src.select_set(True)
++    bpy.context.view_layer.objects.active = src
++    sd = src.modifiers.new("follow_continuous_shell", "SURFACE_DEFORM")
++    sd.target = shell
++    assert bpy.ops.object.surfacedeform_bind.poll()
++    bpy.ops.object.surfacedeform_bind(modifier=sd.name)
++    assert bool(getattr(sd, "is_bound", False)), "Surface Deform bind failed"
++
++    C.setup_camera(scene, 0.0)
++    rest_pos, rest_edges = C.evaluated(src)
++    raw = [src.matrix_world @ v.co for v in src.data.vertices]
++    bind_drift = max((a - b).length for a, b in zip(rest_pos, raw))
++    hf, hb, foot = C2.clusters(rest_pos, P)
++    info = {
++        "src": {"verts": len(src.data.vertices), "shells": src_shells,
++                "uv": src_uv, "textures": len(src_tex)},
++        "shell": {"verts": len(shell.data.vertices),
++                  "faces": len(shell.data.polygons),
++                  "shells": A.shell_count(shell.data),
++                  "tri_ratio": round(tri_ratio, 5),
++                  "auto_weight_covered": shell_covered},
++        "bind": {"is_bound": True, "rest_drift_m": round(bind_drift, 8)},
++        "assets": {"uv_layers": len(src.data.uv_layers),
++                   "materials": len(src.data.materials),
++                   "textures": C.texture_inventory(src),
++                   "uv_same": len(src.data.uv_layers) == src_uv,
++                   "textures_same": C.texture_inventory(src) == src_tex},
++        "apose": {"head_z": round(P["head"][1], 5),
++                  "hip_z": round(P["hip"][1], 5),
++                  "shoulder_z": round(P["shoulder"][1], 5)},
++    }
++    log("CHAIN " + json.dumps(info, ensure_ascii=False)[:900])
++    return dict(scene=scene, src=src, shell=shell, rig=rig, P=P, table=table,
++                stance=stance, rest_pos=rest_pos, rest_edges=rest_edges,
++                hf=hf, hb=hb, foot=foot, hip_z=P["hip"][1],
++                sh_z=P["shoulder"][1], info=info)
++
++
++def render(ch, name, deg=0.0):
++    scene, src, shell = ch["scene"], ch["src"], ch["shell"]
++    C.setup_camera(scene, deg)
++    src.hide_render = False
++    shell.hide_render = True
++    p = HERE / "frames" / f"{name}.png"
++    scene.render.filepath = str(p)
++    bpy.ops.render.render(write_still=True)
++    b = p.read_bytes()
++    assert b[:8] == b"\x89PNG\r\n\x1a\n" and len(b) > 10000
++    return {"file": p.name, "bytes": len(b),
++            "sha256": hashlib.sha256(b).hexdigest()}
++
++
++def main() -> int:
++    ap = argparse.ArgumentParser()
++    ap.add_argument("--probe", action="store_true")
++    args = ap.parse_args(sys.argv[sys.argv.index("--") + 1:]
++                         if "--" in sys.argv else [])
++
++    t0 = time.time()
++    base_mapping = json.loads(MAPPING.read_text(encoding="utf-8"))
++    gain_mapping = copy.deepcopy(base_mapping)
++    gain_mapping["arm_gain_deg"] = {
++        k: v * ARM_GAIN for k, v in base_mapping["arm_gain_deg"].items()}
++    ch = build_chain()
++
++    # 站架恒等：换用 player A-pose 后仍不许把模型扭成格斗站架。
++    C.pose_frame(ch["rig"], ch["P"], ch["table"], ch["stance"],
++                 None, 0, gain_mapping)
++    stance_pos, _ = C.evaluated(ch["src"])
++    max_stance = max((a - b).length
++                     for a, b in zip(ch["rest_pos"], stance_pos))
++    identical = max_stance < 1e-5
++    log(f"STANCE_IDENTITY max={max_stance:.9f} identical={identical}")
++    assert identical, "player A-pose rig must not deform at stance"
++
++    def metrics(card, frame, mapping):
++        C.pose_frame(ch["rig"], ch["P"], ch["table"], ch["stance"],
++                     card, frame, mapping)
++        pos, _ = C.evaluated(ch["src"])
++        return C2.frame_metrics(ch["rest_pos"], ch["rest_edges"], pos,
++                                ch["hf"], ch["hb"], ch["foot"],
++                                ch["hip_z"], ch["sh_z"])
++
++    shots = []
++    shots_spec = PROBE_SHOTS if args.probe else KEY_SHOTS
++    for name, card, frame, _deg in shots_spec:
++        C.pose_frame(ch["rig"], ch["P"], ch["table"], ch["stance"],
++                     card, frame, gain_mapping)
++        png = render(ch, f"e-{name}-x15")
++        png.update({"shot": name, "card": card, "frame": frame,
++                    "tag": "E_x15"})
++        shots.append(png)
++        log(f"SHOT {png['file']} bytes={png['bytes']}")
++    C.pose_frame(ch["rig"], ch["P"], ch["table"], ch["stance"],
++                 None, 0, gain_mapping)
++    side = render(ch, "e-stance-angle55", 55.0)
++    side.update({"shot": "stance-angle55", "card": None, "frame": 0,
++                 "tag": "E_x15", "angle_deg": 55.0})
++    shots.append(side)
++
++    if args.probe:
++        one = metrics("cross", 10, gain_mapping)
++        report = {
++            "blender": bpy.app.version_string,
++            "method": "player V4b A-pose rig + Voxel shell + SURFACE_DEFORM",
++            "params": {"voxel_size": VOXEL, "arm_only_gain": ARM_GAIN,
++                       "apose_table": "player"},
++            "chain": ch["info"],
++            "stance_identity": {"identical": identical,
++                                "max_vertex_delta_m": round(max_stance, 9)},
++            "one_frame_cross10": one,
++            "shots": shots,
++            "elapsed_seconds": round(time.time() - t0, 2),
++        }
++        PROBE_JSON.write_text(
++            json.dumps(report, ensure_ascii=False, indent=2) + "\n",
++            encoding="utf-8")
++        log(f"E_PROBE_OK shots={len(shots)} cross10={one} "
++            f"elapsed={report['elapsed_seconds']}s")
++        return 0
++
++    # --- 全 72 帧 × 两组增益，与 A 路线 A2_x15 同帧对照 ---------------------
++    a_report = json.loads(A_REPORT.read_text(encoding="utf-8"))
++    a_by_key = {(r["card"], r["frame"]): r
++                for r in a_report["all_frames"]["rows"]}
++    rows = []
++    for cid, n in CARDS:
++        for f in range(n):
++            m_x1 = metrics(cid, f, base_mapping)
++            m_x15 = metrics(cid, f, gain_mapping)
++            ref = a_by_key[(cid, f)]["A2_x15"]
++            rows.append({
++                "card": cid, "frame": f,
++                "E_x1": m_x1, "E_x15": m_x15,
++                "A2_x15_foe": {k: ref[k] for k in m_x1},
++            })
++        log(f"METRICS {cid} {n} frames elapsed={time.time() - t0:.1f}s")
++
++    bpy.ops.wm.save_as_mainfile(filepath=str(OUT_BLEND), compress=True)
++    blend_bytes = OUT_BLEND.read_bytes()
++    export = {"file": OUT_BLEND.name, "bytes": len(blend_bytes),
++              "sha256": hashlib.sha256(blend_bytes).hexdigest()}
++
++    # 重开验证：bind / 骨架 / packed 贴图随文件走，且真的能驱动。
++    bpy.ops.wm.open_mainfile(filepath=str(OUT_BLEND))
++    meshes = [o for o in bpy.context.scene.objects if o.type == "MESH"]
++    hi = next(o for o in meshes if any(m.type == "SURFACE_DEFORM"
++                                       for m in o.modifiers))
++    sd = next(m for m in hi.modifiers if m.type == "SURFACE_DEFORM")
++    rigs = [o for o in bpy.context.scene.objects if o.type == "ARMATURE"]
++    imgs = [im for im in bpy.data.images
++            if im.source == "FILE" and tuple(im.size) == (4096, 4096)]
++    rest2, _ = C.evaluated(hi)
++    C.pose_frame(rigs[0], ch["P"], ch["table"], ch["stance"],
++                 "cross", 10, gain_mapping)
++    posed2, _ = C.evaluated(hi)
++    reopen = {
++        "surface_deform_is_bound": bool(getattr(sd, "is_bound", False)),
++        "surface_deform_target": sd.target.name if sd.target else None,
++        "rig_count": len(rigs),
++        "rig_bones": len(rigs[0].pose.bones) if rigs else 0,
++        "high_poly_verts": len(hi.data.vertices),
++        "high_poly_uv_layers": len(hi.data.uv_layers),
++        "packed_4096_textures": sum(1 for im in imgs if im.packed_file),
++        "textures_4096": len(imgs),
++        "reopen_drive_max_displacement_m": round(
++            max((a - b).length for a, b in zip(rest2, posed2)), 5),
++    }
++    log("REOPEN " + json.dumps(reopen, ensure_ascii=False))
++
++    report = {
++        "blender": bpy.app.version_string,
++        "fingerprints": {k: hashlib.sha256(p.read_bytes()).hexdigest()
++                         for k, p in (("source_blend", BLEND),
++                                      ("table", TABLE), ("spec", SPEC),
++                                      ("mapping", MAPPING),
++                                      ("a_report", A_REPORT),
++                                      ("c_build_py", BAKE / "C路线-真3D修复" / "c_build.py"))},
++        "method": "player V4b A-pose rest 13 bones (apose_joints.player) "
++                  "+ Voxel continuous shell (triangulated) + ARMATURE_AUTO "
++                  "+ SURFACE_DEFORM bind; original 2,035-shell high-poly "
++                  "keeps UV / 3 packed 4096 PBR textures",
++        "params": {"voxel_size": VOXEL, "arm_only_gain": ARM_GAIN,
++                   "apose_table": "player"},
++        "chain": ch["info"],
++        "stance_identity": {"identical": identical,
++                            "max_vertex_delta_m": round(max_stance, 9)},
++        "export": export,
++        "reopen": reopen,
++        "all_frames": {"count": len(rows),
++                       "cards": {k: n for k, n in CARDS}, "rows": rows},
++        "shots": shots,
++        "elapsed_seconds": round(time.time() - t0, 2),
++    }
++    OUT_JSON.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
++                        encoding="utf-8")
++    log(f"E_BUILD_OK frames={len(rows)} shots={len(shots)} "
++        f"blend_bytes={export['bytes']} elapsed={report['elapsed_seconds']}s")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/render_e_x1.py
+@@ -0,0 +1,74 @@
++"""重开交付的 .blend，按 x1.0 默认增益渲代表帧。
++
++同时也证明「重开后仍能按另一套 mapping 驱动」，不是只存了个壳。
++全帧数字在 e_build.json / metrics_e.json 里；这里只出视觉对照。
++用法：blender.exe -b --python render_e_x1.py
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import sys
++from pathlib import Path
++
++sys.dont_write_bytecode = True
++
++import bpy
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++sys.path.insert(0, str(BAKE / "C路线-真3D修复"))
++import c_build as C  # noqa: E402
++
++BLEND = HERE / "玩家V4b-可变形连续壳.blend"
++SPEC = BAKE / "3D攻击GIF" / "apose_joints.json"
++TABLE = BAKE / "baked2.json"
++MAPPING = BAKE / "3D攻击GIF" / "puppet_mapping.json"
++OUT = HERE / "x1_shots.json"
++SHOTS = [("stance", None, 0), ("jab07", "jab", 6),
++         ("cross11", "cross", 10), ("wave18", "wave", 17)]
++
++
++def log(*a):
++    print(*a, flush=True)
++
++
++def main() -> int:
++    spec = json.loads(SPEC.read_text(encoding="utf-8"))
++    table = json.loads(TABLE.read_text(encoding="utf-8"))
++    mapping = json.loads(MAPPING.read_text(encoding="utf-8"))
++    P = C.apose_points({"foe": spec["player"]})
++    stance = C.joints_of(table, None, 0)
++    bpy.ops.wm.open_mainfile(filepath=str(BLEND))
++    scene = bpy.context.scene
++    rig = next(o for o in scene.objects if o.type == "ARMATURE")
++    hi = next(o for o in scene.objects
++              if o.type == "MESH" and any(m.type == "SURFACE_DEFORM"
++                                          for m in o.modifiers))
++    shell = next(m for m in hi.modifiers
++                 if m.type == "SURFACE_DEFORM").target
++    assert shell is not None
++    hi.hide_render = False
++    shell.hide_render = True
++    rows = []
++    for name, card, frame in SHOTS:
++        C.pose_frame(rig, P, table, stance, card, frame, mapping)
++        C.setup_camera(scene, 0.0)
++        p = HERE / "frames" / f"e-{name}-x1.png"
++        scene.render.filepath = str(p)
++        bpy.ops.render.render(write_still=True)
++        b = p.read_bytes()
++        assert b[:8] == b"\x89PNG\r\n\x1a\n" and len(b) > 10000
++        rows.append({"shot": name, "card": card, "frame": frame,
++                     "file": p.name, "bytes": len(b),
++                     "sha256": hashlib.sha256(b).hexdigest()})
++        log(f"X1_SHOT {name} bytes={len(b)}")
++    out = {"blend": BLEND.name, "gain": 1.0, "shots": rows}
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    log(f"X1_RENDER_OK shots={len(rows)}")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/analyze_e.py
+@@ -0,0 +1,85 @@
++"""E 路线全 72 帧变形质量分析：E_x1 / E_x15 与对手怪 A2_x15 逐帧对照。
++
++所有数字从 e_build.json 现算，不写死；输出 metrics_e.json 供板与判据共用。
++"""
++from __future__ import annotations
++
++import json
++import statistics
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++SRC = HERE / "e_build.json"
++OUT = HERE / "metrics_e.json"
++
++KEYS = ("tear_p999_m", "tear_gt5cm", "max_displacement_m",
++        "moved_gt_1mm", "reach_f_m", "reach_b_m", "reach_max_m",
++        "foot_gap_m", "penetration_pct")
++
++
++def summarize(rows, tag):
++    out = {}
++    for k in KEYS:
++        vals = [r[tag][k] for r in rows]
++        out[k] = {
++            "max": round(max(vals), 6),
++            "mean": round(statistics.fmean(vals), 6),
++            "min": round(min(vals), 6),
++        }
++    return out
++
++
++def main() -> int:
++    data = json.loads(SRC.read_text(encoding="utf-8"))
++    rows = data["all_frames"]["rows"]
++    assert len(rows) == 72, len(rows)
++    per_tag = {tag: summarize(rows, tag)
++               for tag in ("E_x1", "E_x15", "A2_x15_foe")}
++
++    # 逐帧最坏撕裂比与幅度比：E_x15 / A2_x15_foe
++    ratios = []
++    for r in rows:
++        e, a = r["E_x15"], r["A2_x15_foe"]
++        denom = max(a["tear_p999_m"], 1e-9)
++        ratios.append({
++            "card": r["card"], "frame": r["frame"],
++            "tear_ratio": round(e["tear_p999_m"] / denom, 5),
++            "tear_e": e["tear_p999_m"], "tear_a": a["tear_p999_m"],
++            "reach_e": e["reach_max_m"], "reach_a": a["reach_max_m"],
++        })
++    worst = max(ratios, key=lambda x: x["tear_ratio"])
++    e_reach = sum(1 for x in ratios if x["reach_e"] >= x["reach_a"] - 1e-6)
++    better_tear = sum(1 for x in ratios if x["tear_ratio"] < 1.0)
++
++    out = {
++        "frames": len(rows),
++        "cards": data["all_frames"]["cards"],
++        "per_tag": per_tag,
++        "worst_tear_ratio": worst,
++        "frames_e_reach_not_less_than_foe": e_reach,
++        "frames_e_tear_lower_than_foe": better_tear,
++        "mean_tear_ratio": round(
++            statistics.fmean(x["tear_ratio"] for x in ratios), 5),
++        "source": str(SRC.name),
++    }
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    for tag in ("E_x1", "E_x15", "A2_x15_foe"):
++        s = per_tag[tag]
++        print(f"{tag:<12} tear_p999 max={s['tear_p999_m']['max']:.5f} "
++              f"mean={s['tear_p999_m']['mean']:.5f} "
++              f"gt5cm_max={s['tear_gt5cm']['max']} "
++              f"reach_max={s['reach_max_m']['max']:.5f} "
++              f"foot_gap_max={s['foot_gap_m']['max']:.5f}")
++    print(f"WORST_TEAR_RATIO={worst['tear_ratio']} "
++          f"at {worst['card']}#{worst['frame']} "
++          f"(E={worst['tear_e']} A={worst['tear_a']})")
++    print(f"MEAN_TEAR_RATIO={out['mean_tear_ratio']} "
++          f"REACH_NOT_LESS={e_reach}/{len(rows)} "
++          f"TEAR_LOWER={better_tear}/{len(rows)}")
++    print("METRICS_E_OK")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/export_e_gltf.py
+@@ -0,0 +1,157 @@
++"""从玩家 V4b 可变形 .blend 导出四口径 GLB，量化 glTF 带走/丢掉什么。
++
++口径与 C 路线完全同款，便于逐项对照：
++  player-full        高模 + 代理壳 + 13 骨，材质 EXPORT
++  player-stance      只高模 / 站架 / export_apply=True（烘焙 SURFACE_DEFORM）
++  player-cross       只高模 / cross#10 驱动后 / export_apply=True
++  player-proxy-rig   只代理壳 + 13 骨（glTF 里唯一可能保留 skin 的口径）
++
++另外记录 3 张 packed 4096² 的字节与 sha256，供 inspect_e_gltf.py
++逐字节核对「贴图零重编码」。
++用法：blender.exe -b --python export_e_gltf.py
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import sys
++import time
++from pathlib import Path
++
++sys.dont_write_bytecode = True
++
++import bpy
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++BLEND = HERE / "玩家V4b-可变形连续壳.blend"
++sys.path.insert(0, str(BAKE / "C路线-真3D修复"))
++import c_build as C  # noqa: E402
++
++SPEC = BAKE / "3D攻击GIF" / "apose_joints.json"
++TABLE = BAKE / "baked2.json"
++MAPPING = BAKE / "3D攻击GIF" / "puppet_mapping.json"
++OUT = HERE / "export_e.json"
++
++
++def log(*a):
++    print(*a, flush=True)
++
++
++def sha(data: bytes) -> str:
++    return hashlib.sha256(data).hexdigest()
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def drive_pose(rig, P, table, stance, card, frame, gain=1.0):
++    mapping = json.loads(MAPPING.read_text(encoding="utf-8"))
++    if gain != 1.0:
++        mapping["arm_gain_deg"] = {
++            k: v * gain for k, v in mapping["arm_gain_deg"].items()}
++    C.pose_frame(rig, P, table, stance, card, frame, mapping)
++    bpy.context.view_layer.update()
++
++
++def do_export(name, objs, *, apply_modifiers, materials, description):
++    for o in bpy.context.scene.objects:
++        o.hide_set(False)
++        o.hide_render = False
++        o.hide_viewport = False
++    bpy.ops.object.select_all(action="DESELECT")
++    for o in objs:
++        o.select_set(True)
++    bpy.context.view_layer.objects.active = objs[0]
++    path = HERE / (name + ".glb")
++    if path.exists():
++        path.unlink()
++    t0 = time.time()
++    result = bpy.ops.export_scene.gltf(
++        filepath=str(path), export_format="GLB", use_selection=True,
++        export_apply=apply_modifiers, export_animations=True,
++        export_skins=True, export_materials=materials,
++        export_cameras=False, export_lights=False, export_yup=True)
++    elapsed = round(time.time() - t0, 3)
++    assert path.is_file() and path.stat().st_size > 100, (name, result)
++    row = {"name": name, "file": path.name, "description": description,
++           "objects": [o.name for o in objs],
++           "export_apply": apply_modifiers, "export_materials": materials,
++           "export_animations": True, "export_skins": True,
++           "operator_result": list(result),
++           "bytes": path.stat().st_size, "sha256": sha256(path),
++           "elapsed_seconds": elapsed}
++    log(f"EXPORT {name} bytes={row['bytes']} elapsed={elapsed}s "
++        f"result={row['operator_result']}")
++    return row
++
++
++def main() -> int:
++    t0 = time.time()
++    bpy.ops.wm.open_mainfile(filepath=str(BLEND))
++    scene = bpy.context.scene
++    hi = next(o for o in scene.objects
++              if o.type == "MESH"
++              and any(m.type == "SURFACE_DEFORM" for m in o.modifiers))
++    shell = next(o for o in scene.objects
++                 if o.type == "MESH"
++                 and any(m.type == "ARMATURE" for m in o.modifiers))
++    rig = next(o for o in scene.objects if o.type == "ARMATURE")
++    spec = json.loads(SPEC.read_text(encoding="utf-8"))
++    table = json.loads(TABLE.read_text(encoding="utf-8"))
++    P = C.apose_points({"foe": spec["player"]})
++    stance = C.joints_of(table, None, 0)
++    packed = []
++    for im in bpy.data.images:
++        if im.source == "FILE" and im.packed_file:
++            data = bytes(im.packed_file.data)
++            packed.append({"name": im.name, "size": list(im.size),
++                           "bytes": len(data), "sha256": sha(data)})
++    packed.sort(key=lambda x: x["name"])
++    log(f"OBJECTS hi={hi.name} shell={shell.name} rig={rig.name} "
++        f"bones={len(rig.pose.bones)} packed_images={len(packed)}")
++
++    rows = []
++    rows.append(do_export(
++        "player-full", [hi, shell, rig], apply_modifiers=False,
++        materials="EXPORT",
++        description="完整场景口径：高模 + 代理壳 + 13 骨，PBR 贴图导出"))
++    drive_pose(rig, P, table, stance, None, 0, 1.0)
++    rows.append(do_export(
++        "player-stance", [hi], apply_modifiers=True, materials="NONE",
++        description="只高模 / 站架 / 烘焙 SURFACE_DEFORM / 无材质"))
++    drive_pose(rig, P, table, stance, "cross", 10, 1.5)
++    rows.append(do_export(
++        "player-cross", [hi], apply_modifiers=True, materials="NONE",
++        description="只高模 / cross#10 增益 x1.5 / 烘焙 SURFACE_DEFORM / 无材质"))
++    drive_pose(rig, P, table, stance, None, 0, 1.0)
++    rows.append(do_export(
++        "player-proxy-rig", [shell, rig], apply_modifiers=False,
++        materials="NONE",
++        description="只代理壳 + 13 骨 / 无材质，检验 skin 是否随导出"))
++
++    out = {
++        "blender": bpy.app.version_string,
++        "blend_sha256": sha256(BLEND),
++        "source_object": {"high_poly": hi.name, "proxy_shell": shell.name,
++                          "rig": rig.name, "rig_bones": len(rig.pose.bones)},
++        "apose_table": "player",
++        "packed_images": packed,
++        "exports": rows,
++        "total_bytes": sum(r["bytes"] for r in rows),
++        "elapsed_seconds": round(time.time() - t0, 3),
++    }
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    log(f"TOTAL_BYTES={out['total_bytes']} elapsed={out['elapsed_seconds']}s")
++    log("GLTF_EXPORT_E_OK")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/inspect_e_gltf.py
+@@ -0,0 +1,152 @@
++"""纯 Python 解析四口径玩家 GLB：结构、PBR 三通道、贴图零重编码、静态快照。
++
++不依赖 Blender；只读 export_e.json 与本工作区的 .glb。
++用法：python inspect_e_gltf.py
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import struct
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++OUT = HERE / "gltf_e_inspection.json"
++GLB_MAGIC = 0x46546C67
++
++
++def sha(data: bytes) -> str:
++    return hashlib.sha256(data).hexdigest()
++
++
++def parse_glb(path: Path):
++    data = path.read_bytes()
++    assert struct.unpack_from("<I", data, 0)[0] == GLB_MAGIC, path
++    version, length = struct.unpack_from("<II", data, 4)
++    assert version == 2 and length == len(data), (version, length, len(data))
++    off, chunks = 12, []
++    while off < len(data):
++        clen, ctype = struct.unpack_from("<I4s", data, off)
++        off += 8
++        chunks.append((ctype, data[off:off + clen]))
++        off += clen
++    js = json.loads(next(p for t, p in chunks if t == b"JSON").decode("utf-8"))
++    bin_chunk = next(p for t, p in chunks if t == b"BIN\x00")
++    return js, bin_chunk, len(data)
++
++
++def image_bytes(js, bin_chunk, idx):
++    bv = js["bufferViews"][js["images"][idx]["bufferView"]]
++    off = bv.get("byteOffset", 0)
++    return bin_chunk[off:off + bv["byteLength"]]
++
++
++def primitives(js):
++    out = []
++    for mi, mesh in enumerate(js.get("meshes", [])):
++        for pi, prim in enumerate(mesh.get("primitives", [])):
++            attrs = sorted(prim.get("attributes", {}).keys())
++            acc = js["accessors"][prim["attributes"]["POSITION"]]
++            out.append({"mesh": mi, "primitive": pi,
++                        "attributes": attrs,
++                        "verts": acc["count"],
++                        "pos_min": acc.get("min"), "pos_max": acc.get("max")})
++    return out
++
++
++def main() -> int:
++    exp = json.loads((HERE / "export_e.json").read_text(encoding="utf-8"))
++    packed = exp["packed_images"]
++    rows = []
++    for item in exp["exports"]:
++        path = HERE / item["file"]
++        js, bin_chunk, file_len = parse_glb(path)
++        imgs = js.get("images", [])
++        img_rows = []
++        for i in range(len(imgs)):
++            blob = image_bytes(js, bin_chunk, i)
++            hit = [p for p in packed if p["sha256"] == sha(blob)]
++            img_rows.append({"index": i, "bytes": len(blob),
++                             "sha256": sha(blob),
++                             "matches_packed_source": bool(hit),
++                             "source_name": hit[0]["name"] if hit else None})
++        mats = js.get("materials", [])
++        pbr = {}
++        for m in mats:
++            b = m.get("pbrMetallicRoughness", {})
++            pbr = {
++                "baseColorTexture": b.get("baseColorTexture", {}).get("index"),
++                "metallicRoughnessTexture": b.get(
++                    "metallicRoughnessTexture", {}).get("index"),
++                "normalTexture": m.get("normalTexture", {}).get("index"),
++            }
++            break
++        rows.append({
++            "name": item["name"], "file": item["file"],
++            "file_bytes": file_len, "sha256": item["sha256"],
++            "counts": {k: len(js.get(k, [])) for k in
++                       ("scenes", "nodes", "meshes", "materials", "textures",
++                        "images", "skins", "animations", "cameras",
++                        "accessors", "bufferViews", "buffers")},
++            "extensionsUsed": js.get("extensionsUsed", []),
++            "skin_joints": [len(s.get("joints", []))
++                            for s in js.get("skins", [])],
++            "primitives": primitives(js),
++            "images": img_rows,
++            "pbr": pbr,
++            "export_apply": item["export_apply"],
++        })
++
++    # 静态快照：站架 vs cross#10 的 POSITION min/max 最大分量差
++    def bounds(name):
++        r = next(x for x in rows if x["name"] == name)
++        return r["primitives"][0]["pos_min"], r["primitives"][0]["pos_max"]
++    s_min, s_max = bounds("player-stance")
++    c_min, c_max = bounds("player-cross")
++    delta = max([abs(a - b) for a, b in zip(s_min, c_min)]
++                + [abs(a - b) for a, b in zip(s_max, c_max)])
++
++    full = next(x for x in rows if x["name"] == "player-full")
++    out = {
++        "exports": rows,
++        "packed_source_images": packed,
++        "zero_reencode": {
++            "full_images": len(full["images"]),
++            "all_match": bool(full["images"])
++            and all(i["matches_packed_source"] for i in full["images"]),
++            "source_bytes": sum(p["bytes"] for p in packed),
++            "glb_image_bytes": sum(i["bytes"] for i in full["images"]),
++            "share_of_full_glb": round(
++                sum(i["bytes"] for i in full["images"]) / full["file_bytes"], 5),
++        },
++        "static_snapshot": {
++            "stance_pos_min": s_min, "stance_pos_max": s_max,
++            "cross_pos_min": c_min, "cross_pos_max": c_max,
++            "max_component_delta_m": round(delta, 6),
++            "stance_skins": next(x for x in rows
++                                 if x["name"] == "player-stance")["counts"]["skins"],
++            "stance_animations": next(x for x in rows
++                                      if x["name"] == "player-stance")["counts"]["animations"],
++        },
++    }
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    for r in rows:
++        c = r["counts"]
++        print(f"{r['name']:<20} bytes={r['file_bytes']:>10} "
++              f"meshes={c['meshes']} skins={c['skins']} "
++              f"anims={c['animations']} imgs={c['images']} "
++              f"prims={len(r['primitives'])}")
++    z = out["zero_reencode"]
++    print(f"ZERO_REENCODE all_match={z['all_match']} "
++          f"src={z['source_bytes']} glb={z['glb_image_bytes']} "
++          f"share={z['share_of_full_glb']}")
++    print(f"STATIC_SNAPSHOT max_delta={delta:.6f}m "
++          f"skins={out['static_snapshot']['stance_skins']} "
++          f"anims={out['static_snapshot']['stance_animations']}")
++    print("GLTF_INSPECT_E_OK")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/run_godot_e.py
+@@ -0,0 +1,115 @@
++"""E 路线驱动：复制玩家 GLB 到隔离工程 → Godot 4.5 导入 → 引擎内读回结构。
++
++游戏工程全程零改动；探针工程在 E路线/probe_project_e/。
++用法：python run_godot_e.py
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import shutil
++import subprocess
++import time
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++PROJECT = HERE / "probe_project_e"
++ASSETS = PROJECT / "assets"
++LOGS = HERE / "logs"
++GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
++GLBS = ["player-full.glb", "player-stance.glb", "player-proxy-rig.glb"]
++OUT = HERE / "godot_e_result.json"
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def dir_bytes(p: Path):
++    if not p.is_dir():
++        return 0, 0
++    files = [x for x in p.rglob("*") if x.is_file()]
++    return len(files), sum(x.stat().st_size for x in files)
++
++
++def timed(cmd, timeout=300):
++    t0 = time.perf_counter()
++    r = subprocess.run(cmd, capture_output=True, text=True,
++                       encoding="utf-8", errors="replace", timeout=timeout)
++    return round(time.perf_counter() - t0, 3), r
++
++
++def main() -> int:
++    assert GODOT.is_file(), GODOT
++    ASSETS.mkdir(parents=True, exist_ok=True)
++    LOGS.mkdir(parents=True, exist_ok=True)
++    copies = []
++    for name in GLBS:
++        src, dst = HERE / name, ASSETS / name
++        shutil.copyfile(src, dst)
++        copies.append({"file": name, "bytes": dst.stat().st_size,
++                       "sha256": sha256(dst),
++                       "identical": sha256(src) == sha256(dst)})
++    assert all(c["identical"] for c in copies), copies
++    print(f"COPIED={len(copies)} total_bytes={sum(c['bytes'] for c in copies)}")
++
++    dt1, r1 = timed([str(GODOT), "--headless", "--editor", "--quit",
++                     "--path", str(PROJECT)])
++    (LOGS / "godot_editor_import_e.log").write_text(
++        (r1.stdout or "") + "\n=== STDERR ===\n" + (r1.stderr or ""),
++        encoding="utf-8")
++    imports = [{"file": n + ".import",
++                "exists": (ASSETS / (n + ".import")).is_file()}
++               for n in GLBS]
++    n_imp, b_imp = dir_bytes(PROJECT / ".godot" / "imported")
++    print(f"EDITOR_IMPORT seconds={dt1} rc={r1.returncode} "
++          f"all_import_files={all(x['exists'] for x in imports)}")
++
++    dt2, r2 = timed([str(GODOT), "--headless", "--path", str(PROJECT),
++                     "--script", "res://probes/inspect_e.gd"])
++    (LOGS / "godot_inspect_e.log").write_text(
++        (r2.stdout or "") + "\n=== STDERR ===\n" + (r2.stderr or ""),
++        encoding="utf-8")
++    marker = "PROBE_JSON "
++    line = next((l for l in (r2.stdout or "").splitlines()
++                 if l.startswith(marker)), None)
++    if line is None:
++        print("PROBE_JSON_MISSING head=" + repr((r2.stdout or "")[:400]))
++        return 1
++    probe = json.loads(line[len(marker):])
++
++    log_text = (LOGS / "godot_inspect_e.log").read_text(
++        encoding="utf-8", errors="replace")
++    out = {
++        "godot_executable": str(GODOT), "probe_project": str(PROJECT),
++        "copies": copies,
++        "editor_import": {"seconds": dt1, "returncode": r1.returncode,
++                          "import_files": imports,
++                          "imported_files": n_imp, "imported_bytes": b_imp},
++        "inspect_probe": {"seconds": dt2, "returncode": r2.returncode,
++                          "script_errors": log_text.count("SCRIPT ERROR")},
++        "engine": probe["engine"], "targets": probe["targets"],
++        "total_wall_seconds": round(dt1 + dt2, 3),
++    }
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    for t in probe["targets"]:
++        print(f"{Path(t['path']).name:<22} load_ok={t['load_ok']} "
++              f"nodes={t['node_count']} meshes={len(t['mesh_instances'])} "
++              f"skels={len(t['skeletons'])} "
++              f"anim_players={len(t['animation_players'])}")
++    ok = (r1.returncode == 0 and r2.returncode == 0
++          and all(x["exists"] for x in imports)
++          and all(t["load_ok"] for t in probe["targets"])
++          and out["inspect_probe"]["script_errors"] == 0)
++    print(f"IMPORT_BYTES={b_imp} WALL={out['total_wall_seconds']}s")
++    print("GODOT_IMPORT_E_OK" if ok else "GODOT_IMPORT_E_FAILED")
++    return 0 if ok else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/make_boards_e.py
+@@ -0,0 +1,361 @@
++"""E 路线四张对照板：造型/动作、增益 x1 与 x1.5、72 帧变形质量、glTF-Godot 成本账。
++
++所有数字现读 e_build.json / metrics_e.json / gltf_e_inspection.json /
++godot_e_result.json，绝不写死实测值。板用浅底，因为源渲染是白底，
++深色卡片会形成嵌套白矩形（对手怪概念对照踩过这个坑）。
++
++产出 board_stats_e.json 与 e_conclusion.json，供 verify_e.py 复算。
++目录实物与 stats 必须对账（D 路线重复字典键曾让第四张板静默漏记）。
++"""
++from __future__ import annotations
++
++import json
++from pathlib import Path
++
++from PIL import Image, ImageDraw, ImageFont
++
++HERE = Path(__file__).resolve().parent
++FRAMES = HERE / "frames"
++BOARDS = HERE / "boards"
++BOARDS.mkdir(exist_ok=True)
++
++BG = (244, 246, 250)
++CARD = (255, 255, 255)
++EDGE = (216, 223, 232)
++FG = (28, 38, 54)
++MUTED = (104, 118, 138)
++ACCENT = (176, 120, 36)
++GOOD = (28, 132, 96)
++BAD = (192, 66, 58)
++BLUE = (36, 100, 172)
++TEAL = (24, 148, 148)
++
++BOARD_NAMES = [
++    "E-造型与动作六帧.png",
++    "E-增益x1与x15对照.png",
++    "E-全72帧变形质量.png",
++    "E-glTF与Godot成本账.png",
++]
++
++
++def font(size: int, bold: bool = False):
++    names = (r"C:\Windows\Fonts\msyhbd.ttc",) if bold else (
++        r"C:\Windows\Fonts\msyh.ttc",)
++    for p in names + (r"C:\Windows\Fonts\msyh.ttc",):
++        try:
++            return ImageFont.truetype(p, size)
++        except OSError:
++            continue
++    return ImageFont.load_default()
++
++
++F_TITLE = font(32, True)
++F_SUB = font(17)
++F_H = font(21, True)
++F_B = font(17)
++F_S = font(15)
++F_TAG = font(16, True)
++
++
++def load_json(name: str):
++    return json.loads((HERE / name).read_text(encoding="utf-8"))
++
++
++def contain(img: Image.Image, box: tuple[int, int]) -> Image.Image:
++    w, h = img.size
++    bw, bh = box
++    s = min(bw / w, bh / h)
++    return img.resize((max(1, int(w * s)), max(1, int(h * s))),
++                      Image.Resampling.LANCZOS)
++
++
++def paste_center(canvas: Image.Image, path: Path,
++                 box: tuple[int, int, int, int]) -> None:
++    x, y, w, h = box
++    raw = Image.open(path).convert("RGBA")
++    # 源渲染是透明底，直接 convert("RGB") 会把 alpha=0 区域变纯黑。
++    white = Image.new("RGBA", raw.size, (255, 255, 255, 255))
++    flat = Image.alpha_composite(white, raw).convert("RGB")
++    img = contain(flat, (w, h))
++    canvas.paste(img, (x + (w - img.width) // 2, y + (h - img.height) // 2))
++
++
++def header(d: ImageDraw.ImageDraw, title: str, sub: str, w: int) -> None:
++    d.text((40, 24), title, font=F_TITLE, fill=FG)
++    d.text((40, 70), sub, font=F_SUB, fill=MUTED)
++    d.line((40, 108, w - 40, 108), fill=EDGE, width=2)
++
++
++def cell(d: ImageDraw.ImageDraw, canvas: Image.Image, path: Path,
++         box: tuple[int, int, int, int], label: str, note: str) -> None:
++    x, y, w, h = box
++    d.rounded_rectangle((x, y, x + w, y + h), radius=10,
++                        fill=CARD, outline=EDGE, width=2)
++    paste_center(canvas, path, (x + 12, y + 12, w - 24, h - 74))
++    d.text((x + 18, y + h - 56), label, font=F_H, fill=FG)
++    d.text((x + 18, y + h - 28), note, font=F_S, fill=MUTED)
++
++
++def board1(build: dict, probe: dict) -> Path:
++    w, h = 1800, 1320
++    im = Image.new("RGB", (w, h), BG)
++    d = ImageDraw.Draw(im)
++    header(d, "E 路线 · 玩家 V4b 造型与动作六帧",
++           "源 GLB 渲染 / 连续壳站架 / 55 度侧视 / 三档攻击代表帧；"
++           "全部来自 Blender 5.2.3 同一套固定灯光", w)
++    src = probe["structure"]
++    d.text((40, 116),
++           f"源资产 {src['verts']} 顶点 / {src['shells']} 连通壳 / "
++           f"{src['packed_textures']} 张 4096² PBR；"
++           f"站架恒等最大位移 {build['stance_identity']['max_vertex_delta_m']} m",
++           font=F_S, fill=MUTED)
++
++    items = [
++        ("e-source-front.png", "源 GLB 正面", "未绑骨 / A-pose 原样"),
++        ("e-stance-x15.png", "连续壳站架", "SURFACE_DEFORM 绑定后 rest"),
++        ("e-stance-angle55.png", "55 度侧视", "同一 rest / 只转相机"),
++        ("e-jab07-x15.png", "jab #6", "单侧前臂驱动"),
++        ("e-cross11-x15.png", "cross #10", "后手驱动"),
++        ("e-wave18-x15.png", "wave #17", "双手驱动"),
++    ]
++    for i, (fn, label, note) in enumerate(items):
++        col, row = i % 3, i // 3
++        cell(d, im, FRAMES / fn,
++             (40 + col * 580, 152 + row * 578, 560, 552), label, note)
++    out = BOARDS / BOARD_NAMES[0]
++    im.save(out)
++    return out
++
++
++def board2(x1: dict, probe: dict) -> Path:
++    w, h = 1800, 1300
++    im = Image.new("RGB", (w, h), BG)
++    d = ImageDraw.Draw(im)
++    header(d, "E 路线 · 同帧增益 x1.0 与 x1.5",
++           "同一交付 .blend 重开后只改增益，四组代表帧逐帧对照；"
++           "站架在两档下必须恒等", w)
++    d.text((40, 116),
++           f"x1 shots={len(x1['shots'])} gain={x1['gain']} / "
++           f"x1.5 shots={len(probe['shots'])} gain="
++           f"{probe['params']['arm_only_gain']}",
++           font=F_S, fill=MUTED)
++    pairs = [("stance", "e-stance-x1.png", "e-stance-x15.png", "站架 / frame 0"),
++             ("jab07", "e-jab07-x1.png", "e-jab07-x15.png", "jab / frame 6"),
++             ("cross11", "e-cross11-x1.png", "e-cross11-x15.png",
++              "cross / frame 10"),
++             ("wave18", "e-wave18-x1.png", "e-wave18-x15.png",
++              "wave / frame 17")]
++    for i, (_, f1, f15, label) in enumerate(pairs):
++        x = 40 + i * 435
++        for row, (fn, tag, col) in enumerate(
++                [(f1, "x1.0", BLUE), (f15, "x1.5", ACCENT)]):
++            y = 152 + row * 565
++            d.rounded_rectangle((x, y, x + 415, y + 540), radius=10,
++                                fill=CARD, outline=EDGE, width=2)
++            paste_center(im, FRAMES / fn, (x + 10, y + 10, 395, 455))
++            d.text((x + 16, y + 476), f"{label}  {tag}", font=F_H, fill=col)
++            d.text((x + 16, y + 508), fn, font=F_S, fill=MUTED)
++    out = BOARDS / BOARD_NAMES[1]
++    im.save(out)
++    return out
++
++
++def polyline(d: ImageDraw.ImageDraw, box, series, ymax: float,
++             title: str, note: str) -> None:
++    x0, y0, x1, y1 = box
++    d.rounded_rectangle((x0 - 16, y0 - 44, x1 + 16, y1 + 30), radius=10,
++                        fill=CARD, outline=EDGE, width=2)
++    d.text((x0, y0 - 38), title, font=F_H, fill=FG)
++    d.text((x0 + 330, y0 - 36), note, font=F_S, fill=MUTED)
++    for k in range(5):
++        gy = y0 + (y1 - y0) * k / 4
++        d.line((x0, gy, x1, gy), fill=EDGE, width=1)
++        d.text((x0 - 62, gy - 9), f"{ymax * (4 - k) / 4:.3f}",
++               font=F_S, fill=MUTED)
++    for idx, (label, vals, col) in enumerate(series):
++        pts = []
++        for i, v in enumerate(vals):
++            px = x0 + (x1 - x0) * i / max(1, len(vals) - 1)
++            py = y1 - (y1 - y0) * min(v / ymax, 1.0)
++            pts.append((px, py))
++        d.line(pts, fill=col, width=3, joint="curve")
++        lx, ly = x1 - 210, y0 + 8 + 22 * idx
++        d.rectangle((lx, ly + 5, lx + 22, ly + 13), fill=col)
++        d.text((lx + 30, ly), label, font=F_S, fill=col)
++
++
++def board3(build: dict, metrics: dict) -> Path:
++    w, h = 1800, 1120
++    im = Image.new("RGB", (w, h), BG)
++    d = ImageDraw.Draw(im)
++    header(d, "E 路线 · 全 72 帧变形质量（负结果如实保留）",
++           "逐帧从 e_build.json 现算；E_x15 撕裂均值高于对手怪 A2_x15，"
++           "不能把「能驱动」写成「变形已可用」", w)
++    rows = build["all_frames"]["rows"]
++    tags = [("E_x1", TEAL), ("E_x15", BLUE), ("A2_x15_foe", BAD)]
++    tear = [(t, [r[t]["tear_p999_m"] for r in rows], c) for t, c in tags]
++    reach = [(t, [r[t]["reach_max_m"] for r in rows], c)
++             for t, c in tags[1:]]
++    polyline(d, (110, 190, 1730, 520), tear, 0.06,
++             "边撕裂 p999 (m)", "越低越好；三条线同帧同增益口径")
++    polyline(d, (110, 650, 1730, 940), reach, 0.80,
++             "动作幅度 reach_max (m)", "越高越好；E_x15 与对手怪 A2_x15")
++    worst = metrics["worst_tear_ratio"]
++    d.text((40, 1000),
++           f"mean_tear_ratio={metrics['mean_tear_ratio']}  "
++           f"worst={worst['tear_ratio']} @ {worst['card']}#{worst['frame']}  "
++           f"撕裂优于对手怪 {metrics['frames_e_tear_lower_than_foe']}/"
++           f"{metrics['frames']} 帧  幅度不逊 "
++           f"{metrics['frames_e_reach_not_less_than_foe']}/"
++           f"{metrics['frames']} 帧",
++           font=F_B, fill=BAD)
++    d.text((40, 1034),
++           "结论：造型层成立、驱动链成立；变形质量这一项 E 路线劣于对手怪，"
++           "未达可渲 228 帧的门槛。", font=F_S, fill=MUTED)
++    out = BOARDS / BOARD_NAMES[2]
++    im.save(out)
++    return out
++
++
++def board4(gltf: dict, godot: dict, export: dict) -> Path:
++    w, h = 1800, 900
++    im = Image.new("RGB", (w, h), BG)
++    d = ImageDraw.Draw(im)
++    header(d, "E 路线 · glTF 导出与 Godot 读回成本账",
++           "四个 GLB 均由同一交付 .blend 导出；"
++           "SURFACE_DEFORM 在 glTF 无对应物，导出即烘焙静态快照", w)
++    d.text((40, 116),
++           f"Blender {export['blender']} / 交付 .blend "
++           f"{export['blend_sha256'][:16]}... / "
++           f"rig_bones={export['source_object']['rig_bones']}",
++           font=F_S, fill=MUTED)
++
++    cols = [(40, 250), (300, 210), (520, 210), (740, 210),
++            (960, 250), (1220, 250), (1480, 260)]
++    heads = ["GLB", "字节", "skins", "anims", "顶点", "带 JOINTS_0", "贴图"]
++    y = 160
++    d.rounded_rectangle((30, y, 1770, y + 44), radius=8, fill=(230, 236, 244))
++    for (cx, _), head in zip(cols, heads):
++        d.text((cx + 10, y + 10), head, font=F_TAG, fill=FG)
++    y += 50
++    for ex in gltf["exports"]:
++        c = ex["counts"]
++        prims = ex["primitives"]
++        joints = sum("JOINTS_0" in p["attributes"] for p in prims)
++        verts = sum(p["verts"] for p in prims)
++        vals = [ex["file"], f"{ex['file_bytes']:,}", str(c["skins"]),
++                str(c["animations"]), f"{verts:,}", str(joints),
++                str(c["images"])]
++        d.rounded_rectangle((30, y, 1770, y + 62), radius=8,
++                            fill=CARD, outline=EDGE, width=1)
++        for (cx, _), v in zip(cols, vals):
++            d.text((cx + 10, y + 18), v, font=F_B, fill=FG)
++        y += 70
++
++    y += 16
++    z = gltf["zero_reencode"]
++    d.text((40, y), f"零重编码：{z['full_images']} 张 embedded PBR 与源 "
++                    f"packed 图逐字节一致，占 full GLB "
++                    f"{z['share_of_full_glb'] * 100:.3f}%", font=F_B, fill=GOOD)
++    y += 40
++    d.line((40, y, 1760, y), fill=EDGE, width=2)
++    y += 20
++    d.text((40, y), "Godot 4.5 读回（隔离工程 probe_project_e）",
++           font=F_H, fill=FG)
++    y += 38
++    for t in godot["targets"]:
++        meshes = ", ".join(
++            f"{m['name']} verts={m['verts']} skeleton='{m['skeleton_path']}'"
++            for m in t["mesh_instances"])
++        sk = t["skeletons"][0]["bones"] if t["skeletons"] else 0
++        d.text((40, y), f"{t['path']}  load={t['load_ok']}  "
++                        f"bones={sk}  AnimationPlayer={len(t['animation_players'])}",
++               font=F_B, fill=FG)
++        y += 28
++        d.text((60, y), meshes, font=F_S, fill=MUTED)
++        y += 38
++    d.text((40, y + 10),
++           f"导入 {godot['editor_import']['imported_files']} 文件 / "
++           f"rc={godot['editor_import']['returncode']} / "
++           f"0 SCRIPT ERROR / 全部 0 animation；"
++           "高模不带 skin，只有代理壳能随骨架动。",
++           font=F_B, fill=BAD)
++    out = BOARDS / BOARD_NAMES[3]
++    im.save(out)
++    return out
++
++
++def main() -> int:
++    build = load_json("e_build.json")
++    metrics = load_json("metrics_e.json")
++    probe = load_json("e_probe.json")
++    x1 = load_json("x1_shots.json")
++    src = load_json("source_probe.json")
++    gltf = load_json("gltf_e_inspection.json")
++    godot = load_json("godot_e_result.json")
++    export = load_json("export_e.json")
++
++    outs = [board1(build, src), board2(x1, probe),
++            board3(build, metrics), board4(gltf, godot, export)]
++
++    # 结论可复算：撕裂均值劣于对手怪 + glTF 无动画 -> 先小样本证伪，
++    # 不直接渲 228 帧、不直接投 Godot 驱动层重建。
++    full = next(e for e in gltf["exports"] if e["name"] == "player-full")
++    worse = metrics["mean_tear_ratio"] > 1.0
++    no_anim = full["counts"]["animations"] == 0
++    recommendation = ("small_sprite_sample_first" if worse and no_anim
++                      else "godot_rig_layer")
++    conclusion = {
++        "route": "E",
++        "target": "player V4b",
++        "chain": build["method"],
++        "source_shells": build["chain"]["src"]["shells"],
++        "proxy_shells": build["chain"]["shell"]["shells"],
++        "rig_bones": build["reopen"]["rig_bones"],
++        "frames": metrics["frames"],
++        "mean_tear_ratio": metrics["mean_tear_ratio"],
++        "worst_tear_ratio": metrics["worst_tear_ratio"]["tear_ratio"],
++        "frames_tear_better_than_foe":
++            metrics["frames_e_tear_lower_than_foe"],
++        "frames_reach_not_less_than_foe":
++            metrics["frames_e_reach_not_less_than_foe"],
++        "deformation_verdict": "WORSE_THAN_FOE" if worse else "NOT_WORSE",
++        "gltf_animations": full["counts"]["animations"],
++        "gltf_verdict": "static_snapshot_only" if no_anim else "animated",
++        "recommendation": recommendation,
++        "reasons": [
++            "SURFACE_DEFORM has no glTF equivalent; export bakes a static snapshot",
++            "high-poly mesh has no JOINTS_0 and empty skeleton_path in Godot",
++            "mean tear ratio above 1.0 versus the foe baseline",
++            "baked2.json is 2D (x,z) joints; Godot needs 14-bone Y-up poses",
++        ],
++        "game_source_changed": False,
++        "human_visual_review": True,
++    }
++    (HERE / "e_conclusion.json").write_text(
++        json.dumps(conclusion, ensure_ascii=False, indent=2) + "\n",
++        encoding="utf-8")
++
++    boards = [{"file": p.name, "w": Image.open(p).width,
++               "h": Image.open(p).height, "bytes": p.stat().st_size}
++              for p in outs]
++    stats = {"boards": boards, "board_names": BOARD_NAMES,
++             "frame_files": sorted(p.name for p in FRAMES.glob("*.png")),
++             "recommendation": recommendation}
++    (HERE / "board_stats_e.json").write_text(
++        json.dumps(stats, ensure_ascii=False, indent=2) + "\n",
++        encoding="utf-8")
++    for b in boards:
++        print(f"BOARD {b['file']:<28} {b['w']}x{b['h']} {b['bytes']} B")
++    listed = sorted(b["file"] for b in boards)
++    on_disk = sorted(p.name for p in BOARDS.glob("E-*.png"))
++    if listed != on_disk or listed != sorted(BOARD_NAMES):
++        print(f"BOARD_LIST_MISMATCH disk={on_disk} listed={listed}")
++        return 1
++    print(f"RECOMMENDATION={recommendation} BOARDS_ON_DISK={len(on_disk)}")
++    print("BOARDS_E_OK")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/verify_e.py
+@@ -0,0 +1,529 @@
++"""E 路线承重判据：玩家 V4b 的 13 骨 / Voxel 连续壳 / glTF-Godot 读回。
++
++量的不是「好不好看」，是证据链是否成立：
++  · 源资产与 UV/PBR 有没有被动过；
++  · 2,035 壳是否真塌成 3 壳、SURFACE_DEFORM 是否真 bind 且重开仍能驱动；
++  · 72 帧指标是否可从原始逐帧数据独立复算（含劣于对手怪的负结果）；
++  · glTF 是否只是静态快照、Godot 里骨架是否只挂在代理壳上；
++  · 全程对可运行游戏工程 / C / D 路线归档零污染。
++
++输入解析失败不静默通过：顶层异常记 E-00 并写结果文件，变异脚本才读得到红。
++"""
++from __future__ import annotations
++
++import ast
++import hashlib
++import json
++import statistics
++from pathlib import Path
++
++from PIL import Image, ImageStat
++
++HERE = Path(__file__).resolve().parent
++BAKE = HERE.parent
++GAME = BAKE.parent / "牌拳-CardBoxer"
++C_ROUTE = BAKE / "C路线-glTF-Godot探针"
++D_ROUTE = BAKE / "D路线-CreativeReview与引擎截帧"
++FRAMES = HERE / "frames"
++BOARDS = HERE / "boards"
++LOGS = HERE / "logs"
++OUT = HERE / "verify_e_result.json"
++
++CHECKS: list[dict] = []
++
++
++def expect(name: str, cond: bool, detail: str) -> None:
++    CHECKS.append({"name": name, "ok": bool(cond), "detail": str(detail)})
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def load(p: Path):
++    return json.loads(p.read_text(encoding="utf-8"))
++
++
++def img_info(p: Path):
++    """图片读失败返回 None，绝不抛出去让整轮 verify 崩掉。"""
++    try:
++        with Image.open(p) as im:
++            rgb = im.convert("RGB")
++            st = ImageStat.Stat(rgb.resize((128, 128),
++                                           Image.Resampling.LANCZOS))
++            return {"w": im.width, "h": im.height, "mode": im.mode,
++                    "stddev": round(sum(st.stddev) / 3, 3)}
++    except Exception as exc:  # noqa: BLE001 - 变异体故意弄坏图片
++        return {"error": repr(exc)}
++
++
++def near(a: float, b: float, tol: float = 1e-6) -> bool:
++    return abs(float(a) - float(b)) <= tol
++
++
++def recompute_metrics(rows: list[dict]) -> dict:
++    """独立重算 analyze_e.py 的口径，不 import 它。"""
++    keys = ("tear_p999_m", "tear_gt5cm", "max_displacement_m",
++            "moved_gt_1mm", "reach_f_m", "reach_b_m", "reach_max_m",
++            "foot_gap_m", "penetration_pct")
++    per_tag = {}
++    for tag in ("E_x1", "E_x15", "A2_x15_foe"):
++        per_tag[tag] = {}
++        for k in keys:
++            vals = [r[tag][k] for r in rows]
++            per_tag[tag][k] = {
++                "max": round(max(vals), 6),
++                "mean": round(statistics.fmean(vals), 6),
++                "min": round(min(vals), 6),
++            }
++    ratios = []
++    for r in rows:
++        e, a = r["E_x15"], r["A2_x15_foe"]
++        ratios.append({
++            "card": r["card"], "frame": r["frame"],
++            "tear_ratio": round(e["tear_p999_m"] /
++                                max(a["tear_p999_m"], 1e-9), 5),
++            "tear_e": e["tear_p999_m"], "tear_a": a["tear_p999_m"],
++            "reach_e": e["reach_max_m"], "reach_a": a["reach_max_m"],
++        })
++    worst = max(ratios, key=lambda x: x["tear_ratio"])
++    return {
++        "per_tag": per_tag,
++        "worst": worst,
++        "mean_ratio": round(statistics.fmean(
++            x["tear_ratio"] for x in ratios), 5),
++        "reach_not_less": sum(
++            1 for x in ratios if x["reach_e"] >= x["reach_a"] - 1e-6),
++        "tear_better": sum(1 for x in ratios if x["tear_ratio"] < 1.0),
++    }
++
++
++def run_checks() -> None:
++    baseline = load(HERE / "baseline_e.json")
++    src = load(HERE / "source_probe.json")
++    probe = load(HERE / "e_probe.json")
++    build = load(HERE / "e_build.json")
++    metrics = load(HERE / "metrics_e.json")
++    x1 = load(HERE / "x1_shots.json")
++    export = load(HERE / "export_e.json")
++    gltf = load(HERE / "gltf_e_inspection.json")
++    godot = load(HERE / "godot_e_result.json")
++    stats = load(HERE / "board_stats_e.json")
++    conclusion = load(HERE / "e_conclusion.json")
++
++    # E-01 输入基线：105 个游戏文件 + 10 个单点 + C/D 清单条目数
++    drift = []
++    for rel, meta in baseline["game"].items():
++        p = GAME / rel
++        if not p.is_file():
++            drift.append("missing:" + rel)
++        elif p.stat().st_size != meta["bytes"] or sha256(p) != meta["sha256"]:
++            drift.append("changed:" + rel)
++    for key, meta in baseline["singles"].items():
++        p = Path(meta["path"])
++        if not p.is_file():
++            drift.append("missing-single:" + key)
++        elif p.stat().st_size != meta["bytes"] or sha256(p) != meta["sha256"]:
++            drift.append("changed-single:" + key)
++    for name, p in (("C", C_ROUTE / "文件清单.txt"),
++                    ("D", D_ROUTE / "文件清单.txt")):
++        entries = sum(1 for line in p.read_text(encoding="utf-8").splitlines()
++                      if line.startswith("WORK/"))
++        key = "c_route_filelist" if name == "C" else "d_route_filelist"
++        if entries != baseline["singles"][key]["entries"]:
++            drift.append("entries:" + name)
++    expect("E-01_baseline_inputs_intact", not drift,
++           f"game={len(baseline['game'])} singles="
++           f"{len(baseline['singles'])} drift={len(drift)} {drift[:3]}")
++
++    # E-02 可运行游戏工程里一个 3D 资产都没有
++    exts = ("*.glb", "*.gltf", "*.obj", "*.fbx", "*.blend", "*.dae", "*.vrm")
++    found = [str(p.relative_to(GAME)) for e in exts for p in GAME.rglob(e)]
++    expect("E-02_game_has_zero_3d_assets", not found,
++           f"3d_assets_in_game={len(found)} {found[:3]}")
++
++    # E-03 源 V4b GLB 结构
++    s = src["structure"]
++    v4b = baseline["singles"]["v4b_glb"]
++    height = src["normalize"]["bbox_max"][2] - src["normalize"]["bbox_min"][2]
++    expect("E-03_source_asset_structure",
++           s["verts"] == 57901 and s["shells"] == 2035
++           and s["uv_layers"] == 1 and s["materials"] == 1
++           and s["packed_textures"] == 3
++           and all(t["size"] == [4096, 4096] for t in s["textures"])
++           and Path(src["glb"]["path"]).stat().st_size == v4b["bytes"]
++           and sha256(Path(src["glb"]["path"])) == v4b["sha256"]
++           and near(height, 1.72, 1e-5),
++           f"verts={s['verts']} shells={s['shells']} "
++           f"height={height:.5f} pbr={s['packed_textures']}")
++
++    # E-04 链参数两处一致
++    pb, pp = build["params"], probe["params"]
++    expect("E-04_chain_params_recomputable",
++           pb == pp and pb["voxel_size"] == 0.02
++           and pb["arm_only_gain"] == 1.5
++           and pb["apose_table"] == "player"
++           and "SURFACE_DEFORM" in build["method"],
++           f"build={pb} probe={pp} method={build['method']}")
++
++    # E-05 Voxel 把 2,035 壳塌成 3 壳
++    sh, sr = build["chain"]["shell"], build["chain"]["src"]
++    expect("E-05_voxel_shell_collapses_2035_shells",
++           sh["shells"] == 3 and sr["shells"] == 2035
++           and sh["verts"] == 14070 and sh["faces"] == 28128
++           and near(sh["tri_ratio"], 1.0)
++           and sh["auto_weight_covered"] == 14062
++           and sh["auto_weight_covered"] / sh["verts"] > 0.999,
++           f"{sr['shells']} -> {sh['shells']} shells, "
++           f"weights={sh['auto_weight_covered']}/{sh['verts']}")
++
++    # E-06 UV / 材质 / 三张 4096² PBR 原样保留
++    a, ro = build["chain"]["assets"], build["reopen"]
++    packed = export["packed_images"]
++    expect("E-06_uv_and_pbr_untouched",
++           a["uv_same"] is True and a["textures_same"] is True
++           and a["uv_layers"] == 1 and a["materials"] == 1
++           and len(a["textures"]) == 3
++           and all(t["size"] == [4096, 4096] for t in a["textures"])
++           and ro["high_poly_uv_layers"] == 1
++           and ro["packed_4096_textures"] == 3
++           and ro["textures_4096"] == 3
++           and len(packed) == 3
++           and all(t["size"] == [4096, 4096] for t in packed),
++           f"uv={a['uv_layers']} mats={a['materials']} "
++           f"reopen_pbr={ro['textures_4096']}")
++
++    # E-07 SURFACE_DEFORM 绑定且重开后仍在
++    b = build["chain"]["bind"]
++    expect("E-07_surface_deform_bound_and_reopened",
++           b["is_bound"] is True and b["rest_drift_m"] < 1e-5
++           and ro["surface_deform_is_bound"] is True
++           and ro["surface_deform_target"] == "e_continuous_shell"
++           and ro["rig_count"] == 1 and ro["rig_bones"] == 13
++           and ro["high_poly_verts"] == 57901,
++           f"bound={b['is_bound']} drift={b['rest_drift_m']} "
++           f"reopen_target={ro['surface_deform_target']} "
++           f"bones={ro['rig_bones']}")
++
++    # E-08 站架恒等
++    si, si2 = build["stance_identity"], probe["stance_identity"]
++    expect("E-08_stance_is_identity",
++           si["identical"] is True and si2["identical"] is True
++           and si["max_vertex_delta_m"] < 1e-4
++           and si2["max_vertex_delta_m"] < 1e-4,
++           f"build={si['max_vertex_delta_m']} probe={si2['max_vertex_delta_m']}")
++
++    # E-09 重开仍能驱动
++    drv = ro["reopen_drive_max_displacement_m"]
++    expect("E-09_reopen_still_drives",
++           drv > 0.8 and drv < 1.0
++           and near(drv,
++                    max(r["E_x15"]["max_displacement_m"]
++                        for r in build["all_frames"]["rows"]), 0.01),
++           f"reopen_drive={drv}")
++
++    # E-10 72 帧账本
++    af = build["all_frames"]
++    cards = af["cards"]
++    expect("E-10_72_frames_ledger",
++           af["count"] == 72 and len(af["rows"]) == 72
++           and cards == {"jab": 14, "cross": 22, "wave": 36}
++           and sum(cards.values()) == 72 and metrics["frames"] == 72,
++           f"count={af['count']} rows={len(af['rows'])} cards={cards}")
++
++    # E-11 独立重算 27 组统计 + 逐帧比值
++    rc = recompute_metrics(af["rows"])
++    diffs = []
++    for tag, ks in rc["per_tag"].items():
++        for k, vals in ks.items():
++            for stat, v in vals.items():
++                got = metrics["per_tag"][tag][k][stat]
++                if not near(got, v):
++                    diffs.append(f"{tag}.{k}.{stat}")
++    expect("E-11_metrics_recomputed_from_raw_rows",
++           not diffs
++           and near(rc["mean_ratio"], metrics["mean_tear_ratio"])
++           and rc["worst"] == metrics["worst_tear_ratio"]
++           and rc["reach_not_less"]
++           == metrics["frames_e_reach_not_less_than_foe"]
++           and rc["tear_better"]
++           == metrics["frames_e_tear_lower_than_foe"],
++           f"stat_diffs={len(diffs)} {diffs[:3]} "
++           f"worst={rc['worst']['tear_ratio']}")
++
++    # E-12 x1.5 增益确实放大变形
++    p1 = metrics["per_tag"]["E_x1"]
++    p15 = metrics["per_tag"]["E_x15"]
++    expect("E-12_gain_x15_amplifies_deformation",
++           p15["max_displacement_m"]["max"]
++           > p1["max_displacement_m"]["max"] > 0.5
++           and p15["tear_p999_m"]["max"] > p1["tear_p999_m"]["max"]
++           and p15["moved_gt_1mm"]["max"] > 57000
++           and p15["reach_max_m"]["max"] > p1["reach_max_m"]["max"],
++           f"disp x1={p1['max_displacement_m']['max']} "
++           f"x15={p15['max_displacement_m']['max']}")
++
++    # E-13 负结果如实保留（不许粉饰成「优于对手怪」）
++    board_src = (HERE / "make_boards_e.py").read_text(encoding="utf-8")
++    expect("E-13_negative_result_not_sugarcoated",
++           metrics["mean_tear_ratio"] > 1.0
++           and rc["worst"]["tear_ratio"] > 1.8
++           and metrics["frames_e_tear_lower_than_foe"] == 4
++           and metrics["frames_e_reach_not_less_than_foe"] == 22
++           and conclusion["deformation_verdict"] == "WORSE_THAN_FOE"
++           and conclusion["gltf_verdict"] == "static_snapshot_only"
++           and "负结果如实保留" in board_src,
++           f"mean={metrics['mean_tear_ratio']} "
++           f"better={metrics['frames_e_tear_lower_than_foe']}/72 "
++           f"verdict={conclusion['deformation_verdict']}")
++
++    # E-14 结论可复算
++    full = next(e for e in gltf["exports"] if e["name"] == "player-full")
++    calc = ("small_sprite_sample_first"
++            if metrics["mean_tear_ratio"] > 1.0
++            and full["counts"]["animations"] == 0
++            else "godot_rig_layer")
++    reasons = conclusion["reasons"]
++    expect("E-14_conclusion_recomputable",
++           calc == conclusion["recommendation"] == stats["recommendation"]
++           and len(reasons) == 4
++           and any("SURFACE_DEFORM" in r for r in reasons)
++           and any("skeleton_path" in r for r in reasons)
++           and conclusion["game_source_changed"] is False
++           and conclusion["frames"] == 72
++           and conclusion["rig_bones"] == 13,
++           f"calc={calc} listed={conclusion['recommendation']} "
++           f"reasons={len(reasons)}")
++
++    # E-15 16 张代表帧逐张 sha256 对账
++    shots = list(build["shots"]) + list(x1["shots"]) + [
++        {"file": src["front_render"]["file"],
++         "bytes": src["front_render"]["bytes"],
++         "sha256": src["front_render"]["sha256"]}]
++    on_disk = sorted(p.name for p in FRAMES.glob("*.png"))
++    bad = []
++    for shot in shots:
++        p = FRAMES / shot["file"]
++        if not p.is_file() or p.stat().st_size != shot["bytes"] \
++                or sha256(p) != shot["sha256"]:
++            bad.append(shot["file"])
++    digests = [sha256(FRAMES / n) for n in on_disk]
++    expect("E-15_all_16_frames_sha_matched",
++           len(shots) == 16 and len(on_disk) == 16 and not bad
++           and sorted(s["file"] for s in shots) == on_disk
++           and len(set(digests)) == len(digests)
++           and all(Image.open(FRAMES / n).size == (768, 768)
++                   for n in on_disk),
++           f"shots={len(shots)} disk={len(on_disk)} bad={len(bad)} "
++           f"distinct={len(set(digests))}")
++
++    # E-16 四张板非空、两两不同、尺寸与清单一致
++    infos, board_bad = {}, []
++    for b in stats["boards"]:
++        p = BOARDS / b["file"]
++        info = img_info(p)
++        infos[b["file"]] = info
++        if (info.get("w") != b["w"] or info.get("h") != b["h"]
++                or p.stat().st_size != b["bytes"]
++                or info.get("stddev", 0) < 8):
++            board_bad.append(b["file"])
++    board_sha = [sha256(BOARDS / b["file"]) for b in stats["boards"]]
++    expect("E-16_four_boards_shape_and_distinct",
++           len(stats["boards"]) == 4 and not board_bad
++           and len(set(board_sha)) == 4
++           and all(v.get("mode") == "RGB" for v in infos.values()),
++           f"bad={board_bad} distinct={len(set(board_sha))}")
++
++    # E-17 板清单 / 磁盘 / 源码接线三方对账
++    disk_boards = sorted(p.name for p in BOARDS.glob("E-*.png"))
++    disk_frames = sorted(p.name for p in FRAMES.glob("*.png"))
++    expect("E-17_board_ledger_and_source_wiring",
++           sorted(stats["board_names"]) == disk_boards
++           == sorted(b["file"] for b in stats["boards"])
++           and stats["frame_files"] == disk_frames
++           and "BOARD_LIST_MISMATCH" in board_src
++           and "alpha_composite" in board_src,
++           f"boards={len(disk_boards)} frames={len(disk_frames)} "
++           f"ledger_match={stats['frame_files'] == disk_frames}")
++
++    # E-18 四个 GLB 逐件完好，进 Godot 的三份是逐字节副本
++    ex_bad = []
++    for e in export["exports"]:
++        p = HERE / e["file"]
++        if not p.is_file() or p.stat().st_size != e["bytes"] \
++                or sha256(p) != e["sha256"]:
++            ex_bad.append(e["file"])
++    ins = {e["file"]: e for e in gltf["exports"]}
++    for c in godot["copies"]:
++        p = HERE / c["file"]
++        if c["identical"] is not True or sha256(p) != c["sha256"] \
++                or p.stat().st_size != c["bytes"]:
++            ex_bad.append("copy:" + c["file"])
++    for e in export["exports"]:
++        if ins[e["file"]]["sha256"] != e["sha256"]:
++            ex_bad.append("inspect:" + e["file"])
++    expect("E-18_four_glb_exports_intact",
++           len(export["exports"]) == 4 and len(godot["copies"]) == 3
++           and not ex_bad,
++           f"exports={len(export['exports'])} bad={ex_bad}")
++
++    # E-19 skin 只在代理壳，animation 全为 0
++    byname = {e["name"]: e for e in gltf["exports"]}
++    prims = byname["player-full"]["primitives"]
++    skinned = [p for p in prims if "JOINTS_0" in p["attributes"]]
++    unskinned = [p for p in prims if "JOINTS_0" not in p["attributes"]]
++    expect("E-19_glb_structure_skin_and_animation",
++           byname["player-full"]["counts"]["skins"] == 1
++           and byname["player-full"]["skin_joints"] == [14]
++           and all(e["counts"]["animations"] == 0
++                   for e in gltf["exports"])
++           and len(skinned) == 1 and skinned[0]["verts"] == 14070
++           and len(unskinned) == 1 and unskinned[0]["verts"] == 57934
++           and byname["player-proxy-rig"]["counts"]["skins"] == 1
++           and byname["player-stance"]["counts"]["skins"] == 0
++           and byname["player-cross"]["counts"]["skins"] == 0,
++           f"full skins={byname['player-full']['counts']['skins']} "
++           f"animations=all0 skinned_verts={skinned[0]['verts']}")
++
++    # E-20 PBR 零重编码
++    z = gltf["zero_reencode"]
++    imgs = byname["player-full"]["images"]
++    packed_sha = {p["sha256"] for p in export["packed_images"]}
++    embedded_sha = {i["sha256"] for i in imgs}
++    packed_bytes = sum(p["bytes"] for p in export["packed_images"])
++    embedded_bytes = sum(i["bytes"] for i in imgs)
++    expect("E-20_pbr_zero_reencode",
++           z["all_match"] is True and z["full_images"] == 3
++           and packed_bytes == embedded_bytes == z["source_bytes"]
++           == z["glb_image_bytes"]
++           and z["share_of_full_glb"] > 0.9
++           and all(i["matches_packed_source"] for i in imgs)
++           and embedded_sha == packed_sha
++           and byname["player-full"]["pbr"]
++           == {"baseColorTexture": 1, "metallicRoughnessTexture": 2,
++               "normalTexture": 0},
++           f"all_match={z['all_match']} bytes={z['source_bytes']} "
++           f"share={z['share_of_full_glb']}")
++
++    # E-21 导出只是当前帧的静态快照
++    snap = gltf["static_snapshot"]
++    delta = max(
++        max(abs(a - b) for a, b in zip(snap["stance_" + side],
++                                       snap["cross_" + side]))
++        for side in ("pos_min", "pos_max"))
++    expect("E-21_export_is_static_snapshot",
++           near(delta, snap["max_component_delta_m"], 1e-6)
++           and delta > 0.1 and snap["stance_skins"] == 0
++           and snap["stance_animations"] == 0
++           and byname["player-stance"]["sha256"]
++           != byname["player-cross"]["sha256"],
++           f"stance_vs_cross_delta={delta:.6f} "
++           f"skins={snap['stance_skins']}")
++
++    # E-22 Godot 导入与读回无错
++    ei, ip = godot["editor_import"], godot["inspect_probe"]
++    expect("E-22_godot_import_clean",
++           ei["returncode"] == 0
++           and len(ei["import_files"]) == 3
++           and all(x["exists"] for x in ei["import_files"])
++           and ei["imported_files"] == 12
++           and ip["returncode"] == 0 and ip["script_errors"] == 0
++           and (godot["engine"]["major"], godot["engine"]["minor"])
++           == (4, 5)
++           and godot["total_wall_seconds"] > 0,
++           f"import_rc={ei['returncode']} imported={ei['imported_files']} "
++           f"script_errors={ip['script_errors']}")
++
++    # E-23 Godot 里骨架只挂代理壳，高模不带 skin
++    tgt = {t["path"].split("/")[-1]: t for t in godot["targets"]}
++    f = tgt["player-full.glb"]
++    meshes = {m["name"]: m for m in f["mesh_instances"]}
++    bones = f["skeletons"][0]["bone_names_head"] if f["skeletons"] else []
++    expect("E-23_godot_skeleton_only_on_proxy",
++           len(godot["targets"]) == 3
++           and all(t["load_ok"] for t in godot["targets"])
++           and all(not t["animation_players"] for t in godot["targets"])
++           and "node_0" in meshes and meshes["node_0"]["skeleton_path"] == ""
++           and "e_continuous_shell" in meshes
++           and meshes["e_continuous_shell"]["skeleton_path"] != ""
++           and len(bones) == 14 and "neutral_bone" in bones
++           and tgt["player-proxy-rig.glb"]["mesh_instances"][0][
++               "skeleton_path"] != "",
++           f"targets={len(godot['targets'])} node_0_skeleton="
++           f"'{meshes.get('node_0', {}).get('skeleton_path')}' "
++           f"bones={len(bones)}")
++
++    # E-24 流水线源码接线（Python 语法必须成立）
++    py = {}
++    for name in ("e_build.py", "render_e_x1.py", "export_e_gltf.py",
++                 "inspect_e_gltf.py", "probe_v4b_source.py",
++                 "make_boards_e.py", "analyze_e.py", "run_godot_e.py"):
++        text = (HERE / name).read_text(encoding="utf-8")
++        py[name] = text
++        ast.parse(text)
++    gd = (HERE / "probe_project_e" / "probes" /
++          "inspect_e.gd").read_text(encoding="utf-8")
++    wiring = (
++        "SURFACE_DEFORM" in py["e_build.py"]
++        and "voxel_remesh" in py["e_build.py"]
++        and 'spec["player"]' in py["e_build.py"]
++        and "C.pose_frame" in py["render_e_x1.py"]
++        and "export_apply=" in py["export_e_gltf.py"]
++        and "export_skins=True" in py["export_e_gltf.py"]
++        and "--editor" in py["run_godot_e.py"]
++        and "inspect_e.gd" in py["run_godot_e.py"]
++        and "Skeleton3D" in gd and "AnimationPlayer" in gd)
++    expect("E-24_pipeline_source_wiring", wiring,
++           f"py_files={len(py)} ast_ok=True wiring={wiring}")
++
++    # E-25 建链/导出/导入日志无错误且非空。
++    # 验收自身 stdout 正在写入时是空文件，必须排除（否则判据自指假红）。
++    self_logs = {"verify_e.log", "mutation_e.log",
++                 "mutation_e_selftest.log", "make_filelist_e.log",
++                 "crosscheck_filelist_e.log", "empty_marker_e.log"}
++    log_files = sorted(p for p in LOGS.glob("*.log")
++                       if p.name not in self_logs)
++    noisy = []
++    for p in log_files:
++        t = p.read_text(encoding="utf-8", errors="replace")
++        if not t.strip() or "Traceback" in t or "SCRIPT ERROR:" in t:
++            noisy.append(p.name)
++    expect("E-25_logs_have_no_errors",
++           len(log_files) >= 7 and not noisy,
++           f"pipeline_logs={len(log_files)} noisy={noisy}")
++
++    # E-26 前序两条路线仍然绿
++    cv = load(C_ROUTE / "verify_c_result.json")
++    dv = load(D_ROUTE / "verify_d_result.json")
++    expect("E-26_upstream_routes_still_green",
++           cv["passed"] == cv["total"] == 25 and not cv["failed"]
++           and dv["passed"] == dv["total"] == 18 and not dv["failed"],
++           f"verify_c={cv['passed']}/{cv['total']} "
++           f"verify_d={dv['passed']}/{dv['total']}")
++
++
++def main() -> int:
++    try:
++        run_checks()
++    except Exception as exc:  # noqa: BLE001 - 输入坏了也必须写出红结果
++        expect("E-00_inputs_parseable", False, repr(exc))
++    passed = sum(1 for c in CHECKS if c["ok"])
++    failed = [c["name"] for c in CHECKS if not c["ok"]]
++    out = {"route": "E", "total": len(CHECKS), "passed": passed,
++           "failed": failed, "checks": CHECKS}
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    for c in CHECKS:
++        print(f"{'OK ' if c['ok'] else 'RED'} {c['name']:<44} {c['detail']}")
++    print(f"VERIFY_E {passed}/{len(CHECKS)} failed={failed}")
++    ok = passed == len(CHECKS) == 26 and not failed
++    print("E_VERIFIED" if ok else "E_VERIFY_FAILED")
++    return 0 if ok else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/mutation_e.py
+@@ -0,0 +1,228 @@
++"""E 路线变异验证：逐条打红 26 条判据，证明守卫不是摆设。
++
++纪律（沿用 D 路线，本项目吃过亏）：
++  · needle 锚点失配 = DID NOT RUN，计入未证明，绝不静默算 CAUGHT；
++  · 还原必须逐字节 + sha256 校验，不用文本模式读写；
++  · 全部跑完必须 clean re-run 26/26；
++  · --selftest 故意让一个锚点失配，证明 DID NOT RUN 分支本身有牙。
++  变异目标只在 E 工作区内，不改可运行游戏工程、不改 C/D 路线归档、
++  不改 verify_e.py 自身。
++"""
++from __future__ import annotations
++
++import hashlib
++import io
++import json
++import subprocess
++import sys
++from pathlib import Path
++
++from PIL import Image
++
++HERE = Path(__file__).resolve().parent
++RESULT = HERE / "verify_e_result.json"
++SELFTEST = "--selftest" in sys.argv
++OUT = HERE / ("mutation_e_selftest_result.json" if SELFTEST
++              else "mutation_e_result.json")
++
++
++def sha(data: bytes) -> str:
++    return hashlib.sha256(data).hexdigest()
++
++
++def solid_png(data: bytes, size: tuple[int, int] | None = None) -> bytes:
++    if size is None:
++        size = Image.open(io.BytesIO(data)).size
++    buf = io.BytesIO()
++    Image.new("RGB", size, (250, 250, 250)).save(buf, format="PNG")
++    return buf.getvalue()
++
++
++CASES = [
++    {"id": "M1", "path": "baseline_e.json", "kind": "text",
++     "needle": b'"sha256": "09ddb7e1f7a4b7fa0aa2bfedc393fcbb884bfdaed8bcfd722e2dfe67c84a4e8f"',
++     "mutant": b'"sha256": "09ddb7e1f7a4b7fa0aa2bfedc393fcbb884bfdaed8bcfd722e2dfe67c84a4e8e"',
++     "expect": ["E-01_baseline_inputs_intact"]},
++    {"id": "M2", "path": "source_probe.json", "kind": "text",
++     "needle": b'"shells": 2035', "mutant": b'"shells": 2036',
++     "expect": ["E-03_source_asset_structure"]},
++    {"id": "M3", "path": "e_build.json", "kind": "text",
++     "needle": b'"is_bound": true', "mutant": b'"is_bound": false',
++     "expect": ["E-07_surface_deform_bound_and_reopened"]},
++    {"id": "M4", "path": "e_build.json", "kind": "text",
++     "needle": b'"count": 72', "mutant": b'"count": 71',
++     "expect": ["E-10_72_frames_ledger"]},
++    {"id": "M5", "path": "e_build.json", "kind": "text",
++     "needle": b'"shells": 3', "mutant": b'"shells": 4',
++     "expect": ["E-05_voxel_shell_collapses_2035_shells"]},
++    {"id": "M6", "path": "e_build.json", "kind": "text",
++     "needle": b'"reopen_drive_max_displacement_m": 0.82539',
++     "mutant": b'"reopen_drive_max_displacement_m": 0.00001',
++     "expect": ["E-09_reopen_still_drives"]},
++    {"id": "M7", "path": "metrics_e.json", "kind": "text",
++     "needle": b'"mean_tear_ratio": 1.27632',
++     "mutant": b'"mean_tear_ratio": 0.50000',
++     "expect": ["E-11_metrics_recomputed_from_raw_rows",
++                "E-13_negative_result_not_sugarcoated",
++                "E-14_conclusion_recomputable"]},
++    {"id": "M8", "path": "frames/e-jab07-x15.png", "kind": "solid_png",
++     "expect": ["E-15_all_16_frames_sha_matched"]},
++    {"id": "M9", "path": "boards/E-全72帧变形质量.png", "kind": "copy_from",
++     "arg": "boards/E-造型与动作六帧.png",
++     "expect": ["E-16_four_boards_shape_and_distinct"]},
++    {"id": "M10", "path": "board_stats_e.json", "kind": "text",
++     "needle": b'"recommendation": "small_sprite_sample_first"',
++     "mutant": b'"recommendation": "godot_rig_layer"',
++     "expect": ["E-14_conclusion_recomputable"]},
++    {"id": "M11", "path": "e_conclusion.json", "kind": "text",
++     "needle": b'"deformation_verdict": "WORSE_THAN_FOE"',
++     "mutant": b'"deformation_verdict": "NOT_WORSE"',
++     "expect": ["E-13_negative_result_not_sugarcoated"]},
++    {"id": "M12", "path": "gltf_e_inspection.json", "kind": "text",
++     "needle": b'"all_match": true', "mutant": b'"all_match": false',
++     "expect": ["E-20_pbr_zero_reencode"]},
++    {"id": "M13", "path": "export_e.json", "kind": "text",
++     "needle": b'"bytes": 38220692', "mutant": b'"bytes": 1',
++     "expect": ["E-18_four_glb_exports_intact"]},
++    {"id": "M14", "path": "godot_e_result.json", "kind": "text",
++     "needle": b'"script_errors": 0', "mutant": b'"script_errors": 3',
++     "expect": ["E-22_godot_import_clean"]},
++    {"id": "M15", "path": "godot_e_result.json", "kind": "text_all",
++     "needle": b'"skeleton_path": ""',
++     "mutant": b'"skeleton_path": ".."',
++     "expect": ["E-23_godot_skeleton_only_on_proxy"]},
++    {"id": "M16", "path": "make_boards_e.py", "kind": "text",
++     "needle": b"BOARD_LIST_MISMATCH", "mutant": b"BOARD_LIST_CHANGED",
++     "expect": ["E-17_board_ledger_and_source_wiring"]},
++    {"id": "M17", "path": "run_godot_e.py", "kind": "text",
++     "needle": b'"--editor"', "mutant": b'"--headless"',
++     "expect": ["E-24_pipeline_source_wiring"]},
++    {"id": "M18", "path": "logs/e_build.log", "kind": "text",
++     "needle": b"E_BUILD_OK",
++     "mutant": b"Traceback (most recent call last)",
++     "expect": ["E-25_logs_have_no_errors"]},
++    {"id": "M19", "path": "player-full.glb", "kind": "flip_byte",
++     "expect": ["E-18_four_glb_exports_intact"]},
++]
++
++
++def mutate(case: dict, data: bytes) -> bytes | None:
++    """返回 None 表示锚点失配（DID NOT RUN），绝不当成已证明。"""
++    kind = case["kind"]
++    if kind == "text":
++        needle = case["needle"]
++        if data.count(needle) != 1:
++            return None
++        return data.replace(needle, case["mutant"], 1)
++    if kind == "text_all":
++        needle = case["needle"]
++        if data.count(needle) < 1:
++            return None
++        return data.replace(needle, case["mutant"])
++    if kind == "solid_png":
++        return solid_png(data)
++    if kind == "copy_from":
++        other = (HERE / case["arg"]).read_bytes()
++        return other if other != data else None
++    if kind == "flip_byte":
++        if len(data) < 2:
++            return None
++        return data[:-1] + bytes([data[-1] ^ 0x01])
++    raise ValueError(kind)
++
++
++def run_verify() -> dict:
++    subprocess.run([sys.executable, "-u", "verify_e.py"], cwd=str(HERE),
++                   capture_output=True, timeout=180)
++    return json.loads(RESULT.read_text(encoding="utf-8"))
++
++
++def main() -> int:
++    cases = [dict(c) for c in CASES]
++    if SELFTEST:
++        # 故意让 M1 的锚点不存在，验证 DID NOT RUN 分支有牙。
++        cases[0]["needle"] = b'"sha256": "deadbeef"'
++        cases[0]["mutant"] = b'"sha256": "deadbead"'
++
++    rows = []
++    restored = {}
++    for case in cases:
++        p = HERE / case["path"]
++        orig = p.read_bytes()
++        orig_sha = sha(orig)
++        changed = mutate(case, orig)
++        if changed is None or changed == orig:
++            rows.append({"id": case["id"], "status": "DID NOT RUN",
++                         "red": [], "expected": case["expect"],
++                         "restored": True})
++            continue
++        try:
++            p.write_bytes(changed)
++            if sha(p.read_bytes()) != sha(changed):
++                rows.append({"id": case["id"], "status": "WRITE_FAILED",
++                             "red": [], "expected": case["expect"],
++                             "restored": False})
++                continue
++            res = run_verify()
++            red = res["failed"]
++            hit = [name for name in case["expect"] if name in red]
++            rows.append({"id": case["id"],
++                         "status": "CAUGHT" if hit else "MISSED",
++                         "red": red, "expected": case["expect"],
++                         "restored": False})
++        finally:
++            p.write_bytes(orig)
++            restored[case["path"]] = sha(p.read_bytes()) == orig_sha
++    for row in rows:
++        row["restored"] = restored.get(
++            next(c["path"] for c in cases if c["id"] == row["id"]), True)
++
++    clean = run_verify()
++    caught = sum(1 for r in rows if r["status"] == "CAUGHT")
++    did_not_run = sum(1 for r in rows if r["status"] == "DID NOT RUN")
++    missed = sum(1 for r in rows if r["status"] == "MISSED")
++    write_failed = sum(1 for r in rows if r["status"] == "WRITE_FAILED")
++    all_restored = all(restored.values())
++    clean_green = (clean["passed"] == clean["total"] == 26
++                   and not clean["failed"])
++    expected_total = len(cases)
++    all_proven = (caught == expected_total and did_not_run == 0
++                  and missed == 0 and write_failed == 0)
++    if SELFTEST:
++        assertion_ok = (caught == expected_total - 1 and did_not_run == 1
++                        and missed == 0 and write_failed == 0
++                        and not all_proven and all_restored and clean_green)
++    else:
++        assertion_ok = all_proven and all_restored and clean_green
++
++    out = {
++        "selftest": SELFTEST, "total": expected_total, "caught": caught,
++        "did_not_run": did_not_run, "missed": missed,
++        "write_failed": write_failed,
++        "restore": restored, "restore_all_ok": all_restored,
++        "clean_rerun": {"passed": clean["passed"],
++                        "total": clean["total"], "green": clean_green},
++        "all_proven": all_proven,
++        "selftest_assertion_ok": assertion_ok,
++        "rows": rows,
++    }
++    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
++                   encoding="utf-8")
++    for r in rows:
++        print(f"{r['id']:<4} {r['status']:<11} red={len(r['red'])} "
++              f"{r['red'][:4]}")
++    print(f"CAUGHT={caught}/{expected_total} DID_NOT_RUN={did_not_run} "
++          f"MISSED={missed} RESTORE={sum(restored.values())}/{len(restored)} "
++          f"CLEAN={clean['passed']}/{clean['total']}")
++    if SELFTEST:
++        print("SELFTEST_ASSERTION_OK" if assertion_ok
++              else "SELFTEST_ASSERTION_FAILED")
++        print("MUTATION_E_FAILED (expected 1 DID NOT RUN)"
++              if not all_proven else "MUTATION_E_OK")
++    else:
++        print("MUTATION_E_OK" if all_proven else "MUTATION_E_FAILED")
++    return 0 if assertion_ok else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/make_filelist_e.py
+@@ -0,0 +1,107 @@
++"""生成 E 路线可复现的文件清单与新增脚本 diff。
++
++条目数由 build_list() 现算并写进头部，绝不手写数字。
++排除：
++  · probe_project_e/.godot/ 引擎缓存（含时间戳，每次开编辑器会重写）；
++  · logs/make_filelist_e.log 是生成器自身 stdout（写入中哈希会变）；
++  · 清单与 diff 自身。
++STABLE_OK 只证「两次生成一致」；「与实物一致」由独立的
++crosscheck_filelist_e.py 逐行重算 size + sha256 并反向查漏项证明。
++"""
++from __future__ import annotations
++
++import hashlib
++import subprocess
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++LIST = HERE / "文件清单.txt"
++DIFF = HERE / "new-files-e.diff"
++EMPTY = HERE / "logs" / "empty_marker_e.bin"
++EMPTY.parent.mkdir(parents=True, exist_ok=True)
++EMPTY.write_bytes(b"")
++
++DIFF_SCRIPTS = [
++    "make_baseline_e.py", "probe_v4b_source.py", "e_build.py",
++    "render_e_x1.py", "analyze_e.py", "export_e_gltf.py",
++    "inspect_e_gltf.py", "run_godot_e.py", "make_boards_e.py",
++    "verify_e.py", "mutation_e.py", "make_filelist_e.py",
++    "crosscheck_filelist_e.py",
++    "probe_project_e/project.godot",
++    "probe_project_e/probes/inspect_e.gd",
++]
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def tracked() -> list[tuple[str, Path]]:
++    rows = []
++    for p in sorted(HERE.rglob("*")):
++        if not p.is_file():
++            continue
++        rel = p.relative_to(HERE).as_posix()
++        if rel in ("文件清单.txt", "new-files-e.diff",
++                   "logs/make_filelist_e.log"):
++            continue
++        if rel.startswith("probe_project_e/.godot/") or rel.endswith(".tmp"):
++            continue
++        rows.append(("WORK/" + rel, p))
++    return rows
++
++
++def build_list() -> bytes:
++    rows = tracked()
++    lines = [
++        "《牌拳》E 路线 · 玩家 V4b 3D 绑骨 / glTF-Godot 读回 · 文件清单",
++        f"条目数由脚本现算：{len(rows)}（WORK=本工作区）",
++        "复算命令：python make_filelist_e.py  # 连续生成两次比对 STABLE_OK",
++        "排除：probe_project_e/.godot/ 引擎缓存；"
++        "logs/make_filelist_e.log 生成器自身日志",
++        "",
++        f"{'PATH':<84} {'BYTES':>12}  SHA256",
++        "-" * 122,
++    ]
++    for rel, p in rows:
++        lines.append(f"{rel:<84} {p.stat().st_size:>12}  {sha256(p)}")
++    return ("\n".join(lines) + "\n").encode("utf-8")
++
++
++def build_diff() -> bytes:
++    chunks = []
++    for name in DIFF_SCRIPTS:
++        r = subprocess.run(
++            ["diff", "-u", "--label", "/dev/null", "--label", "b/" + name,
++             str(EMPTY), str(HERE / name)],
++            capture_output=True,
++        )
++        if r.returncode >= 2:
++            raise RuntimeError(f"diff failed for {name}: "
++                               f"{r.stderr.decode(errors='replace')}")
++        chunks.append(r.stdout)
++    return b"".join(chunks)
++
++
++def main() -> int:
++    first = [(LIST, build_list()), (DIFF, build_diff())]
++    for path, data in first:
++        path.write_bytes(data)
++    again = [(LIST, build_list()), (DIFF, build_diff())]
++    stable = all(a[1] == b[1] for a, b in zip(first, again))
++    summary = (f"FILELIST_ENTRIES={len(tracked())}\n"
++               f"DIFF_BYTES={DIFF.stat().st_size}\n"
++               + ("FILELIST_STABLE_OK\n" if stable
++                  else "FILELIST_STABLE_FAILED\n"))
++    (HERE / "logs" / "make_filelist_e.log").write_bytes(
++        summary.encode("utf-8"))
++    print(summary, end="")
++    return 0 if stable else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/crosscheck_filelist_e.py
+@@ -0,0 +1,65 @@
++"""外部逐行复算 E 路线文件清单：size + sha256 + 反向漏项。
++
++与生成器 make_filelist_e.py 完全独立，不 import 生成器、不复用其枚举。
++可在工作区外（%TEMP%）整份复制后运行，用来证「清单与实物一致」，
++而不是只证「两次生成一致」。
++"""
++from __future__ import annotations
++
++import hashlib
++import sys
++from pathlib import Path
++
++WORK = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨")
++LIST = WORK / "文件清单.txt"
++EXCLUDED = {"文件清单.txt", "new-files-e.diff", "logs/make_filelist_e.log"}
++
++
++def sha256(p: Path) -> str:
++    h = hashlib.sha256()
++    with p.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++rows: list[tuple[str, int, str]] = []
++for line in LIST.read_text(encoding="utf-8").splitlines():
++    if not line.startswith("WORK/"):
++        continue
++    parts = line.split()
++    rows.append((parts[0][len("WORK/"):], int(parts[1]), parts[2]))
++
++bad: list[tuple[str, str]] = []
++for rel, size, digest in rows:
++    p = WORK / rel
++    if not p.is_file():
++        bad.append((rel, "MISSING"))
++        continue
++    real_size = p.stat().st_size
++    if real_size != size:
++        bad.append((rel, f"SIZE listed={size} real={real_size}"))
++    if sha256(p) != digest:
++        bad.append((rel, "SHA256"))
++
++listed = {r[0] for r in rows}
++extra: list[str] = []
++for p in sorted(WORK.rglob("*")):
++    if not p.is_file():
++        continue
++    rel = p.relative_to(WORK).as_posix()
++    if rel in EXCLUDED:
++        continue
++    if rel.startswith("probe_project_e/.godot/") or rel.endswith(".tmp"):
++        continue
++    if rel not in listed:
++        extra.append(rel)
++
++print(f"ROWS={len(rows)} BAD={len(bad)} EXTRA={len(extra)}")
++for item in bad[:20]:
++    print("BAD", item)
++for item in extra[:20]:
++    print("EXTRA", item)
++ok = not bad and not extra
++print("CROSSCHECK_OK" if ok else "CROSSCHECK_FAILED")
++sys.exit(0 if ok else 1)
+--- /dev/null
++++ b/probe_project_e/project.godot
+@@ -0,0 +1,16 @@
++; E 路线：玩家 V4b glTF -> Godot 4.5 导入读回用隔离工程
++; 与可运行游戏工程、C/D 路线探针工程四者完全分离。
++; 只做结构读回，不是生产导入，无玩法代码。
++
++config_version=5
++
++[application]
++
++config/name="E Route Player glTF Import Probe"
++config/features=PackedStringArray("4.5", "GL Compatibility")
++run/main_scene=""
++
++[rendering]
++
++renderer/rendering_method="gl_compatibility"
++renderer/rendering_method.mobile="gl_compatibility"
+--- /dev/null
++++ b/probe_project_e/probes/inspect_e.gd
+@@ -0,0 +1,110 @@
++extends SceneTree
++## E 路线：玩家 V4b 三份 GLB 作为 PackedScene load 回来，逐节点读回结构。
++##
++##   godot --headless --path <probe_project_e> --script res://probes/inspect_e.gd
++## 只打印一行 PROBE_JSON，不在工程里写任何文件。
++
++const TARGETS := [
++	"res://assets/player-full.glb",
++	"res://assets/player-stance.glb",
++	"res://assets/player-proxy-rig.glb",
++]
++
++
++func _tex_info(tex: Texture2D) -> Dictionary:
++	if tex == null:
++		return {"present": false}
++	return {"present": true, "w": tex.get_width(), "h": tex.get_height()}
++
++
++func _material_info(mat: Material) -> Dictionary:
++	if mat == null:
++		return {"present": false}
++	var out := {"present": true, "class": mat.get_class()}
++	if mat is BaseMaterial3D:
++		var bm := mat as BaseMaterial3D
++		out["albedo"] = _tex_info(bm.albedo_texture)
++		out["normal"] = _tex_info(bm.normal_texture)
++		out["metallic"] = _tex_info(bm.metallic_texture)
++		out["roughness"] = _tex_info(bm.roughness_texture)
++		out["ao"] = _tex_info(bm.ao_texture)
++	return out
++
++
++func _vec3(v: Vector3) -> Array:
++	return [round(v.x * 10000.0) / 10000.0,
++			round(v.y * 10000.0) / 10000.0,
++			round(v.z * 10000.0) / 10000.0]
++
++
++func _walk(n: Node, row: Dictionary) -> void:
++	var t := n.get_class()
++	row["types"][t] = int(row["types"].get(t, 0)) + 1
++	row["node_count"] = int(row["node_count"]) + 1
++
++	if n is MeshInstance3D:
++		var mi := n as MeshInstance3D
++		var mesh := mi.mesh
++		var mrow := {"name": String(n.name), "has_mesh": mesh != null}
++		if mesh != null:
++			var verts := 0
++			for s in range(mesh.get_surface_count()):
++				var arr := mesh.surface_get_arrays(s)
++				if arr.size() > Mesh.ARRAY_VERTEX and arr[Mesh.ARRAY_VERTEX] != null:
++					verts += (arr[Mesh.ARRAY_VERTEX] as PackedVector3Array).size()
++			var box := mesh.get_aabb()
++			mrow["surfaces"] = mesh.get_surface_count()
++			mrow["verts"] = verts
++			mrow["aabb_pos"] = _vec3(box.position)
++			mrow["aabb_size"] = _vec3(box.size)
++			mrow["material"] = _material_info(mesh.surface_get_material(0))
++			mrow["skeleton_path"] = String(mi.get_skeleton_path())
++		row["mesh_instances"].append(mrow)
++
++	if n is Skeleton3D:
++		var sk := n as Skeleton3D
++		var names := []
++		for i in range(min(sk.get_bone_count(), 16)):
++			names.append(String(sk.get_bone_name(i)))
++		row["skeletons"].append({
++			"name": String(n.name), "bones": sk.get_bone_count(),
++			"bone_names_head": names})
++
++	if n is AnimationPlayer:
++		var ap := n as AnimationPlayer
++		row["animation_players"].append({
++			"name": String(n.name),
++			"animations": Array(ap.get_animation_list())})
++
++	for c in n.get_children():
++		_walk(c, row)
++
++
++func _probe(path: String) -> Dictionary:
++	var row := {
++		"path": path, "load_ok": false, "resource_class": "",
++		"types": {}, "node_count": 0, "mesh_instances": [],
++		"skeletons": [], "animation_players": [],
++	}
++	var res := load(path)
++	if res == null:
++		row["error"] = "load returned null"
++		return row
++	row["load_ok"] = true
++	row["resource_class"] = res.get_class()
++	if res is PackedScene:
++		var inst := (res as PackedScene).instantiate()
++		root.add_child(inst)
++		_walk(inst, row)
++		inst.queue_free()
++	else:
++		row["error"] = "not a PackedScene"
++	return row
++
++
++func _init() -> void:
++	var out := {"engine": Engine.get_version_info(), "targets": []}
++	for p in TARGETS:
++		out["targets"].append(_probe(p))
++	print("PROBE_JSON " + JSON.stringify(out))
++	quit(0)

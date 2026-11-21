@@ -1,0 +1,9 @@
+REAL_ROUNDTRIP_PASS foe 9.177002766591613e-07 9.177002766591613e-07 4.4540030216090904e-07
+test_foe_unedited_roundtrip_original_rig_and_rest_geometry (__main__.RealRoundtripTests.test_foe_unedited_roundtrip_original_rig_and_rest_geometry) ... ok
+REAL_ROUNDTRIP_PASS player 1.094525487133069e-06 1.094525487133069e-06 7.060051897060168e-07
+test_player_unedited_roundtrip_original_rig_and_rest_geometry (__main__.RealRoundtripTests.test_player_unedited_roundtrip_original_rig_and_rest_geometry) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 10.772s
+
+OK

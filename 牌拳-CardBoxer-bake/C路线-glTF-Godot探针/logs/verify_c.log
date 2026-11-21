@@ -1,0 +1,27 @@
+OK   C-01_baseline_inputs_intact | checked=10 drift=[] missing=[]
+OK   C-02_game_source_unchanged | checked=105 drift=[]
+OK   C-03_source_blend_single_truth | hashes={'baseline': '88dca6d28aa3', 'a_build': '88dca6d28aa3', 'export_report': '88dca6d28aa3', 'structure': '88dca6d28aa3', 'inspection': '88dca6d28aa3'}
+OK   C-04_a_route_guard_still_green | total=26 passed=26 failed=[]
+OK   C-05_blend_structure_diagnosis | objects=6 bones=13 actions=0 packed4096=3 hi=64024 shell=20204
+OK   C-06_gltf_exporter_available | poll=True props=16 missing=[]
+OK   C-07_glb_files_intact | exports=4 bad=[]
+OK   C-08_foe_full_glb_shape | meshes=2 skins=1 anims=0 imgs=3 skinned=1 verts=84263
+OK   C-09_highpoly_has_no_skin_attrs | highpoly_attrs=['NORMAL', 'POSITION', 'TEXCOORD_0'] shell_attrs=['JOINTS_0', 'NORMAL', 'POSITION', 'TEXCOORD_0', 'WEIGHTS_0']
+OK   C-10_textures_not_reencoded | src=39097625 glb=39097625 share=0.9108
+OK   C-11_pbr_channels_all_present | material={'name': 'Material.001', 'baseColorTexture': 1, 'metallicRoughnessTexture': 2, 'normalTexture': 0, 'occlusionTexture': None, 'alphaMode': None}
+OK   C-12_skin_joint_count_accounting | glb_joints=14 blender_bones=13 godot_bones=14
+OK   C-13_animations_nowhere | blend_actions=0 glb_anims=[0, 0, 0, 0] godot_players=[0, 0, 0]
+OK   C-14_gltf_is_static_snapshot | max_abs_delta=0.187166 vertex_count_equal=False stance/posed skins&anims=0
+OK   C-15_editor_import_succeeded | rc=0 imports=[{'file': 'foe-full.glb.import', 'exists': True, 'bytes': 1037}, {'file': 'foe-stance.glb.import', 'exists': True, 'bytes': 1043}, {'file': 'foe-proxy-rig.glb.import', 'exists': True, 'bytes': 1051}] imported=12 files / 44728238 B seconds=16.835
+OK   C-16_all_targets_load_as_packedscene | classes=['PackedScene', 'PackedScene', 'PackedScene'] ok=[True, True, True]
+OK   C-17_foe_full_scene_tree | types={'MeshInstance3D': 2, 'Node3D': 2, 'Skeleton3D': 1}
+OK   C-18_godot_material_textures_4096 | materials=2 classes=['StandardMaterial3D', 'StandardMaterial3D']
+OK   C-19_skeleton_binding_split | bound=['a_continuous_shell'] unbound=['node_0']
+OK   C-20_pose_writable_but_highpoly_unbound | local_changed=True bound=1 unbound=1 global_refresh=False
+OK   C-21_cost_boards_nonblank | boards=['C-链路成本账.png', 'C-四口径对照.png'] bad=[]
+OK   C-22_source_wiring | needles=9 missing=[]
+OK   C-23_isolation_and_clean_logs | game_glb=[] err_hits=[('godot_editor_import.log', 0), ('godot_inspect_probe.log', 0), ('godot_pose_probe.log', 0)] project=probe_project
+OK   C-24_not_a_production_import | game_drift=0 game_glb=0 project=probe_project
+OK   C-25_import_volume_same_order | glb=46755712 imported=44728238 ratio=0.9566 wall=17.879s
+TOTAL=25 PASSED=25 FAILED=[]
+C_VERIFIED

@@ -1,0 +1,8 @@
+TIMELINE {'path': 'C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\方波平台期\\boards\\P3-时间线方波.png', 'size': [1400, 760], 'samples': 129, 'hard9_flat_pairs': 107, 'atan12_flat_pairs': 85, 'hard9_distinct': 7, 'atan12_distinct': 22}
+CHECK three_boards_written True
+CHECK timeline_from_129_real_samples True
+CHECK timeline_plateau_reduced True
+CHECK timeline_distinct_increased True
+CHECK strip_32_panels True
+CHECK compare_three_frames True
+P3_BOARDS_OK

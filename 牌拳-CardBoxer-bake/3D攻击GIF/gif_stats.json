@@ -1,0 +1,260 @@
+{
+  "frame_ms": 60,
+  "pad": 30,
+  "routes": {
+    "player": {
+      "box": [
+        86,
+        63,
+        736,
+        713
+      ],
+      "alpha_union": [
+        125,
+        93,
+        697,
+        683
+      ],
+      "gif_size": [
+        650,
+        650
+      ],
+      "cards": {
+        "jab": {
+          "frames": 14,
+          "split": [
+            4,
+            3,
+            7
+          ],
+          "file": "玩家V4b-攻击-jab.gif",
+          "bytes": 632737,
+          "encoded_frames": 11,
+          "merged_duplicate_frames": 3,
+          "duration_sum_ms": 840,
+          "expected_duration_ms": 840,
+          "sha256": "472f429330bc77dec9aacf0dc4358ba6348daa25b9265c6fc5eefe8278453b1d"
+        },
+        "cross": {
+          "frames": 22,
+          "split": [
+            6,
+            4,
+            12
+          ],
+          "file": "玩家V4b-攻击-cross.gif",
+          "bytes": 1042347,
+          "encoded_frames": 18,
+          "merged_duplicate_frames": 4,
+          "duration_sum_ms": 1320,
+          "expected_duration_ms": 1320,
+          "sha256": "a47a8d77c8694d8f6b8ed2f671c14da64030f766babe3bc78eebec77ef609966"
+        },
+        "wave": {
+          "frames": 36,
+          "split": [
+            10,
+            8,
+            18
+          ],
+          "file": "玩家V4b-攻击-wave.gif",
+          "bytes": 1616601,
+          "encoded_frames": 28,
+          "merged_duplicate_frames": 8,
+          "duration_sum_ms": 2160,
+          "expected_duration_ms": 2160,
+          "sha256": "ecf66ef2fcf15e47ec949f1786fa1e7f26d383a957f58684e7b54e355a5531fa"
+        }
+      },
+      "sheet": {
+        "file": "玩家V4b-关键帧对照.png",
+        "bytes": 375758,
+        "size": [
+          958,
+          930
+        ]
+      },
+      "combo": {
+        "file": "玩家V4b-三档连播.gif",
+        "frames": 78,
+        "encoded_frames": 60,
+        "duration_sum_ms": 5460,
+        "expected_duration_ms": 5460,
+        "bytes": 3178584,
+        "sha256": "cea9e37e56d3db826ced5a689b8ce1920de0d39bafdaf7081d7df9205c39f50f"
+      }
+    },
+    "foe": {
+      "box": [
+        84,
+        55,
+        743,
+        714
+      ],
+      "alpha_union": [
+        127,
+        85,
+        700,
+        684
+      ],
+      "gif_size": [
+        659,
+        659
+      ],
+      "cards": {
+        "jab": {
+          "frames": 14,
+          "split": [
+            4,
+            3,
+            7
+          ],
+          "file": "对手怪V1-攻击-jab.gif",
+          "bytes": 1294262,
+          "encoded_frames": 11,
+          "merged_duplicate_frames": 3,
+          "duration_sum_ms": 840,
+          "expected_duration_ms": 840,
+          "sha256": "b736790ab885c0bcdd27f4c4df7701f8b913a28daf5dae156df0fc8d8ca4f17c"
+        },
+        "cross": {
+          "frames": 22,
+          "split": [
+            6,
+            4,
+            12
+          ],
+          "file": "对手怪V1-攻击-cross.gif",
+          "bytes": 2115898,
+          "encoded_frames": 18,
+          "merged_duplicate_frames": 4,
+          "duration_sum_ms": 1320,
+          "expected_duration_ms": 1320,
+          "sha256": "d412104320e66af7ced5d71781eadb4fd328cde76ccec7aa38ea43f1be235d29"
+        },
+        "wave": {
+          "frames": 36,
+          "split": [
+            10,
+            8,
+            18
+          ],
+          "file": "对手怪V1-攻击-wave.gif",
+          "bytes": 3319095,
+          "encoded_frames": 28,
+          "merged_duplicate_frames": 8,
+          "duration_sum_ms": 2160,
+          "expected_duration_ms": 2160,
+          "sha256": "52142a027af71d2f40f2b670996ff4d1b6b003519da9dd61a323f59adfa49e5b"
+        }
+      },
+      "sheet": {
+        "file": "对手怪V1-关键帧对照.png",
+        "bytes": 503505,
+        "size": [
+          958,
+          930
+        ]
+      },
+      "combo": {
+        "file": "对手怪V1-三档连播.gif",
+        "frames": 78,
+        "encoded_frames": 60,
+        "duration_sum_ms": 5460,
+        "expected_duration_ms": 5460,
+        "bytes": 5441786,
+        "sha256": "5570eb31efd7b9a099b30c566c9d0f6fbba53e6fa86f239a02169a214d4568af"
+      }
+    },
+    "mesh": {
+      "box": [
+        17,
+        0,
+        512,
+        495
+      ],
+      "alpha_union": [
+        57,
+        0,
+        512,
+        475
+      ],
+      "gif_size": [
+        495,
+        495
+      ],
+      "cards": {
+        "jab": {
+          "frames": 14,
+          "split": [
+            4,
+            3,
+            7
+          ],
+          "file": "证伪-网格-攻击-jab.gif",
+          "bytes": 769912,
+          "encoded_frames": 14,
+          "merged_duplicate_frames": 0,
+          "duration_sum_ms": 840,
+          "expected_duration_ms": 840,
+          "sha256": "36fd4bb095e6b39e182b80a3d4433c0ca69aa726433a43410c31dc57120ebb5c"
+        },
+        "cross": {
+          "frames": 22,
+          "split": [
+            6,
+            4,
+            12
+          ],
+          "file": "证伪-网格-攻击-cross.gif",
+          "bytes": 1154675,
+          "encoded_frames": 22,
+          "merged_duplicate_frames": 0,
+          "duration_sum_ms": 1320,
+          "expected_duration_ms": 1320,
+          "sha256": "8bff6f2fef21432d9656c67851cd3cd8163f88d5d708807efc4c1a366ef67889"
+        },
+        "wave": {
+          "frames": 36,
+          "split": [
+            10,
+            8,
+            18
+          ],
+          "file": "证伪-网格-攻击-wave.gif",
+          "bytes": 1685966,
+          "encoded_frames": 33,
+          "merged_duplicate_frames": 3,
+          "duration_sum_ms": 2160,
+          "expected_duration_ms": 2160,
+          "sha256": "20f7e325008015cd3d6e5eaae382c7194c3d1f8943f6ed6416e0ca34c9e24e72"
+        }
+      },
+      "sheet": {
+        "file": "证伪-网格-关键帧对照.png",
+        "bytes": 449793,
+        "size": [
+          958,
+          930
+        ]
+      },
+      "combo": {
+        "file": "证伪-网格-三档连播.gif",
+        "frames": 78,
+        "encoded_frames": 73,
+        "duration_sum_ms": 5460,
+        "expected_duration_ms": 5460,
+        "bytes": 2791801,
+        "sha256": "ab73817969572cd421770cca0b3fdca6f3f963ce3365b2a67ee7160d3e720125"
+      }
+    }
+  },
+  "overview": {
+    "file": "三路线-命中帧总览.png",
+    "bytes": 375746,
+    "size": [
+      766,
+      898
+    ]
+  }
+}

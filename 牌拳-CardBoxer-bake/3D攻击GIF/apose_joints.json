@@ -1,0 +1,40 @@
+{
+  "_note": "A-pose 正面立绘的 11 关节标定，单位 = 画布像素（768x768，y 向下）。来源是各自 -front.png 的可视量测；相机 ortho_scale=2.30 m / 768 px / target_z=0.86 m，故 1 m = 333.913 px、1 game px = 3.33913 px。f = 画面右侧（游戏 +x 前手），b = 画面左侧。",
+  "camera": {
+    "resolution": 768,
+    "ortho_scale_m": 2.30,
+    "target_z_m": 0.86,
+    "px_per_m": 333.913043,
+    "px_per_game_px": 3.33913043
+  },
+  "source_images": {
+    "player": "3D模型探针V4b/v4b-front.png",
+    "foe": "对手怪Blender建模V1/foe-front.png"
+  },
+  "player": {
+    "head": [384, 96],
+    "shoulder": [384, 222],
+    "hip": [384, 320],
+    "f_elbow": [492, 300],
+    "f_hand": [588, 375],
+    "b_elbow": [278, 300],
+    "b_hand": [185, 375],
+    "f_knee": [450, 500],
+    "f_foot": [492, 665],
+    "b_knee": [320, 500],
+    "b_foot": [278, 665]
+  },
+  "foe": {
+    "head": [384, 100],
+    "shoulder": [384, 215],
+    "hip": [384, 390],
+    "f_elbow": [528, 330],
+    "f_hand": [545, 430],
+    "b_elbow": [240, 330],
+    "b_hand": [225, 430],
+    "f_knee": [470, 535],
+    "f_foot": [505, 665],
+    "b_knee": [300, 535],
+    "b_foot": [270, 665]
+  }
+}

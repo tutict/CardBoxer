@@ -1,0 +1,18 @@
+PASS pngs_valid: 8/8 PNG, 512x512
+PASS renders_nonempty: all renders have >8000 non-white pixels
+PASS repeat_pixels_identical: changed px (>6)=0, max channel delta=1 (getbbox=(158, 133, 280, 193) counts +/-1 noise)
+PASS repeat_bytes_fully_explained: sha equal=False; chunk types equal=True; IDAT equal=False; tEXt differs=True; changed px(>6)=0; max delta=1; bytes 136225 vs 136252; IDAT differences are +/-1 quantisation, NOT a different picture
+PASS pose_frames_distinct: min stance-vs-motion changed pixels = 26021; jab_impact.png=42928, sweep_impact.png=57286, throw_impact.png=42764, hit_heavy_mid.png=26021
+PASS palette_and_angle_live: palette changed px=4049; angle55 changed px=38717
+PASS manifest_joints_traceable: 8/8 recomputed from baked2.json
+PASS table_sha256_matches: manifest/rig_stats/disk all b6a7f8435b08...
+PASS ortho_coordinate_bridge: shoe centers L=127.0 R=284.0 span=157.0px (n=3849); predicted 157.5px; tol=25px
+PASS rig_is_real: bones=13 skinned=13 props=41; all rigid-bound 100%
+PASS mesh_has_depth: min distinct lateral layers=13 (2.5D ribbon would be 2); min lateral span=0.136 m
+PASS toon_shader_is_wired: ShaderToRGB nodes=11, constant ramps=11/11, source chain present
+PASS skeleton_is_wired: source tokens missing=[]; probe follows=True, max vertex displacement=0.3752, rest/posed signatures differ=True
+PASS bone_readback_clean: frames=3 worst error=0.14 px; orphan lists=['[]', '[]', '[]']
+PASS differs_from_2d5_v3: changed pixels vs 2d5-stance.png = 42565
+PASS game_dir_unchanged: files newer than boxer_3d.py = 0
+CHECKS 16/16
+MODEL_3D_VERIFIED

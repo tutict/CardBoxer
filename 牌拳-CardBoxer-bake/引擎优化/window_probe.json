@@ -1,0 +1,23 @@
+{
+	"aspect_match": true,
+	"logical": [
+		1280,
+		720
+	],
+	"physical": [
+		1600,
+		900
+	],
+	"render_image": [
+		1600,
+		900
+	],
+	"scale_x": 1.25,
+	"scale_y": 1.25,
+	"stretch_aspect": "keep",
+	"stretch_mode": "canvas_items",
+	"viewport_px": [
+		1600,
+		900
+	]
+}

@@ -1,0 +1,29 @@
+{
+  "file": "zzz-front.png",
+  "opaque_pixels": 75075,
+  "mean_luminance": 97.49,
+  "luminance_hist_8x32": [
+    26061,
+    6475,
+    5068,
+    2912,
+    5677,
+    28882,
+    0,
+    0
+  ],
+  "pct_above_224": 0.0,
+  "coat_sample_pixels": 33757,
+  "coat_mean": 128.51,
+  "coat_hist_8x32": [
+    6043,
+    3052,
+    680,
+    982,
+    2917,
+    20083,
+    0,
+    0
+  ],
+  "diagnosis": "BANDS_SHOULD_BE_VISIBLE"
+}

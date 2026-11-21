@@ -1,0 +1,28 @@
+ALL_PAIRS 1076 RESIDUAL 53
+BY_CARD {'block': 4, 'cross': 8, 'hit_heavy': 4, 'hit_light': 4, 'jab': 8, 'rush': 4, 'sidestep': 4, 'sweep': 4, 'throw': 4, 'uppercut': 8, 'wave': 1}
+BY_BONE {'shin_b': 13, 'shin_f': 13, 'thigh_b': 13, 'thigh_f': 14}
+IN_SEGMENT 53
+FLAG_TRUE 53
+F_KNEE_MOVED_ZERO 0
+RAW_DELTA_ZERO 53
+--- first 20 ---
+{'card': 'jab', 'frame': 2, 'bone': 'thigh_f', 'raw0_a': -3.258711, 'raw1_a': -3.549362, 'raw1_b': -3.549362, 'raw_delta': 0.0, 'out1_a': -3.322676337, 'out1_b': -3.322676337, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'jab', 'frame': 2, 'bone': 'shin_f', 'raw0_a': -4.014426, 'raw1_a': -4.025806, 'raw1_b': -4.025806, 'raw_delta': 0.0, 'out1_a': -3.705091993, 'out1_b': -3.705091993, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'jab', 'frame': 2, 'bone': 'thigh_b', 'raw0_a': 13.920496, 'raw1_a': 14.261246, 'raw1_b': 14.261246, 'raw_delta': 0.0, 'out1_a': 8.2430695, 'out1_b': 8.2430695, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'jab', 'frame': 2, 'bone': 'shin_b', 'raw0_a': -17.40621, 'raw1_a': -17.403482, 'raw1_b': -17.403482, 'raw_delta': 0.0, 'out1_a': -8.840057826, 'out1_b': -8.840057826, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'jab', 'frame': 6, 'bone': 'thigh_f', 'raw0_a': 2.131272, 'raw1_a': 1.848382, 'raw1_b': 1.848382, 'raw_delta': 0.0, 'out1_a': 1.813529533, 'out1_b': 1.813529533, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'jab', 'frame': 6, 'bone': 'shin_f', 'raw0_a': 16.586319, 'raw1_a': 16.392274, 'raw1_b': 16.392274, 'raw_delta': 0.0, 'out1_a': 8.668353371, 'out1_b': 8.668353371, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'jab', 'frame': 6, 'bone': 'thigh_b', 'raw0_a': 7.047274, 'raw1_a': 7.354983, 'raw1_b': 7.354983, 'raw_delta': 0.0, 'out1_a': 5.855092202, 'out1_b': 5.855092202, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'jab', 'frame': 6, 'bone': 'shin_b', 'raw0_a': 6.878206, 'raw1_a': 6.708237, 'raw1_b': 6.708237, 'raw_delta': 0.0, 'out1_a': 5.50487584, 'out1_b': 5.50487584, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'cross', 'frame': 4, 'bone': 'thigh_f', 'raw0_a': -6.428748, 'raw1_a': -6.722266, 'raw1_b': -6.722266, 'raw_delta': 0.0, 'out1_a': -5.512789769, 'out1_b': -5.512789769, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'cross', 'frame': 4, 'bone': 'shin_f', 'raw0_a': -5.328456, 'raw1_a': -5.327902, 'raw1_b': -5.327902, 'raw_delta': 0.0, 'out1_a': -4.652362733, 'out1_b': -4.652362733, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'cross', 'frame': 4, 'bone': 'thigh_b', 'raw0_a': 18.547448, 'raw1_a': 18.892117, 'raw1_b': 18.892117, 'raw_delta': 0.0, 'out1_a': 9.064398107, 'out1_b': 9.064398107, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'cross', 'frame': 4, 'bone': 'shin_b', 'raw0_a': -24.202377, 'raw1_a': -24.146518, 'raw1_b': -24.146518, 'raw_delta': 0.0, 'out1_a': -9.659166987, 'out1_b': -9.659166987, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'cross', 'frame': 10, 'bone': 'thigh_f', 'raw0_a': 4.706508, 'raw1_a': 4.427811, 'raw1_b': 4.427811, 'raw_delta': 0.0, 'out1_a': 4.012872002, 'out1_b': 4.012872002, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'cross', 'frame': 10, 'bone': 'shin_f', 'raw0_a': 22.698944, 'raw1_a': 22.454595, 'raw1_b': 22.454595, 'raw_delta': 0.0, 'out1_a': 9.494775691, 'out1_b': 9.494775691, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'cross', 'frame': 10, 'bone': 'thigh_b', 'raw0_a': 8.735117, 'raw1_a': 9.059716, 'raw1_b': 9.059716, 'raw_delta': 0.0, 'out1_a': 6.648181626, 'out1_b': 6.648181626, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'cross', 'frame': 10, 'bone': 'shin_b', 'raw0_a': 8.635067, 'raw1_a': 8.445391, 'raw1_b': 8.445391, 'raw_delta': 0.0, 'out1_a': 6.382465063, 'out1_b': 6.382465063, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'uppercut', 'frame': 5, 'bone': 'thigh_f', 'raw0_a': -18.8045, 'raw1_a': -19.101798, 'raw1_b': -19.101798, 'raw_delta': 0.0, 'out1_a': -9.093587403, 'out1_b': -9.093587403, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'uppercut', 'frame': 5, 'bone': 'shin_f', 'raw0_a': 9.028734, 'raw1_a': 8.90002, 'raw1_b': 8.90002, 'raw_delta': 0.0, 'out1_a': 6.581129177, 'out1_b': 6.581129177, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'uppercut', 'frame': 5, 'bone': 'thigh_b', 'raw0_a': 31.917143, 'raw1_a': 32.260879, 'raw1_b': 32.260879, 'raw_delta': 0.0, 'out1_a': 10.22368671, 'out1_b': 10.22368671, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}
+{'card': 'uppercut', 'frame': 5, 'bone': 'shin_b', 'raw0_a': -27.896762, 'raw1_a': -27.812378, 'raw1_b': -27.812378, 'raw_delta': 0.0, 'out1_a': -9.952123135, 'out1_b': -9.952123135, 'i_in_segment': True, 'f_knee_moved_px': 0.259808, 'flag': True}

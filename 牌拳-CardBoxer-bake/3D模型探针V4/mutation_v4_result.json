@@ -1,0 +1,42 @@
+{
+  "cases": [
+    {
+      "id": "M1",
+      "desc": "render_v4.json 的相机 target_z 被改（同相机判据失效）",
+      "verdict": "CAUGHT",
+      "target_red": "three_versions_share_identical_cameras",
+      "target_was_red": true,
+      "sentinel": "v4_seven_renders_valid",
+      "sentinel_was_green": true,
+      "passed": 16,
+      "restored_sha_ok": true
+    },
+    {
+      "id": "M2",
+      "desc": "V4b 脸特写被换成 V3 的副本（三版不是不同模型）",
+      "verdict": "CAUGHT",
+      "target_red": "face_closeups_are_distinct",
+      "target_was_red": true,
+      "sentinel": "v4b_seven_renders_valid",
+      "sentinel_was_green": true,
+      "passed": 16,
+      "restored_sha_ok": true
+    },
+    {
+      "id": "M3",
+      "desc": "V4b model_inspection.json 的 skins 改成 1（假装能绑骨）",
+      "verdict": "CAUGHT",
+      "target_red": "V4b_still_static_single_mesh",
+      "target_was_red": true,
+      "sentinel": "V4b_probe_report_sha_matches",
+      "sentinel_was_green": true,
+      "passed": 16,
+      "restored_sha_ok": true
+    }
+  ],
+  "caught": 3,
+  "total": 3,
+  "clean_rerun": true,
+  "clean_passed": 17,
+  "verdict": "MUTATION_OK"
+}

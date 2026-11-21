@@ -1,0 +1,4 @@
+triple: rc=0 shots=1 gl=True script_errors=0 marker=['[P0_SHOT] mode=triple tk_phase=%s motion=%s label=%s winner=%s hp=%d/%d']
+  saved 引擎帧-三同气功波.png (701781 B)
+RESTORE OK sha256=32157207e55d3c394d6d5b3201c4a649c4681e9d942f5b307c7e508d76b1b1bd
+RESULT: OK triple | OK RESTORE

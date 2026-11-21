@@ -1,0 +1,65 @@
+{
+  "job_id": "1510550344416837632",
+  "status": "DONE",
+  "raw_result": {
+    "ResultCreditDetails": "{\"FaceCount\":10,\"Format\":5,\"GenerateType-Normal\":20,\"Pbr\":10}",
+    "ResultCreditConsumed": 45,
+    "RequestId": "76624116-b44d-4777-88d6-4d12ffc16e7d",
+    "Status": "DONE",
+    "ResultFile3Ds": [
+      {
+        "Type": "OBJ",
+        "Url": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/eefdb54a-61d7-4b69-9990-a04e30983d03_0.zip?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794037850%3B1794124250&q-key-time=1794037850%3B1794124250&q-header-list=host&q-url-param-list=&q-signature=ee6abf1e9c0783ecffa9c3408106bf6cc4295609",
+        "PreviewImageUrl": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/preview_eefdb54a-61d7-4b69-9990-a04e30983d03_0.png?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794037850%3B1794124250&q-key-time=1794037850%3B1794124250&q-header-list=host&q-url-param-list=&q-signature=dbb6fc38ee6b813bef284f96cbcd58100f8487df"
+      },
+      {
+        "Type": "GLB",
+        "Url": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/eefdb54a-61d7-4b69-9990-a04e30983d03_0.glb?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794037850%3B1794124250&q-key-time=1794037850%3B1794124250&q-header-list=host&q-url-param-list=&q-signature=55a4f9b0b118211e29069055f96cb886f9891d2d",
+        "PreviewImageUrl": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/preview_eefdb54a-61d7-4b69-9990-a04e30983d03_0.png?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794037850%3B1794124250&q-key-time=1794037850%3B1794124250&q-header-list=host&q-url-param-list=&q-signature=dbb6fc38ee6b813bef284f96cbcd58100f8487df"
+      },
+      {
+        "Type": "FBX",
+        "Url": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/eefdb54a-61d7-4b69-9990-a04e30983d03_0.fbx?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794037850%3B1794124250&q-key-time=1794037850%3B1794124250&q-header-list=host&q-url-param-list=&q-signature=e8c048592c0017ad0364eca1831c9e68854d097b",
+        "PreviewImageUrl": "https://hunyuan-prod-1258344699.cos.ap-guangzhou.tencentcos.cn/3d/output/1379431822/preview_eefdb54a-61d7-4b69-9990-a04e30983d03_0.png?q-sign-algorithm=sha1&q-ak=AKIDpRovliU1IJ5ctufBSVIq8AwTlnZ5MN8d&q-sign-time=1794037850%3B1794124250&q-key-time=1794037850%3B1794124250&q-header-list=host&q-url-param-list=&q-signature=dbb6fc38ee6b813bef284f96cbcd58100f8487df"
+      }
+    ],
+    "ErrorCode": "",
+    "ErrorMessage": ""
+  },
+  "prompt_sha256": "99e1615ac36ebaf84c4eda8c9dffdc96579dabfc0099bf2d8a4c8d97629d731d",
+  "settings": {
+    "enable_pbr": true,
+    "face_count": 80000,
+    "result_format": "FBX",
+    "model": "3.1",
+    "generate_type": "Normal(default)"
+  },
+  "artifacts": [
+    {
+      "file": "artifact_01.zip",
+      "bytes": 24692078,
+      "sha256": "b245a202df54f1758b9937566ecb3d7388dc3c53d5ecac65894f9ab1a949740b",
+      "source_url_path": "eefdb54a-61d7-4b69-9990-a04e30983d03_0.zip"
+    },
+    {
+      "file": "artifact_02.png",
+      "bytes": 71070,
+      "sha256": "99790f127f42458261f3486f7e0abb52dcefbfa495b48effb6d3d38369faed6e",
+      "source_url_path": "preview_eefdb54a-61d7-4b69-9990-a04e30983d03_0.png"
+    },
+    {
+      "file": "artifact_03.glb",
+      "bytes": 29181864,
+      "sha256": "17933da074bf13c63faedbeac0dcabfc08efa7f89ea44bdff129850ba011d440",
+      "source_url_path": "eefdb54a-61d7-4b69-9990-a04e30983d03_0.glb"
+    },
+    {
+      "file": "artifact_04.fbx",
+      "bytes": 29718908,
+      "sha256": "7018bfec2b6936e880430a3e84f42149f5985618891516b78719ae3c95e8b17d",
+      "source_url_path": "eefdb54a-61d7-4b69-9990-a04e30983d03_0.fbx"
+    }
+  ],
+  "glb": "artifact_03.glb",
+  "viewer_html": "generated_model_20261107-155052_viewer.html"
+}

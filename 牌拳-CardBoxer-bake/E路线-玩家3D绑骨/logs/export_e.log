@@ -1,0 +1,37 @@
+00:00.610  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\E路线-玩家3D绑骨\玩家V4b-可变形连续壳.blend"
+OBJECTS hi=node_0 shell=e_continuous_shell rig=e_apose_rig bones=13 packed_images=3
+INFO Draco is available, use library at D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+17:29:36 | INFO: Starting glTF 2.0 export
+17:29:36 | WARNING: Mesh node_0.001 is not valid, and may be exported wrongly
+17:29:36 | INFO: Extracting primitive: node_0.001
+17:29:37 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+17:29:37 | INFO: Primitives created: 1
+17:29:37 | WARNING: There are more than 4 joint vertex influences.The 4 with highest weight will be used (and normalized).
+17:29:37 | INFO: Extracting primitive: node_0
+17:29:37 | INFO: Primitives created: 1
+17:29:37 | INFO: Finished glTF 2.0 export in 0.2898859977722168 s
+
+EXPORT player-full bytes=38220692 elapsed=0.605s result=['FINISHED']
+17:29:37 | INFO: Starting glTF 2.0 export
+17:29:37 | INFO: Extracting primitive: node_0
+17:29:37 | INFO: Primitives created: 1
+17:29:37 | INFO: Finished glTF 2.0 export in 0.06735992431640625 s
+
+EXPORT player-stance bytes=2335004 elapsed=0.068s result=['FINISHED']
+17:29:37 | INFO: Starting glTF 2.0 export
+17:29:37 | INFO: Extracting primitive: node_0
+17:29:37 | INFO: Primitives created: 1
+17:29:37 | INFO: Finished glTF 2.0 export in 0.05661296844482422 s
+
+EXPORT player-cross bytes=2339100 elapsed=0.058s result=['FINISHED']
+17:29:37 | INFO: Starting glTF 2.0 export
+17:29:37 | INFO: Extracting primitive: node_0.001
+17:29:37 | INFO: Primitives created: 1
+17:29:37 | WARNING: There are more than 4 joint vertex influences.The 4 with highest weight will be used (and normalized).
+17:29:37 | INFO: Finished glTF 2.0 export in 0.09863567352294922 s
+
+EXPORT player-proxy-rig bytes=905116 elapsed=0.1s result=['FINISHED']
+TOTAL_BYTES=43799912 elapsed=2.404s
+GLTF_EXPORT_E_OK
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

@@ -1,0 +1,95 @@
+{
+  "passed": 16,
+  "total": 16,
+  "checks": [
+    {
+      "name": "pngs_valid",
+      "ok": true,
+      "detail": "8/8 PNG, 512x512"
+    },
+    {
+      "name": "renders_nonempty",
+      "ok": true,
+      "detail": "all renders have >8000 non-white pixels"
+    },
+    {
+      "name": "repeat_pixels_identical",
+      "ok": true,
+      "detail": "changed px (>6)=0, max channel delta=1 (getbbox=(158, 133, 280, 193) counts +/-1 noise)"
+    },
+    {
+      "name": "repeat_bytes_fully_explained",
+      "ok": true,
+      "detail": "sha equal=False; chunk types equal=True; IDAT equal=False; tEXt differs=True; changed px(>6)=0; max delta=1; bytes 136225 vs 136252; IDAT differences are +/-1 quantisation, NOT a different picture"
+    },
+    {
+      "name": "pose_frames_distinct",
+      "ok": true,
+      "detail": "min stance-vs-motion changed pixels = 26021; jab_impact.png=42928, sweep_impact.png=57286, throw_impact.png=42764, hit_heavy_mid.png=26021"
+    },
+    {
+      "name": "palette_and_angle_live",
+      "ok": true,
+      "detail": "palette changed px=4049; angle55 changed px=38717"
+    },
+    {
+      "name": "manifest_joints_traceable",
+      "ok": true,
+      "detail": "8/8 recomputed from baked2.json"
+    },
+    {
+      "name": "table_sha256_matches",
+      "ok": true,
+      "detail": "manifest/rig_stats/disk all b6a7f8435b08..."
+    },
+    {
+      "name": "ortho_coordinate_bridge",
+      "ok": true,
+      "detail": "shoe centers L=127.0 R=284.0 span=157.0px (n=3849); predicted 157.5px; tol=25px"
+    },
+    {
+      "name": "rig_is_real",
+      "ok": true,
+      "detail": "bones=13 skinned=13 props=41; all rigid-bound 100%"
+    },
+    {
+      "name": "mesh_has_depth",
+      "ok": true,
+      "detail": "min distinct lateral layers=13 (2.5D ribbon would be 2); min lateral span=0.136 m"
+    },
+    {
+      "name": "toon_shader_is_wired",
+      "ok": true,
+      "detail": "ShaderToRGB nodes=11, constant ramps=11/11, source chain present"
+    },
+    {
+      "name": "skeleton_is_wired",
+      "ok": true,
+      "detail": "source tokens missing=[]; probe follows=True, max vertex displacement=0.3752, rest/posed signatures differ=True"
+    },
+    {
+      "name": "bone_readback_clean",
+      "ok": true,
+      "detail": "frames=3 worst error=0.14 px; orphan lists=['[]', '[]', '[]']"
+    },
+    {
+      "name": "differs_from_2d5_v3",
+      "ok": true,
+      "detail": "changed pixels vs 2d5-stance.png = 42565"
+    },
+    {
+      "name": "game_dir_unchanged",
+      "ok": true,
+      "detail": "files newer than boxer_3d.py = 0"
+    }
+  ],
+  "reports": {
+    "shoe_span_px": 157,
+    "shoe_span_predicted_px": 157.5,
+    "min_distinct_y_levels": 13,
+    "min_lateral_span_m": 0.136,
+    "diff_vs_2d5_v3_px": 42565
+  },
+  "table_sha256": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55",
+  "script_sha256": "b805323e251418015d9d892232b3f73cf2b8220f67c93f981e9ab80e32a1486c"
+}

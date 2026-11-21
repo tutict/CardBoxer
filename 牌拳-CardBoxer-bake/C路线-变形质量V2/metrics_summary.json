@@ -1,0 +1,340 @@
+{
+  "frames": 72,
+  "cards": {
+    "jab": 14,
+    "cross": 22,
+    "wave": 36
+  },
+  "variants": [
+    "V1_base",
+    "V1_gain",
+    "V2_base",
+    "V2_final"
+  ],
+  "per_variant": {
+    "V1_base": {
+      "reach_max_m": {
+        "min": 0.0,
+        "mean": 0.17448,
+        "p95": 0.49169,
+        "max": 0.50489
+      },
+      "reach_f_m": {
+        "min": 0.0,
+        "mean": 0.10109,
+        "p95": 0.33333,
+        "max": 0.41171
+      },
+      "reach_b_m": {
+        "min": 0.0,
+        "mean": 0.15088,
+        "p95": 0.49169,
+        "max": 0.50489
+      },
+      "max_delta_deg": {
+        "min": 0.0,
+        "mean": 9.81708,
+        "p95": 28.0,
+        "max": 28.0
+      },
+      "tear_p999_m": {
+        "min": 0.0,
+        "mean": 0.01318,
+        "p95": 0.04,
+        "max": 0.04
+      },
+      "tear_gt5cm": {
+        "min": 0,
+        "mean": 50.05556,
+        "p95": 103,
+        "max": 103
+      },
+      "max_displacement_m": {
+        "min": 0.0,
+        "mean": 0.19405,
+        "p95": 0.54624,
+        "max": 0.55708
+      },
+      "foot_gap_m": {
+        "min": 0.0,
+        "mean": 0.00808,
+        "p95": 0.02301,
+        "max": 0.02301
+      },
+      "penetration_pct": {
+        "min": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "moved_gt_1mm": {
+        "min": 0,
+        "mean": 58918.73611,
+        "p95": 64006,
+        "max": 64006
+      }
+    },
+    "V1_gain": {
+      "reach_max_m": {
+        "min": 0.0,
+        "mean": 0.25326,
+        "p95": 0.73966,
+        "max": 0.75003
+      },
+      "reach_f_m": {
+        "min": 0.0,
+        "mean": 0.13496,
+        "p95": 0.4686,
+        "max": 0.57235
+      },
+      "reach_b_m": {
+        "min": 0.0,
+        "mean": 0.21692,
+        "p95": 0.73966,
+        "max": 0.75003
+      },
+      "max_delta_deg": {
+        "min": 0.0,
+        "mean": 14.55811,
+        "p95": 42.0,
+        "max": 42.0
+      },
+      "tear_p999_m": {
+        "min": 0.0,
+        "mean": 0.01824,
+        "p95": 0.05411,
+        "max": 0.05411
+      },
+      "tear_gt5cm": {
+        "min": 0,
+        "mean": 62.38889,
+        "p95": 186,
+        "max": 186
+      },
+      "max_displacement_m": {
+        "min": 0.0,
+        "mean": 0.27994,
+        "p95": 0.81154,
+        "max": 0.82094
+      },
+      "foot_gap_m": {
+        "min": 0.0,
+        "mean": 0.00808,
+        "p95": 0.02301,
+        "max": 0.02301
+      },
+      "penetration_pct": {
+        "min": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "moved_gt_1mm": {
+        "min": 0,
+        "mean": 58992.45833,
+        "p95": 64006,
+        "max": 64006
+      }
+    },
+    "V2_base": {
+      "reach_max_m": {
+        "min": 0.0,
+        "mean": 0.17448,
+        "p95": 0.49169,
+        "max": 0.50489
+      },
+      "reach_f_m": {
+        "min": 0.0,
+        "mean": 0.10109,
+        "p95": 0.33333,
+        "max": 0.41171
+      },
+      "reach_b_m": {
+        "min": 0.0,
+        "mean": 0.15088,
+        "p95": 0.49169,
+        "max": 0.50489
+      },
+      "max_delta_deg": {
+        "min": 0.0,
+        "mean": 9.81708,
+        "p95": 28.0,
+        "max": 28.0
+      },
+      "tear_p999_m": {
+        "min": 0.0,
+        "mean": 0.02395,
+        "p95": 0.07023,
+        "max": 0.07023
+      },
+      "tear_gt5cm": {
+        "min": 0,
+        "mean": 106.125,
+        "p95": 565,
+        "max": 565
+      },
+      "max_displacement_m": {
+        "min": 0.0,
+        "mean": 0.19412,
+        "p95": 0.54624,
+        "max": 0.55708
+      },
+      "foot_gap_m": {
+        "min": 0.0,
+        "mean": 0.00808,
+        "p95": 0.02301,
+        "max": 0.02301
+      },
+      "penetration_pct": {
+        "min": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "moved_gt_1mm": {
+        "min": 0,
+        "mean": 58906.84722,
+        "p95": 64006,
+        "max": 64006
+      }
+    },
+    "V2_final": {
+      "reach_max_m": {
+        "min": 0.0,
+        "mean": 0.25326,
+        "p95": 0.73966,
+        "max": 0.75003
+      },
+      "reach_f_m": {
+        "min": 0.0,
+        "mean": 0.13496,
+        "p95": 0.4686,
+        "max": 0.57235
+      },
+      "reach_b_m": {
+        "min": 0.0,
+        "mean": 0.21692,
+        "p95": 0.73966,
+        "max": 0.75003
+      },
+      "max_delta_deg": {
+        "min": 0.0,
+        "mean": 14.55811,
+        "p95": 42.0,
+        "max": 42.0
+      },
+      "tear_p999_m": {
+        "min": 0.0,
+        "mean": 0.03515,
+        "p95": 0.10248,
+        "max": 0.10248
+      },
+      "tear_gt5cm": {
+        "min": 0,
+        "mean": 199.56944,
+        "p95": 1007,
+        "max": 1007
+      },
+      "max_displacement_m": {
+        "min": 0.0,
+        "mean": 0.28007,
+        "p95": 0.81154,
+        "max": 0.82094
+      },
+      "foot_gap_m": {
+        "min": 0.0,
+        "mean": 0.00808,
+        "p95": 0.02301,
+        "max": 0.02301
+      },
+      "penetration_pct": {
+        "min": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "moved_gt_1mm": {
+        "min": 0,
+        "mean": 58990.77778,
+        "p95": 64006,
+        "max": 64006
+      }
+    }
+  },
+  "decomposition": {
+    "gain_only_on_V1": 1.4515,
+    "weight_only_at_x1": 1.0,
+    "gain_on_V2": 1.4515,
+    "combined_V2_final_over_V1_base": 1.4515,
+    "tear_worst_V2_final_over_V1_base": 2.562,
+    "tear_worst_V2_final_over_rigid_C_baseline": 0.3654
+  },
+  "purity": {
+    "arm_b": {
+      "v1": 0.83599,
+      "v2": 0.90144,
+      "delta": 0.06545
+    },
+    "arm_f": {
+      "v1": 0.83376,
+      "v2": 0.89875,
+      "delta": 0.06499
+    },
+    "leg_b": {
+      "v1": 0.84071,
+      "v2": 0.91387,
+      "delta": 0.07316
+    },
+    "leg_f": {
+      "v1": 0.8384,
+      "v2": 0.91545,
+      "delta": 0.07705
+    },
+    "torso": {
+      "v1": 0.56479,
+      "v2": 0.72812,
+      "delta": 0.16333
+    }
+  },
+  "reach_non_negative_frames": 72,
+  "V2_final_worst": {
+    "tear_p999_m": 0.10248,
+    "tear_gt5cm": 1007,
+    "foot_gap_m": 0.02301,
+    "penetration_pct": 0.0
+  },
+  "stance_identity": {
+    "vertices_identical": true,
+    "tolerance_m": 1e-05,
+    "max_vertex_delta_m": 6.43e-07
+  },
+  "assets": {
+    "uv_layers": 1,
+    "materials": 1,
+    "textures": [
+      {
+        "image": "texture_pbr_20250901",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_normal",
+        "size": [
+          4096,
+          4096
+        ]
+      }
+    ],
+    "uv_same": true,
+    "textures_same": true
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "length": 1014,
+  "sha256": "1a8896763f5aa0f120471982dd8789bb31a1779fcf73e320f3295acc81cb7fc9",
+  "forbidden_hits": [],
+  "missing_constraints": [],
+  "checks": {
+    "length_le_1024": true,
+    "length_gt_400": true,
+    "no_forbidden_terms": true,
+    "all_required_constraints": true,
+    "ascii_only": true
+  },
+  "verdict": "PROMPT_OK"
+}

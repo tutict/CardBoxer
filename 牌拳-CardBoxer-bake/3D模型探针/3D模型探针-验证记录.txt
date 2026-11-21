@@ -1,0 +1,226 @@
+《牌拳 / CARD BOXER》二游风 3D 模型探针 · 验证记录
+=========================================================
+日期：2026-11-07
+目录：牌拳-CardBoxer-bake/3D模型探针/
+范围：本机多模态生成 3D → 产物结构检查 → Blender 5.2.3 导入 → 绑骨可行性诊断
+边界：不改游戏源码、不导入 Godot、不渲 228 帧图集、不做 Creative Review 结论
+      游戏目录（牌拳-CardBoxer/）本轮 0 文件改动，实测 find -newer 计数 = 0
+
+
+一、结论（先说结果）
+---------------------------------------------------------
+造型门槛达成了：生成的是完整、正面、头身比正常、五官可读的二游风 3D 女拳手，
+黑白熊猫配色 + 白长外套 + 黑内搭长裤 + 红腰带 + 中国结 + 双环发髻 + 金发夹 +
+黑金厚底靴 + 黑拳套，比前几轮程序化几何「积木人 / 纸片人」有质变。
+
+但 C 路线（渲 228 帧动作图集导 2D 精灵）**不具备直接执行条件**，三条硬事实：
+
+  | 事实 | 证据 |
+  |---|---|
+  | 模型是静态的 | GLB: 0 skins / 0 animations / 1 node；FBX: LimbNode/Deformer/Skin/Skeleton/BindPose/Animation 全 0 |
+  | 自动绑骨跑不通 | Blender `ARMATURE_AUTO` 报 `Bone Heat Weighting: failed to find solution for one or more bones`，覆盖率 0/51587 |
+  | 根因是拓扑不是姿势 | 861 个互不连通的开放壳体、21580 条非流形边；3 组骨架对照全部 0 覆盖 |
+
+一句话：**模型好看，但它是「一张可以转着看的 3D 立绘」，不是「能打拳的角色资产」。**
+这两件事别混。之前程序化几何不好看但能播 228 帧，这个正好反过来。
+
+
+二、生成侧：参数、两次前置失败、真实产物
+---------------------------------------------------------
+入口：本机多模态生成 skill 的 3d 命令；因内置脚本的本地输入格式校验与当前会话
+返回字段前缀不兼容，做了本地兼容副本 `generator_local.py`（`patch_generator.py` 记录补丁）。
+
+  | 项 | 值 |
+  |---|---|
+  | model / generate_type | 3.1 / Normal(default) |
+  | --enable-pbr | true |
+  | --face-count | 80000 |
+  | --result-format | FBX |
+  | --max-poll-time | 480 s |
+  | job_id | 1510512569416187904 |
+  | 服务状态 / 耗时 | DONE / 约 188 s |
+  | 计费 | ResultCreditConsumed = 45（FaceCount 10 + Format 5 + Normal 20 + Pbr 10）|
+  | prompt 长度 / sha256 | 995 字符（限 1024） / d0af098e25fb68f6e4628139944cb8082a800a0999f0942470f39fc1b6e9fa53 |
+
+两次前置失败，都修在提交前，不是服务问题：
+  1. `INVALID_SHORT_KEY` —— 本地输入格式校验不认当前会话返回的字段前缀 → 做本地兼容副本。
+  2. `Prompt字符长度为1058，不在允许范围(0,1024]内` → prompt 缩到 995 字符后重跑成功。
+第三次进入服务并成功。`probe_run.log` 尾部 `PROBE_OK artifacts=4`。
+
+产物（sha256 与 probe_report.json 逐字一致，见第九节清单）：
+
+  | 文件 | 字节 | 内容 |
+  |---|---:|---|
+  | artifact_01.zip | 25,146,564 | OBJ 包：4 张 4096² PBR PNG + 1 .obj + material.mtl |
+  | artifact_02.png | 72,045 | 服务预览图（本轮视觉判读依据）|
+  | artifact_03.glb | 30,197,712 | glTF 2.0 二进制 |
+  | artifact_04.fbx | 30,436,700 | FBX 二进制 |
+  | generated_model_20261107-132056_viewer.html | 652 | model-viewer 可拖拽预览页 |
+
+
+三、结构检查（inspect_model.py，纯 Python，不经 Blender）
+---------------------------------------------------------
+  | 项 | 值 |
+  |---|---|
+  | GLB version / 声明长度 / 文件字节 | 2 / 30,197,712 / 30,197,712（一致）|
+  | BIN chunk | 30,195,744 B |
+  | scene / node / mesh / material / primitive | 1 / 1 / 1 / 1 / 1 |
+  | 顶点 / 三角形 | 51,587 / 79,996 |
+  | texture / image | 3 / 3（全部 embedded）|
+  | 贴图槽 | baseColorTexture / metallicRoughnessTexture / normalTexture |
+  | **skins / animations / cameras** | **0 / 0 / 0** |
+  | rig-like node 名 | 0（`node_0` 一个）|
+  | extensionsUsed | KHR_materials_specular |
+  | ZIP 条目 | 6：4 PNG（13,311,804 / 3,628,530 / 4,072,465 / 4,405,583 B）+ OBJ 5,204,075 B + MTL 245 B |
+  | FBX token 计数 | LimbNode 0、Deformer 0、Skin 0、Skeleton 0、BindPose 0、Animation 0；Geometry 4 / Material 12 / Texture 27 |
+
+`inspect_model.log` 尾行 `INSPECT_OK`。结论：**没有任何可复用的骨架或动画数据，
+绑骨必须从零做**，不是「解包就能用」。
+
+
+四、Blender 5.2.3 LTS 导入与坐标对齐（probe_rigfit.py）
+---------------------------------------------------------
+本机 Blender：`D:\Tools\Blender-5.2.3\...\blender.exe`，`-b --factory-startup --python`。
+全程 3.43 s，退出码 0。
+
+  | 项 | 值 |
+  |---|---|
+  | 导入 mesh 对象 | 1（`node_0`），51,587 顶点 |
+  | 贴图 | 3 张全部 loaded，均 4096×4096；baseColor→Base Color，另两张→Color |
+  | UV layers | 1 |
+  | 原始 bbox | x [-0.2661, 0.2642]、y [-0.1143, 0.1319]、z [0, 1.1278] |
+  | 归一化 | scale = 1.72 / 1.1278 = **1.525134**，脚底 z=0、x/y 居中 |
+  | 归一化后 bbox | x ±0.4044、y ±0.1877、z [0, 1.72]（与 boxer_rig.REST 头顶 1.72 m 对齐）|
+
+REST 11 关节 → 最近网格顶点的距离（米）：
+
+  | 关节 | 距离 | 关节 | 距离 |
+  |---|---:|---|---:|
+  | hip | 0.0042 | b_hand | 0.0270 |
+  | shoulder | 0.0374 | f_knee | 0.0410 |
+  | head | 0.0284 | f_foot | 0.0821 |
+  | f_elbow | 0.1145 | b_knee | 0.0101 |
+  | **f_hand** | **0.2723** | **b_foot** | **0.1553** |
+  | b_elbow | 0.0181 | | |
+
+2 个关节（f_hand / b_foot）超出 0.12 m 落在几何之外。另有一条更直观的量化：
+z=1.56（游戏护脸手高度）处模型 x 范围只有 [-0.1717, 0.1710]，而 REST 要 x=0.44；
+模型最大 |x| = 0.4044 出现在 **z=0.821**（垂在腰侧的手 / 外套下摆）。
+
+`rigfit_overlay.png`（512² 正交，红=13 骨、青=11 关节，前置投影仅用于可视化）
+目视确认：红色护脸手斜指右上、红色前后脚叉到 x≈±0.44，模型的手垂在腰侧、
+脚并立在 x≈±0.15。**坐标桥（gx→屏幕 x、gz→z）本身没毛病，是模型摆的 A-pose
+不是游戏的格斗站架**；不要误记成「坐标系差 90° 需要旋转」。
+
+
+五、绑骨可行性：失败 → 三次对照 → 根因 → 独立复核
+---------------------------------------------------------
+5.1 首次 `bpy.ops.object.parent_set(type="ARMATURE_AUTO")`（用 boxer_rig 的 13 骨）：
+    日志 `Warning: Bone Heat Weighting: failed to find solution for one or more bones`，
+    **0 个有效权重 / 51,587 顶点覆盖率 0.0**。注意 Blender 这次不抛 Python 异常，
+    只打 C 层警告并留下 0 个 group —— 用「没报错」判断成功会得出完全相反的结论。
+
+5.2 单变量隔离（probe_rigfit2.py，每次都重新导入 + 归一化，互不污染）：
+
+  | 实验 | 骨架 | 结果 |
+  |---|---|---|
+  | C1_minimal | 3 根，全在躯干内部 | groups=3，coverage **0.0** |
+  | C2_scaled | 游戏 13 骨绕髋缩放 50%，全缩进模型内 | groups=13，coverage **0.0** |
+  | C3_apose | 对称 A-pose 13 骨，贴合真实手臂/腿 | groups=13，coverage **0.0** |
+
+    三次全灭 → **与骨骼摆在哪里、是不是格斗站架无关**。C1 只留 3 根躯干骨仍失败，
+    排除了「骨骼伸出模型外」这个解释。（Blender 会建出空 group 名，但一个权重都没写。）
+
+5.3 真因 —— 网格拓扑：
+
+  | 项 | 值 |
+  |---|---:|
+  | 顶点 / 面 / 边 | 51,587 / 79,996 / 130,784 |
+  | **非流形边** | **21,580** |
+  | 其中边界边 | 21,580（即没有一处封闭）|
+  | **连通壳体** | **861** |
+  | 最大壳 / top10 | 1,281 / [1281,1106,1102,951,875,735,712,674,615,605] |
+  | 孤立顶点 | 0 |
+
+    这是 AI 生成 3D 的典型输出：外套、头发、发髻、拳套、鞋、中国结、脸……
+    烘成同一张贴图的**一堆彼此不连、且全部开放的薄壳**，塞进一个 mesh 里。
+    Bone heat 依赖封闭体做热扩散，对这种拓扑无解。
+
+5.4 独立复核（verify_shells.py，**完全不经过 Blender**）：
+    直接解析 GLB 索引缓冲（239,988 indices / 79,996 triangles）做 union-find，
+    得 861 个连通分量、top10 与 bmesh 逐字一致 → `SHELLS_CROSSCHECK_OK`。
+    GLB sha256 同时与 probe_report.json 一致（2c85462c…）。
+    **两条独立实现算出的数一样，这个承重结论才算数**；单靠 bmesh 一个数不写进结论。
+
+
+六、兜底路径跑通，但只证明「链路」不证明「质量」
+---------------------------------------------------------
+绕开 bone heat 的「最近骨骼刚性权重」：每个顶点按到 13 根骨骼线段的最短距离
+分配 top-1/top-2 反比权重，手动挂 ARMATURE modifier。
+
+  | 项 | 值 |
+  |---|---:|
+  | 权重计算耗时 | 0.51 s |
+  | 覆盖 | 51,587 / 51,587 = **100%** |
+  | vertex groups | 13 |
+  | 驱动测试 | `upperarm_f` 旋转 35° |
+  | 最大顶点位移 | **0.31552 m** |
+  | 平均位移 | 0.00697 m |
+  | 位移 >1 cm 的顶点 | 3,430 |
+
+要说清楚：0.3155 m 对 1.72 m 的角色是 **18% 身高**，配合「平均只有 0.007 m」
+说明只有一小撮顶点被猛拖走 —— 典型的刚性绑定误分配（远处顶点被判给前臂骨）。
+**100% 覆盖 ≠ 变形可用**。这条只能作为「自动化有一条路可试」的下限证据，
+没有渲姿势帧、没有目视验证是否撕裂，别当成 C 路线已打通。
+
+
+七、判据卫生 / 本轮没做的事
+---------------------------------------------------------
+* 本轮是诊断探针，不是回归守卫：没有写进任何 test suite，也没有变异验证。
+  承重数字靠「两条独立实现互证」而非靠断言。
+* 「脚本跑完 exit=0」不等于功能成功：bone heat 的失败只体现在 stdout 警告 +
+  0 覆盖，判据必须钉**实际写进顶点的权重**，不能钉异常。
+* 没做的事（逐条列，不粉饰）：
+  - 没渲任何动画帧、没渲 228 帧图集、没做 alpha 抠底/锚点/图集打包；
+  - 没试 voxel/quad remesh 封壳后 bone heat 是否成功（这一步只做了诊断，没做修复）；
+  - 没验证 glTF 进 Godot、没重写 toon shader、没评估 PBR 贴图在 GL Compatibility 下的表现；
+  - 没验证模型朝向在 2D 图集里是否需要绕 Z 旋转（对正面视角直接取 gx→屏幕 x 应该不需要，但未实测）；
+  - 没做人形比例的自动判据（头身比 / 肩腰比），造型是否「像正常人」由看图判；
+  - 生成模型只是风格参考，未做 IP 合规审查，也未复刻任何现成角色。
+* 视觉判读只用 `artifact_02.png` 与 `rigfit_overlay.png`；`ViewImage` 用纯技术性
+  query 正常返回，没有出现之前 stance 图那次 `SENSITIVE_CONTENT_UNAVAILABLE`。
+
+
+八、成本账与下一步（请工程师选）
+---------------------------------------------------------
+  | 路线 | 做什么 | 代价 | 判断 |
+  |---|---|---|---|
+  | **A 修成真角色资产** | 封壳重拓扑（voxel/quad remesh）→ 重新投影/烘焙 4096² 贴图 → 绑 13 骨 → 把 A-pose 摆成游戏格斗站架 → 用 baked2.json 驱动 → 先渲 8~16 帧小样本 | 真建模工作量，天级；贴图重烘会掉细节 | 想让 C 真正落地只能走这条 |
+  | **B 当静态素材用（成本最低）** | 渲多角度立绘 / 卡牌插画 / HUD 头像 / 角色选择页；战斗继续用已落地的 A 路线代码自绘外观层 | 几乎为 0，现在就能出图 | 立刻兑现「人物像正常人」的观感收益 |
+  | **C 先做刚性绑定 2~8 帧小样本** | 用第六节的兜底权重 + baked2.json 渲几帧看图，判定撕裂程度 | 一次脚本 + 一次 Blender 跑 | 便宜的证伪实验；但以 861 壳 / 0.3155 m 位移看，大概率撕裂 |
+  | D 到此为止 | 探针只作造型评审依据 | 0 | 保底 |
+
+我的建议：**先走 C 的 2~8 帧证伪（便宜、直接回答「能不能渲」），同时走 B 出静态
+立绘拿到可见收益**；A 等 C 的结果再决定要不要投入。在选定前不要渲 228 帧全量 ——
+和前几轮同一个道理：把 861 壳的绑定缺陷固化到 228 帧里，后面抠底/锚点/换帧全部作废。
+
+
+九、文件与复算命令
+---------------------------------------------------------
+`3D模型探针-文件清单.txt` = 生成清单时已存在的 **26 个顶层文件** sha256；
+清单自身与本文（`3D模型探针-验证记录.txt`）在清单生成之后写入，故不含自引用。
+另有 `obj_bundle/` 目录（ZIP 解包出的 6 个文件，未在顶层清单内）。
+
+可复算命令（在 `3D模型探针/` 下）：
+
+    find . -maxdepth 1 -type f -print0 | xargs -0 sha256sum | sort -k2
+    python -u verify_shells.py                      # 独立复核 861 壳
+    blender -b --factory-startup --python probe_rigfit.py    # 导入 + 叠加图 + bone heat
+    blender -b --factory-startup --python probe_rigfit2.py   # 三次对照 + 刚性兜底
+
+关键日志尾行：
+    probe_run.log        PROBE_OK artifacts=4 glb=artifact_03.glb viewer=...
+    inspect_model.log    INSPECT_OK
+    rigfit_run.log       RIGFIT_OK elapsed= 3.43 s
+    rigfit2_run.log      RIGFIT2_OK
+    verify_shells.log    SHELLS_CROSSCHECK_OK

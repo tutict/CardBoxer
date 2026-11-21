@@ -1,0 +1,206 @@
+# ── 太阁 IV 合战：回合制比牌 ─────────────────────────────────
+#
+# 一轮 = 弃牌换牌 → 选 3 张 → 双方同时亮牌 → 比牌型 → 赢家结算伤害 → 补牌。
+# 实时格斗那套（前摇 / 距离 / 气 / 读牌 AI）在这条分支里一步都不跑，
+# 角色只借 perform_visual() 播动画，伤害统一由 apply_hit() 结算。
+# 把 BATTLE_MODE 改回 "realtime" 就完整回到原玩法，不需要回滚代码。
+
+func _reset_taikou_turn(new_round: bool) -> void:
+	if new_round:
+		tk_turn = 1
+	tk_phase = "discard"
+	tk_phase_time = 0.0
+	tk_marks.clear()
+	tk_player_reveal.clear()
+	tk_enemy_reveal.clear()
+	tk_player_ids.clear()
+	tk_enemy_ids.clear()
+	tk_player_result = {}
+	tk_enemy_result = {}
+	tk_winner = ""
+	tk_damage = 0
+	_banner(
+		"第 %d 轮 · 弃牌" % tk_turn,
+		"1-5 标记要换掉的牌（可 0 张） · 空格确认",
+		Color(0.96, 0.90, 0.74), 0.9
+	)
+
+
+func _tick_taikou(dt: float) -> void:
+	tk_phase_time += dt
+	# 动画照常驱动；回合制不允许移动，也不跑实时 AI / 实时出牌 / 冷却补牌。
+	player.tick(dt, 0.0, false)
+	enemy.tick(dt, 0.0, false)
+	player.face_toward(enemy.position.x)
+	enemy.face_toward(player.position.x)
+
+	# 无输入自动对战：只用于验收与截帧，不介入玩法决策。
+	if tk_bot and (tk_phase == "discard" or tk_phase == "select") and tk_phase_time > 0.8:
+		_taikou_confirm()
+
+	match tk_phase:
+		"reveal":
+			if tk_phase_time >= 1.5:
+				_resolve_taikou()
+		"resolve":
+			if tk_phase_time >= 1.9:
+				_finish_taikou_turn()
+
+	if player.hp <= 0 or enemy.hp <= 0:
+		_end_taikou_round()
+
+
+func _taikou_toggle(index: int) -> void:
+	if round_phase != "fight" or index < 0 or index >= hand.size():
+		return
+	if hand[index] == null:
+		return
+	if tk_marks.has(index):
+		tk_marks.erase(index)
+		return
+	var limit := TK_DISCARD_MAX if tk_phase == "discard" else TK_PLAY
+	if tk_marks.size() >= limit:
+		_push_float_text(
+			player.position + Vector2(0, -210),
+			"最多 %d 张" % limit, Color(0.85, 0.42, 0.42)
+		)
+		return
+	tk_marks.append(index)
+
+
+func _taikou_confirm() -> void:
+	if round_phase != "fight":
+		return
+	match tk_phase:
+		"discard":
+			_do_taikou_discard()
+		"select":
+			if not tk_bot and tk_marks.size() != TK_PLAY:
+				_push_float_text(
+					player.position + Vector2(0, -210),
+					"请选满 3 张", Color(0.85, 0.42, 0.42)
+				)
+				return
+			_do_taikou_reveal()
+
+
+func _do_taikou_discard() -> void:
+	# 弃牌 = 把该槽位换成一张新牌，等价于太阁 IV 的「每轮弃最多 3 张再补」。
+	var mine: Array = TaikouAI.choose_discards(hand) if tk_bot else tk_marks.duplicate()
+	for i in mine:
+		hand[i] = _draw_from(_deck)
+	var theirs: Array = TaikouAI.choose_discards(enemy_hand)
+	for i in theirs:
+		enemy_hand[i] = _draw_from(_enemy_deck)
+	tk_marks.clear()
+	tk_phase = "select"
+	tk_phase_time = 0.0
+	_banner(
+		"第 %d 轮 · 选牌" % tk_turn,
+		"1-5 选 3 张凑牌型 · 空格亮牌",
+		Color(0.96, 0.90, 0.74), 0.9
+	)
+
+
+func _do_taikou_reveal() -> void:
+	var pidx: Array = TaikouAI.choose_play(hand) if tk_bot else tk_marks.duplicate()
+	var eidx: Array = TaikouAI.choose_play(enemy_hand)
+	pidx.sort()
+	eidx.sort()
+	tk_player_ids.clear()
+	tk_enemy_ids.clear()
+	tk_player_reveal.clear()
+	tk_enemy_reveal.clear()
+	for i in pidx:
+		var card: Dictionary = Defs.card(String(hand[i]))
+		tk_player_reveal.append(int(card.get("rank", 1)))
+		tk_player_ids.append(String(hand[i]))
+	for i in eidx:
+		var card2: Dictionary = Defs.card(String(enemy_hand[i]))
+		tk_enemy_reveal.append(int(card2.get("rank", 1)))
+		tk_enemy_ids.append(String(enemy_hand[i]))
+	tk_player_result = Rules.evaluate(tk_player_reveal)
+	tk_enemy_result = Rules.evaluate(tk_enemy_reveal)
+	for i in pidx:
+		hand[i] = null
+	for i in eidx:
+		enemy_hand[i] = null
+	# 只播动画：perform_visual 不走实时命中判定，伤害留到 _resolve_taikou。
+	if tk_player_ids.size() > 0:
+		player.perform_visual(String(tk_player_ids[0]))
+	if tk_enemy_ids.size() > 0:
+		enemy.perform_visual(String(tk_enemy_ids[0]))
+	tk_marks.clear()
+	tk_phase = "reveal"
+	tk_phase_time = 0.0
+	_banner(
+		"亮牌",
+		"你 %s   ·   青岚 %s" % [String(tk_player_result["name"]), String(tk_enemy_result["name"])],
+		Color(0.92, 0.92, 0.98), 1.4
+	)
+
+
+func _resolve_taikou() -> void:
+	var cmp: int = Rules.compare(tk_player_result, tk_enemy_result)
+	if cmp > 0:
+		tk_winner = "player"
+		tk_damage = Rules.damage_of(tk_player_result)
+		enemy.apply_hit(tk_damage, "taikou", "", false)
+		_banner(
+			"你赢下这一轮",
+			"%s · 造成 %d 伤害" % [String(tk_player_result["name"]), tk_damage],
+			Color(0.99, 0.76, 0.36), 1.6
+		)
+	elif cmp < 0:
+		tk_winner = "enemy"
+		tk_damage = Rules.damage_of(tk_enemy_result)
+		player.apply_hit(tk_damage, "taikou", "", false)
+		_banner(
+			"青岚赢下这一轮",
+			"%s · 受到 %d 伤害" % [String(tk_enemy_result["name"]), tk_damage],
+			Color(0.42, 0.80, 0.98), 1.6
+		)
+	else:
+		tk_winner = "draw"
+		tk_damage = 3
+		player.apply_hit(3, "taikou", "", false)
+		enemy.apply_hit(3, "taikou", "", false)
+		_banner("平局", "双方各受 3 点", Color(0.86, 0.88, 0.95), 1.6)
+	tk_phase = "resolve"
+	tk_phase_time = 0.0
+
+
+func _finish_taikou_turn() -> void:
+	# 出掉的 3 张统一补回，手牌始终 5 张 —— AI 的穷举才不会读到空格。
+	for i in range(hand.size()):
+		if hand[i] == null:
+			hand[i] = _draw_from(_deck)
+	for i in range(enemy_hand.size()):
+		if enemy_hand[i] == null:
+			enemy_hand[i] = _draw_from(_enemy_deck)
+	combo_count = 0
+	combo_shown = 0.0
+	if player.hp <= 0 or enemy.hp <= 0:
+		_end_taikou_round()
+		return
+	tk_turn += 1
+	if tk_turn > TK_MAX_TURNS:
+		var winner := "draw"
+		if player.hp > enemy.hp:
+			winner = "player"
+		elif enemy.hp > player.hp:
+			winner = "enemy"
+		_end_round(winner, "轮数耗尽 · 按兵力判定")
+		return
+	_reset_taikou_turn(false)
+
+
+func _end_taikou_round() -> void:
+	var winner := "player"
+	if player.hp <= 0 and enemy.hp <= 0:
+		winner = "player" if player.hp >= enemy.hp else "enemy"
+	elif player.hp <= 0:
+		winner = "enemy"
+	_end_round(winner, "K.O.")
+
+

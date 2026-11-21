@@ -1,0 +1,18 @@
+17:04:14 | INFO: Data are loaded, start creating Blender stuff
+17:04:14 | INFO: Blender create Mesh node node_0.002
+17:04:14 | INFO: glTF import finished in 0.25s
+PROGRESS 25/284 elapsed=3.3s
+PROGRESS 50/284 elapsed=6.5s
+PROGRESS 75/284 elapsed=9.8s
+PROGRESS 100/284 elapsed=13.1s
+PROGRESS 125/284 elapsed=16.4s
+PROGRESS 150/284 elapsed=19.7s
+PROGRESS 175/284 elapsed=23.1s
+PROGRESS 200/284 elapsed=26.4s
+PROGRESS 225/284 elapsed=29.8s
+PROGRESS 250/284 elapsed=33.2s
+PROGRESS 275/284 elapsed=36.6s
+PROGRESS 284/284 elapsed=37.8s
+Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:35:40)
+TEAR_SWEEP_BLENDER_OK rows=284 edges=136092 max_pose_err=3.87e-07
+

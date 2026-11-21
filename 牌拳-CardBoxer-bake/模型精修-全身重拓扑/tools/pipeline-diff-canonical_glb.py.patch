@@ -1,0 +1,84 @@
+--- canonical-glb-resume.py
++++ canonical_glb.py
+@@ -174,7 +174,7 @@
+                  sockets_json: Path, profile_json: Path) -> dict:
+     paths=[Path(p).resolve() for p in (source_glb,raw_glb,output_glb,sockets_json,profile_json)]
+     source_glb,raw_glb,output_glb,sockets_json,profile_json=paths
+-    if output_glb in (source_glb,raw_glb) or profile_json in (source_glb,raw_glb,sockets_json,output_glb):
++    if output_glb in (source_glb,raw_glb,sockets_json) or profile_json in (source_glb,raw_glb,sockets_json,output_glb):
+         raise ValueError("Input/baseline overwrite is prohibited")
+     baseline=Path(__file__).resolve().parent.parent/"baseline"
+     if output_glb.is_relative_to(baseline) or profile_json.is_relative_to(baseline): raise ValueError("Frozen baseline write prohibited")
+@@ -189,18 +189,24 @@
+     attrs=prim["attributes"]
+     for name in ("POSITION","NORMAL","TEXCOORD_0","JOINTS_0","WEIGHTS_0"):
+         if name not in attrs: raise ValueError(f"Raw mesh missing {name}")
++    joint_accessor=raw.doc["accessors"][attrs["JOINTS_0"]]
++    if joint_accessor["componentType"] not in (5121,5123) or joint_accessor.get("normalized",False) or joint_accessor["type"]!="VEC4":
++        raise ValueError("JOINTS_0 must use unnormalized unsigned byte/short VEC4 indices")
+     joints=raw.accessor(attrs["JOINTS_0"]).astype(np.int64);weights=raw.accessor(attrs["WEIGHTS_0"]).astype(float)
+     count=raw.doc["accessors"][attrs["POSITION"]]["count"]
+     if joints.shape!=(count,4) or weights.shape!=(count,4): raise ValueError("Expected four influences per vertex")
+     if np.any(joints<0) or np.any(joints>=len(raw_names)): raise ValueError("Joint index out of range")
+     if np.any(weights<0) or np.max(np.abs(weights.sum(axis=1)-1))>0.005: raise ValueError("Raw weights must be normalized and nonnegative")
+     for name,acc in attrs.items():
+-        if name.startswith("WEIGHTS_") and name!="WEIGHTS_0" and np.any(raw.accessor(acc)>1e-7): raise ValueError("More than four influences")
++        if name.startswith("WEIGHTS_") and name!="WEIGHTS_0" and np.any(np.abs(raw.accessor(acc))>1e-7): raise ValueError("More than four influences")
+     remap=np.array([source_names.index(n) for n in raw_names],dtype=np.uint16);joints=remap[joints]
+     if np.any(weights[joints==source_names.index("neutral_bone")]>1e-7): raise ValueError("Neutral bone visible influence prohibited")
+     weights/=weights.sum(axis=1,keepdims=True)
+     source_globals=src.globals();raw_globals=raw.globals()
+     ms=source_globals[src.mesh_node()];mr=raw_globals[raw.mesh_node()]
++    raw_rest=skin_rest_vertices(raw);raw_bind=transform_points(mr,raw.accessor(attrs["POSITION"]))
++    raw_bind_error=float(np.linalg.norm(raw_rest-raw_bind,axis=1).max())
++    if raw_bind_error>1e-5:raise ValueError(f"Raw rest bind error {raw_bind_error:.9g}m exceeds 1e-5m")
+     frame=np.linalg.inv(ms) @ mr;linear=frame[:3,:3];normal_matrix=np.linalg.inv(linear).T
+     b=Builder(raw);out_prim=b.doc["meshes"][raw.doc["nodes"][raw.mesh_node()]["mesh"]]["primitives"][0]
+     out_attrs=out_prim["attributes"]
+@@ -215,15 +221,20 @@
+     if "TANGENT" in attrs:
+         t=raw.accessor(attrs["TANGENT"]).astype(float);direction=t[:,:3] @ linear.T
+         direction-=new_normals*np.sum(new_normals*direction,axis=1,keepdims=True)
+-        out_attrs["TANGENT"]=b.accessor(np.c_[normalized(direction),t[:,3]*np.sign(np.linalg.det(linear))],"VEC4")
++        new_tangents=normalized(direction)
++        out_attrs["TANGENT"]=b.accessor(np.c_[new_tangents,t[:,3]*np.sign(np.linalg.det(linear))],"VEC4")
+     for original,target in zip(prim.get("targets",[]),out_prim.get("targets",[])):
+         if "POSITION" in original: target["POSITION"]=b.accessor(raw.accessor(original["POSITION"]) @ linear.T,"VEC3",bounds=True)
+         if "NORMAL" in original:
+             normals=normalized((base_normals+raw.accessor(original["NORMAL"])) @ normal_matrix.T)
+             target["NORMAL"]=b.accessor(normals-new_normals,"VEC3")
+         if "TANGENT" in original:
+-            # glTF morph tangent has XYZ only; direction is a linear differential.
+-            target["TANGENT"]=b.accessor(raw.accessor(original["TANGENT"]) @ linear.T,"VEC3")
++            if "TANGENT" not in attrs:raise ValueError("Morph tangent needs a base tangent")
++            # Tangent XYZ morphs are deltas of normalized directions, just like normals.
++            morphed_tangent=(t[:,:3]+raw.accessor(original["TANGENT"])) @ linear.T
++            target_normals=normals if "NORMAL" in original else new_normals
++            morphed_tangent-=target_normals*np.sum(target_normals*morphed_tangent,axis=1,keepdims=True)
++            target["TANGENT"]=b.accessor(normalized(morphed_tangent)-new_tangents,"VEC3")
+     if np.linalg.det(linear)<0:
+         indices=raw.accessor(prim["indices"]).ravel().reshape(-1,3)[:,[0,2,1]].ravel()
+         out_prim["indices"]=b.accessor(indices,"SCALAR",5125)
+@@ -257,8 +268,7 @@
+     profile_json.parent.mkdir(parents=True,exist_ok=True)
+     profile_json.write_text(json.dumps(profile,indent=2,allow_nan=False)+"\n",encoding="utf-8")
+     final=GLB(output_glb)
+-    raw_rest=skin_rest_vertices(raw);final_rest=skin_rest_vertices(final)
+-    raw_bind=transform_points(mr,raw.accessor(attrs["POSITION"]))
++    final_rest=skin_rest_vertices(final)
+     final_bind=transform_points(ms,positions)
+     report={"version":1,"source":str(source_glb),"raw":str(raw_glb),"output":str(output_glb),
+         "source_sha256":sha256(source_glb),"raw_sha256":sha256(raw_glb),"output_sha256":sha256(output_glb),
+@@ -269,7 +279,11 @@
+         "canonical_rest_bind_error_m":float(np.linalg.norm(final_rest-final_bind,axis=1).max()),
+         "world_rest_transfer_error_m":float(np.linalg.norm(final_rest-raw_rest,axis=1).max()),
+         "original_nodes_exact":final.doc["nodes"]==src.doc["nodes"],
+-        "original_ibms_exact":bool(np.array_equal(final.ibms(),src.ibms()))}
++        "original_ibms_exact":bool(np.array_equal(final.ibms(),src.ibms())),
++        "sockets_source":str(sockets_json),"sockets_source_sha256":sha256(sockets_json),
++        "pipeline_sha256":sha256(Path(__file__)),
++        "joint_remap":{name:source_names.index(name) for name in raw_names},
++        "image_sha256":[hashlib.sha256(final.view(im["bufferView"])).hexdigest() for im in final.doc.get("images",[])]}
+     return report
+ 
+ 

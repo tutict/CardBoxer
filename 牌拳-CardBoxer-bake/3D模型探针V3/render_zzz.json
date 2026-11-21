@@ -1,0 +1,38 @@
+{
+  "blender": "5.2.3 LTS",
+  "glb": "artifact_03.glb",
+  "normalize_scale": 1.547429,
+  "raw_height_m": 1.11152,
+  "toon_materials": 1,
+  "shader": "baseColor x [Diffuse>ShaderToRGB>ColorRamp(CONSTANT 3)] > Emission",
+  "outline": "deferred to Pillow alpha-edge pass (open-shell mesh)",
+  "ortho_scale": 2.3,
+  "resolution": 768,
+  "shots": [
+    {
+      "shot": "front",
+      "angle_deg": 0,
+      "file": "zzz-front.png",
+      "bytes": 319947
+    },
+    {
+      "shot": "angle25",
+      "angle_deg": 25,
+      "file": "zzz-angle25.png",
+      "bytes": 316807
+    },
+    {
+      "shot": "angle55",
+      "angle_deg": 55,
+      "file": "zzz-angle55.png",
+      "bytes": 298438
+    },
+    {
+      "shot": "back35",
+      "angle_deg": -35,
+      "file": "zzz-back35.png",
+      "bytes": 307977
+    }
+  ],
+  "elapsed_seconds": 1.58
+}

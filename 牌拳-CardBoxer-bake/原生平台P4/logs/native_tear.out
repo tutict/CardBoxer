@@ -1,0 +1,17 @@
+baseline   worst_p999=0.042737 over=0 exact=255 perc=308 maxpx=0.0
+hybrid     worst_p999=0.043500 over=0 exact=0 perc=120 maxpx=33.0606
+micro05    worst_p999=0.042737 over=0 exact=0 perc=257 maxpx=0.4904
+P3_ATAN12 0.042737 P4_BASELINE 0.042737
+CHECK poses_852 True
+CHECK three_cases_284_each True
+CHECK plan_frame_pairs_match True
+CHECK glb_mesh_shape True
+CHECK pose_matrices_readback_accurate True
+CHECK baseline_matches_p3_atan12 True
+CHECK all_cases_within_anchor True
+CHECK all_cases_no_frame_over_anchor True
+CHECK representative_never_worse_than_full True
+CHECK hybrid_reaches_zero_exact True
+CHECK hybrid_perceptual_below_baseline True
+CHECK max_edge_artifact_constant_diagnostic_only True
+NATIVE_TEAR_OK

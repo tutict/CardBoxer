@@ -1,0 +1,3380 @@
+===== I/crosscheck_filelist_i.py =====
+"""独立复核 I 路线文件清单：重新遍历目录，逐条比对路径/字节/sha256。
+
+刻意不 import make_filelist_i.py，避免「两边用同一个错函数一起错」。
+用法：python crosscheck_filelist_i.py
+"""
+from __future__ import annotations
+
+import hashlib
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+LIST = HERE / "文件清单.txt"
+SKIP_NAMES = {"文件清单.txt", "new-files.diff"}
+SKIP_DIRS = {"logs", ".godot", "__pycache__", "orig"}
+
+
+def digest(p: Path) -> str:
+    return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+def main() -> int:
+    actual = {}
+    for p in HERE.rglob("*"):
+        if not p.is_file() or p.name in SKIP_NAMES:
+            continue
+        rel = p.relative_to(HERE)
+        if any(part in SKIP_DIRS for part in rel.parts):
+            continue
+        key = str(rel).replace("\\", "/")
+        actual[key] = (p.stat().st_size, digest(p))
+
+    declared = {}
+    for ln in LIST.read_bytes().decode("utf-8").splitlines():
+        if not ln or ln.startswith("#"):
+            continue
+        parts = ln.split("\t")
+        if len(parts) != 3:
+            print("BAD ROW", repr(ln))
+            continue
+        declared[parts[0]] = (int(parts[1]), parts[2])
+
+    bad = [k for k, v in declared.items() if actual.get(k) != v]
+    extra = sorted(set(actual) - set(declared))
+    missing = sorted(set(declared) - set(actual))
+    ok = not bad and not extra and not missing and len(declared) > 40
+    print(f"ROWS={len(declared)} ACTUAL={len(actual)} "
+          f"BAD={len(bad)} EXTRA={len(extra)} MISSING={len(missing)}")
+    for k in bad[:10]:
+        print("  MISMATCH", k)
+    for k in extra[:10]:
+        print("  EXTRA", k)
+    for k in missing[:10]:
+        print("  MISSING", k)
+    print("CROSSCHECK_I_OK" if ok else "CROSSCHECK_I_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/diag_leak_i.py =====
+"""I 路线：定位「玩家 ROI 在 on/plain 之间变化」到底落在哪。
+
+零操作对照已证明同状态逐像素 0，所以这不是抖动。
+输出：变化像素的行/列直方图、10×10 热块 top10、变化像素的平均色差，
+并画一张放大差分热图 boards/I-玩家侧泄漏热图.png。
+
+诚实口径：本脚本只定位，不粉饰。若机制仍不明，验证记录里写「未定位」。
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from PIL import Image, ImageChops, ImageDraw, ImageEnhance
+
+HERE = Path(__file__).resolve().parent
+H = HERE.parent / "H路线-双方3D侧面战斗"
+SHOTS = HERE / "shots" / "visual_ab"
+OUT = HERE / "data" / "player_leak_i.json"
+BOARD = HERE / "boards" / "I-玩家侧泄漏热图.png"
+THR = 18
+ROI = json.loads((H / "data" / "roi_h.json").read_text(
+    encoding="utf-8"))["boxes"][0]
+
+
+def main() -> int:
+    a = Image.open(SHOTS / "vis-on.png").convert("RGB").crop(ROI)
+    b = Image.open(SHOTS / "vis-plain.png").convert("RGB").crop(ROI)
+    d = ImageChops.difference(a, b)
+    w, h = a.size
+    ap = list(a.get_flattened_data())
+    bp = list(b.get_flattened_data())
+    dp = list(d.get_flattened_data())
+    rows = [0] * h
+    cols = [0] * w
+    blocks = {}
+    deltas = []
+    for idx, px in enumerate(dp):
+        if sum(px) <= THR:
+            continue
+        y, x = divmod(idx, w)
+        rows[y] += 1
+        cols[x] += 1
+        key = (y // 10, x // 10)
+        blocks[key] = blocks.get(key, 0) + 1
+        deltas.append([ap[idx][c] - bp[idx][c] for c in range(3)])
+    span = [i for i, v in enumerate(rows) if v > 0]
+    cspan = [i for i, v in enumerate(cols) if v > 0]
+    mean_delta = ([round(sum(v[c] for v in deltas) / len(deltas), 2)
+                   for c in range(3)] if deltas else [0, 0, 0])
+    top = sorted(blocks.items(), key=lambda kv: -kv[1])[:10]
+    out = {
+        "roi": ROI, "size": [w, h], "threshold_sum_rgb": THR,
+        "changed_px": len(deltas),
+        "changed_ratio": round(len(deltas) / (w * h), 4),
+        "mean_delta_on_minus_plain": mean_delta,
+        "row_span": [min(span), max(span)] if span else [],
+        "col_span": [min(cspan), max(cspan)] if cspan else [],
+        "top_10px_blocks": [{"block": [k[1] * 10, k[0] * 10],
+                             "changed_px": v} for k, v in top],
+        "max_row": max(rows) if rows else 0,
+        "max_col": max(cols) if cols else 0,
+    }
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    # 热图：差分放大 + 原图并列
+    z = 3
+    heat = ImageEnhance.Brightness(d).enhance(3.0)
+    canvas = Image.new("RGB", (2 * w * z + 60, h * z + 60), (20, 24, 34))
+    canvas.paste(a.resize((w * z, h * z), Image.LANCZOS), (20, 20))
+    canvas.paste(heat.resize((w * z, h * z), Image.LANCZOS),
+                 (w * z + 40, 20))
+    dr = ImageDraw.Draw(canvas)
+    dr.text((20, h * z + 26), "玩家 ROI · on", fill=(160, 225, 205))
+    dr.text((w * z + 40, h * z + 26), "差分 ×3（亮 = 变化）",
+            fill=(240, 180, 150))
+    BOARD.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(BOARD)
+    print("CHANGED", out["changed_px"], "RATIO", out["changed_ratio"])
+    print("MEAN_DELTA", mean_delta, "ROW_SPAN", out["row_span"],
+          "COL_SPAN", out["col_span"])
+    print("TOP_BLOCKS", out["top_10px_blocks"][:5])
+    print("WROTE", BOARD.name, BOARD.stat().st_size, "B")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/diag_rootcause_i.py =====
+"""I 路线 P0 汇总：把三条独立证据合成一条可复算的根因结论。
+
+1. 贴图：UV 岛（非黑区）亮度差 70.99，玩家亮、对手暗（texture_i.json）。
+2. 材质：两份 GLB 在 Godot 里都是 StandardMaterial3D，metallic=1.0 /
+   roughness=1.0 乘数 + 独立 metallicRoughnessTexture，只有贴图内容不同
+   （material_i.json）。
+3. 渲染：H 路线同进程 vp_diag 两帧里，角色主体亮度 95.02 vs 106.2，
+   对手反而更亮 11.18 —— 贴图差异被渲染链吃掉甚至反转。
+
+结论：造型撞车之外，「贴图暗却看不出暗」是渲染链问题（四盏固定方向
+高强度灯 + 金属度乘数 1.0 让 albedo 不参与漫反射）。因此**不需要重做
+3D 模型**，表现层（tint / metallic / 灯光 / 轮廓）就能把两人分开。
+
+输出 data/rootcause_i.json。只读，不改任何资产或源码。
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from PIL import Image, ImageStat
+
+HERE = Path(__file__).resolve().parent
+H = HERE.parent / "H路线-双方3D侧面战斗"
+OUT = HERE / "data" / "rootcause_i.json"
+# H 路线自动定位的两个角色 ROI（取中间主体区域，避开大部分背景）
+SUBJECT = {"player": (380, 300, 468, 525),
+           "foe": (812, 300, 902, 525)}
+SHOTS = {"player": H / "shots" / "vp_diag" / "vp-foe-hidden.png",
+         "foe": H / "shots" / "vp_diag" / "vp-player-hidden.png"}
+
+
+def luma(path: Path, box) -> tuple[list[float], float]:
+    im = Image.open(path).convert("RGB").crop(box)
+    m = [round(v, 2) for v in ImageStat.Stat(im).mean]
+    return m, round(sum(m) / 3.0, 2)
+
+
+def main() -> int:
+    tex = json.loads((HERE / "data" / "texture_i.json").read_text(
+        encoding="utf-8"))
+    mat = json.loads((HERE / "data" / "material_i.json").read_text(
+        encoding="utf-8"))
+    surfaces = mat["standard_surfaces"]
+    lit_gap = tex["deltas"]["mean_lit_luma_player_minus_foe"]
+    lit_ratio_gap = tex["deltas"]["lit_ratio_player_minus_foe"]
+
+    subject = {}
+    for k, p in SHOTS.items():
+        rgb, lum = luma(p, SUBJECT[k])
+        subject[k] = {"rgb": rgb, "luma": lum, "box": list(SUBJECT[k]),
+                      "source": str(p)}
+    render_gap = round(subject["player"]["luma"]
+                       - subject["foe"]["luma"], 2)
+
+    metal = {k: [s.get("metallic") for s in v]
+             for k, v in surfaces.items()}
+    rough = {k: [s.get("roughness") for s in v]
+             for k, v in surfaces.items()}
+    tex_paths = {k: [s.get("metallic_texture", "") for s in v]
+                 for k, v in surfaces.items()}
+
+    out = {
+        "texture_lit_luma_gap": lit_gap,
+        "texture_black_fill_ratio_gap": lit_ratio_gap,
+        "hypothesis_falsified": tex["hypothesis_falsified"],
+        "material_multipliers": {"metallic": metal, "roughness": rough},
+        "metallic_textures": tex_paths,
+        "render_subject": subject,
+        "render_luma_gap_player_minus_foe": render_gap,
+    }
+    out["checks"] = {
+        "texture_gap_is_real": lit_gap > 50.0,
+        "black_fill_ruled_out": abs(lit_ratio_gap) < 0.10
+                                and tex["hypothesis_falsified"] is True,
+        "both_materials_standard_and_metallic": all(
+            v == [1.0] for v in metal.values())
+            and all(len(v) > 0 for v in surfaces.values()),
+        "both_have_metallic_texture": all(
+            all(bool(t) for t in v) for v in tex_paths.values()),
+        "render_gap_flat_or_inverted": render_gap < 20.0,
+    }
+    out["root_cause"] = (
+        "四盏固定方向高强度灯 + metallic 乘数 1.0 抑制 albedo 漫反射，"
+        "把贴图 70.99 的亮度差吃成渲染 -11.18；属渲染链，不是贴图也不是拓扑"
+        if all(out["checks"].values()) else
+        "三条证据未同时成立，根因待查，不得据此动表现层")
+    out["decision"] = (
+        "表现层可修：tint + 降 metallic + 降灯能量 + 加宽轮廓；"
+        "不重做 3D 模型（重做要重跑 Voxel/绑骨/GLB/rest 全链）"
+        if all(out["checks"].values()) else "先补诊断，不动手")
+    out["ok"] = all(out["checks"].values())
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    print("TEXTURE_LIT_GAP", lit_gap, "BLACK_FILL_GAP", lit_ratio_gap)
+    print("METALLIC", metal, "ROUGHNESS", rough)
+    print("RENDER_SUBJECT", {k: v["luma"] for k, v in subject.items()},
+          "GAP", render_gap)
+    print("ROOT_CAUSE", out["root_cause"])
+    print("DECISION", out["decision"])
+    for k, v in out["checks"].items():
+        print("CHECK", k, v)
+    print("ROOTCAUSE_I_OK" if out["ok"] else "ROOTCAUSE_I_INCONCLUSIVE")
+    return 0 if out["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/diag_texture_i.py =====
+"""I 路线 P0 根因诊断：贴图均值差 3.3 倍，为什么渲染只差 9.27 亮度？
+
+原假设：4096² basecolor 里 UV 岛之外有大片黑填充，整图均值被黑区拉低。
+实测证伪：非黑区（UV 岛）亮度差 70.99，与整图 70.66 同量级，
+黑填充占比只差 3.1%。所以「贴图暗」是真的，抹平发生在渲染链，
+不在贴图。这个负结果保留在 data/texture_i.json，不放宽阈值粉饰。
+
+用 256×256 LANCZOS 抽样（4096² 全逐像素太慢，抽样足够判分布），
+分别算：全图均值、非近黑像素占比、只看非近黑区域的均值、红蓝偏色。
+输出 data/texture_i.json。只读，不改资产。
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from PIL import Image
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+OUT = HERE / "data" / "texture_i.json"
+TEX = {
+    "player": GAME / "assets/3d" /
+              "player-rigged_texture_pbr_20250901.png",
+    "foe": GAME / "assets/3d" /
+           "foe-rigged_texture_pbr_20250901.png",
+}
+NEAR_BLACK = 30   # sum(R,G,B) < 30 视为 UV 岛外的黑填充
+
+
+def analyse(path: Path) -> dict:
+    im = Image.open(path).convert("RGB")
+    orig_size = list(im.size)
+    px = list(im.resize((256, 256), Image.LANCZOS).getdata())
+    n = len(px)
+    mean_all = [round(sum(p[i] for p in px) / n, 2) for i in range(3)]
+    lit = [p for p in px if sum(p) >= NEAR_BLACK]
+    dark = n - len(lit)
+    mean_lit = ([round(sum(p[i] for p in lit) / len(lit), 2)
+                 for i in range(3)] if lit else [0.0, 0.0, 0.0])
+    return {
+        "file": path.name, "orig_size": orig_size, "bytes": path.stat().st_size,
+        "sample": [256, 256],
+        "mean_all_rgb": mean_all,
+        "mean_all_luma": round(sum(mean_all) / 3.0, 2),
+        "near_black_px": dark, "lit_px": len(lit),
+        "lit_ratio": round(len(lit) / n, 4),
+        "mean_lit_rgb": mean_lit,
+        "mean_lit_luma": round(sum(mean_lit) / 3.0, 2),
+        "red_minus_blue": round(mean_all[0] - mean_all[2], 2),
+    }
+
+
+def main() -> int:
+    rows = {k: analyse(v) for k, v in TEX.items()}
+    out = {"near_black_threshold_sum_rgb": NEAR_BLACK, "textures": rows}
+    out["deltas"] = {
+        "mean_all_luma_player_minus_foe": round(
+            rows["player"]["mean_all_luma"]
+            - rows["foe"]["mean_all_luma"], 2),
+        "mean_lit_luma_player_minus_foe": round(
+            rows["player"]["mean_lit_luma"]
+            - rows["foe"]["mean_lit_luma"], 2),
+        "lit_ratio_player_minus_foe": round(
+            rows["player"]["lit_ratio"] - rows["foe"]["lit_ratio"], 4),
+    }
+    # 原假设（黑填充拉低整图均值）已被实测证伪：UV 岛亮度差 70.99
+    # 与整图 70.66 同量级，黑填充仅差 3.1%。这里把「证伪」本身当结果，
+    # 不放宽阈值假装假设成立；根因转查材质/光照，见 rootcause_i.json。
+    d = out["deltas"]
+    checks = {
+        "full_image_luma_gap_is_large": (
+            d["mean_all_luma_player_minus_foe"] > 50.0),
+        "uv_island_gap_same_order": (
+            abs(d["mean_lit_luma_player_minus_foe"])
+            > abs(d["mean_all_luma_player_minus_foe"]) * 0.9),
+        "black_fill_not_the_cause": (
+            abs(d["lit_ratio_player_minus_foe"]) < 0.10),
+        "both_are_4096": all(
+            r["orig_size"] == [4096, 4096] for r in rows.values()),
+    }
+    falsified = (checks["uv_island_gap_same_order"]
+                 and checks["black_fill_not_the_cause"])
+    out["hypothesis_falsified"] = falsified
+    out["checks"] = checks
+    out["root_cause"] = (
+        "贴图确实整体暗（UV 岛亮度差 70.99），黑填充只差 3.1%；"
+        "渲染亮度差被抹平的原因不在贴图，转查材质/光照"
+        if falsified else
+        "UV 岛外的黑填充主导整图均值差，需按非黑区重新评估")
+    out["ok"] = all(checks.values())
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for k, r in rows.items():
+        print(k, "mean_all", r["mean_all_rgb"], "lit_ratio", r["lit_ratio"],
+              "mean_lit", r["mean_lit_rgb"])
+    print("DELTAS", d)
+    print("ROOT_CAUSE", out["root_cause"])
+    for k, v in out["checks"].items():
+        print("CHECK", k, v)
+    print("TEXTURE_I_OK" if out["ok"] else "TEXTURE_I_INCONCLUSIVE")
+    return 0 if out["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/diag_visual_i.py =====
+"""I 路线 P3：把四帧同进程 A/B 量化成可复算的区分度指标。
+
+base   = 无 3D 层（纯背景）
+on     = foe 视觉启用
+plain  = set_foe_visual(false)（H 原样）
+again  = 再次启用（验证可反复切换）
+
+角色掩膜用 sum(|frame - base|) > 18 造：这样亮度只统计角色像素，
+不被擂台背景稀释（H 路线 ROI 均值的教训）。
+输出 data/visual_diag_i.json；只读 PNG，不改源码或资产。
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from PIL import Image, ImageChops, ImageStat
+
+HERE = Path(__file__).resolve().parent
+H = HERE.parent / "H路线-双方3D侧面战斗"
+SHOTS = HERE / "shots" / "visual_ab"
+OUT = HERE / "data" / "visual_diag_i.json"
+THR = 18
+
+ROI = json.loads((H / "data" / "roi_h.json").read_text(
+    encoding="utf-8"))["boxes"]
+LEFT, RIGHT = ROI[0], ROI[1]
+# H 的 ROI 只有 126/128 px 宽，角色加宽后会被裁断，宽度比恒为 1.0。
+# 用更宽的窗口专门量轮廓宽度（仍以 base 帧作背景参考）。
+WIDE_FOE = (730, 280, 985, 545)
+
+
+def load(tag: str) -> Image.Image:
+    return Image.open(SHOTS / f"vis-{tag}.png").convert("RGB")
+
+
+def diff(a: Image.Image, b: Image.Image, box) -> dict:
+    ia, ib = a.crop(box), b.crop(box)
+    d = ImageChops.difference(ia, ib)
+    changed = sum(1 for px in d.get_flattened_data() if sum(px) > THR)
+    total = ia.width * ia.height
+    return {"changed_px": changed, "total_px": total,
+            "ratio": round(changed / total, 4),
+            "mae": round(sum(ImageStat.Stat(d).mean) / 3.0, 4)}
+
+
+def mask_stats(frame: Image.Image, base: Image.Image, box) -> dict:
+    fa, ba = frame.crop(box), base.crop(box)
+    d = ImageChops.difference(fa, ba)
+    fp = list(fa.get_flattened_data())
+    dp = list(d.get_flattened_data())
+    w, h = fa.size
+    hits = [i for i, px in enumerate(dp) if sum(px) > THR]
+    if not hits:
+        return {"mask_px": 0, "luma": 0.0, "rgb": [0, 0, 0],
+                "width_px": 0, "red_minus_blue": 0.0}
+    rgb = [round(sum(fp[i][c] for i in hits) / len(hits), 2)
+           for c in range(3)]
+    cols = [i % w for i in hits]
+    return {
+        "mask_px": len(hits),
+        "rgb": rgb,
+        "luma": round(sum(rgb) / 3.0, 2),
+        "red_minus_blue": round(rgb[0] - rgb[2], 2),
+        "width_px": max(cols) - min(cols) + 1,
+        "mask_ratio": round(len(hits) / (w * h), 4),
+    }
+
+
+def main() -> int:
+    imgs = {t: load(t) for t in
+            ("base", "on", "on-repeat", "plain", "again")}
+    out = {"threshold_sum_rgb": THR, "left_roi": LEFT, "right_roi": RIGHT}
+    out["diffs"] = {
+        # 零操作对照：同状态两帧。若这里的 changed_px > 0，
+        # 后面 on_vs_plain 的玩家侧差异就不能全算到视觉开关头上。
+        "player_roi_noop": diff(imgs["on"], imgs["on-repeat"], LEFT),
+        "foe_roi_noop": diff(imgs["on"], imgs["on-repeat"], RIGHT),
+        "player_roi_on_vs_plain": diff(imgs["on"], imgs["plain"], LEFT),
+        "foe_roi_on_vs_plain": diff(imgs["on"], imgs["plain"], RIGHT),
+        "player_roi_on_vs_base": diff(imgs["on"], imgs["base"], LEFT),
+        "foe_roi_on_vs_again": diff(imgs["on"], imgs["again"], RIGHT),
+        "full_frame_on_vs_plain": diff(
+            imgs["on"], imgs["plain"], (0, 0, 1280, 720)),
+    }
+    out["masks"] = {
+        "player_on": mask_stats(imgs["on"], imgs["base"], LEFT),
+        "player_plain": mask_stats(imgs["plain"], imgs["base"], LEFT),
+        "foe_on": mask_stats(imgs["on"], imgs["base"], RIGHT),
+        "foe_plain": mask_stats(imgs["plain"], imgs["base"], RIGHT),
+        "foe_on_wide": mask_stats(imgs["on"], imgs["base"], WIDE_FOE),
+        "foe_plain_wide": mask_stats(imgs["plain"], imgs["base"],
+                                     WIDE_FOE),
+    }
+    m = out["masks"]
+    out["metrics"] = {
+        "luma_gap_player_minus_foe_on": round(
+            m["player_on"]["luma"] - m["foe_on"]["luma"], 2),
+        "luma_gap_player_minus_foe_plain": round(
+            m["player_plain"]["luma"] - m["foe_plain"]["luma"], 2),
+        "foe_luma_drop_on_vs_plain": round(
+            m["foe_plain"]["luma"] - m["foe_on"]["luma"], 2),
+        "red_blue_shift_delta": round(
+            (m["player_on"]["red_minus_blue"]
+             - m["foe_on"]["red_minus_blue"])
+            - (m["player_plain"]["red_minus_blue"]
+               - m["foe_plain"]["red_minus_blue"]), 2),
+        "foe_width_ratio_on_over_plain": round(
+            m["foe_on"]["width_px"] / max(1, m["foe_plain"]["width_px"]), 4),
+        "player_luma_change_on_vs_plain": round(
+            m["player_on"]["luma"] - m["player_plain"]["luma"], 2),
+        "foe_width_ratio_wide": round(
+            m["foe_on_wide"]["width_px"]
+            / max(1, m["foe_plain_wide"]["width_px"]), 4),
+    }
+    d = out["diffs"]
+    q = out["metrics"]
+    spec = json.loads((HERE / "data" / "visual_diff_spec.json").read_text(
+        encoding="utf-8"))["targets"]
+    checks = {
+        "noop_frames_identical": (
+            d["player_roi_noop"]["changed_px"] == 0
+            and d["foe_roi_noop"]["changed_px"] == 0),
+        "player_roi_pixel_identical": (
+            d["player_roi_on_vs_plain"]["changed_px"]
+            == spec["player_roi_changed_px"]),
+        "player_luma_unchanged": abs(
+            q["player_luma_change_on_vs_plain"]) < 0.01,
+        "foe_roi_changed": d["foe_roi_on_vs_plain"]["ratio"] > 0.30,
+        "luma_gap_above_target": (
+            q["luma_gap_player_minus_foe_on"]
+            >= spec["min_luma_gap_player_minus_foe"]),
+        "foe_substantially_darker": q["foe_luma_drop_on_vs_plain"] > 50.0,
+        "color_shift_visible": (
+            abs(q["red_blue_shift_delta"])
+            >= spec["min_abs_red_blue_shift"]),
+        "repeat_switch_deterministic": (
+            d["foe_roi_on_vs_again"]["changed_px"] == 0),
+        "wide_roi_wider_than_plain": (
+            q["foe_width_ratio_wide"]
+            >= spec["min_subject_width_ratio"]),
+    }
+    out["checks"] = checks
+    out["failed"] = [k for k, v in checks.items() if not v]
+    out["ok"] = all(checks.values())
+    out["wide_foe_roi"] = list(WIDE_FOE)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for k, v in out["diffs"].items():
+        print("DIFF", k, v)
+    for k, v in m.items():
+        print("MASK", k, "luma", v["luma"], "w", v["width_px"],
+              "px", v["mask_px"], "rb", v["red_minus_blue"])
+    print("METRICS", out["metrics"])
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("VISUAL_DIAG_I_OK" if out["ok"] else "VISUAL_DIAG_I_FAILED")
+    return 0 if out["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/make_baseline_i.py =====
+"""I 路线 P0：备份「H 完成态」的可运行游戏工程，写逐文件 size+sha256 基线。
+
+二进制复制；排除 .godot/ 与 __pycache__/。
+用法：python make_baseline_i.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import shutil
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+ORIG = HERE / "orig" / "pre-visual"
+BASELINE = HERE / "baseline_i.json"
+EXCLUDE_DIRS = {".godot", "__pycache__"}
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def game_files() -> list[Path]:
+    out = []
+    for p in sorted(GAME.rglob("*")):
+        if not p.is_file():
+            continue
+        rel = p.relative_to(GAME)
+        if any(part in EXCLUDE_DIRS for part in rel.parts):
+            continue
+        out.append(p)
+    return out
+
+
+def main() -> int:
+    files = game_files()
+    rows = []
+    for p in files:
+        rel = p.relative_to(GAME)
+        dst = ORIG / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(p, dst)
+        rows.append({"rel": str(rel).replace("\\", "/"),
+                     "size": p.stat().st_size,
+                     "sha256": sha256(p)})
+    mismatch = []
+    for row in rows:
+        q = ORIG / row["rel"]
+        if not q.is_file() or q.stat().st_size != row["size"] \
+                or sha256(q) != row["sha256"]:
+            mismatch.append(row["rel"])
+    payload = {
+        "game": str(GAME), "count": len(rows),
+        "backup": str(ORIG), "backup_verified": not mismatch,
+        "backup_mismatch": mismatch, "files": rows,
+    }
+    BASELINE.write_text(json.dumps(payload, ensure_ascii=False, indent=2)
+                        + "\n", encoding="utf-8")
+    print(f"BASELINE_FILES={len(rows)} BACKUP_VERIFIED={not mismatch} "
+          f"MISMATCH={len(mismatch)}")
+    print("BASELINE_I_OK" if not mismatch else "BASELINE_I_FAILED")
+    return 0 if not mismatch else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/make_filelist_i.py =====
+"""生成 I 路线交付文件清单与新增脚本 / 源码 diff。
+
+自指纪律（G 路线踩过）：清单 / diff / logs / orig / .godot /
+__pycache__ 一律排除，否则「清单写好后重跑」会把自己算进去。
+脚本名单动态扫 *.py，不写死，避免新增脚本漏进 diff。
+用法：python make_filelist_i.py
+"""
+from __future__ import annotations
+
+import difflib
+import hashlib
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+# 真实工程在 桌面/学习资料/牌拳-CardBoxer，与本归档目录是兄弟关系；
+# 写成 HERE.parent / "牌拳-CardBoxer" 会指向 bake 内的不存在的子目录。
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+LIST = HERE / "文件清单.txt"
+DIFF = HERE / "new-files.diff"
+EXCLUDE_NAMES = {"文件清单.txt", "new-files.diff"}
+EXCLUDE_DIRS = {"logs", ".godot", "__pycache__", "orig"}
+
+
+def sha256(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def entries() -> list[Path]:
+    out = []
+    for p in sorted(HERE.rglob("*")):
+        if not p.is_file() or p.name in EXCLUDE_NAMES:
+            continue
+        rel = p.relative_to(HERE)
+        if any(part in EXCLUDE_DIRS for part in rel.parts):
+            continue
+        out.append(p)
+    return out
+
+
+def main() -> int:
+    scripts = sorted(HERE.glob("*.py"))
+    tests = sorted((HERE / "tests").glob("*.gd"))
+    assert len(scripts) >= 15, f"too few scripts: {len(scripts)}"
+    assert len(tests) >= 3, f"too few probe scripts: {len(tests)}"
+
+    rows = []
+    for p in entries():
+        rel = str(p.relative_to(HERE)).replace("\\", "/")
+        rows.append(f"{rel}\t{p.stat().st_size}\t{sha256(p)}")
+    header = [
+        "# I 路线 · 视觉区分度 · 交付文件清单",
+        "# 格式: 相对路径<TAB>字节<TAB>sha256",
+        "# 排除: 本清单 / new-files.diff / logs / orig / .godot / __pycache__",
+        "",
+    ]
+    LIST.write_bytes(("\n".join(header + rows) + "\n").encode("utf-8"))
+
+    parts = []
+    for p in scripts:
+        parts.append(f"===== I/{p.name} =====\n"
+                     + p.read_text(encoding="utf-8"))
+    for p in tests:
+        parts.append(f"===== I/tests/{p.name} =====\n"
+                     + p.read_text(encoding="utf-8"))
+    spec = HERE / "data" / "visual_diff_spec.json"
+    parts.append("===== I/data/visual_diff_spec.json =====\n"
+                 + spec.read_text(encoding="utf-8"))
+    old = (HERE / "orig" / "pre-visual" / "scripts"
+           / "fighter_3d_layer.gd").read_text(
+               encoding="utf-8").splitlines()
+    new = (GAME / "scripts" / "fighter_3d_layer.gd").read_text(
+        encoding="utf-8").splitlines()
+    parts.append("===== unified diff: H -> I "
+                 "scripts/fighter_3d_layer.gd =====\n"
+                 + "\n".join(difflib.unified_diff(
+                     old, new,
+                     fromfile="H/scripts/fighter_3d_layer.gd",
+                     tofile="I/scripts/fighter_3d_layer.gd",
+                     lineterm="")))
+    DIFF.write_bytes(("\n\n".join(parts) + "\n").encode("utf-8"))
+
+    again = ("\n".join(header + [
+        f"{str(p.relative_to(HERE)).replace(chr(92), '/')}\t"
+        f"{p.stat().st_size}\t{sha256(p)}" for p in entries()
+    ]) + "\n").encode("utf-8")
+    stable = LIST.read_bytes() == again
+    # 生成者自检：diff 必须真的写出且非空，不能让「清单绿了但 diff 没生成」
+    # 混过收口（上一轮 GAME 路径写错就是这样静默过去的）。
+    assert DIFF.is_file() and DIFF.stat().st_size > 10000, \
+        f"new-files.diff missing or too small: {DIFF}"
+    assert (GAME / "scripts" / "fighter_3d_layer.gd").is_file()
+    print(f"FILELIST_ENTRIES={len(rows)} DIFF_BYTES={DIFF.stat().st_size} "
+          f"SCRIPTS={len(scripts)} TESTS={len(tests)}")
+    print(f"STABLE={stable}")
+    print("FILELIST_STABLE_OK" if stable else "FILELIST_UNSTABLE")
+    return 0 if stable else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/make_visual_board_i.py =====
+"""I 路线看图：把 on / plain 两帧的左右角色裁出来放大并排。
+
+上部 2×2：玩家 on / 对手 on / 玩家 plain / 对手 plain；
+下部两张 600×338 全景缩略，用来判断「是否一眼可分」。
+输出 boards/I-视觉区分A-B.png。
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from PIL import Image, ImageDraw, ImageFont
+
+HERE = Path(__file__).resolve().parent
+H = HERE.parent / "H路线-双方3D侧面战斗"
+SHOTS = HERE / "shots" / "visual_ab"
+OUT = HERE / "boards" / "I-视觉区分A-B.png"
+FONT = Path(r"C:\Windows\Fonts\msyh.ttc")
+ROI = json.loads((H / "data" / "roi_h.json").read_text(
+    encoding="utf-8"))["boxes"]
+
+
+def crop(im: Image.Image, box, size=(126, 265)) -> Image.Image:
+    w, h = size
+    cx, cy = (box[0] + box[2]) // 2, (box[1] + box[3]) // 2
+    return im.crop((cx - w // 2, cy - h // 2,
+                    cx - w // 2 + w, cy - h // 2 + h))
+
+
+def main() -> int:
+    on = Image.open(SHOTS / "vis-on.png").convert("RGB")
+    plain = Image.open(SHOTS / "vis-plain.png").convert("RGB")
+    z = 2
+    w, h = 126 * z, 265 * z
+    pad, label = 24, 34
+    tw, th = 600, 338
+    wide = 2 * tw + 3 * pad
+    tall = 2 * (h + label) + 3 * pad + th + 50
+    canvas = Image.new("RGB", (wide, tall), (20, 24, 34))
+    d = ImageDraw.Draw(canvas)
+    f = ImageFont.truetype(str(FONT), 20) if FONT.is_file() \
+        else ImageFont.load_default()
+    x0 = (wide - (2 * w + pad)) // 2
+    x1 = x0 + w + pad
+    y0 = pad
+    y1 = pad + h + label + pad
+    cells = [
+        (crop(on, ROI[0]), "玩家 · 视觉开 on", x0, y0, (160, 225, 205)),
+        (crop(on, ROI[1]), "对手 · 视觉开 on", x1, y0, (240, 170, 150)),
+        (crop(plain, ROI[0]), "玩家 · 视觉关 plain", x0, y1,
+         (160, 225, 205)),
+        (crop(plain, ROI[1]), "对手 · 视觉关 plain", x1, y1,
+         (240, 170, 150)),
+    ]
+    for im, text, x, y, col in cells:
+        canvas.paste(im.resize((w, h), Image.LANCZOS), (x, y))
+        d.text((x + 6, y + h + 4), text, font=f, fill=col)
+    ty = y1 + h + label + pad
+    for i, (im, text) in enumerate([
+            (on, "全景 · on（视觉开）"),
+            (plain, "全景 · plain（视觉关 / H 原样）")]):
+        x = pad + i * (tw + pad)
+        canvas.paste(im.resize((tw, th), Image.LANCZOS), (x, ty))
+        d.text((x + 6, ty + th + 2), text, font=f, fill=(180, 190, 210))
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(OUT)
+    print("WROTE", OUT.name, OUT.stat().st_size, "B", canvas.size)
+    print("VISUAL_BOARD_I_OK" if OUT.stat().st_size > 50000
+          else "VISUAL_BOARD_I_FAILED")
+    return 0 if OUT.stat().st_size > 50000 else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/mutation_i.py =====
+"""I 路线变异验证：逐条改坏被守卫的对象，确认 verify_i.py 的**点名判据**报红。
+
+比 H 路线更严：不只看 rc != 0，还要求输出里出现
+`CHECK <expect_red_check> False`，否则算 MISSED。这样即使「清单 sha
+不一致」这类泛化判据顺带变红，也不能冒充针对性守卫有牙。
+
+纪律：
+- 二进制读写 + sha256 证明还原，不用 read_text/write_text（换行会被转）。
+- needle 匹配 0 次 = DID NOT RUN，计入未证明，不直接崩、不算 CAUGHT。
+- 每组还原后才进下一组；最后 clean re-run 必须 GREEN。
+- 变异体必须仍能解析：改 GDScript 字面量 / JSON 布尔数值，不制造语法错。
+- 守卫子进程禁写字节码：CPython 时间戳 pyc 只对照整数秒 mtime + size，
+  同一秒内多次变异会读到上一例的陈旧字节码，误报 GREEN (MISSED!)。
+
+I_ROOT 环境变量供 selftest_did_not_run_i.py 把副本放到 logs/ 下时
+仍指向真正的工作区；正常运行时不设。
+用法：python mutation_i.py
+"""
+from __future__ import annotations
+
+import hashlib
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(os.environ.get("I_ROOT", str(Path(__file__).resolve().parent)))
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+VERIFY = HERE / "verify_i.py"
+
+# (编号, 目标, needle, mutant, 期望变红的判据名)；"GAME:" 指游戏工程内文件。
+CASES = [
+    ("M01_source_scale_reverted", "GAME:scripts/fighter_3d_layer.gd",
+     b"const FOE_DRAW_SCALE_X := 1.22",
+     b"const FOE_DRAW_SCALE_X := 1.16",
+     "source_scale_matches_spec"),
+    ("M02_source_tint_changed", "GAME:scripts/fighter_3d_layer.gd",
+     b"vec3(0.42, 0.30, 0.28)", b"vec3(0.99, 0.99, 0.99)",
+     "source_tint_matches_spec"),
+    ("M03_retired_constant_reintroduced",
+     "GAME:scripts/fighter_3d_layer.gd",
+     b"const FOE_CANVAS_SHADER_CODE",
+     b"const FOE_TINT := [0.46, 0.34, 0.30]\n"
+     b"const FOE_CANVAS_SHADER_CODE",
+     "source_retired_constants_absent"),
+    ("M04_off_switch_renamed", "GAME:scripts/fighter_3d_layer.gd",
+     b'"CARD_BOXER_FOE_VISUAL"', b'"CARD_BOXER_FOE_VISUAL_X"',
+     "source_off_switch_present"),
+    ("M05_spec_width_target_relaxed", "data/visual_diff_spec.json",
+     b'"min_subject_width_ratio": 1.1',
+     b'"min_subject_width_ratio": 1.0',
+     "spec_width_target_not_relaxed"),
+    ("M06_r1_negative_flipped", "data/visual_diag_r1_failed.json",
+     b'"ok": false', b'"ok": true',
+     "r1_negative_result_kept_false"),
+    ("M07_diag_player_check_flipped", "data/visual_diag_i.json",
+     b'"player_roi_pixel_identical": true',
+     b'"player_roi_pixel_identical": false',
+     "visual_diag_all_checks_true"),
+    ("M08_off_player_check_flipped", "data/off_switch_i.json",
+     b'"player_roi_never_changes": true',
+     b'"player_roi_never_changes": false',
+     "off_switch_all_checks_true"),
+    ("M09_all_checks_not_green", "data/all_checks_i.json",
+     b'"result": "ALL GREEN"', b'"result": "FAILED"',
+     "all_checks_15_green"),
+    ("M10_static_ab_pixels_changed", "data/static_ab_i.json",
+     b'"changed_pixels": 0', b'"changed_pixels": 1',
+     "static_ab_zero_pixels"),
+    ("M11_baseline_sha_tampered", "baseline_i.json",
+     b"c5dd4a3056a52e77f2269832bd898d8fbd03f2a61b81cc97b01d38e4c057e38e",
+     b"d5dd4a3056a52e77f2269832bd898d8fbd03f2a61b81cc97b01d38e4c057e38e",
+     "arena_sha_matches_baseline"),
+    ("M12_final_patch_ok_flipped", "data/patch_visual_final_i.json",
+     b'"ok": true', b'"ok": false',
+     "final_patch_report_ok"),
+]
+
+
+def resolve(target: str) -> Path:
+    if target.startswith("GAME:"):
+        return GAME / target[5:]
+    return HERE / target
+
+
+def digest(b: bytes) -> str:
+    return hashlib.sha256(b).hexdigest()
+
+
+def guard_env() -> dict:
+    env = os.environ.copy()
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    return env
+
+
+def run_verify() -> tuple[int, str]:
+    p = subprocess.run([sys.executable, "-u", str(VERIFY)],
+                       capture_output=True, timeout=180, env=guard_env())
+    return p.returncode, (p.stdout + p.stderr).decode("utf-8", "replace")
+
+
+def main() -> int:
+    assert VERIFY.is_file(), VERIFY
+    caught = 0
+    did_not_run: list[str] = []
+    restore_ok = 0
+    restore_total = 0
+    for name, target, needle, mutant, expect in CASES:
+        path = resolve(target)
+        if not path.is_file():
+            did_not_run.append(name + ":FILE_MISSING")
+            print(f"{name} DID NOT RUN (missing file)")
+            continue
+        orig = path.read_bytes()
+        count = orig.count(needle)
+        if count == 0:
+            did_not_run.append(name + ":ANCHOR_MISS")
+            print(f"{name} DID NOT RUN (anchor not found)")
+            continue
+        path.write_bytes(orig.replace(needle, mutant, 1))
+        restore_total += 1
+        try:
+            rc, out = run_verify()
+            red = (rc != 0 and "I_NOT_VERIFIED" in out
+                   and f"CHECK {expect} False" in out)
+            if red:
+                caught += 1
+            else:
+                print(f"  MISSED_DETAIL {name} rc={rc} "
+                      f"expect=CHECK {expect} False")
+            print(f"{name} {'CAUGHT' if red else 'MISSED'} rc={rc}")
+        finally:
+            path.write_bytes(orig)
+            after = path.read_bytes()
+            if after == orig and digest(after) == digest(orig):
+                restore_ok += 1
+
+    rc_clean, out_clean = run_verify()
+    clean_green = rc_clean == 0 and "I_VERIFIED" in out_clean
+    total = len(CASES)
+    ok = (caught == total and not did_not_run
+          and restore_ok == restore_total == total and clean_green)
+    print(f"CAUGHT={caught}/{total} DID_NOT_RUN={len(did_not_run)} "
+          f"restore={restore_ok}/{restore_total} "
+          f"clean={'GREEN' if clean_green else 'RED'}")
+    for x in did_not_run:
+        print("  DNR", x)
+    print("MUTATION_I_OK" if ok else "MUTATION_I_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/patch_visual_final_i.py =====
+"""I 路线 final：让源码与 visual_diff_spec.json r2 逐项对齐。
+
+r1（draw_scale_x=1.16）实测宽 ROI 轮廓比 1.0889 < spec 目标 1.1。
+按项目规矩**不放宽阈值**，把实现从 1.16 提到 1.22，再重跑同进程 A/B。
+
+顺带清掉 v1/v2/v3 留在源码里的过期债：
+  - 退役常量 FOE_TINT / FOE_METALLIC_MULT / FOE_CANVAS_TINT
+  - 仍写着「改 3D 材质 / 降灯能量 / 运行时 tint 在副本上做」的注释
+  - 让 FOE_CANVAS_SHADER_CODE 成为 canvas tint 的唯一真相来源
+
+幂等：已应用时跳过替换，只按盘上源码 + spec + baseline_i.json 复算判据。
+用法：python patch_visual_final_i.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+LAYER = GAME / "scripts" / "fighter_3d_layer.gd"
+ARENA = GAME / "scripts" / "arena.gd"
+FIGHTER = GAME / "scripts" / "fighter.gd"
+SPEC = HERE / "data" / "visual_diff_spec.json"
+BASELINE = HERE / "baseline_i.json"
+OUT = HERE / "data" / "patch_visual_final_i.json"
+
+SHADER_LINE = (
+    'const FOE_CANVAS_SHADER_CODE := '
+    '"shader_type canvas_item;\\nvoid fragment() {\\n'
+    '\\tvec4 c = texture(TEXTURE, UV);\\n'
+    '\\tCOLOR = vec4(c.rgb * vec3(0.42, 0.30, 0.28), c.a);'
+    '\\n}\\n"\n'
+)
+
+OLD_HEAD = (
+    "# ── I 路线「视觉区分度」：只作用于 foe ──────────────────────\n"
+    "# rootcause_i.json：贴图 UV 岛亮度差 70.99 被四盏高强度灯 +\n"
+    "# metallic 乘数 1.0 吃成渲染 -11.18。这里改渲染链，不动 GLB。\n"
+    "# 数值与 data/visual_diff_spec.json 逐项对应，改一处要改两处。\n"
+    "const FOE_TINT := [0.46, 0.34, 0.30]\n"
+    "const FOE_METALLIC_MULT := 0.35\n"
+    "# v2：灯光常量退役。v1 实测改灯会串到另一个 SubViewport，\n"
+    "# 视觉区分改由 2D 合成层 shader 完成（每层 material 独立）。\n"
+    "const FOE_CANVAS_TINT := [0.42, 0.30, 0.28]\n"
+    + SHADER_LINE
+    + "const FOE_DRAW_SCALE_X := 1.16\n"
+    "const FOE_DRAW_SCALE_Y := 0.94\n"
+)
+
+NEW_HEAD = (
+    "# ── I 路线「视觉区分度」：只作用于 foe ──────────────────────\n"
+    "# rootcause_i.json：贴图 UV 岛亮度差 70.99 被四盏高强度灯 +\n"
+    "# metallic 乘数 1.0 吃成渲染 -11.18。定稿走纯 2D 合成层：\n"
+    "# 3D 渲染树（灯 / 材质 / mesh）与 GLB 一个都不动。\n"
+    "# 数值与 data/visual_diff_spec.json 逐项对应，改一处要改两处。\n"
+    "# 已退役：3D albedo tint、metallic 乘数（v2 串扰玩家层 7940 px）、\n"
+    "# 灯能量缩放（v1 跨 SubViewport 串光）；负结果见 data/v1-failed/\n"
+    "# 与 data/v2-failed/。shader 字符串是 tint 的唯一真相来源。\n"
+    + SHADER_LINE
+    + "const FOE_DRAW_SCALE_X := 1.22\n"
+    "const FOE_DRAW_SCALE_Y := 0.94\n"
+)
+
+EDITS = [
+    ("head", OLD_HEAD, NEW_HEAD),
+    ("collect_comment",
+     "\t# I 路线：收集基础材质，运行时 tint 只在副本上做。\n",
+     "\t# I 路线：收集 mesh / 灯初值，仅供 visual_state() 读回诊断；\n"
+     "\t# v3 不复制、不改写任何 3D 材质。\n"),
+    ("state_comment",
+     "# I 路线：foe 专属视觉开关与可还原的原始资源表。\n",
+     "# I 路线：foe 专属视觉开关。_mesh_rows/_light_rows 仅供诊断读回；\n"
+     "# _foe_materials 恒空（v3 断言没有 3D 材质副本）；_foe_canvas_mat\n"
+     "# 是本层本地的 2D 合成材质，物理上不会串到玩家层。\n"),
+    ("setter_comment",
+     "## I 路线：可反复切换。true = 压暗偏锈红 + 降金属度 + 降灯能量 +\n"
+     "## 加宽压矮轮廓；false = 逐项还原到 H 路线原样（玩家层恒定 false）。\n",
+     "## I 路线：可反复切换。true = 本层挂 canvas_item 调色 shader +\n"
+     "## 加宽压矮绘制尺寸；false = 清 material、尺寸回 1.0，逐项还原到\n"
+     "## H 路线原样（玩家层恒定 false，从不被本函数触碰）。\n"),
+]
+
+
+def sha(p: Path) -> str:
+    return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+def baseline_map() -> dict[str, str]:
+    payload = json.loads(BASELINE.read_text(encoding="utf-8"))
+    return {r["rel"]: r["sha256"] for r in payload["files"]}
+
+
+def game_rels() -> set[str]:
+    out = set()
+    for p in GAME.rglob("*"):
+        if not p.is_file():
+            continue
+        rel = p.relative_to(GAME)
+        if any(part in (".godot", "__pycache__") for part in rel.parts):
+            continue
+        out.add(str(rel).replace("\\", "/"))
+    return out
+
+
+def main() -> int:
+    spec = json.loads(SPEC.read_text(encoding="utf-8"))
+    base = baseline_map()
+    data = LAYER.read_bytes()
+    eol = b"\r\n" if b"\r\n" in data else b"\n"
+    work = data.replace(eol, b"\n")
+    applied = []
+    for tag, old, new in EDITS:
+        ob, nb = old.encode("utf-8"), new.encode("utf-8")
+        count = work.count(ob)
+        if count == 1:
+            work = work.replace(ob, nb, 1)
+            applied.append(tag)
+        else:
+            assert count == 0, f"anchor {tag} duplicated: {count}"
+    if applied:
+        LAYER.write_bytes(work.replace(b"\n", eol))
+    src = LAYER.read_text(encoding="utf-8")
+
+    tint = spec["canvas_tint"]
+    tint_lit = "vec3(%s)" % ", ".join(f"{v:.2f}" for v in tint)
+    sx = spec["silhouette"]["draw_scale_x"]
+    sy = spec["silhouette"]["draw_scale_y"]
+    now = game_rels()
+    changed = sorted(r for r, h in base.items()
+                     if r in now and sha(GAME / r) != h)
+    missing = sorted(r for r in base if r not in now)
+    extra = sorted(now - set(base))
+
+    checks = {
+        "spec_revision_is_2": spec.get("revision") == 2,
+        "only_existing_file_changed": (changed == ["scripts/fighter_3d_layer.gd"]
+                                       and not missing),
+        "arena_matches_h_baseline": sha(ARENA) == base["scripts/arena.gd"],
+        "fighter_matches_h_baseline": (
+            sha(FIGHTER) == base["scripts/fighter.gd"]),
+        "layer_differs_from_h_baseline": (
+            sha(LAYER) != base["scripts/fighter_3d_layer.gd"]),
+        # 按形状放行走探针脚本，以及 Godot 4.4+ 自动生成的 .gd.uid；
+        # 不按文件名字面列白名单，避免下次新增探针又误报。
+        "new_files_only_probe_scripts": all(
+            r.startswith("tests/")
+            and (r.endswith("_probe.gd")
+                 or (r.endswith(".gd.uid") and r[:-4] in now))
+            for r in extra) and len(extra) <= 12,
+        "no_surface_override_calls": (
+            "set_surface_override_material" not in src),
+        "no_3d_material_duplicate": (
+            "(base as StandardMaterial3D).duplicate()" not in src),
+        "no_light_energy_write": (
+            'l.light_energy = float(row["energy"])' not in src),
+        "retired_constants_absent": all(
+            name not in src
+            for name in spec["material"]["retired_constants_absent"]),
+        "canvas_shader_present": "shader_type canvas_item" in src,
+        "canvas_material_set": "material = _foe_canvas_mat" in src,
+        "canvas_material_cleared": "material = null" in src,
+        "shader_tint_matches_spec": tint_lit in src,
+        "draw_scale_x_matches_spec": (
+            f"const FOE_DRAW_SCALE_X := {sx:.2f}" in src),
+        "draw_scale_y_matches_spec": (
+            f"const FOE_DRAW_SCALE_Y := {sy:.2f}" in src),
+        "player_draw_path_pixel_identity_shape": all(
+            s in src for s in (
+                "FOE_DRAW_SCALE_X if foe_visual else 1.0",
+                "FOE_DRAW_SCALE_Y if foe_visual else 1.0")),
+        # 源码里 OS.get_environment( 与字符串是跨行写法，不能按连续
+        # 字面量扫；只钉「名字存在 + none 判别 + 仅 foe 分支」三个形状。
+        "off_switch_present": (
+            '"CARD_BOXER_FOE_VISUAL"' in src and '!= "none"' in src),
+        "off_switch_scoped_to_foe": (
+            'if p_role == "foe" and OS.get_environment(' in src),
+        "collect_meshes_kept_for_diagnostics": (
+            "func _collect_meshes" in src),
+        "G_shape_preserved": all(s in src for s in [
+            "const DEFAULT_SIDE_YAW := 55.0",
+            "drv.apply_frame(c, f)", "_apply_stance_bias()"]),
+    }
+    report = {
+        "applied": applied or "SKIPPED_ALREADY_APPLIED",
+        "baseline_files": len(base), "changed_vs_baseline": changed,
+        "missing_vs_baseline": missing, "new_files": extra,
+        "spec_revision": spec.get("revision"),
+        "draw_scale_x": sx, "canvas_tint_literal": tint_lit,
+        "sha256_after": {
+            "scripts/fighter_3d_layer.gd": sha(LAYER),
+            "scripts/arena.gd": sha(ARENA),
+            "scripts/fighter.gd": sha(FIGHTER)},
+        "checks": checks,
+        "failed": [k for k, v in checks.items() if not v],
+        "ok": all(checks.values()),
+    }
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    print("PATCH_FINAL", report["applied"])
+    print("CHANGED", changed, "MISSING", missing, "NEW", extra)
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("PATCH_VISUAL_FINAL_I_OK" if report["ok"]
+          else "PATCH_VISUAL_FINAL_I_FAILED")
+    return 0 if report["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/patch_visual_i.py =====
+"""I 路线 P2：把「对手侧专属视觉层」接进 fighter_3d_layer.gd。
+
+一次性补丁；逐锚点 count==1 断言，二进制读写（保留原 EOL），
+补丁前后 sha256 落盘到 data/patch_visual_i.json。
+arena.gd / fighter.gd / 任何资产一律不碰。
+
+玩法：configure("foe", ...) 自动启用；CARD_BOXER_FOE_VISUAL=none 或
+set_foe_visual(false) 完整还原；玩家层与未配置层逐像素不变。
+
+用法：python patch_visual_i.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+LAYER = GAME / "scripts" / "fighter_3d_layer.gd"
+ARENA = GAME / "scripts" / "arena.gd"
+FIGHTER = GAME / "scripts" / "fighter.gd"
+ORIG = HERE / "orig" / "pre-visual" / "scripts"
+OUT = HERE / "data" / "patch_visual_i.json"
+
+
+def sha(p: Path) -> str:
+    return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+# (名字, 原文, 新文)；全部按 LF 写，运行时按文件实际 EOL 转换。
+PATCHES = [
+    ("foe_visual_constants",
+     "const DEFAULT_FOE_YAW := -55.0\n",
+     "const DEFAULT_FOE_YAW := -55.0\n"
+     "\n"
+     "# ── I 路线「视觉区分度」：只作用于 foe ──────────────────────\n"
+     "# rootcause_i.json：贴图 UV 岛亮度差 70.99 被四盏高强度灯 +\n"
+     "# metallic 乘数 1.0 吃成渲染 -11.18。这里改渲染链，不动 GLB。\n"
+     "# 数值与 data/visual_diff_spec.json 逐项对应，改一处要改两处。\n"
+     "const FOE_TINT := [0.46, 0.34, 0.30]\n"
+     "const FOE_METALLIC_MULT := 0.35\n"
+     "const FOE_LIGHT_ENERGY := 0.58\n"
+     "const FOE_LIGHT_SHIFT := [0.78, 0.86, 1.0]\n"
+     "const FOE_DRAW_SCALE_X := 1.16\n"
+     "const FOE_DRAW_SCALE_Y := 0.94\n"),
+
+    ("foe_visual_state_vars",
+     "var view_changes := 0\n",
+     "var view_changes := 0\n"
+     "# I 路线：foe 专属视觉开关与可还原的原始资源表。\n"
+     "var foe_visual := false\n"
+     "var _mesh_rows: Array = []\n"
+     "var _light_rows: Array = []\n"
+     "var _foe_materials: Array = []\n"),
+
+    ("light_rows_recorded",
+     "\tvar l := DirectionalLight3D.new()\n"
+     "\tl.rotation_degrees = rot\n"
+     "\tl.light_energy = energy\n"
+     "\tl.light_color = col\n"
+     "\tl.shadow_enabled = shadow\n"
+     "\tsv.add_child(l)\n",
+     "\tvar l := DirectionalLight3D.new()\n"
+     "\tl.rotation_degrees = rot\n"
+     "\tl.light_energy = energy\n"
+     "\tl.light_color = col\n"
+     "\tl.shadow_enabled = shadow\n"
+     "\tsv.add_child(l)\n"
+     "\t# I 路线：记下原始能量/颜色，set_foe_visual(false) 要逐项还原。\n"
+     "\t_light_rows.append({\"light\": l, \"energy\": energy,\n"
+     "\t\t\t\"color\": col})\n"),
+
+    ("configure_enables_foe_visual",
+     "\tview_yaw_deg = p_yaw\n"
+     "\tview_flip = p_flip\n"
+     "\n"
+     "\n"
+     "## 探针/运行时改视角",
+     "\tview_yaw_deg = p_yaw\n"
+     "\tview_flip = p_flip\n"
+     "\t# I 路线：只有 foe 启用视觉区分；none 用于同进程 A/B 还原 H 原样。\n"
+     "\tif p_role == \"foe\" and OS.get_environment(\n"
+     "\t\t\t\"CARD_BOXER_FOE_VISUAL\") != \"none\":\n"
+     "\t\tfoe_visual = true\n"
+     "\n"
+     "\n"
+     "## 探针/运行时改视角"),
+
+    ("collect_meshes_after_instantiate",
+     "\tvar inst: Node3D = (res as PackedScene).instantiate()\n"
+     "\tsv.add_child(inst)\n",
+     "\tvar inst: Node3D = (res as PackedScene).instantiate()\n"
+     "\tsv.add_child(inst)\n"
+     "\t# I 路线：收集基础材质，运行时 tint 只在副本上做。\n"
+     "\t_collect_meshes(inst)\n"),
+
+    ("apply_visual_after_lights",
+     "\t_add_light(Vector3(-25.0, 200.0, 0.0), 0.95,\n"
+     "\t\t\tColor(0.76, 0.85, 1.00), false)\n"
+     "\n"
+     "\tapply(\"stance\", 0)\n",
+     "\t_add_light(Vector3(-25.0, 200.0, 0.0), 0.95,\n"
+     "\t\t\tColor(0.76, 0.85, 1.00), false)\n"
+     "\n"
+     "\tif foe_visual:\n"
+     "\t\tset_foe_visual(true)\n"
+     "\tapply(\"stance\", 0)\n"),
+
+    ("visual_methods_inserted",
+     "func apply(card: String, frame: int) -> void:\n",
+     "## I 路线：递归收集 MeshInstance3D 的 surface 基础材质。\n"
+     "func _collect_meshes(n: Node) -> void:\n"
+     "\tif n is MeshInstance3D:\n"
+     "\t\tvar mi := n as MeshInstance3D\n"
+     "\t\tif mi.mesh != null:\n"
+     "\t\t\tfor i in range(mi.mesh.get_surface_count()):\n"
+     "\t\t\t\t_mesh_rows.append({\"mi\": mi, \"surface\": i,\n"
+     "\t\t\t\t\t\t\"base\": mi.mesh.surface_get_material(i)})\n"
+     "\tfor c in n.get_children():\n"
+     "\t\t_collect_meshes(c)\n"
+     "\n"
+     "\n"
+     "## I 路线：可反复切换。true = 压暗偏锈红 + 降金属度 + 降灯能量 +\n"
+     "## 加宽压矮轮廓；false = 逐项还原到 H 路线原样（玩家层恒定 false）。\n"
+     "func set_foe_visual(enabled: bool) -> void:\n"
+     "\tfoe_visual = enabled\n"
+     "\tfor idx in range(_mesh_rows.size()):\n"
+     "\t\tvar row: Dictionary = _mesh_rows[idx]\n"
+     "\t\tvar mi: MeshInstance3D = row[\"mi\"]\n"
+     "\t\tvar i: int = int(row[\"surface\"])\n"
+     "\t\tif not enabled:\n"
+     "\t\t\tmi.set_surface_override_material(i, null)\n"
+     "\t\t\tcontinue\n"
+     "\t\tvar base: Material = row[\"base\"]\n"
+     "\t\tif base is StandardMaterial3D:\n"
+     "\t\t\tif _foe_materials.size() <= idx:\n"
+     "\t\t\t\tvar dup := (base as StandardMaterial3D).duplicate()\n"
+     "\t\t\t\tvar b := base as StandardMaterial3D\n"
+     "\t\t\t\tdup.albedo_color = b.albedo_color * Color(\n"
+     "\t\t\t\t\t\tFOE_TINT[0], FOE_TINT[1], FOE_TINT[2], 1.0)\n"
+     "\t\t\t\tdup.metallic = b.metallic * FOE_METALLIC_MULT\n"
+     "\t\t\t\t_foe_materials.append(dup)\n"
+     "\t\t\tmi.set_surface_override_material(i, _foe_materials[idx])\n"
+     "\tfor row in _light_rows:\n"
+     "\t\tvar l: DirectionalLight3D = row[\"light\"]\n"
+     "\t\tvar lc: Color = row[\"color\"]\n"
+     "\t\tif enabled:\n"
+     "\t\t\tl.light_energy = float(row[\"energy\"]) * FOE_LIGHT_ENERGY\n"
+     "\t\t\tl.light_color = lc * Color(\n"
+     "\t\t\t\t\tFOE_LIGHT_SHIFT[0], FOE_LIGHT_SHIFT[1],\n"
+     "\t\t\t\t\tFOE_LIGHT_SHIFT[2], 1.0)\n"
+     "\t\telse:\n"
+     "\t\t\tl.light_energy = float(row[\"energy\"])\n"
+     "\t\t\tl.light_color = lc\n"
+     "\tqueue_redraw()\n"
+     "\n"
+     "\n"
+     "## 探针读回状态，避免靠画面猜开关有没有生效。\n"
+     "func visual_state() -> Dictionary:\n"
+     "\treturn {\"role\": role_id, \"foe_visual\": foe_visual,\n"
+     "\t\t\t\"mesh_rows\": _mesh_rows.size(),\n"
+     "\t\t\t\"light_rows\": _light_rows.size(),\n"
+     "\t\t\t\"foe_materials\": _foe_materials.size()}\n"
+     "\n"
+     "\n"
+     "func apply(card: String, frame: int) -> void:\n"),
+
+    ("draw_scaled_only_for_foe",
+     "\tvar w := float(SV_W) * DRAW_SCALE\n"
+     "\tvar h := float(SV_H) * DRAW_SCALE\n",
+     "\t# I 路线：只有启用 foe 视觉时改绘制尺寸；玩家侧乘 1.0 精确不变。\n"
+     "\tvar sx := FOE_DRAW_SCALE_X if foe_visual else 1.0\n"
+     "\tvar sy := FOE_DRAW_SCALE_Y if foe_visual else 1.0\n"
+     "\tvar w := float(SV_W) * DRAW_SCALE * sx\n"
+     "\tvar h := float(SV_H) * DRAW_SCALE * sy\n"),
+]
+
+
+def main() -> int:
+    before = {str(p.relative_to(GAME)).replace("\\", "/"): sha(p)
+              for p in (LAYER, ARENA, FIGHTER)}
+    backup = {str(p.relative_to(GAME)).replace("\\", "/"):
+              sha(ORIG / p.name) for p in (LAYER, ARENA, FIGHTER)}
+    data = LAYER.read_bytes()
+    eol = b"\r\n" if b"\r\n" in data else b"\n"
+    work = data.replace(eol, b"\n")
+    applied = []
+    for name, old, new in PATCHES:
+        o = old.encode("utf-8")
+        n = new.encode("utf-8")
+        assert work.count(o) == 1, f"anchor not unique: {name} count={work.count(o)}"
+        work = work.replace(o, n, 1)
+        applied.append(name)
+    LAYER.write_bytes(work.replace(b"\n", eol))
+
+    src = LAYER.read_text(encoding="utf-8")
+    checks = {
+        "arena_untouched": sha(ARENA) == before["scripts/arena.gd"],
+        "fighter_untouched": sha(FIGHTER) == before["scripts/fighter.gd"],
+        "backup_matches_before": all(
+            backup[k] == before[k] for k in before),
+        "eight_patches_applied": len(applied) == 8,
+        "switch_default_off": (
+            "var use_3d := false" in ARENA.read_text(encoding="utf-8")),
+        "foe_visual_auto_on": (
+            'p_role == "foe" and OS.get_environment(' in src),
+        "off_switch_present": 'CARD_BOXER_FOE_VISUAL' in src,
+        "tint_uses_duplicate": ".duplicate()" in src,
+        "restore_clears_override": (
+            "set_surface_override_material(i, null)" in src),
+        "lights_restored": ('l.light_energy = float(row["energy"])'
+                            in src),
+        "draw_scale_conditional": (
+            "FOE_DRAW_SCALE_X if foe_visual else 1.0" in src),
+        "spec_values_present": all(s in src for s in [
+            "const FOE_TINT := [0.46, 0.34, 0.30]",
+            "const FOE_METALLIC_MULT := 0.35",
+            "const FOE_LIGHT_ENERGY := 0.58",
+            "const FOE_DRAW_SCALE_X := 1.16"]),
+        "visual_state_probe": "func visual_state()" in src,
+        "G_shape_preserved": all(s in src for s in [
+            "const DEFAULT_SIDE_YAW := 55.0",
+            "drv.apply_frame(c, f)", "_apply_stance_bias()"]),
+    }
+    after = {str(p.relative_to(GAME)).replace("\\", "/"): sha(p)
+             for p in (LAYER, ARENA, FIGHTER)}
+    report = {"before": before, "backup": backup, "after": after,
+              "applied": applied, "eol": "CRLF" if eol == b"\r\n" else "LF",
+              "checks": checks,
+              "failed": [k for k, v in checks.items() if not v],
+              "ok": all(checks.values())}
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for a in applied:
+        print("PATCH", a)
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("PATCH_VISUAL_I_OK" if report["ok"] else "PATCH_VISUAL_I_FAILED")
+    return 0 if report["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/patch_visual_v2_i.py =====
+"""I 路线 v2：v1 改灯失败，改成「绝不碰灯 + 2D 合成层调色」。
+
+v1 负结果（data/v1-failed/、boards/I-V1失败-全局变暗.png）：
+玩家层灯能量三态恒 1.9/0.75/0.55/0.95、override 恒 0，
+但玩家 ROI 仍暗 20.08；GL Compatibility 多 SubViewport 平行光串扰，
+改灯 = 把两人一起压暗，区分度反而更差。
+
+v2 用 CanvasItem.material 上的 canvas_item shader 对最终贴回 2D 的
+ViewportTexture 调色。material 是每层独立属性，物理上不可能串到玩家层；
+透明像素 alpha=0，不会盖出方块。保留 3D 材质 tint / metallic 与轮廓缩放。
+
+用法：python patch_visual_v2_i.py（一次性，逐锚点 count==1）
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+LAYER = GAME / "scripts" / "fighter_3d_layer.gd"
+ARENA = GAME / "scripts" / "arena.gd"
+FIGHTER = GAME / "scripts" / "fighter.gd"
+OUT = HERE / "data" / "patch_visual_v2_i.json"
+
+
+def sha(p: Path) -> str:
+    return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+PATCHES = [
+    ("lights_retired_canvas_shader_added",
+     "const FOE_LIGHT_ENERGY := 0.58\n"
+     "const FOE_LIGHT_SHIFT := [0.78, 0.86, 1.0]\n",
+     "# v2：灯光常量退役。v1 实测改灯会串到另一个 SubViewport，\n"
+     "# 视觉区分改由 2D 合成层 shader 完成（每层 material 独立）。\n"
+     "const FOE_CANVAS_TINT := [0.42, 0.30, 0.28]\n"
+     "const FOE_CANVAS_SHADER_CODE := \"shader_type canvas_item;\\nvoid fragment() {\\n\\tvec4 c = texture(TEXTURE, UV);\\n\\tCOLOR = vec4(c.rgb * vec3(0.42, 0.30, 0.28), c.a);\\n}\\n\"\n"),
+
+    ("canvas_material_var",
+     "var _foe_materials: Array = []\n",
+     "var _foe_materials: Array = []\n"
+     "var _foe_canvas_mat: ShaderMaterial = null\n"),
+
+    ("light_loop_removed_canvas_applied",
+     "\tfor row in _light_rows:\n"
+     "\t\tvar l: DirectionalLight3D = row[\"light\"]\n"
+     "\t\tvar lc: Color = row[\"color\"]\n"
+     "\t\tif enabled:\n"
+     "\t\t\tl.light_energy = float(row[\"energy\"]) * FOE_LIGHT_ENERGY\n"
+     "\t\t\tl.light_color = lc * Color(\n"
+     "\t\t\t\t\tFOE_LIGHT_SHIFT[0], FOE_LIGHT_SHIFT[1],\n"
+     "\t\t\t\t\tFOE_LIGHT_SHIFT[2], 1.0)\n"
+     "\t\telse:\n"
+     "\t\t\tl.light_energy = float(row[\"energy\"])\n"
+     "\t\t\tl.light_color = lc\n"
+     "\tqueue_redraw()\n",
+     "\t# I 路线 v2：灯光一个都不碰。v1 实测 GL Compatibility 下改一个\n"
+     "\t# SubViewport 的 DirectionalLight3D 会让另一个 SubViewport 的角色\n"
+     "\t# 一起变暗（玩家层灯能量恒定，玩家 ROI 仍暗 20.08）。\n"
+     "\t# 改用每层独立的 CanvasItem.material，物理上不会串到玩家层。\n"
+     "\tif enabled:\n"
+     "\t\tif _foe_canvas_mat == null:\n"
+     "\t\t\tvar sh := Shader.new()\n"
+     "\t\t\tsh.code = FOE_CANVAS_SHADER_CODE\n"
+     "\t\t\tvar sm := ShaderMaterial.new()\n"
+     "\t\t\tsm.shader = sh\n"
+     "\t\t\t_foe_canvas_mat = sm\n"
+     "\t\tmaterial = _foe_canvas_mat\n"
+     "\telse:\n"
+     "\t\tmaterial = null\n"
+     "\tqueue_redraw()\n"),
+]
+
+
+def main() -> int:
+    before = {str(p.relative_to(GAME)).replace("\\", "/"): sha(p)
+              for p in (LAYER, ARENA, FIGHTER)}
+    data = LAYER.read_bytes()
+    eol = b"\r\n" if b"\r\n" in data else b"\n"
+    work = data.replace(eol, b"\n")
+    # 幂等：已应用时跳过补丁，只按盘上源码复算判据（便于收口重跑）。
+    applied = []
+    if b"FOE_CANVAS_SHADER_CODE" not in work:
+        for name, old, new in PATCHES:
+            o, n = old.encode("utf-8"), new.encode("utf-8")
+            assert work.count(o) == 1, (
+                f"anchor not unique: {name} count={work.count(o)}")
+            work = work.replace(o, n, 1)
+            applied.append(name)
+        LAYER.write_bytes(work.replace(b"\n", eol))
+    else:
+        applied = ["ALREADY_APPLIED"]
+
+    src = LAYER.read_text(encoding="utf-8")
+    checks = {
+        "arena_untouched": sha(ARENA) == before["scripts/arena.gd"],
+        "fighter_untouched": sha(FIGHTER) == before["scripts/fighter.gd"],
+        "three_patches_or_idempotent": (
+            len(applied) == 3 or applied == ["ALREADY_APPLIED"]),
+        # 只禁「运行时改灯」；_add_light() 里创建灯的赋值是合法且必需的。
+        "no_runtime_light_energy_write": (
+            'l.light_energy = float(row["energy"])' not in src),
+        "no_runtime_light_color_write": (
+            'l.light_color = lc * Color(' not in src),
+        "light_creation_assignments_present": (
+            "l.light_energy = energy" in src
+            and "l.light_color = col" in src),
+        "retired_constants_gone": ("const FOE_LIGHT_ENERGY" not in src
+                                   and "const FOE_LIGHT_SHIFT" not in src),
+        "canvas_shader_present": "shader_type canvas_item" in src,
+        "canvas_material_set": "material = _foe_canvas_mat" in src,
+        "canvas_material_cleared": "material = null" in src,
+        "shader_tint_matches_spec": "vec3(0.42, 0.30, 0.28)" in src,
+        "still_has_3d_tint": "dup.albedo_color = b.albedo_color * Color(" in src,
+        "still_has_draw_scale": "FOE_DRAW_SCALE_X if foe_visual else 1.0" in src,
+        "restore_clears_override": (
+            "set_surface_override_material(i, null)" in src),
+        "G_shape_preserved": all(s in src for s in [
+            "const DEFAULT_SIDE_YAW := 55.0",
+            "drv.apply_frame(c, f)", "_apply_stance_bias()"]),
+    }
+    after = {str(p.relative_to(GAME)).replace("\\", "/"): sha(p)
+             for p in (LAYER, ARENA, FIGHTER)}
+    report = {"before": before, "after": after, "applied": applied,
+              "eol": "CRLF" if eol == b"\r\n" else "LF",
+              "checks": checks,
+              "failed": [k for k, v in checks.items() if not v],
+              "ok": all(checks.values())}
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for a in applied:
+        print("PATCH", a)
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("PATCH_VISUAL_V2_I_OK" if report["ok"]
+          else "PATCH_VISUAL_V2_I_FAILED")
+    return 0 if report["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/patch_visual_v3_i.py =====
+"""I 路线 v3：3D 材质 override 整套退役，只留纯 2D 合成调色。
+
+v1 负结果：改灯 → 两人都暗（GL Compatibility 多 SubViewport 平行光串扰）。
+v2 负结果：灯不改了，但改 foe 层 surface override 仍让玩家层角色
+整体变暗（7940/33390 px，变化像素平均 -25；零操作同状态对照 0）。
+
+v3：3D 渲染树（灯 / 材质 / mesh）完全保持 H 原样，视觉区分只由
+foe 层自己的 CanvasItem.material（canvas_item shader）+ 绘制尺寸承担。
+这两者都是 2D 层本地属性，理论上不可能影响玩家层。
+
+幂等：已应用时跳过补丁，只按盘上源码复算判据。
+用法：python patch_visual_v3_i.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+LAYER = GAME / "scripts" / "fighter_3d_layer.gd"
+ARENA = GAME / "scripts" / "arena.gd"
+FIGHTER = GAME / "scripts" / "fighter.gd"
+OUT = HERE / "data" / "patch_visual_v3_i.json"
+
+
+def sha(p: Path) -> str:
+    return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+OLD = (
+    "\tfor idx in range(_mesh_rows.size()):\n"
+    "\t\tvar row: Dictionary = _mesh_rows[idx]\n"
+    "\t\tvar mi: MeshInstance3D = row[\"mi\"]\n"
+    "\t\tvar i: int = int(row[\"surface\"])\n"
+    "\t\tif not enabled:\n"
+    "\t\t\tmi.set_surface_override_material(i, null)\n"
+    "\t\t\tcontinue\n"
+    "\t\tvar base: Material = row[\"base\"]\n"
+    "\t\tif base is StandardMaterial3D:\n"
+    "\t\t\tif _foe_materials.size() <= idx:\n"
+    "\t\t\t\tvar dup := (base as StandardMaterial3D).duplicate()\n"
+    "\t\t\t\tvar b := base as StandardMaterial3D\n"
+    "\t\t\t\tdup.albedo_color = b.albedo_color * Color(\n"
+    "\t\t\t\t\t\tFOE_TINT[0], FOE_TINT[1], FOE_TINT[2], 1.0)\n"
+    "\t\t\t\tdup.metallic = b.metallic * FOE_METALLIC_MULT\n"
+    "\t\t\t\t_foe_materials.append(dup)\n"
+    "\t\t\tmi.set_surface_override_material(i, _foe_materials[idx])\n"
+)
+NEW = (
+    "\t# I 路线 v3：3D 材质一律不动。v2 实测改 foe 层 surface override\n"
+    "\t# 会让玩家层角色整体变暗（7940 px / 变化像素平均 -25），即使两层\n"
+    "\t# 灯能量、玩家层 override、玩家层 CanvasItem.material 全部恒定。\n"
+    "\t# 视觉区分全部交给纯 2D 合成的 canvas_item shader + 绘制尺寸。\n"
+)
+
+
+def main() -> int:
+    before = {str(p.relative_to(GAME)).replace("\\", "/"): sha(p)
+              for p in (LAYER, ARENA, FIGHTER)}
+    data = LAYER.read_bytes()
+    eol = b"\r\n" if b"\r\n" in data else b"\n"
+    work = data.replace(eol, b"\n")
+    applied = "SKIPPED_ALREADY_APPLIED"
+    if OLD.encode("utf-8") in work:
+        assert work.count(OLD.encode("utf-8")) == 1, "anchor not unique"
+        work = work.replace(OLD.encode("utf-8"), NEW.encode("utf-8"), 1)
+        LAYER.write_bytes(work.replace(b"\n", eol))
+        applied = "V3_APPLIED"
+    src = LAYER.read_text(encoding="utf-8")
+    checks = {
+        "arena_untouched": sha(ARENA) == before["scripts/arena.gd"],
+        "fighter_untouched": sha(FIGHTER) == before["scripts/fighter.gd"],
+        "no_surface_override_calls": (
+            "set_surface_override_material" not in src),
+        # 只禁「复制 3D 材质」；DEFAULT_STANCE_BIAS.duplicate() 是
+        # G 路线本来就有的字典拷贝，不能一起禁。
+        "no_3d_material_duplicate": (
+            "(base as StandardMaterial3D).duplicate()" not in src),
+        "no_light_energy_write": (
+            'l.light_energy = float(row["energy"])' not in src),
+        "canvas_shader_present": "shader_type canvas_item" in src,
+        "canvas_material_set": "material = _foe_canvas_mat" in src,
+        "canvas_material_cleared": "material = null" in src,
+        "shader_tint_matches_spec": "vec3(0.42, 0.30, 0.28)" in src,
+        "draw_scale_kept": (
+            "FOE_DRAW_SCALE_X if foe_visual else 1.0" in src),
+        "collect_meshes_kept_for_diagnostics": (
+            "func _collect_meshes" in src),
+        "G_shape_preserved": all(s in src for s in [
+            "const DEFAULT_SIDE_YAW := 55.0",
+            "drv.apply_frame(c, f)", "_apply_stance_bias()"]),
+    }
+    after = {str(p.relative_to(GAME)).replace("\\", "/"): sha(p)
+             for p in (LAYER, ARENA, FIGHTER)}
+    report = {"before": before, "after": after, "applied": applied,
+              "checks": checks,
+              "failed": [k for k, v in checks.items() if not v],
+              "ok": all(checks.values())}
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    print("PATCH", applied)
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("PATCH_VISUAL_V3_I_OK" if report["ok"]
+          else "PATCH_VISUAL_V3_I_FAILED")
+    return 0 if report["ok"] else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/run_all_checks_i.py =====
+"""I 路线收口：在 I 改动后的游戏树上跑 15 套引擎内自检。
+
+口径与 H 路线 run_all_checks_h.py 完全一致（同一批 res:// 脚本、
+同一套 OK/FAIL 判定），输出落到 I/logs/checks 与 I/data，不覆盖 H 归档。
+用法：python run_all_checks_i.py
+"""
+from __future__ import annotations
+
+import json
+import subprocess
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+LOGS = HERE / "logs" / "checks"
+OUT = HERE / "data" / "all_checks_i.json"
+
+CHECKS = [
+    ("motion_check", "res://tests/motion_check.gd"),
+    ("pose_probe", "res://tests/pose_probe.gd"),
+    ("duel_probe", "res://tests/duel_probe.gd"),
+    ("reach_probe", "res://tests/reach_probe.gd"),
+    ("feet_probe", "res://tests/feet_probe.gd"),
+    ("fighter_skin_check", "res://tests/fighter_skin_check.gd"),
+    ("battle_motion_p0_check", "res://tests/battle_motion_p0_check.gd"),
+    ("battle_rhythm_check", "res://tests/battle_rhythm_check.gd"),
+    ("engine_opt_check", "res://tests/engine_opt_check.gd"),
+    ("redraw_gate_check", "res://tests/redraw_gate_check.gd"),
+    ("taikou_flow_check", "res://tests/taikou_flow_check.gd"),
+    ("taikou_rage_check", "res://tests/taikou_rage_check.gd"),
+    ("taikou_rules_check", "res://tests/taikou_rules_check.gd"),
+    ("combo_check", "res://scripts/combo_check.gd"),
+    ("portrait_wiring_check", "res://tests/portrait_wiring_check.gd"),
+]
+
+
+def summary(text: str) -> str:
+    lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+    hits = [ln for ln in lines
+            if ("CHECK" in ln.upper() or "PROBE" in ln.upper()
+                or "passed" in ln.lower())
+            and not ln.startswith("at:")]
+    return hits[-1] if hits else (lines[-1] if lines else "<empty output>")
+
+
+def main() -> int:
+    LOGS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    rows, failures = [], []
+    for name, script in CHECKS:
+        p = GAME / script.replace("res://", "")
+        if not p.is_file():
+            failures.append(name)
+            rows.append({"name": name, "rc": -1, "ok": False,
+                         "summary": "MISSING FILE"})
+            print(f"FAIL {name:32s} MISSING FILE")
+            continue
+        try:
+            proc = subprocess.run(
+                [str(GODOT), "--headless", "--path", str(GAME),
+                 "--script", script],
+                capture_output=True, timeout=180, cwd=str(GAME))
+            rc = proc.returncode
+            text = (proc.stdout + b"\n" + proc.stderr).decode("utf-8", "replace")
+        except subprocess.TimeoutExpired:
+            rc, text = -1, "TIMEOUT"
+        bad = (rc != 0 or "FAIL:" in text or "SCRIPT ERROR" in text
+               or "Parse Error" in text or len(text.strip()) < 20)
+        rows.append({"name": name, "rc": rc, "ok": not bad,
+                     "summary": summary(text)})
+        (LOGS / f"i_{name}.log").write_text(text, encoding="utf-8")
+        if bad:
+            failures.append(name)
+        print(("FAIL " if bad else "OK   ") +
+              f"{name:32s} rc={rc}  {summary(text)}")
+    payload = {"tag": "i", "total": len(CHECKS), "failed": failures,
+               "result": "ALL GREEN" if not failures else "FAILED",
+               "checks": rows}
+    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    print(f"ALL_CHECKS_I {len(CHECKS) - len(failures)}/{len(CHECKS)} "
+          f"{payload['result']}")
+    return 0 if not failures else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/run_light_isolation.py =====
+"""I 路线诊断驱动：读回 on/plain/again 三态两层灯能量与材质 override。
+
+落盘 data/light_isolation_i.json，并判定玩家层是否真的没被改。
+用法：python run_light_isolation.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import shutil
+import subprocess
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+SRC = HERE / "tests" / "light_isolation_probe.gd"
+DST = GAME / "tests" / "light_isolation_probe.gd"
+OUT = HERE / "data" / "light_isolation_i.json"
+
+
+def main() -> int:
+    shutil.copyfile(SRC, DST)
+    env = os.environ.copy()
+    env.pop("CARD_BOXER_3D", None)
+    env.pop("CARD_BOXER_FOE_VISUAL", None)
+    p = subprocess.run(
+        [str(GODOT), "--path", str(GAME), "--resolution", "1280x720",
+         "--quit-after", "900", "--script",
+         "res://tests/light_isolation_probe.gd"],
+        env=env, capture_output=True, timeout=300, cwd=str(GAME))
+    text = (p.stdout + b"\n--- STDERR ---\n"
+            + p.stderr).decode("utf-8", "replace")
+    (HERE / "logs" / "godot_light_isolation.log").write_text(
+        text, encoding="utf-8")
+    marker = "ILIGHT_JSON "
+    line = next((l for l in text.splitlines()
+                 if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no marker"}
+    rows = {r["tag"]: r for r in payload.get("rows", [])}
+    on, plain, again = (rows.get(t, {}) for t in ("on", "plain", "again"))
+    pl_on = on.get("player_lights", [])
+    pl_plain = plain.get("player_lights", [])
+    foe_on = on.get("foe_lights", [])
+    foe_plain = plain.get("foe_lights", [])
+    checks = {
+        "rc0": p.returncode == 0,
+        "marker": line is not None,
+        "no_errors": ("SCRIPT ERROR" not in text
+                      and "Parse Error" not in text),
+        "three_states": len(rows) == 3,
+        "four_lights_each": all(len(v) == 4 for v in
+                                (pl_on, pl_plain, foe_on, foe_plain)),
+        "player_lights_unchanged": pl_on == pl_plain,
+        # v2 明确「两层灯一个都不改」；v1 里 foe 灯会变，已归档为负结果。
+        "foe_lights_unchanged": foe_on == foe_plain,
+        "all_lights_identical_across_states": (
+            on.get("player_lights") == plain.get("player_lights")
+            == again.get("player_lights")
+            and on.get("foe_lights") == plain.get("foe_lights")
+            == again.get("foe_lights")),
+        "player_no_override": all(r.get("player_overrides") == 0
+                                  for r in rows.values()),
+        # v3：3D 材质 override 整套退役，任何状态都不得出现。
+        "no_3d_override_any_state": all(r.get("foe_overrides") == 0
+                                        for r in rows.values()),
+    }
+    ok = all(checks.values())
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps({
+        "payload": payload, "checks": checks,
+        "failed": [k for k, v in checks.items() if not v],
+        "player_lights_equal_but_pixels_changed": (
+            checks["player_lights_unchanged"]),
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    for t in ("on", "plain", "again"):
+        r = rows.get(t, {})
+        print(t, "player_energy",
+              [x["energy"] for x in r.get("player_lights", [])],
+              "foe_energy",
+              [x["energy"] for x in r.get("foe_lights", [])],
+              "overrides", r.get("player_overrides"),
+              r.get("foe_overrides"))
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("LIGHT_ISOLATION_I_OK" if ok else "LIGHT_ISOLATION_I_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/run_material_probe.py =====
+"""I 路线 P0：驱动 Godot 材质探针，落盘可复算的材质结构。
+
+把 tests/material_probe.gd 复制进游戏工程（新增文件，不改既有），
+headless 跑 Godot 4.5，解析 IMAT_JSON 并判定「运行时 tint 可行」。
+用法：python run_material_probe.py
+"""
+from __future__ import annotations
+
+import json
+import shutil
+import subprocess
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+SRC = HERE / "tests" / "material_probe.gd"
+DST = GAME / "tests" / "material_probe.gd"
+OUT = HERE / "data" / "material_i.json"
+LOG = HERE / "logs" / "godot_material_probe.log"
+
+
+def main() -> int:
+    assert GODOT.is_file() and SRC.is_file()
+    DST.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(SRC, DST)
+    p = subprocess.run(
+        [str(GODOT), "--headless", "--path", str(GAME),
+         "--script", "res://tests/material_probe.gd"],
+        capture_output=True, timeout=180, cwd=str(GAME))
+    text = (p.stdout + b"\n--- STDERR ---\n"
+            + p.stderr).decode("utf-8", "replace")
+    LOG.parent.mkdir(parents=True, exist_ok=True)
+    LOG.write_text(text, encoding="utf-8")
+    marker = "IMAT_JSON "
+    line = next((l for l in text.splitlines()
+                 if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no marker"}
+    surfaces = {k: v.get("surfaces", []) for k, v in payload.items()
+                if isinstance(v, dict)}
+    standard = {k: [s for s in v
+                    if s.get("material_class") == "StandardMaterial3D"]
+                for k, v in surfaces.items()}
+    checks = {
+        "rc0": p.returncode == 0,
+        "marker_present": line is not None,
+        "no_parse_error": ("Parse Error" not in text
+                           and "SCRIPT ERROR" not in text),
+        "both_loaded": all("error" not in v for v in payload.values()
+                           if isinstance(v, dict)),
+        "both_have_standard_material": all(len(v) > 0
+                                           for v in standard.values()),
+        "both_have_albedo_texture": all(
+            bool(s.get("albedo_texture")) for v in standard.values()
+            for s in v),
+        "albedo_colors_are_white": all(
+            all(abs(c - 1.0) < 0.01
+                for c in s["albedo_color"][:3])
+            for v in standard.values() for s in v),
+        "textures_differ_between_roles": (
+            standard.get("player") and standard.get("foe")
+            and standard["player"][0]["albedo_texture"]
+            != standard["foe"][0]["albedo_texture"]),
+    }
+    ok = all(checks.values())
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps({
+        "payload": payload, "standard_surfaces": standard,
+        "checks": checks, "failed": [k for k, v in checks.items()
+                                     if not v],
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print("RC", p.returncode, "marker", line is not None)
+    for k, v in surfaces.items():
+        print(k, "surfaces", len(v),
+              [(s.get("material_class"), s.get("albedo_texture", "")[-40:])
+               for s in v[:2]])
+    for k, v in checks.items():
+        print("CHECK", k, v)
+    print("MATERIAL_I_OK" if ok else "MATERIAL_I_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/run_off_switch_probe.py =====
+"""I 路线：同进程证明 CARD_BOXER_FOE_VISUAL=none 是有效的可逆开关。
+
+判据故意做成「开关有牙」三段：
+  off1 == off2          同状态稳定
+  off1 == restored      可逐像素还原
+  off1 != forced        手动开时对手侧确实变（不是实现坏了所以都没效果）
+  player ROI 全程 0 变化
+
+用法：python run_off_switch_probe.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import shutil
+import subprocess
+import time
+from pathlib import Path
+
+from PIL import Image, ImageChops
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+H = HERE.parent / "H路线-双方3D侧面战斗"
+OUTDIR = HERE / "shots" / "off_switch"
+SRC = HERE / "tests" / "off_switch_probe.gd"
+DST = GAME / "tests" / "off_switch_probe.gd"
+OUT = HERE / "data" / "off_switch_i.json"
+LOG = HERE / "logs" / "godot_off_switch.log"
+THR = 18
+
+
+def load(tag: str) -> Image.Image:
+    return Image.open(OUTDIR / f"off-{tag}.png").convert("RGB")
+
+
+def diff(a: Image.Image, b: Image.Image, box) -> dict:
+    ia, ib = a.crop(box), b.crop(box)
+    d = ImageChops.difference(ia, ib)
+    changed = sum(1 for px in d.get_flattened_data() if sum(px) > THR)
+    total = ia.width * ia.height
+    return {"changed_px": changed, "total_px": total,
+            "ratio": round(changed / total, 4)}
+
+
+def main() -> int:
+    assert GODOT.is_file() and SRC.is_file()
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    DST.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(SRC, DST)
+    env = os.environ.copy()
+    env.pop("CARD_BOXER_3D", None)
+    env["CARD_BOXER_FOE_VISUAL"] = "none"
+    env["I_OFF_DIR"] = str(OUTDIR)
+    t0 = time.perf_counter()
+    try:
+        proc = subprocess.run(
+            [str(GODOT), "--path", str(GAME), "--resolution", "1280x720",
+             "--quit-after", "900", "--script",
+             "res://tests/off_switch_probe.gd"],
+            env=env, capture_output=True, timeout=300, cwd=str(GAME))
+        rc = proc.returncode
+        text = (proc.stdout + b"\n--- STDERR ---\n"
+                + proc.stderr).decode("utf-8", "replace")
+    except subprocess.TimeoutExpired as exc:
+        rc = -1
+        text = ((exc.stdout or b"") + b"\n--- TIMEOUT ---\n").decode(
+            "utf-8", "replace")
+    dt = round(time.perf_counter() - t0, 3)
+    LOG.parent.mkdir(parents=True, exist_ok=True)
+    LOG.write_text(text, encoding="utf-8")
+    marker = "IOFF_JSON "
+    line = next((l for l in text.splitlines()
+                 if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no marker"}
+    rows = payload.get("shots", [])
+    states = {s.get("tag"): s for s in payload.get("states", [])}
+    errors = text.count("SCRIPT ERROR") + text.count("Parse Error")
+
+    boxes = json.loads((H / "data" / "roi_h.json").read_text(
+        encoding="utf-8"))["boxes"]
+    left, right = boxes[0], boxes[1]
+    diffs = {}
+    if all((OUTDIR / f"off-{t}.png").is_file()
+           for t in ("off1", "off2", "forced", "restored")):
+        imgs = {t: load(t) for t in
+                ("off1", "off2", "forced", "restored")}
+        full = (0, 0, 1280, 720)
+        diffs = {
+            "off1_vs_off2_full": diff(imgs["off1"], imgs["off2"], full),
+            "off1_vs_restored_full": diff(
+                imgs["off1"], imgs["restored"], full),
+            "off1_vs_forced_foe_roi": diff(
+                imgs["off1"], imgs["forced"], right),
+            "off1_vs_forced_player_roi": diff(
+                imgs["off1"], imgs["forced"], left),
+        }
+    d = diffs
+    checks = {
+        "rc": rc == 0,
+        "has_opengl": "OpenGL API" in text,
+        "no_script_errors": errors == 0,
+        "no_payload_error": "error" not in payload,
+        "five_shots": len(rows) == 5,
+        "all_png_ok": all(r.get("save_error") == 0
+                          and r.get("w") == 1280 and r.get("h") == 720
+                          and Path(r.get("path", "")).is_file()
+                          for r in rows),
+        "both_layers_ready": (payload.get("player_layer_ready") is True
+                              and payload.get("foe_layer_ready") is True),
+        "env_is_none": payload.get("env_visual_none") == "none",
+        "configure_did_not_enable": (
+            payload.get("foe_initial_visual") is False),
+        "off1_state_disabled": (states.get("off1", {}).get("foe_visual")
+                                is False),
+        "forced_state_enabled": (states.get("forced", {}).get("foe_visual")
+                                 is True),
+        "restored_state_disabled": (
+            states.get("restored", {}).get("foe_visual") is False),
+        "player_layer_never_visual": (
+            payload.get("player_visual_state", {}).get("foe_visual") is False),
+        "off_state_stable": d.get("off1_vs_off2_full", {}).get(
+            "changed_px") == 0,
+        "off_state_restorable": d.get("off1_vs_restored_full", {}).get(
+            "changed_px") == 0,
+        "switch_has_teeth": d.get("off1_vs_forced_foe_roi", {}).get(
+            "ratio", 0.0) > 0.30,
+        "player_roi_never_changes": d.get(
+            "off1_vs_forced_player_roi", {}).get("changed_px") == 0,
+    }
+    ok = all(checks.values())
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps({
+        "run": {"seconds": dt, "returncode": rc,
+                "script_errors": errors, "headless": False},
+        "payload": payload, "diffs": diffs, "checks": checks,
+        "failed": [k for k, v in checks.items() if not v], "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"RUN {dt}s rc={rc} errors={errors}")
+    print("ENV", payload.get("env_visual_none"),
+          "FOE_INITIAL", payload.get("foe_initial_visual"))
+    for s in payload.get("states", []):
+        print("STATE", s)
+    for k, v in diffs.items():
+        print("DIFF", k, v)
+    for k, v in checks.items():
+        if not v:
+            print("  FAIL", k)
+    print("OFF_SWITCH_I_OK" if ok else "OFF_SWITCH_I_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/run_static_ab_i.py =====
+"""I 路线收口：I 改动后「默认关」与 G 改动前基线工程逐像素等价。
+
+基线工程复用 G 路线 baseline_project（G 改动前的完整 2D 工程副本）。
+不设 CARD_BOXER_3D 时 I 的双轨开关不创建任何 3D 层，因此**默认关
+零污染**；跨进程整帧不可比已被 H 路线退役，这里只用 perf_probe.gd
+冻结静态状态 120 帧的可复现通道。用法：python run_static_ab_i.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import subprocess
+import time
+from pathlib import Path
+
+from PIL import Image, ImageChops
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+BASE_PROJECT = (HERE.parent / "G路线-游戏内3D接线" / "baseline_project")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+OUT = HERE / "data" / "static_ab_i.json"
+LOGS = HERE / "logs"
+SHOTS = HERE / "shots" / "static_ab_i"
+PROBE = "res://tests/perf_probe.gd"
+
+
+def run(project: Path, tag: str) -> dict:
+    d = SHOTS / tag
+    d.mkdir(parents=True, exist_ok=True)
+    png = d / "背景基线.png"
+    js = d / "perf.json"
+    env = os.environ.copy()
+    env.pop("CARD_BOXER_3D", None)
+    env.pop("CARD_BOXER_FOE_VISUAL", None)
+    env["CARD_BOXER_PERF_OUT"] = str(png)
+    env["CARD_BOXER_PERF_JSON"] = str(js)
+    env["CARD_BOXER_PERF_FRAMES"] = "120"
+    t0 = time.perf_counter()
+    try:
+        proc = subprocess.run(
+            [str(GODOT), "--path", str(project),
+             "--resolution", "1280x720", "--quit-after", "900",
+             "--script", PROBE],
+            env=env, capture_output=True, timeout=240, cwd=str(project))
+        rc = proc.returncode
+        text = (proc.stdout + b"\n--- STDERR ---\n"
+                + proc.stderr).decode("utf-8", "replace")
+    except subprocess.TimeoutExpired as exc:
+        rc = -1
+        text = ((exc.stdout or b"") + b"\n--- TIMEOUT ---\n").decode(
+            "utf-8", "replace")
+    dt = round(time.perf_counter() - t0, 3)
+    (LOGS / ("static_ab_i_%s.log" % tag)).write_text(text, encoding="utf-8")
+    perf = json.loads(js.read_text(encoding="utf-8")) if js.is_file() else {}
+    return {"tag": tag, "project": str(project), "rc": rc, "seconds": dt,
+            "png": png, "perf": perf,
+            "marker": "PERF_PROBE_DONE" in text,
+            "errors": text.count("SCRIPT ERROR") + text.count("Parse Error"),
+            "has_opengl": "OpenGL API" in text}
+
+
+def main() -> int:
+    assert BASE_PROJECT.is_dir(), BASE_PROJECT
+    LOGS.mkdir(parents=True, exist_ok=True)
+    SHOTS.mkdir(parents=True, exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    a = run(BASE_PROJECT, "pre_g_baseline")
+    b = run(GAME, "i_off")
+
+    ia = Image.open(a["png"]).convert("RGB") if a["png"].is_file() else None
+    ib = Image.open(b["png"]).convert("RGB") if b["png"].is_file() else None
+    changed = None
+    if ia is not None and ib is not None and ia.size == ib.size:
+        changed = sum(ImageChops.difference(ia, ib)
+                      .convert("L").histogram()[1:])
+    checks = {
+        "both_rc0": a["rc"] == 0 and b["rc"] == 0,
+        "both_markers": a["marker"] and b["marker"],
+        "both_gl": a["has_opengl"] and b["has_opengl"],
+        "no_errors": a["errors"] == 0 and b["errors"] == 0,
+        "both_png": ia is not None and ib is not None,
+        "same_size": ia is not None and ib is not None and ia.size == ib.size,
+        "pixel_identical": changed == 0,
+        "same_sample_count": a["perf"].get("samples") == 120
+                             and b["perf"].get("samples") == 120,
+        "same_viewport": a["perf"].get("viewport") == [1280, 720]
+                         and b["perf"].get("viewport") == [1280, 720],
+    }
+    ok = all(checks.values())
+    OUT.write_text(json.dumps({
+        "baseline_project": str(BASE_PROJECT),
+        "baseline": {k: (str(v) if isinstance(v, Path) else v)
+                     for k, v in a.items()},
+        "i_off": {k: (str(v) if isinstance(v, Path) else v)
+                  for k, v in b.items()},
+        "changed_pixels": changed,
+        "prims_mean": {"baseline": a["perf"].get("primitives", {}).get("mean"),
+                       "i_off": b["perf"].get("primitives", {}).get("mean")},
+        "draw_calls_mean": {
+            "baseline": a["perf"].get("draw_calls", {}).get("mean"),
+            "i_off": b["perf"].get("draw_calls", {}).get("mean")},
+        "checks": checks, "failed": [k for k, v in checks.items() if not v],
+        "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"BASELINE rc={a['rc']} {a['seconds']}s  "
+          f"I_OFF rc={b['rc']} {b['seconds']}s")
+    print(f"CHANGED_PIXELS={changed}")
+    for k, v in checks.items():
+        if not v:
+            print("  FAIL", k)
+    print("STATIC_AB_I_OK" if ok else "STATIC_AB_I_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/run_visual_diff_probe.py =====
+"""I 路线 P3：同进程同树「视觉区分 on / plain / again」A/B 探针驱动。
+
+把 tests/visual_diff_probe.gd 复制进游戏工程（新增文件，不改既有），
+带窗口跑 Godot 4.5，解析 IVIS_JSON 并写判据。
+用法：python run_visual_diff_probe.py
+"""
+from __future__ import annotations
+
+import json
+import os
+import shutil
+import subprocess
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+GODOT = Path(r"C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe")
+OUTDIR = HERE / "shots" / "visual_ab"
+SRC = HERE / "tests" / "visual_diff_probe.gd"
+DST = GAME / "tests" / "visual_diff_probe.gd"
+OUT = HERE / "data" / "visual_ab_i.json"
+LOG = HERE / "logs" / "godot_visual_diff.log"
+
+
+def main() -> int:
+    assert GODOT.is_file() and SRC.is_file()
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    DST.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(SRC, DST)
+    env = os.environ.copy()
+    env.pop("CARD_BOXER_3D", None)
+    env.pop("CARD_BOXER_FOE_VISUAL", None)   # 让 configure("foe") 默认启用
+    env["I_VIS_DIR"] = str(OUTDIR)
+    t0 = time.perf_counter()
+    try:
+        proc = subprocess.run(
+            [str(GODOT), "--path", str(GAME), "--resolution", "1280x720",
+             "--quit-after", "900", "--script",
+             "res://tests/visual_diff_probe.gd"],
+            env=env, capture_output=True, timeout=300, cwd=str(GAME))
+        rc = proc.returncode
+        text = (proc.stdout + b"\n--- STDERR ---\n"
+                + proc.stderr).decode("utf-8", "replace")
+    except subprocess.TimeoutExpired as exc:
+        rc = -1
+        text = ((exc.stdout or b"") + b"\n--- TIMEOUT ---\n").decode(
+            "utf-8", "replace")
+    dt = round(time.perf_counter() - t0, 3)
+    LOG.parent.mkdir(parents=True, exist_ok=True)
+    LOG.write_text(text, encoding="utf-8")
+    marker = "IVIS_JSON "
+    line = next((l for l in text.splitlines()
+                 if l.startswith(marker)), None)
+    payload = json.loads(line[len(marker):]) if line else {"error": "no marker"}
+    rows = payload.get("shots", [])
+    states = {s.get("tag"): s for s in payload.get("states", [])}
+    errors = text.count("SCRIPT ERROR") + text.count("Parse Error")
+    checks = {
+        "rc": rc == 0,
+        "has_opengl": "OpenGL API" in text,
+        "no_script_errors": errors == 0,
+        "no_payload_error": "error" not in payload,
+        "five_shots": len(rows) == 5,
+        "all_png_ok": all(r.get("save_error") == 0
+                          and r.get("w") == 1280 and r.get("h") == 720
+                          and Path(r.get("path", "")).is_file()
+                          for r in rows),
+        "both_layers_ready": (payload.get("player_layer_ready") is True
+                              and payload.get("foe_layer_ready") is True),
+        "env_not_none": payload.get("env_visual_none") == "",
+        "on_state_enabled": states.get("on", {}).get("foe_visual") is True,
+        "plain_state_disabled": (states.get("plain", {}).get("foe_visual")
+                                 is False),
+        "again_state_enabled": (states.get("again", {}).get("foe_visual")
+                                is True),
+        "player_layer_never_visual": (
+            payload.get("player_visual_state", {}).get("foe_visual") is False),
+        "mesh_and_lights_collected": all(
+            states.get(t, {}).get("mesh_rows", 0) > 0
+            and states.get(t, {}).get("light_rows", 0) == 4
+            for t in ("on", "plain", "again")),
+    }
+    ok = all(checks.values())
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps({
+        "run": {"seconds": dt, "returncode": rc,
+                "has_opengl": "OpenGL API" in text,
+                "script_errors": errors, "headless": False},
+        "payload": payload, "checks": checks,
+        "failed": [k for k, v in checks.items() if not v], "ok": ok,
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"RUN {dt}s rc={rc} errors={errors}")
+    for s in payload.get("states", []):
+        print("STATE", s)
+    print("PLAYER", payload.get("player_visual_state"))
+    for r in rows:
+        print(f"SHOT {r['name']:<8} {r['w']}x{r['h']} "
+              f"err={r['save_error']} prims={r['prims']:.0f} "
+              f"calls={r['draw_calls']:.0f}")
+    for k, v in checks.items():
+        if not v:
+            print("  FAIL", k)
+    print("VISUAL_AB_I_OK" if ok else "VISUAL_AB_I_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/selftest_did_not_run_i.py =====
+"""证明 mutation_i.py 的「锚点失配 = DID NOT RUN」分支真的有牙。
+
+做法：复制一份变异脚本到 logs/（清单排除目录），把 M01 的 needle
+改成盘上绝不会出现的字符串，用 I_ROOT 指回真工作区后跑它。
+期望：M01 被标 DID NOT RUN、汇总 MUTATION_I_FAILED（不算通过）、
+其余 11 组照常按点名判据 CAUGHT 并逐字节还原、clean re-run 仍 GREEN。
+
+用法：python selftest_did_not_run_i.py
+"""
+from __future__ import annotations
+
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+SRC = HERE / "mutation_i.py"
+COPY = HERE / "logs" / "selftest_mutation_i.py"
+NEEDLE = b"const FOE_DRAW_SCALE_X := 1.22"
+ABSENT = b"const FOE_DRAW_SCALE_X := 9.99_ABSENT"
+TOTAL = 12
+
+
+def main() -> int:
+    src = SRC.read_text(encoding="utf-8")
+    anchor = src.find("CASES = [")
+    assert anchor > 0, "CASES block not found"
+    head, tail = src[:anchor], src[anchor:]
+    assert NEEDLE.decode() in tail, "needle literal not in CASES"
+    patched = head + tail.replace(NEEDLE.decode(), ABSENT.decode(), 1)
+    assert ABSENT.decode() in patched and patched != src
+    COPY.parent.mkdir(parents=True, exist_ok=True)
+    COPY.write_text(patched, encoding="utf-8")
+
+    env = os.environ.copy()
+    env["I_ROOT"] = str(HERE)
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    p = subprocess.run([sys.executable, "-u", str(COPY)],
+                       capture_output=True, timeout=300, env=env)
+    out = (p.stdout + p.stderr).decode("utf-8", "replace")
+    # 不要与 shell 重定向的 selftest_did_not_run_i.out 同名，否则
+    # 子进程输出会把本脚本自己的判据输出覆盖成一份混在一起的日志。
+    (HERE / "logs" / "selftest_mutation_i_child.out").write_text(
+        out, encoding="utf-8")
+
+    checks = {
+        "m01_marked_did_not_run": (
+            "M01_source_scale_reverted DID NOT RUN" in out),
+        "dnr_counted": "DID_NOT_RUN=1" in out,
+        "not_reported_as_ok": "MUTATION_I_FAILED" in out,
+        "other_cases_still_caught": f"CAUGHT={TOTAL - 1}/{TOTAL}" in out,
+        "all_mutations_restored": (
+            f"restore={TOTAL - 1}/{TOTAL - 1}" in out),
+        "clean_rerun_green": "clean=GREEN" in out,
+        "copy_script_left_in_excluded_dir": COPY.is_file(),
+    }
+    COPY.unlink(missing_ok=True)
+    checks["temp_script_removed"] = not COPY.exists()
+    for k, v in checks.items():
+        print(("OK   " if v else "FAIL ") + k)
+    ok = all(checks.values())
+    print(f"SELFTEST_I {sum(checks.values())}/{len(checks)}")
+    print("DID_NOT_RUN_BRANCH_OK" if ok else "DID_NOT_RUN_BRANCH_FAILED")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/verify_i.py =====
+"""I 路线承重判据：每条结论都从盘上重算，不信任任何汇总报告的结论字段。
+
+分组：
+  A 源码形状（直接读游戏工程 fighter_3d_layer.gd）
+  B 基线对账（baseline_i.json 逐文件 sha256）
+  C 规格与负结果（r1 / v1 / v2 负结果必须保持 ok=false）
+  D 同进程 A/B 区分度指标
+  E 可逆开关与全量回归
+  F 交付清单（逐条重算 sha，排除 logs/orig/清单/diff）
+
+输出只写 logs/verify_i.json（清单排除目录），避免清单自指。
+用法：python verify_i.py
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GAME = Path(r"C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer")
+H = HERE.parent / "H路线-双方3D侧面战斗"
+LAYER = GAME / "scripts" / "fighter_3d_layer.gd"
+ARENA = GAME / "scripts" / "arena.gd"
+FIGHTER = GAME / "scripts" / "fighter.gd"
+LIST = HERE / "文件清单.txt"
+OUT = HERE / "logs" / "verify_i.json"
+
+
+def j(rel: str) -> dict:
+    return json.loads((HERE / rel).read_text(encoding="utf-8"))
+
+
+def sha(p: Path) -> str:
+    return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+def game_rels() -> set[str]:
+    out = set()
+    for p in GAME.rglob("*"):
+        if not p.is_file():
+            continue
+        rel = p.relative_to(GAME)
+        if any(part in (".godot", "__pycache__") for part in rel.parts):
+            continue
+        out.add(str(rel).replace("\\", "/"))
+    return out
+
+
+def filelist_actual() -> dict[str, tuple[int, str]]:
+    skip = {"logs", ".godot", "__pycache__", "orig"}
+    names = {"文件清单.txt", "new-files.diff"}
+    out = {}
+    for p in HERE.rglob("*"):
+        if not p.is_file() or p.name in names:
+            continue
+        rel = p.relative_to(HERE)
+        if any(part in skip for part in rel.parts):
+            continue
+        out[str(rel).replace("\\", "/")] = (p.stat().st_size, sha(p))
+    return out
+
+
+def main() -> int:
+    spec = j("data/visual_diff_spec.json")
+    baseline = j("baseline_i.json")
+    rootcause = j("data/rootcause_i.json")
+    texture = j("data/texture_i.json")
+    material = j("data/material_i.json")
+    v3 = j("data/patch_visual_v3_i.json")
+    final = j("data/patch_visual_final_i.json")
+    ab = j("data/visual_ab_i.json")
+    diag = j("data/visual_diag_i.json")
+    r1 = j("data/visual_diag_r1_failed.json")
+    off = j("data/off_switch_i.json")
+    allc = j("data/all_checks_i.json")
+    static = j("data/static_ab_i.json")
+    light = j("data/light_isolation_i.json")
+    v1 = j("data/v1-failed/visual_diag_i.json")
+    v2 = j("data/v2-failed/player_leak_i.json")
+
+    src = LAYER.read_text(encoding="utf-8")
+    tint = spec["canvas_tint"]
+    tint_lit = "vec3(%s)" % ", ".join(f"{v:.2f}" for v in tint)
+    sx, sy = (spec["silhouette"]["draw_scale_x"],
+              spec["silhouette"]["draw_scale_y"])
+    targets = spec["targets"]
+    base_map = {r["rel"]: r["sha256"] for r in baseline["files"]}
+    now = game_rels()
+    changed = sorted(r for r, h in base_map.items()
+                     if r in now and sha(GAME / r) != h)
+    missing = sorted(r for r in base_map if r not in now)
+
+    m = diag["metrics"]
+    d = diag["diffs"]
+    od = off["diffs"]
+    c: dict[str, bool] = {}
+
+    # A 源码形状 ---------------------------------------------------
+    c["source_scale_matches_spec"] = (
+        f"const FOE_DRAW_SCALE_X := {sx:.2f}" in src)
+    c["source_scale_y_matches_spec"] = (
+        f"const FOE_DRAW_SCALE_Y := {sy:.2f}" in src)
+    c["source_tint_matches_spec"] = tint_lit in src
+    c["source_has_canvas_shader"] = "shader_type canvas_item" in src
+    c["source_canvas_mat_set_and_cleared"] = (
+        "material = _foe_canvas_mat" in src and "material = null" in src)
+    c["source_no_surface_override"] = (
+        "set_surface_override_material" not in src)
+    c["source_no_3d_material_duplicate"] = (
+        "(base as StandardMaterial3D).duplicate()" not in src)
+    c["source_no_light_energy_write"] = (
+        'l.light_energy = float(row["energy"])' not in src)
+    c["source_retired_constants_absent"] = all(
+        n not in src for n in spec["material"]["retired_constants_absent"])
+    c["source_off_switch_present"] = (
+        '"CARD_BOXER_FOE_VISUAL"' in src and '!= "none"' in src)
+    c["source_off_switch_scoped_to_foe"] = (
+        'if p_role == "foe" and OS.get_environment(' in src)
+    c["source_player_draw_path_identity_shape"] = all(
+        s in src for s in (
+            "FOE_DRAW_SCALE_X if foe_visual else 1.0",
+            "FOE_DRAW_SCALE_Y if foe_visual else 1.0"))
+    c["source_G_shape_preserved"] = all(s in src for s in [
+        "const DEFAULT_SIDE_YAW := 55.0",
+        "drv.apply_frame(c, f)", "_apply_stance_bias()"])
+    c["source_collect_meshes_for_diagnostics"] = (
+        "func _collect_meshes" in src)
+
+    # B 基线对账 ---------------------------------------------------
+    c["baseline_backup_verified"] = (baseline["backup_verified"] is True
+                                     and not baseline["backup_mismatch"])
+    c["baseline_only_layer_changed"] = (
+        changed == ["scripts/fighter_3d_layer.gd"] and not missing)
+    c["arena_sha_matches_baseline"] = (
+        sha(ARENA) == base_map["scripts/arena.gd"])
+    c["fighter_sha_matches_baseline"] = (
+        sha(FIGHTER) == base_map["scripts/fighter.gd"])
+    c["layer_sha_matches_final_report"] = (
+        sha(LAYER) == final["sha256_after"]["scripts/fighter_3d_layer.gd"])
+
+    # C 规格与负结果 -----------------------------------------------
+    c["spec_revision_is_2"] = spec.get("revision") == 2
+    c["spec_width_target_not_relaxed"] = (
+        targets["min_subject_width_ratio"] == 1.1)
+    c["spec_retired_constants_named"] = (
+        spec["material"]["retired_constants_absent"]
+        == ["FOE_TINT", "FOE_METALLIC_MULT", "FOE_CANVAS_TINT"])
+    c["spec_off_targets_present"] = all(
+        targets.get(k) is True for k in (
+            "off_switch_disables_visual_layer",
+            "off_state_same_process_pixel_identical",
+            "default_off_pixel_identical"))
+    c["r1_negative_result_kept_false"] = (
+        r1.get("ok") is False
+        and r1.get("checks", {}).get("wide_roi_wider_than_plain") is False
+        and r1["metrics"]["foe_width_ratio_wide"] < 1.1)
+    c["v1_negative_result_kept"] = (
+        abs(v1["metrics"].get("player_luma_change_on_vs_plain", 0.0)) > 5.0)
+    c["v2_negative_result_kept"] = v2.get("changed_px", 0) > 1000
+    c["v3_patch_report_ok"] = v3.get("ok") is True
+    c["final_patch_report_ok"] = final.get("ok") is True
+    c["rootcause_points_to_render_chain"] = (
+        rootcause.get("hypothesis_falsified") is True
+        and "metallic" in rootcause.get("root_cause", "")
+        and abs(rootcause["render_luma_gap_player_minus_foe"]) < 20.0)
+    c["texture_gap_is_real"] = (
+        texture["deltas"]["mean_lit_luma_player_minus_foe"] > 60.0)
+    c["material_probe_ran"] = material.get("ok") is True
+
+    # D 同进程 A/B --------------------------------------------------
+    c["visual_ab_ok"] = ab.get("ok") is True
+    c["visual_diag_ok"] = diag.get("ok") is True
+    c["visual_diag_all_checks_true"] = all(diag["checks"].values())
+    c["player_roi_pixel_identical"] = (
+        d["player_roi_on_vs_plain"]["changed_px"]
+        == targets["player_roi_changed_px"])
+    c["noop_frames_identical"] = (
+        d["player_roi_noop"]["changed_px"] == 0
+        and d["foe_roi_noop"]["changed_px"] == 0)
+    c["repeat_switch_deterministic"] = (
+        d["foe_roi_on_vs_again"]["changed_px"] == 0)
+    c["luma_gap_above_target"] = (
+        m["luma_gap_player_minus_foe_on"]
+        >= targets["min_luma_gap_player_minus_foe"])
+    c["width_ratio_above_target"] = (
+        m["foe_width_ratio_wide"] >= targets["min_subject_width_ratio"])
+    c["color_shift_above_target"] = (
+        abs(m["red_blue_shift_delta"])
+        >= targets["min_abs_red_blue_shift"])
+    c["foe_luma_drop_substantial"] = m["foe_luma_drop_on_vs_plain"] > 50.0
+    c["player_luma_unchanged"] = (
+        abs(m["player_luma_change_on_vs_plain"]) < 0.01)
+    c["full_frame_change_is_scoped"] = abs(
+        d["full_frame_on_vs_plain"]["changed_px"]
+        - d["foe_roi_on_vs_plain"]["changed_px"]) < 2000
+    roi_h = json.loads((H / "data" / "roi_h.json").read_text(
+        encoding="utf-8"))["boxes"]
+    c["width_uses_wide_roi"] = (
+        (diag.get("wide_foe_roi", [0, 0, 0, 0])[2]
+         - diag.get("wide_foe_roi", [0, 0, 0, 0])[0])
+        > (roi_h[1][2] - roi_h[1][0]))
+    c["light_isolation_ran"] = (light.get("ok") is True
+                                and light.get(
+                                    "player_lights_equal_but_pixels_changed")
+                                is True)
+
+    # E 可逆开关与回归 ---------------------------------------------
+    c["off_switch_all_checks_true"] = all(off["checks"].values())
+    c["off_switch_ok"] = off.get("ok") is True
+    c["off_configure_did_not_enable"] = (
+        off["payload"].get("foe_initial_visual") is False
+        and off["payload"].get("env_visual_none") == "none")
+    c["off_state_stable_and_restorable"] = (
+        od["off1_vs_off2_full"]["changed_px"] == 0
+        and od["off1_vs_restored_full"]["changed_px"] == 0)
+    c["switch_has_teeth"] = (
+        od["off1_vs_forced_foe_roi"]["ratio"] > 0.30)
+    c["off_player_roi_never_changes"] = (
+        od["off1_vs_forced_player_roi"]["changed_px"] == 0)
+    c["all_checks_15_green"] = (
+        allc["result"] == "ALL GREEN" and allc["total"] == 15
+        and not allc["failed"] and len(allc["checks"]) == 15)
+    c["static_ab_zero_pixels"] = (
+        static["changed_pixels"] == 0 and static.get("ok") is True)
+
+    # F 交付清单 ---------------------------------------------------
+    c["filelist_present"] = LIST.is_file()
+    declared = {}
+    if LIST.is_file():
+        for ln in LIST.read_bytes().decode("utf-8").splitlines():
+            if not ln or ln.startswith("#"):
+                continue
+            p = ln.split("\t")
+            if len(p) == 3:
+                declared[p[0]] = (int(p[1]), p[2])
+    actual = filelist_actual()
+    c["filelist_populated"] = len(declared) > 40
+    c["filelist_self_consistent"] = (
+        bool(declared) and declared == actual)
+    boards = ["I-视觉区分A-B.png", "I-r1-宽度未达标.png",
+              "I-V1失败-全局变暗.png", "I-V2失败-玩家侧变暗.png",
+              "I-玩家侧泄漏热图.png"]
+    c["boards_present"] = all(
+        (HERE / "boards" / b).is_file()
+        and (HERE / "boards" / b).stat().st_size > 50000 for b in boards)
+
+    failed = [k for k, v in c.items() if not v]
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps({"checks": c, "failed": failed,
+                               "ok": not failed},
+                              ensure_ascii=False, indent=2) + "\n",
+                   encoding="utf-8")
+    for k, v in c.items():
+        print("CHECK", k, v)
+    print(f"VERIFY_I {len(c) - len(failed)}/{len(c)} failed={len(failed)}")
+    for k in failed:
+        print("  FAILED", k)
+    print("I_VERIFIED" if not failed else "I_NOT_VERIFIED")
+    return 0 if not failed else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
+
+===== I/tests/light_isolation_probe.gd =====
+extends SceneTree
+## I 路线诊断：on/plain 两态里，两个 SubViewport 的灯能量各是多少。
+## 用来判定「玩家侧跟着变暗」是代码 bug 还是多 SubViewport 光照串扰。
+## 跑法：godot --path . --resolution 1280x720 --quit-after 900 \
+##        --script res://tests/light_isolation_probe.gd
+
+const ArenaScene = preload("res://scenes/main.tscn")
+
+
+class Driver:
+	extends Node
+
+	const LayerScript = preload("res://scripts/fighter_3d_layer.gd")
+	const MOTION_P := "res://data/motion_input.json"
+	const MOTION_F := "res://data/motion_input_foe.json"
+	const WARM := 20
+
+	var arena: Node2D
+	var stage := 0
+	var wait := 0
+	var busy := false
+	var initialized := false
+	var rows: Array = []
+
+	func _lights(layer) -> Array:
+		var out: Array = []
+		if layer == null or layer.sv == null:
+			return out
+		for c in layer.sv.get_children():
+			if c is DirectionalLight3D:
+				var l := c as DirectionalLight3D
+				out.append({"energy": snappedf(l.light_energy, 0.0001),
+					"r": snappedf(l.light_color.r, 0.0001),
+					"g": snappedf(l.light_color.g, 0.0001),
+					"b": snappedf(l.light_color.b, 0.0001)})
+		return out
+
+	func _overrides(layer) -> int:
+		var n := 0
+		if layer == null:
+			return n
+		for row in layer._mesh_rows:
+			var mi: MeshInstance3D = row["mi"]
+			if mi.get_surface_override_material(int(row["surface"])) != null:
+				n += 1
+		return n
+
+	func _attach() -> void:
+		var lp := LayerScript.new()
+		arena.world.add_child(lp)
+		if lp.setup(JSON.parse_string(
+				FileAccess.get_file_as_string(MOTION_P))):
+			arena.layer_3d = lp
+			lp.position = arena.player.position + arena.player.visual_shift
+			arena.player.draw_3d_override = true
+		var lf := LayerScript.new()
+		lf.configure("foe", LayerScript.FOE_GLB_PATH,
+				LayerScript.DEFAULT_FOE_YAW, false)
+		arena.world.add_child(lf)
+		if lf.setup(JSON.parse_string(
+				FileAccess.get_file_as_string(MOTION_F))):
+			arena.layer_3d_foe = lf
+			lf.position = arena.enemy.position + arena.enemy.visual_shift
+			arena.enemy.draw_3d_override = true
+
+	func _record(tag: String) -> void:
+		rows.append({
+			"tag": tag,
+			"player_lights": _lights(arena.layer_3d),
+			"foe_lights": _lights(arena.layer_3d_foe),
+			"player_overrides": _overrides(arena.layer_3d),
+			"foe_overrides": _overrides(arena.layer_3d_foe),
+			"player_state": arena.layer_3d.visual_state()
+					if arena.layer_3d != null else {},
+			"foe_state": arena.layer_3d_foe.visual_state()
+					if arena.layer_3d_foe != null else {},
+		})
+
+	func _process(_d: float) -> void:
+		if busy:
+			return
+		busy = true
+		if not initialized:
+			initialized = true
+			arena.paused = true
+			for c in arena.get_children():
+				if c.name != "World":
+					c.visible = false
+		wait += 1
+		if wait < WARM:
+			busy = false
+			return
+		wait = 0
+		if stage == 0:
+			_attach()
+			_record("on")
+		elif stage == 1:
+			arena.layer_3d_foe.set_foe_visual(false)
+			_record("plain")
+		elif stage == 2:
+			arena.layer_3d_foe.set_foe_visual(true)
+			_record("again")
+			print("ILIGHT_JSON " + JSON.stringify({"rows": rows}))
+			get_tree().quit(0)
+			return
+		stage += 1
+		busy = false
+
+
+func _init() -> void:
+	var inst: Node2D = (ArenaScene as PackedScene).instantiate()
+	root.add_child(inst)
+	var d := Driver.new()
+	d.arena = inst
+	root.add_child(d)
+
+
+===== I/tests/material_probe.gd =====
+extends SceneTree
+## I 路线 P0：读回两份 GLB 在 Godot 里的真实材质参数。
+## 目的：确认能否用 StandardMaterial3D.duplicate() 做运行时 tint，
+## 而不是靠猜 GLB 导入后是什么材质类。
+##
+## 跑法：godot --headless --path . --script res://tests/material_probe.gd
+
+const PLAYER_GLB := "res://assets/3d/player-rigged.glb"
+const FOE_GLB := "res://assets/3d/foe-rigged.glb"
+
+
+func _collect(n: Node, out: Array) -> void:
+	if n is MeshInstance3D:
+		out.append(n)
+	for c in n.get_children():
+		_collect(c, out)
+
+
+func _info(res_path: String) -> Dictionary:
+	var res := load(res_path)
+	if res == null or not (res is PackedScene):
+		return {"path": res_path, "error": "load failed"}
+	var inst: Node = (res as PackedScene).instantiate()
+	var meshes: Array = []
+	_collect(inst, meshes)
+	var rows: Array = []
+	for m in meshes:
+		var mi := m as MeshInstance3D
+		var mesh := mi.mesh
+		if mesh == null:
+			rows.append({"mesh": mi.name, "error": "null mesh"})
+			continue
+		for i in range(mesh.get_surface_count()):
+			var mat: Material = mesh.surface_get_material(i)
+			var d := {
+				"mesh": String(mi.name), "surface": i,
+				"material_class": mat.get_class() if mat != null else "null",
+			}
+			if mat is StandardMaterial3D:
+				var sm := mat as StandardMaterial3D
+				d["albedo_color"] = [sm.albedo_color.r, sm.albedo_color.g,
+					sm.albedo_color.b, sm.albedo_color.a]
+				d["albedo_texture"] = (sm.albedo_texture.resource_path
+					if sm.albedo_texture != null else "")
+				d["metallic"] = sm.metallic
+				d["roughness"] = sm.roughness
+				d["metallic_texture"] = (sm.metallic_texture.resource_path
+					if sm.metallic_texture != null else "")
+				d["normal_texture"] = (sm.normal_texture.resource_path
+					if sm.normal_texture != null else "")
+			rows.append(d)
+	return {"path": res_path, "surfaces": rows}
+
+
+func _init() -> void:
+	var out := {"player": _info(PLAYER_GLB), "foe": _info(FOE_GLB)}
+	print("IMAT_JSON " + JSON.stringify(out))
+	quit(0)
+
+
+===== I/tests/off_switch_probe.gd =====
+extends SceneTree
+## I 路线：证明 CARD_BOXER_FOE_VISUAL=none 真的让 foe 层退回 H 原样。
+##
+## 同进程同树五帧（跨进程整帧像素等价已退役，见 H 路线记录）：
+##   base     = 无 3D 层（纯背景，用来造角色掩膜）
+##   off1     = 挂两层，env=none，configure("foe") 不得启用视觉层
+##   off2     = 同状态再截一帧（零操作对照）
+##   forced   = 手动 set_foe_visual(true)，证明本进程视觉层功能完好
+##   restored = set_foe_visual(false)，证明能逐像素还原到 off1
+##
+## 跑法（必须带窗口）：
+##   CARD_BOXER_FOE_VISUAL=none I_OFF_DIR=<abs> godot --path . \
+##     --resolution 1280x720 --quit-after 900 \
+##     --script res://tests/off_switch_probe.gd
+
+const ArenaScene = preload("res://scenes/main.tscn")
+
+
+class Driver:
+	extends Node
+
+	const LayerScript = preload("res://scripts/fighter_3d_layer.gd")
+	const MOTION_P := "res://data/motion_input.json"
+	const MOTION_F := "res://data/motion_input_foe.json"
+	const WARM := 20
+
+	var arena: Node2D
+	var out_dir := ""
+	var motion_p: Dictionary = {}
+	var motion_f: Dictionary = {}
+	var initialized := false
+	var busy := false
+	var stage := 0
+	var wait := 0
+	var rows: Array = []
+	var states: Array = []
+	var player_ready := false
+	var foe_ready := false
+	var foe_initial_visual := true
+
+	func _snap(name: String) -> void:
+		await RenderingServer.frame_post_draw
+		var img := get_viewport().get_texture().get_image()
+		var path := out_dir + "/off-" + name + ".png"
+		var err := img.save_png(path)
+		rows.append({"name": name, "path": path,
+			"w": img.get_width(), "h": img.get_height(),
+			"save_error": int(err)})
+
+	func _attach() -> void:
+		var lp := LayerScript.new()
+		arena.world.add_child(lp)
+		player_ready = lp.setup(motion_p)
+		if player_ready:
+			arena.layer_3d = lp
+			arena.motion_3d = motion_p
+			lp.position = arena.player.position + arena.player.visual_shift
+			arena.player.draw_3d_override = true
+			arena.player.queue_redraw()
+		var lf := LayerScript.new()
+		lf.configure("foe", LayerScript.FOE_GLB_PATH,
+				LayerScript.DEFAULT_FOE_YAW, false)
+		arena.world.add_child(lf)
+		foe_ready = lf.setup(motion_f)
+		if foe_ready:
+			arena.layer_3d_foe = lf
+			arena.motion_3d_foe = motion_f
+			lf.position = arena.enemy.position + arena.enemy.visual_shift
+			arena.enemy.draw_3d_override = true
+			arena.enemy.queue_redraw()
+		foe_initial_visual = bool(lf.visual_state().get("foe_visual", true))
+
+	func _record_state(tag: String) -> void:
+		var s := {}
+		if arena.layer_3d_foe != null:
+			s = arena.layer_3d_foe.visual_state()
+		s["tag"] = tag
+		states.append(s)
+
+	func _process(_d: float) -> void:
+		if busy:
+			return
+		busy = true
+		if not initialized:
+			initialized = true
+			arena.paused = true
+			for c in arena.get_children():
+				if c.name != "World":
+					c.visible = false
+			var pp: Variant = JSON.parse_string(
+					FileAccess.get_file_as_string(MOTION_P))
+			if pp is Dictionary:
+				motion_p = pp
+			var ff: Variant = JSON.parse_string(
+					FileAccess.get_file_as_string(MOTION_F))
+			if ff is Dictionary:
+				motion_f = ff
+		wait += 1
+		if wait < WARM:
+			busy = false
+			return
+		wait = 0
+		if stage == 0:
+			await _snap("base")
+			_attach()
+			_record_state("off1")
+		elif stage == 1:
+			await _snap("off1")
+		elif stage == 2:
+			await _snap("off2")
+			arena.layer_3d_foe.set_foe_visual(true)
+			_record_state("forced")
+		elif stage == 3:
+			await _snap("forced")
+			arena.layer_3d_foe.set_foe_visual(false)
+			_record_state("restored")
+		elif stage == 4:
+			await _snap("restored")
+			var payload := {
+				"shots": rows, "states": states,
+				"player_layer_ready": player_ready,
+				"foe_layer_ready": foe_ready,
+				"foe_initial_visual": foe_initial_visual,
+				"player_visual_state": arena.layer_3d.visual_state()
+						if arena.layer_3d != null else {},
+				"env_visual_none": OS.get_environment(
+						"CARD_BOXER_FOE_VISUAL"),
+			}
+			var f := FileAccess.open(out_dir + "/off_result.json",
+					FileAccess.WRITE)
+			if f != null:
+				f.store_string(JSON.stringify(payload, "\t"))
+				f.close()
+			print("IOFF_JSON " + JSON.stringify(payload))
+			get_tree().quit(0)
+			return
+		stage += 1
+		busy = false
+
+
+func _init() -> void:
+	var out_dir := OS.get_environment("I_OFF_DIR")
+	if out_dir == "":
+		print("IOFF_JSON " + JSON.stringify({"error": "I_OFF_DIR missing"}))
+		quit(1)
+		return
+	DirAccess.make_dir_recursive_absolute(out_dir)
+	var inst: Node2D = (ArenaScene as PackedScene).instantiate()
+	root.add_child(inst)
+	var d := Driver.new()
+	d.arena = inst
+	d.out_dir = out_dir
+	root.add_child(d)
+	print("IOFF_START out=%s" % out_dir)
+
+
+===== I/tests/visual_diff_probe.gd =====
+extends SceneTree
+## I 路线：同进程同树 A/B，证明「对手侧视觉区分」生效且玩家侧零变化。
+##
+## 四帧（都在同一进程、同一棵树）：
+##   base  = 无 3D 层（纯背景，用来造角色掩膜）
+##   on    = 两层 + foe 视觉启用
+##   plain = set_foe_visual(false)（H 路线原样）
+##   again = set_foe_visual(true)（可反复切换 / 还原）
+## 跨进程整帧像素等价不成立（RNG 随机化），所以 A/B 必须同进程。
+##
+## 跑法（必须带窗口）：
+##   I_VIS_DIR=<abs> godot --path . --resolution 1280x720 \
+##     --quit-after 900 --script res://tests/visual_diff_probe.gd
+
+const ArenaScene = preload("res://scenes/main.tscn")
+
+
+class Driver:
+	extends Node
+
+	const LayerScript = preload("res://scripts/fighter_3d_layer.gd")
+	const MOTION_P := "res://data/motion_input.json"
+	const MOTION_F := "res://data/motion_input_foe.json"
+	const WARM := 20
+	const NAMES := ["base", "on", "on-repeat", "plain", "again"]
+
+	var arena: Node2D
+	var out_dir := ""
+	var motion_p: Dictionary = {}
+	var motion_f: Dictionary = {}
+	var initialized := false
+	var busy := false
+	var stage := 0
+	var wait := 0
+	var rows: Array = []
+	var states: Array = []
+	var player_ready := false
+	var foe_ready := false
+
+	func _snap(name: String) -> void:
+		await RenderingServer.frame_post_draw
+		var img := get_viewport().get_texture().get_image()
+		var path := out_dir + "/vis-" + name + ".png"
+		var err := img.save_png(path)
+		var vp := RenderingServer.get_rendering_info(
+			RenderingServer.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME)
+		var dc := RenderingServer.get_rendering_info(
+			RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)
+		rows.append({"name": name, "path": path,
+			"w": img.get_width(), "h": img.get_height(),
+			"save_error": int(err), "prims": float(vp),
+			"draw_calls": float(dc)})
+
+	func _attach() -> void:
+		var lp := LayerScript.new()
+		arena.world.add_child(lp)
+		player_ready = lp.setup(motion_p)
+		if player_ready:
+			arena.layer_3d = lp
+			arena.motion_3d = motion_p
+			lp.position = arena.player.position + arena.player.visual_shift
+			arena.player.draw_3d_override = true
+			arena.player.queue_redraw()
+		var lf := LayerScript.new()
+		lf.configure("foe", LayerScript.FOE_GLB_PATH,
+				LayerScript.DEFAULT_FOE_YAW, false)
+		arena.world.add_child(lf)
+		foe_ready = lf.setup(motion_f)
+		if foe_ready:
+			arena.layer_3d_foe = lf
+			arena.motion_3d_foe = motion_f
+			lf.position = arena.enemy.position + arena.enemy.visual_shift
+			arena.enemy.draw_3d_override = true
+			arena.enemy.queue_redraw()
+
+	func _record_state(tag: String) -> void:
+		var s := {}
+		if arena.layer_3d_foe != null:
+			s = arena.layer_3d_foe.visual_state()
+		s["tag"] = tag
+		states.append(s)
+
+	func _process(_d: float) -> void:
+		if busy:
+			return
+		busy = true
+		if not initialized:
+			initialized = true
+			arena.paused = true
+			for c in arena.get_children():
+				if c.name != "World":
+					c.visible = false
+			var pp: Variant = JSON.parse_string(
+					FileAccess.get_file_as_string(MOTION_P))
+			if pp is Dictionary:
+				motion_p = pp
+			var ff: Variant = JSON.parse_string(
+					FileAccess.get_file_as_string(MOTION_F))
+			if ff is Dictionary:
+				motion_f = ff
+		wait += 1
+		if wait < WARM:
+			busy = false
+			return
+		wait = 0
+		if stage == 0:
+			await _snap("base")
+			_attach()
+			_record_state("on")
+		elif stage == 1:
+			await _snap("on")
+			# 零操作对照：同状态再截一帧，区分帧间抖动与真串扰。
+		elif stage == 2:
+			await _snap("on-repeat")
+			arena.layer_3d_foe.set_foe_visual(false)
+			_record_state("plain")
+		elif stage == 3:
+			await _snap("plain")
+			arena.layer_3d_foe.set_foe_visual(true)
+			_record_state("again")
+		elif stage == 4:
+			await _snap("again")
+			var payload := {
+				"shots": rows, "states": states,
+				"player_layer_ready": player_ready,
+				"foe_layer_ready": foe_ready,
+				"player_visual_state": arena.layer_3d.visual_state()
+						if arena.layer_3d != null else {},
+				"env_visual_none": OS.get_environment(
+						"CARD_BOXER_FOE_VISUAL"),
+			}
+			var f := FileAccess.open(out_dir + "/vis_result.json",
+					FileAccess.WRITE)
+			if f != null:
+				f.store_string(JSON.stringify(payload, "\t"))
+				f.close()
+			print("IVIS_JSON " + JSON.stringify(payload))
+			get_tree().quit(0)
+			return
+		stage += 1
+		busy = false
+
+
+func _init() -> void:
+	var out_dir := OS.get_environment("I_VIS_DIR")
+	if out_dir == "":
+		print("IVIS_JSON " + JSON.stringify({"error": "I_VIS_DIR missing"}))
+		quit(1)
+		return
+	DirAccess.make_dir_recursive_absolute(out_dir)
+	var inst: Node2D = (ArenaScene as PackedScene).instantiate()
+	root.add_child(inst)
+	var d := Driver.new()
+	d.arena = inst
+	d.out_dir = out_dir
+	root.add_child(d)
+	print("IVIS_START out=%s" % out_dir)
+
+
+===== I/data/visual_diff_spec.json =====
+{
+  "schema": "visual_diff_v1",
+  "revision": 2,
+  "revision_note": "r1 的 draw_scale_x=1.16 实测宽 ROI 轮廓比 1.0889 < 目标 1.1；r2 把实现提到 1.22 并重跑同进程 A/B。r1 负结果见 data/visual_diag_r1_failed.json 与 boards/I-V1失败-全局变暗.png 同族的口径说明，不放宽阈值。",
+  "role": "foe",
+  "off_switch": "CARD_BOXER_FOE_VISUAL=none",
+  "on_switch": "configure(\"foe\", ...) 自动启用；玩家层与未配置层不启用",
+  "rationale": "rootcause_i.json：贴图 UV 岛亮度差 70.99 被渲染链吃成 -11.18；改渲染链而非重做模型",
+  "material": {
+    "policy": "v3 3D 材质完全不动",
+    "reason": "v2 实测改 foe 层 surface override 会让玩家层角色整体变暗 7940 px；纯 2D 合成 shader 才是零串扰的落点",
+    "retired_v1_v2_values": {
+      "albedo_tint": [0.46, 0.34, 0.30],
+      "metallic_multiplier": 0.35
+    },
+    "retired_constants_absent": [
+      "FOE_TINT", "FOE_METALLIC_MULT", "FOE_CANVAS_TINT"
+    ]
+  },
+  "lights": {
+    "policy": "v2 完全不改灯",
+    "reason": "GL Compatibility 下多个 SubViewport 的平行光串扰；v1 实测玩家层灯能量恒定但玩家 ROI 暗 20.08，负结果见 data/v1-failed/ 与 boards/I-V1失败-全局变暗.png",
+    "retired_v1_values": {"energy_scale": 0.58, "color_shift": [0.78, 0.86, 1.0]}
+  },
+  "canvas_tint": [0.42, 0.30, 0.28],
+  "canvas_tint_source": "FOE_CANVAS_SHADER_CODE 是唯一真相来源；不再另设数组常量，避免两份数值漂移",
+  "canvas_tint_scope": "CanvasItem.material 上的 canvas_item shader，只作用于 foe 层最终贴回 2D 的 ViewportTexture，透明像素 alpha=0 不盖方块",
+  "silhouette": {
+    "draw_scale_x": 1.22,
+    "draw_scale_y": 0.94
+  },
+  "baseline_from_h": {
+    "player_subject_luma": 95.02,
+    "foe_subject_luma": 106.2,
+    "gap_player_minus_foe": -11.18
+  },
+  "targets": {
+    "min_luma_gap_player_minus_foe": 25.0,
+    "min_abs_red_blue_shift": 8.0,
+    "min_subject_width_ratio": 1.1,
+    "player_roi_changed_px": 0,
+    "off_switch_disables_visual_layer": true,
+    "off_state_same_process_pixel_identical": true,
+    "default_off_pixel_identical": true
+  },
+  "hard_rules": [
+    "只改 fighter_3d_layer.gd 的 foe 分支；arena.gd / fighter.gd 零改动",
+    "判定 / HP / 伤害 / 牌型 / 硬直 / 阶段时长零改动",
+    "玩家层绘制路径逐像素不变（同进程 A/B 证明）",
+    "set_foe_visual(false) 必须能完整还原材质 / 灯光 / 绘制尺寸",
+    "不新增资产、不改 GLB、不重做模型"
+  ]
+}
+
+
+===== unified diff: H -> I scripts/fighter_3d_layer.gd =====
+--- H/scripts/fighter_3d_layer.gd
++++ I/scripts/fighter_3d_layer.gd
+@@ -41,6 +41,18 @@
+ # 不用 -90°：与玩家同理，零厚度壳会退化成线且出拳幅度被压成 0。
+ const DEFAULT_FOE_YAW := -55.0
+ 
++# ── I 路线「视觉区分度」：只作用于 foe ──────────────────────
++# rootcause_i.json：贴图 UV 岛亮度差 70.99 被四盏高强度灯 +
++# metallic 乘数 1.0 吃成渲染 -11.18。定稿走纯 2D 合成层：
++# 3D 渲染树（灯 / 材质 / mesh）与 GLB 一个都不动。
++# 数值与 data/visual_diff_spec.json 逐项对应，改一处要改两处。
++# 已退役：3D albedo tint、metallic 乘数（v2 串扰玩家层 7940 px）、
++# 灯能量缩放（v1 跨 SubViewport 串光）；负结果见 data/v1-failed/
++# 与 data/v2-failed/。shader 字符串是 tint 的唯一真相来源。
++const FOE_CANVAS_SHADER_CODE := "shader_type canvas_item;\nvoid fragment() {\n\tvec4 c = texture(TEXTURE, UV);\n\tCOLOR = vec4(c.rgb * vec3(0.42, 0.30, 0.28), c.a);\n}\n"
++const FOE_DRAW_SCALE_X := 1.22
++const FOE_DRAW_SCALE_Y := 0.94
++
+ # 定稿站架（看图证据 boards/G-侧身站架反向扫描.png 的 r0-flip-all）：
+ # 双拳收到胸前护脸、前后脚分开、双脚贴地、无撕裂。
+ # 单位 = 度，绕 Z，与 rig_driver 的 delta 同符号口径。
+@@ -68,6 +80,14 @@
+ var view_yaw_deg := DEFAULT_SIDE_YAW
+ var view_flip := DEFAULT_SIDE_FLIP
+ var view_changes := 0
++# I 路线：foe 专属视觉开关。_mesh_rows/_light_rows 仅供诊断读回；
++# _foe_materials 恒空（v3 断言没有 3D 材质副本）；_foe_canvas_mat
++# 是本层本地的 2D 合成材质，物理上不会串到玩家层。
++var foe_visual := false
++var _mesh_rows: Array = []
++var _light_rows: Array = []
++var _foe_materials: Array = []
++var _foe_canvas_mat: ShaderMaterial = null
+ # 格斗站架偏置（度，绕 Z，与 rig_driver 同符号口径）。
+ # 这是表现层后处理，不改 rig_driver 的公式 / motion_input / 73 帧表。
+ # 可用 CARD_BOXER_3D_STANCE=none 关掉，用来做「有/无站架」A/B 取证。
+@@ -91,6 +111,9 @@
+ 	l.light_color = col
+ 	l.shadow_enabled = shadow
+ 	sv.add_child(l)
++	# I 路线：记下原始能量/颜色，set_foe_visual(false) 要逐项还原。
++	_light_rows.append({"light": l, "energy": energy,
++			"color": col})
+ 
+ 
+ ## H 路线：在 setup() 之前指定角色资产与朝向。
+@@ -101,6 +124,10 @@
+ 	glb_path = p_glb
+ 	view_yaw_deg = p_yaw
+ 	view_flip = p_flip
++	# I 路线：只有 foe 启用视觉区分；none 用于同进程 A/B 还原 H 原样。
++	if p_role == "foe" and OS.get_environment(
++			"CARD_BOXER_FOE_VISUAL") != "none":
++		foe_visual = true
+ 
+ 
+ ## 探针/运行时改视角；不动骨架，只摆相机 + 决定贴图是否镜像。
+@@ -150,6 +177,9 @@
+ 		return false
+ 	var inst: Node3D = (res as PackedScene).instantiate()
+ 	sv.add_child(inst)
++	# I 路线：收集 mesh / 灯初值，仅供 visual_state() 读回诊断；
++	# v3 不复制、不改写任何 3D 材质。
++	_collect_meshes(inst)
+ 
+ 	var skel := _find_skel(inst)
+ 	if skel == null:
+@@ -176,6 +206,8 @@
+ 	_add_light(Vector3(-25.0, 200.0, 0.0), 0.95,
+ 			Color(0.76, 0.85, 1.00), false)
+ 
++	if foe_visual:
++		set_foe_visual(true)
+ 	apply("stance", 0)
+ 	ready_ok = true
+ 	return true
+@@ -201,6 +233,52 @@
+ 		var q := Quaternion(Vector3(0.0, 0.0, 1.0),
+ 				-deg_to_rad(float(stance_bias_deg[key])))
+ 		drv.skel.set_bone_pose_rotation(i, cur * q)
++
++
++## I 路线：递归收集 MeshInstance3D 的 surface 基础材质。
++func _collect_meshes(n: Node) -> void:
++	if n is MeshInstance3D:
++		var mi := n as MeshInstance3D
++		if mi.mesh != null:
++			for i in range(mi.mesh.get_surface_count()):
++				_mesh_rows.append({"mi": mi, "surface": i,
++						"base": mi.mesh.surface_get_material(i)})
++	for c in n.get_children():
++		_collect_meshes(c)
++
++
++## I 路线：可反复切换。true = 本层挂 canvas_item 调色 shader +
++## 加宽压矮绘制尺寸；false = 清 material、尺寸回 1.0，逐项还原到
++## H 路线原样（玩家层恒定 false，从不被本函数触碰）。
++func set_foe_visual(enabled: bool) -> void:
++	foe_visual = enabled
++	# I 路线 v3：3D 材质一律不动。v2 实测改 foe 层 surface override
++	# 会让玩家层角色整体变暗（7940 px / 变化像素平均 -25），即使两层
++	# 灯能量、玩家层 override、玩家层 CanvasItem.material 全部恒定。
++	# 视觉区分全部交给纯 2D 合成的 canvas_item shader + 绘制尺寸。
++	# I 路线 v2：灯光一个都不碰。v1 实测 GL Compatibility 下改一个
++	# SubViewport 的 DirectionalLight3D 会让另一个 SubViewport 的角色
++	# 一起变暗（玩家层灯能量恒定，玩家 ROI 仍暗 20.08）。
++	# 改用每层独立的 CanvasItem.material，物理上不会串到玩家层。
++	if enabled:
++		if _foe_canvas_mat == null:
++			var sh := Shader.new()
++			sh.code = FOE_CANVAS_SHADER_CODE
++			var sm := ShaderMaterial.new()
++			sm.shader = sh
++			_foe_canvas_mat = sm
++		material = _foe_canvas_mat
++	else:
++		material = null
++	queue_redraw()
++
++
++## 探针读回状态，避免靠画面猜开关有没有生效。
++func visual_state() -> Dictionary:
++	return {"role": role_id, "foe_visual": foe_visual,
++			"mesh_rows": _mesh_rows.size(),
++			"light_rows": _light_rows.size(),
++			"foe_materials": _foe_materials.size()}
+ 
+ 
+ func apply(card: String, frame: int) -> void:
+@@ -226,8 +304,11 @@
+ 	var t := sv.get_texture()
+ 	if t == null:
+ 		return
+-	var w := float(SV_W) * DRAW_SCALE
+-	var h := float(SV_H) * DRAW_SCALE
++	# I 路线：只有启用 foe 视觉时改绘制尺寸；玩家侧乘 1.0 精确不变。
++	var sx := FOE_DRAW_SCALE_X if foe_visual else 1.0
++	var sy := FOE_DRAW_SCALE_Y if foe_visual else 1.0
++	var w := float(SV_W) * DRAW_SCALE * sx
++	var h := float(SV_H) * DRAW_SCALE * sy
+ 	# 水平镜像用负宽度 Rect2（不能碰 draw_set_transform：它会覆盖节点
+ 	# 自身 transform，把 arena 设的 position 吃掉，层就画到 (0,0) 了）。
+ 	var x0 := DRAW_OFFSET_X - w * 0.5

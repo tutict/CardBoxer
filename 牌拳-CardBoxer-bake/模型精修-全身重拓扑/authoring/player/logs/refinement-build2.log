@@ -1,0 +1,60 @@
+00:02:48 | INFO: Data are loaded, start creating Blender stuff
+00:02:48 | INFO: Blender create Mesh node node_0.002
+00:02:49 | INFO: glTF import finished in 0.28s
+PLAYER surface_preserving_quad_reflow 31922 38789
+PLAYER explicit_feature_loops {}
+PLAYER structured_face {'features': {'eye_b': {'connected_to_face_grid': True, 'boundary_vertices': 38, 'concentric_rings': 5}, 'eye_f': {'connected_to_face_grid': True, 'boundary_vertices': 38, 'concentric_rings': 5}, 'lips': {'connected_to_face_grid': True, 'boundary_vertices': 28, 'concentric_rings': 5}}, 'grid': [32, 30], 'internal_cap_triangles': 137, 'closed_face_component': True}
+PLAYER surface_bake 0 / 73405 texels 71
+PLAYER surface_bake 4000 / 73405 texels 246445
+PLAYER surface_bake 8000 / 73405 texels 470333
+PLAYER surface_bake 12000 / 73405 texels 671759
+PLAYER surface_bake 16000 / 73405 texels 925389
+PLAYER surface_bake 20000 / 73405 texels 1151951
+PLAYER surface_bake 24000 / 73405 texels 1415246
+PLAYER surface_bake 28000 / 73405 texels 1690586
+PLAYER surface_bake 32000 / 73405 texels 1962361
+PLAYER surface_bake 36000 / 73405 texels 2212766
+PLAYER surface_bake 40000 / 73405 texels 2462062
+PLAYER surface_bake 44000 / 73405 texels 2705253
+PLAYER surface_bake 48000 / 73405 texels 2990163
+PLAYER surface_bake 52000 / 73405 texels 3273016
+PLAYER surface_bake 56000 / 73405 texels 3554463
+PLAYER surface_bake 60000 / 73405 texels 3850648
+PLAYER surface_bake 64000 / 73405 texels 4120334
+PLAYER surface_bake 68000 / 73405 texels 4249253
+PLAYER surface_bake 72000 / 73405 texels 4328492
+PLAYER surface_resample_bake_complete 4358109
+PLAYER normal_reference_bake 0 texels 71
+PLAYER normal_reference_bake 8000 texels 457920
+PLAYER normal_reference_bake 16000 texels 902629
+PLAYER normal_reference_bake 24000 texels 1393049
+PLAYER normal_reference_bake 32000 texels 1931599
+PLAYER normal_reference_bake 40000 texels 2422111
+PLAYER normal_reference_bake 48000 texels 2939201
+PLAYER normal_reference_bake 56000 texels 3501524
+PLAYER normal_reference_bake 64000 texels 4047161
+PLAYER normal_reference_bake 72000 texels 4233851
+PLAYER normal_reference_bake_complete 4358102 degenerate_uv_triangles 0
+09:11.265  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\candidate-full.png'
+09:15.047  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\candidate-face.png'
+09:17.578  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\candidate-hands.png'
+09:20.000  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\candidate-hand-back.png'
+09:22.406  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\grip-0.png'
+09:24.906  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\grip-0p25.png'
+09:27.234  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\grip-0p5.png'
+09:29.734  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\grip-0p75.png'
+09:32.187  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\grip-1.png'
+09:36.015  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\candidate-wireframe.png'
+09:38.937  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\player\candidate-hand-wireframe.png'
+INFO Draco is available, use library at C:\Program Files\Blender Foundation\Blender 5.2\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at C:\Program Files\Blender Foundation\Blender 5.2\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+00:12:25 | INFO: Starting glTF 2.0 export
+00:12:25 | WARNING: Mesh node_0.005 is not valid, and may be exported wrongly
+00:12:25 | INFO: Extracting primitive: node_0.005
+00:12:25 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+00:12:26 | INFO: Primitives created: 1
+00:12:26 | INFO: Finished glTF 2.0 export in 1.046130657196045 s
+
+Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:35:40)
+
+Blender quit

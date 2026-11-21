@@ -1,0 +1,43 @@
+card       kind    fr snap_in snap_out       upper        fore glove_x hit@sw glove@hit   step_max/med   bow
+jab        attack  14    12.3     10.0   0.87-1.57   0.40-2.50   130.0   1.00     130.0      45.6/11.7   0.0
+cross      attack  23    11.1     10.0   0.82-1.57   0.33-2.50   130.0   1.00     130.0       35.9/6.8   0.0
+uppercut   attack  25    77.4     75.3   0.60-1.26   0.67-1.81    34.0   1.00      34.0       18.4/3.2   0.0
+sweep      attack  28    34.7     32.2   1.24-1.39   1.00-1.00    48.0   1.00      48.0        0.0/0.0     -
+wave       attack  35    50.6     50.6   0.91-1.15   1.12-1.23    62.0   1.00      62.0        1.9/0.3   0.0
+throw      attack  19    53.4     43.4   0.82-1.21   0.30-2.32    66.0   1.00      66.0       29.3/6.1   0.0
+rush       move    13     2.1      2.7   0.57-1.13   1.00-1.00    48.0   1.00      48.0        0.0/0.0     -
+backstep   move    11     2.8      3.0   0.90-1.47   1.00-1.00    48.0   1.00      48.0        0.0/0.0     -
+guard      guard   15    68.4     68.4   0.69-0.69   1.16-1.16     6.0   1.00       6.0        0.0/0.0     -
+sidestep   guard   10   100.3     59.8   1.84-1.84   1.00-1.00    48.0   1.00      48.0      66.0/14.3   0.0
+focus      power   23    44.7     44.7   1.33-1.50   1.20-1.20    46.0   1.00      46.0        0.0/0.0     -
+recover    power   14    33.3     33.3   1.00-1.00   0.39-0.39    30.0   1.00      30.0        0.0/0.0     -
+
+worst snap-in per joint (px):
+  head      sidestep    100.3
+  shoulder  sidestep     96.3
+  hip       sidestep     90.6
+  b_hand    sidestep     84.0
+  f_hand    uppercut     77.4
+  f_hand    guard        68.4
+  f_hand    sidestep     66.0
+  f_elbow   sidestep     66.0
+  b_elbow   sidestep     66.0
+  b_hand    guard        61.7
+  f_hand    throw        53.4
+  b_hand    wave         50.6
+
+worst forearm stretch (x rest):
+  jab        2.50x
+  cross      2.50x
+  throw      2.32x
+  uppercut   1.81x
+  wave       1.23x
+  focus      1.20x
+
+glove forward at the tick damage is decided, vs the card's reach:
+  jab        reach  118  glove  130.0  short by -12.0  (swing 1.00 at last active tick)
+  cross      reach  124  glove  130.0  short by  -6.0  (swing 1.00 at last active tick)
+  uppercut   reach  112  glove   34.0  short by  78.0  (swing 1.00 at last active tick)
+  sweep      reach  138  glove   48.0  short by  90.0  (swing 1.00 at last active tick)
+  wave       reach  470  glove   62.0  short by 408.0  (swing 1.00 at last active tick)
+  throw      reach   98  glove   66.0  short by  32.0  (swing 1.00 at last active tick)

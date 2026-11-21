@@ -1,0 +1,5 @@
+POSE_PROBE seconds=1.153 rc=0
+POSE {"after_origin": [0.0, 1.36612, 0.0], "before_origin": [0.0, 1.36612, 0.0], "bone_count": 14, "bound_mesh_count": 1, "global_pose_changed_in_headless": false, "load_ok": true, "path": "res://assets/foe-full.glb", "pose_local_changed": true, "skeleton_found": true, "target_bone_index": 7, "unbound_mesh_count": 1, "seconds": 1.153, "returncode": 0}
+  MESH a_continuous_shell   skeleton_path='..' skin_present=True
+  MESH node_0               skeleton_path='' skin_present=False
+GODOT_POSE_PROBE_OK

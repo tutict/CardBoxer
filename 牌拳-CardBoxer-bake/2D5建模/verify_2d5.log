@@ -1,0 +1,14 @@
+CHECKS 11/11
+PASS pngs_valid: 8/8 PNG, 512x512, manifest sizes match
+PASS renders_nonempty: all 8 renders have >8000 non-white pixels
+PASS repeat_pixels_identical: ImageChops.difference bbox=None (None == pixel-identical)
+PASS repeat_sha_diff_is_metadata_only: chunk types equal=True; IDAT equal=True; tEXt differs=True; bytes 148130 vs 148130
+PASS pose_frames_distinct: min pairwise changed pixels = 28441; stance-vs-motion = jab_impact.png=56045, sweep_impact.png=65061, throw_impact.png=53516, hit_heavy_mid.png=28441
+PASS palette_and_angle_live: palette changed px=3365; angle12 changed px=14527
+PASS manifest_joints_traceable: 8/8 recomputed from baked2.json; 2d5-stance.png:OK, 2d5-jab_impact.png:OK, 2d5-sweep_impact.png:OK, 2d5-throw_impact.png:OK, 2d5-hit_heavy_mid.png:OK, 2d5-stance_enemy.png:OK, 2d5-stance_angle12.png:OK, 2d5-stance_repeat.png:OK
+PASS table_sha256_matches: manifest=b6a7f8435b08... disk=b6a7f8435b08...
+PASS ortho_coordinate_bridge: shoe centers L=132.0 R=289.0 span=157.0px (n=3163); predicted from stance f_foot/b_foot = 157.5px; tol=25px
+PASS differs_from_v1_baseline: changed px=47445 vs V1 run1; dark-pixel test retired (render model changed)
+PASS toon_shader_is_wired: ShaderToRGB=True, CONSTANT=True, toon_material_calls=9, probe=True
+REPORTS {"shoe_span_px": 157, "shoe_span_predicted_px": 157.5, "face_region_175_45_260_140": {"warm_skin": 2837, "dark": 120, "gold": 83}, "face_readable_by_eye": "V3 egg-shaped face ribbon + hair cap, angry brows, half-lidded eyes, nose shadow, mouth and gold clip. (V1's D_FACE / head-sphere note is obsolete.)", "face_stats_caveat": "coarse report-only colour buckets; counts are NOT an existence proof. Facial features are verified by eye, not by these numbers."}
+MODEL_2D5_VERIFIED

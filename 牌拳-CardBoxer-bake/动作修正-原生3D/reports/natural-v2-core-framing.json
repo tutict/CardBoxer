@@ -1,0 +1,8380 @@
+{
+  "ok": true,
+  "images": 598,
+  "failed": 0,
+  "padding": 4,
+  "rows": [
+    {
+      "file": "foe-cross-facing1-f000.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f000.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f001.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        166,
+        410,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f001.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        167,
+        410,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f002.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        169,
+        410,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f002.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        214,
+        171,
+        411,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f003.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        216,
+        173,
+        411,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f003.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        217,
+        173,
+        412,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f004.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        219,
+        173,
+        412,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f004.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        220,
+        173,
+        412,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f005.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        220,
+        173,
+        412,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f005.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        209,
+        177,
+        411,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f006.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        179,
+        407,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f006.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        216,
+        181,
+        406,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f007.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        176,
+        183,
+        405,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f007.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        168,
+        184,
+        403,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f008.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        155,
+        185,
+        402,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f008.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        146,
+        185,
+        402,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f009.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        142,
+        185,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f009.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        147,
+        184,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f010.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        156,
+        184,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f010.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        169,
+        184,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f011.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        175,
+        183,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f011.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        215,
+        182,
+        401,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f012.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        181,
+        401,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f012.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        202,
+        180,
+        401,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f013.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        204,
+        180,
+        402,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f013.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        205,
+        179,
+        402,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f014.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        205,
+        178,
+        402,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f014.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        205,
+        177,
+        403,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f015.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        205,
+        177,
+        404,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f015.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        176,
+        404,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f016.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        175,
+        405,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f016.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        174,
+        406,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f017.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        173,
+        406,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f017.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        173,
+        406,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f018.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        207,
+        172,
+        406,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f018.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        207,
+        171,
+        407,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f019.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        208,
+        170,
+        407,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f019.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        209,
+        169,
+        408,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f020.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        210,
+        167,
+        408,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f020.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-cross-facing1-f021.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f000.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f000.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f001.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        165,
+        410,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f001.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        165,
+        410,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f002.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        165,
+        410,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f002.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        165,
+        411,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f003.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        164,
+        411,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f003.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        210,
+        169,
+        409,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f004.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        175,
+        407,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f004.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        177,
+        405,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f005.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        179,
+        403,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f005.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        199,
+        180,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f006.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        180,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f006.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        199,
+        179,
+        402,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f007.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        176,
+        403,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f007.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        174,
+        403,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f008.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        202,
+        174,
+        404,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f008.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        173,
+        405,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f009.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        204,
+        172,
+        405,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f009.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        205,
+        172,
+        406,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f010.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        171,
+        406,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f010.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        207,
+        170,
+        407,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f011.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        208,
+        170,
+        407,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f011.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        209,
+        168,
+        408,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f012.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        210,
+        167,
+        408,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f012.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-jab-facing1-f013.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f000.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        248,
+        205,
+        473,
+        554
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f000.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        249,
+        205,
+        473,
+        554
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f001.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        249,
+        207,
+        474,
+        555
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f001.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        249,
+        209,
+        476,
+        556
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f002.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        249,
+        211,
+        477,
+        556
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f002.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        250,
+        215,
+        480,
+        556
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f003.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        250,
+        218,
+        482,
+        557
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f003.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        250,
+        222,
+        485,
+        557
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f004.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        251,
+        227,
+        487,
+        557
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f004.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        251,
+        231,
+        489,
+        559
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f005.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        251,
+        236,
+        491,
+        559
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f005.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        251,
+        240,
+        493,
+        559
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f006.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        251,
+        243,
+        494,
+        559
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f006.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        251,
+        246,
+        495,
+        559
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f007.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        251,
+        249,
+        495,
+        559
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f007.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        251,
+        249,
+        494,
+        559
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f008.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        251,
+        247,
+        489,
+        560
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f008.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        251,
+        243,
+        483,
+        561
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f009.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        250,
+        241,
+        475,
+        567
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f009.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        249,
+        240,
+        465,
+        577
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f010.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        248,
+        242,
+        454,
+        585
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f010.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        248,
+        248,
+        443,
+        587
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f011.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        247,
+        255,
+        433,
+        587
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f011.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        246,
+        263,
+        443,
+        586
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f012.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        245,
+        274,
+        452,
+        582
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f012.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        219,
+        287,
+        459,
+        575
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f013.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        303,
+        465,
+        568
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f013.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        181,
+        318,
+        468,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f014.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        171,
+        331,
+        471,
+        555
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f014.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        165,
+        339,
+        472,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f015.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        160,
+        347,
+        473,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f015.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        156,
+        355,
+        473,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f016.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        152,
+        363,
+        473,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f016.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        149,
+        372,
+        472,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f017.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        147,
+        381,
+        472,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f017.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        144,
+        389,
+        473,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f018.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        142,
+        397,
+        473,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f018.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        140,
+        405,
+        473,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f019.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        138,
+        411,
+        474,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f019.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        137,
+        417,
+        474,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f020.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        136,
+        421,
+        474,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f020.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        136,
+        423,
+        474,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f021.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        136,
+        424,
+        474,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f021.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        135,
+        424,
+        474,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f022.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        135,
+        423,
+        474,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f022.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        135,
+        421,
+        474,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f023.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        135,
+        420,
+        474,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f023.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        136,
+        418,
+        474,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f024.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        136,
+        416,
+        474,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f024.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        136,
+        414,
+        475,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f025.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        136,
+        412,
+        475,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f025.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        136,
+        410,
+        475,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f026.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        136,
+        409,
+        475,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f026.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        136,
+        409,
+        475,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-ko-facing1-f027.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        136,
+        408,
+        475,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-stance-facing1-f000.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f000.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f000.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f001.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        210,
+        167,
+        409,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f001.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        208,
+        169,
+        410,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f002.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        172,
+        410,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f002.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        176,
+        412,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f003.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        180,
+        413,
+        553
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f003.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        185,
+        432,
+        558
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f004.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        193,
+        190,
+        452,
+        564
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f004.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        190,
+        195,
+        469,
+        565
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f005.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        199,
+        483,
+        562
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f005.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        185,
+        204,
+        495,
+        559
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f006.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        182,
+        207,
+        504,
+        559
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f006.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        181,
+        209,
+        511,
+        554
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f007.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        180,
+        210,
+        516,
+        555
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f007.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        180,
+        211,
+        509,
+        556
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f008.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        180,
+        211,
+        486,
+        557
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f008.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        182,
+        211,
+        447,
+        557
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f009.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        211,
+        418,
+        555
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f009.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        185,
+        211,
+        417,
+        557
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f010.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        187,
+        212,
+        416,
+        559
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f010.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        189,
+        212,
+        414,
+        559
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f011.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        192,
+        212,
+        413,
+        559
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f011.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        194,
+        212,
+        412,
+        562
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f012.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        212,
+        412,
+        563
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f012.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        190,
+        212,
+        411,
+        562
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f013.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        184,
+        212,
+        410,
+        562
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f013.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        179,
+        213,
+        409,
+        562
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f014.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        175,
+        213,
+        409,
+        561
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f014.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        172,
+        213,
+        408,
+        561
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f015.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        169,
+        214,
+        408,
+        561
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f015.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        166,
+        214,
+        407,
+        561
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f016.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        165,
+        214,
+        407,
+        562
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f016.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        165,
+        214,
+        406,
+        562
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f017.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        166,
+        213,
+        406,
+        562
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f017.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        169,
+        212,
+        406,
+        559
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f018.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        177,
+        211,
+        406,
+        557
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f018.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        189,
+        210,
+        406,
+        555
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f019.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        209,
+        407,
+        552
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f019.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        207,
+        407,
+        550
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f020.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        205,
+        408,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f020.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        204,
+        408,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f021.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        202,
+        409,
+        550
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f021.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        200,
+        409,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f022.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        204,
+        198,
+        409,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f022.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        205,
+        196,
+        409,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f023.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        194,
+        410,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f023.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        208,
+        191,
+        409,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f024.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        188,
+        409,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f024.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        185,
+        409,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f025.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        182,
+        409,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f025.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        178,
+        409,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f026.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        172,
+        409,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f026.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        167,
+        409,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-sweep-facing1-f027.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f000.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f000.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        166,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f001.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        210,
+        168,
+        409,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f001.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        208,
+        172,
+        409,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f002.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        177,
+        409,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f002.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        183,
+        409,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f003.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        200,
+        189,
+        409,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f003.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        195,
+        409,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f004.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        195,
+        202,
+        409,
+        551
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f004.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        192,
+        207,
+        409,
+        553
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f005.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        191,
+        212,
+        409,
+        554
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f005.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        189,
+        215,
+        409,
+        555
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f006.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        189,
+        217,
+        409,
+        555
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f006.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        192,
+        208,
+        409,
+        551
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f007.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        198,
+        196,
+        408,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f007.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        187,
+        407,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f008.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        208,
+        177,
+        407,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f008.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        141,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f009.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        217,
+        105,
+        405,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f009.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        221,
+        79,
+        405,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f010.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        223,
+        69,
+        407,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f010.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        224,
+        69,
+        409,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f011.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        224,
+        71,
+        410,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f011.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        224,
+        74,
+        412,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f012.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        225,
+        79,
+        413,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f012.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        225,
+        95,
+        415,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f013.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        225,
+        98,
+        415,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f013.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        225,
+        105,
+        416,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f014.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        225,
+        112,
+        417,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f014.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        224,
+        122,
+        417,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f015.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        224,
+        135,
+        416,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f015.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        223,
+        152,
+        413,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f016.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        223,
+        153,
+        409,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f016.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        222,
+        154,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f017.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        221,
+        155,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f017.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        220,
+        157,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f018.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        218,
+        159,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f018.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        217,
+        160,
+        406,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f019.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        215,
+        163,
+        406,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f019.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        165,
+        407,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f020.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        210,
+        168,
+        407,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f020.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        208,
+        169,
+        407,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f021.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        208,
+        170,
+        407,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f021.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        209,
+        169,
+        408,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f022.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        210,
+        167,
+        408,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f022.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        166,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-uppercut-facing1-f023.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f000.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f000.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f001.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f001.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        212,
+        166,
+        409,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f002.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        213,
+        166,
+        410,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f002.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        215,
+        167,
+        410,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f003.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        216,
+        168,
+        410,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f003.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        218,
+        170,
+        411,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f004.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        220,
+        171,
+        411,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f004.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        222,
+        172,
+        411,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f005.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        224,
+        174,
+        412,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f005.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        226,
+        175,
+        412,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f006.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        228,
+        177,
+        412,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f006.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        230,
+        178,
+        413,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f007.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        231,
+        180,
+        413,
+        550
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f007.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        236,
+        181,
+        413,
+        551
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f008.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        240,
+        182,
+        413,
+        551
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f008.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        243,
+        183,
+        414,
+        552
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f009.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        246,
+        183,
+        415,
+        552
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f009.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        234,
+        183,
+        411,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f010.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        215,
+        184,
+        407,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f010.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        205,
+        184,
+        406,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f011.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        197,
+        184,
+        405,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f011.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        190,
+        184,
+        405,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f012.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        183,
+        184,
+        404,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f012.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        177,
+        184,
+        404,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f013.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        172,
+        185,
+        403,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f013.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        168,
+        185,
+        403,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f014.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        164,
+        185,
+        402,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f014.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        161,
+        185,
+        402,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f015.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        159,
+        185,
+        402,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f015.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        157,
+        186,
+        402,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f016.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        156,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f016.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        155,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f017.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        154,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f017.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        154,
+        186,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f018.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        155,
+        187,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f018.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        156,
+        188,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f019.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        157,
+        189,
+        401,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f019.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        158,
+        190,
+        401,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f020.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        160,
+        191,
+        401,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f020.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        162,
+        192,
+        401,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f021.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        164,
+        193,
+        401,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f021.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        167,
+        194,
+        401,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f022.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        170,
+        194,
+        402,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f022.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        172,
+        195,
+        402,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f023.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        175,
+        195,
+        402,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f023.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        180,
+        194,
+        402,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f024.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        188,
+        193,
+        402,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f024.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        191,
+        402,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f025.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        205,
+        189,
+        403,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f025.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        201,
+        187,
+        403,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f026.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        190,
+        185,
+        404,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f026.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        186,
+        184,
+        404,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f027.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        209,
+        182,
+        404,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f027.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        205,
+        181,
+        405,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f028.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        180,
+        405,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f028.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        203,
+        179,
+        405,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f029.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        204,
+        178,
+        406,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f029.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        205,
+        177,
+        406,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f030.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        176,
+        406,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f030.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        206,
+        174,
+        406,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f031.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        207,
+        173,
+        407,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f031.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        208,
+        172,
+        406,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f032.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        209,
+        171,
+        407,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f032.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        209,
+        170,
+        407,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f033.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        210,
+        169,
+        407,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f033.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        210,
+        168,
+        408,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f034.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        167,
+        408,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f034.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "foe-wave-facing1-f035.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        211,
+        165,
+        409,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f000.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f000.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f001.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        166,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f001.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f002.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        168,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f002.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        169,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f003.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        171,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f003.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        172,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f004.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        173,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f004.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        173,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f005.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        174,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f005.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        174,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f006.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        174,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f006.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        175,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f007.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        175,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f007.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        175,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f008.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        175,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f008.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        175,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f009.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        175,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f009.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        175,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f010.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        175,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f010.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        175,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f011.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        175,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f011.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        175,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f012.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        175,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f012.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        175,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f013.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        174,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f013.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        174,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f014.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        174,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f014.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        173,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f015.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        172,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f015.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f016.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        171,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f016.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        170,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f017.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        170,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f017.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        169,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f018.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        168,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f018.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        167,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f019.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        167,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f019.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        166,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f020.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        166,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f020.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-cross-facing1-f021.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f000.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f000.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f001.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f001.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        506,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f002.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        165,
+        506,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f002.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        165,
+        506,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f003.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        165,
+        506,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f003.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f004.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        170,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f004.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        171,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f005.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        172,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f005.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        172,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f006.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        526,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f006.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        172,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f007.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        171,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f007.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        170,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f008.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        169,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f008.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        169,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f009.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        168,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f009.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        168,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f010.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        167,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f010.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        167,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f011.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        166,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f011.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        166,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f012.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f012.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-jab-facing1-f013.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f000.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        276,
+        199,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f000.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        276,
+        200,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f001.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        276,
+        201,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f001.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        275,
+        202,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f002.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        275,
+        205,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f002.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        274,
+        207,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f003.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        274,
+        210,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f003.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        273,
+        213,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f004.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        272,
+        217,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f004.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        271,
+        220,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f005.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        271,
+        224,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f005.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        228,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f006.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        231,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f006.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        235,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f007.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        238,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f007.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        268,
+        240,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f008.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        268,
+        242,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f008.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        268,
+        245,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f009.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        248,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f009.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        271,
+        254,
+        503,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f010.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        275,
+        261,
+        503,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f010.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        279,
+        270,
+        502,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f011.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        280,
+        498,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f011.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        290,
+        492,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f012.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        277,
+        302,
+        486,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f012.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        274,
+        316,
+        495,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f013.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        271,
+        330,
+        502,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f013.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        346,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f014.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        268,
+        359,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f014.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        267,
+        367,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f015.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        266,
+        374,
+        516,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f015.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        266,
+        382,
+        517,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f016.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        266,
+        389,
+        517,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f016.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        266,
+        396,
+        517,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f017.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        266,
+        403,
+        517,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f017.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        267,
+        410,
+        516,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f018.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        268,
+        416,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f018.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        420,
+        514,
+        538
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f019.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        417,
+        513,
+        542
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f019.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        271,
+        416,
+        512,
+        546
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f020.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        272,
+        414,
+        512,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f020.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        273,
+        414,
+        511,
+        551
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f021.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        273,
+        413,
+        511,
+        551
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f021.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        273,
+        414,
+        511,
+        551
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f022.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        273,
+        414,
+        511,
+        550
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f022.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        273,
+        414,
+        511,
+        549
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f023.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        272,
+        415,
+        511,
+        548
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f023.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        271,
+        416,
+        511,
+        547
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f024.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        271,
+        417,
+        511,
+        545
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f024.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        418,
+        511,
+        544
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f025.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        419,
+        511,
+        543
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f025.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        420,
+        511,
+        541
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f026.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        421,
+        511,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f026.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        421,
+        511,
+        540
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-ko-facing1-f027.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        421,
+        511,
+        539
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-stance-facing1-f000.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f000.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f000.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        166,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f001.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        169,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f001.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        173,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f002.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        179,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f002.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        186,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f003.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        281,
+        193,
+        501,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f003.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        279,
+        202,
+        498,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f004.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        277,
+        210,
+        496,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f004.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        275,
+        218,
+        494,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f005.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        273,
+        224,
+        492,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f005.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        272,
+        230,
+        490,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f006.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        271,
+        234,
+        488,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f006.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        271,
+        237,
+        486,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f007.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        271,
+        239,
+        485,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f007.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        271,
+        239,
+        486,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f008.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        239,
+        502,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f008.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        239,
+        518,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f009.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        239,
+        533,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f009.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        239,
+        558,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f010.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        239,
+        576,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f010.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        239,
+        588,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f011.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        239,
+        592,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f011.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        239,
+        588,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f012.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        239,
+        580,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f012.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        239,
+        575,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f013.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        240,
+        569,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f013.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        240,
+        562,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f014.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        241,
+        554,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f014.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        241,
+        545,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f015.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        242,
+        536,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f015.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        243,
+        528,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f016.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        268,
+        243,
+        520,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f016.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        268,
+        243,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f017.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        268,
+        243,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f017.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        242,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f018.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        239,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f018.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        269,
+        234,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f019.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        270,
+        229,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f019.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        272,
+        223,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f020.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        274,
+        216,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f020.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        276,
+        209,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f021.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        278,
+        203,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f021.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        279,
+        197,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f022.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        194,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f022.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        281,
+        191,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f023.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        188,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f023.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        186,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f024.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        183,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f024.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        181,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f025.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        179,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f025.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        176,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f026.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        171,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f026.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        167,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-sweep-facing1-f027.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f000.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f000.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        166,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f001.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        168,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f001.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        172,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f002.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        176,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f002.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        182,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f003.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        187,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f003.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        193,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f004.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        199,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f004.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        279,
+        204,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f005.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        278,
+        207,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f005.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        278,
+        209,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f006.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        278,
+        210,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f006.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        201,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f007.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        188,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f007.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        180,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f008.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        172,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f008.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        166,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f009.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        137,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f009.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        108,
+        506,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f010.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        95,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f010.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        98,
+        504,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f011.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        104,
+        504,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f011.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        111,
+        503,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f012.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        119,
+        503,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f012.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        126,
+        503,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f013.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        133,
+        502,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f013.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        139,
+        502,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f014.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        143,
+        502,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f014.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        147,
+        502,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f015.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        293,
+        148,
+        503,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f015.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        149,
+        504,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f016.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        292,
+        151,
+        505,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f016.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        152,
+        506,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f017.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        291,
+        154,
+        506,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f017.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        155,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f018.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        290,
+        157,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f018.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        159,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f019.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        161,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f019.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        163,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f020.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        165,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f020.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        166,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f021.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        167,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f021.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        166,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f022.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        166,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f022.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-uppercut-facing1-f023.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f000.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f000.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f001.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        166,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f001.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        166,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f002.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        167,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f002.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        168,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f003.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        170,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f003.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        171,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f004.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        173,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f004.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        174,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f005.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        176,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f005.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        178,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f006.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        180,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f006.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        181,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f007.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        183,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f007.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        184,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f008.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        185,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f008.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        186,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f009.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        186,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f009.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        184,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f010.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        183,
+        514,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f010.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        183,
+        516,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f011.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        182,
+        520,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f011.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        182,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f012.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        182,
+        529,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f012.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        182,
+        532,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f013.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        182,
+        535,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f013.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        537,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f014.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        181,
+        539,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f014.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        181,
+        540,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f015.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        181,
+        542,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f015.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        181,
+        543,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f016.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        181,
+        543,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f016.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        181,
+        544,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f017.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        544,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f017.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        544,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f018.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        183,
+        544,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f018.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        183,
+        544,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f019.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        184,
+        544,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f019.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        281,
+        186,
+        543,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f020.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        281,
+        187,
+        542,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f020.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        281,
+        188,
+        541,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f021.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        189,
+        540,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f021.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        190,
+        539,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f022.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        191,
+        538,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f022.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        191,
+        537,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f023.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        191,
+        535,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f023.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        191,
+        533,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f024.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        190,
+        529,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f024.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        280,
+        189,
+        525,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f025.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        281,
+        188,
+        520,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f025.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        281,
+        186,
+        518,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f026.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        282,
+        184,
+        517,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f026.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        182,
+        517,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f027.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        283,
+        180,
+        516,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f027.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        179,
+        515,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f028.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        284,
+        177,
+        513,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f028.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        175,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f029.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        285,
+        174,
+        512,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f029.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        173,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f030.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        286,
+        172,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f030.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        170,
+        511,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f031.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        169,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f031.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        287,
+        168,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f032.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        167,
+        510,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f032.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        167,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f033.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        288,
+        166,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f033.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        166,
+        509,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f034.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        508,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f034.5.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    },
+    {
+      "file": "player-wave-facing1-f035.0.png",
+      "size": [
+        720,
+        680
+      ],
+      "bounds": [
+        289,
+        165,
+        507,
+        537
+      ],
+      "clipped": false
+    }
+  ]
+}

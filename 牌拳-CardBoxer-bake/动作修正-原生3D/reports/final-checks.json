@@ -1,0 +1,149 @@
+{
+  "ok": true,
+  "checks": [
+    {
+      "name": "taikou_rules_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "TAIKOU RULES CHECK: 90/90 passed"
+      ]
+    },
+    {
+      "name": "taikou_rage_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "TAIKOU RAGE CHECK: 1482/1482 passed"
+      ]
+    },
+    {
+      "name": "taikou_flow_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "TAIKOU FLOW CHECK: 51/51 passed"
+      ]
+    },
+    {
+      "name": "battle_rhythm_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "BATTLE RHYTHM CHECK: 62/62 passed"
+      ]
+    },
+    {
+      "name": "battle_motion_p0_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "BATTLE MOTION P0 CHECK: 93/93 passed"
+      ]
+    },
+    {
+      "name": "motion_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "MOTION CHECK: PASS"
+      ]
+    },
+    {
+      "name": "engine_opt_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "ENGINE OPT CHECK: 37/37 passed"
+      ]
+    },
+    {
+      "name": "fighter_skin_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "FIGHTER SKIN CHECK: PASS"
+      ]
+    },
+    {
+      "name": "portrait_wiring_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "PORTRAIT WIRING CHECK: 157/157 passed"
+      ]
+    },
+    {
+      "name": "redraw_gate_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "REDRAW GATE CHECK: 72/72 passed"
+      ]
+    },
+    {
+      "name": "battle_presentation_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "BATTLE PRESENTATION CHECK: 44/44 passed"
+      ]
+    },
+    {
+      "name": "battle_transition_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "BATTLE TRANSITION CHECK: 49/49 passed"
+      ]
+    },
+    {
+      "name": "battle_integration_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "BATTLE INTEGRATION CHECK: 2/2 passed"
+      ]
+    },
+    {
+      "name": "native_motion_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "NATIVE MOTION CHECK: PASS failures=0 sampled=2966 support_max_m=0.00257098674774"
+      ]
+    },
+    {
+      "name": "native_rig_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "NATIVE_RIG_CHECK: PASS (124 checks, 0 failures)"
+      ]
+    },
+    {
+      "name": "natural_runtime_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "NATURAL RUNTIME CHECK: 1031/1031 passed"
+      ]
+    },
+    {
+      "name": "battle_contact_spacing_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "BATTLE CONTACT SPACING CHECK: 70/70 passed"
+      ]
+    },
+    {
+      "name": "battle_shadow_check",
+      "ok": true,
+      "exit_code": 0,
+      "summary": [
+        "BATTLE SHADOW CHECK: PASS draws=1 -> 2 shift=(51.07143, 0.0) pos=(430.0, 520.0)"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+M1 CAUGHT  target_red=True sentinel_green=True restore=True red=['armature_13_bones_full_rigid_coverage']
+M2 CAUGHT  target_red=True sentinel_green=True restore=True red=['silhouette_measured_and_shortfall_not_hidden']
+M3 CAUGHT  target_red=True sentinel_green=True restore=True red=['deform_probe_shows_motion_and_caveat']
+M4 CAUGHT  target_red=True sentinel_green=True restore=True red=['input_image_is_approved_design']
+
+4/4 CAUGHT  restore=4/4  did_not_run=0  clean_rerun=GREEN  MUTATION_FOE_BUILD_OK

@@ -1,0 +1,13 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+F3D_READY bones=13 cards=15
+F3D_FOE_READY bones=13
+CONTACT player/jab hand=lead_hand gap=0.000 positions=(430.0, 520.0)/(850.0, 520.0) shifts=(428.5378, 0.0)/(40.0, 0.0)
+CONTACT player/cross hand=rear_hand gap=0.000 positions=(430.0, 520.0)/(850.0, 520.0) shifts=(450.6631, 0.0)/(40.0, 0.0)
+CONTACT player/wave hand=palms gap=0.000 positions=(430.0, 520.0)/(850.0, 520.0) shifts=(447.4228, 0.0)/(40.0, 0.0)
+CONTACT foe/jab hand=lead_hand gap=0.000 positions=(850.0, 520.0)/(430.0, 520.0) shifts=(-387.9962, 0.0)/(-40.0, 0.0)
+CONTACT foe/cross hand=rear_hand gap=0.000 positions=(850.0, 520.0)/(430.0, 520.0) shifts=(-391.0531, 0.0)/(-40.0, 0.0)
+CONTACT foe/wave hand=palms gap=0.000 positions=(850.0, 520.0)/(430.0, 520.0) shifts=(-379.4195, 0.0)/(-40.0, 0.0)
+BATTLE CONTACT SPACING CHECK: 58/58 passed

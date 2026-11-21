@@ -1,0 +1,4118 @@
+{
+  "blender": "5.2.3 LTS",
+  "fingerprints": {
+    "blend": "76004e212759c76f8f84a5d8fbab58680eedc4ebcd11d663e783f8c234e13165",
+    "table": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55",
+    "spec": "56add4f491d580fdd2394c3226f32bd2560a27e28a9c78e0ed1cd29d36ecfd28",
+    "mapping": "7ce408d9efb648ceb57d86619dbb3504057e4b1cb9095bf3ca8f00662f709547",
+    "c_build_py": "5bfe0589d385dfc03cbba4727fa86ba93fdc37b81c70ab4ee1a0b9a2d4b30e46"
+  },
+  "method": "explicit import of C路线-真3D修复/c_build.py (same retarget formula) + A-pose territory weight refinement + 72-frame four-variant quality metrics",
+  "params": {
+    "alpha_cross_family": 0.1,
+    "beta_bridge": 0.45,
+    "arm_only_gain": 1.5,
+    "hand_cluster_n": 160,
+    "foot_pct": 0.01,
+    "torso_half_x": 0.22,
+    "torso_half_y": 0.25,
+    "bridge_bones": [
+      "chest",
+      "hips",
+      "thigh_b",
+      "thigh_f",
+      "upperarm_b",
+      "upperarm_f"
+    ]
+  },
+  "rig": {
+    "bones": 13,
+    "names": [
+      "chest",
+      "forearm_b",
+      "forearm_f",
+      "head",
+      "hips",
+      "neck",
+      "shin_b",
+      "shin_f",
+      "spine",
+      "thigh_b",
+      "thigh_f",
+      "upperarm_b",
+      "upperarm_f"
+    ]
+  },
+  "proxy": {
+    "voxel_size": 0.02,
+    "verts": 20204,
+    "auto_weight_covered": 20196
+  },
+  "weights": {
+    "covered": 64006,
+    "verts": 64024,
+    "owner_families": {
+      "arm_b": 16158,
+      "arm_f": 15111,
+      "leg_b": 11330,
+      "leg_f": 11494,
+      "torso": 9931
+    },
+    "v1_purity": {
+      "arm_b": {
+        "verts": 16158,
+        "mean_own_weight": 0.83599
+      },
+      "arm_f": {
+        "verts": 15111,
+        "mean_own_weight": 0.83376
+      },
+      "leg_b": {
+        "verts": 11330,
+        "mean_own_weight": 0.84071
+      },
+      "leg_f": {
+        "verts": 11476,
+        "mean_own_weight": 0.8384
+      },
+      "torso": {
+        "verts": 9931,
+        "mean_own_weight": 0.56479
+      }
+    },
+    "v2_purity": {
+      "arm_b": {
+        "verts": 16158,
+        "mean_own_weight": 0.90144
+      },
+      "arm_f": {
+        "verts": 15111,
+        "mean_own_weight": 0.89875
+      },
+      "leg_b": {
+        "verts": 11330,
+        "mean_own_weight": 0.91387
+      },
+      "leg_f": {
+        "verts": 11476,
+        "mean_own_weight": 0.91545
+      },
+      "torso": {
+        "verts": 9931,
+        "mean_own_weight": 0.72812
+      }
+    },
+    "refine": {
+      "changed_vertices": 64006,
+      "dropped_assignments": 720
+    }
+  },
+  "assets": {
+    "uv_layers": 1,
+    "materials": 1,
+    "textures": [
+      {
+        "image": "texture_pbr_20250901",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_normal",
+        "size": [
+          4096,
+          4096
+        ]
+      }
+    ],
+    "uv_same": true,
+    "textures_same": true
+  },
+  "stance_identity": {
+    "vertices_identical": true,
+    "tolerance_m": 1e-05,
+    "max_vertex_delta_m": 6.43e-07
+  },
+  "clusters": {
+    "hand_f": 160,
+    "hand_b": 160,
+    "foot": 640,
+    "hip_z": 0.84203,
+    "shoulder_z": 1.36612
+  },
+  "all_frames": {
+    "count": 72,
+    "cards": {
+      "jab": 14,
+      "cross": 22,
+      "wave": 36
+    },
+    "rows": [
+      {
+        "card": "jab",
+        "frame": 0,
+        "V1_base": {
+          "tear_p999_m": 0.0,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0,
+          "moved_gt_1mm": 0,
+          "reach_f_m": 0.0,
+          "reach_b_m": 0.0,
+          "reach_max_m": 0.0,
+          "foot_gap_m": 0.0,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.0,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0,
+          "moved_gt_1mm": 0,
+          "reach_f_m": 0.0,
+          "reach_b_m": 0.0,
+          "reach_max_m": 0.0,
+          "foot_gap_m": 0.0,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.0,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0,
+          "moved_gt_1mm": 0,
+          "reach_f_m": 0.0,
+          "reach_b_m": 0.0,
+          "reach_max_m": 0.0,
+          "foot_gap_m": 0.0,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.0
+        },
+        "V2_final": {
+          "tear_p999_m": 0.0,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0,
+          "moved_gt_1mm": 0,
+          "reach_f_m": 0.0,
+          "reach_b_m": 0.0,
+          "reach_max_m": 0.0,
+          "foot_gap_m": 0.0,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.0
+        }
+      },
+      {
+        "card": "jab",
+        "frame": 1,
+        "V1_base": {
+          "tear_p999_m": 0.00644,
+          "tear_gt5cm": 13,
+          "max_displacement_m": 0.07687,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.02461,
+          "reach_b_m": 0.05463,
+          "reach_max_m": 0.05463,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00814,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0778,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.02461,
+          "reach_b_m": 0.05463,
+          "reach_max_m": 0.05463,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00693,
+          "tear_gt5cm": 6,
+          "max_displacement_m": 0.08245,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.04243,
+          "reach_b_m": 0.05463,
+          "reach_max_m": 0.05463,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.308
+        },
+        "V2_final": {
+          "tear_p999_m": 0.01032,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0846,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.04243,
+          "reach_b_m": 0.05463,
+          "reach_max_m": 0.05463,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.308
+        }
+      },
+      {
+        "card": "jab",
+        "frame": 2,
+        "V1_base": {
+          "tear_p999_m": 0.00644,
+          "tear_gt5cm": 13,
+          "max_displacement_m": 0.07687,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.02461,
+          "reach_b_m": 0.05463,
+          "reach_max_m": 0.05463,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00814,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0778,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.02461,
+          "reach_b_m": 0.05463,
+          "reach_max_m": 0.05463,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00693,
+          "tear_gt5cm": 6,
+          "max_displacement_m": 0.08245,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.04243,
+          "reach_b_m": 0.05463,
+          "reach_max_m": 0.05463,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.308
+        },
+        "V2_final": {
+          "tear_p999_m": 0.01032,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0846,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.04243,
+          "reach_b_m": 0.05463,
+          "reach_max_m": 0.05463,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.308
+        }
+      },
+      {
+        "card": "jab",
+        "frame": 3,
+        "V1_base": {
+          "tear_p999_m": 0.00644,
+          "tear_gt5cm": 13,
+          "max_displacement_m": 0.07687,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.02461,
+          "reach_b_m": 0.05463,
+          "reach_max_m": 0.05463,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00814,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0778,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.02461,
+          "reach_b_m": 0.05463,
+          "reach_max_m": 0.05463,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00693,
+          "tear_gt5cm": 6,
+          "max_displacement_m": 0.08245,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.04243,
+          "reach_b_m": 0.05463,
+          "reach_max_m": 0.05463,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.308
+        },
+        "V2_final": {
+          "tear_p999_m": 0.01032,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0846,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.04243,
+          "reach_b_m": 0.05463,
+          "reach_max_m": 0.05463,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.308
+        }
+      },
+      {
+        "card": "jab",
+        "frame": 4,
+        "V1_base": {
+          "tear_p999_m": 0.01229,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.30378,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.2773,
+          "reach_b_m": 0.07973,
+          "reach_max_m": 0.2773,
+          "foot_gap_m": 0.01527,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 14.439
+        },
+        "V2_base": {
+          "tear_p999_m": 0.03185,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.30378,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.2773,
+          "reach_b_m": 0.07973,
+          "reach_max_m": 0.2773,
+          "foot_gap_m": 0.01527,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 14.439
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.01928,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.43413,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.39246,
+          "reach_b_m": 0.07973,
+          "reach_max_m": 0.39246,
+          "foot_gap_m": 0.01527,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 21.659
+        },
+        "V2_final": {
+          "tear_p999_m": 0.04764,
+          "tear_gt5cm": 100,
+          "max_displacement_m": 0.43413,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.39246,
+          "reach_b_m": 0.07973,
+          "reach_max_m": 0.39246,
+          "foot_gap_m": 0.01527,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 21.659
+        }
+      },
+      {
+        "card": "jab",
+        "frame": 5,
+        "V1_base": {
+          "tear_p999_m": 0.01521,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.37863,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.34506,
+          "reach_b_m": 0.09932,
+          "reach_max_m": 0.34506,
+          "foot_gap_m": 0.01079,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 17.916
+        },
+        "V2_base": {
+          "tear_p999_m": 0.03929,
+          "tear_gt5cm": 25,
+          "max_displacement_m": 0.37863,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.34506,
+          "reach_b_m": 0.09932,
+          "reach_max_m": 0.34506,
+          "foot_gap_m": 0.01079,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 17.916
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.02372,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.53656,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.48397,
+          "reach_b_m": 0.09932,
+          "reach_max_m": 0.48397,
+          "foot_gap_m": 0.01079,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 26.875
+        },
+        "V2_final": {
+          "tear_p999_m": 0.05885,
+          "tear_gt5cm": 359,
+          "max_displacement_m": 0.53656,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.48397,
+          "reach_b_m": 0.09932,
+          "reach_max_m": 0.48397,
+          "foot_gap_m": 0.01079,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 26.875
+        }
+      },
+      {
+        "card": "jab",
+        "frame": 6,
+        "V1_base": {
+          "tear_p999_m": 0.01806,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.45259,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.41171,
+          "reach_b_m": 0.11983,
+          "reach_max_m": 0.41171,
+          "foot_gap_m": 0.00579,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 21.393
+        },
+        "V2_base": {
+          "tear_p999_m": 0.04672,
+          "tear_gt5cm": 96,
+          "max_displacement_m": 0.45259,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.41171,
+          "reach_b_m": 0.11983,
+          "reach_max_m": 0.41171,
+          "foot_gap_m": 0.00579,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 21.393
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.02808,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.63573,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.57235,
+          "reach_b_m": 0.11983,
+          "reach_max_m": 0.57235,
+          "foot_gap_m": 0.00579,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 32.09
+        },
+        "V2_final": {
+          "tear_p999_m": 0.06976,
+          "tear_gt5cm": 527,
+          "max_displacement_m": 0.63573,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.57235,
+          "reach_b_m": 0.11983,
+          "reach_max_m": 0.57235,
+          "foot_gap_m": 0.00579,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 32.09
+        }
+      },
+      {
+        "card": "jab",
+        "frame": 7,
+        "V1_base": {
+          "tear_p999_m": 0.01806,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.45259,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.41171,
+          "reach_b_m": 0.11983,
+          "reach_max_m": 0.41171,
+          "foot_gap_m": 0.00579,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 21.393
+        },
+        "V2_base": {
+          "tear_p999_m": 0.04672,
+          "tear_gt5cm": 96,
+          "max_displacement_m": 0.45259,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.41171,
+          "reach_b_m": 0.11983,
+          "reach_max_m": 0.41171,
+          "foot_gap_m": 0.00579,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 21.393
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.02808,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.63573,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.57235,
+          "reach_b_m": 0.11983,
+          "reach_max_m": 0.57235,
+          "foot_gap_m": 0.00579,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 32.09
+        },
+        "V2_final": {
+          "tear_p999_m": 0.06976,
+          "tear_gt5cm": 527,
+          "max_displacement_m": 0.63573,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.57235,
+          "reach_b_m": 0.11983,
+          "reach_max_m": 0.57235,
+          "foot_gap_m": 0.00579,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 32.09
+        }
+      },
+      {
+        "card": "jab",
+        "frame": 8,
+        "V1_base": {
+          "tear_p999_m": 0.01512,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.3673,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.33333,
+          "reach_b_m": 0.08677,
+          "reach_max_m": 0.33333,
+          "foot_gap_m": 0.00146,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 17.632
+        },
+        "V2_base": {
+          "tear_p999_m": 0.03822,
+          "tear_gt5cm": 23,
+          "max_displacement_m": 0.3673,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.33333,
+          "reach_b_m": 0.08677,
+          "reach_max_m": 0.33333,
+          "foot_gap_m": 0.00146,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 17.632
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.0236,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.52122,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.4686,
+          "reach_b_m": 0.08677,
+          "reach_max_m": 0.4686,
+          "foot_gap_m": 0.00146,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 26.448
+        },
+        "V2_final": {
+          "tear_p999_m": 0.05735,
+          "tear_gt5cm": 332,
+          "max_displacement_m": 0.52122,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.4686,
+          "reach_b_m": 0.08677,
+          "reach_max_m": 0.4686,
+          "foot_gap_m": 0.00146,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 26.448
+        }
+      },
+      {
+        "card": "jab",
+        "frame": 9,
+        "V1_base": {
+          "tear_p999_m": 0.01173,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.28165,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.25562,
+          "reach_b_m": 0.06308,
+          "reach_max_m": 0.25562,
+          "foot_gap_m": 0.00362,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.539
+        },
+        "V2_base": {
+          "tear_p999_m": 0.02934,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.28165,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.25562,
+          "reach_b_m": 0.06308,
+          "reach_max_m": 0.25562,
+          "foot_gap_m": 0.00362,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.539
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.01841,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.40234,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.36207,
+          "reach_b_m": 0.06308,
+          "reach_max_m": 0.36207,
+          "foot_gap_m": 0.00362,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 20.309
+        },
+        "V2_final": {
+          "tear_p999_m": 0.04425,
+          "tear_gt5cm": 55,
+          "max_displacement_m": 0.40234,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.36207,
+          "reach_b_m": 0.06308,
+          "reach_max_m": 0.36207,
+          "foot_gap_m": 0.00362,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 20.309
+        }
+      },
+      {
+        "card": "jab",
+        "frame": 10,
+        "V1_base": {
+          "tear_p999_m": 0.00799,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.18483,
+          "moved_gt_1mm": 63977,
+          "reach_f_m": 0.16787,
+          "reach_b_m": 0.03964,
+          "reach_max_m": 0.16787,
+          "foot_gap_m": 0.00627,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 8.89
+        },
+        "V2_base": {
+          "tear_p999_m": 0.0192,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.18483,
+          "moved_gt_1mm": 63977,
+          "reach_f_m": 0.16787,
+          "reach_b_m": 0.03964,
+          "reach_max_m": 0.16787,
+          "foot_gap_m": 0.00627,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 8.89
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.01235,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.26541,
+          "moved_gt_1mm": 63977,
+          "reach_f_m": 0.23926,
+          "reach_b_m": 0.03964,
+          "reach_max_m": 0.23926,
+          "foot_gap_m": 0.00627,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.335
+        },
+        "V2_final": {
+          "tear_p999_m": 0.02907,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.26541,
+          "moved_gt_1mm": 63977,
+          "reach_f_m": 0.23926,
+          "reach_b_m": 0.03964,
+          "reach_max_m": 0.23926,
+          "foot_gap_m": 0.00627,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.335
+        }
+      },
+      {
+        "card": "jab",
+        "frame": 11,
+        "V1_base": {
+          "tear_p999_m": 0.00412,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.09333,
+          "moved_gt_1mm": 63938,
+          "reach_f_m": 0.08476,
+          "reach_b_m": 0.01886,
+          "reach_max_m": 0.08476,
+          "foot_gap_m": 0.00161,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.511
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00973,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.09333,
+          "moved_gt_1mm": 63938,
+          "reach_f_m": 0.08476,
+          "reach_b_m": 0.01886,
+          "reach_max_m": 0.08476,
+          "foot_gap_m": 0.00161,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.511
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00632,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.13447,
+          "moved_gt_1mm": 63938,
+          "reach_f_m": 0.12136,
+          "reach_b_m": 0.01886,
+          "reach_max_m": 0.12136,
+          "foot_gap_m": 0.00161,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 6.766
+        },
+        "V2_final": {
+          "tear_p999_m": 0.01475,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.13447,
+          "moved_gt_1mm": 63938,
+          "reach_f_m": 0.12136,
+          "reach_b_m": 0.01886,
+          "reach_max_m": 0.12136,
+          "foot_gap_m": 0.00161,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 6.766
+        }
+      },
+      {
+        "card": "jab",
+        "frame": 12,
+        "V1_base": {
+          "tear_p999_m": 0.00124,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.02629,
+          "moved_gt_1mm": 63190,
+          "reach_f_m": 0.02387,
+          "reach_b_m": 0.00491,
+          "reach_max_m": 0.02387,
+          "foot_gap_m": 0.00033,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.287
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00276,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.02629,
+          "moved_gt_1mm": 63190,
+          "reach_f_m": 0.02387,
+          "reach_b_m": 0.00491,
+          "reach_max_m": 0.02387,
+          "foot_gap_m": 0.00033,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.287
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00184,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.03802,
+          "moved_gt_1mm": 63190,
+          "reach_f_m": 0.03436,
+          "reach_b_m": 0.00491,
+          "reach_max_m": 0.03436,
+          "foot_gap_m": 0.00033,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.922
+        },
+        "V2_final": {
+          "tear_p999_m": 0.00418,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.03802,
+          "moved_gt_1mm": 63190,
+          "reach_f_m": 0.03436,
+          "reach_b_m": 0.00491,
+          "reach_max_m": 0.03436,
+          "foot_gap_m": 0.00033,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.922
+        }
+      },
+      {
+        "card": "jab",
+        "frame": 13,
+        "V1_base": {
+          "tear_p999_m": 0.00151,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.01301,
+          "moved_gt_1mm": 14109,
+          "reach_f_m": 0.00027,
+          "reach_b_m": 0.00028,
+          "reach_max_m": 0.00028,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.424
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00227,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.01301,
+          "moved_gt_1mm": 13524,
+          "reach_f_m": 0.00027,
+          "reach_b_m": 0.00028,
+          "reach_max_m": 0.00028,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.424
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00151,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.01301,
+          "moved_gt_1mm": 14109,
+          "reach_f_m": 0.00027,
+          "reach_b_m": 0.00028,
+          "reach_max_m": 0.00028,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.424
+        },
+        "V2_final": {
+          "tear_p999_m": 0.00227,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.01301,
+          "moved_gt_1mm": 13524,
+          "reach_f_m": 0.00027,
+          "reach_b_m": 0.00028,
+          "reach_max_m": 0.00028,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.424
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 0,
+        "V1_base": {
+          "tear_p999_m": 0.0,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0,
+          "moved_gt_1mm": 0,
+          "reach_f_m": 0.0,
+          "reach_b_m": 0.0,
+          "reach_max_m": 0.0,
+          "foot_gap_m": 0.0,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.0,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0,
+          "moved_gt_1mm": 0,
+          "reach_f_m": 0.0,
+          "reach_b_m": 0.0,
+          "reach_max_m": 0.0,
+          "foot_gap_m": 0.0,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.0,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0,
+          "moved_gt_1mm": 0,
+          "reach_f_m": 0.0,
+          "reach_b_m": 0.0,
+          "reach_max_m": 0.0,
+          "foot_gap_m": 0.0,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.0
+        },
+        "V2_final": {
+          "tear_p999_m": 0.0,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0,
+          "moved_gt_1mm": 0,
+          "reach_f_m": 0.0,
+          "reach_b_m": 0.0,
+          "reach_max_m": 0.0,
+          "foot_gap_m": 0.0,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.0
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 1,
+        "V1_base": {
+          "tear_p999_m": 0.00525,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.05192,
+          "moved_gt_1mm": 63984,
+          "reach_f_m": 0.02382,
+          "reach_b_m": 0.03982,
+          "reach_max_m": 0.03982,
+          "foot_gap_m": 0.00184,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00697,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.05192,
+          "moved_gt_1mm": 63984,
+          "reach_f_m": 0.02382,
+          "reach_b_m": 0.03982,
+          "reach_max_m": 0.03982,
+          "foot_gap_m": 0.00184,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00525,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.05192,
+          "moved_gt_1mm": 63984,
+          "reach_f_m": 0.02382,
+          "reach_b_m": 0.04625,
+          "reach_max_m": 0.04625,
+          "foot_gap_m": 0.00184,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V2_final": {
+          "tear_p999_m": 0.01013,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.05192,
+          "moved_gt_1mm": 63984,
+          "reach_f_m": 0.02382,
+          "reach_b_m": 0.04625,
+          "reach_max_m": 0.04625,
+          "foot_gap_m": 0.00184,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 2,
+        "V1_base": {
+          "tear_p999_m": 0.00777,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.10579,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.05986,
+          "reach_b_m": 0.09325,
+          "reach_max_m": 0.09325,
+          "foot_gap_m": 0.01301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.01069,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.1063,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.05986,
+          "reach_b_m": 0.09325,
+          "reach_max_m": 0.09325,
+          "foot_gap_m": 0.01301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00777,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.10713,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.05986,
+          "reach_b_m": 0.10374,
+          "reach_max_m": 0.10374,
+          "foot_gap_m": 0.01301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V2_final": {
+          "tear_p999_m": 0.0145,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.10713,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.05986,
+          "reach_b_m": 0.10374,
+          "reach_max_m": 0.10374,
+          "foot_gap_m": 0.01301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 3,
+        "V1_base": {
+          "tear_p999_m": 0.00765,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.12396,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06906,
+          "reach_b_m": 0.10404,
+          "reach_max_m": 0.10404,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.072
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00844,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.12434,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06906,
+          "reach_b_m": 0.10404,
+          "reach_max_m": 0.10404,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.072
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00777,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.12335,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06906,
+          "reach_b_m": 0.1116,
+          "reach_max_m": 0.1116,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.072
+        },
+        "V2_final": {
+          "tear_p999_m": 0.01356,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.12403,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06906,
+          "reach_b_m": 0.1116,
+          "reach_max_m": 0.1116,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.072
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 4,
+        "V1_base": {
+          "tear_p999_m": 0.00765,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.12396,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06906,
+          "reach_b_m": 0.10404,
+          "reach_max_m": 0.10404,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.072
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00844,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.12434,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06906,
+          "reach_b_m": 0.10404,
+          "reach_max_m": 0.10404,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.072
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00777,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.12335,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06906,
+          "reach_b_m": 0.1116,
+          "reach_max_m": 0.1116,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.072
+        },
+        "V2_final": {
+          "tear_p999_m": 0.01356,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.12403,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06906,
+          "reach_b_m": 0.1116,
+          "reach_max_m": 0.1116,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.072
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 5,
+        "V1_base": {
+          "tear_p999_m": 0.00765,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.12396,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06906,
+          "reach_b_m": 0.10404,
+          "reach_max_m": 0.10404,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.072
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00844,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.12434,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06906,
+          "reach_b_m": 0.10404,
+          "reach_max_m": 0.10404,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.072
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00777,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.12335,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06906,
+          "reach_b_m": 0.1116,
+          "reach_max_m": 0.1116,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.072
+        },
+        "V2_final": {
+          "tear_p999_m": 0.01356,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.12403,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06906,
+          "reach_b_m": 0.1116,
+          "reach_max_m": 0.1116,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.072
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 6,
+        "V1_base": {
+          "tear_p999_m": 0.0382,
+          "tear_gt5cm": 101,
+          "max_displacement_m": 0.54713,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.09045,
+          "reach_b_m": 0.49665,
+          "reach_max_m": 0.49665,
+          "foot_gap_m": 0.01404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 27.537
+        },
+        "V2_base": {
+          "tear_p999_m": 0.06804,
+          "tear_gt5cm": 526,
+          "max_displacement_m": 0.54713,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.09045,
+          "reach_b_m": 0.49665,
+          "reach_max_m": 0.49665,
+          "foot_gap_m": 0.01404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 27.537
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.05233,
+          "tear_gt5cm": 156,
+          "max_displacement_m": 0.80518,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.09045,
+          "reach_b_m": 0.73633,
+          "reach_max_m": 0.73633,
+          "foot_gap_m": 0.01404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 41.306
+        },
+        "V2_final": {
+          "tear_p999_m": 0.09825,
+          "tear_gt5cm": 968,
+          "max_displacement_m": 0.80518,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.09045,
+          "reach_b_m": 0.73633,
+          "reach_max_m": 0.73633,
+          "foot_gap_m": 0.01404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 41.306
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 7,
+        "V1_base": {
+          "tear_p999_m": 0.03964,
+          "tear_gt5cm": 103,
+          "max_displacement_m": 0.55708,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.11478,
+          "reach_b_m": 0.50489,
+          "reach_max_m": 0.50489,
+          "foot_gap_m": 0.01104,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 28.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.06989,
+          "tear_gt5cm": 563,
+          "max_displacement_m": 0.55708,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.11478,
+          "reach_b_m": 0.50489,
+          "reach_max_m": 0.50489,
+          "foot_gap_m": 0.01104,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 28.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.05396,
+          "tear_gt5cm": 178,
+          "max_displacement_m": 0.82094,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.11478,
+          "reach_b_m": 0.75003,
+          "reach_max_m": 0.75003,
+          "foot_gap_m": 0.01104,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 42.0
+        },
+        "V2_final": {
+          "tear_p999_m": 0.10218,
+          "tear_gt5cm": 997,
+          "max_displacement_m": 0.82094,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.11478,
+          "reach_b_m": 0.75003,
+          "reach_max_m": 0.75003,
+          "foot_gap_m": 0.01104,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 42.0
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 8,
+        "V1_base": {
+          "tear_p999_m": 0.04,
+          "tear_gt5cm": 103,
+          "max_displacement_m": 0.55286,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.13915,
+          "reach_b_m": 0.5001,
+          "reach_max_m": 0.5001,
+          "foot_gap_m": 0.00704,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 28.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.07023,
+          "tear_gt5cm": 565,
+          "max_displacement_m": 0.55286,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.13915,
+          "reach_b_m": 0.5001,
+          "reach_max_m": 0.5001,
+          "foot_gap_m": 0.00704,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 28.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.05411,
+          "tear_gt5cm": 186,
+          "max_displacement_m": 0.8184,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.13915,
+          "reach_b_m": 0.74679,
+          "reach_max_m": 0.74679,
+          "foot_gap_m": 0.00704,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 42.0
+        },
+        "V2_final": {
+          "tear_p999_m": 0.10248,
+          "tear_gt5cm": 1007,
+          "max_displacement_m": 0.8184,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.13915,
+          "reach_b_m": 0.74679,
+          "reach_max_m": 0.74679,
+          "foot_gap_m": 0.00704,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 42.0
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 9,
+        "V1_base": {
+          "tear_p999_m": 0.04,
+          "tear_gt5cm": 103,
+          "max_displacement_m": 0.54624,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.16491,
+          "reach_b_m": 0.49169,
+          "reach_max_m": 0.49169,
+          "foot_gap_m": 0.00404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 28.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.07023,
+          "tear_gt5cm": 565,
+          "max_displacement_m": 0.54624,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.16491,
+          "reach_b_m": 0.49169,
+          "reach_max_m": 0.49169,
+          "foot_gap_m": 0.00404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 28.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.05411,
+          "tear_gt5cm": 186,
+          "max_displacement_m": 0.81154,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.16491,
+          "reach_b_m": 0.73966,
+          "reach_max_m": 0.73966,
+          "foot_gap_m": 0.00404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 42.0
+        },
+        "V2_final": {
+          "tear_p999_m": 0.10248,
+          "tear_gt5cm": 1007,
+          "max_displacement_m": 0.81154,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.16491,
+          "reach_b_m": 0.73966,
+          "reach_max_m": 0.73966,
+          "foot_gap_m": 0.00404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 42.0
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 10,
+        "V1_base": {
+          "tear_p999_m": 0.04,
+          "tear_gt5cm": 103,
+          "max_displacement_m": 0.54624,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.16491,
+          "reach_b_m": 0.49169,
+          "reach_max_m": 0.49169,
+          "foot_gap_m": 0.00404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 28.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.07023,
+          "tear_gt5cm": 565,
+          "max_displacement_m": 0.54624,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.16491,
+          "reach_b_m": 0.49169,
+          "reach_max_m": 0.49169,
+          "foot_gap_m": 0.00404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 28.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.05411,
+          "tear_gt5cm": 186,
+          "max_displacement_m": 0.81154,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.16491,
+          "reach_b_m": 0.73966,
+          "reach_max_m": 0.73966,
+          "foot_gap_m": 0.00404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 42.0
+        },
+        "V2_final": {
+          "tear_p999_m": 0.10248,
+          "tear_gt5cm": 1007,
+          "max_displacement_m": 0.81154,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.16491,
+          "reach_b_m": 0.73966,
+          "reach_max_m": 0.73966,
+          "foot_gap_m": 0.00404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 42.0
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 11,
+        "V1_base": {
+          "tear_p999_m": 0.04,
+          "tear_gt5cm": 103,
+          "max_displacement_m": 0.54624,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.16491,
+          "reach_b_m": 0.49169,
+          "reach_max_m": 0.49169,
+          "foot_gap_m": 0.00404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 28.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.07023,
+          "tear_gt5cm": 565,
+          "max_displacement_m": 0.54624,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.16491,
+          "reach_b_m": 0.49169,
+          "reach_max_m": 0.49169,
+          "foot_gap_m": 0.00404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 28.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.05411,
+          "tear_gt5cm": 186,
+          "max_displacement_m": 0.81154,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.16491,
+          "reach_b_m": 0.73966,
+          "reach_max_m": 0.73966,
+          "foot_gap_m": 0.00404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 42.0
+        },
+        "V2_final": {
+          "tear_p999_m": 0.10248,
+          "tear_gt5cm": 1007,
+          "max_displacement_m": 0.81154,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.16491,
+          "reach_b_m": 0.73966,
+          "reach_max_m": 0.73966,
+          "foot_gap_m": 0.00404,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 42.0
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 12,
+        "V1_base": {
+          "tear_p999_m": 0.03927,
+          "tear_gt5cm": 102,
+          "max_displacement_m": 0.53094,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.13479,
+          "reach_b_m": 0.47918,
+          "reach_max_m": 0.47918,
+          "foot_gap_m": 0.003,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 28.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.06943,
+          "tear_gt5cm": 562,
+          "max_displacement_m": 0.53094,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.13479,
+          "reach_b_m": 0.47918,
+          "reach_max_m": 0.47918,
+          "foot_gap_m": 0.003,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 28.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.05346,
+          "tear_gt5cm": 170,
+          "max_displacement_m": 0.79557,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.13479,
+          "reach_b_m": 0.72497,
+          "reach_max_m": 0.72497,
+          "foot_gap_m": 0.003,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 42.0
+        },
+        "V2_final": {
+          "tear_p999_m": 0.10196,
+          "tear_gt5cm": 990,
+          "max_displacement_m": 0.79557,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.13479,
+          "reach_b_m": 0.72497,
+          "reach_max_m": 0.72497,
+          "foot_gap_m": 0.003,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 42.0
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 13,
+        "V1_base": {
+          "tear_p999_m": 0.03776,
+          "tear_gt5cm": 100,
+          "max_displacement_m": 0.51756,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.11634,
+          "reach_b_m": 0.4674,
+          "reach_max_m": 0.4674,
+          "foot_gap_m": 0.00104,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 27.769
+        },
+        "V2_base": {
+          "tear_p999_m": 0.06848,
+          "tear_gt5cm": 549,
+          "max_displacement_m": 0.51756,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.11634,
+          "reach_b_m": 0.4674,
+          "reach_max_m": 0.4674,
+          "foot_gap_m": 0.00104,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 27.769
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.05221,
+          "tear_gt5cm": 156,
+          "max_displacement_m": 0.77868,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.11634,
+          "reach_b_m": 0.70986,
+          "reach_max_m": 0.70986,
+          "foot_gap_m": 0.00104,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 41.653
+        },
+        "V2_final": {
+          "tear_p999_m": 0.10093,
+          "tear_gt5cm": 968,
+          "max_displacement_m": 0.77868,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.11634,
+          "reach_b_m": 0.70986,
+          "reach_max_m": 0.70986,
+          "foot_gap_m": 0.00104,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 41.653
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 14,
+        "V1_base": {
+          "tear_p999_m": 0.03245,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.43786,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.09627,
+          "reach_b_m": 0.39471,
+          "reach_max_m": 0.39471,
+          "foot_gap_m": 0.00148,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 23.871
+        },
+        "V2_base": {
+          "tear_p999_m": 0.05873,
+          "tear_gt5cm": 351,
+          "max_displacement_m": 0.43786,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.09627,
+          "reach_b_m": 0.39471,
+          "reach_max_m": 0.39471,
+          "foot_gap_m": 0.00148,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 23.871
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.04553,
+          "tear_gt5cm": 114,
+          "max_displacement_m": 0.66441,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.09627,
+          "reach_b_m": 0.60435,
+          "reach_max_m": 0.60435,
+          "foot_gap_m": 0.00148,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 35.806
+        },
+        "V2_final": {
+          "tear_p999_m": 0.08726,
+          "tear_gt5cm": 820,
+          "max_displacement_m": 0.66441,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.09627,
+          "reach_b_m": 0.60435,
+          "reach_max_m": 0.60435,
+          "foot_gap_m": 0.00148,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 35.806
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 15,
+        "V1_base": {
+          "tear_p999_m": 0.02664,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.35128,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.07636,
+          "reach_b_m": 0.31607,
+          "reach_max_m": 0.31607,
+          "foot_gap_m": 0.00446,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 19.461
+        },
+        "V2_base": {
+          "tear_p999_m": 0.04792,
+          "tear_gt5cm": 119,
+          "max_displacement_m": 0.35128,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.07636,
+          "reach_b_m": 0.31607,
+          "reach_max_m": 0.31607,
+          "foot_gap_m": 0.00446,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 19.461
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.03721,
+          "tear_gt5cm": 100,
+          "max_displacement_m": 0.53718,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.07636,
+          "reach_b_m": 0.4875,
+          "reach_max_m": 0.4875,
+          "foot_gap_m": 0.00446,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 29.191
+        },
+        "V2_final": {
+          "tear_p999_m": 0.07139,
+          "tear_gt5cm": 632,
+          "max_displacement_m": 0.53718,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.07636,
+          "reach_b_m": 0.4875,
+          "reach_max_m": 0.4875,
+          "foot_gap_m": 0.00446,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 29.191
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 16,
+        "V1_base": {
+          "tear_p999_m": 0.02031,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.26398,
+          "moved_gt_1mm": 64004,
+          "reach_f_m": 0.05674,
+          "reach_b_m": 0.23708,
+          "reach_max_m": 0.23708,
+          "foot_gap_m": 0.00588,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 14.863
+        },
+        "V2_base": {
+          "tear_p999_m": 0.03649,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.26398,
+          "moved_gt_1mm": 64004,
+          "reach_f_m": 0.05674,
+          "reach_b_m": 0.23708,
+          "reach_max_m": 0.23708,
+          "foot_gap_m": 0.00588,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 14.863
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.02854,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.40615,
+          "moved_gt_1mm": 64004,
+          "reach_f_m": 0.05674,
+          "reach_b_m": 0.36777,
+          "reach_max_m": 0.36777,
+          "foot_gap_m": 0.00588,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 22.295
+        },
+        "V2_final": {
+          "tear_p999_m": 0.05458,
+          "tear_gt5cm": 262,
+          "max_displacement_m": 0.40615,
+          "moved_gt_1mm": 64004,
+          "reach_f_m": 0.05674,
+          "reach_b_m": 0.36777,
+          "reach_max_m": 0.36777,
+          "foot_gap_m": 0.00588,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 22.295
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 17,
+        "V1_base": {
+          "tear_p999_m": 0.0141,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.18074,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.03912,
+          "reach_b_m": 0.16203,
+          "reach_max_m": 0.16203,
+          "foot_gap_m": 0.00407,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.36
+        },
+        "V2_base": {
+          "tear_p999_m": 0.02541,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.18074,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.03912,
+          "reach_b_m": 0.16203,
+          "reach_max_m": 0.16203,
+          "foot_gap_m": 0.00407,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.36
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.02016,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.27949,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.03912,
+          "reach_b_m": 0.25256,
+          "reach_max_m": 0.25256,
+          "foot_gap_m": 0.00407,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 15.54
+        },
+        "V2_final": {
+          "tear_p999_m": 0.03814,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.27949,
+          "moved_gt_1mm": 63997,
+          "reach_f_m": 0.03912,
+          "reach_b_m": 0.25256,
+          "reach_max_m": 0.25256,
+          "foot_gap_m": 0.00407,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 15.54
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 18,
+        "V1_base": {
+          "tear_p999_m": 0.00858,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.1083,
+          "moved_gt_1mm": 63953,
+          "reach_f_m": 0.02363,
+          "reach_b_m": 0.09693,
+          "reach_max_m": 0.09693,
+          "foot_gap_m": 0.00126,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 6.323
+        },
+        "V2_base": {
+          "tear_p999_m": 0.0155,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.1083,
+          "moved_gt_1mm": 63953,
+          "reach_f_m": 0.02363,
+          "reach_b_m": 0.09693,
+          "reach_max_m": 0.09693,
+          "foot_gap_m": 0.00126,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 6.323
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.01242,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.16814,
+          "moved_gt_1mm": 63953,
+          "reach_f_m": 0.02363,
+          "reach_b_m": 0.15167,
+          "reach_max_m": 0.15167,
+          "foot_gap_m": 0.00126,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 9.485
+        },
+        "V2_final": {
+          "tear_p999_m": 0.02326,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.16814,
+          "moved_gt_1mm": 63953,
+          "reach_f_m": 0.02363,
+          "reach_b_m": 0.15167,
+          "reach_max_m": 0.15167,
+          "foot_gap_m": 0.00126,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 9.485
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 19,
+        "V1_base": {
+          "tear_p999_m": 0.00409,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.05072,
+          "moved_gt_1mm": 63887,
+          "reach_f_m": 0.01118,
+          "reach_b_m": 0.04535,
+          "reach_max_m": 0.04535,
+          "foot_gap_m": 0.00064,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.01
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00737,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.05072,
+          "moved_gt_1mm": 63887,
+          "reach_f_m": 0.01118,
+          "reach_b_m": 0.04535,
+          "reach_max_m": 0.04535,
+          "foot_gap_m": 0.00064,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.01
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00592,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.07893,
+          "moved_gt_1mm": 63887,
+          "reach_f_m": 0.01118,
+          "reach_b_m": 0.07112,
+          "reach_max_m": 0.07112,
+          "foot_gap_m": 0.00064,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.515
+        },
+        "V2_final": {
+          "tear_p999_m": 0.01081,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.07893,
+          "moved_gt_1mm": 63887,
+          "reach_f_m": 0.01118,
+          "reach_b_m": 0.07112,
+          "reach_max_m": 0.07112,
+          "foot_gap_m": 0.00064,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.515
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 20,
+        "V1_base": {
+          "tear_p999_m": 0.00103,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.01378,
+          "moved_gt_1mm": 61114,
+          "reach_f_m": 0.00273,
+          "reach_b_m": 0.01234,
+          "reach_max_m": 0.01234,
+          "foot_gap_m": 0.00032,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.817
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00194,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.01378,
+          "moved_gt_1mm": 61080,
+          "reach_f_m": 0.00273,
+          "reach_b_m": 0.01234,
+          "reach_max_m": 0.01234,
+          "foot_gap_m": 0.00032,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.817
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00151,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.02138,
+          "moved_gt_1mm": 61106,
+          "reach_f_m": 0.00273,
+          "reach_b_m": 0.01928,
+          "reach_max_m": 0.01928,
+          "foot_gap_m": 0.00032,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.225
+        },
+        "V2_final": {
+          "tear_p999_m": 0.00293,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.02138,
+          "moved_gt_1mm": 61075,
+          "reach_f_m": 0.00273,
+          "reach_b_m": 0.01928,
+          "reach_max_m": 0.01928,
+          "foot_gap_m": 0.00032,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.225
+        }
+      },
+      {
+        "card": "cross",
+        "frame": 21,
+        "V1_base": {
+          "tear_p999_m": 0.00039,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.00282,
+          "moved_gt_1mm": 16586,
+          "reach_f_m": 0.0003,
+          "reach_b_m": 0.00031,
+          "reach_max_m": 0.00031,
+          "foot_gap_m": 4e-05,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.428
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00044,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.00314,
+          "moved_gt_1mm": 16831,
+          "reach_f_m": 0.0003,
+          "reach_b_m": 0.00031,
+          "reach_max_m": 0.00031,
+          "foot_gap_m": 4e-05,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.428
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00039,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.00282,
+          "moved_gt_1mm": 16586,
+          "reach_f_m": 0.0003,
+          "reach_b_m": 0.00031,
+          "reach_max_m": 0.00031,
+          "foot_gap_m": 4e-05,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.428
+        },
+        "V2_final": {
+          "tear_p999_m": 0.00044,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.00314,
+          "moved_gt_1mm": 16831,
+          "reach_f_m": 0.0003,
+          "reach_b_m": 0.00031,
+          "reach_max_m": 0.00031,
+          "foot_gap_m": 4e-05,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.428
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 0,
+        "V1_base": {
+          "tear_p999_m": 0.0,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0,
+          "moved_gt_1mm": 0,
+          "reach_f_m": 0.0,
+          "reach_b_m": 0.0,
+          "reach_max_m": 0.0,
+          "foot_gap_m": 0.0,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.0,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0,
+          "moved_gt_1mm": 0,
+          "reach_f_m": 0.0,
+          "reach_b_m": 0.0,
+          "reach_max_m": 0.0,
+          "foot_gap_m": 0.0,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.0,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0,
+          "moved_gt_1mm": 0,
+          "reach_f_m": 0.0,
+          "reach_b_m": 0.0,
+          "reach_max_m": 0.0,
+          "foot_gap_m": 0.0,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.0
+        },
+        "V2_final": {
+          "tear_p999_m": 0.0,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0,
+          "moved_gt_1mm": 0,
+          "reach_f_m": 0.0,
+          "reach_b_m": 0.0,
+          "reach_max_m": 0.0,
+          "foot_gap_m": 0.0,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.0
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 1,
+        "V1_base": {
+          "tear_p999_m": 0.00364,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.03611,
+          "moved_gt_1mm": 63896,
+          "reach_f_m": 0.00575,
+          "reach_b_m": 0.02229,
+          "reach_max_m": 0.02229,
+          "foot_gap_m": 0.00513,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00626,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.03611,
+          "moved_gt_1mm": 63896,
+          "reach_f_m": 0.00575,
+          "reach_b_m": 0.02229,
+          "reach_max_m": 0.02229,
+          "foot_gap_m": 0.00513,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00358,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.03611,
+          "moved_gt_1mm": 63896,
+          "reach_f_m": 0.01073,
+          "reach_b_m": 0.02889,
+          "reach_max_m": 0.02889,
+          "foot_gap_m": 0.00513,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V2_final": {
+          "tear_p999_m": 0.00798,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.03611,
+          "moved_gt_1mm": 63896,
+          "reach_f_m": 0.01073,
+          "reach_b_m": 0.02889,
+          "reach_max_m": 0.02889,
+          "foot_gap_m": 0.00513,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 2,
+        "V1_base": {
+          "tear_p999_m": 0.00594,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.07328,
+          "moved_gt_1mm": 63992,
+          "reach_f_m": 0.01997,
+          "reach_b_m": 0.06912,
+          "reach_max_m": 0.06912,
+          "foot_gap_m": 0.00271,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.01083,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.07328,
+          "moved_gt_1mm": 63992,
+          "reach_f_m": 0.01997,
+          "reach_b_m": 0.06912,
+          "reach_max_m": 0.06912,
+          "foot_gap_m": 0.00271,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00626,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.09471,
+          "moved_gt_1mm": 63992,
+          "reach_f_m": 0.03719,
+          "reach_b_m": 0.0884,
+          "reach_max_m": 0.0884,
+          "foot_gap_m": 0.00271,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.74
+        },
+        "V2_final": {
+          "tear_p999_m": 0.01124,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.09471,
+          "moved_gt_1mm": 63992,
+          "reach_f_m": 0.03719,
+          "reach_b_m": 0.0884,
+          "reach_max_m": 0.0884,
+          "foot_gap_m": 0.00271,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.74
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 3,
+        "V1_base": {
+          "tear_p999_m": 0.00824,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.11798,
+          "moved_gt_1mm": 64003,
+          "reach_f_m": 0.03733,
+          "reach_b_m": 0.11122,
+          "reach_max_m": 0.11122,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.533
+        },
+        "V2_base": {
+          "tear_p999_m": 0.01455,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.11798,
+          "moved_gt_1mm": 64003,
+          "reach_f_m": 0.03733,
+          "reach_b_m": 0.11122,
+          "reach_max_m": 0.11122,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.533
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00981,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.15098,
+          "moved_gt_1mm": 64003,
+          "reach_f_m": 0.07116,
+          "reach_b_m": 0.1409,
+          "reach_max_m": 0.1409,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 6.8
+        },
+        "V2_final": {
+          "tear_p999_m": 0.01756,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.15098,
+          "moved_gt_1mm": 64003,
+          "reach_f_m": 0.07116,
+          "reach_b_m": 0.1409,
+          "reach_max_m": 0.1409,
+          "foot_gap_m": 0.00301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 6.8
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 4,
+        "V1_base": {
+          "tear_p999_m": 0.00966,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.15322,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.05284,
+          "reach_b_m": 0.14376,
+          "reach_max_m": 0.14376,
+          "foot_gap_m": 0.01301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 6.229
+        },
+        "V2_base": {
+          "tear_p999_m": 0.01645,
+          "tear_gt5cm": 21,
+          "max_displacement_m": 0.15322,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.05284,
+          "reach_b_m": 0.14376,
+          "reach_max_m": 0.14376,
+          "foot_gap_m": 0.01301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 6.229
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.01272,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.19781,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.10217,
+          "reach_b_m": 0.18387,
+          "reach_max_m": 0.18387,
+          "foot_gap_m": 0.01301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 9.344
+        },
+        "V2_final": {
+          "tear_p999_m": 0.02262,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.19781,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.10217,
+          "reach_b_m": 0.18387,
+          "reach_max_m": 0.18387,
+          "foot_gap_m": 0.01301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 9.344
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 5,
+        "V1_base": {
+          "tear_p999_m": 0.01082,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.17239,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06538,
+          "reach_b_m": 0.1611,
+          "reach_max_m": 0.1611,
+          "foot_gap_m": 0.02001,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.373
+        },
+        "V2_base": {
+          "tear_p999_m": 0.01889,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.17239,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06538,
+          "reach_b_m": 0.1611,
+          "reach_max_m": 0.1611,
+          "foot_gap_m": 0.02001,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.373
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.01489,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.22472,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12573,
+          "reach_b_m": 0.2081,
+          "reach_max_m": 0.2081,
+          "foot_gap_m": 0.02001,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 11.059
+        },
+        "V2_final": {
+          "tear_p999_m": 0.02656,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.22472,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12573,
+          "reach_b_m": 0.2081,
+          "reach_max_m": 0.2081,
+          "foot_gap_m": 0.02001,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 11.059
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 6,
+        "V1_base": {
+          "tear_p999_m": 0.01085,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.17196,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06256,
+          "reach_b_m": 0.16074,
+          "reach_max_m": 0.16074,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.31
+        },
+        "V2_base": {
+          "tear_p999_m": 0.01881,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.17196,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06256,
+          "reach_b_m": 0.16074,
+          "reach_max_m": 0.16074,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.31
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.0149,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.22325,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12232,
+          "reach_b_m": 0.20662,
+          "reach_max_m": 0.20662,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.965
+        },
+        "V2_final": {
+          "tear_p999_m": 0.02639,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.22325,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12232,
+          "reach_b_m": 0.20662,
+          "reach_max_m": 0.20662,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.965
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 7,
+        "V1_base": {
+          "tear_p999_m": 0.01085,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.17196,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06256,
+          "reach_b_m": 0.16074,
+          "reach_max_m": 0.16074,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.31
+        },
+        "V2_base": {
+          "tear_p999_m": 0.01881,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.17196,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06256,
+          "reach_b_m": 0.16074,
+          "reach_max_m": 0.16074,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.31
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.0149,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.22325,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12232,
+          "reach_b_m": 0.20662,
+          "reach_max_m": 0.20662,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.965
+        },
+        "V2_final": {
+          "tear_p999_m": 0.02639,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.22325,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12232,
+          "reach_b_m": 0.20662,
+          "reach_max_m": 0.20662,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.965
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 8,
+        "V1_base": {
+          "tear_p999_m": 0.01085,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.17196,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06256,
+          "reach_b_m": 0.16074,
+          "reach_max_m": 0.16074,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.31
+        },
+        "V2_base": {
+          "tear_p999_m": 0.01881,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.17196,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06256,
+          "reach_b_m": 0.16074,
+          "reach_max_m": 0.16074,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.31
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.0149,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.22325,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12232,
+          "reach_b_m": 0.20662,
+          "reach_max_m": 0.20662,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.965
+        },
+        "V2_final": {
+          "tear_p999_m": 0.02639,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.22325,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12232,
+          "reach_b_m": 0.20662,
+          "reach_max_m": 0.20662,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.965
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 9,
+        "V1_base": {
+          "tear_p999_m": 0.01085,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.17196,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06256,
+          "reach_b_m": 0.16074,
+          "reach_max_m": 0.16074,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.31
+        },
+        "V2_base": {
+          "tear_p999_m": 0.01881,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.17196,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06256,
+          "reach_b_m": 0.16074,
+          "reach_max_m": 0.16074,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.31
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.0149,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.22325,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12232,
+          "reach_b_m": 0.20662,
+          "reach_max_m": 0.20662,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.965
+        },
+        "V2_final": {
+          "tear_p999_m": 0.02639,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.22325,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12232,
+          "reach_b_m": 0.20662,
+          "reach_max_m": 0.20662,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.965
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 10,
+        "V1_base": {
+          "tear_p999_m": 0.01085,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.17196,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06256,
+          "reach_b_m": 0.16074,
+          "reach_max_m": 0.16074,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.31
+        },
+        "V2_base": {
+          "tear_p999_m": 0.01881,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.17196,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06256,
+          "reach_b_m": 0.16074,
+          "reach_max_m": 0.16074,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.31
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.0149,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.22325,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12232,
+          "reach_b_m": 0.20662,
+          "reach_max_m": 0.20662,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.965
+        },
+        "V2_final": {
+          "tear_p999_m": 0.02639,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.22325,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12232,
+          "reach_b_m": 0.20662,
+          "reach_max_m": 0.20662,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.965
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 11,
+        "V1_base": {
+          "tear_p999_m": 0.01085,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.17196,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06256,
+          "reach_b_m": 0.16074,
+          "reach_max_m": 0.16074,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.31
+        },
+        "V2_base": {
+          "tear_p999_m": 0.01881,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.17196,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06256,
+          "reach_b_m": 0.16074,
+          "reach_max_m": 0.16074,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.31
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.0149,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.22325,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12232,
+          "reach_b_m": 0.20662,
+          "reach_max_m": 0.20662,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.965
+        },
+        "V2_final": {
+          "tear_p999_m": 0.02639,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.22325,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12232,
+          "reach_b_m": 0.20662,
+          "reach_max_m": 0.20662,
+          "foot_gap_m": 0.02301,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.965
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 12,
+        "V1_base": {
+          "tear_p999_m": 0.01205,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.1535,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.10868,
+          "reach_b_m": 0.1375,
+          "reach_max_m": 0.1375,
+          "foot_gap_m": 0.00737,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 9.0
+        },
+        "V2_base": {
+          "tear_p999_m": 0.02186,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.1535,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.10868,
+          "reach_b_m": 0.1375,
+          "reach_max_m": 0.1375,
+          "foot_gap_m": 0.00737,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 9.0
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.01735,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.23906,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.14819,
+          "reach_b_m": 0.21585,
+          "reach_max_m": 0.21585,
+          "foot_gap_m": 0.00737,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.499
+        },
+        "V2_final": {
+          "tear_p999_m": 0.03284,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.23906,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.14819,
+          "reach_b_m": 0.21585,
+          "reach_max_m": 0.21585,
+          "foot_gap_m": 0.00737,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.499
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 13,
+        "V1_base": {
+          "tear_p999_m": 0.01348,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.17101,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.13133,
+          "reach_b_m": 0.15308,
+          "reach_max_m": 0.15308,
+          "foot_gap_m": 0.01057,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 9.887
+        },
+        "V2_base": {
+          "tear_p999_m": 0.02401,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.17101,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.13133,
+          "reach_b_m": 0.15308,
+          "reach_max_m": 0.15308,
+          "foot_gap_m": 0.01057,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 9.887
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.01945,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.26503,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.17855,
+          "reach_b_m": 0.23916,
+          "reach_max_m": 0.23916,
+          "foot_gap_m": 0.01057,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 14.83
+        },
+        "V2_final": {
+          "tear_p999_m": 0.03603,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.26503,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.17855,
+          "reach_b_m": 0.23916,
+          "reach_max_m": 0.23916,
+          "foot_gap_m": 0.01057,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 14.83
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 14,
+        "V1_base": {
+          "tear_p999_m": 0.01494,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.18932,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.15477,
+          "reach_b_m": 0.16944,
+          "reach_max_m": 0.16944,
+          "foot_gap_m": 0.01245,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.802
+        },
+        "V2_base": {
+          "tear_p999_m": 0.02625,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.18932,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.15477,
+          "reach_b_m": 0.16944,
+          "reach_max_m": 0.16944,
+          "foot_gap_m": 0.01245,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.802
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.0216,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.29206,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.21001,
+          "reach_b_m": 0.26352,
+          "reach_max_m": 0.26352,
+          "foot_gap_m": 0.01245,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 16.203
+        },
+        "V2_final": {
+          "tear_p999_m": 0.03937,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.29206,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.21001,
+          "reach_b_m": 0.26352,
+          "reach_max_m": 0.26352,
+          "foot_gap_m": 0.01245,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 16.203
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 15,
+        "V1_base": {
+          "tear_p999_m": 0.01646,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.20839,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.17854,
+          "reach_b_m": 0.18646,
+          "reach_max_m": 0.18646,
+          "foot_gap_m": 0.0134,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 11.72
+        },
+        "V2_base": {
+          "tear_p999_m": 0.02853,
+          "tear_gt5cm": 83,
+          "max_displacement_m": 0.20839,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.17854,
+          "reach_b_m": 0.18646,
+          "reach_max_m": 0.18646,
+          "foot_gap_m": 0.0134,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 11.72
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.02363,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.31979,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.24192,
+          "reach_b_m": 0.28859,
+          "reach_max_m": 0.28859,
+          "foot_gap_m": 0.0134,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 17.58
+        },
+        "V2_final": {
+          "tear_p999_m": 0.04275,
+          "tear_gt5cm": 96,
+          "max_displacement_m": 0.31979,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.24192,
+          "reach_b_m": 0.28859,
+          "reach_max_m": 0.28859,
+          "foot_gap_m": 0.0134,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 17.58
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 16,
+        "V1_base": {
+          "tear_p999_m": 0.01791,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.2286,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.2025,
+          "reach_b_m": 0.20402,
+          "reach_max_m": 0.20402,
+          "foot_gap_m": 0.01432,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 12.642
+        },
+        "V2_base": {
+          "tear_p999_m": 0.03079,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.2286,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.2025,
+          "reach_b_m": 0.20402,
+          "reach_max_m": 0.20402,
+          "foot_gap_m": 0.01432,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 12.642
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.02556,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.34812,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.27408,
+          "reach_b_m": 0.31427,
+          "reach_max_m": 0.31427,
+          "foot_gap_m": 0.01432,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 18.963
+        },
+        "V2_final": {
+          "tear_p999_m": 0.04616,
+          "tear_gt5cm": 103,
+          "max_displacement_m": 0.34812,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.27408,
+          "reach_b_m": 0.31427,
+          "reach_max_m": 0.31427,
+          "foot_gap_m": 0.01432,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 18.963
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 17,
+        "V1_base": {
+          "tear_p999_m": 0.0195,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.24928,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.22659,
+          "reach_b_m": 0.22209,
+          "reach_max_m": 0.22659,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.565
+        },
+        "V2_base": {
+          "tear_p999_m": 0.03313,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.24928,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.22659,
+          "reach_b_m": 0.22209,
+          "reach_max_m": 0.22659,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.565
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.02749,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.37699,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.30636,
+          "reach_b_m": 0.34052,
+          "reach_max_m": 0.34052,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 20.348
+        },
+        "V2_final": {
+          "tear_p999_m": 0.04955,
+          "tear_gt5cm": 134,
+          "max_displacement_m": 0.37699,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.30636,
+          "reach_b_m": 0.34052,
+          "reach_max_m": 0.34052,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 20.348
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 18,
+        "V1_base": {
+          "tear_p999_m": 0.0195,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.24928,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.22659,
+          "reach_b_m": 0.22209,
+          "reach_max_m": 0.22659,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.565
+        },
+        "V2_base": {
+          "tear_p999_m": 0.03313,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.24928,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.22659,
+          "reach_b_m": 0.22209,
+          "reach_max_m": 0.22659,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.565
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.02749,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.37699,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.30636,
+          "reach_b_m": 0.34052,
+          "reach_max_m": 0.34052,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 20.348
+        },
+        "V2_final": {
+          "tear_p999_m": 0.04955,
+          "tear_gt5cm": 134,
+          "max_displacement_m": 0.37699,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.30636,
+          "reach_b_m": 0.34052,
+          "reach_max_m": 0.34052,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 20.348
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 19,
+        "V1_base": {
+          "tear_p999_m": 0.0195,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.24928,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.22659,
+          "reach_b_m": 0.22209,
+          "reach_max_m": 0.22659,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.565
+        },
+        "V2_base": {
+          "tear_p999_m": 0.03313,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.24928,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.22659,
+          "reach_b_m": 0.22209,
+          "reach_max_m": 0.22659,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.565
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.02749,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.37699,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.30636,
+          "reach_b_m": 0.34052,
+          "reach_max_m": 0.34052,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 20.348
+        },
+        "V2_final": {
+          "tear_p999_m": 0.04955,
+          "tear_gt5cm": 134,
+          "max_displacement_m": 0.37699,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.30636,
+          "reach_b_m": 0.34052,
+          "reach_max_m": 0.34052,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 20.348
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 20,
+        "V1_base": {
+          "tear_p999_m": 0.0195,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.24928,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.22659,
+          "reach_b_m": 0.22209,
+          "reach_max_m": 0.22659,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.565
+        },
+        "V2_base": {
+          "tear_p999_m": 0.03313,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.24928,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.22659,
+          "reach_b_m": 0.22209,
+          "reach_max_m": 0.22659,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.565
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.02749,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.37699,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.30636,
+          "reach_b_m": 0.34052,
+          "reach_max_m": 0.34052,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 20.348
+        },
+        "V2_final": {
+          "tear_p999_m": 0.04955,
+          "tear_gt5cm": 134,
+          "max_displacement_m": 0.37699,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.30636,
+          "reach_b_m": 0.34052,
+          "reach_max_m": 0.34052,
+          "foot_gap_m": 0.01514,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 20.348
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 21,
+        "V1_base": {
+          "tear_p999_m": 0.01683,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.21192,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.17008,
+          "reach_b_m": 0.18936,
+          "reach_max_m": 0.18936,
+          "foot_gap_m": 0.00974,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 12.214
+        },
+        "V2_base": {
+          "tear_p999_m": 0.02979,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.21192,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.17008,
+          "reach_b_m": 0.18936,
+          "reach_max_m": 0.18936,
+          "foot_gap_m": 0.00974,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 12.214
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.02443,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.32845,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.22935,
+          "reach_b_m": 0.29616,
+          "reach_max_m": 0.29616,
+          "foot_gap_m": 0.00974,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 18.321
+        },
+        "V2_final": {
+          "tear_p999_m": 0.04458,
+          "tear_gt5cm": 101,
+          "max_displacement_m": 0.32845,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.22935,
+          "reach_b_m": 0.29616,
+          "reach_max_m": 0.29616,
+          "foot_gap_m": 0.00974,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 18.321
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 22,
+        "V1_base": {
+          "tear_p999_m": 0.01565,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.19716,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.15086,
+          "reach_b_m": 0.17619,
+          "reach_max_m": 0.17619,
+          "foot_gap_m": 0.00995,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 11.446
+        },
+        "V2_base": {
+          "tear_p999_m": 0.02784,
+          "tear_gt5cm": 98,
+          "max_displacement_m": 0.19716,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.15086,
+          "reach_b_m": 0.17619,
+          "reach_max_m": 0.17619,
+          "foot_gap_m": 0.00995,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 11.446
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.02278,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.30627,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.20288,
+          "reach_b_m": 0.27616,
+          "reach_max_m": 0.27616,
+          "foot_gap_m": 0.00995,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 17.17
+        },
+        "V2_final": {
+          "tear_p999_m": 0.04176,
+          "tear_gt5cm": 99,
+          "max_displacement_m": 0.30627,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.20288,
+          "reach_b_m": 0.27616,
+          "reach_max_m": 0.27616,
+          "foot_gap_m": 0.00995,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 17.17
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 23,
+        "V1_base": {
+          "tear_p999_m": 0.01435,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.18073,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.13175,
+          "reach_b_m": 0.16158,
+          "reach_max_m": 0.16158,
+          "foot_gap_m": 0.01054,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.514
+        },
+        "V2_base": {
+          "tear_p999_m": 0.02554,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.18073,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.13175,
+          "reach_b_m": 0.16158,
+          "reach_max_m": 0.16158,
+          "foot_gap_m": 0.01054,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.514
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.02087,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.28085,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.17725,
+          "reach_b_m": 0.25326,
+          "reach_max_m": 0.25326,
+          "foot_gap_m": 0.01054,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 15.772
+        },
+        "V2_final": {
+          "tear_p999_m": 0.03832,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.28085,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.17725,
+          "reach_b_m": 0.25326,
+          "reach_max_m": 0.25326,
+          "foot_gap_m": 0.01054,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 15.772
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 24,
+        "V1_base": {
+          "tear_p999_m": 0.01295,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.16231,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.11405,
+          "reach_b_m": 0.14511,
+          "reach_max_m": 0.14511,
+          "foot_gap_m": 0.00892,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 9.507
+        },
+        "V2_base": {
+          "tear_p999_m": 0.02313,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.16231,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.11405,
+          "reach_b_m": 0.14511,
+          "reach_max_m": 0.14511,
+          "foot_gap_m": 0.00892,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 9.507
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.01872,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.25269,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.15312,
+          "reach_b_m": 0.22784,
+          "reach_max_m": 0.22784,
+          "foot_gap_m": 0.00892,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 14.261
+        },
+        "V2_final": {
+          "tear_p999_m": 0.03469,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.25269,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.15312,
+          "reach_b_m": 0.22784,
+          "reach_max_m": 0.22784,
+          "foot_gap_m": 0.00892,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 14.261
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 25,
+        "V1_base": {
+          "tear_p999_m": 0.01211,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.15438,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.09686,
+          "reach_b_m": 0.13825,
+          "reach_max_m": 0.13825,
+          "foot_gap_m": 0.0077,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 9.027
+        },
+        "V2_base": {
+          "tear_p999_m": 0.02196,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.15438,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.09686,
+          "reach_b_m": 0.13825,
+          "reach_max_m": 0.13825,
+          "foot_gap_m": 0.0077,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 9.027
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.01753,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.24019,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12984,
+          "reach_b_m": 0.21681,
+          "reach_max_m": 0.21681,
+          "foot_gap_m": 0.0077,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.54
+        },
+        "V2_final": {
+          "tear_p999_m": 0.03295,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.24019,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.12984,
+          "reach_b_m": 0.21681,
+          "reach_max_m": 0.21681,
+          "foot_gap_m": 0.0077,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 13.54
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 26,
+        "V1_base": {
+          "tear_p999_m": 0.00926,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.11494,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.07992,
+          "reach_b_m": 0.10264,
+          "reach_max_m": 0.10264,
+          "foot_gap_m": 0.00615,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 6.841
+        },
+        "V2_base": {
+          "tear_p999_m": 0.01663,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.11494,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.07992,
+          "reach_b_m": 0.10264,
+          "reach_max_m": 0.10264,
+          "foot_gap_m": 0.00615,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 6.841
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.01338,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.17956,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.10702,
+          "reach_b_m": 0.1617,
+          "reach_max_m": 0.1617,
+          "foot_gap_m": 0.00615,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.262
+        },
+        "V2_final": {
+          "tear_p999_m": 0.02497,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.17956,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.10702,
+          "reach_b_m": 0.1617,
+          "reach_max_m": 0.1617,
+          "foot_gap_m": 0.00615,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 10.262
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 27,
+        "V1_base": {
+          "tear_p999_m": 0.00809,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.1014,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06529,
+          "reach_b_m": 0.09063,
+          "reach_max_m": 0.09063,
+          "foot_gap_m": 0.00474,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 6.055
+        },
+        "V2_base": {
+          "tear_p999_m": 0.01473,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.1014,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06529,
+          "reach_b_m": 0.09063,
+          "reach_max_m": 0.09063,
+          "foot_gap_m": 0.00474,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 6.055
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.01171,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.15854,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.08717,
+          "reach_b_m": 0.14286,
+          "reach_max_m": 0.14286,
+          "foot_gap_m": 0.00474,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 9.083
+        },
+        "V2_final": {
+          "tear_p999_m": 0.02211,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.15854,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.08717,
+          "reach_b_m": 0.14286,
+          "reach_max_m": 0.14286,
+          "foot_gap_m": 0.00474,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 9.083
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 28,
+        "V1_base": {
+          "tear_p999_m": 0.00657,
+          "tear_gt5cm": 3,
+          "max_displacement_m": 0.08153,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.05181,
+          "reach_b_m": 0.07288,
+          "reach_max_m": 0.07288,
+          "foot_gap_m": 0.00357,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.904
+        },
+        "V2_base": {
+          "tear_p999_m": 0.01193,
+          "tear_gt5cm": 1,
+          "max_displacement_m": 0.08153,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.05181,
+          "reach_b_m": 0.07288,
+          "reach_max_m": 0.07288,
+          "foot_gap_m": 0.00357,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.904
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00945,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.12767,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06915,
+          "reach_b_m": 0.11503,
+          "reach_max_m": 0.11503,
+          "foot_gap_m": 0.00357,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.355
+        },
+        "V2_final": {
+          "tear_p999_m": 0.01791,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.12767,
+          "moved_gt_1mm": 64006,
+          "reach_f_m": 0.06915,
+          "reach_b_m": 0.11503,
+          "reach_max_m": 0.11503,
+          "foot_gap_m": 0.00357,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 7.355
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 29,
+        "V1_base": {
+          "tear_p999_m": 0.00513,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.06239,
+          "moved_gt_1mm": 63982,
+          "reach_f_m": 0.03974,
+          "reach_b_m": 0.05573,
+          "reach_max_m": 0.05573,
+          "foot_gap_m": 0.0025,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.798
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00923,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.06239,
+          "moved_gt_1mm": 63982,
+          "reach_f_m": 0.03974,
+          "reach_b_m": 0.05573,
+          "reach_max_m": 0.05573,
+          "foot_gap_m": 0.0025,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 3.798
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.0073,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.09801,
+          "moved_gt_1mm": 63982,
+          "reach_f_m": 0.05285,
+          "reach_b_m": 0.08826,
+          "reach_max_m": 0.08826,
+          "foot_gap_m": 0.0025,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 5.697
+        },
+        "V2_final": {
+          "tear_p999_m": 0.01387,
+          "tear_gt5cm": 77,
+          "max_displacement_m": 0.09801,
+          "moved_gt_1mm": 63982,
+          "reach_f_m": 0.05285,
+          "reach_b_m": 0.08826,
+          "reach_max_m": 0.08826,
+          "foot_gap_m": 0.0025,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 5.697
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 30,
+        "V1_base": {
+          "tear_p999_m": 0.0037,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.04494,
+          "moved_gt_1mm": 63965,
+          "reach_f_m": 0.02815,
+          "reach_b_m": 0.04015,
+          "reach_max_m": 0.04015,
+          "foot_gap_m": 0.00167,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 2.759
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00671,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.04494,
+          "moved_gt_1mm": 63965,
+          "reach_f_m": 0.02815,
+          "reach_b_m": 0.04015,
+          "reach_max_m": 0.04015,
+          "foot_gap_m": 0.00167,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 2.759
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00528,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.07073,
+          "moved_gt_1mm": 63965,
+          "reach_f_m": 0.03735,
+          "reach_b_m": 0.0637,
+          "reach_max_m": 0.0637,
+          "foot_gap_m": 0.00167,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.138
+        },
+        "V2_final": {
+          "tear_p999_m": 0.0101,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.07073,
+          "moved_gt_1mm": 63965,
+          "reach_f_m": 0.03735,
+          "reach_b_m": 0.0637,
+          "reach_max_m": 0.0637,
+          "foot_gap_m": 0.00167,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 4.138
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 31,
+        "V1_base": {
+          "tear_p999_m": 0.00246,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.02992,
+          "moved_gt_1mm": 63798,
+          "reach_f_m": 0.01861,
+          "reach_b_m": 0.02673,
+          "reach_max_m": 0.02673,
+          "foot_gap_m": 0.00114,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.864
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00454,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.02992,
+          "moved_gt_1mm": 63798,
+          "reach_f_m": 0.01861,
+          "reach_b_m": 0.02673,
+          "reach_max_m": 0.02673,
+          "foot_gap_m": 0.00114,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.864
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00356,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.04731,
+          "moved_gt_1mm": 63798,
+          "reach_f_m": 0.02454,
+          "reach_b_m": 0.0426,
+          "reach_max_m": 0.0426,
+          "foot_gap_m": 0.00114,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 2.797
+        },
+        "V2_final": {
+          "tear_p999_m": 0.00683,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.04731,
+          "moved_gt_1mm": 63798,
+          "reach_f_m": 0.02454,
+          "reach_b_m": 0.0426,
+          "reach_max_m": 0.0426,
+          "foot_gap_m": 0.00114,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 2.797
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 32,
+        "V1_base": {
+          "tear_p999_m": 0.00139,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.01745,
+          "moved_gt_1mm": 63145,
+          "reach_f_m": 0.01052,
+          "reach_b_m": 0.01564,
+          "reach_max_m": 0.01564,
+          "foot_gap_m": 0.00063,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.086
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00266,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.01745,
+          "moved_gt_1mm": 63145,
+          "reach_f_m": 0.01052,
+          "reach_b_m": 0.01564,
+          "reach_max_m": 0.01564,
+          "foot_gap_m": 0.00063,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.086
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00203,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.02758,
+          "moved_gt_1mm": 63145,
+          "reach_f_m": 0.01402,
+          "reach_b_m": 0.02488,
+          "reach_max_m": 0.02488,
+          "foot_gap_m": 0.00063,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.629
+        },
+        "V2_final": {
+          "tear_p999_m": 0.004,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.02758,
+          "moved_gt_1mm": 63145,
+          "reach_f_m": 0.01402,
+          "reach_b_m": 0.02488,
+          "reach_max_m": 0.02488,
+          "foot_gap_m": 0.00063,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 1.629
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 33,
+        "V1_base": {
+          "tear_p999_m": 0.00061,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.00709,
+          "moved_gt_1mm": 62231,
+          "reach_f_m": 0.00561,
+          "reach_b_m": 0.00633,
+          "reach_max_m": 0.00633,
+          "foot_gap_m": 0.0004,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.715
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00122,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.00709,
+          "moved_gt_1mm": 61474,
+          "reach_f_m": 0.00561,
+          "reach_b_m": 0.00633,
+          "reach_max_m": 0.00633,
+          "foot_gap_m": 0.0004,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.715
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00088,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0117,
+          "moved_gt_1mm": 61813,
+          "reach_f_m": 0.00729,
+          "reach_b_m": 0.01054,
+          "reach_max_m": 0.01054,
+          "foot_gap_m": 0.0004,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.742
+        },
+        "V2_final": {
+          "tear_p999_m": 0.00183,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0117,
+          "moved_gt_1mm": 61718,
+          "reach_f_m": 0.00729,
+          "reach_b_m": 0.01054,
+          "reach_max_m": 0.01054,
+          "foot_gap_m": 0.0004,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.742
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 34,
+        "V1_base": {
+          "tear_p999_m": 0.00032,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.00315,
+          "moved_gt_1mm": 27093,
+          "reach_f_m": 0.00288,
+          "reach_b_m": 0.0006,
+          "reach_max_m": 0.00288,
+          "foot_gap_m": 0.00026,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.429
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00049,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.00315,
+          "moved_gt_1mm": 27327,
+          "reach_f_m": 0.00288,
+          "reach_b_m": 0.0006,
+          "reach_max_m": 0.00288,
+          "foot_gap_m": 0.00026,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.429
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00033,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.00375,
+          "moved_gt_1mm": 32827,
+          "reach_f_m": 0.00342,
+          "reach_b_m": 0.00181,
+          "reach_max_m": 0.00342,
+          "foot_gap_m": 0.00026,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.429
+        },
+        "V2_final": {
+          "tear_p999_m": 0.0006,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.00375,
+          "moved_gt_1mm": 33131,
+          "reach_f_m": 0.00342,
+          "reach_b_m": 0.00181,
+          "reach_max_m": 0.00342,
+          "foot_gap_m": 0.00026,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.429
+        }
+      },
+      {
+        "card": "wave",
+        "frame": 35,
+        "V1_base": {
+          "tear_p999_m": 0.00026,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0019,
+          "moved_gt_1mm": 31044,
+          "reach_f_m": 0.00113,
+          "reach_b_m": 0.00114,
+          "reach_max_m": 0.00114,
+          "foot_gap_m": 3e-05,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.286
+        },
+        "V2_base": {
+          "tear_p999_m": 0.00028,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.00209,
+          "moved_gt_1mm": 31085,
+          "reach_f_m": 0.00113,
+          "reach_b_m": 0.00114,
+          "reach_max_m": 0.00114,
+          "foot_gap_m": 3e-05,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.286
+        },
+        "V1_gain": {
+          "tear_p999_m": 0.00026,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.0019,
+          "moved_gt_1mm": 31044,
+          "reach_f_m": 0.00113,
+          "reach_b_m": 0.00114,
+          "reach_max_m": 0.00114,
+          "foot_gap_m": 3e-05,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.286
+        },
+        "V2_final": {
+          "tear_p999_m": 0.00028,
+          "tear_gt5cm": 0,
+          "max_displacement_m": 0.00209,
+          "moved_gt_1mm": 31085,
+          "reach_f_m": 0.00113,
+          "reach_b_m": 0.00114,
+          "reach_max_m": 0.00114,
+          "foot_gap_m": 3e-05,
+          "penetration_pct": 0.0,
+          "max_delta_deg": 0.286
+        }
+      }
+    ]
+  },
+  "shots": [
+    {
+      "file": "stance-A_x1.png",
+      "bytes": 451805,
+      "sha256": "b9b6faf7cc188866928f8c5e792cbd47376727680f9a3ca7a2fb27a9b0c9b406",
+      "tag": "A_x1",
+      "shot": "stance",
+      "card": null,
+      "frame": 0,
+      "max_delta_deg": 0.0
+    },
+    {
+      "file": "stance-B_x15.png",
+      "bytes": 451812,
+      "sha256": "36704efdfd19e456352e090f6f617b122cfa2136a5eb572c3b28e4464cd3e9af",
+      "tag": "B_x15",
+      "shot": "stance",
+      "card": null,
+      "frame": 0,
+      "max_delta_deg": 0.0
+    },
+    {
+      "file": "jab01-A_x1.png",
+      "bytes": 451805,
+      "sha256": "a0c8746797dc445dc05a20ebb7a5fd566e95491016704496a49fa8feaf274918",
+      "tag": "A_x1",
+      "shot": "jab01",
+      "card": "jab",
+      "frame": 0,
+      "max_delta_deg": 0.0
+    },
+    {
+      "file": "jab01-B_x15.png",
+      "bytes": 451809,
+      "sha256": "fec26ac894009a89fcd99fcfaf58a85875ce0adf20047b25e00106d649f0c4f1",
+      "tag": "B_x15",
+      "shot": "jab01",
+      "card": "jab",
+      "frame": 0,
+      "max_delta_deg": 0.0
+    },
+    {
+      "file": "jab07-A_x1.png",
+      "bytes": 456620,
+      "sha256": "924856e8585bd13585bd67969867b5df7986b5cd415ff300cfdcecf35773d722",
+      "tag": "A_x1",
+      "shot": "jab07",
+      "card": "jab",
+      "frame": 6,
+      "max_delta_deg": 21.393
+    },
+    {
+      "file": "jab07-B_x15.png",
+      "bytes": 455478,
+      "sha256": "3badef53740a5a0cb2693bc567c40c5c9d17509e2cc514d4040bffa85949fdb5",
+      "tag": "B_x15",
+      "shot": "jab07",
+      "card": "jab",
+      "frame": 6,
+      "max_delta_deg": 32.09
+    },
+    {
+      "file": "jab13-A_x1.png",
+      "bytes": 451395,
+      "sha256": "ebdd49e14c004be2357b70943beea3334c5ffddba454077126c808227d6eea34",
+      "tag": "A_x1",
+      "shot": "jab13",
+      "card": "jab",
+      "frame": 12,
+      "max_delta_deg": 1.287
+    },
+    {
+      "file": "jab13-B_x15.png",
+      "bytes": 450793,
+      "sha256": "159677593aa9b92096dda25223aaba137d4d72257f09dcb4d2a39fb6c4169954",
+      "tag": "B_x15",
+      "shot": "jab13",
+      "card": "jab",
+      "frame": 12,
+      "max_delta_deg": 1.922
+    },
+    {
+      "file": "cross01-A_x1.png",
+      "bytes": 451805,
+      "sha256": "49aac478112ba8ceadb8368e43033941d9bca90222863220f39af3c0f0be3c75",
+      "tag": "A_x1",
+      "shot": "cross01",
+      "card": "cross",
+      "frame": 0,
+      "max_delta_deg": 0.0
+    },
+    {
+      "file": "cross01-B_x15.png",
+      "bytes": 451805,
+      "sha256": "5fa240d5e534ac85ff6508340df08a2778c8b8de5eda5140a295ab38b5897c51",
+      "tag": "B_x15",
+      "shot": "cross01",
+      "card": "cross",
+      "frame": 0,
+      "max_delta_deg": 0.0
+    },
+    {
+      "file": "cross11-A_x1.png",
+      "bytes": 457984,
+      "sha256": "d88046f39480eee3c8653e104035ddcba3832240ce2ac8176115f978e3c33159",
+      "tag": "A_x1",
+      "shot": "cross11",
+      "card": "cross",
+      "frame": 10,
+      "max_delta_deg": 28.0
+    },
+    {
+      "file": "cross11-B_x15.png",
+      "bytes": 457554,
+      "sha256": "b05cad5c84cd6ab88b93991873a12778e0bcc737fca16b2ce41f6a632759b445",
+      "tag": "B_x15",
+      "shot": "cross11",
+      "card": "cross",
+      "frame": 10,
+      "max_delta_deg": 42.0
+    },
+    {
+      "file": "cross21-A_x1.png",
+      "bytes": 451876,
+      "sha256": "d57e7ce4fbaecba11769b1519cbcdc8db5b99f520fde6ac67cb14d6e8eeb1701",
+      "tag": "A_x1",
+      "shot": "cross21",
+      "card": "cross",
+      "frame": 20,
+      "max_delta_deg": 0.817
+    },
+    {
+      "file": "cross21-B_x15.png",
+      "bytes": 451640,
+      "sha256": "18377c7f3e776428c47b087616a1863f34382bd196f60dbd6a820ab7ab53eb29",
+      "tag": "B_x15",
+      "shot": "cross21",
+      "card": "cross",
+      "frame": 20,
+      "max_delta_deg": 1.225
+    },
+    {
+      "file": "wave01-A_x1.png",
+      "bytes": 451809,
+      "sha256": "eb54bd97534d40244b4211a6e7ee677da65cb61993745cff43f3e2cf6a3835e6",
+      "tag": "A_x1",
+      "shot": "wave01",
+      "card": "wave",
+      "frame": 0,
+      "max_delta_deg": 0.0
+    },
+    {
+      "file": "wave01-B_x15.png",
+      "bytes": 451810,
+      "sha256": "a81ca59ae43b0ea1669abcd977387640533ae8ae42993ea97705ca2522a1107b",
+      "tag": "B_x15",
+      "shot": "wave01",
+      "card": "wave",
+      "frame": 0,
+      "max_delta_deg": 0.0
+    },
+    {
+      "file": "wave18-A_x1.png",
+      "bytes": 456496,
+      "sha256": "ed72eb9964e9d89981eb812dc1c3a434bfae44953b59defc8aba01d8923b49bb",
+      "tag": "A_x1",
+      "shot": "wave18",
+      "card": "wave",
+      "frame": 17,
+      "max_delta_deg": 13.565
+    },
+    {
+      "file": "wave18-B_x15.png",
+      "bytes": 456986,
+      "sha256": "03d626459f395d0f4880a6f7329b53bb08e053e15476e2d4abc27c0da12115c3",
+      "tag": "B_x15",
+      "shot": "wave18",
+      "card": "wave",
+      "frame": 17,
+      "max_delta_deg": 20.348
+    },
+    {
+      "file": "wave35-A_x1.png",
+      "bytes": 451603,
+      "sha256": "0b5bb885504d921c949d907a11e2bc537582b8082199f0426daa11e5b4e87d4a",
+      "tag": "A_x1",
+      "shot": "wave35",
+      "card": "wave",
+      "frame": 34,
+      "max_delta_deg": 0.429
+    },
+    {
+      "file": "wave35-B_x15.png",
+      "bytes": 451187,
+      "sha256": "61f7df3c0aa0f5ff4aa92a283ea37245d5e22d514839383910513ec5c036797d",
+      "tag": "B_x15",
+      "shot": "wave35",
+      "card": "wave",
+      "frame": 34,
+      "max_delta_deg": 0.429
+    },
+    {
+      "file": "stance-B_x15-angle55.png",
+      "bytes": 410738,
+      "sha256": "d0d1ccb86a7025812d02886fa43bddaf997ede063f2ebc3e205f5114b0445e56",
+      "tag": "B_x15",
+      "shot": "stance-angle55",
+      "card": null,
+      "frame": 0,
+      "angle_deg": 55.0
+    }
+  ],
+  "elapsed_seconds": 56.92
+}

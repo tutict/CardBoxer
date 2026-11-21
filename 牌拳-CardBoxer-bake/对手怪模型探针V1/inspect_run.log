@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪模型探针V1\inspect_model_v4.py", line 38, in <module>
+    assert "glb" in files, "no GLB found by magic bytes"
+           ^^^^^^^^^^^^^^
+AssertionError: no GLB found by magic bytes

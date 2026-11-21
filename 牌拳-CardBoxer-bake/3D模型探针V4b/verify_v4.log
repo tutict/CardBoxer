@@ -1,0 +1,19 @@
+PASS  V4_prompt_ok  len=1014 sha=1a8896763f5a
+PASS  V4b_prompt_ok  len=999 sha=7ceb8afacfda
+PASS  V4_four_artifacts_by_magic  {'zip': ['artifact_01.zip'], 'png': ['artifact_02.png'], 'glb': ['artifact_03.glb'], 'fbx': ['artifact_04.fbx']}
+PASS  V4_still_static_single_mesh  verts=56461 shells=1860 skins=0 anim=0
+PASS  V4_probe_report_sha_matches  4 artifacts
+PASS  V4b_four_artifacts_by_magic  {'png': ['artifact_01.png'], 'zip': ['artifact_02.zip'], 'glb': ['artifact_03.glb'], 'fbx': ['artifact_04.fbx']}
+PASS  V4b_still_static_single_mesh  verts=57901 shells=2035 skins=0 anim=0
+PASS  V4b_probe_report_sha_matches  3 artifacts
+PASS  three_versions_share_identical_cameras  shots=7 v3==v4==v4b=True
+PASS  material_policy_identical  original PBR kept (engineer picked the PBR service preview)
+PASS  v3_seven_renders_valid  {'front': '(768, 768) colors=2371', 'angle25': '(768, 768) colors=2440', 'angle55': '(768, 768) colors=2027', 'back35': '(768, 768) colors=2069', 'face-front': '(1024, 1024) colors=4309', 'face-25': '(1024, 1024) colors=4623', 'upper': '(1024, 1024) colors=4803'}
+PASS  v4_seven_renders_valid  {'front': '(768, 768) colors=2935', 'angle25': '(768, 768) colors=2949', 'angle55': '(768, 768) colors=2633', 'back35': '(768, 768) colors=2625', 'face-front': '(1024, 1024) colors=6748', 'face-25': '(1024, 1024) colors=6884', 'upper': '(1024, 1024) colors=6714'}
+PASS  v4b_seven_renders_valid  {'front': '(768, 768) colors=3373', 'angle25': '(768, 768) colors=3306', 'angle55': '(768, 768) colors=2803', 'back35': '(768, 768) colors=2952', 'face-front': '(1024, 1024) colors=7487', 'face-25': '(1024, 1024) colors=7271', 'upper': '(1024, 1024) colors=7045'}
+PASS  face_closeups_are_distinct  [623801, 604638, 566883]
+PASS  upper_closeups_are_distinct  [471827, 514507, 484884]
+PASS  comparison_boards_exist  ['V3-V4-造型对照.png', 'V3-V4-脸模放大.png', 'V3-V4-V4b-三版对照.png']
+PASS  game_sources_not_modified  newer=[]
+
+17/17 PASS  MODEL_V4_VERIFIED

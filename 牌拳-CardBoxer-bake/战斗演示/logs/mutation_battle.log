@@ -1,0 +1,9 @@
+[M1] CAUGHT rc=1 failed=['B02_hp_rage_track_recomputed', 'B13_source_fingerprints']
+[M2] CAUGHT rc=1 failed=['B01_card_type_binding', 'B02_hp_rage_track_recomputed', 'B03_outcome_derived', 'B13_source_fingerprints']
+[M3] CAUGHT rc=1 failed=['B05_duration_conservation']
+[M4] CAUGHT rc=1 failed=['B06_frame_ms_10ms_multiple', 'B13_source_fingerprints']
+[M5] CAUGHT rc=1 failed=['B12_source_wiring']
+[M6] CAUGHT rc=1 failed=['B13_source_fingerprints', 'B14_not_claimed_is_explicit']
+[M7] CAUGHT rc=1 failed=['B09_foe_differs_between_versions']
+[M8] CAUGHT rc=1 failed=['B13_source_fingerprints']
+MUTATION_BATTLE 8/8 CAUGHT did_not_run=0 escaped=0 restore=8/8 clean=GREEN MUTATION_BATTLE_OK

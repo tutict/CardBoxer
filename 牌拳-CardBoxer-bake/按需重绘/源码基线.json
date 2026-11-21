@@ -1,0 +1,32 @@
+{
+  "scripts/arena.gd": {
+    "sha256": "485c7da3c15dc16740c1abb458a3b9e18d477fbf2da10b704666ff3f8efc0f95",
+    "bytes": 44024,
+    "crlf": 0,
+    "lf_only": 1243
+  },
+  "scripts/hud.gd": {
+    "sha256": "0fca9b2ac80497254a7cd5f4c2fb6a58a7df99d2e6c1801aa39905ffd2b67bcf",
+    "bytes": 24522,
+    "crlf": 0,
+    "lf_only": 588
+  },
+  "scripts/fighter.gd": {
+    "sha256": "df9b5e99e8c7c3b4bb6f163150ed87574205fd9a266bd6b1bc20e85818d9b81b",
+    "bytes": 40685,
+    "crlf": 0,
+    "lf_only": 1099
+  },
+  "scripts/fx_layer.gd": {
+    "sha256": "b9192a3ba20d90062d6c0a829dcdc6c808126e70baf838f676a87290165572ed",
+    "bytes": 430,
+    "crlf": 0,
+    "lf_only": 15
+  },
+  "project.godot": {
+    "sha256": "a4bb56358694fc1dcb83babd4603866a8c541906859cab8b6ef5db64bfa27522",
+    "bytes": 1290,
+    "crlf": 0,
+    "lf_only": 31
+  }
+}

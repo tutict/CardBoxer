@@ -1,0 +1,309 @@
+{
+  "exports": [
+    {
+      "name": "player-full",
+      "file": "player-full.glb",
+      "file_bytes": 38220692,
+      "sha256": "68fbb0c19f5faabe407dba396fb021f1d3259eef725217cfaa0450acdbe12493",
+      "counts": {
+        "scenes": 1,
+        "nodes": 17,
+        "meshes": 2,
+        "materials": 1,
+        "textures": 3,
+        "images": 3,
+        "skins": 1,
+        "animations": 0,
+        "cameras": 0,
+        "accessors": 11,
+        "bufferViews": 14,
+        "buffers": 1
+      },
+      "extensionsUsed": [
+        "KHR_materials_specular"
+      ],
+      "skin_joints": [
+        14
+      ],
+      "primitives": [
+        {
+          "mesh": 0,
+          "primitive": 0,
+          "attributes": [
+            "JOINTS_0",
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0",
+            "WEIGHTS_0"
+          ],
+          "verts": 14070,
+          "pos_min": [
+            -0.6238383054733276,
+            0.00010960176587104797,
+            -0.3825668692588806
+          ],
+          "pos_max": [
+            0.6238266229629517,
+            1.7197462320327759,
+            0.3834790289402008
+          ]
+        },
+        {
+          "mesh": 1,
+          "primitive": 0,
+          "attributes": [
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0"
+          ],
+          "verts": 57934,
+          "pos_min": [
+            -0.6272372603416443,
+            0,
+            -0.384692519903183
+          ],
+          "pos_max": [
+            0.6272372603416443,
+            1.7200000286102295,
+            0.384692519903183
+          ]
+        }
+      ],
+      "images": [
+        {
+          "index": 0,
+          "bytes": 5638722,
+          "sha256": "cce269cfbcd6c32a459bd2aa147fe447d6d2f8c5f67666543e8bf13408fb2dc0",
+          "matches_packed_source": true,
+          "source_name": "texture_pbr_20250901_normal"
+        },
+        {
+          "index": 1,
+          "bytes": 16637843,
+          "sha256": "9fc25cf63871573f4e80686c3a178f2cf93c733538a8df1b7ee84dbc3537fdb3",
+          "matches_packed_source": true,
+          "source_name": "texture_pbr_20250901"
+        },
+        {
+          "index": 2,
+          "bytes": 12703501,
+          "sha256": "ee2ab849bba394baf31b3eeca9203f0efc7a1cd057491645e8755031be45b258",
+          "matches_packed_source": true,
+          "source_name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness"
+        }
+      ],
+      "pbr": {
+        "baseColorTexture": 1,
+        "metallicRoughnessTexture": 2,
+        "normalTexture": 0
+      },
+      "export_apply": false
+    },
+    {
+      "name": "player-stance",
+      "file": "player-stance.glb",
+      "file_bytes": 2335004,
+      "sha256": "4af1347e6dd62ce7e3d09bebac66775b29fff8482d77264f416bac587d7d43b0",
+      "counts": {
+        "scenes": 1,
+        "nodes": 1,
+        "meshes": 1,
+        "materials": 0,
+        "textures": 0,
+        "images": 0,
+        "skins": 0,
+        "animations": 0,
+        "cameras": 0,
+        "accessors": 4,
+        "bufferViews": 4,
+        "buffers": 1
+      },
+      "extensionsUsed": [],
+      "skin_joints": [],
+      "primitives": [
+        {
+          "mesh": 0,
+          "primitive": 0,
+          "attributes": [
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0"
+          ],
+          "verts": 57939,
+          "pos_min": [
+            -0.6272373199462891,
+            -5.9368293392481064e-08,
+            -0.3846924304962158
+          ],
+          "pos_max": [
+            0.6272372603416443,
+            1.7200000286102295,
+            0.38469254970550537
+          ]
+        }
+      ],
+      "images": [],
+      "pbr": {},
+      "export_apply": true
+    },
+    {
+      "name": "player-cross",
+      "file": "player-cross.glb",
+      "file_bytes": 2339100,
+      "sha256": "be5867e8c5c702b8ac169f45233349fcb7ac5dd5f41979606c758636bb8b31e3",
+      "counts": {
+        "scenes": 1,
+        "nodes": 1,
+        "meshes": 1,
+        "materials": 0,
+        "textures": 0,
+        "images": 0,
+        "skins": 0,
+        "animations": 0,
+        "cameras": 0,
+        "accessors": 4,
+        "bufferViews": 4,
+        "buffers": 1
+      },
+      "extensionsUsed": [],
+      "skin_joints": [],
+      "primitives": [
+        {
+          "mesh": 0,
+          "primitive": 0,
+          "attributes": [
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0"
+          ],
+          "verts": 58067,
+          "pos_min": [
+            -0.45743367075920105,
+            -0.023483972996473312,
+            -0.3846888244152069
+          ],
+          "pos_max": [
+            0.7764038443565369,
+            1.7079224586486816,
+            0.3846924901008606
+          ]
+        }
+      ],
+      "images": [],
+      "pbr": {},
+      "export_apply": true
+    },
+    {
+      "name": "player-proxy-rig",
+      "file": "player-proxy-rig.glb",
+      "file_bytes": 905116,
+      "sha256": "35c51ff08491a2e2636e23329ca3929529e09bfdea45c47e3d55ce4fcc82e7df",
+      "counts": {
+        "scenes": 1,
+        "nodes": 16,
+        "meshes": 1,
+        "materials": 0,
+        "textures": 0,
+        "images": 0,
+        "skins": 1,
+        "animations": 0,
+        "cameras": 0,
+        "accessors": 7,
+        "bufferViews": 7,
+        "buffers": 1
+      },
+      "extensionsUsed": [],
+      "skin_joints": [
+        14
+      ],
+      "primitives": [
+        {
+          "mesh": 0,
+          "primitive": 0,
+          "attributes": [
+            "JOINTS_0",
+            "NORMAL",
+            "POSITION",
+            "TEXCOORD_0",
+            "WEIGHTS_0"
+          ],
+          "verts": 14070,
+          "pos_min": [
+            -0.6238383054733276,
+            0.00010960176587104797,
+            -0.3825668692588806
+          ],
+          "pos_max": [
+            0.6238266229629517,
+            1.7197462320327759,
+            0.3834790289402008
+          ]
+        }
+      ],
+      "images": [],
+      "pbr": {},
+      "export_apply": false
+    }
+  ],
+  "packed_source_images": [
+    {
+      "name": "texture_pbr_20250901",
+      "size": [
+        4096,
+        4096
+      ],
+      "bytes": 16637843,
+      "sha256": "9fc25cf63871573f4e80686c3a178f2cf93c733538a8df1b7ee84dbc3537fdb3"
+    },
+    {
+      "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+      "size": [
+        4096,
+        4096
+      ],
+      "bytes": 12703501,
+      "sha256": "ee2ab849bba394baf31b3eeca9203f0efc7a1cd057491645e8755031be45b258"
+    },
+    {
+      "name": "texture_pbr_20250901_normal",
+      "size": [
+        4096,
+        4096
+      ],
+      "bytes": 5638722,
+      "sha256": "cce269cfbcd6c32a459bd2aa147fe447d6d2f8c5f67666543e8bf13408fb2dc0"
+    }
+  ],
+  "zero_reencode": {
+    "full_images": 3,
+    "all_match": true,
+    "source_bytes": 34980066,
+    "glb_image_bytes": 34980066,
+    "share_of_full_glb": 0.91521
+  },
+  "static_snapshot": {
+    "stance_pos_min": [
+      -0.6272373199462891,
+      -5.9368293392481064e-08,
+      -0.3846924304962158
+    ],
+    "stance_pos_max": [
+      0.6272372603416443,
+      1.7200000286102295,
+      0.38469254970550537
+    ],
+    "cross_pos_min": [
+      -0.45743367075920105,
+      -0.023483972996473312,
+      -0.3846888244152069
+    ],
+    "cross_pos_max": [
+      0.7764038443565369,
+      1.7079224586486816,
+      0.3846924901008606
+    ],
+    "max_component_delta_m": 0.169804,
+    "stance_skins": 0,
+    "stance_animations": 0
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "blender": "5.2.3 LTS",
+  "probe_glb": "artifact_03.glb",
+  "base_color_image": "texture_pbr_20250901",
+  "node_types": [
+    "ShaderNodeBsdfDiffuse",
+    "ShaderNodeEmission",
+    "ShaderNodeMixRGB",
+    "ShaderNodeOutputMaterial",
+    "ShaderNodeShaderToRGB",
+    "ShaderNodeTexImage",
+    "ShaderNodeValToRGB"
+  ],
+  "has_shader_to_rgb": true,
+  "has_mix_rgb": true,
+  "color_ramp_constant": true,
+  "opaque_pixels": 13534,
+  "quantised_colours": 59,
+  "png_bytes": 67114,
+  "verdict": "TOON_TEX_PROBE_OK"
+}

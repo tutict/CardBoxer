@@ -1,0 +1,30 @@
+{
+  "scripts/arena.gd": {
+    "sha256": "5c4c393b7b26c6de6aab40be3a57ebfec39845d6b73f651b17d30bb7e53ac8e3",
+    "bytes": 39704
+  },
+  "scripts/hud.gd": {
+    "sha256": "0fca9b2ac80497254a7cd5f4c2fb6a58a7df99d2e6c1801aa39905ffd2b67bcf",
+    "bytes": 24522
+  },
+  "scripts/battle_motion_p0.gd": {
+    "sha256": "d958c71ae74ad2fefc7c7cb6574cb15a138c5a2cdfcfd7612d0daa85b7833460",
+    "bytes": 3021
+  },
+  "tests/battle_motion_p0_check.gd": {
+    "sha256": "57ffad11f7a331debec7e0298d47a558a44fb512f12965a2722cd8cb9a5ec9db",
+    "bytes": 9447
+  },
+  "scripts/fighter.gd": {
+    "sha256": "c453d735077b3f61053f999eb1be283de503ddd9ee0e77ccf3b4d638b86ef41a",
+    "bytes": 39925
+  },
+  "scripts/taikou_rules.gd": {
+    "sha256": "d16a4b16668b60d929b0eab318e98d0a2acffefd503f17e8d344cb55a599bce1",
+    "bytes": 3362
+  },
+  "data/card_motion.json": {
+    "sha256": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55",
+    "bytes": 226918
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "total": 12,
+  "passed": 12,
+  "failed": [],
+  "checks": [
+    {
+      "name": "S-01_blend_contains_player_not_foe",
+      "ok": true,
+      "detail": "meshes=['e_continuous_shell', 'node_0'] foe_named=[] hi_verts=57901"
+    },
+    {
+      "name": "S-02_source_glb_is_v4b_player",
+      "ok": true,
+      "detail": "glb_sha=5143404cf53d packed4096=3 camera=e_cam"
+    },
+    {
+      "name": "S-03_open_as_is_matches_delivery_view",
+      "ok": true,
+      "detail": "A=345302 B=345303 delta=1"
+    },
+    {
+      "name": "S-04_godot_main_scene_wired",
+      "ok": true,
+      "detail": "main_scene=True hide_shell=True"
+    },
+    {
+      "name": "S-05_godot_render_clean",
+      "ok": true,
+      "detail": "ok=True views=4 gl=True errs=0"
+    },
+    {
+      "name": "S-06_proxy_shell_hidden_before_capture",
+      "ok": true,
+      "detail": "init={'hidden_proxy_shell': 0, 'visible_highpoly': 1} ready={'hidden_proxy_shell': 1, 'visible_highpoly': -1} capture={'hidden_proxy_shell': 1, 'visible_highpoly': 1}"
+    },
+    {
+      "name": "S-07_four_godot_shots_valid",
+      "ok": true,
+      "detail": "shots=4 distinct=4 stddev_min=56.33"
+    },
+    {
+      "name": "S-08_two_boards_valid",
+      "ok": true,
+      "detail": "boards=2 distinct=2"
+    },
+    {
+      "name": "S-09_player_and_foe_are_distinct",
+      "ok": true,
+      "detail": "lowfreq_mae_24x24=29.0521 threshold=15.0"
+    },
+    {
+      "name": "S-10_offline_viewer_complete",
+      "ok": true,
+      "detail": "items=12 srcs=12 missing=0"
+    },
+    {
+      "name": "S-11_game_and_e_route_zero_drift",
+      "ok": true,
+      "detail": "drift=0 game3d=0 verify_e=26/26 e_entries=80"
+    },
+    {
+      "name": "S-12_render_log_markers",
+      "ok": true,
+      "detail": "markers=4 script_errors=0"
+    }
+  ]
+}

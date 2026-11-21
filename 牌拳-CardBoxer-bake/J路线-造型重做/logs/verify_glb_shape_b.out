@@ -1,0 +1,20 @@
+BASE 42914328 verts 64059 0edcfe9e455f3c8c
+NEW  42917552 verts 64121 96d383eec6286efb
+DIFF {'unchanged': 53526, 'removed': 10533, 'added': 10595, 'unchanged_ratio': 0.835573, 'new_coord_clusters_1e3': 274, 'target_verts': 10526, 'target_shells': 262}
+CHECK both_glb_parsed True
+CHECK target_spec_verified True
+CHECK build_verified True
+CHECK build_reports_unified_weights True
+CHECK sha_differs True
+CHECK verts_delta_small True
+CHECK skin_preserved True
+CHECK animations_still_zero True
+CHECK images_identical True
+CHECK image_count_3 True
+CHECK unchanged_ratio_matches_target_scale True
+CHECK removed_coords_near_target True
+CHECK added_coords_near_target True
+CHECK new_coords_form_shell_centroid_clusters True
+CHECK base_glb_is_i_baseline True
+CHECK exported_sha_matches_build True
+GLB_SHAPE_B_OK

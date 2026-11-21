@@ -1,0 +1,7 @@
+foe-full         bytes=  42926956 meshes=2 skins=1 anims=0 imgs=3 verts=84263 skinned=1
+foe-stance       bytes=   2531012 meshes=1 skins=0 anims=0 imgs=0 verts=64062 skinned=0
+foe-posed        bytes=   2533600 meshes=1 skins=0 anims=0 imgs=0 verts=64143 skinned=0
+foe-proxy-rig    bytes=   1297744 meshes=1 skins=1 anims=0 imgs=0 verts=20204 skinned=1
+POSE_DELTA {"stance_position_min_max": {"min": [-0.6084343791007996, -2.7864433604918304e-07, -0.3602530360221863], "max": [0.6084343791007996, 1.720000147819519, 0.3602530062198639]}, "posed_position_min_max": {"min": [-0.6492729783058167, -0.0318400040268898, -0.36025288701057434], "max": [0.7956001162528992, 1.7588777542114258, 0.3602530062198639]}, "componentwise_abs_delta": [0.040839, 0.03184, 0.0, 0.187166, 0.038878, 0.0], "max_abs_delta": 0.187166, "vertex_count_equal": false, "skins_stance": 0, "skins_posed": 0, "animations_stance": 0, "animations_posed": 0}
+TEXTURE_COST {"source_packed_4096_images": 3, "source_packed_bytes_total": 39097625, "glb_full_image_count": 3, "glb_full_image_bytes_total": 39097625, "glb_full_bytes": 42926956, "image_share_of_glb": 0.9108}
+GLTF_INSPECTION_OK

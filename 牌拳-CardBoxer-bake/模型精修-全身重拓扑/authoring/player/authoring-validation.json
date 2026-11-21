@@ -1,0 +1,110 @@
+{
+  "mesh_triangles": 76602,
+  "triangle_cap_pass": true,
+  "max_normalization_error": 5.21540641784668e-08,
+  "max_influences": 4,
+  "neutral_weight_sum": 0,
+  "weights_pass": true,
+  "morphs": {
+    "grip_half_f": {
+      "moved_vertices": 634,
+      "nonhand_deltas": 0,
+      "default": 0.0,
+      "pass": true
+    },
+    "grip_f": {
+      "moved_vertices": 634,
+      "nonhand_deltas": 0,
+      "default": 0.0,
+      "pass": true
+    },
+    "grip_half_b": {
+      "moved_vertices": 634,
+      "nonhand_deltas": 0,
+      "default": 0.0,
+      "pass": true
+    },
+    "grip_b": {
+      "moved_vertices": 634,
+      "nonhand_deltas": 0,
+      "default": 0.0,
+      "pass": true
+    }
+  },
+  "grip_states": [
+    {
+      "grip": 0,
+      "finite": true,
+      "max_hand_edge_m": 0.03145469993171796,
+      "pass": true
+    },
+    {
+      "grip": 0.25,
+      "finite": true,
+      "max_hand_edge_m": 0.03145469993171796,
+      "pass": true
+    },
+    {
+      "grip": 0.5,
+      "finite": true,
+      "max_hand_edge_m": 0.03145469993171796,
+      "pass": true
+    },
+    {
+      "grip": 0.75,
+      "finite": true,
+      "max_hand_edge_m": 0.03145469993171796,
+      "pass": true
+    },
+    {
+      "grip": 1,
+      "finite": true,
+      "max_hand_edge_m": 0.03145469993171796,
+      "pass": true
+    }
+  ],
+  "boundary_edges": 92,
+  "nonmanifold_edges": 92,
+  "max_sole_deviation_m": 1.252864763046091e-07,
+  "sole_pass": true,
+  "textures": {
+    "player-basecolor-4k": {
+      "size": [
+        4096,
+        4096
+      ],
+      "pass": true
+    },
+    "player-normal-4k": {
+      "size": [
+        4096,
+        4096
+      ],
+      "pass": true
+    },
+    "player-orm-4k": {
+      "size": [
+        4096,
+        4096
+      ],
+      "pass": true
+    }
+  },
+  "bone_names": [
+    "hips",
+    "spine",
+    "chest",
+    "neck",
+    "head",
+    "upperarm_b",
+    "forearm_b",
+    "upperarm_f",
+    "forearm_f",
+    "thigh_b",
+    "shin_b",
+    "thigh_f",
+    "shin_f",
+    "neutral_bone"
+  ],
+  "pass": false
+}

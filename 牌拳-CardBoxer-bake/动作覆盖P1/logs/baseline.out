@@ -1,0 +1,10 @@
+WATCH scripts/arena.gd c5dd4a3056a5 50263
+WATCH scripts/fighter_3d_layer.gd e99735fa1f78 13564
+WATCH data/motion_input.json c3ff4f76f558 19771
+WATCH data/motion_input_foe.json 7d1dcd21b92e 19769
+CHECK all_watched_present True
+CHECK all_sha_nonempty True
+CHECK backups_bytewise_equal True
+CHECK backup_count True
+CHECK four_to_change True
+BASELINE_OK

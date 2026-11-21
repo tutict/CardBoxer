@@ -1,0 +1,67 @@
+=== scripts/arena.gd ===
+--- C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer-bake/orig/pre-three-rounds/arena.gd	2026-11-06 10:34:03.248185700 +0800
++++ C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/scripts/arena.gd	2026-11-06 10:39:22.207002900 +0800
+@@ -23,7 +23,8 @@
+ const BATTLE_MODE := "taikou"
+ const TK_PLAY := 3
+ const TK_DISCARD_MAX := 3
+-const TK_MAX_TURNS := 12
++## 一局合战打满这么多回亮牌就按剩余兵力收局；HUD 与结算文案都读本常量，别在别处写死回数。
++const TK_MAX_TURNS := 3
+ 
+ const HAND_SIZE := 5
+ const COOLDOWN_TOTAL := 2.0
+@@ -673,15 +674,17 @@
+ 	if player.hp <= 0 or enemy.hp <= 0:
+ 		_end_taikou_round()
+ 		return
+-	tk_turn += 1
+-	if tk_turn > TK_MAX_TURNS:
++	# 先判断是否打满：收局时 tk_turn 停在最后一回，不要自增出超过上限、
++	# 根本不存在的轮次（否则 HUD 会显示「第 4 轮 / 共 3 轮」）。
++	if tk_turn >= TK_MAX_TURNS:
+ 		var winner := "draw"
+ 		if player.hp > enemy.hp:
+ 			winner = "player"
+ 		elif enemy.hp > player.hp:
+ 			winner = "enemy"
+-		_end_round(winner, "轮数耗尽 · 按兵力判定")
++		_end_round(winner, "%d 回战罢 · 按兵力判定" % TK_MAX_TURNS)
+ 		return
++	tk_turn += 1
+ 	_reset_taikou_turn(false)
+ 
+ 
+
+=== tests/taikou_flow_check.gd ===
+--- C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer-bake/orig/pre-three-rounds/taikou_flow_check.gd	2026-11-06 10:34:03.295479500 +0800
++++ C:/Users/tutic/Desktop/学习资料/牌拳-CardBoxer/tests/taikou_flow_check.gd	2026-11-06 10:39:22.209122600 +0800
+@@ -144,13 +144,24 @@
+ 	_expect(a.player.hp == 97 and a.enemy.hp == 97, "平局双方各受 3 点，实际 %d/%d" % [a.player.hp, a.enemy.hp])
+ 
+ 
+-## 12 轮打完仍没 KO 时，必须按兵力收局，不能无限循环。
++## 打满轮数上限仍没 KO 时，必须按兵力收局，不能无限循环。
++## 「一局 = 3 回」由下面的承重断言钉死，防止只改常量不更新预期。
+ func _check_turn_limit() -> void:
+-	a.tk_turn = ArenaScript.TK_MAX_TURNS
++	_expect(ArenaScript.TK_MAX_TURNS == 3, "一局卡牌对战应为 3 回，实际 %d" % ArenaScript.TK_MAX_TURNS)
++	# 不是把 tk_turn 直接设成上限跳到末尾，而是从第一回连续推进，
++	# 证明「打满三回」这条路径真的会在第三回收局。
++	a.round_phase = "fight"
++	a.round_wins = [0, 0]
++	a.tk_turn = 1
+ 	a.player.hp = 70
+ 	a.enemy.hp = 40
+-	a._finish_taikou_turn()
+-	_expect(a.round_phase == "over", "轮数耗尽应结束本局")
++	var steps: int = 0
++	while a.round_phase != "over" and steps < 10:
++		a._finish_taikou_turn()
++		steps += 1
++	_expect(steps == 3, "应恰好打满 3 回收局，实际 %d 回" % steps)
++	_expect(a.tk_turn == 3, "收局时轮数应停在 3，不应自增出越界轮次，实际 %d" % a.tk_turn)
++	_expect(a.round_phase == "over", "三回战罢应结束本局")
+ 	_expect(a.round_wins[0] == 1, "兵力高的一方应拿下一局")
+ 
+ 

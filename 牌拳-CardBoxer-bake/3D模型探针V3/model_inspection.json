@@ -1,0 +1,126 @@
+{
+  "artifacts_by_signature": {
+    "zip": [
+      "artifact_01.zip"
+    ],
+    "png": [
+      "artifact_02.png"
+    ],
+    "glb": [
+      "artifact_03.glb"
+    ],
+    "fbx": [
+      "artifact_04.fbx"
+    ]
+  },
+  "glb": {
+    "gltf_version": 2,
+    "declared_length": 29181864,
+    "file_bytes": 29181864,
+    "bin_chunk_bytes": 29179896
+  },
+  "counts": {
+    "scenes": 1,
+    "nodes": 1,
+    "meshes": 1,
+    "materials": 1,
+    "textures": 3,
+    "images": 3,
+    "skins": 0,
+    "animations": 0,
+    "accessors": 4,
+    "bufferViews": 7,
+    "buffers": 1,
+    "samplers": 1,
+    "cameras": 0,
+    "extensionsUsed": [
+      "KHR_materials_specular"
+    ]
+  },
+  "vertices_total": 55622,
+  "triangles_total": 79992,
+  "primitives_total": 1,
+  "mesh_names": [
+    "node_0"
+  ],
+  "material_texture_refs": [
+    "baseColorTexture",
+    "metallicRoughnessTexture",
+    "normalTexture"
+  ],
+  "images": [
+    {
+      "name": "texture_pbr_20250901_normal",
+      "mimeType": "image/png",
+      "embedded": true
+    },
+    {
+      "name": "texture_pbr_20250901",
+      "mimeType": "image/png",
+      "embedded": true
+    },
+    {
+      "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+      "mimeType": "image/png",
+      "embedded": true
+    }
+  ],
+  "has_skin": false,
+  "has_animation": false,
+  "node_names_sample": [
+    "node_0"
+  ],
+  "rig_like_node_names": [],
+  "connected_shells_unionfind": 1557,
+  "shell_sizes_top10": [
+    882,
+    861,
+    764,
+    658,
+    650,
+    619,
+    597,
+    584,
+    583,
+    502
+  ],
+  "zip_entries": [
+    {
+      "name": "texture_pbr_20250901.png",
+      "size": 14664844
+    },
+    {
+      "name": "texture_pbr_20250901_metallic.png",
+      "size": 2544481
+    },
+    {
+      "name": "texture_pbr_20250901_roughness.png",
+      "size": 2853930
+    },
+    {
+      "name": "texture_pbr_20250901_normal.png",
+      "size": 4474207
+    },
+    {
+      "name": "d9926423cccc356a9b1613f753b7965a.obj",
+      "size": 5289584
+    },
+    {
+      "name": "material.mtl",
+      "size": 245
+    }
+  ],
+  "zip_entry_count": 6,
+  "fbx_bytes": 29718908,
+  "fbx_token_counts": {
+    "LimbNode": 0,
+    "Deformer": 0,
+    "Skin": 0,
+    "Skeleton": 0,
+    "BindPose": 0,
+    "Geometry": 4,
+    "Material": 12,
+    "Texture": 27,
+    "Animation": 0
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "checks": [
+    {
+      "name": "S01_stance_candidate_curve",
+      "ok": true,
+      "detail": "selected=S2 monotone_diff=True"
+    },
+    {
+      "name": "S02_stance_frame_equals_selected_probe",
+      "ok": true,
+      "detail": "tags=player,foe byte_identical_bad=[]"
+    },
+    {
+      "name": "S03_side_view_semantics",
+      "ok": true,
+      "detail": "flip=True no_retarget=True hips_zero=True"
+    },
+    {
+      "name": "S04_local_relative_angle_and_caps",
+      "ok": true,
+      "detail": "shape=True world_max=179.099 local_max=18.0 cap=18.0 gain=0.55"
+    },
+    {
+      "name": "S05_facing_rule",
+      "ok": true,
+      "detail": "player=right (+x) foe=left (-x)"
+    },
+    {
+      "name": "S06_frames_complete_and_hashed",
+      "ok": true,
+      "detail": "per_tag=73 bad=[] total_bad=0"
+    },
+    {
+      "name": "S07_duration_conservation",
+      "ok": true,
+      "detail": "total=11200 expected=11200 enc=70/140 frame_ms=80"
+    },
+    {
+      "name": "S08_gif_frames_readable",
+      "ok": true,
+      "detail": "canvas=880x500 sampled_bad=[]"
+    },
+    {
+      "name": "S09_hitstop_is_three_frames",
+      "ok": true,
+      "detail": "f27_vs_f29=643px (<3000) f19_vs_f27=279921px (>5000)"
+    },
+    {
+      "name": "S10_script_spec_hp_rage",
+      "ok": true,
+      "detail": "spec_bad=[] final=86:81"
+    },
+    {
+      "name": "S11_source_fingerprints",
+      "ok": true,
+      "detail": "checked=7 mismatched=[]"
+    },
+    {
+      "name": "S12_source_wiring",
+      "ok": true,
+      "detail": "needles=9 missing=[]"
+    },
+    {
+      "name": "S13_boards_nonempty",
+      "ok": true,
+      "detail": "boards=4 bad=[]"
+    },
+    {
+      "name": "S14_mesh_warp_wired",
+      "ok": true,
+      "detail": "grid=1024 far=813"
+    },
+    {
+      "name": "S15_negative_results_archived",
+      "ok": true,
+      "detail": "v1_png=9 v2_png=9"
+    },
+    {
+      "name": "S16_side_differs_from_front",
+      "ok": true,
+      "detail": "same_hit_frame_diff=65857px (>20000)"
+    },
+    {
+      "name": "S17_not_claimed_is_explicit",
+      "ok": true,
+      "detail": "action_not_claimed_len=61"
+    },
+    {
+      "name": "S18_game_sources_untouched",
+      "ok": true,
+      "detail": "files=7 changed=[]"
+    }
+  ],
+  "passed": 18,
+  "total": 18,
+  "verified": true,
+  "diagnostics": {
+    "hitstop_diff_px": 643,
+    "leadin_diff_px": 279921,
+    "side_vs_front_diff_px": 65857,
+    "world_abs_max_deg": 179.099,
+    "local_abs_max_deg": 18.0
+  }
+}

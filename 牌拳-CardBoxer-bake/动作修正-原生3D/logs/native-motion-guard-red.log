@@ -1,0 +1,11 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+FAIL: player guard hands clear chest occlusion
+FAIL: player guard hands raised toward chin
+GEOMETRY player guard_z=0.42917954921722/0.32513356208801 jab_z=0.78306484222412 cross_z=0.77973175048828 sweep_z=0.78999990224838
+FAIL: foe guard hands clear chest occlusion
+FAIL: foe guard hands raised toward chin
+GEOMETRY foe guard_z=0.4970078766346/0.3853922188282 jab_z=0.90378153324127 cross_z=0.91803354024887 sweep_z=0.67000007629395
+NATIVE MOTION CHECK: FAIL failures=4 sampled=1502 support_max_m=0.01580134130859
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)

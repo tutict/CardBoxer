@@ -1,0 +1,11 @@
+PASS  html_exists_and_offline  hits=[]
+PASS  all_img_src_exist_and_relative  n=6 files=['对手怪V1-2D设计板.png', '对手怪V1-细节六格.png', 'foe-full-original.png']
+PASS  http_200_for_html_and_assets  对手怪V1-2D设计查看器.html:200/6376; foe-full-original.png:200/1924625; 对手怪V1-2D设计板.png:200/1569615; 玩家V4b-对手怪V1-概念对照.png:200/757175
+PASS  copies_match_sources_byte_for_byte  foe-full-original.png:a6ea4d6a; foe-redraw.png:5884a733; 玩家V4b-对手怪V1-概念对照.png:73cadb5a
+PASS  design_stats_self_consistent  board=[1800, 1500] detail=[1800, 1180]
+PASS  watermark_wipe_evidenced  dark=0.0 off_fill=0.17224→0.0
+PASS  six_crops_distinct_and_in_range  keys=['head', 'crystal', 'chest', 'arms', 'belt', 'boots']
+PASS  board_shown_crops_are_a_subset  shown=['head', 'crystal', 'chest', 'boots']
+PASS  board_and_detail_not_blank  colors=3082/3582
+
+9/9 PASS  SHOWCASE_VERIFIED

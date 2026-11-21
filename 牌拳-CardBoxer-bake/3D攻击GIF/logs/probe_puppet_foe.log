@@ -1,0 +1,7 @@
+SRC 对手怪Blender建模V1\foe-front.png size=768x768 alpha_bbox=(180, 96, 588, 672)
+MASKS segments=13 counts=[3033, 5748, 2322, 9192, 84293, 73693, 64944, 74520, 65639, 20170, 82799, 20062, 83409] build_seconds=2.06
+STANCE_CHECK identical=True identity_matrices=True
+FRAME stance_f000.png card=None f=0 phase=stance root=[0.0, 0.0] maxdeg=0.0 bytes=372834
+FRAME jab_f007.png card=jab f=7 phase=recover root=[43.409, 0.0] maxdeg=21.393 bytes=317486
+FRAME wave_f018.png card=wave f=18 phase=recover root=[30.052, -3.339] maxdeg=13.565 bytes=320536
+PUPPET_OK tag=foe frames=3 elapsed=2.78s

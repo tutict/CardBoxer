@@ -1,0 +1,13 @@
+PASS  prompt_ok_and_sha_self_consistent  len=992 sha=4c31a3fb83b6
+PASS  prompt_forbids_ip_and_weapon_terms  hits=[] missing=[]
+PASS  quota_429_recorded_no_fake_artifacts  http=429 artifacts=[]
+PASS  no_recoverable_job_was_created  提交阶段即被拒，无 job_id 可 resume
+PASS  two_concept_images_valid  c1=(1024, 1536) colors=4077 c2=(1024, 1536) colors=3426
+PASS  second_image_shares_composition_not_blank  lowfreq_mae=13.215 (<30 同构图；负结果：视角未换)
+PASS  concept_board_valid  (1440, 1160) colors=3307
+PASS  board_bboxes_are_measured_not_guessed  player_bbox=[174, 96, 594, 672] foe_bbox=[58, 38, 962, 1500]
+PASS  foe_concept_is_not_player_v4b  scaled_diff_px=64929
+PASS  game_sources_not_modified  newer=[]
+
+10/10 PASS  CONCEPT_V1_VERIFIED
+

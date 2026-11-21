@@ -1,0 +1,6 @@
+M1 CAUGHT  red=True sentinel_green=True restore=True  把 100% 刚性权重覆盖改成 0.5（假装没覆盖全）
+M2 CAUGHT  red=True sentinel_green=True restore=True  把剪影未达标伪装成达标（负结果不能改成通过）
+M3 CAUGHT  red=True sentinel_green=True restore=True  把骨架驱动最大位移改成 0（假装模型没动）
+M4 CAUGHT  red=True sentinel_green=True restore=True  给纯图生 3D 塞一个文字 prompt（伪装成文生 3D）
+
+4/4 CAUGHT  restore=4/4  did_not_run=0  clean_rerun=GREEN  MUTATION_FOE_BUILD_OK

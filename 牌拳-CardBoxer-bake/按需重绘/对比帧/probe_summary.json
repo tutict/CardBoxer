@@ -1,0 +1,77 @@
+{
+  "rows": [
+    {
+      "name": "off",
+      "gate": false,
+      "frames": 90,
+      "draws": 270,
+      "skips": 0,
+      "draw_us": 27946,
+      "per_layer_us": {
+        "arena_draw_us": 3594,
+        "fx_draw_us": 206,
+        "hud_draw_us": 24146
+      },
+      "TIME_PROCESS_mean_ms": 6.58999999999999
+    },
+    {
+      "name": "on",
+      "gate": true,
+      "frames": 90,
+      "draws": 0,
+      "skips": 270,
+      "draw_us": 0,
+      "per_layer_us": {
+        "arena_draw_us": 0,
+        "fx_draw_us": 0,
+        "hud_draw_us": 0
+      },
+      "TIME_PROCESS_mean_ms": 54.1923076923077
+    },
+    {
+      "name": "changed_on",
+      "gate": true,
+      "frames": 70,
+      "draws": 1,
+      "skips": 209,
+      "draw_us": 760,
+      "per_layer_us": {
+        "arena_draw_us": 0,
+        "fx_draw_us": 0,
+        "hud_draw_us": 760
+      },
+      "TIME_PROCESS_mean_ms": 130.356
+    },
+    {
+      "name": "changed_off",
+      "gate": false,
+      "frames": 70,
+      "draws": 210,
+      "skips": 0,
+      "draw_us": 20051,
+      "per_layer_us": {
+        "arena_draw_us": 2901,
+        "fx_draw_us": 171,
+        "hud_draw_us": 16979
+      },
+      "TIME_PROCESS_mean_ms": 130.356
+    },
+    {
+      "name": "back_on",
+      "gate": true,
+      "frames": 70,
+      "draws": 1,
+      "skips": 209,
+      "draw_us": 393,
+      "per_layer_us": {
+        "arena_draw_us": 0,
+        "fx_draw_us": 0,
+        "hud_draw_us": 393
+      },
+      "TIME_PROCESS_mean_ms": 129.354
+    }
+  ],
+  "static_saved_draw_us": 27946,
+  "static_saved_draws": 270,
+  "TIME_PROCESS_note": "retired: window throttle makes it bimodal (see logs/probe.log)"
+}

@@ -1,0 +1,30 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+FAIL: draft goes directly to planning without discard confirmation
+FAIL: four actions cannot start or spend cards
+FAIL: draft goes directly to planning without discard confirmation
+FAIL: enemy locks five actions before player selection
+FAIL: planning exposes a five-slot enemy preview
+FAIL: draft goes directly to planning without discard confirmation
+FAIL: enemy locks five actions before player selection
+FAIL: planning exposes a five-slot enemy preview
+FAIL: draft goes directly to planning without discard confirmation
+FAIL: enemy locks five actions before player selection
+FAIL: planning exposes a five-slot enemy preview
+FAIL: draft goes directly to planning without discard confirmation
+FAIL: enemy locks five actions before player selection
+FAIL: planning exposes a five-slot enemy preview
+FAIL: mask positions vary between seeds
+FAIL: draft goes directly to planning without discard confirmation
+FAIL: same-page direct optional swap exists
+FAIL: five-card pattern: two_pair
+FAIL: five-card pattern: full_house
+FAIL: five-card pattern: straight
+FAIL: five-card pattern: four
+FAIL: five-card pattern: five
+FAIL: five ordered nonattacks produce five beats
+FAIL: fifth-beat dodge creates next-exchange opening
+FAIL: generic effect executor exists
+TACTICAL PLANNING CHECK: 1/26 passed

@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "version_upgrade": true,
+    "baseline_deterministic": true,
+    "bake_rc_0": true,
+    "bake_bytes_identical": true,
+    "eevee_old_ok": true,
+    "eevee_new_ok": true
+  },
+  "drift_count": 0,
+  "new_sha256": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55",
+  "baseline_sha256": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55"
+}

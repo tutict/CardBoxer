@@ -1,0 +1,8 @@
+M1 CAUGHT exit=1 failures=4 sentinel_green=True
+M2 CAUGHT exit=1 failures=1 sentinel_green=True
+M3 CAUGHT exit=1 failures=2 sentinel_green=True
+M4 CAUGHT exit=1 failures=1 sentinel_green=True
+M5 CAUGHT exit=1 failures=1 sentinel_green=True
+M6 CAUGHT exit=1 failures=3 sentinel_green=True
+TOTAL=6 CAUGHT=6 DID_NOT_RUN=0 RESTORE=3/3 CLEAN=True
+MUTATION_WIRING_VERIFIED

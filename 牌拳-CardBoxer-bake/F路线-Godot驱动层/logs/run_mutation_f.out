@@ -1,0 +1,22 @@
+M01 CAUGHT      static=RED  failed=['A05_z_axis_neg_delta', 'F03_filelist_sha_selfconsistent']  A05 旋转轴符号
+M02 CAUGHT      static=RED  failed=['A04_correct_pose_basis', 'F03_filelist_sha_selfconsistent']  A04 pose 基底（真实修过的 bug）
+M03 CAUGHT      static=RED  failed=['A04_correct_pose_basis', 'F03_filelist_sha_selfconsistent']  A04 根骨 root 平移
+M04 CAUGHT      static=RED  failed=['A06_13_bones_only', 'F03_filelist_sha_selfconsistent']  A06 13 骨形状
+M05 CAUGHT      static=RED  failed=['A08_scene_reads_motion_only', 'F03_filelist_sha_selfconsistent']  A08 场景只读运动输入
+M06 CAUGHT      static=RED  failed=['A07_scene_preloads_driver', 'F03_filelist_sha_selfconsistent']  A07 场景 preload 驱动层
+M07 CAUGHT      static=RED  failed=['A10_motion_copy_identical', 'A14_motion_input_recompute', 'F03_filelist_sha_selfconsistent']  A14 运动输入独立复算
+M08 CAUGHT      static=RED  failed=['B03_highpoly_has_skin', 'F03_filelist_sha_selfconsistent']  B03 高模带 skin
+M09 CAUGHT      static=RED  failed=['B09_godot_14_bones', 'F03_filelist_sha_selfconsistent']  B09 Godot 14 骨
+M10 CAUGHT      static=RED  failed=['C04_73_frames', 'F03_filelist_sha_selfconsistent']  C04 73 帧
+M11 CAUGHT      static=RED  failed=['C06_crosscheck_all_green', 'F03_filelist_sha_selfconsistent']  C06 三重对账全绿
+M12 CAUGHT      static=RED  failed=['D03_stage_ready', 'F03_filelist_sha_selfconsistent']  D03 主场景 ready
+M13 CAUGHT      static=RED  failed=['A12_render_uses_main_scene', 'F03_filelist_sha_selfconsistent']  A12 截帧走同一条场景链
+M14 CAUGHT      static=RED  failed=['A11_drive_probe_has_73', 'F03_filelist_sha_selfconsistent']  A11 探针帧表
+M15 CAUGHT      static=RED  failed=['F03_filelist_sha_selfconsistent']  F03 清单 sha 自洽（改了交付文件就应报红）
+R01 CAUGHT      static=RED runtime=RED  failed=['F03_filelist_sha_selfconsistent']  root 位移比例翻倍 -> root_matches_blender 应红
+R02 CAUGHT      static=RED runtime=RED  failed=['F03_filelist_sha_selfconsistent']  手臂归一常数被换 -> delta_matches_blender 应红
+R03 CAUGHT      static=RED runtime=RED  failed=['F03_filelist_sha_selfconsistent']  躯干增益翻倍 -> delta_matches_blender 应红
+R04 CAUGHT      static=RED runtime=RED  failed=['F03_filelist_sha_selfconsistent']  旋转角折半 -> engine_vs_blender 应红
+N01 MISSED      static=GREEN  failed=[]  负对照：清单外且 verify 不读
+SUMMARY caught=19/19 did_not_run=0 missed=1 restored=20/20 clean=GREEN runtime_clean=GREEN negative=OK
+MUTATION_F_OK

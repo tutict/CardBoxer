@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "glb_sha_is_i_baseline": true,
+    "glb_size_is_i_baseline": true,
+    "b_round2_glb_removed": true,
+    "rollback_report_all_green": true,
+    "default_bat_has_no_3d_switch": true,
+    "new_bat_has_3d_switch": true,
+    "new_bat_has_utf8_codepage": true,
+    "new_bat_godot_exists": true,
+    "before_evidence_preserved": true,
+    "after_four_pngs_valid": true,
+    "default_probe_off": true,
+    "3d_probe_on": true,
+    "both_probes_clean": true,
+    "hud_uses_systemfont": true,
+    "hit_label_is_ascii": true
+  },
+  "failed": [],
+  "ok": true
+}

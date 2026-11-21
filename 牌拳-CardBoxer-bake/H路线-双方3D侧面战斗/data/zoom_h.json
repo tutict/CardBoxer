@@ -1,0 +1,39 @@
+{
+  "shot": "h-both-stance.png",
+  "left_roi": [
+    361,
+    280,
+    487,
+    545
+  ],
+  "right_roi": [
+    794,
+    280,
+    920,
+    545
+  ],
+  "roi_size": [
+    126,
+    265
+  ],
+  "auto_boxes": [
+    [
+      361,
+      280,
+      487,
+      545
+    ],
+    [
+      793,
+      280,
+      921,
+      545
+    ]
+  ],
+  "changed_px": 33070,
+  "total_px": 33390,
+  "changed_ratio": 0.9904,
+  "distinct": true,
+  "board": "H-双侧角色特写.png",
+  "board_bytes": 343451
+}

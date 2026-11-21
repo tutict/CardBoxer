@@ -1,0 +1,176 @@
+{
+  "selftest": false,
+  "cases": [
+    {
+      "id": "M01",
+      "status": "CAUGHT",
+      "expect": "E07_side_view_probe_ok",
+      "failed_sample": [
+        "E07_side_view_probe_ok",
+        "G02_filelist_sha_selfconsistent"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "M02",
+      "status": "CAUGHT",
+      "expect": "E01_static_pixel_identical",
+      "failed_sample": [
+        "E01_static_pixel_identical",
+        "G02_filelist_sha_selfconsistent"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "M03",
+      "status": "CAUGHT",
+      "expect": "E02_same_tree_ok",
+      "failed_sample": [
+        "E02_same_tree_ok",
+        "G02_filelist_sha_selfconsistent"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "M04",
+      "status": "CAUGHT",
+      "expect": "D03_ab_ok",
+      "failed_sample": [
+        "D03_ab_ok",
+        "G02_filelist_sha_selfconsistent"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "M05",
+      "status": "CAUGHT",
+      "expect": "C01_copy_data_motion_input.json",
+      "failed_sample": [
+        "C01_copy_data_motion_input.json",
+        "G02_filelist_sha_selfconsistent"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "M06",
+      "status": "CAUGHT",
+      "expect": "E05_three_d_ab_ok",
+      "failed_sample": [
+        "E05_three_d_ab_ok",
+        "G02_filelist_sha_selfconsistent"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "M07",
+      "status": "CAUGHT",
+      "expect": "B02_only_allowed_changed",
+      "failed_sample": [
+        "B02_only_allowed_changed",
+        "G02_filelist_sha_selfconsistent"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "M08",
+      "status": "CAUGHT",
+      "expect": "D04_retired_claim_absent",
+      "failed_sample": [
+        "D04_retired_claim_absent",
+        "G02_filelist_sha_selfconsistent"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "M09",
+      "status": "CAUGHT",
+      "expect": "F01_all_green_after",
+      "failed_sample": [
+        "F01_all_green_after",
+        "G02_filelist_sha_selfconsistent"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "M10",
+      "status": "CAUGHT",
+      "expect": "A05_side_yaw_is_55",
+      "failed_sample": [
+        "A05_side_yaw_is_55"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "M11",
+      "status": "CAUGHT",
+      "expect": "A06_side_flip_false",
+      "failed_sample": [
+        "A06_side_flip_false"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "M12",
+      "status": "CAUGHT",
+      "expect": "A08_stance_bias_exact",
+      "failed_sample": [
+        "A08_stance_bias_exact"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "M13",
+      "status": "CAUGHT",
+      "expect": "A09_stance_bias_default_applied",
+      "failed_sample": [
+        "A09_stance_bias_default_applied"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "M14",
+      "status": "CAUGHT",
+      "expect": "A11_bias_uses_bone_pose_rotation",
+      "failed_sample": [
+        "A11_bias_uses_bone_pose_rotation"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "M15",
+      "status": "CAUGHT",
+      "expect": "A01_switch_default_off",
+      "failed_sample": [
+        "A01_switch_default_off"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "M16",
+      "status": "CAUGHT",
+      "expect": "A02_override_default_false",
+      "failed_sample": [
+        "A02_override_default_false"
+      ],
+      "guard_rc": 1
+    },
+    {
+      "id": "N01",
+      "status": "MISSED (expected)",
+      "expect": null,
+      "failed_sample": [],
+      "guard_rc": 0
+    }
+  ],
+  "total": 17,
+  "caught": 16,
+  "did_not_run": 0,
+  "negative_controls": 1,
+  "unproven_positive": 0,
+  "restore_ok": 17,
+  "restore_total": 17,
+  "clean_rerun": "GREEN",
+  "clean_failed": [],
+  "ok": true,
+  "selftest_ok": false
+}

@@ -1,0 +1,30 @@
+RAW {'n': 1136, 'mean': 10.1991, 'p95': 34.9608, 'max': 116.0986}
+Q1_CAUSE {'shipped_cap_deg': 9.0, 'exact_flat_pairs': 482, 'exact_flat_from_native_track': 255, 'exact_flat_from_clamp': 227, 'clamp_share_of_exact_flat': 0.471, 'perceptual_flat_pairs': 497, 'perceptual_flat_from_clamp': 242, 'clamp_share_of_perceptual_flat': 0.4869}
+MAP hard09 stateless exact_flat 482 (0.448) perc_flat 497 longest_run 26 mean_abs 4.9982 max_abs 9.0 max_jump 18.0 distinct 0.5415
+MAP hard12 stateless exact_flat 434 (0.4033) perc_flat 450 longest_run 26 mean_abs 6.0238 max_abs 12.0 max_jump 24.0 distinct 0.5827
+MAP tanh09 stateless exact_flat 261 (0.2426) perc_flat 368 longest_run 8 mean_abs 4.6241 max_abs 9.0 max_jump 17.7677 distinct 0.7227
+MAP tanh12 stateless exact_flat 255 (0.237) perc_flat 331 longest_run 8 mean_abs 5.4831 max_abs 12.0 max_jump 23.0583 distinct 0.7251
+MAP atan09 stateless exact_flat 255 (0.237) perc_flat 325 longest_run 8 mean_abs 4.027 max_abs 8.7175 max_jump 15.4475 distinct 0.7251
+MAP atan12 stateless exact_flat 255 (0.237) perc_flat 308 longest_run 8 mean_abs 4.7692 max_abs 11.498 max_jump 19.5304 distinct 0.7251
+MAP atan15 stateless exact_flat 255 (0.237) perc_flat 289 longest_run 8 mean_abs 5.3742 max_abs 14.2163 max_jump 23.1439 distinct 0.7251
+MAP log09 stateless exact_flat 255 (0.237) perc_flat 400 longest_run 8 mean_abs 2.0086 max_abs 9.0 max_jump 10.2107 distinct 0.7251
+MAP log12 stateless exact_flat 255 (0.237) perc_flat 343 longest_run 8 mean_abs 2.6782 max_abs 12.0 max_jump 13.6142 distinct 0.7251
+MAP norm09_track_peak contextual exact_flat 255 (0.237) perc_flat 363 longest_run 8 mean_abs 2.6331 max_abs 9.0 max_jump 14.9149 distinct 0.7251
+LIVE_CURVES {"hard09": {"samples": 129, "exact_flat_adjacent_pairs": 107, "longest_flat_run": 27, "action_pairs": 47, "action_exact_flat_pairs": 35, "longest_action_flat_run_pairs": 9, "mean_peak_deg": 3.1209, "max_peak_deg": 9.0, "distinct_values": 7}, "tanh12": {"samples": 129, "exact_flat_adjacent_pairs": 85, "longest_flat_run": 27, "action_pairs": 47, "action_exact_flat_pairs": 13, "longest_action_flat_run_pairs": 3, "mean_peak_deg": 3.7743, "max_peak_deg": 11.9295, "distinct_values": 22}, "atan12": {"samples": 129, "exact_flat_adjacent_pairs": 85, "longest_flat_run": 27, "action_pairs": 47, "action_exact_flat_pairs": 13, "longest_action_flat_run_pairs": 3, "mean_peak_deg": 3.2163, "max_peak_deg": 10.3565, "distinct_values": 22}, "atan15": {"samples": 129, "exact_flat_adjacent_pairs": 85, "longest_flat_run": 27, "action_pairs": 47, "action_exact_flat_pairs": 13, "longest_action_flat_run_pairs": 3, "mean_peak_deg": 3.7547, "max_peak_deg": 12.4538, "distinct_values": 22}}
+CHECK fifteen_tracks True
+CHECK frames_284 True
+CHECK raw_distribution_matches_p2 True
+CHECK shipped_hard09_has_plateau True
+CHECK both_causes_sum_to_total True
+CHECK both_causes_are_material True
+CHECK soft_mapping_removes_every_clamp_flat_pair True
+CHECK soft_mapping_reaches_native_track_floor True
+CHECK contextual_norm_cannot_beat_stateless True
+CHECK soft_mapping_shortens_longest_flat_run True
+CHECK soft_mapping_improves_perceptual_flatness True
+CHECK atan_beats_tanh_on_perceptual_flatness True
+CHECK stateless_mapping_keeps_max_angle_bounded True
+CHECK live_curves_from_real_match True
+CHECK live_action_plateau_reduced True
+CHECK live_distinct_values_increased True
+PLATEAU_DIAG_OK

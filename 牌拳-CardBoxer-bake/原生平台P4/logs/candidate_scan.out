@@ -1,0 +1,24 @@
+SEGMENTS 38
+case                    exact   perc  frames     maxpx    meanpx     adjpx
+micro_0                   255    308       0    0.0000   0.00000  112.0179
+micro_0.05                  0    309      80    0.0490   0.00944  112.0179
+micro_0.1                   0    311      80    0.0981   0.01887  112.0179
+micro_0.2                   0    294      80    0.1962   0.03774  112.0179
+micro_0.3                   0    280      80    0.2942   0.05661  112.0179
+micro_0.5                   0    257      80    0.4904   0.09436  112.0179
+micro_1                     0    218      80    0.9808   0.18872  112.0179
+micro_2                     0    180      80    1.9616   0.37744  112.0179
+lerp_transition            24    132      66   33.0606   1.22759  112.0179
+hybrid_lerp_micro03         0    120      82   33.0606   1.23782  112.0179
+RECOMMENDED hybrid_lerp_micro03
+CHECK fifteen_tracks_284_frames True
+CHECK baseline_exact_is_p3_floor True
+CHECK baseline_perceptual_is_p3_value True
+CHECK micro_monotone_in_amplitude True
+CHECK some_candidate_reaches_zero_exact True
+CHECK hybrid_reaches_zero_exact True
+CHECK recommended_is_zero_exact True
+CHECK recommended_perceptual_below_baseline True
+CHECK small_micro_moves_less_than_lerp True
+CHECK lerp_does_not_worsen_adjacent_jumps True
+CANDIDATE_SCAN_OK

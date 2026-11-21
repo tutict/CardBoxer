@@ -1,0 +1,23 @@
+FILE motion_input.json 72921 cards 15 added 12
+CHECK motion_input.json existing_three_unchanged True
+CHECK motion_input.json non_cards_fields_unchanged True
+CHECK motion_input.json added_twelve_tracks True
+CHECK motion_input.json cards_total_fifteen True
+CHECK motion_input.json added_matches_source_px True
+CHECK motion_input.json frame_counts_match_source True
+CHECK motion_input.json all_frames_have_11_joints True
+CHECK motion_input.json readback_is_valid_json True
+FILE motion_input_foe.json 72919 cards 15 added 12
+CHECK motion_input_foe.json existing_three_unchanged True
+CHECK motion_input_foe.json non_cards_fields_unchanged True
+CHECK motion_input_foe.json added_twelve_tracks True
+CHECK motion_input_foe.json cards_total_fifteen True
+CHECK motion_input_foe.json added_matches_source_px True
+CHECK motion_input_foe.json frame_counts_match_source True
+CHECK motion_input_foe.json all_frames_have_11_joints True
+CHECK motion_input_foe.json readback_is_valid_json True
+CROSS two_cards_identical True
+CROSS two_stance_identical True
+CROSS two_mapping_identical True
+CROSS two_apose_may_differ True
+BUILD_MOTION_P1_OK

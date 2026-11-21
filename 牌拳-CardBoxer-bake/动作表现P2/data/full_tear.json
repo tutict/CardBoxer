@@ -1,0 +1,81 @@
+{
+  "anchor_p999_m": 0.09365,
+  "per_case": {
+    "cap03_hard_g100": {
+      "frames": 284,
+      "worst_p999_m": 0.040791,
+      "worst_frame": [
+        "throw",
+        8
+      ],
+      "mean_p999_m": 0.01222,
+      "frames_over_anchor": 0,
+      "worst_edges_gt_5cm": 44,
+      "total_edges_gt_5cm": 5936,
+      "worst_max_edge_m": 0.367047,
+      "worst_displacement_m": 0.583787,
+      "max_pose_err": 2.53e-07,
+      "worst_over_shipped_baseline": 1.0
+    },
+    "cap09_hard_g100": {
+      "frames": 284,
+      "worst_p999_m": 0.043694,
+      "worst_frame": [
+        "throw",
+        8
+      ],
+      "mean_p999_m": 0.016043,
+      "frames_over_anchor": 0,
+      "worst_edges_gt_5cm": 71,
+      "total_edges_gt_5cm": 6170,
+      "worst_max_edge_m": 0.367047,
+      "worst_displacement_m": 0.583787,
+      "max_pose_err": 3.58e-07,
+      "worst_over_shipped_baseline": 1.0712
+    },
+    "cap12_hard_g100": {
+      "frames": 284,
+      "worst_p999_m": 0.044522,
+      "worst_frame": [
+        "throw",
+        8
+      ],
+      "mean_p999_m": 0.017894,
+      "frames_over_anchor": 0,
+      "worst_edges_gt_5cm": 83,
+      "total_edges_gt_5cm": 6348,
+      "worst_max_edge_m": 0.367047,
+      "worst_displacement_m": 0.583787,
+      "max_pose_err": 4.17e-07,
+      "worst_over_shipped_baseline": 1.0915
+    }
+  },
+  "representative_sweep_worst": {
+    "cap03_hard_g100": 0.040791,
+    "cap09_hard_g100": 0.043694,
+    "cap12_hard_g100": 0.044522
+  },
+  "sampling_gap_m": {
+    "cap03_hard_g100": 0.0,
+    "cap09_hard_g100": 0.0,
+    "cap12_hard_g100": 0.0
+  },
+  "verdict": {
+    "full_284_frame_gate": "PASS",
+    "note": "全量通过只说明撕裂不是瓶颈；最终幅度档仍以引擎内A/B 看图的可读性为准。"
+  },
+  "checks": {
+    "all_852_poses_evaluated": true,
+    "three_cases": true,
+    "each_case_284_frames": true,
+    "all_frame_pairs_covered": true,
+    "full_frame_pairs_count": true,
+    "pose_matrices_readback_accurate": true,
+    "shipped_baseline_within_anchor": true,
+    "cap09_all_frames_within_anchor": true,
+    "cap12_all_frames_within_anchor": true,
+    "cap09_worse_than_baseline_only_mildly": true,
+    "cap12_worse_than_baseline_only_mildly": true
+  },
+  "ok": true
+}

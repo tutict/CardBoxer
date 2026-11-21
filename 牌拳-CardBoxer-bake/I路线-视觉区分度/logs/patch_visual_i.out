@@ -1,0 +1,23 @@
+PATCH foe_visual_constants
+PATCH foe_visual_state_vars
+PATCH light_rows_recorded
+PATCH configure_enables_foe_visual
+PATCH collect_meshes_after_instantiate
+PATCH apply_visual_after_lights
+PATCH visual_methods_inserted
+PATCH draw_scaled_only_for_foe
+CHECK arena_untouched True
+CHECK fighter_untouched True
+CHECK backup_matches_before True
+CHECK eight_patches_applied True
+CHECK switch_default_off True
+CHECK foe_visual_auto_on True
+CHECK off_switch_present True
+CHECK tint_uses_duplicate True
+CHECK restore_clears_override True
+CHECK lights_restored True
+CHECK draw_scale_conditional True
+CHECK spec_values_present True
+CHECK visual_state_probe True
+CHECK G_shape_preserved True
+PATCH_VISUAL_I_OK

@@ -1,0 +1,48 @@
+{
+  "rest": {
+    "centroid": [
+      -0.0,
+      -0.0,
+      0.25
+    ],
+    "y_range": [
+      -0.09,
+      0.09
+    ],
+    "vertex_count": 24,
+    "vertex_signature": "15a0951a8f6c4ad20c886a4c6d4119d62a40eec9a27d0c6df7cb036eadd27e3e",
+    "distinct_y_levels": 13
+  },
+  "posed": {
+    "centroid": [
+      0.0258,
+      0.0,
+      0.2655
+    ],
+    "y_range": [
+      -0.09,
+      0.09
+    ],
+    "vertex_count": 24,
+    "vertex_signature": "27df37c08bcc17466b61ad6df94aec0a3c69d61d4d98a6fcc9f34095eda617c4",
+    "distinct_y_levels": 13
+  },
+  "centroid_delta": 0.0301,
+  "max_vertex_displacement": 0.3752,
+  "vertex_signatures_differ": true,
+  "mesh_follows_bone": true,
+  "y_thickness_rest": 0.18,
+  "y_thickness_posed": 0.18,
+  "distinct_y_levels_rest": 13,
+  "bone_count": 1,
+  "vertex_group_count": 1,
+  "modifiers": [
+    [
+      "Skin",
+      "ARMATURE"
+    ]
+  ],
+  "first_vertex_weight_total": 1.0,
+  "rest_png_sha256": "40dd2a44d2c96237676d07ac99db4a2845e92d72907f2cf3e30e9e80560f224e",
+  "posed_png_sha256": "3271242524815c7bf761567f44460852c4843bc40df27ab74e40c8a7f74d9891"
+}

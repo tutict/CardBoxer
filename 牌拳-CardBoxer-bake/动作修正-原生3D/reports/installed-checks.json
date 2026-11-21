@@ -1,0 +1,68 @@
+[
+  {
+    "check": "import",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作修正-原生3D\\logs\\installed-import-engine.log"
+  },
+  {
+    "check": "native-motion",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作修正-原生3D\\logs\\installed-native-motion-engine.log"
+  },
+  {
+    "check": "native-rig",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作修正-原生3D\\logs\\installed-native-rig-engine.log"
+  },
+  {
+    "check": "presentation",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作修正-原生3D\\logs\\installed-presentation-engine.log"
+  },
+  {
+    "check": "integration",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作修正-原生3D\\logs\\installed-integration-engine.log"
+  },
+  {
+    "check": "transitions",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作修正-原生3D\\logs\\installed-transitions-engine.log"
+  },
+  {
+    "check": "contact",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作修正-原生3D\\logs\\installed-contact-engine.log"
+  },
+  {
+    "check": "2d-motion",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作修正-原生3D\\logs\\installed-2d-motion-engine.log"
+  },
+  {
+    "check": "combo",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作修正-原生3D\\logs\\installed-combo-engine.log"
+  },
+  {
+    "check": "rules",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作修正-原生3D\\logs\\installed-rules-engine.log"
+  },
+  {
+    "check": "natural-runtime",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作修正-原生3D\\logs\\installed-natural-runtime-engine.log"
+  }
+]

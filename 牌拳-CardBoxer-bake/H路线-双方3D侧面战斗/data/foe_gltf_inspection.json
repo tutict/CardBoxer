@@ -1,0 +1,190 @@
+{
+  "foe": {
+    "file": "foe-rigged.glb",
+    "bytes": 42914328,
+    "sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+    "counts": {
+      "scenes": 1,
+      "nodes": 16,
+      "meshes": 1,
+      "materials": 1,
+      "textures": 3,
+      "images": 3,
+      "skins": 1,
+      "animations": 0,
+      "accessors": 7
+    },
+    "primitives": [
+      {
+        "mesh": 0,
+        "primitive": 0,
+        "attributes": [
+          "JOINTS_0",
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0",
+          "WEIGHTS_0"
+        ],
+        "verts": 64059,
+        "has_joints": true,
+        "has_weights": true,
+        "pos_min": [
+          -0.6084343791007996,
+          0,
+          -0.36025306582450867
+        ],
+        "pos_max": [
+          0.6084343791007996,
+          1.7200000286102295,
+          0.36025306582450867
+        ]
+      }
+    ],
+    "skinned_nodes": [
+      {
+        "node": 15,
+        "name": "foe_HI_skinned",
+        "skin": 0,
+        "mesh": 0
+      }
+    ],
+    "skins": [
+      {
+        "joints": 14,
+        "has_inverse_bind": true
+      }
+    ],
+    "images": [
+      {
+        "index": 0,
+        "bytes": 8934769,
+        "sha256": "ed4d58cd90dd1419746a26926e80e0912f23ed83fdae8a9d881629e7e848cd9f",
+        "name": "texture_pbr_20250901_normal"
+      },
+      {
+        "index": 1,
+        "bytes": 15782150,
+        "sha256": "3c1076596ef22f2e45c6509e459f7e262053724ce05b803874ed53a927473d6a",
+        "name": "texture_pbr_20250901"
+      },
+      {
+        "index": 2,
+        "bytes": 14380706,
+        "sha256": "c87454eacff12946de4b70254b0dbe0fe822fd93d8896efa79af5663f2cdff7e",
+        "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness"
+      }
+    ],
+    "joint_node_names": [
+      "hips",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "upperarm_b",
+      "forearm_b",
+      "upperarm_f",
+      "forearm_f",
+      "thigh_b",
+      "shin_b",
+      "thigh_f",
+      "shin_f",
+      "neutral_bone"
+    ]
+  },
+  "player_joint_names": [
+    "hips",
+    "spine",
+    "chest",
+    "neck",
+    "head",
+    "upperarm_b",
+    "forearm_b",
+    "upperarm_f",
+    "forearm_f",
+    "thigh_b",
+    "shin_b",
+    "thigh_f",
+    "shin_f",
+    "neutral_bone"
+  ],
+  "source": {
+    "file": "artifact_03.glb",
+    "bytes": 41628356,
+    "images": [
+      {
+        "index": 0,
+        "bytes": 8934769,
+        "sha256": "ed4d58cd90dd1419746a26926e80e0912f23ed83fdae8a9d881629e7e848cd9f",
+        "name": "texture_pbr_20250901_normal"
+      },
+      {
+        "index": 1,
+        "bytes": 15782150,
+        "sha256": "3c1076596ef22f2e45c6509e459f7e262053724ce05b803874ed53a927473d6a",
+        "name": "texture_pbr_20250901"
+      },
+      {
+        "index": 2,
+        "bytes": 14380706,
+        "sha256": "c87454eacff12946de4b70254b0dbe0fe822fd93d8896efa79af5663f2cdff7e",
+        "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness"
+      }
+    ],
+    "primitives": [
+      {
+        "mesh": 0,
+        "primitive": 0,
+        "attributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "verts": 64024,
+        "has_joints": false,
+        "has_weights": false,
+        "pos_min": [
+          -0.35456299781799316,
+          -0.2881680130958557,
+          -1.0145050287246704
+        ],
+        "pos_max": [
+          0.3631809949874878,
+          0.13680699467658997,
+          0
+        ]
+      }
+    ]
+  },
+  "verdict": {
+    "highpoly_has_skin": true,
+    "highpoly_verts": 64059,
+    "blend_highpoly_verts": 64024,
+    "vertex_split_delta": 35,
+    "player_glb_verts": 57934,
+    "player_blend_verts": 57901,
+    "player_vertex_split_delta": 33,
+    "skinned_nodes": 1,
+    "skin_joints": 14,
+    "has_inverse_bind": true,
+    "zero_animations": true,
+    "three_images": true,
+    "images_zero_reencode": true,
+    "joint_names_same_as_player": true,
+    "source_highpoly_has_no_skin": true
+  },
+  "checks": {
+    "highpoly_has_skin": true,
+    "highpoly_verts_split_ok": true,
+    "player_split_delta_positive": true,
+    "one_skinned_node": true,
+    "skin_joints_ge_13": true,
+    "inverse_bind_present": true,
+    "zero_animations": true,
+    "three_images": true,
+    "images_zero_reencode": true,
+    "joint_names_same_as_player": true,
+    "source_highpoly_has_no_skin": true
+  },
+  "failed": [],
+  "ok": true
+}

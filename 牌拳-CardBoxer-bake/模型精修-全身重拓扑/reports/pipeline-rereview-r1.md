@@ -1,0 +1,53 @@
+# Task 1 pipeline re-review — round 1
+
+Reviewed 2026-11-21. **Round verdict: PASS for this fix scope. F1–F4 are ADDRESSED; no new actionable breakage was found in the round-1 diff.** This closes the four pipeline findings from `reports/pipeline-review.md`; it does not approve final characters, runtime behavior, or promotion.
+
+Read `briefs/pipeline.md` first, the original four findings, the appended round-1 section of `reports/pipeline-report.md`, and the complete 42,766-byte `reports/reviews/pipeline-fix1.patch.txt`. BASE is the reviewed SHA256 boundary preserved under `tools/pipeline_review_round1_before/`; HEAD is `tools/pipeline-review-r1.manifest.json`. Independent read-only hash checks matched all seven preserved-before and current-HEAD entries. The audit helper, Blender helper and real-roundtrip test remain unchanged. Only the bridge, checker, fixture tests and worker report differ at this boundary.
+
+## Per-finding disposition
+
+| Original finding | Verdict | Current implementation and evidence |
+|---|---|---|
+| F1: triangle accessor storage before cast/flatten | **ADDRESSED** | Shared `GLB.triangle_indices` validates accessor index, unnormalized unsigned SCALAR storage, count divisible by three and vertex range before returning integer indices (`tools/canonical_glb.py:175`). Source and raw bridge paths use it (`tools/canonical_glb.py:278`, `tools/canonical_glb.py:297`); reflection consumes validated indices (`tools/canonical_glb.py:340`). Checker validates candidate and source before geometry use (`tools/check_retopology_assets.py:118`, `tools/check_retopology_assets.py:120`). Tests at `tools/pipeline_test.py:314`, `:333`, `:341` cover the original FLOAT/fractional and VEC3 cases, normalized/signed storage, malformed source storage and all three valid unsigned widths. |
+| F2: accessor reads beyond bufferView, including sparse | **ADDRESSED** | `_view_layout` validates typed indices, offsets/lengths and full backing-buffer containment (`tools/canonical_glb.py:110`). `_read_view` checks stride/alignment and the actual last component extent against the declared view before constructing NumPy storage (`tools/canonical_glb.py:123`, `:134`). Accessor count is a positive integer; sparse index/value views use the same bounded reader, with valid sparse count, unsigned ordered unique in-range indices and no sparse stride/target (`tools/canonical_glb.py:138`, `:148`). Tests at `tools/pipeline_test.py:351`, `:371`, `:399` include the original four-byte POSITION view, malformed offsets/counts/strides and sparse cases, plus valid interleaving/sparse replacement/padded integer MAT3. |
+| F3: indexed PNG without mandatory PLTE accepted | **ADDRESSED** | The fix chooses the explicitly permitted supported-format alternative: RGB/RGBA at 8/16 bits only, rejecting indexed PNG in IHDR processing (`tools/check_retopology_assets.py:33`). Existing full-payload/CRC/filter checks remain, with chunk type, critical chunks, contiguous IDAT, optional PLTE and tRNS validation (`tools/check_retopology_assets.py:25`, `:35`, `:42`). Tests at `tools/pipeline_test.py:413` exercise the actual candidate-image gate and malformed chunk cases; `tools/pipeline_test.py:431` preserves the four supported format combinations. The worker's read-only six-atlas compatibility audit is recorded at `reports/pipeline-report.md:157`; its recorded real atlases are within the chosen RGB8/RGBA8 support. |
+| F4: staging/external-input/report collisions consume inputs | **ADDRESSED** | `validate_output_paths` compares resolved paths, existing same-file aliases, output pairs and the frozen baseline directory (`tools/canonical_glb.py:37`). `input_files` enumerates source/raw external image/buffer dependencies using the same resource resolution as reads (`tools/canonical_glb.py:85`, `:102`). Both output paths are checked against the full dependency set before writes, and provenance hashes are captured beforehand (`tools/canonical_glb.py:279`). Exclusively created unique sibling staging replaces the predictable `<output>.tmp` (`tools/canonical_glb.py:48`), so a source with the legacy temporary name is preserved. GLB/profile/report use atomic replacement. Bridge report paths are checked before canonicalization (`tools/canonical_glb.py:395`); checker report paths include source/candidate/profile and external resources (`tools/check_retopology_assets.py:266`). Tests at `tools/pipeline_test.py:436`, `:445`, `:468`, `:480`, `:500`, `:511` cover original input effects, both outputs, CLI reports, encoded resources and mixed supported/unsupported dependency enumeration. |
+
+The four original P2 findings are closed for the reviewed implementation. There are **zero newly raised findings** in this fix round.
+
+## Four independent review axes
+
+| Axis | Verdict within round-1 scope | Assessment |
+|---|---|---|
+| Spec | **PASS** | The original invalid-input rejection and input-preservation gaps are closed. The exact canonicalize interface remains, and the diff preserves the existing frame/rig/morph/socket calculations. RGB/RGBA support is the supported-format choice proposed in F3, with compatibility evidence for these author atlases. This is scoped pipeline compliance, not whole-spec character/runtime acceptance. |
+| Standards | **PASS** | Source preservation now includes external dependencies and report destinations, restoring the invariant in `contracts.md:69`. Ownership and tools-only diagnostic rules in `contracts.md:7` and `briefs/pipeline.md:27` are respected by the fix package. Meaningful rejection/compatibility tests and preserved checksum boundaries satisfy the supplied process requirements. No unrelated coding-style rules are inferred. |
+| Implementation Quality | **PASS** | Bounds/storage checks are shared between consumers instead of duplicated unchecked casts. Small integer matrix padding and valid interleaving remain supported. Output collision protection precedes mutation, and unique exclusive staging prevents the reproduced source-loss path. The reviewed URI reader/dependency enumeration use the same resolution. No new regression in these changes was identified. |
+| Verification & Evidence | **PASS for the scoped conclusions** | The diff, tests, preserved-before/current hashes, recorded RED/GREEN runs and fresh 33-test/real-roundtrip evidence are coherent. This reviewer independently read/hash-checked the artifacts; no suite or Blender rerun is claimed. The evidence is enough to close F1–F4 and assess this fix diff, with the integration limits below. |
+
+## Evidence reviewed
+
+The focused RED logs record F1 eight failures; F2 fifteen failures/six errors; F3 seven failures; F4 seventeen failures/two errors; and the follow-up dependency-enumeration failure. Corresponding GREEN logs show success. The added tests exercise behavior rather than merely mirroring helper internals: final checker acceptance, bridge rejection before writes, input-byte preservation and subprocess CLI report destinations. The malformed-source and mixed-URI follow-ups also have recorded subsequent success.
+
+`tools/pipeline-review-r1-full-suite.log:38` records **33 tests in 24.657s**; `tools/pipeline-review-r1-full-suite.log:40` records **OK (expected failures=1)**. The expected failure at line 35 is the unchanged baseline missing-morph proof; no F1–F4 regression is waived. Root and the worker report record exit0. This is a fresh recorded worker run, not a repeated reviewer run.
+
+The fresh Blender log contains the actual two-source export completion marker (`tools/pipeline-review-r1-blender-roundtrip.log:21`), Blender 5.2.0 LTS build `fbe6228777e7` (line 97) and normal quit (line 99). The previously assessed source sampler warnings remain at lines 8 and 17; they limit exact material/sampler fidelity claims, not the measured rig/rest compatibility task.
+
+Independent hashes of both existing roundtrip source/raw/canonical files match their reports; both report bridge hashes match current HEAD. The reports retain exact original nodes and IBM values. Recorded symmetric nearest-position error remains player 1.094525e-6m and foe 9.177003e-7m; canonical rest error remains 7.060052e-7m and 4.454003e-7m. These are below the required 1e-5m, and the unchanged actual Blender helper/real-roundtrip test provide continuity of the original provenance.
+
+Current changed implementation hashes verified against the manifest:
+
+| File | SHA256 |
+|---|---|
+| `tools/canonical_glb.py` | `734ff3ddbf55aba059ef998d4329a27b8421732960a038064005ae9011881667` |
+| `tools/check_retopology_assets.py` | `e7577e725a7fc2c238faa9f6da19fa48fb2c7fea371f314f6e7741a989111bbe` |
+| `tools/pipeline_test.py` | `5f74fb830a3369b838c24c59bf139f13032d17bfb7d76fa067d7a63eb00ff54d` |
+
+No unresolved specific doubt in this diff required an additional characterization probe. The prior reviewer-owned reproducer/results remain untouched. This re-review wrote only this report; no pipeline, authoring, project, baseline or main assets changed, and no subagent, Git operation, Blender/Godot process or suite rerun was launched.
+
+## Scope and evidence limits
+
+This is a fix-diff re-review, not a new broad audit. The result closes F1–F4 and records no new actionable defect in those changes; it does not claim universal glTF-extension or PNG-ancillary validation. Supported PBR images are intentionally RGB/RGBA8/16. Their structural checks do not establish bake appearance, tangent/UV per-pixel correspondence or AO quality.
+
+Individual output writes are atomic, not one GLB/profile/report transaction; the report explicitly records that an I/O failure can leave an earlier completed output while inputs remain protected (`reports/pipeline-report.md:167`). Report-path protection intentionally fails before writing when a container/dependency set cannot be inspected; programmatic `check_asset` still returns a failed result for malformed assets. The mixed-URI test verifies that unreadable dependencies are not silently dropped to authorize a write. These documented behaviors do not reopen the collision finding.
+
+The original geometric hand envelope, numerical morph locality threshold, frame/rest contracts and visual acceptance limits are outside the change scope and are not newly certified here. Root/author gates still include stable final inputs, final checker with profiles, editable assets and actual visual improvements, all19 clips/both facings, intermediate hand states, posed sockets/soles, normal/slow previews, timing/events/freeze/reset, performance and guarded promotion. Recorded rejected author inputs are neither new pipeline defects nor evidence of integrated completion.

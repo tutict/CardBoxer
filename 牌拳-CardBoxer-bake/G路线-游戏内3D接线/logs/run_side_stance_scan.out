@@ -1,0 +1,9 @@
+RUN 5.805s rc=0 gl=True errors=0
+LAYER ready=True cases=6 bones=13
+SHOT r0-flip-all      1280x720 err=0
+SHOT r1-flip-fore     1280x720 err=0
+SHOT r2-flip-upper    1280x720 err=0
+SHOT r3-fonly-neg     1280x720 err=0
+SHOT r4-both-neg      1280x720 err=0
+SHOT r5-guard-high    1280x720 err=0
+SIDE_STANCE_SCAN_OK

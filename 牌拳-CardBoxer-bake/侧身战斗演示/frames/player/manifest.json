@@ -1,0 +1,1881 @@
+{
+  "source_image": "3D模型探针V4b/v4b-angle55.png",
+  "source_sha256": "caa7afb1a1f3e07bdb442090c1c0efad402d650d7e5bfcdf6e56fc2f722d28f8",
+  "mesh_grid_count": 1024,
+  "mesh_far_vertices": 813,
+  "frames": 73,
+  "cards": {
+    "jab": 14,
+    "cross": 22,
+    "wave": 36
+  },
+  "manifest": [
+    {
+      "file": "stance_f000.png",
+      "label": "stance",
+      "card": null,
+      "frame": 0,
+      "phase": "stance",
+      "joints_sha256": "575fe77560d61dad1d85263a0ff8d7fda2e8e71692b27317e58a46fa4a61e639",
+      "png_sha256": "e44cdd2f9d3935f67b1427c2a8079d6132fec3c11b1e316a33b930c86306f270",
+      "bytes": 132484,
+      "root_delta_px": [
+        0.0,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 0.0,
+        "local_abs_max_deg": 0.0,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 70.0,
+      "stance_matches_selected_probe": true
+    },
+    {
+      "file": "jab_f000.png",
+      "label": "jab",
+      "card": "jab",
+      "frame": 0,
+      "phase": "windup",
+      "joints_sha256": "575fe77560d61dad1d85263a0ff8d7fda2e8e71692b27317e58a46fa4a61e639",
+      "png_sha256": "e44cdd2f9d3935f67b1427c2a8079d6132fec3c11b1e316a33b930c86306f270",
+      "bytes": 132484,
+      "root_delta_px": [
+        0.0,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 0.0,
+        "local_abs_max_deg": 0.0,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 70.0
+    },
+    {
+      "file": "jab_f001.png",
+      "label": "jab",
+      "card": "jab",
+      "frame": 1,
+      "phase": "windup",
+      "joints_sha256": "15f623bb02ac5e846003cb6c6ba22d33c6899cd563463997e41dfb29242d4778",
+      "png_sha256": "009176919bc8fc6a03a2e25656374f8dcc06976b4a96bd21f6bf2a95e01a029f",
+      "bytes": 150453,
+      "root_delta_px": [
+        -10.017,
+        4.007
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 32.894,
+        "local_abs_max_deg": 14.504,
+        "capped_bones": [
+          "shin_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 84.504
+    },
+    {
+      "file": "jab_f002.png",
+      "label": "jab",
+      "card": "jab",
+      "frame": 2,
+      "phase": "windup",
+      "joints_sha256": "15f623bb02ac5e846003cb6c6ba22d33c6899cd563463997e41dfb29242d4778",
+      "png_sha256": "009176919bc8fc6a03a2e25656374f8dcc06976b4a96bd21f6bf2a95e01a029f",
+      "bytes": 150453,
+      "root_delta_px": [
+        -10.017,
+        4.007
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 32.894,
+        "local_abs_max_deg": 14.504,
+        "capped_bones": [
+          "shin_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 84.504
+    },
+    {
+      "file": "jab_f003.png",
+      "label": "jab",
+      "card": "jab",
+      "frame": 3,
+      "phase": "windup",
+      "joints_sha256": "15f623bb02ac5e846003cb6c6ba22d33c6899cd563463997e41dfb29242d4778",
+      "png_sha256": "009176919bc8fc6a03a2e25656374f8dcc06976b4a96bd21f6bf2a95e01a029f",
+      "bytes": 150453,
+      "root_delta_px": [
+        -10.017,
+        4.007
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 32.894,
+        "local_abs_max_deg": 14.504,
+        "capped_bones": [
+          "shin_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 84.504
+    },
+    {
+      "file": "jab_f004.png",
+      "label": "jab",
+      "card": "jab",
+      "frame": 4,
+      "phase": "active",
+      "joints_sha256": "8dd362d3378fac98a59311b35eb1ffc230a62a460ae2a990aec6e44479032d4c",
+      "png_sha256": "0eadfa94590895e28e597d6474b60bc96e590ee7070f51cd4395e52f83d87b67",
+      "bytes": 141959,
+      "root_delta_px": [
+        16.028,
+        -2.003
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 66.263,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "neck",
+          "spine",
+          "upperarm_b",
+          "upperarm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 52.0
+    },
+    {
+      "file": "jab_f005.png",
+      "label": "jab",
+      "card": "jab",
+      "frame": 5,
+      "phase": "active",
+      "joints_sha256": "3fe8707adc9cde0729b1906561bb3d0131de0126072d20de2c93980222c3040c",
+      "png_sha256": "422abb88cd1db72bd52b680a9bdc5b8475ab39ea60214961773023fed31a3c37",
+      "bytes": 141624,
+      "root_delta_px": [
+        21.037,
+        -1.002
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 65.173,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "neck",
+          "spine",
+          "upperarm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 52.0
+    },
+    {
+      "file": "jab_f006.png",
+      "label": "jab",
+      "card": "jab",
+      "frame": 6,
+      "phase": "active",
+      "joints_sha256": "e818cf8b1ff8c56aee0f125e6bcc4b2e0d78bce16af06193dceae5ab2eaf66f0",
+      "png_sha256": "ed4710ef0c31677348ea53f8d03c0cfe26f331c8c9b1b6dac14742f65f68d89c",
+      "bytes": 141377,
+      "root_delta_px": [
+        26.045,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 63.867,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "neck",
+          "spine",
+          "upperarm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 52.0
+    },
+    {
+      "file": "jab_f007.png",
+      "label": "jab",
+      "card": "jab",
+      "frame": 7,
+      "phase": "recover",
+      "joints_sha256": "e818cf8b1ff8c56aee0f125e6bcc4b2e0d78bce16af06193dceae5ab2eaf66f0",
+      "png_sha256": "ed4710ef0c31677348ea53f8d03c0cfe26f331c8c9b1b6dac14742f65f68d89c",
+      "bytes": 141377,
+      "root_delta_px": [
+        26.045,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 63.867,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "neck",
+          "spine",
+          "upperarm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 52.0
+    },
+    {
+      "file": "jab_f008.png",
+      "label": "jab",
+      "card": "jab",
+      "frame": 8,
+      "phase": "recover",
+      "joints_sha256": "36ea9052cab0201e7c8788fe9860cb9079931e6d1d95d90a2114256364a29f2c",
+      "png_sha256": "329e5ec5017655150cbf3693681d4eaff3fccaa447f4c5b9b2387e6829b89065",
+      "bytes": 142828,
+      "root_delta_px": [
+        20.035,
+        2.003
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 63.885,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "neck",
+          "shin_f",
+          "spine",
+          "upperarm_b",
+          "upperarm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 52.0
+    },
+    {
+      "file": "jab_f009.png",
+      "label": "jab",
+      "card": "jab",
+      "frame": 9,
+      "phase": "recover",
+      "joints_sha256": "31755ebc86164febe7b7c40f85804a834dca58c29c3cd488efd4e6452d47c3c2",
+      "png_sha256": "24393012fa9e8b79626e03f227925a0451ab02e66bbb0632f72e82af213cbf11",
+      "bytes": 140838,
+      "root_delta_px": [
+        14.826,
+        1.803
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 51.373,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "spine",
+          "upperarm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 52.0
+    },
+    {
+      "file": "jab_f010.png",
+      "label": "jab",
+      "card": "jab",
+      "frame": 10,
+      "phase": "recover",
+      "joints_sha256": "20ac1e10413b54140a69f679b48c88d41ea7ff2a3a7d075023696dbe6e81484c",
+      "png_sha256": "fa5c50ee582147a5be9d1656991fb9328bccbd3e097381cf6bcf0ad9340896de",
+      "bytes": 137586,
+      "root_delta_px": [
+        9.416,
+        1.202
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 50.606,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "upperarm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 52.0
+    },
+    {
+      "file": "jab_f011.png",
+      "label": "jab",
+      "card": "jab",
+      "frame": 11,
+      "phase": "recover",
+      "joints_sha256": "8fbfe8f7501a69b6242b36ac3af9515a1a142f7d47959783dae535504a55cb1a",
+      "png_sha256": "9b8cfeb9a838bb794ef9229291cc08a0362fb5b6ae9628997b0b5f44b47ad1d8",
+      "bytes": 135845,
+      "root_delta_px": [
+        4.608,
+        0.801
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 20.73,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 59.596
+    },
+    {
+      "file": "jab_f012.png",
+      "label": "jab",
+      "card": "jab",
+      "frame": 12,
+      "phase": "recover",
+      "joints_sha256": "1d9e8d2b5e41357c0a461e7f3f967641c4fc611df1274ef607a349a331483a1b",
+      "png_sha256": "125bb5a5324f10790b9ae80c2bb2b8ee61475bef8e898a79fe2263dbdc263cd2",
+      "bytes": 133354,
+      "root_delta_px": [
+        1.202,
+        0.2
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 5.665,
+        "local_abs_max_deg": 4.865,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 67.435
+    },
+    {
+      "file": "jab_f013.png",
+      "label": "jab",
+      "card": "jab",
+      "frame": 13,
+      "phase": "recover",
+      "joints_sha256": "5faead915e744ab429a572eda913794501068c90dbff4b53ef5c3e998659521d",
+      "png_sha256": "3c25b6f861a7a0ce4e927d639272518004df384d3d7318e2e61ac8a16cc27b7a",
+      "bytes": 133978,
+      "root_delta_px": [
+        0.0,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 1.424,
+        "local_abs_max_deg": 1.512,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 70.102
+    },
+    {
+      "file": "cross_f000.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 0,
+      "phase": "windup",
+      "joints_sha256": "575fe77560d61dad1d85263a0ff8d7fda2e8e71692b27317e58a46fa4a61e639",
+      "png_sha256": "e44cdd2f9d3935f67b1427c2a8079d6132fec3c11b1e316a33b930c86306f270",
+      "bytes": 132484,
+      "root_delta_px": [
+        0.0,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 0.0,
+        "local_abs_max_deg": 0.0,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 70.0
+    },
+    {
+      "file": "cross_f001.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 1,
+      "phase": "windup",
+      "joints_sha256": "ee77c4cfb3ad21fe22089365de9219bd8ea4bbfbc9381792cbfdf3216888788f",
+      "png_sha256": "49c47ec03a5ea63ef5c10d49d719b50bed72f285add0f6161b5665a0ff3ac525",
+      "bytes": 144325,
+      "root_delta_px": [
+        -5.61,
+        2.204
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 22.068,
+        "local_abs_max_deg": 14.789,
+        "capped_bones": [
+          "shin_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 84.789
+    },
+    {
+      "file": "cross_f002.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 2,
+      "phase": "windup",
+      "joints_sha256": "f7725fad5f11b73e93558a4fe9b169da6eb8ae734b6a9382ec1f73d445ab5d68",
+      "png_sha256": "a3d49b67eb604908dd3932ee49c7259052bd85bb007fc2fb3ad7a9425b41c999",
+      "bytes": 157446,
+      "root_delta_px": [
+        -14.024,
+        6.01
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 134.066,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "shin_b",
+          "thigh_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f003.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 3,
+      "phase": "windup",
+      "joints_sha256": "1f3ba372c44701c58669dc23dcb98e9f8cf4f6d0acc72d50b8839dfb7c1e003a",
+      "png_sha256": "c0bc8d1d1aa5664cf477f6bdb08b02a69dd54163f5dddabeb91a8206da29b0c6",
+      "bytes": 157638,
+      "root_delta_px": [
+        -16.028,
+        8.014
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 141.874,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "shin_b",
+          "thigh_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f004.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 4,
+      "phase": "windup",
+      "joints_sha256": "1f3ba372c44701c58669dc23dcb98e9f8cf4f6d0acc72d50b8839dfb7c1e003a",
+      "png_sha256": "c0bc8d1d1aa5664cf477f6bdb08b02a69dd54163f5dddabeb91a8206da29b0c6",
+      "bytes": 157638,
+      "root_delta_px": [
+        -16.028,
+        8.014
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 141.874,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "shin_b",
+          "thigh_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f005.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 5,
+      "phase": "windup",
+      "joints_sha256": "1f3ba372c44701c58669dc23dcb98e9f8cf4f6d0acc72d50b8839dfb7c1e003a",
+      "png_sha256": "c0bc8d1d1aa5664cf477f6bdb08b02a69dd54163f5dddabeb91a8206da29b0c6",
+      "bytes": 157638,
+      "root_delta_px": [
+        -16.028,
+        8.014
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 141.874,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "shin_b",
+          "thigh_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f006.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 6,
+      "phase": "active",
+      "joints_sha256": "5e631480d147b30ced5185c6384576d43127c32ccc6e0f2fc5628531625b655f",
+      "png_sha256": "a50f683725541cfe23e27c83793aca949e7154b5392628a32662d3e4ba2957f1",
+      "bytes": 135314,
+      "root_delta_px": [
+        22.038,
+        -2.003
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 145.444,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "neck",
+          "spine",
+          "upperarm_b",
+          "upperarm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f007.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 7,
+      "phase": "active",
+      "joints_sha256": "1f3f9c832ebd836773737ecf9678bc6766262e9f8987a5a5f4e46320f0430cc2",
+      "png_sha256": "497880373ccba624818bc0b8f4b189698ea00e3b86d90a5300d6784be3e693b6",
+      "bytes": 137030,
+      "root_delta_px": [
+        27.448,
+        -1.402
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 146.002,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "neck",
+          "spine",
+          "upperarm_b",
+          "upperarm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f008.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 8,
+      "phase": "active",
+      "joints_sha256": "1a8394221e6663ce9dccc78945592ad672e58cf5982866b32658eb7e85f0be7c",
+      "png_sha256": "7cec2bdbe1725f081d33b8fd7243c6d807be5d26ec84ef4546d1d5623f886121",
+      "bytes": 138131,
+      "root_delta_px": [
+        32.657,
+        -0.601
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 146.783,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "neck",
+          "shin_f",
+          "spine",
+          "upperarm_b",
+          "upperarm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f009.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 9,
+      "phase": "active",
+      "joints_sha256": "199df148b836ebe6cd7662a2a0ecd432645a754a6bc9436c773c5a3b492d3707",
+      "png_sha256": "fbe00716f2dac12ec2f747e74b7276a0ea79adb3ad8c9379bdbe433ef30cf515",
+      "bytes": 139874,
+      "root_delta_px": [
+        38.066,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 147.62,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "neck",
+          "shin_f",
+          "spine",
+          "upperarm_b",
+          "upperarm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f010.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 10,
+      "phase": "recover",
+      "joints_sha256": "199df148b836ebe6cd7662a2a0ecd432645a754a6bc9436c773c5a3b492d3707",
+      "png_sha256": "fbe00716f2dac12ec2f747e74b7276a0ea79adb3ad8c9379bdbe433ef30cf515",
+      "bytes": 139874,
+      "root_delta_px": [
+        38.066,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 147.62,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "neck",
+          "shin_f",
+          "spine",
+          "upperarm_b",
+          "upperarm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f011.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 11,
+      "phase": "recover",
+      "joints_sha256": "199df148b836ebe6cd7662a2a0ecd432645a754a6bc9436c773c5a3b492d3707",
+      "png_sha256": "fbe00716f2dac12ec2f747e74b7276a0ea79adb3ad8c9379bdbe433ef30cf515",
+      "bytes": 139874,
+      "root_delta_px": [
+        38.066,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 147.62,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "neck",
+          "shin_f",
+          "spine",
+          "upperarm_b",
+          "upperarm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f012.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 12,
+      "phase": "recover",
+      "joints_sha256": "45c3d701f284a4a273128145379914eef1d5707998f48c9151ec6d0a73d14187",
+      "png_sha256": "85da69d99a97b486e1d555498bbccd25e9f1b341265a7a7e4f7219bc9a6e58aa",
+      "bytes": 140226,
+      "root_delta_px": [
+        30.052,
+        2.003
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 146.817,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "neck",
+          "shin_f",
+          "spine",
+          "upperarm_b",
+          "upperarm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f013.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 13,
+      "phase": "recover",
+      "joints_sha256": "8d98f92c54ed514b44f03c715fd6ea75b788ca927a4697b250f8dda84eee25c5",
+      "png_sha256": "fd4e0df8a852682e9683f68a81c12f89a5cfd2fa1f3736cc987d5f687403dd17",
+      "bytes": 139255,
+      "root_delta_px": [
+        25.645,
+        2.003
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 146.628,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "neck",
+          "shin_f",
+          "spine",
+          "upperarm_b",
+          "upperarm_f"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f014.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 14,
+      "phase": "recover",
+      "joints_sha256": "74070a4d4d15ddda35a2e633d7f2a86f89c15e8dfb3bce4fd9d0dc1089e95873",
+      "png_sha256": "1c2549f28a414a3d9bf7c19c0093eaab098d801b1fd7c76cc87bb156ab97a69e",
+      "bytes": 133470,
+      "root_delta_px": [
+        21.037,
+        1.803
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 147.029,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "neck",
+          "shin_f",
+          "spine",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f015.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 15,
+      "phase": "recover",
+      "joints_sha256": "69c3a16b03e921c602807d1bde5e9de1b06f46954d5c9c145d5f4de476253ad3",
+      "png_sha256": "11b9d6f0dfed780d8017a5e96560fdfa5a5e1916245a2988a771ada27f3d6c6e",
+      "bytes": 134575,
+      "root_delta_px": [
+        16.629,
+        1.402
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 176.235,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "forearm_f",
+          "spine",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f016.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 16,
+      "phase": "recover",
+      "joints_sha256": "dcdf2d2eb4ed5e53b22899b7e4f7e6f495f21b389d4fa63cd4aa7165732f68ee",
+      "png_sha256": "4861892aeae0572fa2a12722d89910497ce34832dafe3772284a1390ba8701f4",
+      "bytes": 136938,
+      "root_delta_px": [
+        12.221,
+        1.202
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 163.516,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_f",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f017.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 17,
+      "phase": "recover",
+      "joints_sha256": "7d91583a8bd104462bc97b8cad59e4dd2834e2ed93de31c2961df58cfecd3bd8",
+      "png_sha256": "34a57745fa56665273a3759a8c91b1bf9fc00337bbac15e0a704b0f28086289f",
+      "bytes": 139319,
+      "root_delta_px": [
+        8.415,
+        0.801
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 178.72,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f018.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 18,
+      "phase": "recover",
+      "joints_sha256": "f619884596b9e658f7ccc1749682d24e200b04c99012cb4995ae875d8b1c53f5",
+      "png_sha256": "e1da0a0739d32f5e1a52432a94261f7391450aabfda34463bbeb8d10ac65241f",
+      "bytes": 141585,
+      "root_delta_px": [
+        5.009,
+        0.601
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 91.828,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "cross_f019.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 19,
+      "phase": "recover",
+      "joints_sha256": "b9bdee3f9e4d803cd09bb1bd0bf7d27c0df10bdd2c3ebd174221163311a0d515",
+      "png_sha256": "37481475d77422c04bcfb08b7f208758b40d76c8e0402b8be7b8fd2cbb33e5bf",
+      "bytes": 132069,
+      "root_delta_px": [
+        2.404,
+        0.2
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 25.089,
+        "local_abs_max_deg": 14.546,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 84.546
+    },
+    {
+      "file": "cross_f020.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 20,
+      "phase": "recover",
+      "joints_sha256": "e4407c4130681d37173ec580ac0cb98042874b22a29a8b02769d45e78a050d24",
+      "png_sha256": "c6e22333fea8fa80d35aee544725e7a80cec783121d822df80c08d226c9573e7",
+      "bytes": 132438,
+      "root_delta_px": [
+        0.601,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 5.917,
+        "local_abs_max_deg": 4.332,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 74.332
+    },
+    {
+      "file": "cross_f021.png",
+      "label": "cross",
+      "card": "cross",
+      "frame": 21,
+      "phase": "recover",
+      "joints_sha256": "58c162fff5e960e9421000744a7d576b0cf298df28e71a6d3657657ac5515cb7",
+      "png_sha256": "9a4b245b3bf40bf98e4c2440f615bba115b52028b4e8e0bbdda4ee7b8ebc3d41",
+      "bytes": 132479,
+      "root_delta_px": [
+        0.0,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 0.758,
+        "local_abs_max_deg": 0.387,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 70.284
+    },
+    {
+      "file": "wave_f000.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 0,
+      "phase": "windup",
+      "joints_sha256": "575fe77560d61dad1d85263a0ff8d7fda2e8e71692b27317e58a46fa4a61e639",
+      "png_sha256": "e44cdd2f9d3935f67b1427c2a8079d6132fec3c11b1e316a33b930c86306f270",
+      "bytes": 132484,
+      "root_delta_px": [
+        0.0,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 0.0,
+        "local_abs_max_deg": 0.0,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 70.0
+    },
+    {
+      "file": "wave_f001.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 1,
+      "phase": "windup",
+      "joints_sha256": "bd2c723df692f1a37059b47ea5aa8708b3c0c38def435f4b93cbe318cb2dc5fa",
+      "png_sha256": "17719c472788e63210d2054db111580d3a05b8a6b932fdd6b0f35d8bb0d757b7",
+      "bytes": 137199,
+      "root_delta_px": [
+        -2.204,
+        0.601
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 7.196,
+        "local_abs_max_deg": 7.437,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 77.437
+    },
+    {
+      "file": "wave_f002.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 2,
+      "phase": "windup",
+      "joints_sha256": "c5f07faf66c42c5c23fa1b36d028996d269f75e57303b267eb885db2dcadd4e4",
+      "png_sha256": "f7b85e15bab7563ac155ac17619b0fc2106744889cf5333e3072c72daeb2a9d2",
+      "bytes": 141886,
+      "root_delta_px": [
+        -7.213,
+        2.003
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 19.64,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "shin_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f003.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 3,
+      "phase": "windup",
+      "joints_sha256": "9eaa29adfe4be466e3dafd0b6d6704b03ca4a00026a471554ad283613719558f",
+      "png_sha256": "587e10b8e03f82589afe1b80584ad3240c8942f812fef7e278f7c59c92052c2a",
+      "bytes": 144986,
+      "root_delta_px": [
+        -12.021,
+        4.007
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 42.26,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "shin_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f004.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 4,
+      "phase": "windup",
+      "joints_sha256": "3fc6ff933e70e189b2d61b5f31b4cdb3b4b839c7178e89467cc0a7d4f54074ff",
+      "png_sha256": "a2b972b62fe37c2c72502681ae4a72185bc3390400a9ab252b55ef2f56515676",
+      "bytes": 145189,
+      "root_delta_px": [
+        -14.826,
+        6.01
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 70.567,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "shin_b",
+          "thigh_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f005.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 5,
+      "phase": "windup",
+      "joints_sha256": "137fc429a1d5e6f28d2f30c8c3257ab7919b73e7e29ec663f47daeb2f38278d5",
+      "png_sha256": "ac3d6b1f0defd6709a22c6beda55a4877d4c402ee88eae79eb12796faa89ab3e",
+      "bytes": 144791,
+      "root_delta_px": [
+        -15.827,
+        7.413
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 70.96,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "shin_b",
+          "thigh_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f006.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 6,
+      "phase": "windup",
+      "joints_sha256": "3e8bfb8a520e5d24107e88598f5bfab029500551af8deaf2f746bea52c139f8b",
+      "png_sha256": "e9a94c9af034e94bbf272fe66b2927f8290ef775d72052604b16590641d65933",
+      "bytes": 145816,
+      "root_delta_px": [
+        -16.028,
+        8.014
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 67.996,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "shin_b",
+          "thigh_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f007.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 7,
+      "phase": "windup",
+      "joints_sha256": "3e8bfb8a520e5d24107e88598f5bfab029500551af8deaf2f746bea52c139f8b",
+      "png_sha256": "e9a94c9af034e94bbf272fe66b2927f8290ef775d72052604b16590641d65933",
+      "bytes": 145816,
+      "root_delta_px": [
+        -16.028,
+        8.014
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 67.996,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "shin_b",
+          "thigh_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f008.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 8,
+      "phase": "windup",
+      "joints_sha256": "3e8bfb8a520e5d24107e88598f5bfab029500551af8deaf2f746bea52c139f8b",
+      "png_sha256": "e9a94c9af034e94bbf272fe66b2927f8290ef775d72052604b16590641d65933",
+      "bytes": 145816,
+      "root_delta_px": [
+        -16.028,
+        8.014
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 67.996,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "shin_b",
+          "thigh_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f009.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 9,
+      "phase": "windup",
+      "joints_sha256": "3e8bfb8a520e5d24107e88598f5bfab029500551af8deaf2f746bea52c139f8b",
+      "png_sha256": "e9a94c9af034e94bbf272fe66b2927f8290ef775d72052604b16590641d65933",
+      "bytes": 145816,
+      "root_delta_px": [
+        -16.028,
+        8.014
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 67.996,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "shin_b",
+          "thigh_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f010.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 10,
+      "phase": "active",
+      "joints_sha256": "3e8bfb8a520e5d24107e88598f5bfab029500551af8deaf2f746bea52c139f8b",
+      "png_sha256": "e9a94c9af034e94bbf272fe66b2927f8290ef775d72052604b16590641d65933",
+      "bytes": 145816,
+      "root_delta_px": [
+        -16.028,
+        8.014
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 67.996,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "shin_b",
+          "thigh_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f011.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 11,
+      "phase": "active",
+      "joints_sha256": "3e8bfb8a520e5d24107e88598f5bfab029500551af8deaf2f746bea52c139f8b",
+      "png_sha256": "e9a94c9af034e94bbf272fe66b2927f8290ef775d72052604b16590641d65933",
+      "bytes": 145816,
+      "root_delta_px": [
+        -16.028,
+        8.014
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 67.996,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "shin_b",
+          "thigh_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f012.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 12,
+      "phase": "active",
+      "joints_sha256": "04db4ae302809530b98b744c98cf5e5bca6f14e96219f081eb93d70fc2e9d109",
+      "png_sha256": "4bfc3d4f61f4020fdf9054fb37334b1ec48dde8a89f16807bc69c886da405a66",
+      "bytes": 132514,
+      "root_delta_px": [
+        8.014,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 134.526,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f013.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 13,
+      "phase": "active",
+      "joints_sha256": "7beeeff148a330fbdfc583ec1773d961ccd00ff591313ec7fe59b649cc6ffd10",
+      "png_sha256": "04977313fee74690b3c5b7fd9a1ffd11cc6007e88c1737f284b86c036ac0f3f1",
+      "bytes": 131295,
+      "root_delta_px": [
+        10.017,
+        -0.401
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 164.198,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f014.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 14,
+      "phase": "active",
+      "joints_sha256": "aff7522e7409145f5d4940e1ff1a12e60b9b3e8234a3c265e907e1a3abab734c",
+      "png_sha256": "b7d6c78354fa7166432188585e407994581730815cc4caad978e217b021f796d",
+      "bytes": 138841,
+      "root_delta_px": [
+        12.021,
+        -0.801
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 179.099,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f015.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 15,
+      "phase": "active",
+      "joints_sha256": "de829000cd3bb4a54dff1a86666af2716a99505e0869c8321380aeb0ed77f794",
+      "png_sha256": "9570a10a19c5b61d1a51bec647f70fe6967b6196947e9249c686bf4c63e3a72f",
+      "bytes": 138771,
+      "root_delta_px": [
+        14.024,
+        -1.202
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 171.711,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f016.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 16,
+      "phase": "active",
+      "joints_sha256": "71576f5d3fefda0318eb0650e2185660d4e1da09588d28009351f3aaee60fcaf",
+      "png_sha256": "b281685814329aa9fd4cd676ae0eed64ad23cc1edd2da19e167a17e3026c79bb",
+      "bytes": 138141,
+      "root_delta_px": [
+        16.028,
+        -1.603
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 165.914,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f017.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 17,
+      "phase": "active",
+      "joints_sha256": "e0cf177d1a8410359aaf5abff5a72914b2ca4617889f83cf145dd709fc68574c",
+      "png_sha256": "dcfaf5d686db881026b84feb347c46b1a9bf95098596b3f5f44b993e5a3e890a",
+      "bytes": 137927,
+      "root_delta_px": [
+        18.031,
+        -2.003
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 162.075,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "spine",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f018.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 18,
+      "phase": "recover",
+      "joints_sha256": "e0cf177d1a8410359aaf5abff5a72914b2ca4617889f83cf145dd709fc68574c",
+      "png_sha256": "dcfaf5d686db881026b84feb347c46b1a9bf95098596b3f5f44b993e5a3e890a",
+      "bytes": 137927,
+      "root_delta_px": [
+        18.031,
+        -2.003
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 162.075,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "spine",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f019.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 19,
+      "phase": "recover",
+      "joints_sha256": "e0cf177d1a8410359aaf5abff5a72914b2ca4617889f83cf145dd709fc68574c",
+      "png_sha256": "dcfaf5d686db881026b84feb347c46b1a9bf95098596b3f5f44b993e5a3e890a",
+      "bytes": 137927,
+      "root_delta_px": [
+        18.031,
+        -2.003
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 162.075,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "spine",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f020.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 20,
+      "phase": "recover",
+      "joints_sha256": "e0cf177d1a8410359aaf5abff5a72914b2ca4617889f83cf145dd709fc68574c",
+      "png_sha256": "dcfaf5d686db881026b84feb347c46b1a9bf95098596b3f5f44b993e5a3e890a",
+      "bytes": 137927,
+      "root_delta_px": [
+        18.031,
+        -2.003
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 162.075,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "spine",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f021.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 21,
+      "phase": "recover",
+      "joints_sha256": "ae53efcdc8429fb12c6d9ec8ade296fa76935f497a62b78dd18e67449e3122ac",
+      "png_sha256": "cd09b21bdae93cfd406cef56b89bbe7f21c1422fe6c4e95414a95f453f435b82",
+      "bytes": 138082,
+      "root_delta_px": [
+        14.024,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 171.711,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f022.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 22,
+      "phase": "recover",
+      "joints_sha256": "78f6307d120aa41043b48ec98d1233d814a21e6d0ac23c1fa11bf2e5b671da6d",
+      "png_sha256": "e77656e52f15e1b85bb3e590f78567f2f5ab3412c733f51b8523bab3bc691e19",
+      "bytes": 138185,
+      "root_delta_px": [
+        12.622,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 175.033,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f023.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 23,
+      "phase": "recover",
+      "joints_sha256": "47ff2d6419ba195c0303da83db4d9a6f460e99d31ad63bf8a291b57b12c58245",
+      "png_sha256": "58aa0d5e8b8b1b8bef09260b808c40cb36986d600b2c7cc33f2f28c6a4ceabad",
+      "bytes": 138666,
+      "root_delta_px": [
+        11.019,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 176.373,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f024.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 24,
+      "phase": "recover",
+      "joints_sha256": "06622e63d810e097a1f3ad2a4cd9ceb6cfd59bcec29c23fcb52621974c2074d3",
+      "png_sha256": "461c6b985352e3ac0cd458e20918306d87f374b1cf910401e713606b68765eaf",
+      "bytes": 131546,
+      "root_delta_px": [
+        9.617,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 144.331,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f025.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 25,
+      "phase": "recover",
+      "joints_sha256": "c032b2323a903728dcd394529aa698db6b82f1596deb60ae4ee01ed05b15bec7",
+      "png_sha256": "1979ce232f25d677cbd83ee8c2819b248e95983ee95622e0b14a80b00b632ffb",
+      "bytes": 131915,
+      "root_delta_px": [
+        8.214,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 137.8,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b",
+          "upperarm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f026.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 26,
+      "phase": "recover",
+      "joints_sha256": "0f574b4412f5721a3ce0ceee007299a5c1dcf345cda7e02a6b779998670bba7f",
+      "png_sha256": "92a1a3f2e90260fbea066d616b75c9485e7921b5441105ebd2a3e0f9345518d8",
+      "bytes": 134623,
+      "root_delta_px": [
+        6.812,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 73.17,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f027.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 27,
+      "phase": "recover",
+      "joints_sha256": "b00af2129a0c5c35a5a5d435e620fe47c5e7a27054b754c0997c4b15b4e9d729",
+      "png_sha256": "bf91804caf260b9d03069c388819b19c1662a621c0b3e5384eac9fcf022b59ce",
+      "bytes": 133447,
+      "root_delta_px": [
+        5.61,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 60.433,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f028.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 28,
+      "phase": "recover",
+      "joints_sha256": "1012f33729e67fce1068057a60695556bf7949a2b0fa23af64be6903e78c73e4",
+      "png_sha256": "7e3b9d0d34bac876f1621e6515460dec5021cf563c5e6c6ec133394f03611beb",
+      "bytes": 130514,
+      "root_delta_px": [
+        4.408,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 36.636,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f029.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 29,
+      "phase": "recover",
+      "joints_sha256": "bcde724673f12420b2d6e13a8ece8673448706c3fe36a268d5338e8a71f26dc4",
+      "png_sha256": "859b00f75135f3805ff2ee2f4b0a72ee73390083a7d6aace2c84ba579c57ebb2",
+      "bytes": 130414,
+      "root_delta_px": [
+        3.406,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 25.336,
+        "local_abs_max_deg": 18.0,
+        "capped_bones": [
+          "forearm_b"
+        ],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 88.0
+    },
+    {
+      "file": "wave_f030.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 30,
+      "phase": "recover",
+      "joints_sha256": "89d82e8d7c004db120334eda41bef46a6676eef8e9d708605971e27a0e029c6a",
+      "png_sha256": "5d1b5af2862e51fe6e97f71be1c34ea6c910b22d01e6c02ab4487f054ed94235",
+      "bytes": 130564,
+      "root_delta_px": [
+        2.404,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 17.766,
+        "local_abs_max_deg": 14.166,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 84.166
+    },
+    {
+      "file": "wave_f031.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 31,
+      "phase": "recover",
+      "joints_sha256": "dbb538a97382f2f2f47919d02ddf1b3e7f6a956e6b8ef266c8d20149e00cde3f",
+      "png_sha256": "4a6b7b7348627c27102dfd6f4c203bf75fa52cec58c6df68b8777c90b361fe07",
+      "bytes": 131077,
+      "root_delta_px": [
+        1.603,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 11.741,
+        "local_abs_max_deg": 9.937,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 79.937
+    },
+    {
+      "file": "wave_f032.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 32,
+      "phase": "recover",
+      "joints_sha256": "a99b715bd9153e1b44d5db82c5e75e2e04e758a15a3cd867153abded81b0e1f9",
+      "png_sha256": "69df691006980ba881d42c118d753f108f5ee6dead8b80ee962f932c063846c3",
+      "bytes": 131737,
+      "root_delta_px": [
+        0.801,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 7.196,
+        "local_abs_max_deg": 6.194,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 76.194
+    },
+    {
+      "file": "wave_f033.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 33,
+      "phase": "recover",
+      "joints_sha256": "7ab402209c1e26a083393f09ce364c8b936a77d895a0e714b96e04e5bd623a48",
+      "png_sha256": "4e6d9850746c5c4ef47519b9c2baab6bde728dfa91c24c00ea17ff3f5d4210ef",
+      "bytes": 132147,
+      "root_delta_px": [
+        0.401,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 3.6,
+        "local_abs_max_deg": 3.139,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 73.139
+    },
+    {
+      "file": "wave_f034.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 34,
+      "phase": "recover",
+      "joints_sha256": "68913f81cd8270eae5ea4903ecbc94bcff6e678639f315b23dcf34db21e5c1a0",
+      "png_sha256": "9300d433018a4e0fb14765f218e1e11fcdbb36ec088c282d4cfe14bab3d49ce2",
+      "bytes": 132820,
+      "root_delta_px": [
+        0.2,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 1.524,
+        "local_abs_max_deg": 1.335,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 71.335
+    },
+    {
+      "file": "wave_f035.png",
+      "label": "wave",
+      "card": "wave",
+      "frame": 35,
+      "phase": "recover",
+      "joints_sha256": "8979d2eee49137d24ff45ec79b67e048fee070c835ad918aa604cd4375f5bc8f",
+      "png_sha256": "4191f9336b255a1f668a28a068593ec5a3cd6a8ea35f9c3f609ca6b4b9b77174",
+      "bytes": 132483,
+      "root_delta_px": [
+        0.0,
+        0.0
+      ],
+      "stance_abs_max_deg": 70.0,
+      "action_diag": {
+        "world_abs_max_deg": 0.971,
+        "local_abs_max_deg": 0.72,
+        "capped_bones": [],
+        "hips_delta_deg": 0.0
+      },
+      "total_abs_max_deg": 70.633
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+# 立绘接入预览 文件清单（sha256 前 16 位 / 字节数 / 文件名）
+# 清单文件自身不计入
+---
+a01daadd252cb850  39210  debug-B-卡牌区.png
+3bd5802a1d81effd  27459  debug-B-原截帧同区.png
+15b25361483fe0cb  20990  debug-B-差异.png
+b01c8b6c47532abb  132315  debug-C-缩略卡.png
+76cdd5463b74ee62  24924  debug-D-标题行.png
+59baae98e2680ab0  1256  debug_crop.py
+bc4708e2c1065cf0  448  make_preview.log
+f5c4dcfaf16c0402  16038  make_preview.py
+cc2a7dc6b155cf89  436  mutation_preview.log
+681f733cdcb794dc  5366  mutation_preview.py
+30372c5217f4d376  1548  mutation_preview_result.json
+4237e7e3a3aed8e5  1728  mutation_run.log
+6beed445a017420e  2413  preview_manifest.json
+d4b6e5f51ba6f009  954  probe_align.log
+636ae85cd4720dd0  3366  probe_align.py
+339352eb0d8aa423  788  probe_align.txt
+42ce53c098ee91e8  2687  probe_assets.log
+034b2bbc1d31aa37  1887  probe_assets.py
+6380de4c0a423984  2685  probe_assets.txt
+69c9ef082e9d2fde  1214  verify_preview.log
+e762a654619d61db  8251  verify_preview.py
+0589160e921b2518  2280  verify_preview_result.json
+6768d395134ee800  1216  verify_run.log
+fc98bab3572eb13e  115  清单.tmp2
+d11140d95a1c9db6  6806  立绘接入预览-说明.txt
+d384eb3c90e4bab6  653345  预览-A-战斗区替换.png
+23af1495904bd6c5  648133  预览-B-卡牌插画与头像.png
+4f74f212e6e7d133  284020  预览-C-角色档案板.png
+44fea0499ea3fd31  115213  预览-D-部件尺寸样张.png
+d6c10b28376d8306  466268  预览-总览.png

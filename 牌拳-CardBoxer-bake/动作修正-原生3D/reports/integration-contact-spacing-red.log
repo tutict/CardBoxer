@@ -1,0 +1,25 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+F3D_READY bones=13 cards=15
+F3D_FOE_READY bones=13
+CONTACT player/jab hand=lead_hand gap=326.395 positions=(430.0, 520.0)/(850.0, 520.0) shifts=(102.1429, 0.0)/(40.0, 0.0)
+CONTACT player/cross hand=rear_hand gap=348.520 positions=(430.0, 520.0)/(850.0, 520.0) shifts=(102.1429, 0.0)/(40.0, 0.0)
+CONTACT player/wave hand=palms gap=345.280 positions=(430.0, 520.0)/(850.0, 520.0) shifts=(102.1429, 0.0)/(40.0, 0.0)
+CONTACT foe/jab hand=lead_hand gap=285.853 positions=(850.0, 520.0)/(430.0, 520.0) shifts=(-102.1429, 0.0)/(-40.0, 0.0)
+CONTACT foe/cross hand=rear_hand gap=288.910 positions=(850.0, 520.0)/(430.0, 520.0) shifts=(-102.1429, 0.0)/(-40.0, 0.0)
+CONTACT foe/wave hand=palms gap=277.277 positions=(850.0, 520.0)/(430.0, 520.0) shifts=(-102.1429, 0.0)/(-40.0, 0.0)
+FAIL: player/jab normal-spawn fist reaches presented body
+FAIL: player/jab spark shares presented body contact anchor
+FAIL: player/cross normal-spawn fist reaches presented body
+FAIL: player/cross spark shares presented body contact anchor
+FAIL: player/wave normal-spawn fist reaches presented body
+FAIL: player/wave spark shares presented body contact anchor
+FAIL: foe/jab normal-spawn fist reaches presented body
+FAIL: foe/jab spark shares presented body contact anchor
+FAIL: foe/cross normal-spawn fist reaches presented body
+FAIL: foe/cross spark shares presented body contact anchor
+FAIL: foe/wave normal-spawn fist reaches presented body
+FAIL: foe/wave spark shares presented body contact anchor
+BATTLE CONTACT SPACING CHECK: 46/58 passed

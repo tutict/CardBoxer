@@ -1,0 +1,8 @@
+left_both_vs_only_player {'changed_px': 14155, 'total_px': 33390, 'ratio': 0.4239}
+left_both_vs_only_foe {'changed_px': 18062, 'total_px': 33390, 'ratio': 0.5409}
+right_both_vs_only_foe {'changed_px': 13882, 'total_px': 33920, 'ratio': 0.4093}
+right_both_vs_only_player {'changed_px': 17911, 'total_px': 33920, 'ratio': 0.528}
+directional_margin {'left': 0.117, 'right': 0.1187}
+checks {'left_matches_player_more': True, 'right_matches_foe_more': True, 'left_margin_above_noise': True, 'right_margin_above_noise': True, 'no_absolute_identity_claim': True}
+MARGIN {'left': 0.117, 'right': 0.1187} ok True
+CROSS_H_V2_OK

@@ -1,0 +1,7 @@
+SRC 3D模型探针V4b\v4b-front.png size=768x768 alpha_bbox=(173, 96, 595, 672)
+MASKS segments=13 counts=[923, 1864, 800, 10617, 84696, 22718, 107447, 22620, 108027, 21741, 93197, 21495, 93679] build_seconds=2.09
+STANCE_CHECK identical=True identity_matrices=True
+FRAME stance_f000.png card=None f=0 phase=stance root=[0.0, 0.0] maxdeg=0.0 bytes=279965
+FRAME jab_f007.png card=jab f=7 phase=recover root=[43.409, 0.0] maxdeg=21.393 bytes=203184
+FRAME wave_f018.png card=wave f=18 phase=recover root=[30.052, -3.339] maxdeg=13.565 bytes=206573
+PUPPET_OK tag=player frames=3 elapsed=2.78s

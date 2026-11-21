@@ -1,0 +1,3 @@
+DID NOT RUN SELFTEST 锚点失配                                    anchor hits 0 (need exactly 1)
+
+SELFTEST_DNR_EFFECTIVE dnr=1 clean=14/14

@@ -1,0 +1,44 @@
+{
+  "rows": [
+    {
+      "case": "M1",
+      "status": "CAUGHT",
+      "expect": "A_side_yaw_minus55",
+      "restore_sha_ok": true,
+      "failed_line": "FAILED A_side_yaw_minus55,A_yaw_signs_opposite_equal_abs,A_old_comment_corrected"
+    },
+    {
+      "case": "M2",
+      "status": "CAUGHT",
+      "expect": "A_foe_yaw_plus55",
+      "restore_sha_ok": true,
+      "failed_line": "FAILED A_foe_yaw_plus55,A_yaw_signs_opposite_equal_abs"
+    },
+    {
+      "case": "M3",
+      "status": "CAUGHT",
+      "expect": "A_arena_uses_foe_constant",
+      "restore_sha_ok": true,
+      "failed_line": "FAILED A_arena_uses_foe_constant"
+    },
+    {
+      "case": "M4",
+      "status": "CAUGHT",
+      "expect": "B_engine_foe_yaw_plus55",
+      "restore_sha_ok": true,
+      "failed_line": "FAILED B_engine_foe_yaw_plus55"
+    },
+    {
+      "case": "M5",
+      "status": "CAUGHT",
+      "expect": "C_before_after_pixels_changed",
+      "restore_sha_ok": true,
+      "failed_line": "FAILED C_before_after_pixels_changed"
+    }
+  ],
+  "caught": 5,
+  "did_not_run": 0,
+  "restored": 5,
+  "clean_rerun_green": true,
+  "ok": true
+}

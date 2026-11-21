@@ -1,0 +1,20 @@
+CHECK glb_sha_is_i_baseline True
+CHECK glb_size_is_i_baseline True
+CHECK b_round2_glb_removed True
+CHECK rollback_report_all_green True
+CHECK default_bat_has_no_3d_switch True
+CHECK new_bat_has_3d_switch True
+CHECK new_bat_has_utf8_codepage True
+CHECK new_bat_godot_exists True
+CHECK before_evidence_preserved True
+CHECK after_four_pngs_valid True
+CHECK default_probe_off True
+CHECK 3d_probe_on True
+CHECK both_probes_clean True
+CHECK hud_uses_systemfont True
+CHECK hit_label_is_ascii True
+PASSED 15/15
+FAILED 
+STOPGAP_VERIFIED
+
+--- STDERR ---

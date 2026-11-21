@@ -1,0 +1,12 @@
+USER 684 294 sample_rows [20, 60, 120, 200, 260]
+CAND 朝向-改前改后对照.png [920, 904] matched_rows 0 offset None None
+CAND B-World3D真因对照.png [734, 1210] matched_rows 0 offset None None
+CAND B-资产层归因.png [1032, 938] matched_rows 0 offset None None
+CAND World3D修复-改前改后对照.png [1280, 1712] matched_rows 0 offset None None
+CAND World3D修复-角色亮度对照.png [840, 630] matched_rows 0 offset None None
+CAND sh-legacy-live.png [1280, 720] matched_rows 0 offset None None
+CAND sh-shipped-live.png [1280, 720] matched_rows 0 offset None None
+CAND min-none-live.png [1280, 720] matched_rows 0 offset None None
+CAND min-own-live.png [1280, 720] matched_rows 0 offset None None
+EXACT []
+未找到未缩放的精确裁剪来源；可能是缩放/重编码过的截图

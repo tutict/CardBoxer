@@ -1,0 +1,21 @@
+00:00.781  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\对手怪V1.blend"
+OPEN src=node_0 verts=64024 rig=foe_rig
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\拓扑修复探针V1\probe_transfer.py:71: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if mat and mat.use_nodes:
+SRC textures [{'image': 'texture_pbr_20250901', 'size': [4096, 4096], 'linked_to': ['Color']}, {'image': 'texture_pbr_20250901_metallic-texture_pbr_20250901_roughness', 'size': [4096, 4096], 'linked_to': ['Color']}, {'image': 'texture_pbr_20250901_normal', 'size': [4096, 4096], 'linked_to': ['Color']}] uv_layers 1
+PROXY verts 20204 faces 20198
+PROXY auto_weight 20196 / 20204
+FINAL transfer_weight 64006 / 64024 groups 13
+ASSETS_KEPT {'uv_layers': 1, 'materials': 1, 'textures': [{'image': 'texture_pbr_20250901', 'size': [4096, 4096], 'linked_to': ['Color']}, {'image': 'texture_pbr_20250901_metallic-texture_pbr_20250901_roughness', 'size': [4096, 4096], 'linked_to': ['Color']}, {'image': 'texture_pbr_20250901_normal', 'size': [4096, 4096], 'linked_to': ['Color']}], 'uv_same_as_source': True, 'textures_same_as_source': True}
+00:03.016  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\拓扑修复探针V1\transfer-rest-front.png'
+RENDER transfer-rest-front.png 451702 B
+A_RIGID {'weight_mode': 'nearest-segment rigid 1.0 (11-08 baseline)', 'vertices': 64024, 'moved_vertices_gt_0_1mm': 10780, 'moved_ratio': 0.16837, 'max_displacement_m': 0.47922, 'mean_displacement_m': 0.04068}
+B_TRANSFER {'weight_mode': 'voxel proxy -> Data Transfer smooth', 'vertices': 64024, 'moved_vertices_gt_0_1mm': 22252, 'moved_ratio': 0.34756, 'max_displacement_m': 0.39142, 'mean_displacement_m': 0.05677}
+00:03.360  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\拓扑修复探针V1\transfer-compare-rigid.png'
+RENDER transfer-compare-rigid.png 437737 B
+00:03.547  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\拓扑修复探针V1\transfer-compare-transfer.png'
+RENDER transfer-compare-transfer.png 433404 B
+TRANSFER_PROBE_OK 2.98 s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit

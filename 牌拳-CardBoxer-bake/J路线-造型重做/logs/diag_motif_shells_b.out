@@ -1,0 +1,22 @@
+STATS {'live_shells': 2614, 'cyan_over_threshold': 67, 'warm_over_threshold': 6, 'bright_over_threshold': 400, 'head_cyan': 44, 'head_warm': 0, 'lower_bright': 202, 'thresholds': {'cyan_min': 0.1, 'warm_min': 0.08, 'luma_min': 0.16}}
+--- HEAD_CYAN 44 ---
+  38395 v 6 z 1.449 cyan 0.91667 warm 0.0 luma 0.40685
+  47607 v 27 z 1.443 cyan 0.6875 warm 0.0 luma 0.36141
+  48120 v 23 z 1.452 cyan 0.48438 warm 0.0 luma 0.35633
+  34399 v 30 z 1.451 cyan 0.875 warm 0.0 luma 0.34289
+  38412 v 44 z 1.443 cyan 0.64062 warm 0.0 luma 0.33593
+  34365 v 8 z 1.458 cyan 0.5 warm 0.0 luma 0.33536
+  53875 v 3 z 1.439 cyan 0.33333 warm 0.0 luma 0.33518
+  43190 v 23 z 1.425 cyan 0.4375 warm 0.0 luma 0.32261
+--- HEAD_WARM 0 ---
+--- LOWER_BRIGHT 202 ---
+  55410 v 3 z 0.835 cyan 0.0 warm 0.0 luma 0.28445
+  19652 v 78 z 0.299 cyan 0.0 warm 0.0 luma 0.27544
+  8185 v 65 z 0.304 cyan 0.0 warm 0.0 luma 0.27333
+  19334 v 5 z 0.837 cyan 0.0 warm 0.0 luma 0.26102
+  55384 v 13 z 0.847 cyan 0.0 warm 0.0 luma 0.24545
+  27617 v 9 z 0.623 cyan 0.0 warm 0.0 luma 0.24253
+  6382 v 8 z 0.617 cyan 0.0 warm 0.0 luma 0.23788
+  32334 v 3 z 0.376 cyan 0.0 warm 0.0 luma 0.23593
+CANDIDATES 246
+MOTIF_SHELLS_B_OK

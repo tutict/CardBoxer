@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "files": [
+    {
+      "path": "tools/pipeline_author_audit.py",
+      "resume_sha256": null,
+      "sha256": "8d6fed4bfeea84f109acede995fa1e13e6d67f06d63002c21640a641c3865f87",
+      "bytes": 1974
+    },
+    {
+      "path": "tools/pipeline_blender_roundtrip.py",
+      "resume_sha256": null,
+      "sha256": "c291fbf6ff8621204501805c7087231ec77f4fa50ecb5d487ddd516b800f034c",
+      "bytes": 2064
+    },
+    {
+      "path": "tools/pipeline_roundtrip_test.py",
+      "resume_sha256": null,
+      "sha256": "53aa71fb388ca3992492b75b9c507558375388bfbe29ca6ad2640c0f65e40c01",
+      "bytes": 3993
+    },
+    {
+      "path": "tools/pipeline_test.py",
+      "resume_sha256": "c969865e7783cffb9facbfc86c27b2ce51da76b427a2c2b7bbf5a3c672077f18",
+      "sha256": "c5b02e824385c7db85de8f3e2db082262c74ac5726a95e172cd64a6b97b31c86",
+      "bytes": 18887
+    },
+    {
+      "path": "tools/canonical_glb.py",
+      "resume_sha256": "85eb0df3fa38e3d9f81025ff6c2f093114a677c96469a24c485b66a1a9b0a482",
+      "sha256": "d5d7b5f4aa9c540144ee225e954757ebb6fc4e266846b909ddff81c6d63b0634",
+      "bytes": 17994
+    },
+    {
+      "path": "tools/check_retopology_assets.py",
+      "resume_sha256": "9427caa80bc758897b8c074f480a38123aff0027e4d4327e6cb546bbca4ee833",
+      "sha256": "ea2cc1f1e696a44a082918fbfc15aef7cc2ebe6d20d7f32995099f7ba0531384",
+      "bytes": 18339
+    }
+  ],
+  "immutable_sources": [
+    {
+      "path": "baseline/assets/3d/player-rigged.glb",
+      "sha256": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b"
+    },
+    {
+      "path": "baseline/assets/3d/foe-rigged.glb",
+      "sha256": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18"
+    }
+  ]
+}

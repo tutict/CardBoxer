@@ -1,0 +1,309 @@
+{
+  "godot_executable": "C:\\Users\\tutic\\Documents\\godot\\Godot_v4.5-stable_win64_console.exe",
+  "probe_project": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\E路线-玩家3D绑骨\\probe_project_e",
+  "copies": [
+    {
+      "file": "player-full.glb",
+      "bytes": 38220692,
+      "sha256": "68fbb0c19f5faabe407dba396fb021f1d3259eef725217cfaa0450acdbe12493",
+      "identical": true
+    },
+    {
+      "file": "player-stance.glb",
+      "bytes": 2335004,
+      "sha256": "4af1347e6dd62ce7e3d09bebac66775b29fff8482d77264f416bac587d7d43b0",
+      "identical": true
+    },
+    {
+      "file": "player-proxy-rig.glb",
+      "bytes": 905116,
+      "sha256": "35c51ff08491a2e2636e23329ca3929529e09bfdea45c47e3d55ce4fcc82e7df",
+      "identical": true
+    }
+  ],
+  "editor_import": {
+    "seconds": 22.235,
+    "returncode": 0,
+    "import_files": [
+      {
+        "file": "player-full.glb.import",
+        "exists": true
+      },
+      {
+        "file": "player-stance.glb.import",
+        "exists": true
+      },
+      {
+        "file": "player-proxy-rig.glb.import",
+        "exists": true
+      }
+    ],
+    "imported_files": 12,
+    "imported_bytes": 37940516
+  },
+  "inspect_probe": {
+    "seconds": 0.949,
+    "returncode": 0,
+    "script_errors": 0
+  },
+  "engine": {
+    "build": "official",
+    "hash": "876b290332ec6f2e6d173d08162a02aa7e6ca46d",
+    "hex": 263424,
+    "major": 4,
+    "minor": 5,
+    "patch": 0,
+    "status": "stable",
+    "string": "4.5-stable (official)",
+    "timestamp": 0
+  },
+  "targets": [
+    {
+      "animation_players": [],
+      "load_ok": true,
+      "mesh_instances": [
+        {
+          "aabb_pos": [
+            -0.6238,
+            0.0001,
+            -0.3826
+          ],
+          "aabb_size": [
+            1.2477,
+            1.7196,
+            0.766
+          ],
+          "has_mesh": true,
+          "material": {
+            "albedo": {
+              "h": 4096,
+              "present": true,
+              "w": 4096
+            },
+            "ao": {
+              "present": false
+            },
+            "class": "StandardMaterial3D",
+            "metallic": {
+              "h": 4096,
+              "present": true,
+              "w": 4096
+            },
+            "normal": {
+              "h": 4096,
+              "present": true,
+              "w": 4096
+            },
+            "present": true,
+            "roughness": {
+              "h": 4096,
+              "present": true,
+              "w": 4096
+            }
+          },
+          "name": "e_continuous_shell",
+          "skeleton_path": "..",
+          "surfaces": 1,
+          "verts": 14070
+        },
+        {
+          "aabb_pos": [
+            -0.6272,
+            0.0,
+            -0.3847
+          ],
+          "aabb_size": [
+            1.2545,
+            1.72,
+            0.7694
+          ],
+          "has_mesh": true,
+          "material": {
+            "albedo": {
+              "h": 4096,
+              "present": true,
+              "w": 4096
+            },
+            "ao": {
+              "present": false
+            },
+            "class": "StandardMaterial3D",
+            "metallic": {
+              "h": 4096,
+              "present": true,
+              "w": 4096
+            },
+            "normal": {
+              "h": 4096,
+              "present": true,
+              "w": 4096
+            },
+            "present": true,
+            "roughness": {
+              "h": 4096,
+              "present": true,
+              "w": 4096
+            }
+          },
+          "name": "node_0",
+          "skeleton_path": "",
+          "surfaces": 1,
+          "verts": 57934
+        }
+      ],
+      "node_count": 5,
+      "path": "res://assets/player-full.glb",
+      "resource_class": "PackedScene",
+      "skeletons": [
+        {
+          "bone_names_head": [
+            "hips",
+            "spine",
+            "chest",
+            "neck",
+            "head",
+            "upperarm_b",
+            "forearm_b",
+            "upperarm_f",
+            "forearm_f",
+            "thigh_b",
+            "shin_b",
+            "thigh_f",
+            "shin_f",
+            "neutral_bone"
+          ],
+          "bones": 14,
+          "name": "Skeleton3D"
+        }
+      ],
+      "types": {
+        "MeshInstance3D": 2,
+        "Node3D": 2,
+        "Skeleton3D": 1
+      }
+    },
+    {
+      "animation_players": [],
+      "load_ok": true,
+      "mesh_instances": [
+        {
+          "aabb_pos": [
+            -0.6272,
+            0.0,
+            -0.3847
+          ],
+          "aabb_size": [
+            1.2545,
+            1.72,
+            0.7694
+          ],
+          "has_mesh": true,
+          "material": {
+            "albedo": {
+              "present": false
+            },
+            "ao": {
+              "present": false
+            },
+            "class": "StandardMaterial3D",
+            "metallic": {
+              "present": false
+            },
+            "normal": {
+              "present": false
+            },
+            "present": true,
+            "roughness": {
+              "present": false
+            }
+          },
+          "name": "node_0",
+          "skeleton_path": "",
+          "surfaces": 1,
+          "verts": 57939
+        }
+      ],
+      "node_count": 2,
+      "path": "res://assets/player-stance.glb",
+      "resource_class": "PackedScene",
+      "skeletons": [],
+      "types": {
+        "MeshInstance3D": 1,
+        "Node3D": 1
+      }
+    },
+    {
+      "animation_players": [],
+      "load_ok": true,
+      "mesh_instances": [
+        {
+          "aabb_pos": [
+            -0.6238,
+            0.0001,
+            -0.3826
+          ],
+          "aabb_size": [
+            1.2477,
+            1.7196,
+            0.766
+          ],
+          "has_mesh": true,
+          "material": {
+            "albedo": {
+              "present": false
+            },
+            "ao": {
+              "present": false
+            },
+            "class": "StandardMaterial3D",
+            "metallic": {
+              "present": false
+            },
+            "normal": {
+              "present": false
+            },
+            "present": true,
+            "roughness": {
+              "present": false
+            }
+          },
+          "name": "e_continuous_shell",
+          "skeleton_path": "..",
+          "surfaces": 1,
+          "verts": 14070
+        }
+      ],
+      "node_count": 4,
+      "path": "res://assets/player-proxy-rig.glb",
+      "resource_class": "PackedScene",
+      "skeletons": [
+        {
+          "bone_names_head": [
+            "hips",
+            "spine",
+            "chest",
+            "neck",
+            "head",
+            "upperarm_b",
+            "forearm_b",
+            "upperarm_f",
+            "forearm_f",
+            "thigh_b",
+            "shin_b",
+            "thigh_f",
+            "shin_f",
+            "neutral_bone"
+          ],
+          "bones": 14,
+          "name": "Skeleton3D"
+        }
+      ],
+      "types": {
+        "MeshInstance3D": 1,
+        "Node3D": 2,
+        "Skeleton3D": 1
+      }
+    }
+  ],
+  "total_wall_seconds": 23.184
+}

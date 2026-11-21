@@ -1,0 +1,2640 @@
+{
+  "ok": false,
+  "images": 188,
+  "failed": 188,
+  "padding": 4,
+  "rows": [
+    {
+      "file": "foe-cross-facing1-f000.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f000.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        12,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f001.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        14,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f002.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        23,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f003.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        32,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f004.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        40,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f004.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        43,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f005.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        44,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f005.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        40,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f006.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        26,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f007.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        72,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f008.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        70,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f008.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        69,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f009.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        69,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f009.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        69,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f010.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        70,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f011.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        72,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f012.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        71,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f012.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        70,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f013.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        2,
+        70,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f013.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        1,
+        70,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f014.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        70,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f015.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        71,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f016.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        72,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f017.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        6,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f018.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        19,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f018.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        22,
+        74,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f019.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        23,
+        74,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f019.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        21,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f020.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        17,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f020.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        13,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-cross-facing1-f021.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f000.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f000.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f001.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f002.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f002.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f003.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        74,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f003.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        10,
+        74,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f004.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        9,
+        74,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f005.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        75,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f005.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        71,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f006.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        64,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f006.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        75,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f007.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        7,
+        74,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f007.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        10,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f008.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f008.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f009.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f010.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f011.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f012.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f012.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-jab-facing1-f013.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-stance-facing1-f000.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f000.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f000.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        10,
+        74,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f001.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        9,
+        76,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f002.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        3,
+        85,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f003.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        99,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f004.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        114,
+        318,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f005.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        4,
+        128,
+        353,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f006.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        9,
+        139,
+        375,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f006.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        10,
+        142,
+        380,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f007.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        10,
+        143,
+        381,
+        519
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f007.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        154,
+        348,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f008.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        159,
+        291,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f008.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        160,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f009.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        161,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f010.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        165,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f011.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        165,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f011.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        165,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f012.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        165,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f012.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        165,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f013.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        163,
+        290,
+        519
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f014.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        157,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f015.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        150,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f016.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        145,
+        290,
+        519
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f016.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        143,
+        290,
+        517
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f017.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        142,
+        290,
+        518
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f017.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        142,
+        290,
+        518
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f018.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        140,
+        290,
+        519
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f019.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        135,
+        290,
+        518
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f020.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        0,
+        127,
+        290,
+        518
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f021.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        2,
+        119,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f022.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        5,
+        111,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f023.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        8,
+        104,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f024.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        10,
+        100,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f024.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        98,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f025.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        98,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f025.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        94,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f026.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        85,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f026.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        77,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "foe-sweep-facing1-f027.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        11,
+        73,
+        290,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f000.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f000.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f001.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f002.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        75,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f003.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        74,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f004.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        74,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f004.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        74,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f005.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        74,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f005.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        74,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f006.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        75,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f007.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        78,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f008.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        81,
+        377,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f008.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        82,
+        395,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f009.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        82,
+        401,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f009.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        82,
+        398,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f010.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        82,
+        388,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f011.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        82,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f012.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        81,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f012.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        81,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f013.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        81,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f013.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        81,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f014.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        81,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f015.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        80,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f016.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        78,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f017.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        77,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f018.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f018.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        75,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f019.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        75,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f019.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        75,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f020.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f020.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-cross-facing1-f021.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f000.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f000.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f001.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f002.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f002.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        75,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f003.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        75,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f003.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        75,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f004.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f005.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        77,
+        380,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f005.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        77,
+        388,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f006.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        78,
+        390,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f006.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        77,
+        383,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f007.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        77,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f007.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        77,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f008.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        77,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f008.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        77,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f009.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        77,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f010.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        77,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f011.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f012.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f012.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-jab-facing1-f013.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-stance-facing1-f000.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f000.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f000.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        77,
+        358,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f001.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        153,
+        79,
+        351,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f002.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        154,
+        87,
+        342,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f003.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        156,
+        94,
+        339,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f004.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        158,
+        94,
+        336,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f005.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        159,
+        94,
+        331,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f006.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        160,
+        94,
+        327,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f006.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        160,
+        94,
+        326,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f007.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        158,
+        94,
+        326,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f007.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        156,
+        95,
+        348,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f008.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        95,
+        380,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f008.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        151,
+        95,
+        382,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f009.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        151,
+        95,
+        388,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f010.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        149,
+        95,
+        420,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f011.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        148,
+        95,
+        420,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f011.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        147,
+        95,
+        420,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f012.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        147,
+        95,
+        420,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f012.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        147,
+        95,
+        420,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f013.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        147,
+        95,
+        420,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f014.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        148,
+        95,
+        420,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f015.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        149,
+        95,
+        420,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f016.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        150,
+        95,
+        409,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f016.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        150,
+        95,
+        401,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f017.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        151,
+        95,
+        397,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f017.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        150,
+        95,
+        397,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f018.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        150,
+        95,
+        397,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f019.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        148,
+        95,
+        395,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f020.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        147,
+        95,
+        390,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f021.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        146,
+        95,
+        383,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f022.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        146,
+        95,
+        375,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f023.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        147,
+        95,
+        371,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f024.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        148,
+        95,
+        368,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f024.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        149,
+        95,
+        367,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f025.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        149,
+        95,
+        366,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f025.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        149,
+        93,
+        365,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f026.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        150,
+        86,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f026.5.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        151,
+        79,
+        361,
+        520
+      ],
+      "clipped": true
+    },
+    {
+      "file": "player-sweep-facing1-f027.0.png",
+      "size": [
+        420,
+        520
+      ],
+      "bounds": [
+        152,
+        76,
+        361,
+        520
+      ],
+      "clipped": true
+    }
+  ]
+}

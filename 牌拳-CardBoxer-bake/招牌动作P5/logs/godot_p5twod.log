@@ -1,0 +1,5 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+P5_2D_JSON {"cards":12,"changed_frames":42,"checks":{"all_legacy_cards_present":true,"cardmotion_loaded":true,"cards_and_frames_positive":true,"changed_frame_count_is_42":true,"jab_track_unchanged_in_engine":true,"max_joint_delta_is_40px":true,"mf_peaks_match_independent_readback":true,"only_wave_cross_four_arm_joints_changed":true},"frames":228,"jab_changes":0,"max_joint_delta_px":40.0,"mf_mismatches":[],"mf_peaks_engine":{"cross":{"frame":8,"peak":36.0},"jab":{"frame":6,"peak":80.2247},"wave":{"frame":17,"peak":60.823}},"missing":[],"ok":true,"scope_violations":[]}
+
+--- STDERR ---

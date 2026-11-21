@@ -1,0 +1,17 @@
+REPRODUCIBILITY 3 runs / 3 distinct outcomes / seed_reproducible False
+PHASE_DURATIONS {'cap9': {'1': {'discard': 4.342, 'select': 0.803, 'reveal': 1.502, 'resolve': 2.007}, '2': {'discard': 0.937, 'select': 0.802, 'reveal': 1.502, 'resolve': 2.221}, '3': {'discard': 0.804, 'select': 0.804, 'reveal': 1.501, 'resolve': 2.229}}, 'cap3': {'1': {'discard': 4.366, 'select': 0.8, 'reveal': 1.504, 'resolve': 1.972}, '2': {'discard': 0.803, 'select': 0.937, 'reveal': 1.534, 'resolve': 2.237}, '3': {'discard': 0.803, 'select': 0.804, 'reveal': 1.522, 'resolve': 2.226}}}
+PHASE_VIOLATIONS []
+MOTION_STATES {'reveal_focus': True, 'winner_attack': True, 'loser_react': True, 'draw_both_react': True} react_rows 16
+JUMP player cap3 peak_mean 1.1041 peak_max 3.0 intra_max 6.0 intra_p95 3.0 boundary_max 3.0 zero_events 5 max_before_zero 3.0
+JUMP player cap9 peak_mean 3.1209 peak_max 9.0 intra_max 10.5535 intra_p95 9.0 boundary_max 9.0 zero_events 5 max_before_zero 5.2634
+JUMP foe cap3 peak_mean 1.2639 peak_max 3.0 intra_max 6.0 intra_p95 3.0 boundary_max 3.0 zero_events 3 max_before_zero 1.7166
+JUMP foe cap9 peak_mean 3.5483 peak_max 9.0 intra_max 14.8585 intra_p95 9.0 boundary_max 9.0 zero_events 3 max_before_zero 1.7166
+CAPTURE {'cap9': {'total': 24, 'unique': 24}, 'cap3': {'total': 24, 'unique': 24}} {'cap9': {'total': 88, 'unique_sha': 23, 'groups_with_mixed_delta': [], 'largest_group': 38}, 'cap3': {'total': 89, 'unique_sha': 22, 'groups_with_mixed_delta': [], 'largest_group': 41}}
+CHECK three_turns_each True
+CHECK phase_durations_within_spec True
+CHECK four_motion_states_covered True
+CHECK delta_formula_recomputed_for_both_caps True
+CHECK live_frames_all_unique True
+CHECK sv_duplicates_all_explained_by_delta True
+CHECK reproducibility_recorded True
+LIVE_ANALYSIS_OK

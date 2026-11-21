@@ -1,0 +1,29 @@
+10:47:50 | INFO: Data are loaded, start creating Blender stuff
+10:47:50 | INFO: Blender create Mesh node node_0
+10:47:50 | INFO: glTF import finished in 0.15s
+IMPORT glb=artifact_03.glb meshes=1
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\foe_blender_build.py:65: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if mat and mat.use_nodes:
+RAW verts=64024 tris=79998 uv_layers=1 textures=3 bbox=[-0.3546, -0.1368, -0.0]..[0.3632, 0.2882, 1.0145]
+NORMALIZE scale=1.695408 min=[-0.6084, -0.3603, 0.0] max=[0.6084, 0.3603, 1.72]
+ARMATURE bones=13 names=['hips', 'spine', 'chest', 'neck', 'head', 'upperarm_f', 'forearm_f', 'upperarm_b', 'forearm_b', 'thigh_f', 'shin_f', 'thigh_b', 'shin_b']
+RIGID_WEIGHTS assigned=64024/64024 coverage=1.0
+PER_BONE {'hips': 3210, 'spine': 4435, 'chest': 666, 'neck': 1503, 'head': 410, 'upperarm_f': 8688, 'forearm_f': 2092, 'upperarm_b': 8408, 'forearm_b': 4379, 'thigh_f': 9963, 'shin_f': 4880, 'thigh_b': 10073, 'shin_b': 5317}
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\foe_blender_build.py:152: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+00:03.718  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\foe-front.png'
+RENDER foe-front.png 451628 B
+00:03.953  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\foe-angle25.png'
+RENDER foe-angle25.png 445436 B
+00:04.187  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\foe-angle55.png'
+RENDER foe-angle55.png 410501 B
+00:04.390  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\foe-back35.png'
+RENDER foe-back35.png 443552 B
+00:04.687  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\foe-upper.png'
+RENDER foe-upper.png 1407579 B
+Info: Saved as "对手怪V1.blend"
+SAVED 对手怪V1.blend 42300798 B
+BUILD_OK shots=5 elapsed=4.05s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit

@@ -1,0 +1,99 @@
+22:57:12 | INFO: Data are loaded, start creating Blender stuff
+22:57:12 | INFO: Blender create Mesh node node_0.002
+22:57:13 | INFO: glTF import finished in 0.24s
+INFO Draco is available, use library at C:\Program Files\Blender Foundation\Blender 5.2\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_draco_bridge.dll
+INFO MeshOptimizer is available, use library at C:\Program Files\Blender Foundation\Blender 5.2\5.2\scripts\addons_core\io_scene_gltf2\bf_intern_meshopt_bridge.dll
+22:57:13 | INFO: Starting glTF 2.0 export
+22:57:13 | INFO: Extracting primitive: node_0.002
+22:57:13 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+22:57:14 | INFO: Primitives created: 1
+22:57:14 | INFO: Finished glTF 2.0 export in 0.8362095355987549 s
+
+22:57:14 | INFO: Data are loaded, start creating Blender stuff
+22:57:14 | INFO: Blender create Mesh node node_0.002
+22:57:15 | INFO: glTF import finished in 0.24s
+22:57:15 | INFO: Starting glTF 2.0 export
+22:57:15 | INFO: Extracting primitive: node_0.002
+22:57:15 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+22:57:15 | INFO: Primitives created: 1
+22:57:15 | INFO: Finished glTF 2.0 export in 0.8432915210723877 s
+
+PIPELINE_UNEDITED_ROUNDTRIP_EXPORTED [
+  {
+    "role": "player",
+    "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\baseline\\assets\\3d\\player-rigged.glb",
+    "source_sha256": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+    "raw": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\pipeline_roundtrip\\player-roundtrip-raw.glb",
+    "raw_sha256": "9526f40d8076c6823149e11b483279b2a8e895bedd4e8f4669f333ab5ed31682",
+    "blender_version": "5.2.0 LTS",
+    "export_options": {
+      "export_format": "GLB",
+      "use_selection": true,
+      "export_skins": true,
+      "export_morph": true,
+      "export_morph_normal": true,
+      "export_animations": false,
+      "export_apply": false,
+      "export_yup": true,
+      "export_materials": "EXPORT"
+    },
+    "mesh_vertices": 57934,
+    "mesh_polygons": 79986,
+    "armature_bones": [
+      "hips",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "upperarm_b",
+      "forearm_b",
+      "upperarm_f",
+      "forearm_f",
+      "thigh_b",
+      "shin_b",
+      "thigh_f",
+      "shin_f",
+      "neutral_bone"
+    ]
+  },
+  {
+    "role": "foe",
+    "source": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\baseline\\assets\\3d\\foe-rigged.glb",
+    "source_sha256": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+    "raw": "C:\\Users\\tutic\\Desktop\\\u5b66\u4e60\u8d44\u6599\\\u724c\u62f3-CardBoxer-bake\\\u6a21\u578b\u7cbe\u4fee-\u5168\u8eab\u91cd\u62d3\u6251\\tools\\pipeline_roundtrip\\foe-roundtrip-raw.glb",
+    "raw_sha256": "3f1cc274567a3d098baf4530e9f076368a05eaa7be02a13068f7c46b85afc447",
+    "blender_version": "5.2.0 LTS",
+    "export_options": {
+      "export_format": "GLB",
+      "use_selection": true,
+      "export_skins": true,
+      "export_morph": true,
+      "export_morph_normal": true,
+      "export_animations": false,
+      "export_apply": false,
+      "export_yup": true,
+      "export_materials": "EXPORT"
+    },
+    "mesh_vertices": 64059,
+    "mesh_polygons": 79998,
+    "armature_bones": [
+      "hips",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "upperarm_b",
+      "forearm_b",
+      "upperarm_f",
+      "forearm_f",
+      "thigh_b",
+      "shin_b",
+      "thigh_f",
+      "shin_f",
+      "neutral_bone"
+    ]
+  }
+]
+Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:35:40)
+
+Blender quit

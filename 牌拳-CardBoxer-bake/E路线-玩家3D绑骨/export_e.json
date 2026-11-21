@@ -1,0 +1,119 @@
+{
+  "blender": "5.2.3 LTS",
+  "blend_sha256": "daf02b5ebc6258b51f25bbc5fcf732b39b1793391d2f17ae9f127f59cd53d18b",
+  "source_object": {
+    "high_poly": "node_0",
+    "proxy_shell": "e_continuous_shell",
+    "rig": "e_apose_rig",
+    "rig_bones": 13
+  },
+  "apose_table": "player",
+  "packed_images": [
+    {
+      "name": "texture_pbr_20250901",
+      "size": [
+        4096,
+        4096
+      ],
+      "bytes": 16637843,
+      "sha256": "9fc25cf63871573f4e80686c3a178f2cf93c733538a8df1b7ee84dbc3537fdb3"
+    },
+    {
+      "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+      "size": [
+        4096,
+        4096
+      ],
+      "bytes": 12703501,
+      "sha256": "ee2ab849bba394baf31b3eeca9203f0efc7a1cd057491645e8755031be45b258"
+    },
+    {
+      "name": "texture_pbr_20250901_normal",
+      "size": [
+        4096,
+        4096
+      ],
+      "bytes": 5638722,
+      "sha256": "cce269cfbcd6c32a459bd2aa147fe447d6d2f8c5f67666543e8bf13408fb2dc0"
+    }
+  ],
+  "exports": [
+    {
+      "name": "player-full",
+      "file": "player-full.glb",
+      "description": "完整场景口径：高模 + 代理壳 + 13 骨，PBR 贴图导出",
+      "objects": [
+        "node_0",
+        "e_continuous_shell",
+        "e_apose_rig"
+      ],
+      "export_apply": false,
+      "export_materials": "EXPORT",
+      "export_animations": true,
+      "export_skins": true,
+      "operator_result": [
+        "FINISHED"
+      ],
+      "bytes": 38220692,
+      "sha256": "68fbb0c19f5faabe407dba396fb021f1d3259eef725217cfaa0450acdbe12493",
+      "elapsed_seconds": 0.605
+    },
+    {
+      "name": "player-stance",
+      "file": "player-stance.glb",
+      "description": "只高模 / 站架 / 烘焙 SURFACE_DEFORM / 无材质",
+      "objects": [
+        "node_0"
+      ],
+      "export_apply": true,
+      "export_materials": "NONE",
+      "export_animations": true,
+      "export_skins": true,
+      "operator_result": [
+        "FINISHED"
+      ],
+      "bytes": 2335004,
+      "sha256": "4af1347e6dd62ce7e3d09bebac66775b29fff8482d77264f416bac587d7d43b0",
+      "elapsed_seconds": 0.068
+    },
+    {
+      "name": "player-cross",
+      "file": "player-cross.glb",
+      "description": "只高模 / cross#10 增益 x1.5 / 烘焙 SURFACE_DEFORM / 无材质",
+      "objects": [
+        "node_0"
+      ],
+      "export_apply": true,
+      "export_materials": "NONE",
+      "export_animations": true,
+      "export_skins": true,
+      "operator_result": [
+        "FINISHED"
+      ],
+      "bytes": 2339100,
+      "sha256": "be5867e8c5c702b8ac169f45233349fcb7ac5dd5f41979606c758636bb8b31e3",
+      "elapsed_seconds": 0.058
+    },
+    {
+      "name": "player-proxy-rig",
+      "file": "player-proxy-rig.glb",
+      "description": "只代理壳 + 13 骨 / 无材质，检验 skin 是否随导出",
+      "objects": [
+        "e_continuous_shell",
+        "e_apose_rig"
+      ],
+      "export_apply": false,
+      "export_materials": "NONE",
+      "export_animations": true,
+      "export_skins": true,
+      "operator_result": [
+        "FINISHED"
+      ],
+      "bytes": 905116,
+      "sha256": "35c51ff08491a2e2636e23329ca3929529e09bfdea45c47e3d55ce4fcc82e7df",
+      "elapsed_seconds": 0.1
+    }
+  ],
+  "total_bytes": 43799912,
+  "elapsed_seconds": 2.404
+}

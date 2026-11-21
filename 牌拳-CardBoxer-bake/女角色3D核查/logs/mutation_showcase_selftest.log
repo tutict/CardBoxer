@@ -1,0 +1,9 @@
+M1   DID NOT RUN red=[]
+M2   CAUGHT      red=['S-08_two_boards_valid']
+M3   CAUGHT      red=['S-04_godot_main_scene_wired']
+M4   CAUGHT      red=['S-10_offline_viewer_complete']
+M5   CAUGHT      red=['S-01_blend_contains_player_not_foe']
+M6   CAUGHT      red=['S-07_four_godot_shots_valid']
+CAUGHT=5/6 DID_NOT_RUN=1 MISSED=0 RESTORE=5/5 CLEAN=12/12
+SELFTEST_ASSERTION_OK
+MUTATION_SHOWCASE_FAILED (expected 1 DID NOT RUN)

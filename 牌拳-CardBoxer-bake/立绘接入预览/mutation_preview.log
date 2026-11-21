@@ -1,0 +1,6 @@
+M1 CAUGHT  A 图换成原截帧（角色根本没换）  red=True sentinel_green=True restore=True
+M2 CAUGHT  B 图第 2 张卡被涂改（越界改动）  red=True sentinel_green=True restore=True
+M3 CAUGHT  manifest 里 CARD_W 改成 200（几何过期）  red=True sentinel_green=True restore=True
+M4 CAUGHT  A 图顶部 HUD 被涂改（越界改动）  red=True sentinel_green=True restore=True
+
+4/4 CAUGHT  clean_rerun=16/16

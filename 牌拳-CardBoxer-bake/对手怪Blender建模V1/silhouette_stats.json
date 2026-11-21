@@ -1,0 +1,61 @@
+{
+  "note": "同相机 / 同归一化身高 1.72m 下的正面剪影与明度实测",
+  "design_goals": {
+    "max_luminance_ratio": 0.75,
+    "min_aspect_ratio": 1.15,
+    "min_shoulder_ratio": 1.15
+  },
+  "player_v4b": {
+    "file": "v4b-front.png",
+    "canvas": [
+      768,
+      768
+    ],
+    "alpha_bbox": [
+      174,
+      96,
+      594,
+      672
+    ],
+    "body_wh": [
+      420,
+      576
+    ],
+    "aspect_wh": 0.7292,
+    "mean_luminance": 0.5667,
+    "shoulder_max_span_px": 346,
+    "opaque_sample_px": 23316
+  },
+  "foe_v1": {
+    "file": "foe-front.png",
+    "canvas": [
+      768,
+      768
+    ],
+    "alpha_bbox": [
+      180,
+      96,
+      588,
+      672
+    ],
+    "body_wh": [
+      408,
+      576
+    ],
+    "aspect_wh": 0.7083,
+    "mean_luminance": 0.3256,
+    "shoulder_max_span_px": 400,
+    "opaque_sample_px": 35679
+  },
+  "ratios": {
+    "luminance_foe_over_player": 0.5746,
+    "aspect_foe_over_player": 0.9713,
+    "shoulder_foe_over_player": 1.1561
+  },
+  "goals": {
+    "luminance_dark_enough": true,
+    "aspect_bulky_enough": false,
+    "shoulder_broad_enough": true
+  },
+  "verdict": "SILHOUETTE_CONTRAST_SHORT"
+}

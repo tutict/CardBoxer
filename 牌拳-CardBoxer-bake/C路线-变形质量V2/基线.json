@@ -1,0 +1,90 @@
+{
+  "inputs": {
+    "baked2.json": {
+      "path": "baked2.json",
+      "bytes": 226918,
+      "sha256": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55"
+    },
+    "apose_joints.json": {
+      "path": "3D攻击GIF/apose_joints.json",
+      "bytes": 1198,
+      "sha256": "56add4f491d580fdd2394c3226f32bd2560a27e28a9c78e0ed1cd29d36ecfd28"
+    },
+    "puppet_mapping.json": {
+      "path": "3D攻击GIF/puppet_mapping.json",
+      "bytes": 2070,
+      "sha256": "7ce408d9efb648ceb57d86619dbb3504057e4b1cb9095bf3ca8f00662f709547"
+    },
+    "对手怪V1.blend": {
+      "path": "对手怪Blender建模V1/对手怪V1.blend",
+      "bytes": 42300798,
+      "sha256": "76004e212759c76f8f84a5d8fbab58680eedc4ebcd11d663e783f8c234e13165"
+    },
+    "C路线/c_build.py": {
+      "path": "C路线-真3D修复/c_build.py",
+      "bytes": 26131,
+      "sha256": "5bfe0589d385dfc03cbba4727fa86ba93fdc37b81c70ab4ee1a0b9a2d4b30e46"
+    },
+    "C路线/c_build.json": {
+      "path": "C路线-真3D修复/c_build.json",
+      "bytes": 75903,
+      "sha256": "b68ceb2c7da4c2e1144a6ee6f5900ea164edced8a99e440388fd05b1112c693b"
+    },
+    "C路线/C路线-验证记录.txt": {
+      "path": "C路线-真3D修复/C路线-验证记录.txt",
+      "bytes": 14007,
+      "sha256": "564d863e7c36a11ac150ad6edb3dca55b9df83cade5dc30f241ec246d9a1e8b5"
+    }
+  },
+  "game": {
+    "scripts/arena.gd": {
+      "bytes": 47194,
+      "sha256": "ae5ab3382f0a6da19b3882b9bd403c22c19da6b2e9b43f50c49c49f5d2d46145"
+    },
+    "scripts/fighter.gd": {
+      "bytes": 40685,
+      "sha256": "df9b5e99e8c7c3b4bb6f163150ed87574205fd9a266bd6b1bc20e85818d9b81b"
+    },
+    "scripts/hud.gd": {
+      "bytes": 32962,
+      "sha256": "d7220e8b8aedf0fe99fc194e79a61dd55ab70f26821f33c1d934d28e64d72a68"
+    },
+    "scripts/fighter_skin.gd": {
+      "bytes": 1783,
+      "sha256": "fda41d2da24f2a37896e6d3223482cb96f56c8aad45d020bb02c4e804b445c41"
+    },
+    "scripts/fx_layer.gd": {
+      "bytes": 642,
+      "sha256": "e57f3c0e8604e9ffa704edfba1d070ee3eb947b3c8630bdefd46d8db3e9bba50"
+    },
+    "scripts/card_data.gd": {
+      "bytes": 6365,
+      "sha256": "2d2a3dfe7dde22ebe337a243f06dd1199b5272f9904750a21b31202f8e6cf87f"
+    },
+    "scripts/taikou_rage.gd": {
+      "bytes": 2224,
+      "sha256": "83e6509f78b3a469247de47e28f471e492c8cd7d955f800676efb55caadc3172"
+    },
+    "scripts/battle_motion_p0.gd": {
+      "bytes": 3021,
+      "sha256": "d958c71ae74ad2fefc7c7cb6574cb15a138c5a2cdfcfd7612d0daa85b7833460"
+    },
+    "scripts/battle_rhythm.gd": {
+      "bytes": 3848,
+      "sha256": "48c56db4aca20ddd4bacd7703d21546f4482137c2ac4a2f07ec2b92f6c7f4c84"
+    },
+    "data/card_motion.json": {
+      "bytes": 226918,
+      "sha256": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55"
+    },
+    "project.godot": {
+      "bytes": 1290,
+      "sha256": "a4bb56358694fc1dcb83babd4603866a8c541906859cab8b6ef5db64bfa27522"
+    },
+    "scenes/main.tscn": {
+      "bytes": 173,
+      "sha256": "2bcbdc9f31b8c7f38185699210b0b47c1b342063a6c9c6b86d6327f1e28619fd"
+    }
+  },
+  "missing": []
+}

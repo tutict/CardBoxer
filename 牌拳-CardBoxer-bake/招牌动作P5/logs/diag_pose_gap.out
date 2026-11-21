@@ -1,0 +1,62 @@
+== 轨道分类 ==
+attack(6): ['cross', 'jab', 'sweep', 'throw', 'uppercut', 'wave']
+other (9): ['backstep', 'block', 'focus', 'guard', 'hit_heavy', 'hit_light', 'recover', 'rush', 'sidestep']
+
+== 攻击轨 13 指标 ==
+track         windup_reco  windup_hip_  peak_reach_  peak_reach_  peak_reach_  peak_bbox_g  impact_hold  recover_ove  end_drift_p  foot_ground  stance_widt  arc_deviati  exact_hold_
+cross                 0.0          4.0      18.9248            3       windup      74.4487            0          0.0       0.3162          4.7         82.4          0.0            0
+jab                  10.0          2.0      44.0145            6       active      82.2119            0          0.0        1.077          0.9         82.4       4.7367            0
+sweep                18.0         30.0      14.9554           12       active       14.149            0          0.0       1.2083         16.0         90.4      25.4837            0
+throw                12.0          3.0      24.7208            8       active      51.3763            0          0.0          0.0          2.7      82.1333      10.0513            0
+uppercut              8.0         12.0      42.4977           10       active      83.4387            0          0.0          0.4          3.7         82.4      16.5663            0
+wave                 14.0          4.0       1.7224           17       active      26.2781            0          0.0       0.4123       1.0286      82.7429      11.2264            0
+backstep              4.0          4.0      33.6951            4      recover         0.84            0          6.0          0.1          1.6      81.0667       0.6325            0
+block                10.0          1.0       5.9942            1        react       0.2705            0         10.0       0.1414          1.0      82.6667          0.0            0
+focus                10.0         14.0          0.0            0       windup          0.0            0          0.0       0.1414       1.0667      82.8444          0.0            0
+guard                 7.0          2.0       0.4783            2      recover          0.0            0         14.0       0.5385       1.0286      82.7429          0.0            0
+hit_heavy            18.0          4.0      29.9672            4        react       1.8448            0         18.0          0.4          1.6      94.6667       0.2814            0
+hit_light             9.0          1.0      16.7614            3        react       1.7417            0          9.0          0.2          0.9         82.4       0.7433            0
+recover               4.0          9.0          0.0            0       windup       0.7815            0          0.0          0.2         0.96        82.56          0.0            0
+rush                  6.0          5.0       8.5598            1       windup      39.2939            0         14.0       0.4472          8.0         92.0          0.0            0
+sidestep              4.0          3.0      19.5978            3      recover          0.0            0          8.0          0.1          0.9         80.0          0.8            0
+
+== 攻击轨分布 ==
+windup_recoil_px           {'min': 0.0, 'q25': 8.5, 'q50': 11.0, 'q75': 13.5, 'max': 18.0}
+windup_hip_drop_px         {'min': 2.0, 'q25': 3.25, 'q50': 4.0, 'q75': 10.0, 'max': 30.0}
+peak_reach_gain_px         {'min': 1.7224, 'q25': 15.9477, 'q50': 21.8228, 'q75': 38.0535, 'max': 44.0145}
+peak_bbox_gain_pct         {'min': 14.149, 'q25': 32.5526, 'q50': 62.9125, 'q75': 80.2711, 'max': 83.4387}
+end_drift_px               {'min': 0.0, 'q25': 0.3372, 'q50': 0.4062, 'q75': 0.9108, 'max': 1.2083}
+arc_deviation_px           {'min': 0.0, 'q25': 6.0653, 'q50': 10.6388, 'q75': 15.2313, 'max': 25.4837}
+stance_width_max_px        {'min': 82.1333, 'q25': 82.4, 'q50': 82.4, 'q75': 82.6572, 'max': 90.4}
+
+== 三档伸展 (L2) ==
+{'wave': 1.7224, 'cross': 18.9248, 'jab': 44.0145}
+
+== 峰值姿态两两距离 (L8) ==
+  jab|uppercut             92.0107
+  throw|wave               139.05
+  jab|throw                209.7892
+  throw|uppercut           221.0401
+  uppercut|wave            229.7702
+  jab|wave                 243.5127
+  cross|wave               326.1418
+  cross|uppercut           352.9057
+  cross|jab                387.2347
+  cross|throw              443.0563
+  sweep|wave               561.0205
+  cross|sweep              571.3158
+  jab|sweep                577.7964
+  sweep|throw              599.9587
+  sweep|uppercut           615.2215
+
+== 差距清单 6 条 ==
+  [hard      ] L3 cross        reach 峰值在 windup 段 @frame 3，与命中帧错位
+  [hard      ] L2 wave/cross/jab 三档伸展强度未递减: {'wave': 1.7224, 'cross': 18.9248, 'jab': 44.0145}
+  [note      ] L2 wave         峰值前手伸展仅 1.7224 px（剪影 +26.2781%）
+  [conflict  ] L4 ALL          P4 落地后精确平台总数 0；招牌动作的 hitstop 不能用「整帧完全相同」实现，否则打回 P4 承重判据
+  [constraint] L5 sweep        全表最大起收招漂移 1.2083 px，pose_probe.gd 红线 1.5 px；随动过冲不得推高末帧
+  [note      ] L1 cross        蓄力后收 0.0 px / 重心下沉 4.0 px
+
+== 红线 ==
+exact_hold_total=0 end_drift_worst={'track': 'sweep', 'px': 1.2083}
+WROTE C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\招牌动作P5\data\pose_gap.json

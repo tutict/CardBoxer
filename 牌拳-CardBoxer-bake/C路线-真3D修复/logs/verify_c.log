@@ -1,0 +1,19 @@
+[PASS] C01_source_wiring: needles=7 missing=[]
+[PASS] C02_apose_13_bones: bones=13 names_match=True
+[PASS] C03_voxel_proxy_weights: voxel=0.02 verts=20204 covered=20196
+[PASS] C04_smooth_weight_coverage: covered=64006/64024 (0.99972) multi_bone=57967 (0.9054)
+[PASS] C05_assets_preserved: uv=1 mat=1 tex=3 same=True/True
+[PASS] C06_stance_identity: max=6.43e-07 mean=6.2e-08 tol=1e-05
+[PASS] C07_tear_improvement: p999 0.01806 vs 0.28048 (x15.53); >5cm 21 vs 916 (x43.62)
+[PASS] C08_mesh_actually_moves: moved=64006 max=0.45259 m
+[PASS] C09_shot_hashes: shots=73 mismatched=0 []
+[PASS] C10_frame_inventory: png=98 sweep=21
+[PASS] C11_gif_duration_conservation: cards=3 combo=1 bad=[]
+[PASS] C12_boards_nonempty: boards=5 empty_or_missing=[]
+[PASS] C13_sweep_blender_shape: entries=7 all=4 arm_only=3 mapping_sha_ok=True
+[PASS] C14_sweep_monotonic: rows=21 arm_only=9 violations=[]
+[PASS] C15_worst_tear_below_rigid: worst=0.09365 rigid=0.28048 ratio=0.3339
+[PASS] C16_usable_gain_range_named: range='1.0 .. 1.5 (2.0 marginal)'
+[PASS] C17_pixel_metrics_retired: rejected=2 primary=max_delta_deg (pose_frame geometry)
+[PASS] C18_game_sources_untouched: files=7 changed=[]
+VERIFY_C 18/18 C_ROUTE_VERIFIED

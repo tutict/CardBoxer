@@ -1,0 +1,123 @@
+{
+  "blender": "5.2.3 LTS",
+  "source_blend": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\E路线-玩家3D绑骨\\玩家V4b-可变形连续壳.blend",
+  "source_blend_sha256": "daf02b5ebc6258b51f25bbc5fcf732b39b1793391d2f17ae9f127f59cd53d18b",
+  "source": {
+    "object": "node_0",
+    "verts": 57901,
+    "shells_before": null,
+    "uv_layers": 1,
+    "textures": [
+      {
+        "image": "texture_pbr_20250901",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_normal",
+        "size": [
+          4096,
+          4096
+        ]
+      }
+    ],
+    "vertex_groups": 0
+  },
+  "weight_source": {
+    "object": "e_continuous_shell",
+    "verts": 14070,
+    "groups": [
+      "hips",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "upperarm_f",
+      "forearm_f",
+      "upperarm_b",
+      "forearm_b",
+      "thigh_f",
+      "shin_f",
+      "thigh_b",
+      "shin_b"
+    ]
+  },
+  "rig": {
+    "object": "e_apose_rig",
+    "bones": [
+      "hips",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "upperarm_f",
+      "forearm_f",
+      "upperarm_b",
+      "forearm_b",
+      "thigh_f",
+      "shin_f",
+      "thigh_b",
+      "shin_b"
+    ]
+  },
+  "skinned": {
+    "object": "player_HI_skinned",
+    "verts": 57901,
+    "weighted_verts": 57873,
+    "coverage_pct": 99.9516,
+    "assets": {
+      "uv_layers": 1,
+      "materials": 1,
+      "textures": [
+        {
+          "image": "texture_pbr_20250901",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "image": "texture_pbr_20250901_normal",
+          "size": [
+            4096,
+            4096
+          ]
+        }
+      ],
+      "uv_same": true,
+      "textures_same": true
+    },
+    "modifiers": [
+      {
+        "name": "player_rig",
+        "type": "ARMATURE"
+      }
+    ]
+  },
+  "export": {
+    "file": "player-rigged.glb",
+    "bytes": 38478140,
+    "sha256": "80e5a1a03f446dd8a080e69524d4e78d97191fe56fcb30f86ed7e8c945fcab28",
+    "export_apply": false,
+    "export_skins": true,
+    "operator_result": [
+      "FINISHED"
+    ]
+  }
+}

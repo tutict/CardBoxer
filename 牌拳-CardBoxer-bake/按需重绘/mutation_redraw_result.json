@@ -1,0 +1,160 @@
+{
+  "selftest": false,
+  "total": 8,
+  "caught": 8,
+  "did_not_run": 0,
+  "restored": 8,
+  "clean_rerun": {
+    "rc": 0,
+    "total": 24,
+    "failed": [],
+    "ok": true
+  },
+  "cases": [
+    {
+      "id": "M1",
+      "status": "CAUGHT",
+      "anchor_count": 1,
+      "write_ok": true,
+      "verify_rc": 1,
+      "failed": [
+        "V05"
+      ],
+      "expected": [
+        "V05"
+      ],
+      "hit": [
+        "V05"
+      ],
+      "restore_ok": true,
+      "why": "第一帧不强制重画"
+    },
+    {
+      "id": "M2",
+      "status": "CAUGHT",
+      "anchor_count": 1,
+      "write_ok": true,
+      "verify_rc": 1,
+      "failed": [
+        "V04"
+      ],
+      "expected": [
+        "V04"
+      ],
+      "hit": [
+        "V04"
+      ],
+      "restore_ok": true,
+      "why": "门控默认关闭"
+    },
+    {
+      "id": "M3",
+      "status": "CAUGHT",
+      "anchor_count": 1,
+      "write_ok": true,
+      "verify_rc": 1,
+      "failed": [
+        "V09"
+      ],
+      "expected": [
+        "V09"
+      ],
+      "hit": [
+        "V09"
+      ],
+      "restore_ok": true,
+      "why": "arena 键漏列 effects"
+    },
+    {
+      "id": "M4",
+      "status": "CAUGHT",
+      "anchor_count": 1,
+      "write_ok": true,
+      "verify_rc": 1,
+      "failed": [
+        "V08"
+      ],
+      "expected": [
+        "V08"
+      ],
+      "hit": [
+        "V08"
+      ],
+      "restore_ok": true,
+      "why": "_request_redraw 直接 return，永远不刷"
+    },
+    {
+      "id": "M5",
+      "status": "CAUGHT",
+      "anchor_count": 1,
+      "write_ok": true,
+      "verify_rc": 1,
+      "failed": [
+        "V07"
+      ],
+      "expected": [
+        "V07"
+      ],
+      "hit": [
+        "V07"
+      ],
+      "restore_ok": true,
+      "why": "hitstop 分支丢掉截帧钩子"
+    },
+    {
+      "id": "M6",
+      "status": "CAUGHT",
+      "anchor_count": 1,
+      "write_ok": true,
+      "verify_rc": 1,
+      "failed": [
+        "V10"
+      ],
+      "expected": [
+        "V10"
+      ],
+      "hit": [
+        "V10"
+      ],
+      "restore_ok": true,
+      "why": "HUD 键漏列 tk_motion_label"
+    },
+    {
+      "id": "M7",
+      "status": "CAUGHT",
+      "anchor_count": 1,
+      "write_ok": true,
+      "verify_rc": 1,
+      "failed": [
+        "V11"
+      ],
+      "expected": [
+        "V11"
+      ],
+      "hit": [
+        "V11"
+      ],
+      "restore_ok": true,
+      "why": "静止帧被递增时钟误判成脏"
+    },
+    {
+      "id": "M8",
+      "status": "CAUGHT",
+      "anchor_count": 1,
+      "write_ok": true,
+      "verify_rc": 1,
+      "failed": [
+        "V11"
+      ],
+      "expected": [
+        "V11"
+      ],
+      "hit": [
+        "V11"
+      ],
+      "restore_ok": true,
+      "why": "HUD 回到无条件逐帧重画"
+    }
+  ],
+  "verdict": "MUTATION_REDRAW_OK"
+}

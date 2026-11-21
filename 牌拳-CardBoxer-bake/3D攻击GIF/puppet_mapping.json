@@ -1,0 +1,23 @@
+{
+  "_why": "baked2.json 是侧视 2D 动作表：f/b = 前手/后手、前腿/后腿，靠 x 前后区分；正面立绘的左右是镜像。直接把逐骨方向角差套到正视立绘是语义错配（实测 cross 后手 -147.62 度、wave 后臂 +162.08 度、躯干三段各 +27.18 度被层级累积三次）。这一层是显式重定向：时间曲线与幅度仍逐帧来自真实动作表，只把「前后」重新解释成正视可读的抬臂/伸拳/身体侧倾。",
+  "_not_claimed": "这不是真实 3D 网格蒙皮动画，也不是可直接进 Godot 的最终动作；它是 C 路线（渲图集导 2D 精灵）的节奏预览。",
+  "torso_gain": 0.35,
+  "torso_cap_deg": 8.0,
+  "head_compensation": 0.6,
+  "reach_norm_px": 120.0,
+  "wave_min_norm_px": 60.0,
+  "wave_arm_weight": 0.85,
+  "arm_gain_deg": {
+    "f_upper": 32.0,
+    "f_fore": 26.0,
+    "b_upper": 28.0,
+    "b_fore": 22.0
+  },
+  "push_scale_gain": 0.30,
+  "push_dx_px": 26.0,
+  "push_dy_px": -8.0,
+  "leg_cap_deg": 3.0,
+  "_iteration": "v1 用 max(单手幅度, 双手合计幅度) 让 jab 也触发了双手信号，且 arm_gain 42/32 度把 A-pose 抬成水平 T-pose；看图后 v2 改为 min(mf,mb) 触发双手信号、增益砍到 18..24 度，人形完整但三档几乎看不出差别。v3 把单手增益回调到 22..32 度，并对「正在出拳的那只前臂」追加前推：绕肘放大 1+0.30*t、向画面中心平移 26*t px、上抬 8*t px，模拟 2D 格斗里拳朝镜头伸出的透视。",
+  "_sign_convention": "画布 y 向下；f=画面右臂（A-pose 方向角约 +35 度，抬臂需负角、前推 dx 取负），b=画面左臂（约 +145 度，抬臂需正角、前推 dx 取正）。",
+  "_gain_source": "torso_cap 8 度：正面视角可读的侧倾上限；reach_norm 120 game px：jab 命中帧 f_hand 位移 80.2 px、cross 命中帧 b_hand 位移 146 px 的量级；push 0.30/26px：让出拳手在正面视角压缩变大的常规 2D 透视幅度；leg_cap 3 度：诊断里 thigh/shin 原始增量多在 2..23 度，正面只需暗示重心。"
+}

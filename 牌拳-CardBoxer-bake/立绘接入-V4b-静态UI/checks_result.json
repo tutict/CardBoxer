@@ -1,0 +1,193 @@
+{
+  "total": 15,
+  "passed": 15,
+  "failed": [],
+  "rows": [
+    {
+      "name": "motion_check",
+      "script": "res://tests/motion_check.gd",
+      "exit": 0,
+      "status": "PASS",
+      "bad_markers": [],
+      "stdout_tail": [
+        "OK 回读: 逐帧逐关节一致，最大误差 0.000006 px，镜像精确",
+        "",
+        "检查帧数 228，比对数值 5016 个，失败 0 项",
+        "MOTION CHECK: PASS"
+      ]
+    },
+    {
+      "name": "pose_probe",
+      "script": "res://tests/pose_probe.gd",
+      "exit": 0,
+      "status": "PASS",
+      "bad_markers": [],
+      "stdout_tail": [
+        "OK recover   14 帧，最大误差 0.000015 px",
+        "",
+        "逐帧对照 226 帧 / 2486 个关节值，失败 0 项",
+        "POSE PROBE: PASS"
+      ]
+    },
+    {
+      "name": "duel_probe",
+      "script": "res://tests/duel_probe.gd",
+      "exit": 0,
+      "status": "PASS",
+      "bad_markers": [],
+      "stdout_tail": [
+        "OK  打空     (出牌成功)  攻 hp=100 守 hp=100  (距离 400 > reach，两边都不该掉血、不该有命中信号)",
+        "OK  反应   硬直 21 帧  膝盖峰值位移 16.3 px（>=6，仅表能提供）  头部后仰 36.4 px（>=12）  硬直后回位 0.00 px（<=1）",
+        "",
+        "DUEL PROBE: PASS"
+      ]
+    },
+    {
+      "name": "reach_probe",
+      "script": "res://tests/reach_probe.gd",
+      "exit": 0,
+      "status": "PASS",
+      "bad_markers": [],
+      "stdout_tail": [
+        "OK  throw          98     98.0      0.0        9  打到",
+        "",
+        "量到 5 张牌，失败 0 项",
+        "REACH PROBE: PASS"
+      ]
+    },
+    {
+      "name": "feet_probe",
+      "script": "res://tests/feet_probe.gd",
+      "exit": 0,
+      "status": "PASS",
+      "bad_markers": [],
+      "stdout_tail": [
+        "  b_foot  世界滑移峰值   9.0 px/帧；踩实帧 37/89（42%）；相对身体摆幅 60 px",
+        "OK  走路: 两只脚合计踩实 48%",
+        "",
+        "FEET PROBE: PASS"
+      ]
+    },
+    {
+      "name": "fighter_skin_check",
+      "script": "res://tests/fighter_skin_check.gd",
+      "exit": 0,
+      "status": "PASS",
+      "bad_markers": [],
+      "stdout_tail": [
+        "",
+        "",
+        "检查项 70，失败 0 项",
+        "FIGHTER SKIN CHECK: PASS"
+      ]
+    },
+    {
+      "name": "battle_motion_p0_check",
+      "script": "res://tests/battle_motion_p0_check.gd",
+      "exit": 0,
+      "status": "PASS",
+      "bad_markers": [],
+      "stdout_tail": [
+        "Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org",
+        "",
+        "BATTLE MOTION P0 CHECK: 93/93 passed"
+      ]
+    },
+    {
+      "name": "battle_rhythm_check",
+      "script": "res://tests/battle_rhythm_check.gd",
+      "exit": 0,
+      "status": "PASS",
+      "bad_markers": [],
+      "stdout_tail": [
+        "Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org",
+        "",
+        "BATTLE RHYTHM CHECK: 62/62 passed"
+      ]
+    },
+    {
+      "name": "engine_opt_check",
+      "script": "res://tests/engine_opt_check.gd",
+      "exit": 0,
+      "status": "PASS",
+      "bad_markers": [],
+      "stdout_tail": [
+        "Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org",
+        "",
+        "ENGINE OPT CHECK: 37/37 passed"
+      ]
+    },
+    {
+      "name": "redraw_gate_check",
+      "script": "res://tests/redraw_gate_check.gd",
+      "exit": 0,
+      "status": "PASS",
+      "bad_markers": [],
+      "stdout_tail": [
+        "Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org",
+        "",
+        "REDRAW GATE CHECK: 72/72 passed"
+      ]
+    },
+    {
+      "name": "taikou_flow_check",
+      "script": "res://tests/taikou_flow_check.gd",
+      "exit": 0,
+      "status": "PASS",
+      "bad_markers": [],
+      "stdout_tail": [
+        "Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org",
+        "",
+        "TAIKOU FLOW CHECK: 51/51 passed"
+      ]
+    },
+    {
+      "name": "taikou_rage_check",
+      "script": "res://tests/taikou_rage_check.gd",
+      "exit": 0,
+      "status": "PASS",
+      "bad_markers": [],
+      "stdout_tail": [
+        "Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org",
+        "",
+        "TAIKOU RAGE CHECK: 1482/1482 passed"
+      ]
+    },
+    {
+      "name": "taikou_rules_check",
+      "script": "res://tests/taikou_rules_check.gd",
+      "exit": 0,
+      "status": "PASS",
+      "bad_markers": [],
+      "stdout_tail": [
+        "Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org",
+        "",
+        "TAIKOU RULES CHECK: 90/90 passed"
+      ]
+    },
+    {
+      "name": "combo_check",
+      "script": "res://scripts/combo_check.gd",
+      "exit": 0,
+      "status": "PASS",
+      "bad_markers": [],
+      "stdout_tail": [
+        "Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org",
+        "",
+        "COMBO CHECK: 8/8 passed"
+      ]
+    },
+    {
+      "name": "portrait_wiring_check",
+      "script": "res://tests/portrait_wiring_check.gd",
+      "exit": 0,
+      "status": "PASS",
+      "bad_markers": [],
+      "stdout_tail": [
+        "Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org",
+        "",
+        "PORTRAIT WIRING CHECK: 157/157 passed"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,927 @@
+{
+  "files": {
+    "card_motion": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\card_motion.json",
+      "bytes": 228610,
+      "sha256": "ca4060d75ccc4621dc00ccae85c4eaab8751de50a016f1ca4ab43cf5ad3a2f93"
+    },
+    "motion_input": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input.json",
+      "bytes": 74632,
+      "sha256": "61f8a14ea7b9ec60ff44d0d57f520357d03e258219d94bf7d9512a980dd244be"
+    },
+    "motion_input_foe": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input_foe.json",
+      "bytes": 74630,
+      "sha256": "fa5960b79faf26b3f2dd2f6f0dfea493a6c2f2ed0f6856656df37737fcb65aae"
+    }
+  },
+  "root_keys": {
+    "card_motion": [
+      "cards",
+      "motions",
+      "rhythm",
+      "stance",
+      "units",
+      "warnings"
+    ],
+    "motion_input": [
+      "apose_points",
+      "bones",
+      "cards",
+      "chain",
+      "joint_names",
+      "mapping",
+      "px_to_m",
+      "source",
+      "stance"
+    ],
+    "motion_input_foe": [
+      "apose_points",
+      "bones",
+      "cards",
+      "chain",
+      "joint_names",
+      "mapping",
+      "px_to_m",
+      "source",
+      "stance"
+    ]
+  },
+  "tracks": {
+    "cards/jab": {
+      "group": "cards",
+      "card": "jab",
+      "frames": 14,
+      "frame_keys": [
+        "b_elbow",
+        "b_foot",
+        "b_hand",
+        "b_knee",
+        "f",
+        "f_elbow",
+        "f_foot",
+        "f_hand",
+        "f_knee",
+        "head",
+        "hip",
+        "k",
+        "lean",
+        "phase",
+        "shoulder",
+        "torso_deg"
+      ],
+      "phase_runs": [
+        [
+          "windup",
+          4
+        ],
+        [
+          "active",
+          3
+        ],
+        [
+          "recover",
+          7
+        ]
+      ],
+      "declared": {
+        "frames": 14,
+        "impact": 7,
+        "held_frames": 3,
+        "readback_error_px": 0.0
+      }
+    },
+    "cards/cross": {
+      "group": "cards",
+      "card": "cross",
+      "frames": 22,
+      "frame_keys": [
+        "b_elbow",
+        "b_foot",
+        "b_hand",
+        "b_knee",
+        "f",
+        "f_elbow",
+        "f_foot",
+        "f_hand",
+        "f_knee",
+        "head",
+        "hip",
+        "k",
+        "lean",
+        "phase",
+        "shoulder",
+        "torso_deg"
+      ],
+      "phase_runs": [
+        [
+          "windup",
+          6
+        ],
+        [
+          "active",
+          4
+        ],
+        [
+          "recover",
+          12
+        ]
+      ],
+      "declared": {
+        "frames": 22,
+        "impact": 10,
+        "held_frames": 4,
+        "readback_error_px": 0.583
+      }
+    },
+    "cards/uppercut": {
+      "group": "cards",
+      "card": "uppercut",
+      "frames": 24,
+      "frame_keys": [
+        "b_elbow",
+        "b_foot",
+        "b_hand",
+        "b_knee",
+        "f",
+        "f_elbow",
+        "f_foot",
+        "f_hand",
+        "f_knee",
+        "head",
+        "hip",
+        "k",
+        "lean",
+        "phase",
+        "shoulder",
+        "torso_deg"
+      ],
+      "phase_runs": [
+        [
+          "windup",
+          7
+        ],
+        [
+          "active",
+          4
+        ],
+        [
+          "recover",
+          13
+        ]
+      ],
+      "declared": {
+        "frames": 24,
+        "impact": 11,
+        "held_frames": 4,
+        "readback_error_px": 0.0
+      }
+    },
+    "cards/sweep": {
+      "group": "cards",
+      "card": "sweep",
+      "frames": 28,
+      "frame_keys": [
+        "b_elbow",
+        "b_foot",
+        "b_hand",
+        "b_knee",
+        "f",
+        "f_elbow",
+        "f_foot",
+        "f_hand",
+        "f_knee",
+        "head",
+        "hip",
+        "k",
+        "lean",
+        "phase",
+        "shoulder",
+        "torso_deg"
+      ],
+      "phase_runs": [
+        [
+          "windup",
+          8
+        ],
+        [
+          "active",
+          5
+        ],
+        [
+          "recover",
+          15
+        ]
+      ],
+      "declared": {
+        "frames": 28,
+        "impact": 13,
+        "held_frames": 4,
+        "readback_error_px": 0.0
+      }
+    },
+    "cards/rush": {
+      "group": "cards",
+      "card": "rush",
+      "frames": 13,
+      "frame_keys": [
+        "b_elbow",
+        "b_foot",
+        "b_hand",
+        "b_knee",
+        "f",
+        "f_elbow",
+        "f_foot",
+        "f_hand",
+        "f_knee",
+        "head",
+        "hip",
+        "k",
+        "lean",
+        "phase",
+        "shoulder",
+        "torso_deg"
+      ],
+      "phase_runs": [
+        [
+          "windup",
+          4
+        ],
+        [
+          "recover",
+          9
+        ]
+      ],
+      "declared": {
+        "frames": 13,
+        "impact": 5,
+        "held_frames": 2,
+        "readback_error_px": 0.0
+      }
+    },
+    "cards/backstep": {
+      "group": "cards",
+      "card": "backstep",
+      "frames": 11,
+      "frame_keys": [
+        "b_elbow",
+        "b_foot",
+        "b_hand",
+        "b_knee",
+        "f",
+        "f_elbow",
+        "f_foot",
+        "f_hand",
+        "f_knee",
+        "head",
+        "hip",
+        "k",
+        "lean",
+        "phase",
+        "shoulder",
+        "torso_deg"
+      ],
+      "phase_runs": [
+        [
+          "windup",
+          3
+        ],
+        [
+          "recover",
+          8
+        ]
+      ],
+      "declared": {
+        "frames": 11,
+        "impact": 4,
+        "held_frames": 2,
+        "readback_error_px": 0.0
+      }
+    },
+    "cards/guard": {
+      "group": "cards",
+      "card": "guard",
+      "frames": 14,
+      "frame_keys": [
+        "b_elbow",
+        "b_foot",
+        "b_hand",
+        "b_knee",
+        "f",
+        "f_elbow",
+        "f_foot",
+        "f_hand",
+        "f_knee",
+        "head",
+        "hip",
+        "k",
+        "lean",
+        "phase",
+        "shoulder",
+        "torso_deg"
+      ],
+      "phase_runs": [
+        [
+          "windup",
+          2
+        ],
+        [
+          "recover",
+          12
+        ]
+      ],
+      "declared": {
+        "frames": 14,
+        "impact": 3,
+        "held_frames": 5,
+        "readback_error_px": 0.361
+      }
+    },
+    "cards/sidestep": {
+      "group": "cards",
+      "card": "sidestep",
+      "frames": 10,
+      "frame_keys": [
+        "b_elbow",
+        "b_foot",
+        "b_hand",
+        "b_knee",
+        "f",
+        "f_elbow",
+        "f_foot",
+        "f_hand",
+        "f_knee",
+        "head",
+        "hip",
+        "k",
+        "lean",
+        "phase",
+        "shoulder",
+        "torso_deg"
+      ],
+      "phase_runs": [
+        [
+          "windup",
+          2
+        ],
+        [
+          "recover",
+          8
+        ]
+      ],
+      "declared": {
+        "frames": 10,
+        "impact": 3,
+        "held_frames": 2,
+        "readback_error_px": 0.0
+      }
+    },
+    "cards/focus": {
+      "group": "cards",
+      "card": "focus",
+      "frames": 22,
+      "frame_keys": [
+        "b_elbow",
+        "b_foot",
+        "b_hand",
+        "b_knee",
+        "f",
+        "f_elbow",
+        "f_foot",
+        "f_hand",
+        "f_knee",
+        "head",
+        "hip",
+        "k",
+        "lean",
+        "phase",
+        "shoulder",
+        "torso_deg"
+      ],
+      "phase_runs": [
+        [
+          "windup",
+          10
+        ],
+        [
+          "recover",
+          12
+        ]
+      ],
+      "declared": {
+        "frames": 22,
+        "impact": 11,
+        "held_frames": 7,
+        "readback_error_px": 0.0
+      }
+    },
+    "cards/recover": {
+      "group": "cards",
+      "card": "recover",
+      "frames": 14,
+      "frame_keys": [
+        "b_elbow",
+        "b_foot",
+        "b_hand",
+        "b_knee",
+        "f",
+        "f_elbow",
+        "f_foot",
+        "f_hand",
+        "f_knee",
+        "head",
+        "hip",
+        "k",
+        "lean",
+        "phase",
+        "shoulder",
+        "torso_deg"
+      ],
+      "phase_runs": [
+        [
+          "windup",
+          4
+        ],
+        [
+          "recover",
+          10
+        ]
+      ],
+      "declared": {
+        "frames": 14,
+        "impact": 5,
+        "held_frames": 4,
+        "readback_error_px": 0.0
+      }
+    },
+    "cards/wave": {
+      "group": "cards",
+      "card": "wave",
+      "frames": 36,
+      "frame_keys": [
+        "b_elbow",
+        "b_foot",
+        "b_hand",
+        "b_knee",
+        "f",
+        "f_elbow",
+        "f_foot",
+        "f_hand",
+        "f_knee",
+        "head",
+        "hip",
+        "k",
+        "lean",
+        "phase",
+        "shoulder",
+        "torso_deg"
+      ],
+      "phase_runs": [
+        [
+          "windup",
+          10
+        ],
+        [
+          "active",
+          8
+        ],
+        [
+          "recover",
+          18
+        ]
+      ],
+      "declared": {
+        "frames": 36,
+        "impact": 18,
+        "held_frames": 8,
+        "readback_error_px": 2.802
+      }
+    },
+    "cards/throw": {
+      "group": "cards",
+      "card": "throw",
+      "frames": 20,
+      "frame_keys": [
+        "b_elbow",
+        "b_foot",
+        "b_hand",
+        "b_knee",
+        "f",
+        "f_elbow",
+        "f_foot",
+        "f_hand",
+        "f_knee",
+        "head",
+        "hip",
+        "k",
+        "lean",
+        "phase",
+        "shoulder",
+        "torso_deg"
+      ],
+      "phase_runs": [
+        [
+          "windup",
+          5
+        ],
+        [
+          "active",
+          4
+        ],
+        [
+          "recover",
+          11
+        ]
+      ],
+      "declared": {
+        "frames": 20,
+        "impact": 9,
+        "held_frames": 3,
+        "readback_error_px": 0.0
+      }
+    },
+    "motions/hit_light": {
+      "group": "motions",
+      "card": "hit_light",
+      "frames": 16,
+      "frame_keys": [
+        "b_elbow",
+        "b_foot",
+        "b_hand",
+        "b_knee",
+        "f",
+        "f_elbow",
+        "f_foot",
+        "f_hand",
+        "f_knee",
+        "head",
+        "hip",
+        "k",
+        "lean",
+        "shoulder",
+        "torso_deg"
+      ],
+      "phase_runs": [
+        [
+          "?",
+          16
+        ]
+      ],
+      "declared": {
+        "frames": 16,
+        "readback_error_px": 0.0
+      }
+    },
+    "motions/hit_heavy": {
+      "group": "motions",
+      "card": "hit_heavy",
+      "frames": 30,
+      "frame_keys": [
+        "b_elbow",
+        "b_foot",
+        "b_hand",
+        "b_knee",
+        "f",
+        "f_elbow",
+        "f_foot",
+        "f_hand",
+        "f_knee",
+        "head",
+        "hip",
+        "k",
+        "lean",
+        "shoulder",
+        "torso_deg"
+      ],
+      "phase_runs": [
+        [
+          "?",
+          30
+        ]
+      ],
+      "declared": {
+        "frames": 30,
+        "readback_error_px": 1.217
+      }
+    },
+    "motions/block": {
+      "group": "motions",
+      "card": "block",
+      "frames": 10,
+      "frame_keys": [
+        "b_elbow",
+        "b_foot",
+        "b_hand",
+        "b_knee",
+        "f",
+        "f_elbow",
+        "f_foot",
+        "f_hand",
+        "f_knee",
+        "head",
+        "hip",
+        "k",
+        "lean",
+        "shoulder",
+        "torso_deg"
+      ],
+      "phase_runs": [
+        [
+          "?",
+          10
+        ]
+      ],
+      "declared": {
+        "frames": 10,
+        "readback_error_px": 0.0
+      }
+    }
+  },
+  "sync": {
+    "joint_values_checked": 6248,
+    "disagreements": [],
+    "disagreement_count": 0,
+    "cm_vs_mi_identical": true
+  },
+  "geometry": {
+    "cards/jab": {
+      "reach_stance": 42.7551,
+      "reach_min": 42.7551,
+      "reach_max": 86.7696,
+      "reach_gain_px": 44.0145,
+      "reach_argmax": 6,
+      "hip_y_stance": -80.0,
+      "hip_y_min": -81.0,
+      "hip_y_max": -78.0,
+      "hip_drop_max_px": 2.0,
+      "bbox_area_stance": 15136.0,
+      "bbox_area_max": 27579.6,
+      "exact_hold_pairs": 0
+    },
+    "cards/cross": {
+      "reach_stance": 42.7551,
+      "reach_min": 14.684,
+      "reach_max": 61.6799,
+      "reach_gain_px": 18.9248,
+      "reach_argmax": 3,
+      "hip_y_stance": -80.0,
+      "hip_y_min": -81.0,
+      "hip_y_max": -76.0,
+      "hip_drop_max_px": 4.0,
+      "bbox_area_stance": 15136.0,
+      "bbox_area_max": 26404.56,
+      "exact_hold_pairs": 0
+    },
+    "cards/uppercut": {
+      "reach_stance": 42.7551,
+      "reach_min": 42.6382,
+      "reach_max": 85.2528,
+      "reach_gain_px": 42.4977,
+      "reach_argmax": 10,
+      "hip_y_stance": -80.0,
+      "hip_y_min": -84.0,
+      "hip_y_max": -68.0,
+      "hip_drop_max_px": 12.0,
+      "bbox_area_stance": 15136.0,
+      "bbox_area_max": 27765.28,
+      "exact_hold_pairs": 0
+    },
+    "cards/sweep": {
+      "reach_stance": 42.7551,
+      "reach_min": 33.4253,
+      "reach_max": 57.7105,
+      "reach_gain_px": 14.9554,
+      "reach_argmax": 12,
+      "hip_y_stance": -80.0,
+      "hip_y_min": -80.0,
+      "hip_y_max": -46.0,
+      "hip_drop_max_px": 34.0,
+      "bbox_area_stance": 15136.0,
+      "bbox_area_max": 17277.6,
+      "exact_hold_pairs": 0
+    },
+    "cards/rush": {
+      "reach_stance": 42.7551,
+      "reach_min": 7.1568,
+      "reach_max": 51.3149,
+      "reach_gain_px": 8.5598,
+      "reach_argmax": 1,
+      "hip_y_stance": -80.0,
+      "hip_y_min": -80.0,
+      "hip_y_max": -75.0,
+      "hip_drop_max_px": 5.0,
+      "bbox_area_stance": 15136.0,
+      "bbox_area_max": 21083.52,
+      "exact_hold_pairs": 0
+    },
+    "cards/backstep": {
+      "reach_stance": 42.7551,
+      "reach_min": 42.7551,
+      "reach_max": 76.4502,
+      "reach_gain_px": 33.6951,
+      "reach_argmax": 4,
+      "hip_y_stance": -80.0,
+      "hip_y_min": -80.0,
+      "hip_y_max": -74.0,
+      "hip_drop_max_px": 6.0,
+      "bbox_area_stance": 15136.0,
+      "bbox_area_max": 15263.1466,
+      "exact_hold_pairs": 0
+    },
+    "cards/guard": {
+      "reach_stance": 42.7551,
+      "reach_min": 42.7551,
+      "reach_max": 43.2334,
+      "reach_gain_px": 0.4783,
+      "reach_argmax": 2,
+      "hip_y_stance": -80.0,
+      "hip_y_min": -80.0,
+      "hip_y_max": -76.0,
+      "hip_drop_max_px": 4.0,
+      "bbox_area_stance": 15136.0,
+      "bbox_area_max": 15136.0,
+      "exact_hold_pairs": 0
+    },
+    "cards/sidestep": {
+      "reach_stance": 42.7551,
+      "reach_min": 42.7551,
+      "reach_max": 62.3529,
+      "reach_gain_px": 19.5978,
+      "reach_argmax": 3,
+      "hip_y_stance": -80.0,
+      "hip_y_min": -80.0,
+      "hip_y_max": -74.0,
+      "hip_drop_max_px": 6.0,
+      "bbox_area_stance": 15136.0,
+      "bbox_area_max": 15136.0,
+      "exact_hold_pairs": 0
+    },
+    "cards/focus": {
+      "reach_stance": 42.7551,
+      "reach_min": 29.5381,
+      "reach_max": 42.7551,
+      "reach_gain_px": 0.0,
+      "reach_argmax": 0,
+      "hip_y_stance": -80.0,
+      "hip_y_min": -80.0,
+      "hip_y_max": -66.0,
+      "hip_drop_max_px": 14.0,
+      "bbox_area_stance": 15136.0,
+      "bbox_area_max": 15136.0,
+      "exact_hold_pairs": 0
+    },
+    "cards/recover": {
+      "reach_stance": 42.7551,
+      "reach_min": 33.722,
+      "reach_max": 42.7551,
+      "reach_gain_px": 0.0,
+      "reach_argmax": 0,
+      "hip_y_stance": -80.0,
+      "hip_y_min": -80.0,
+      "hip_y_max": -71.0,
+      "hip_drop_max_px": 9.0,
+      "bbox_area_stance": 15136.0,
+      "bbox_area_max": 15254.2933,
+      "exact_hold_pairs": 0
+    },
+    "cards/wave": {
+      "reach_stance": 42.7551,
+      "reach_min": 42.4323,
+      "reach_max": 44.4775,
+      "reach_gain_px": 1.7224,
+      "reach_argmax": 17,
+      "hip_y_stance": -80.0,
+      "hip_y_min": -81.0,
+      "hip_y_max": -76.0,
+      "hip_drop_max_px": 4.0,
+      "bbox_area_stance": 15136.0,
+      "bbox_area_max": 19113.4528,
+      "exact_hold_pairs": 0
+    },
+    "cards/throw": {
+      "reach_stance": 42.7551,
+      "reach_min": 40.299,
+      "reach_max": 67.4759,
+      "reach_gain_px": 24.7208,
+      "reach_argmax": 8,
+      "hip_y_stance": -80.0,
+      "hip_y_min": -80.0,
+      "hip_y_max": -77.0,
+      "hip_drop_max_px": 3.0,
+      "bbox_area_stance": 15136.0,
+      "bbox_area_max": 22912.32,
+      "exact_hold_pairs": 0
+    },
+    "motions/hit_light": {
+      "reach_stance": 42.7551,
+      "reach_min": 40.2443,
+      "reach_max": 59.5165,
+      "reach_gain_px": 16.7614,
+      "reach_argmax": 3,
+      "hip_y_stance": -80.0,
+      "hip_y_min": -80.0,
+      "hip_y_max": -79.0,
+      "hip_drop_max_px": 1.0,
+      "bbox_area_stance": 15136.0,
+      "bbox_area_max": 15399.6267,
+      "exact_hold_pairs": 0
+    },
+    "motions/hit_heavy": {
+      "reach_stance": 42.7551,
+      "reach_min": 37.3872,
+      "reach_max": 72.7223,
+      "reach_gain_px": 29.9672,
+      "reach_argmax": 4,
+      "hip_y_stance": -80.0,
+      "hip_y_min": -80.0,
+      "hip_y_max": -76.0,
+      "hip_drop_max_px": 4.0,
+      "bbox_area_stance": 15136.0,
+      "bbox_area_max": 15415.2333,
+      "exact_hold_pairs": 0
+    },
+    "motions/block": {
+      "reach_stance": 42.7551,
+      "reach_min": 42.6948,
+      "reach_max": 48.7494,
+      "reach_gain_px": 5.9942,
+      "reach_argmax": 1,
+      "hip_y_stance": -80.0,
+      "hip_y_min": -80.0,
+      "hip_y_max": -79.0,
+      "hip_drop_max_px": 1.0,
+      "bbox_area_stance": 15136.0,
+      "bbox_area_max": 15176.9466,
+      "exact_hold_pairs": 0
+    }
+  },
+  "mapping": {
+    "torso_gain": 0.35,
+    "torso_cap_deg": 8.0,
+    "head_compensation": 0.6,
+    "reach_norm_px": 120.0,
+    "wave_min_norm_px": 60.0,
+    "wave_arm_weight": 0.85,
+    "arm_gain_deg": {
+      "f_upper": 32.0,
+      "f_fore": 26.0,
+      "b_upper": 28.0,
+      "b_fore": 22.0
+    },
+    "push_scale_gain": 0.3,
+    "push_dx_px": 26.0,
+    "push_dy_px": -8.0,
+    "leg_cap_deg": 12.0,
+    "leg_mode": "atan"
+  },
+  "apose_equal": false,
+  "stance_equal": true,
+  "stance_source": "card_motion.stance",
+  "stance_joints": {
+    "hip": [
+      0.0,
+      -80.0
+    ],
+    "shoulder": [
+      2.0,
+      -148.0
+    ],
+    "head": [
+      4.0,
+      -172.0
+    ],
+    "f_elbow": [
+      30.0,
+      -132.0
+    ],
+    "f_hand": [
+      44.0,
+      -156.0
+    ],
+    "b_elbow": [
+      -18.0,
+      -130.0
+    ],
+    "b_hand": [
+      -24.0,
+      -152.0
+    ],
+    "f_knee": [
+      34.0,
+      -40.0
+    ],
+    "f_foot": [
+      36.0,
+      -0.0
+    ],
+    "b_knee": [
+      -24.2,
+      -42.1
+    ],
+    "b_foot": [
+      -44.0,
+      -0.0
+    ]
+  }
+}

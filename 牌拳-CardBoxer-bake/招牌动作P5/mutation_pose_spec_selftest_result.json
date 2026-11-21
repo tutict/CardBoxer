@@ -1,0 +1,25 @@
+{
+  "verdict": "SELFTEST_DNR_EFFECTIVE",
+  "selftest": true,
+  "rows": [
+    {
+      "name": "SELFTEST 锚点失配",
+      "file": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\招牌动作P5\\招牌动作规格.json",
+      "expect": "language_rules_complete_and_traceable",
+      "status": "DID NOT RUN",
+      "why": "anchor hits 0 (need exactly 1)"
+    }
+  ],
+  "summary": {
+    "cases": 1,
+    "caught": 0,
+    "dnr": 1,
+    "broken": 0,
+    "missed": 0,
+    "restored": 0,
+    "expect_hit": 0,
+    "clean": true,
+    "clean_passed": "14",
+    "clean_total": "14"
+  }
+}

@@ -1,0 +1,5 @@
+CASES 3 FRAMES 284 POSES 852
+CASE cap03_hard_g100 baseline
+CASE cap09_hard_g100 candidate
+CASE cap12_hard_g100 candidate
+SWEEP_PLAN_OK

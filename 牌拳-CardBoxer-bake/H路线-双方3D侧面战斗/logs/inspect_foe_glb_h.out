@@ -1,0 +1,16 @@
+VERDICT {"highpoly_has_skin": true, "highpoly_verts": 64059, "blend_highpoly_verts": 64024, "vertex_split_delta": 35, "player_glb_verts": 57934, "player_blend_verts": 57901, "player_vertex_split_delta": 33, "skinned_nodes": 1, "skin_joints": 14, "has_inverse_bind": true, "zero_animations": true, "three_images": true, "images_zero_reencode": true, "joint_names_same_as_player": true, "source_highpoly_has_no_skin": true}
+SKINNED_NODES [{'node': 15, 'name': 'foe_HI_skinned', 'skin': 0, 'mesh': 0}]
+JOINTS ['hips', 'spine', 'chest', 'neck', 'head', 'upperarm_b', 'forearm_b', 'upperarm_f', 'forearm_f', 'thigh_b', 'shin_b', 'thigh_f', 'shin_f', 'neutral_bone']
+PRIMS [(64059, True, True)]
+CHECK highpoly_has_skin True
+CHECK highpoly_verts_split_ok True
+CHECK player_split_delta_positive True
+CHECK one_skinned_node True
+CHECK skin_joints_ge_13 True
+CHECK inverse_bind_present True
+CHECK zero_animations True
+CHECK three_images True
+CHECK images_zero_reencode True
+CHECK joint_names_same_as_player True
+CHECK source_highpoly_has_no_skin True
+FOE_GLTF_OK

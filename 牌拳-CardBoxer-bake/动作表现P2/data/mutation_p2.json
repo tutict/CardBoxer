@@ -1,0 +1,471 @@
+{
+  "cases": 19,
+  "caught": 19,
+  "dnr": 0,
+  "missed": 0,
+  "restored": 19,
+  "files_restored": {
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input_foe.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\orig\\pre-p2\\motion_input.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\baseline_p2.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\apply_p2.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\full_tear.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\full_tear_blender.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\full_plan.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\p2_shipped_probe.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\all_checks_p2.json": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\logs\\p1_verify_after_p2.out": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\tests\\p2_shipped_probe.gd": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\boards\\P2上线前后-玩家对照.png": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\scripts\\rig_driver.gd": true,
+    "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\amplitude_p2_probe.json": true
+  },
+  "clean_green": true,
+  "clean_verify": 59,
+  "clean_verify_total": 59,
+  "selftest_dnr": false,
+  "rows": [
+    {
+      "name": "M01_player_cap_9_to_3",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "player_cap_is_9",
+        "only_one_diff_path_player"
+      ],
+      "expect_hit": [
+        "player_cap_is_9",
+        "only_one_diff_path_player"
+      ],
+      "failed": [
+        "player_cap_is_9",
+        "two_mappings_identical",
+        "only_one_diff_path_player"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 56/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M02_foe_cap_9_to_3",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input_foe.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "foe_cap_is_9",
+        "only_one_diff_path_foe"
+      ],
+      "expect_hit": [
+        "foe_cap_is_9",
+        "only_one_diff_path_foe"
+      ],
+      "failed": [
+        "foe_cap_is_9",
+        "two_mappings_identical",
+        "only_one_diff_path_foe"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 56/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M03_arm_gain_changed",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "player_arm_gains_untouched",
+        "only_one_diff_path_player"
+      ],
+      "expect_hit": [
+        "player_arm_gains_untouched",
+        "only_one_diff_path_player"
+      ],
+      "failed": [
+        "player_arm_gains_untouched",
+        "two_mappings_identical",
+        "only_one_diff_path_player"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 56/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M04_torso_cap_changed",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "torso_caps_untouched",
+        "only_one_diff_path_player"
+      ],
+      "expect_hit": [
+        "torso_caps_untouched",
+        "only_one_diff_path_player"
+      ],
+      "failed": [
+        "torso_caps_untouched",
+        "two_mappings_identical",
+        "only_one_diff_path_player"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 56/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M05_jab_frames_14_to_13",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "frames_284_both"
+      ],
+      "expect_hit": [
+        "frames_284_both"
+      ],
+      "failed": [
+        "two_card_tables_identical",
+        "frames_284_both",
+        "only_one_diff_path_player"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 56/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M06_backup_cap_3_to_4",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\orig\\pre-p2\\motion_input.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "backup_bytewise_matches_baseline_player"
+      ],
+      "expect_hit": [
+        "backup_bytewise_matches_baseline_player"
+      ],
+      "failed": [
+        "backup_bytewise_matches_baseline_player"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 58/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M07_baseline_sha_corrupted",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\baseline_p2.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "backup_bytewise_matches_baseline_player",
+        "other_12_watched_files_unchanged"
+      ],
+      "expect_hit": [
+        "backup_bytewise_matches_baseline_player"
+      ],
+      "failed": [
+        "backup_bytewise_matches_baseline_player"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 58/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M08_apply_check_flipped",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\apply_p2.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "apply_report_all_checks_true"
+      ],
+      "expect_hit": [
+        "apply_report_all_checks_true"
+      ],
+      "failed": [
+        "apply_report_all_checks_true"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 58/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M09_anchor_raised",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\full_tear.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "anchor_pinned_at_0_09365"
+      ],
+      "expect_hit": [
+        "anchor_pinned_at_0_09365"
+      ],
+      "failed": [
+        "anchor_pinned_at_0_09365"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 58/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M10_full_poses_852_to_851",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\full_tear_blender.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "full_852_poses_evaluated"
+      ],
+      "expect_hit": [
+        "full_852_poses_evaluated"
+      ],
+      "failed": [
+        "full_852_poses_evaluated"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 58/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M11_plan_284_to_283",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\full_plan.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "full_plan_284_frame_pairs"
+      ],
+      "expect_hit": [
+        "full_plan_284_frame_pairs"
+      ],
+      "failed": [
+        "full_plan_284_frame_pairs"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 58/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M12_shipped_readback_to_3",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\p2_shipped_probe.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "shipped_cap_readback_9_both_sides"
+      ],
+      "expect_hit": [
+        "shipped_cap_readback_9_both_sides"
+      ],
+      "failed": [
+        "shipped_cap_readback_9_both_sides"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 58/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M13_shipped_diff_to_zero",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\p2_shipped_probe.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "shipped_action_frames_all_changed_both_sides"
+      ],
+      "expect_hit": [
+        "shipped_action_frames_all_changed_both_sides"
+      ],
+      "failed": [
+        "shipped_action_frames_all_changed_both_sides"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 58/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M14_all_checks_result_failed",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\all_checks_p2.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "all_checks_p2_15_15"
+      ],
+      "expect_hit": [
+        "all_checks_p2_15_15"
+      ],
+      "failed": [
+        "all_checks_p2_15_15"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 58/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M15_p1_log_summary_faked",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\logs\\p1_verify_after_p2.out",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "p1_guard_other_50_still_green"
+      ],
+      "expect_hit": [
+        "p1_guard_other_50_still_green"
+      ],
+      "failed": [
+        "p1_guard_other_50_still_green"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 58/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M16_probe_gd_changed",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\tests\\p2_shipped_probe.gd",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "shipped_probe_script_in_game_bytewise"
+      ],
+      "expect_hit": [
+        "shipped_probe_script_in_game_bytewise"
+      ],
+      "failed": [
+        "shipped_probe_script_in_game_bytewise"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 58/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M17_board_png_signature_broken",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\boards\\P2上线前后-玩家对照.png",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "five_boards_valid_png_signature"
+      ],
+      "expect_hit": [
+        "five_boards_valid_png_signature"
+      ],
+      "failed": [
+        "five_boards_valid_png_signature"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 58/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M18_rig_driver_source_changed",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\scripts\\rig_driver.gd",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "other_12_watched_files_unchanged",
+        "three_core_scripts_sha_unchanged"
+      ],
+      "expect_hit": [
+        "other_12_watched_files_unchanged",
+        "three_core_scripts_sha_unchanged"
+      ],
+      "failed": [
+        "other_12_watched_files_unchanged",
+        "three_core_scripts_sha_unchanged"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 57/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    },
+    {
+      "name": "M19_amp_monotonic_broken",
+      "status": "CAUGHT",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\动作表现P2\\data\\amplitude_p2_probe.json",
+      "rc": 1,
+      "restored": true,
+      "expect_any": [
+        "amp_probe_four_caps_monotonic"
+      ],
+      "expect_hit": [
+        "amp_probe_four_caps_monotonic"
+      ],
+      "failed": [
+        "amp_probe_four_caps_monotonic"
+      ],
+      "errors": {},
+      "verify_tail": [
+        "MOTION_P2_VERIFY 58/59 FAILED",
+        "",
+        "--- STDERR ---"
+      ]
+    }
+  ],
+  "ok": true
+}

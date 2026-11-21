@@ -1,0 +1,291 @@
+{
+  "passed": 20,
+  "total": 20,
+  "results": [
+    {
+      "script": "tests/tactical_rules_check.gd",
+      "mode": "tactical",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 0.57,
+      "counts": [
+        [
+          "2045",
+          "2045"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/tactical_match_check.gd",
+      "mode": "tactical",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 9.13,
+      "counts": [
+        [
+          "267",
+          "267"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/tactical_integration_check.gd",
+      "mode": "tactical",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 3.93,
+      "counts": [
+        [
+          "75",
+          "75"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/tactical_ui_check.gd",
+      "mode": "tactical",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 0.57,
+      "counts": [
+        [
+          "85",
+          "85"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/tactical_contact_check.gd",
+      "mode": "tactical",
+      "native": true,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 3.74,
+      "counts": [
+        [
+          "1",
+          "1"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/taikou_rules_check.gd",
+      "mode": "taikou",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 0.2,
+      "counts": [
+        [
+          "90",
+          "90"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/taikou_rage_check.gd",
+      "mode": "taikou",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 0.2,
+      "counts": [
+        [
+          "1482",
+          "1482"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/taikou_flow_check.gd",
+      "mode": "taikou",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 0.48,
+      "counts": [
+        [
+          "52",
+          "52"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "scripts/combo_check.gd",
+      "mode": "realtime",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 0.2,
+      "counts": [
+        [
+          "8",
+          "8"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/motion_check.gd",
+      "mode": "realtime",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 0.2,
+      "counts": [],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/battle_motion_p0_check.gd",
+      "mode": "taikou",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 0.49,
+      "counts": [
+        [
+          "93",
+          "93"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/battle_rhythm_check.gd",
+      "mode": "taikou",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 0.48,
+      "counts": [
+        [
+          "62",
+          "62"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/battle_presentation_check.gd",
+      "mode": "taikou",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 1.88,
+      "counts": [
+        [
+          "44",
+          "44"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/battle_integration_check.gd",
+      "mode": "taikou",
+      "native": true,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 3.76,
+      "counts": [
+        [
+          "14",
+          "14"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/battle_contact_spacing_check.gd",
+      "mode": "taikou",
+      "native": true,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 3.76,
+      "counts": [
+        [
+          "70",
+          "70"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/battle_shadow_check.gd",
+      "mode": "taikou",
+      "native": true,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 3.83,
+      "counts": [],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/battle_transition_check.gd",
+      "mode": "taikou",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 2.05,
+      "counts": [
+        [
+          "49",
+          "49"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/native_motion_check.gd",
+      "mode": "taikou",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 9.71,
+      "counts": [],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/redraw_gate_check.gd",
+      "mode": "taikou",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 0.49,
+      "counts": [
+        [
+          "72",
+          "72"
+        ]
+      ],
+      "unexpected_errors": []
+    },
+    {
+      "script": "tests/engine_opt_check.gd",
+      "mode": "taikou",
+      "native": false,
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 0.21,
+      "counts": [
+        [
+          "37",
+          "37"
+        ]
+      ],
+      "unexpected_errors": []
+    }
+  ]
+}

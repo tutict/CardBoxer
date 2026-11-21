@@ -1,0 +1,10 @@
+card_p1.png            [136, 104] RGBA bbox=[4, 23, 132, 104] corners=[0, 0, 0, 0] center_a=255
+card_p55.png           [136, 104] RGBA bbox=[4, 15, 136, 104] corners=[0, 0, 0, 0] center_a=0
+avatar_player.png      [40, 40] RGBA bbox=[0, 0, 40, 40] corners=[0, 0, 0, 0] center_a=255
+avatar_foe.png         [40, 40] RGBA bbox=[0, 0, 40, 40] corners=[0, 0, 0, 0] center_a=255
+profile_front.png      [365, 500] RGBA bbox=[0, 0, 365, 500] corners=[0, 0, 0, 0] center_a=255
+profile_25.png         [196, 258] RGBA bbox=[0, 0, 196, 258] corners=[0, 0, 0, 0] center_a=255
+profile_55.png         [196, 258] RGBA bbox=[0, 0, 196, 258] corners=[0, 0, 0, 0] center_a=255
+profile_back35.png     [196, 258] RGBA bbox=[0, 0, 196, 258] corners=[0, 0, 0, 0] center_a=255
+CHECKS={"all_rgba": true, "all_corners_transparent": true, "all_non_empty": true, "foot_line_672": true, "head_line_96": true, "card_art_exact_size": true, "avatar_exact_size": true, "profile_thumb_exact_size": true}
+ASSETS_OK

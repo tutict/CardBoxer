@@ -1,0 +1,11 @@
+00:01.437  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\foe-retopology.blend"
+00:03.078  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\diagnostic-no-normal-cuff.png'
+00:05.125  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\diagnostic-no-normal-mask.png'
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\diagnose_resume.py:16: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  clay=bpy.data.materials.new('Diagnostic Clay');clay.diffuse_color=(.25,.25,.25,1);clay.use_nodes=True;clay.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value=(.25,.25,.25,1);clay.node_tree.nodes['Principled BSDF'].inputs['Roughness'].default_value=.6
+00:06.234  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\diagnostic-clay-cuff.png'
+00:08.000  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\模型精修-全身重拓扑\authoring\foe\diagnostic-clay-mask.png'
+DIAG 33 long cuff edges; 14 ngons
+Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:35:40)
+
+Blender quit

@@ -1,0 +1,65 @@
+《牌拳》B 路线 侧身节奏接线 · 文件清单
+目录: 牌拳-CardBoxer-bake/侧身节奏接线/
+格式: 相对路径 / 字节数 / sha256
+共 60 项（不含 __pycache__ / *.pyc）
+----------------------------------------------------------------------------------------------------
+all_checks.json                                           1758  8174c35fdf83b903139df0bc28f8ed2347b39de26d122da3b7061ff47f859859
+battle_rhythm_spec.json                                   2812  e5dd76ef17fa0cabcf0c217b5c5ccda6fa1c108d4098db27bba794d100da7aff
+capture_result.json                                       2436  e72ba522525a86b143f1305f4844a2adedec1d53361967b2ee72c0460fb6e2e1
+capture_rhythm.py                                         8034  c4ea7817ecb9b47b5a250b62e8c50a6105a5fac5d3aae8c5ed0bb7e851b248ef
+evidence_rhythm.json                                       989  a9910811b9ee75b3715a9c0508cd85099a5ba6239863bcf5e47611be99305ead
+evidence_rhythm.py                                        5052  b9c8d10806fd3b59293970a6adbdabd0bcebab700fd032c3c355e444f6a1e583
+gen_rhythm_gd.py                                          5147  2a72c8dfa8296c03885a7a1fb638ea45a206e1a83f58c774c812335127935986
+logs/capture_all.log                                      1889  09e017df7364e0857b924b422fefa20d73dbb52637abb833e3e30015154484f9
+logs/capture_draw.log                                      294  b31aa6bc62dbe71f43dd8893a2214a656db40984123d47f081a36aa17009ed06
+logs/capture_first.log                                     334  ea616420b90b012590241de5437479d29cc5dfc64eaa92a336390a80579f5017
+logs/capture_foewin.log                                    337  d80d18216eb38e53e0549bd42935d8b00d4da549e81c45bf1fb8bd523fcc27cd
+logs/capture_t000.log                                      308  7e27ee44c4656bb8d17fa944288007c6a45ed6fa9fa65e64a58c351501aabaa0
+logs/capture_t048.log                                      332  b4476eddf631c1e2c07a2f6fe34f9cfa10e43e88a5ed1f70262341f6b6f2c0dd
+logs/capture_t072.log                                      334  229d8a21ca6752c12f87f016d7b66097cbe0069386a1caa39f70fc24b6d6a6b6
+logs/capture_t112.log                                      307  6e7276b41efa62da746003d05c2bd612153761e4109cf1be232ab2e714ee38b8
+logs/capture_t140.log                                      307  6a791264903515a2442e442b6bf1f89abf392434cfd9adeb3f06c232dc4d30ca
+logs/capture_t180.log                                      294  a5b1561199660344bcc681200a5a891eb60656f869c827344c08cc695b1fbd50
+logs/empty_marker.bin                                        0  e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+logs/evidence_run.log                                      821  d3fb306e65284eebd6bdae92f7ffda9fbe3d6fad1a746d48ed13c660c759cd51
+logs/flow_direct.log                                       106  4d2772873b4d7af425c3e340c50d55623fbe8eabada1a5c2a50d433cb14f75a1
+logs/mutation_run.log                                     1663  5bb73863caddacc41fa84ee3563b4f264caaf2c688b8220750fe06d068781ee5
+logs/mutation_selftest.log                                1665  8a7561979c1c23be5c3bc734d3cf641f76960bc3f2a5d5decc88d46e7eab4898
+logs/rhythm_direct.log                                     108  4e925f804a4def1ab807a7352d1c20a3137d79a1af31af099e376008c921a002
+logs/run_all_final.log                                     993  d40faac0fc6c751e4cfd970b87eed8d9f6abeadd422e79e6afc02ea10a15440e
+logs/run_all_stdout.log                                    993  d40faac0fc6c751e4cfd970b87eed8d9f6abeadd422e79e6afc02ea10a15440e
+logs/scripts_combo_check.log                               469  9b26e30ae116990b8310897aec4e709027b87c58e75e1c0bbe9dab45a80e069d
+logs/selftest_result.json                                 4238  48edcc014e0b48e81dd9f3e58861ca39a7a28f6c0c52fa144a058606baa17f21
+logs/tests_battle_motion_p0_check.log                      116  61e0799d9e9332c7e2688716552421b9949fe5ae619d56343f090589edb36635
+logs/tests_battle_rhythm_check.log                         113  bf90ec0f70c5141249f39dd762ab72a6a960bccd5fa7524d7f74c8dc6cfb6a8e
+logs/tests_duel_probe.log                                  642  3e9b44cb5d12ff333be6895300ddd8f14601443c297a43c3baf232a4d7087711
+logs/tests_feet_probe.log                                 1358  b200cc4e422532410d3166e2947bf076933e379a39c4a1734f09dd7baf2e9d88
+logs/tests_fighter_skin_check.log                          137  49a5d0a4ccea04463a4482ac217f3d9c96147f67b0fb25427120247faeddde20
+logs/tests_motion_check.log                                360  b155a33f34c2846d76bed5a1c18092ab04f3fcc4065262de2b4d4ba4c4fc4691
+logs/tests_pose_probe.log                                  893  0e6578c703da384118d1f6d945b48887a987d03afdbeb7cd1be7487cec5546cd
+logs/tests_reach_probe.log                                 555  362bbd61ebf79e719503c7a7f006e448bbb40a91ce6043ac06bcf467fa780f1d
+logs/tests_taikou_flow_check.log                           111  be8e3cd87ff56946e538069a9ef11d46ccd07da1f8a273530c9d1405889595f8
+logs/tests_taikou_rage_check.log                           115  8daf8d9bfe0da632bddda69ab1f704242fb773a110dc0658000a343dd6675b3d
+logs/tests_taikou_rules_check.log                          112  0b9ca166d36a3fd37cbdacbe5a4cfe8f72baa8603117d7d0ac990dc7da693620
+logs/verify_final.log                                     2235  4d3739a652d086e37b18eea46c9f8af8828febd5b6d16628cf5bf990f718f4cd
+logs/verify_run.log                                       2235  4d3739a652d086e37b18eea46c9f8af8828febd5b6d16628cf5bf990f718f4cd
+make_backup.py                                            1690  d0553a0e56d8fc757f26150a279cbb5988949a3ea1ce42aef8252ac82f62b721
+make_filelist.py                                          1495  c0e67951bb3ecb10196c1ae02e869c7d633435addd82e83b1dfc773b8d9e98c3
+mutation_rhythm.py                                        9032  de6db349e594c3bf072a169bd6940d2c7095341e100ace14050577068a177814
+mutation_rhythm_result.json                               4264  3f64038d3fc344c13debe76eb3c87cfa3f860afda0d4ee8bd0e973af88f14e79
+run_all_checks.py                                         3435  b51e8ba525c3006c269f5a402820c9b7ec67bd99181191e9266fd093aaf91827
+verify_rhythm.py                                         20898  58bea29f7a8718a3f6cbaa5db2db775d41aeebcaa002fd2966bdd1e3b92b4a6a
+verify_rhythm_result.json                                 3588  921dfc30813f65dbd22ef0899052673bc2e5557b51aff5ea1c11d829da6db561
+侧身节奏接线-验证记录.txt                                          11050  17b50b138b6cee7503cce1495263ffb2cc8cd029ca25f234cf25a3a9548a7f9f
+备份指纹.json                                                 2645  07b2c6ec2c5ed8670b071765624f65420447ae59a514518c4f787720e039820c
+源码指纹.json                                                 1390  74394c84d5b33282bb90bef5054aea88f5cca8d1a20b3be9261831e46853ea10
+自检汇总.txt                                                   933  1ab549f2990d2edf3b650a7f371f482a449d2ac921a9e4267a0b5a47ec9aa8e2
+节奏帧-t000-起手.png                                         703999  75c499af062862ac3be066ac99d34a037813e5ac2d88c09a0a3fbb719407f914
+节奏帧-t048-命中HIT.png                                      698556  47d04bd5385d2046241da3259fcc346e28907c1538d776a5c9c495b1c5ac275a
+节奏帧-t072-停顿后.png                                        706700  4779ecf565631e4069fcf73515f254b92f05bd0c441e52cba67ed4498f48beaf
+节奏帧-t112-攻击窗末.png                                       701624  7edbabf77e6fae4e2c610cffefcf3f24b41bd675c8eece7ff0ce5cf401a86dfe
+节奏帧-t140-淡出.png                                         685534  c457fdf3587486a2b27600ce648fafedd11e8b232435fcacac15c52be49112d6
+节奏帧-t180-归零.png                                         701531  eab4f9e09e9172c31cdabeeaa73767415fd2254c0f5ecac45fdeaac80b60407b
+节奏帧-八态对照板.png                                          1844724  69359a7dff6e35a289addfc3694583ca756f921d74b5b844561b8dfaf45fec0c
+节奏帧-对手赢反向.png                                           706189  b809beed7e88859b5e0a99ed5c07cf44ab49996e2d29bb6ae76001e83e03c668
+节奏帧-平局无节奏.png                                           684674  9d66569a1059e097e5b456c8597871363f122e7f1d726d25bc4a3720cd961930

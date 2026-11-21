@@ -1,0 +1,40 @@
+SCENE stance cards 15 P stance 0 F stance 0
+SCENE reveal cards 15 P focus 10 F focus 10
+SCENE player_win cards 15 P wave 19 F hit_heavy 5
+SCENE enemy_win cards 15 P hit_heavy 9 F cross 11
+SCENE draw cards 15 P hit_light 6 F hit_light 6
+SCENE legacy_player_win cards 3 P wave 19 F stance 0
+DIFF reveal_player 48817
+DIFF reveal_foe 68321
+DIFF player_win_player 43405
+DIFF player_win_foe 76976
+DIFF enemy_win_player 46932
+DIFF enemy_win_foe 87629
+DIFF draw_player 33991
+DIFF draw_foe 48731
+CHECK main_marker_parsed True
+CHECK main_no_script_errors True
+CHECK main_no_scenario_errors True
+CHECK use_3d_and_both_overrides True
+CHECK hp_unchanged True
+CHECK normal_scenes_have_15_cards True
+CHECK legacy_scene_has_3_cards True
+CHECK stance_is_stance True
+CHECK reveal_both_focus True
+CHECK player_win_bindings True
+CHECK enemy_win_bindings True
+CHECK draw_both_hit_light True
+CHECK legacy_bindings True
+CHECK reveal_player_sv_changed True
+CHECK reveal_foe_sv_changed True
+CHECK player_win_foe_sv_changed True
+CHECK enemy_win_player_sv_changed True
+CHECK draw_player_sv_changed True
+CHECK draw_foe_sv_changed True
+CHECK legacy_winner_sv_bytewise_identical True
+CHECK legacy_winner_frame_identical True
+CHECK all_sv_pngs_nonempty True
+CHECK default_zero_pollution True
+CHECK default_no_script_errors True
+CHECK default_two_pngs True
+MOTION_P1_PROBE_OK

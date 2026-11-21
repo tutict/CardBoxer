@@ -1,0 +1,96 @@
+{
+  "payload": {
+    "foe": {
+      "path": "res://assets/3d/foe-rigged.glb",
+      "surfaces": [
+        {
+          "albedo_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "albedo_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901.png",
+          "material_class": "StandardMaterial3D",
+          "mesh": "foe_HI_skinned",
+          "metallic": 1.0,
+          "metallic_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png",
+          "normal_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901_normal.png",
+          "roughness": 1.0,
+          "surface": 0
+        }
+      ]
+    },
+    "player": {
+      "path": "res://assets/3d/player-rigged.glb",
+      "surfaces": [
+        {
+          "albedo_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "albedo_texture": "res://assets/3d/player-rigged_texture_pbr_20250901.png",
+          "material_class": "StandardMaterial3D",
+          "mesh": "player_HI_skinned",
+          "metallic": 1.0,
+          "metallic_texture": "res://assets/3d/player-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png",
+          "normal_texture": "res://assets/3d/player-rigged_texture_pbr_20250901_normal.png",
+          "roughness": 1.0,
+          "surface": 0
+        }
+      ]
+    }
+  },
+  "standard_surfaces": {
+    "foe": [
+      {
+        "albedo_color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "albedo_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901.png",
+        "material_class": "StandardMaterial3D",
+        "mesh": "foe_HI_skinned",
+        "metallic": 1.0,
+        "metallic_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png",
+        "normal_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901_normal.png",
+        "roughness": 1.0,
+        "surface": 0
+      }
+    ],
+    "player": [
+      {
+        "albedo_color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "albedo_texture": "res://assets/3d/player-rigged_texture_pbr_20250901.png",
+        "material_class": "StandardMaterial3D",
+        "mesh": "player_HI_skinned",
+        "metallic": 1.0,
+        "metallic_texture": "res://assets/3d/player-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png",
+        "normal_texture": "res://assets/3d/player-rigged_texture_pbr_20250901_normal.png",
+        "roughness": 1.0,
+        "surface": 0
+      }
+    ]
+  },
+  "checks": {
+    "rc0": true,
+    "marker_present": true,
+    "no_parse_error": true,
+    "both_loaded": true,
+    "both_have_standard_material": true,
+    "both_have_albedo_texture": true,
+    "albedo_colors_are_white": true,
+    "textures_differ_between_roles": true
+  },
+  "failed": [],
+  "ok": true
+}

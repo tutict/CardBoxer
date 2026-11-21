@@ -1,0 +1,10 @@
+CASE M1 CAUGHT restore True reds 2 rc=1 + FAIL 行
+CASE M2 CAUGHT restore True reds 2 rc=1 + FAIL 行
+CASE M3 CAUGHT restore True reds 1 rc=1 + FAIL 行
+CASE M4 CAUGHT restore True reds 2 rc=1 + FAIL 行
+CASE M5 CAUGHT restore True reds 3 rc=1 + FAIL 行
+CASE DNR-PROBE DID NOT RUN restore True reds 0 target missing
+SUMMARY {"total": 6, "caught": 5, "did_not_run": 1, "missed": 0, "restored": 6}
+CLEAN_GREEN True PRODUCTS_MATCH True
+MUTATION_SEPARATE_FAILED
+SELFTEST_DNR_EFFECTIVE

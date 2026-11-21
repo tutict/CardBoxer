@@ -1,0 +1,12 @@
+COPY assets/3d/foe-rigged.glb                   42914328 B sha=0edcfe9e455f identical=True
+COPY data/motion_input_foe.json                    19769 B sha=7d1dcd21b92e identical=True
+IMPORT rc=0 22.352s errors=0 generated=8 pngs=3
+CHECK two_copies_identical True
+CHECK import_rc True
+CHECK import_no_parse_errors True
+CHECK glb_import_stamp True
+CHECK three_pbr_extracted True
+CHECK pbr_all_4096 True
+CHECK foe_motion_in_game True
+CHECK player_glb_untouched True
+INSTALL_ASSETS_H_OK

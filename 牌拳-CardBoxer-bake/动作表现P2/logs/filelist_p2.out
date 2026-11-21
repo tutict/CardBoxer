@@ -1,0 +1,11 @@
+FILELIST_P2 files=172 bytes=28405991
+CHECK all_sizes_positive True
+CHECK zero_size_paths_only_self_output True
+CHECK all_sha_len_64 True
+CHECK key_artifacts_present True
+CHECK five_boards_count True
+CHECK min_file_count True
+CHECK verify_report_green True
+CHECK mutation_report_green True
+CHECK dnr_selftest_effective True
+FILELIST_P2_OK

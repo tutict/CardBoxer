@@ -1,0 +1,126 @@
+{
+  "blender": "5.2.3 LTS",
+  "method": "player V4b A-pose rig + Voxel shell + SURFACE_DEFORM",
+  "params": {
+    "voxel_size": 0.02,
+    "arm_only_gain": 1.5,
+    "apose_table": "player"
+  },
+  "chain": {
+    "src": {
+      "verts": 57901,
+      "shells": 2035,
+      "uv": 1,
+      "textures": 3
+    },
+    "shell": {
+      "verts": 14070,
+      "faces": 28128,
+      "shells": 3,
+      "tri_ratio": 1.0,
+      "auto_weight_covered": 14062
+    },
+    "bind": {
+      "is_bound": true,
+      "rest_drift_m": 4.79e-06
+    },
+    "assets": {
+      "uv_layers": 1,
+      "materials": 1,
+      "textures": [
+        {
+          "image": "texture_pbr_20250901",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "image": "texture_pbr_20250901_normal",
+          "size": [
+            4096,
+            4096
+          ]
+        }
+      ],
+      "uv_same": true,
+      "textures_same": true
+    },
+    "apose": {
+      "head_z": 1.7225,
+      "hip_z": 1.05167,
+      "shoulder_z": 1.34516
+    }
+  },
+  "stance_identity": {
+    "identical": true,
+    "max_vertex_delta_m": 9.828e-06
+  },
+  "one_frame_cross10": {
+    "tear_p999_m": 0.05588,
+    "tear_gt5cm": 198,
+    "max_displacement_m": 0.82423,
+    "moved_gt_1mm": 57873,
+    "reach_f_m": 0.17317,
+    "reach_b_m": 0.73905,
+    "reach_max_m": 0.73905,
+    "foot_gap_m": 0.00474,
+    "penetration_pct": 0.0
+  },
+  "shots": [
+    {
+      "file": "e-stance-x15.png",
+      "bytes": 365305,
+      "sha256": "b45625138f23db93c08ffedf31e08a28d16203a7fe9b9763d0d7afc846da296f",
+      "shot": "stance",
+      "card": null,
+      "frame": 0,
+      "tag": "E_x15"
+    },
+    {
+      "file": "e-jab07-x15.png",
+      "bytes": 370754,
+      "sha256": "4378953d9ee43ea1c2fb24c6a52ac100cef2cf94c184555ea2bf1342d39d38d6",
+      "shot": "jab07",
+      "card": "jab",
+      "frame": 6,
+      "tag": "E_x15"
+    },
+    {
+      "file": "e-cross11-x15.png",
+      "bytes": 370980,
+      "sha256": "d931ca87f359f8e8430cc989c2e8bd34abea4c943c8d9a6e54d8cd2984ca549d",
+      "shot": "cross11",
+      "card": "cross",
+      "frame": 10,
+      "tag": "E_x15"
+    },
+    {
+      "file": "e-wave18-x15.png",
+      "bytes": 368584,
+      "sha256": "201ba6b2a7f07ace890cf14e7409ef3c220b9e5e80326c0997f2007eb1ba1213",
+      "shot": "wave18",
+      "card": "wave",
+      "frame": 17,
+      "tag": "E_x15"
+    },
+    {
+      "file": "e-stance-angle55.png",
+      "bytes": 344840,
+      "sha256": "2ec1a9831e2b869d2ec5f4dbef6b01ac92e019fdbfcea899e9b1aefd44f42e3b",
+      "shot": "stance-angle55",
+      "card": null,
+      "frame": 0,
+      "tag": "E_x15",
+      "angle_deg": 55.0
+    }
+  ],
+  "elapsed_seconds": 3.3
+}

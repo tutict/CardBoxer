@@ -1,0 +1,58 @@
+[
+  {
+    "role": "player",
+    "morph": "grip_half_f",
+    "outside_normal_component_max": 2.5470928477488997e-08,
+    "outside_gt1e-6": 0,
+    "outside_gt1e-8": 3501
+  },
+  {
+    "role": "player",
+    "morph": "grip_f",
+    "outside_normal_component_max": 2.5470928477488997e-08,
+    "outside_gt1e-6": 0,
+    "outside_gt1e-8": 3501
+  },
+  {
+    "role": "player",
+    "morph": "grip_half_b",
+    "outside_normal_component_max": 2.5470928477488997e-08,
+    "outside_gt1e-6": 0,
+    "outside_gt1e-8": 3504
+  },
+  {
+    "role": "player",
+    "morph": "grip_b",
+    "outside_normal_component_max": 2.5470928477488997e-08,
+    "outside_gt1e-6": 0,
+    "outside_gt1e-8": 3504
+  },
+  {
+    "role": "foe",
+    "morph": "grip_half_f",
+    "outside_normal_component_max": 2.547281852116612e-08,
+    "outside_gt1e-6": 0,
+    "outside_gt1e-8": 4053
+  },
+  {
+    "role": "foe",
+    "morph": "grip_f",
+    "outside_normal_component_max": 2.547281852116612e-08,
+    "outside_gt1e-6": 0,
+    "outside_gt1e-8": 4053
+  },
+  {
+    "role": "foe",
+    "morph": "grip_half_b",
+    "outside_normal_component_max": 2.547281852116612e-08,
+    "outside_gt1e-6": 0,
+    "outside_gt1e-8": 4061
+  },
+  {
+    "role": "foe",
+    "morph": "grip_b",
+    "outside_normal_component_max": 2.547281852116612e-08,
+    "outside_gt1e-6": 0,
+    "outside_gt1e-8": 4061
+  }
+]

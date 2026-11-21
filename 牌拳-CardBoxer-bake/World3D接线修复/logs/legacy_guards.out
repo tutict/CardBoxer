@@ -1,0 +1,18 @@
+GUARD G路线-游戏内3D接线 rc 1 marker G_VERIFY_FAILED reds ['A05_side_yaw_is_55', 'B03_added_all_whitelisted', 'B05_no_unclassified_added']
+   RED A05_side_yaw_is_55 | 源码文本 / sha 快照 / 新增行白名单断言：改 fighter_3d_layer.gd 必然红
+   RED B03_added_all_whitelisted | 源码文本 / sha 快照 / 新增行白名单断言：改 fighter_3d_layer.gd 必然红
+   RED B05_no_unclassified_added | 源码文本 / sha 快照 / 新增行白名单断言：改 fighter_3d_layer.gd 必然红
+GUARD H路线-双方3D侧面战斗 rc 1 marker H_NOT_VERIFIED reds ['H07_patch_after_matches_live_sources', 'H13_layer_parametrised']
+   RED H07_patch_after_matches_live_sources | 源码文本 / sha 快照 / 新增行白名单断言：改 fighter_3d_layer.gd 必然红
+   RED H13_layer_parametrised | 源码文本 / sha 快照 / 新增行白名单断言：改 fighter_3d_layer.gd 必然红
+GUARD I路线-视觉区分度 rc 1 marker I_NOT_VERIFIED reds ['source_G_shape_preserved', 'layer_sha_matches_final_report']
+   RED source_G_shape_preserved | 源码文本 / sha 快照 / 新增行白名单断言：改 fighter_3d_layer.gd 必然红
+   RED layer_sha_matches_final_report | 源码文本 / sha 快照 / 新增行白名单断言：改 fighter_3d_layer.gd 必然红
+GUARD 止损-显示异常 rc 0 marker STOPGAP_VERIFIED reds []
+RESTORED {'G路线-游戏内3D接线': True, 'H路线-双方3D侧面战斗': True, 'I路线-视觉区分度': True, '止损-显示异常': True}
+CHECK four_guards_ran True
+CHECK all_logs_restored True
+CHECK stopgap_still_green True
+CHECK no_unclassified_reds True
+CHECK source_changed_once True
+LEGACY_GUARDS_OK

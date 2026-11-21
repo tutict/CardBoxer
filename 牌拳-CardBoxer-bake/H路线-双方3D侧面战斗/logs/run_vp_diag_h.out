@@ -1,0 +1,6 @@
+RUN 6.117s rc=0 gl=True errors=0
+DIFF player-hidden_untouched           0/33920 ratio=0.0
+DIFF player-hidden_changed         15022/33390 ratio=0.4499
+DIFF foe-hidden_untouched              0/33390 ratio=0.0
+DIFF foe-hidden_changed            14574/33920 ratio=0.4297
+VP_DIAG_OK

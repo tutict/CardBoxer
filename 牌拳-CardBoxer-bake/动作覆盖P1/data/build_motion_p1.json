@@ -1,0 +1,104 @@
+{
+  "targets": {
+    "motion_input.json": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input.json",
+      "bytes": 72921,
+      "cards": {
+        "jab": 14,
+        "cross": 22,
+        "wave": 36,
+        "uppercut": 24,
+        "sweep": 28,
+        "rush": 13,
+        "backstep": 11,
+        "guard": 14,
+        "sidestep": 10,
+        "focus": 22,
+        "recover": 14,
+        "throw": 20,
+        "hit_light": 16,
+        "hit_heavy": 30,
+        "block": 10
+      },
+      "added": [
+        "backstep",
+        "block",
+        "focus",
+        "guard",
+        "hit_heavy",
+        "hit_light",
+        "recover",
+        "rush",
+        "sidestep",
+        "sweep",
+        "throw",
+        "uppercut"
+      ],
+      "checks": {
+        "existing_three_unchanged": true,
+        "non_cards_fields_unchanged": true,
+        "added_twelve_tracks": true,
+        "cards_total_fifteen": true,
+        "added_matches_source_px": true,
+        "frame_counts_match_source": true,
+        "all_frames_have_11_joints": true,
+        "readback_is_valid_json": true
+      },
+      "ok": true
+    },
+    "motion_input_foe.json": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer\\data\\motion_input_foe.json",
+      "bytes": 72919,
+      "cards": {
+        "jab": 14,
+        "cross": 22,
+        "wave": 36,
+        "uppercut": 24,
+        "sweep": 28,
+        "rush": 13,
+        "backstep": 11,
+        "guard": 14,
+        "sidestep": 10,
+        "focus": 22,
+        "recover": 14,
+        "throw": 20,
+        "hit_light": 16,
+        "hit_heavy": 30,
+        "block": 10
+      },
+      "added": [
+        "backstep",
+        "block",
+        "focus",
+        "guard",
+        "hit_heavy",
+        "hit_light",
+        "recover",
+        "rush",
+        "sidestep",
+        "sweep",
+        "throw",
+        "uppercut"
+      ],
+      "checks": {
+        "existing_three_unchanged": true,
+        "non_cards_fields_unchanged": true,
+        "added_twelve_tracks": true,
+        "cards_total_fifteen": true,
+        "added_matches_source_px": true,
+        "frame_counts_match_source": true,
+        "all_frames_have_11_joints": true,
+        "readback_is_valid_json": true
+      },
+      "ok": true
+    }
+  },
+  "cross_file": {
+    "two_cards_identical": true,
+    "two_stance_identical": true,
+    "two_mapping_identical": true,
+    "two_apose_may_differ": true
+  },
+  "source": "card_motion.json",
+  "ok": true
+}

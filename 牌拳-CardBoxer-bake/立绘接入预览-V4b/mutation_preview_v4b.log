@@ -1,0 +1,5 @@
+M1 CAUGHT  target_red=True sentinel_green=True restore=True red=['erase_fill_uses_clean_center_patch']
+M2 CAUGHT  target_red=True sentinel_green=True restore=True red=['b_card_matches_recomputed_asset', 'subject_bbox_matches_measured_probe']
+M3 CAUGHT  target_red=True sentinel_green=True restore=True red=['output_sha_matches_manifest', 'not_a_copy_of_v3_preview']
+M4 CAUGHT  target_red=True sentinel_green=True restore=True red=['face_source_sha_matches_manifest']
+4/4 CAUGHT  restore=4/4  clean_rerun=GREEN  MUTATION_V4B_OK

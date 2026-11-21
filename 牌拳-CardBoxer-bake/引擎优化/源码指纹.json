@@ -1,0 +1,42 @@
+{
+  "scripts/arena.gd": {
+    "sha256": "485c7da3c15dc16740c1abb458a3b9e18d477fbf2da10b704666ff3f8efc0f95",
+    "bytes": 44024
+  },
+  "scripts/fighter.gd": {
+    "sha256": "df9b5e99e8c7c3b4bb6f163150ed87574205fd9a266bd6b1bc20e85818d9b81b",
+    "bytes": 40685
+  },
+  "scripts/hud.gd": {
+    "sha256": "0fca9b2ac80497254a7cd5f4c2fb6a58a7df99d2e6c1801aa39905ffd2b67bcf",
+    "bytes": 24522
+  },
+  "scripts/battle_rhythm.gd": {
+    "sha256": "48c56db4aca20ddd4bacd7703d21546f4482137c2ac4a2f07ec2b92f6c7f4c84",
+    "bytes": 3848
+  },
+  "scripts/battle_motion_p0.gd": {
+    "sha256": "d958c71ae74ad2fefc7c7cb6574cb15a138c5a2cdfcfd7612d0daa85b7833460",
+    "bytes": 3021
+  },
+  "tests/engine_opt_check.gd": {
+    "sha256": "aff5f7b127bd690255777c948f92b182d721d6f15c81c98e538d905effa14733",
+    "bytes": 4488
+  },
+  "tests/perf_probe.gd": {
+    "sha256": "23ed9e421a3dc077560c405f0d7bd62d90cfb0f4d0398887e115d54c7b745654",
+    "bytes": 3301
+  },
+  "tests/window_probe.gd": {
+    "sha256": "bcc605691148dbfa053f439dcf651e9d5034f6d5f5afc6c299d53e032e35e4f0",
+    "bytes": 2114
+  },
+  "tests/rng_probe.gd": {
+    "sha256": "b6311ac700afc9efe0b6bcdcd08f9facfb584c27c1306e4d869af1be979df380",
+    "bytes": 795
+  },
+  "project.godot": {
+    "sha256": "a4bb56358694fc1dcb83babd4603866a8c541906859cab8b6ef5db64bfa27522",
+    "bytes": 1290
+  }
+}

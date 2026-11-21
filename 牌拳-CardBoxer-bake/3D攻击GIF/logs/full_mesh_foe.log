@@ -1,0 +1,151 @@
+00:00.594  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\对手怪V1.blend"
+OPEN 对手怪V1.blend meshes=1 verts=64024 tris=79998 bones=13 arm_modifiers=1
+DEFORM {"vertices": 64024, "moved_gt_1mm": 64024, "max_displacement_m": 0.88084, "mean_displacement_m": 0.26873, "a": "stance", "b": "jab frame 7 (index 0-based)", "driver": "pose bone matrix, rotation only, scale=1"}
+00:02.000  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\stance_f000.png'
+FRAME stance_f000.png card=None f=0 phase=stance bytes=215238
+00:02.187  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\jab_f000.png'
+FRAME jab_f000.png card=jab f=0 phase=windup bytes=215231
+00:02.359  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\jab_f001.png'
+FRAME jab_f001.png card=jab f=1 phase=windup bytes=216202
+00:02.531  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\jab_f002.png'
+FRAME jab_f002.png card=jab f=2 phase=windup bytes=216184
+00:02.719  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\jab_f003.png'
+FRAME jab_f003.png card=jab f=3 phase=windup bytes=216198
+00:02.890  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\jab_f004.png'
+FRAME jab_f004.png card=jab f=4 phase=active bytes=248505
+00:03.078  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\jab_f005.png'
+FRAME jab_f005.png card=jab f=5 phase=active bytes=249328
+00:03.265  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\jab_f006.png'
+FRAME jab_f006.png card=jab f=6 phase=active bytes=250947
+00:03.453  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\jab_f007.png'
+FRAME jab_f007.png card=jab f=7 phase=recover bytes=250940
+00:03.625  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\jab_f008.png'
+FRAME jab_f008.png card=jab f=8 phase=recover bytes=250252
+00:03.797  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\jab_f009.png'
+FRAME jab_f009.png card=jab f=9 phase=recover bytes=244862
+00:03.984  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\jab_f010.png'
+FRAME jab_f010.png card=jab f=10 phase=recover bytes=237882
+00:04.156  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\jab_f011.png'
+FRAME jab_f011.png card=jab f=11 phase=recover bytes=226930
+00:04.328  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\jab_f012.png'
+FRAME jab_f012.png card=jab f=12 phase=recover bytes=218033
+00:04.531  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\jab_f013.png'
+FRAME jab_f013.png card=jab f=13 phase=recover bytes=215325
+00:04.703  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f000.png'
+FRAME cross_f000.png card=cross f=0 phase=windup bytes=215225
+00:04.906  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f001.png'
+FRAME cross_f001.png card=cross f=1 phase=windup bytes=220602
+00:05.094  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f002.png'
+FRAME cross_f002.png card=cross f=2 phase=windup bytes=244439
+00:05.297  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f003.png'
+FRAME cross_f003.png card=cross f=3 phase=windup bytes=246480
+00:05.484  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f004.png'
+FRAME cross_f004.png card=cross f=4 phase=windup bytes=246452
+00:05.656  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f005.png'
+FRAME cross_f005.png card=cross f=5 phase=windup bytes=246466
+00:05.844  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f006.png'
+FRAME cross_f006.png card=cross f=6 phase=active bytes=238376
+00:06.031  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f007.png'
+FRAME cross_f007.png card=cross f=7 phase=active bytes=233725
+00:06.219  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f008.png'
+FRAME cross_f008.png card=cross f=8 phase=active bytes=229965
+00:06.406  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f009.png'
+FRAME cross_f009.png card=cross f=9 phase=active bytes=231741
+00:06.609  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f010.png'
+FRAME cross_f010.png card=cross f=10 phase=recover bytes=231716
+00:06.781  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f011.png'
+FRAME cross_f011.png card=cross f=11 phase=recover bytes=231733
+00:06.984  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f012.png'
+FRAME cross_f012.png card=cross f=12 phase=recover bytes=235925
+00:07.172  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f013.png'
+FRAME cross_f013.png card=cross f=13 phase=recover bytes=239274
+00:07.344  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f014.png'
+FRAME cross_f014.png card=cross f=14 phase=recover bytes=237786
+00:07.515  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f015.png'
+FRAME cross_f015.png card=cross f=15 phase=recover bytes=238182
+00:07.703  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f016.png'
+FRAME cross_f016.png card=cross f=16 phase=recover bytes=232153
+00:07.890  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f017.png'
+FRAME cross_f017.png card=cross f=17 phase=recover bytes=229144
+00:08.078  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f018.png'
+FRAME cross_f018.png card=cross f=18 phase=recover bytes=227364
+00:08.281  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f019.png'
+FRAME cross_f019.png card=cross f=19 phase=recover bytes=214901
+00:08.515  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f020.png'
+FRAME cross_f020.png card=cross f=20 phase=recover bytes=214073
+00:08.719  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\cross_f021.png'
+FRAME cross_f021.png card=cross f=21 phase=recover bytes=214521
+00:08.922  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f000.png'
+FRAME wave_f000.png card=wave f=0 phase=windup bytes=215231
+00:09.109  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f001.png'
+FRAME wave_f001.png card=wave f=1 phase=windup bytes=212157
+00:09.297  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f002.png'
+FRAME wave_f002.png card=wave f=2 phase=windup bytes=209365
+00:09.484  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f003.png'
+FRAME wave_f003.png card=wave f=3 phase=windup bytes=199137
+00:09.656  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f004.png'
+FRAME wave_f004.png card=wave f=4 phase=windup bytes=194510
+00:09.828  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f005.png'
+FRAME wave_f005.png card=wave f=5 phase=windup bytes=193639
+00:10.000  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f006.png'
+FRAME wave_f006.png card=wave f=6 phase=windup bytes=193046
+00:10.172  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f007.png'
+FRAME wave_f007.png card=wave f=7 phase=windup bytes=193044
+00:10.344  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f008.png'
+FRAME wave_f008.png card=wave f=8 phase=windup bytes=193035
+00:10.515  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f009.png'
+FRAME wave_f009.png card=wave f=9 phase=windup bytes=193044
+00:10.672  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f010.png'
+FRAME wave_f010.png card=wave f=10 phase=active bytes=193038
+00:10.844  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f011.png'
+FRAME wave_f011.png card=wave f=11 phase=active bytes=193067
+00:11.047  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f012.png'
+FRAME wave_f012.png card=wave f=12 phase=active bytes=231066
+00:11.234  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f013.png'
+FRAME wave_f013.png card=wave f=13 phase=active bytes=234216
+00:11.406  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f014.png'
+FRAME wave_f014.png card=wave f=14 phase=active bytes=238114
+00:11.578  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f015.png'
+FRAME wave_f015.png card=wave f=15 phase=active bytes=237848
+00:11.765  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f016.png'
+FRAME wave_f016.png card=wave f=16 phase=active bytes=237131
+00:11.937  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f017.png'
+FRAME wave_f017.png card=wave f=17 phase=active bytes=237404
+00:12.109  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f018.png'
+FRAME wave_f018.png card=wave f=18 phase=recover bytes=237394
+00:12.281  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f019.png'
+FRAME wave_f019.png card=wave f=19 phase=recover bytes=237418
+00:12.453  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f020.png'
+FRAME wave_f020.png card=wave f=20 phase=recover bytes=237399
+00:12.640  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f021.png'
+FRAME wave_f021.png card=wave f=21 phase=recover bytes=236364
+00:12.812  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f022.png'
+FRAME wave_f022.png card=wave f=22 phase=recover bytes=236019
+00:13.000  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f023.png'
+FRAME wave_f023.png card=wave f=23 phase=recover bytes=236183
+00:13.187  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f024.png'
+FRAME wave_f024.png card=wave f=24 phase=recover bytes=234160
+00:13.375  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f025.png'
+FRAME wave_f025.png card=wave f=25 phase=recover bytes=232341
+00:13.547  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f026.png'
+FRAME wave_f026.png card=wave f=26 phase=recover bytes=217237
+00:13.719  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f027.png'
+FRAME wave_f027.png card=wave f=27 phase=recover bytes=215143
+00:13.890  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f028.png'
+FRAME wave_f028.png card=wave f=28 phase=recover bytes=211416
+00:14.078  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f029.png'
+FRAME wave_f029.png card=wave f=29 phase=recover bytes=209882
+00:14.250  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f030.png'
+FRAME wave_f030.png card=wave f=30 phase=recover bytes=213083
+00:14.437  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f031.png'
+FRAME wave_f031.png card=wave f=31 phase=recover bytes=212289
+00:14.609  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f032.png'
+FRAME wave_f032.png card=wave f=32 phase=recover bytes=213068
+00:14.812  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f033.png'
+FRAME wave_f033.png card=wave f=33 phase=recover bytes=214476
+00:14.984  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f034.png'
+FRAME wave_f034.png card=wave f=34 phase=recover bytes=215087
+00:15.156  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\3D攻击GIF\frames\foe\wave_f035.png'
+FRAME wave_f035.png card=wave f=35 phase=recover bytes=214991
+RENDER_3D_OK tag=foe frames=73 elapsed=14.83s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

@@ -1,0 +1,128 @@
+{
+  "blend_sha256": "76004e212759c76f8f84a5d8fbab58680eedc4ebcd11d663e783f8c234e13165",
+  "blender": "5.2.3 LTS",
+  "method": "Voxel continuous shell + ARMATURE_AUTO, original high-poly follows via SURFACE_DEFORM (UV/PBR untouched)",
+  "voxel_size": 0.02,
+  "src": {
+    "verts": 64024,
+    "shells": 2809,
+    "uv": 1,
+    "textures": 3
+  },
+  "shell": {
+    "verts": 20204,
+    "shells": 3,
+    "auto_weight_covered": 20196
+  },
+  "bind": {
+    "poll": true,
+    "is_bound": true,
+    "error": null,
+    "rest_drift_m": 1.92e-06
+  },
+  "assets_after": {
+    "uv_layers": 1,
+    "materials": 1,
+    "textures": [
+      {
+        "image": "texture_pbr_20250901",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_normal",
+        "size": [
+          4096,
+          4096
+        ]
+      }
+    ],
+    "uv_same": true,
+    "textures_same": true
+  },
+  "frames": [
+    {
+      "card": "jab",
+      "frame": 6,
+      "max_delta_deg": 21.393,
+      "metrics": {
+        "tear_p999_m": 0.01787,
+        "tear_gt5cm": 21,
+        "max_displacement_m": 0.45243,
+        "moved_gt_1mm": 64006,
+        "reach_f_m": 0.41196,
+        "reach_b_m": 0.11983,
+        "reach_max_m": 0.41196,
+        "foot_gap_m": 0.00579,
+        "penetration_pct": 0.0
+      },
+      "png": {
+        "file": "a2-jab06.png",
+        "bytes": 456636,
+        "sha256": "02104640704f7ecb670ccbe4a66f0e882f67c90030b60e057e8435de38b11ad4"
+      }
+    },
+    {
+      "card": "cross",
+      "frame": 10,
+      "max_delta_deg": 28.0,
+      "metrics": {
+        "tear_p999_m": 0.03496,
+        "tear_gt5cm": 25,
+        "max_displacement_m": 0.54553,
+        "moved_gt_1mm": 64006,
+        "reach_f_m": 0.16491,
+        "reach_b_m": 0.49134,
+        "reach_max_m": 0.49134,
+        "foot_gap_m": 0.00404,
+        "penetration_pct": 0.0
+      },
+      "png": {
+        "file": "a2-cross10.png",
+        "bytes": 458219,
+        "sha256": "cd86fd77fc480c8739c0b6af58dbdc79fe69d698c177801348e35567f31eae24"
+      }
+    },
+    {
+      "card": "wave",
+      "frame": 17,
+      "max_delta_deg": 13.565,
+      "metrics": {
+        "tear_p999_m": 0.01698,
+        "tear_gt5cm": 21,
+        "max_displacement_m": 0.24895,
+        "moved_gt_1mm": 64006,
+        "reach_f_m": 0.22671,
+        "reach_b_m": 0.22194,
+        "reach_max_m": 0.22671,
+        "foot_gap_m": 0.01514,
+        "penetration_pct": 0.0
+      },
+      "png": {
+        "file": "a2-wave17.png",
+        "bytes": 455932,
+        "sha256": "91eeefebb37118e358f2bdf81125fe20978b8a4ca7d339e243078f336fc0d676"
+      }
+    }
+  ],
+  "rest_png": {
+    "file": "a2-rest.png",
+    "bytes": 451873,
+    "sha256": "a06f14f39a589e7ac95627efb0a97ef1262e217bbe6bbc70e5f4319407024c65"
+  },
+  "side_png": {
+    "file": "a2-stance-angle55.png",
+    "bytes": 417842,
+    "sha256": "ec57d55f33bda6472d1eab88b763ffce3ac115cae8549b638649a3feddd6781f"
+  },
+  "elapsed_seconds": 3.89
+}

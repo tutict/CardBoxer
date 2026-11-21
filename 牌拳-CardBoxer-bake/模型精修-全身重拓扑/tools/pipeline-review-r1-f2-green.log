@@ -1,0 +1,8 @@
+test_f2_base_accessor_view_offsets_counts_and_strides_are_bounded (__main__.CanonicalTests.test_f2_base_accessor_view_offsets_counts_and_strides_are_bounded) ... ok
+test_f2_sparse_bounds_offsets_unsigned_order_and_range_are_validated (__main__.CanonicalTests.test_f2_sparse_bounds_offsets_unsigned_order_and_range_are_validated) ... ok
+test_f2_valid_interleaved_sparse_and_padded_matrix_accessors (__main__.CanonicalTests.test_f2_valid_interleaved_sparse_and_padded_matrix_accessors) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.735s
+
+OK

@@ -1,0 +1,15 @@
+test_f4_report_does_not_drop_dependencies_when_another_uri_is_unsupported (__main__.CanonicalTests.test_f4_report_does_not_drop_dependencies_when_another_uri_is_unsupported) ... FAIL
+
+======================================================================
+FAIL: test_f4_report_does_not_drop_dependencies_when_another_uri_is_unsupported (__main__.CanonicalTests.test_f4_report_does_not_drop_dependencies_when_another_uri_is_unsupported)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tutic\Desktop\ѧϰ����\��ȭ-CardBoxer-bake\ģ�;���-ȫ��������\tools\pipeline_test.py", line 517, in test_f4_report_does_not_drop_dependencies_when_another_uri_is_unsupported
+    self.assertNotEqual(process.returncode,0);self.assertEqual(dependency.read_bytes(),data)
+                                              ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'{\n  "version": 1,\n  "source": "C:\\\\U[2675 chars]n}\n' != b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\[229586 chars]\x82"
+
+----------------------------------------------------------------------
+Ran 1 test in 0.933s
+
+FAILED (failures=1)

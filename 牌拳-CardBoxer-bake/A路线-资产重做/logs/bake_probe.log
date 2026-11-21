@@ -1,0 +1,5 @@
+00:00.578  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\对手怪V1.blend"
+Info: Baking map saved to internal image, save it externally or pack it
+BAKE_PROBE {"engine_before": "BLENDER_EEVEE", "engine_used": "CYCLES", "bake_poll_after_setup": true, "image_size": [512, 512], "samples": 8, "use_selected_to_active": false, "bake_seconds": 0.5, "bake_ok": true, "error": null, "png": {"file": "a1-bake-probe.png", "bytes": 378229, "sha256": "b9aeb6a61836d768aaa59b85b732c18ad9d773a77ecdb904e081837688de9a88", "valid_png": true}, "elapsed_seconds": 0.6}
+BAKE_PROBE_DONE
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

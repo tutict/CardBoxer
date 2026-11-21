@@ -1,0 +1,4 @@
+SELFTEST-DID-NOT-RUN DID NOT RUN anchor=0
+
+0/1 CAUGHT | did_not_run=1 | restore=0/1 | clean=GREEN
+RESULT: MUTATION_REDRAW_SELFTEST_OK

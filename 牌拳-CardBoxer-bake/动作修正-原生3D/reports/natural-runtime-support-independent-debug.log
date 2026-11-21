@@ -1,0 +1,17 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+SUPPORT COMPARE player step=0 full=-0.0000067949295 packed=-0.00000670552254 authored_full=-0.0000067949295 authored_packed=-0.00000670552254
+SUPPORT COMPARE player step=1 full=-0.00000616908073 packed=-0.00000694394112 authored_full=-0.00000697374344 authored_packed=-0.00000695884228
+SUPPORT COMPARE player step=8 full=-0.00038278102875 packed=-0.00038328766823 authored_full=-0.00038349628448 authored_packed=-0.00038328766823
+SUPPORT COMPARE player step=16 full=-0.00003105401993 packed=-0.00003156065941 authored_full=-0.00003165006638 authored_packed=-0.00003156065941
+SUPPORT COMPARE player step=32 full=-0.00000369548798 packed=-0.00000365078449 authored_full=-0.00000393390656 authored_packed=-0.00000366568565
+TRAVEL SUPPORT player max_m=0.00063461065292 verify_ms=205.25
+SUPPORT COMPARE foe step=0 full=-0.00001305341721 packed=-0.00001302361488 authored_full=-0.00001305341721 authored_packed=-0.00001302361488
+SUPPORT COMPARE foe step=1 full=-0.00003463029861 packed=-0.00003458559513 authored_full=-0.00003480911255 authored_packed=-0.00003460049629
+SUPPORT COMPARE foe step=8 full=-0.00090903043747 packed=-0.00090876221657 authored_full=-0.00090882182121 authored_packed=-0.00090879201889
+SUPPORT COMPARE foe step=16 full=-0.00004124641418 packed=-0.00004082918167 authored_full=-0.00004088878632 authored_packed=-0.00004085898399
+SUPPORT COMPARE foe step=32 full=-0.00002360343933 packed=-0.00002360343933 authored_full=-0.00002348423004 authored_packed=-0.00002357363701
+TRAVEL SUPPORT foe max_m=0.00099450349808 verify_ms=214.553
+NATURAL RUNTIME CHECK: 1031/1031 passed

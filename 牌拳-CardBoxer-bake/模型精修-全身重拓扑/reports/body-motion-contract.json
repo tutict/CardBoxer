@@ -1,0 +1,51 @@
+{
+  "ok": true,
+  "keys": 1502,
+  "roles": {
+    "player": [
+      "stance",
+      "jab",
+      "cross",
+      "sweep",
+      "uppercut",
+      "wave",
+      "throw",
+      "rush",
+      "backstep",
+      "guard",
+      "sidestep",
+      "focus",
+      "recover",
+      "hit_light",
+      "hit_heavy",
+      "block",
+      "idle",
+      "walk",
+      "ko"
+    ],
+    "foe": [
+      "stance",
+      "jab",
+      "cross",
+      "sweep",
+      "uppercut",
+      "wave",
+      "throw",
+      "rush",
+      "backstep",
+      "guard",
+      "sidestep",
+      "focus",
+      "recover",
+      "hit_light",
+      "hit_heavy",
+      "block",
+      "idle",
+      "walk",
+      "ko"
+    ]
+  },
+  "body_and_phase_exact": true,
+  "baseline_sha256": "083c84e3e24bdb4bea6d3e4b92855322caea97d675cae19a06df36acefd5a703",
+  "candidate_sha256": "27278a748c8c2e6a3e6165e9f92843b0de5976b2b1da9f99744f33b26c20f5ed"
+}

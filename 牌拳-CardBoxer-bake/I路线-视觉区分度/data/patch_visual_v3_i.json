@@ -1,0 +1,29 @@
+{
+  "before": {
+    "scripts/fighter_3d_layer.gd": "22708c007299c274d40dae0f952dbbe1f99afe50990e688819b9f6f4c5d70e9d",
+    "scripts/arena.gd": "c5dd4a3056a52e77f2269832bd898d8fbd03f2a61b81cc97b01d38e4c057e38e",
+    "scripts/fighter.gd": "0ad8b0c3d94e0f0bd02ac9b2566bbbcd9d3bf7ee9a0c0e82333651e9659fe1c8"
+  },
+  "after": {
+    "scripts/fighter_3d_layer.gd": "22708c007299c274d40dae0f952dbbe1f99afe50990e688819b9f6f4c5d70e9d",
+    "scripts/arena.gd": "c5dd4a3056a52e77f2269832bd898d8fbd03f2a61b81cc97b01d38e4c057e38e",
+    "scripts/fighter.gd": "0ad8b0c3d94e0f0bd02ac9b2566bbbcd9d3bf7ee9a0c0e82333651e9659fe1c8"
+  },
+  "applied": "SKIPPED_ALREADY_APPLIED",
+  "checks": {
+    "arena_untouched": true,
+    "fighter_untouched": true,
+    "no_surface_override_calls": true,
+    "no_3d_material_duplicate": true,
+    "no_light_energy_write": true,
+    "canvas_shader_present": true,
+    "canvas_material_set": true,
+    "canvas_material_cleared": true,
+    "shader_tint_matches_spec": true,
+    "draw_scale_kept": true,
+    "collect_meshes_kept_for_diagnostics": true,
+    "G_shape_preserved": true
+  },
+  "failed": [],
+  "ok": true
+}

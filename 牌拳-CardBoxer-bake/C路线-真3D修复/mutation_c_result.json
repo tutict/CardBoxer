@@ -1,0 +1,85 @@
+{
+  "cases": [
+    {
+      "case": "M1",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "C04_smooth_weight_coverage",
+      "failed_checks": [
+        "C04_smooth_weight_coverage"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M2",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "C07_tear_improvement",
+      "failed_checks": [
+        "C07_tear_improvement"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M3",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "C11_gif_duration_conservation",
+      "failed_checks": [
+        "C11_gif_duration_conservation"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M4",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "C14_sweep_monotonic",
+      "failed_checks": [
+        "C14_sweep_monotonic"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M5",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "C01_source_wiring",
+      "failed_checks": [
+        "C01_source_wiring"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M6",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "C16_usable_gain_range_named",
+      "failed_checks": [
+        "C16_usable_gain_range_named"
+      ],
+      "restored_sha256_ok": true
+    },
+    {
+      "case": "M7",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "target": "C13_sweep_blender_shape",
+      "failed_checks": [
+        "C13_sweep_blender_shape"
+      ],
+      "restored_sha256_ok": true
+    }
+  ],
+  "caught": 7,
+  "total": 7,
+  "did_not_run": 0,
+  "escaped": 0,
+  "restored": 7,
+  "restore_all_ok": true,
+  "clean_rerun": "GREEN",
+  "clean_passed": 18,
+  "clean_total": 18,
+  "selftest": false,
+  "verdict": "MUTATION_C_OK"
+}

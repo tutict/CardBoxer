@@ -1,0 +1,8 @@
+00:00.640  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\对手怪V1.blend"
+OPEN meshes=1 arm=foe_rig bones=13
+{"blend": "对手怪V1.blend", "bone": "upperarm_f", "angle_deg": 35, "axis": "pose-bone local Z", "vertices": 64024, "moved_vertices_gt_0_1mm": 10780, "moved_ratio": 0.16837, "max_displacement_m": 0.47922, "mean_displacement_m": 0.04068, "weight_mode": "nearest-segment rigid 1.0 (from foe_blender_build.py)", "caveat": "链路可动，不证明变形可用；刚性权重会把开放薄壳整片带走"}
+00:01.922  render           | Saved: 'C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\对手怪Blender建模V1\foe-deform-upperarm35.png'
+DEFORM_OK elapsed=1.27s
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)
+
+Blender quit

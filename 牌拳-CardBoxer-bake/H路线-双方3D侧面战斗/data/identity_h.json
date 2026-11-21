@@ -1,0 +1,70 @@
+{
+  "basecolor_thumb_mae": 75.3802,
+  "basecolor_mean_rgb": {
+    "player": [
+      110.06,
+      103.65,
+      95.55
+    ],
+    "foe": [
+      33.21,
+      32.26,
+      31.43
+    ]
+  },
+  "roi_mean_rgb": {
+    "player": [
+      84.64,
+      76.14,
+      79.8
+    ],
+    "foe": [
+      86.99,
+      85.83,
+      95.56
+    ]
+  },
+  "roi_mean_luminance": {
+    "player": 80.19,
+    "foe": 89.46
+  },
+  "roi_mirrored": {
+    "size": [
+      126,
+      265
+    ],
+    "changed_px": 28939,
+    "total_px": 33390,
+    "ratio": 0.8667,
+    "mae": 35.5448
+  },
+  "roi_unmirrored": {
+    "size": [
+      126,
+      265
+    ],
+    "changed_px": 30014,
+    "total_px": 33390,
+    "ratio": 0.8989,
+    "mae": 52.0477
+  },
+  "roi_scope_note": "ROI 含擂台绳索/观众席/灯光，水平镜像后背景必然错位；镜像 ROI 差异率只证明两帧非同一张图，不作角色造型差异证据。造型区分度是看图判断，不用像素指标硬撑。",
+  "primary_identity_evidence": "GLB 顶点数/bbox/三张 PBR sha256 不同 + Godot 读回 mesh_sig/SubViewport/ViewportTexture 各自独立",
+  "glb_vertex_counts": {
+    "player": 57934,
+    "foe": 64059
+  },
+  "glb_bbox_x_span": {
+    "player": 1.254475,
+    "foe": 1.216869
+  },
+  "checks": {
+    "basecolor_not_identical": true,
+    "frames_not_identical_including_background": true,
+    "render_brightness_differs": true,
+    "vertex_counts_differ": true,
+    "bbox_spans_differ": true,
+    "scope_note_present": true
+  },
+  "ok": true
+}

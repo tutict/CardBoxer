@@ -1,0 +1,23 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2468)
+ERROR: Node not inside tree. Use look_at_from_position() instead.
+   at: look_at (scene/3d/node_3d.cpp:1224)
+   GDScript backtrace (most recent call first):
+       [0] _place_camera (res://scripts/fighter_3d_layer.gd:157)
+       [1] setup (res://scripts/fighter_3d_layer.gd:220)
+       [2] _ready (res://scripts/arena.gd:265)
+       [3] _initialize (res://tests/battle_integration_check.gd:14)
+F3D_READY bones=13 cards=15
+ERROR: Node not inside tree. Use look_at_from_position() instead.
+   at: look_at (scene/3d/node_3d.cpp:1224)
+   GDScript backtrace (most recent call first):
+       [0] _place_camera (res://scripts/fighter_3d_layer.gd:157)
+       [1] setup (res://scripts/fighter_3d_layer.gd:220)
+       [2] _ready (res://scripts/arena.gd:276)
+       [3] _initialize (res://tests/battle_integration_check.gd:14)
+F3D_FOE_READY bones=13
+BATTLE INTEGRATION CHECK: 9/9 passed
+F3D_READY bones=13 cards=15
+F3D_FOE_READY bones=13

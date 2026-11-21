@@ -1,0 +1,119 @@
+止损：角色显示「原来的火柴人 + 乱码」
+日期：2026-11-14
+工程：C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer
+证据区：C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\止损-显示异常
+
+────────────────────────────────────────
+一、结论先行
+────────────────────────────────────────
+1. 「原来的火柴人」不是回归，是设计：运行游戏.bat 不带 CARD_BOXER_3D，
+   arena.gd:221 的 use_3d = OS.get_environment("CARD_BOXER_3D") != "" 为 false，
+   两个 Fighter 的 draw_3d_override 都保持 false，画的是 A 路线的 2D 代码自绘外观层。
+   带 CARD_BOXER_3D=1 启动，两套 3D 表现层才会挂上并被读回（本次实测两侧 override 全 true）。
+
+2. 「乱码」在 Godot 4.5 图形界面里没有复现。默认 / 开 3D 两种启动方式的
+   1280x720 真实截帧里，中文 HUD、回合作战横幅、五张卡牌说明全部正常渲染。
+   盘上逐项排除：0 条脚本错误、79 个文本文件全部严格 UTF-8、HUD 用 SystemFont
+   且点名 Microsoft YaHei、命中标签 "HIT!" 是纯 ASCII、B round2 的 GLB 在引擎内
+   资产读回 ok=true（贴图/顶点都正常，不是加载失败）。
+
+3. 唯一能在盘上定位到的「乱码」来源不在游戏画面里，而在控制台：
+   arena.gd:949 的 [TAIKOU] 回合日志含「你 / 青岚」等中文。若用 console 版 Godot
+   从默认 GBK 代码页的 cmd 启动，UTF-8 中文会被按 GBK 解码成一串乱码。
+   本轮跑 taikou_flow_check.gd 得 51/51，但该自检不触发 _resolve_taikou() 的 print，
+   所以这一条是「源码级可核查的假设」，不是实证到的用户现场。如实标注。
+
+4. 已止损：工程里装着我未验收的 B round2 GLB，先撤回到已知好的 I 基线。
+   新增 运行游戏-3D.bat 让 3D 一步可见；原 运行游戏.bat 一个字节没改。
+
+5. 仍未解决：用户看到的「乱码」具体在哪一层。需要一张现场截图或说明启动方式
+   （双击 bat / 编辑器 F5 / console 版 / 4.6 打开），我按图定位，不猜。
+
+────────────────────────────────────────
+二、读盘事实（止损前）
+────────────────────────────────────────
+工程 assets/3d/foe-rigged.glb
+  回滚前 42,917,552 B  sha256 96d383eec6286efb1099e9fba617c67c8fefa47a4fb5ff69f0c9abb7933831c5  = B round2
+  I 基线 42,914,328 B  sha256 0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88
+  备份 J路线-造型重做/orig/pre-b/foe-rigged.glb 与 H/I 路线归档的 sha 三者一致。
+  J路线-造型重做/logs/rollback_shape_b.out 里有上一次的 ROLLBACK_B_OK，
+  但之后 install_shape_b.py 又把 B round2 装了回去 → 本次以盘上 sha 为准，不认日志。
+
+────────────────────────────────────────
+三、复现方法
+────────────────────────────────────────
+新增 tests/display_stopgap_probe.gd（工程内）：实例化 res://scenes/main.tscn，
+不隐藏 HUD / fx / World（与 J/H 探针不同，那两个会隐藏 HUD 只留 World），
+120 帧后截 live 帧、paused 12 帧后再截 frozen 帧，并打印 use_3d / 两层是否挂上 /
+两个 override / tk_phase。带窗口跑 Godot 4.5 console 版，GL Compatibility。
+
+run_display_probe.py 按两种环境各跑一次：
+  default：清掉全部 CARD_BOXER_* 变量（等价于 运行游戏.bat）
+  3d     ：CARD_BOXER_3D=1
+回滚前用 tag=before 留证，回滚后复测用 tag=after，互不覆盖。
+
+────────────────────────────────────────
+四、复现结果
+────────────────────────────────────────
+┌──────────┬────────┬────────┬──────────────┬─────────────────────┬──────────┐
+│ case     │ rc     │ 错误数 │ use_3d       │ 角色                 │ 中文     │
+├──────────┼────────┼────────┼──────────────┼─────────────────────┼──────────┤
+│ default  │ 0      │ 0      │ false        │ 2D 自绘白色小人      │ 正常     │
+│ 3d       │ 0      │ 0      │ true         │ 两套 3D 贴图模型     │ 正常     │
+│ after-2例│ 0      │ 0      │ false / true │ 同上                 │ 正常     │
+└──────────┴────────┴────────┴──────────────┴─────────────────────┴──────────┘
+3d 例的 payload：layer_3d=true / layer_3d_foe=true / player_override=true /
+enemy_override=true，tk_phase=discard。四次运行都是 1280x720、save_error=0、
+has_opengl=true。回滚前后画面差异只在对手侧 GLB；玩家侧 player-rigged.glb
+从未被 B 路线改动，所以玩家模型上的青/红/白布元素是 I 基线本来就有的，
+不是这次装 B round2 装坏的 —— 这一点修正了「B round2 带来碎片」的直觉归因。
+
+────────────────────────────────────────
+五、止损动作
+────────────────────────────────────────
+cd J路线-造型重做 && python rollback_shape_b.py
+  RESTORED 42914328 0edcfe9e455f3c8c
+  6/6：glb_sha_matches_i_baseline / glb_size_matches / import_file_untouched /
+       backup_still_intact / reimport_rc0 / no_script_errors → ROLLBACK_B_OK
+B round2 的 GLB、截帧、判据、负结果记录全部留在 J 目录，只是不再装载进工程。
+
+新增（唯一改到工程的文件）：运行游戏-3D.bat
+  sha256 a39007f8c64344364ad274c01bd638894f03181beefac032b582137148ad9398
+  chcp 65001 + set CARD_BOXER_3D=1 + 锁 Godot 4.5 + 保留 4.6.3 回退。
+原 运行游戏.bat 未改：sha256 0cc5d54af4b922b1b50262609b25d367992807e28771330b160a7c993a0a0692
+
+────────────────────────────────────────
+六、验收（可复算）
+────────────────────────────────────────
+python verify_stopgap.py    → 15/15 PASS，STOPGAP_VERIFIED
+python mutation_stopgap.py  → 5/5 CAUGHT / DID_NOT_RUN 0 / RESTORE 5/5（sha256）
+                              clean re-run 15/15，MUTATION_STOPGAP_OK
+5 个变异：删 3D 开关、改代码页、伪造 default 的 use_3d、伪造 3d 的 layer_3d、
+把工程 GLB 换回 B round2。最后一个专门证明「已回滚」这条核心判据有牙。
+
+其它实测：
+  iconv 严格 UTF-8 校验工程 79 个 .gd/.json/.tscn/.godot/.txt/.import/.bat → NON_UTF8=0
+  taikou_flow_check.gd → 51/51 passed（不触发中文回合日志，如实标注）
+  J路线-造型重做/data/asset_probe_b.json → ok=true，foe 64121 verts，albedo 读回正常
+
+────────────────────────────────────────
+七、明确没做的部分
+────────────────────────────────────────
+* 没有把 3D 改成默认开：G/H 路线的双轨开关是刻意设计，改默认值会推翻
+  「默认关零污染」的既有验收，所以只新增启动脚本，不动 arena.gd。
+* 没有实测 Godot 4.6.3 / 4.6.1 打开本工程的画面。运行游戏.bat 优先 4.5 且
+  4.5 exe 实测存在，双击 bat 不会走到 4.6；若用户是手动用 4.6 打开，需另测。
+* 没有改任何 .gd 游戏源码、没有删 J 路线任何产物、没有继续 B 路线造型研究。
+* 「乱码」未定位。两种 4.5 图形界面截帧都没有乱码；需要用户指认位置。
+* J 路线的造型同源问题（两人模型同源、玩家身上青冠/红花/白布元素）仍在，
+  本轮只止损，不继续改造型。
+
+────────────────────────────────────────
+八、复算命令
+────────────────────────────────────────
+cd C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\止损-显示异常
+python run_display_probe.py after       # 重截两种启动方式的画面
+python verify_stopgap.py                # 15 条只读判据
+python mutation_stopgap.py              # 5 组变异 + 逐字节还原
+python make_compare.py                  # 两版对照板
+cd ..\J路线-造型重做 && python rollback_shape_b.py   # 幂等回滚

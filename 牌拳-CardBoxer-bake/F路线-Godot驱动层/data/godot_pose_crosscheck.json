@@ -1,0 +1,571 @@
+{
+  "tolerances": {
+    "deg": 0.0001,
+    "m": 0.0002
+  },
+  "worst": {
+    "delta_deg": 1e-05,
+    "calc_vs_engine_m": 1e-06,
+    "engine_vs_blender_m": 1e-06,
+    "root_m": 0.0
+  },
+  "cards_pose_changed": {
+    "jab": true,
+    "cross": true,
+    "wave": true
+  },
+  "neutral_start": [
+    0.707107,
+    -0.707107,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "neutral_end": [
+    0.707107,
+    -0.707107,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "checks": {
+    "frame_count_73": true,
+    "frames_applied_73": true,
+    "bone_count_14": true,
+    "bones_driven_13": true,
+    "delta_matches_blender": true,
+    "calc_matches_engine": true,
+    "engine_matches_blender": true,
+    "root_matches_blender": true,
+    "neutral_bone_untouched": true,
+    "neutral_matches_import": true,
+    "pose_actually_written": true,
+    "pose_readback_shape": true,
+    "windowed_render": true
+  },
+  "frames": 73,
+  "rows": [
+    {
+      "card": "stance",
+      "frame": 0,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "jab",
+      "frame": 0,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "jab",
+      "frame": 1,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "jab",
+      "frame": 2,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "jab",
+      "frame": 3,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "jab",
+      "frame": 4,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "jab",
+      "frame": 5,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "jab",
+      "frame": 6,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "jab",
+      "frame": 7,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "jab",
+      "frame": 8,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "jab",
+      "frame": 9,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "jab",
+      "frame": 10,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "jab",
+      "frame": 11,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "jab",
+      "frame": 12,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "jab",
+      "frame": 13,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "cross",
+      "frame": 0,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 1,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 2,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "cross",
+      "frame": 3,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "cross",
+      "frame": 4,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "cross",
+      "frame": 5,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "cross",
+      "frame": 6,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 7,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 8,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 9,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 10,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 11,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 12,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "cross",
+      "frame": 13,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 14,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 15,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 16,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 17,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 18,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 19,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 20,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "cross",
+      "frame": 21,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 0,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 1,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "wave",
+      "frame": 2,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "wave",
+      "frame": 3,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 4,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 5,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 6,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 7,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 8,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 9,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 10,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 11,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 12,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 13,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 14,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 15,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 16,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "wave",
+      "frame": 17,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "wave",
+      "frame": 18,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "wave",
+      "frame": 19,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "wave",
+      "frame": 20,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "wave",
+      "frame": 21,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 22,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "wave",
+      "frame": 23,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 24,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "wave",
+      "frame": 25,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 26,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 27,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "wave",
+      "frame": 28,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 0.0
+    },
+    {
+      "card": "wave",
+      "frame": 29,
+      "delta_deg": 1e-05,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 30,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 31,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 32,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 33,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 1e-06,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 34,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    },
+    {
+      "card": "wave",
+      "frame": 35,
+      "delta_deg": 0.0,
+      "calc_vs_engine_m": 0.0,
+      "engine_vs_blender_m": 1e-06
+    }
+  ],
+  "ok": true
+}

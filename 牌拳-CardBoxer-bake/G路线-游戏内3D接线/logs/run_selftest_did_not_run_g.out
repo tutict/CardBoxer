@@ -1,0 +1,21 @@
+M01  CAUGHT               expect=E07_side_view_probe_ok
+M02  CAUGHT               expect=E01_static_pixel_identical
+M03  CAUGHT               expect=E02_same_tree_ok
+M04  CAUGHT               expect=D03_ab_ok
+M05  CAUGHT               expect=C01_copy_data_motion_input.json
+M06  CAUGHT               expect=E05_three_d_ab_ok
+M07  CAUGHT               expect=B02_only_allowed_changed
+M08  CAUGHT               expect=D04_retired_claim_absent
+M09  CAUGHT               expect=F01_all_green_after
+M10  DID NOT RUN          expect=A05_side_yaw_is_55
+M11  CAUGHT               expect=A06_side_flip_false
+M12  CAUGHT               expect=A08_stance_bias_exact
+M13  CAUGHT               expect=A09_stance_bias_default_applied
+M14  CAUGHT               expect=A11_bias_uses_bone_pose_rotation
+M15  CAUGHT               expect=A01_switch_default_off
+M16  CAUGHT               expect=A02_override_default_false
+N01  MISSED (expected)    expect=None
+CAUGHT=15/16 DID_NOT_RUN=1 restore=16/16 clean=GREEN
+MUTATION_G_FAILED
+
+--- STDERR ---

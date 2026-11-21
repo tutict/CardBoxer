@@ -1,0 +1,43 @@
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\World3D接线修复\run_shipped_check.py:48: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  for r, g, b, a in im.getdata():
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\World3D接线修复\run_shipped_check.py:71: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  for r, g, b in im.getdata()]
+CASE shipped  rc=0 5.7s script_err=0 scenario=0 pngs=3
+CASE legacy   rc=0 4.63s script_err=0 scenario=2 pngs=3
+CASE no_tint  rc=0 4.744s script_err=0 scenario=0 pngs=3
+CASE default  rc=0 3.102s script_err=0 scenario=0 pngs=2
+  foe ROI mean luma {'shipped': 24.826, 'legacy': 26.911, 'no_tint': 28.47}
+  shipped player True -55.0 {'opaque_px': 44628, 'near_white_px': 13902, 'cyan_px': 2611, 'white_ratio': 0.311508} sha 946c0682b785
+  shipped foe True 55.0 {'opaque_px': 70249, 'near_white_px': 725, 'cyan_px': 424, 'white_ratio': 0.01032} sha 4e1dd5089934
+CHECK four_ran True
+CHECK all_rc_zero True
+CHECK no_script_errors True
+CHECK shipped_use_3d True
+CHECK shipped_two_layers True
+CHECK shipped_own_true True
+CHECK shipped_yaw_face_to_face True
+CHECK shipped_flip_false True
+CHECK shipped_foe_visual_on True
+CHECK shipped_4_lights_each True
+CHECK shipped_sv_matches_single_layer True
+CHECK shipped_sv_pixels_match_single_layer True
+CHECK shipped_two_sv_written True
+CHECK shipped_no_scenario_error True
+CHECK shipped_live_frame True
+CHECK legacy_own_false True
+CHECK legacy_both_white True
+CHECK legacy_sv_differs_from_single_layer True
+CHECK legacy_live_frame True
+CHECK no_tint_foe_visual_off True
+CHECK no_tint_both_sv_unchanged True
+CHECK no_tint_foe_roi_brighter True
+CHECK no_tint_live_frame True
+CHECK default_use_3d_false True
+CHECK default_no_layers True
+CHECK default_no_overrides True
+CHECK default_no_yaw_read True
+CHECK default_two_pngs True
+CHECK default_arena_has_use3d_guard True
+CHECK default_layer_creation_is_guarded True
+PASSED 30/30
+SHIPPED_CHECK_OK

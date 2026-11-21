@@ -1,0 +1,13 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+牌           reach     画面最远        差  命中@tick  判定
+OK  jab           118    124.0     -6.0        7  打到
+OK  cross         124    122.0      2.0       11  打到
+OK  uppercut      112    112.0      0.0       12  打到
+OK  sweep          98     98.8     -0.8       13  打到
+wave       跳过：弹道牌，reach 是飞行距离
+OK  throw          98     98.0      0.0        9  打到
+
+量到 5 张牌，失败 0 项
+REACH PROBE: PASS
+

@@ -1,0 +1,175 @@
+{
+  "cases": [
+    {
+      "case": "M1",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V05_texture_rect_covers_whole_viewport"
+      ],
+      "target": "V05"
+    },
+    {
+      "case": "M2",
+      "status": "DID NOT RUN",
+      "reason": "anchor_count=0 in game/scripts/arena.gd",
+      "target": "V06"
+    },
+    {
+      "case": "M3",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V08_dynamic_backdrop_layers_kept"
+      ],
+      "target": "V08"
+    },
+    {
+      "case": "M4",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V09_damage_and_phase_lines_untouched",
+        "V10_p0_and_rhythm_wiring_not_regressed"
+      ],
+      "target": "V09"
+    },
+    {
+      "case": "M5",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V10_p0_and_rhythm_wiring_not_regressed"
+      ],
+      "target": "V10"
+    },
+    {
+      "case": "M6",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V02_only_two_existing_files_changed",
+        "V06_dead_draw_forms_retired"
+      ],
+      "target": "V02"
+    },
+    {
+      "case": "M7",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V19_project_godot_only_added_window_override"
+      ],
+      "target": "V19"
+    },
+    {
+      "case": "M8",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V04_backdrop_is_opaque_and_unmodified"
+      ],
+      "target": "V04"
+    },
+    {
+      "case": "M9",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V01_backup_manifest_intact"
+      ],
+      "target": "V01"
+    },
+    {
+      "case": "M10",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V03_four_probe_scripts_present"
+      ],
+      "target": "V03"
+    },
+    {
+      "case": "M11",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V11_static_backdrop_pixels_recomputed_identical"
+      ],
+      "target": "V11"
+    },
+    {
+      "case": "M12",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V12_engine_frame_stats_all_dropped_and_comparable"
+      ],
+      "target": "V12"
+    },
+    {
+      "case": "M13",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V13_thirteen_engine_checks_green"
+      ],
+      "target": "V13"
+    },
+    {
+      "case": "M14",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V14_window_enlarged_1_25_without_layout_change"
+      ],
+      "target": "V14"
+    },
+    {
+      "case": "M15",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V16_rng_root_cause_logged"
+      ],
+      "target": "V16"
+    },
+    {
+      "case": "M16",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V17_regression_evidence_and_restore_ok"
+      ],
+      "target": "V17"
+    },
+    {
+      "case": "M17",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V18_previous_archive_untouched"
+      ],
+      "target": "V18"
+    },
+    {
+      "case": "M18",
+      "status": "CAUGHT",
+      "rc": 1,
+      "failed_checks": [
+        "V07_texture_and_overlay_kept_exactly_once"
+      ],
+      "target": "V07"
+    }
+  ],
+  "caught": 17,
+  "escaped": 0,
+  "did_not_run": 1,
+  "restored": 17,
+  "total": 18,
+  "clean_rerun_rc": 0,
+  "clean_failed": [],
+  "clean_ok": true,
+  "result": "MUTATION_ENGINE_OPT_SELFTEST_OK",
+  "selftest": true
+}

@@ -1,0 +1,602 @@
+Task1 fix round1; BASE=reviewed hash manifest, HEAD=tools/pipeline-review-r1.manifest.json
+--- tools/pipeline_review_round1_before/canonical_glb.py
++++ tools/canonical_glb.py
+@@ -12,8 +12,11 @@
+ import hashlib
+ import json
+ import math
++import os
+ import struct
++import tempfile
+ from pathlib import Path
++from urllib.parse import unquote,urlsplit
+ import numpy as np
+ 
+ DTYPES = {5120:"i1",5121:"u1",5122:"<i2",5123:"<u2",5125:"<u4",5126:"<f4"}
+@@ -23,6 +26,35 @@
+ 
+ def sha256(path: Path) -> str:
+     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
++
++
++def integer(value, label, minimum=0):
++    if not isinstance(value,int) or isinstance(value,bool) or value<minimum:
++        raise ValueError(f"{label} must be an integer >= {minimum}")
++    return value
++
++
++def validate_output_paths(inputs,outputs):
++    inputs={Path(p).resolve() for p in inputs};outputs=[Path(p).resolve() for p in outputs]
++    baseline=Path(__file__).resolve().parent.parent/"baseline"
++    def same(a,b):
++        return a==b or (a.exists() and b.exists() and os.path.samefile(a,b))
++    for i,path in enumerate(outputs):
++        if path.is_relative_to(baseline):raise ValueError("Frozen baseline write prohibited")
++        if any(same(path,p) for p in inputs) or any(same(path,p) for p in outputs[:i]):
++            raise ValueError("Input/dependency/output overwrite is prohibited")
++
++
++def atomic_write(path,payload):
++    path=Path(path).resolve();path.parent.mkdir(parents=True,exist_ok=True)
++    descriptor,name=tempfile.mkstemp(prefix="."+path.name+".",suffix=".tmp",dir=path.parent)
++    temporary=Path(name)
++    try:
++        with os.fdopen(descriptor,"wb") as stream:
++            stream.write(payload);stream.flush();os.fsync(stream.fileno())
++        os.replace(temporary,path)
++    finally:
++        if temporary.exists():temporary.unlink()
+ 
+ 
+ class GLB:
+@@ -43,27 +75,83 @@
+         for i,buf in enumerate(self.doc.get("buffers",[])):
+             uri=buf.get("uri")
+             if uri:
+-                b=base64.b64decode(uri.split(",",1)[1]) if uri.startswith("data:") else (self.path.parent/uri).read_bytes()
++                b=self.resource_bytes(uri)
+             elif i==0 and bins: b=bins[0]
+             else: raise ValueError("Missing buffer payload")
+-            if len(b)<buf["byteLength"]: raise ValueError("Truncated buffer")
+-            self.buffers.append(b[:buf["byteLength"]])
+-
+-    def view(self, index: int) -> bytes:
+-        v=self.doc["bufferViews"][index];start=v.get("byteOffset",0)
+-        return self.buffers[v["buffer"]][start:start+v["byteLength"]]
++            length=integer(buf["byteLength"],"buffer byteLength",1)
++            if len(b)<length: raise ValueError("Truncated buffer")
++            self.buffers.append(b[:length])
++
++    def resource_path(self,uri):
++        if not isinstance(uri,str):raise ValueError("Resource URI must be a string")
++        if uri.startswith("data:"):return None
++        if Path(uri).is_absolute():return Path(uri).resolve()
++        parsed=urlsplit(uri)
++        if parsed.scheme or parsed.netloc or parsed.query or parsed.fragment:raise ValueError("Only local file or data resource URIs are supported")
++        return (self.path.parent/unquote(parsed.path)).resolve()
++
++    def resource_bytes(self,uri):
++        path=self.resource_path(uri)
++        if path is not None:return path.read_bytes()
++        try:
++            header,payload=uri.split(",",1)
++            if not header.endswith(";base64"):raise ValueError("Embedded resources must use base64")
++            return base64.b64decode(payload,validate=True)
++        except (ValueError,base64.binascii.Error) as exc:raise ValueError("Invalid data resource") from exc
++
++    def input_files(self):
++        paths={self.path}
++        for item in self.doc.get("buffers",[])+self.doc.get("images",[]):
++            if "uri" in item:
++                path=self.resource_path(item["uri"])
++                if path is not None:paths.add(path)
++        return paths
++
++    def _view_layout(self,index):
++        index=integer(index,"bufferView index")
++        if index>=len(self.doc.get("bufferViews",[])):raise ValueError("bufferView index out of range")
++        v=self.doc["bufferViews"][index];buffer=integer(v["buffer"],"bufferView buffer index")
++        if buffer>=len(self.buffers):raise ValueError("bufferView buffer index out of range")
++        start=integer(v.get("byteOffset",0),"bufferView byteOffset");length=integer(v["byteLength"],"bufferView byteLength",1)
++        if start+length>len(self.buffers[buffer]):raise ValueError("bufferView crosses buffer boundary")
++        return v,self.buffers[buffer],start,length
++
++    def view(self,index):
++        v,buffer,start,length=self._view_layout(index)
++        return buffer[start:start+length]
++
++    def _read_view(self,index,offset,count,kind,dtype,sparse=False):
++        v,buffer,start,length=self._view_layout(index);offset=integer(offset,"accessor byteOffset")
++        rows=int(kind[-1]) if kind.startswith("MAT") else WIDTH[kind];columns=rows if kind.startswith("MAT") else 1
++        column_stride=((rows*dtype.itemsize+3)//4)*4 if columns>1 else rows*dtype.itemsize
++        element_size=columns*column_stride;extent=(columns-1)*column_stride+rows*dtype.itemsize
++        if sparse and ("byteStride" in v or "target" in v):raise ValueError("Sparse bufferView cannot declare stride or target")
++        stride=integer(v.get("byteStride",element_size),"accessor stride",1)
++        if "byteStride" in v and (stride<4 or stride>252 or stride%4 or stride<element_size):
++            raise ValueError("Invalid bufferView byteStride")
++        if offset%dtype.itemsize or (start+offset)%dtype.itemsize or (columns>1 and (start+offset)%4):
++            raise ValueError("Accessor component/matrix alignment violated")
++        if offset+(count-1)*stride+extent>length:raise ValueError("Accessor crosses its declared bufferView boundary")
++        return np.ndarray((count,columns,rows),dtype=dtype,buffer=buffer,offset=start+offset,
++                          strides=(stride,column_stride,dtype.itemsize)).reshape(count,-1).copy()
+ 
+     def accessor(self, index: int) -> np.ndarray:
+-        a=self.doc["accessors"][index];w=WIDTH[a["type"]];dtype=np.dtype(DTYPES[a["componentType"]])
++        index=integer(index,"accessor index")
++        if index>=len(self.doc.get("accessors",[])):raise ValueError("Accessor index out of range")
++        a=self.doc["accessors"][index];kind=a["type"];w=WIDTH[kind];dtype=np.dtype(DTYPES[a["componentType"]])
++        count=integer(a["count"],"accessor count",1)
+         if "bufferView" in a:
+-            v=self.doc["bufferViews"][a["bufferView"]]
+-            off=v.get("byteOffset",0)+a.get("byteOffset",0);stride=v.get("byteStride",w*dtype.itemsize)
+-            out=np.ndarray((a["count"],w),dtype=dtype,buffer=self.buffers[v["buffer"]],offset=off,strides=(stride,dtype.itemsize)).copy()
+-        else: out=np.zeros((a["count"],w),dtype=dtype)
++            out=self._read_view(a["bufferView"],a.get("byteOffset",0),count,kind,dtype)
++        else:
++            if a.get("byteOffset",0)!=0:raise ValueError("Accessor without bufferView cannot have byteOffset")
++            out=np.zeros((count,w),dtype=dtype)
+         if "sparse" in a:
+             s=a["sparse"];ia=s["indices"];va=s["values"]
+-            indices=np.frombuffer(self.view(ia["bufferView"]),dtype=DTYPES[ia["componentType"]],count=s["count"],offset=ia.get("byteOffset",0))
+-            values=np.frombuffer(self.view(va["bufferView"]),dtype=dtype,count=s["count"]*w,offset=va.get("byteOffset",0)).reshape(-1,w)
++            sparse_count=integer(s["count"],"sparse count",1)
++            if sparse_count>count or ia["componentType"] not in (5121,5123,5125):raise ValueError("Invalid sparse count/index storage")
++            indices=self._read_view(ia["bufferView"],ia.get("byteOffset",0),sparse_count,"SCALAR",np.dtype(DTYPES[ia["componentType"]]),sparse=True).ravel()
++            if np.any(indices>=count) or np.any(indices[1:]<=indices[:-1]):raise ValueError("Sparse indices must be ordered unique and in range")
++            values=self._read_view(va["bufferView"],va.get("byteOffset",0),sparse_count,kind,dtype,sparse=True)
+             out[indices]=values
+         if a.get("normalized") and a["componentType"] != 5126:
+             info=np.iinfo(dtype);out=np.maximum(out.astype(np.float64)/info.max,-1.) if info.min<0 else out.astype(np.float64)/info.max
+@@ -83,6 +171,18 @@
+         if any(x in p.get("extensions",{}) for x in ("KHR_draco_mesh_compression","EXT_meshopt_compression")):
+             raise ValueError("Compressed geometry must be decoded before canonicalization")
+         return p
++
++    def triangle_indices(self, vertex_count):
++        index=self.mesh_primitive().get("indices")
++        if not isinstance(index,int) or isinstance(index,bool) or not 0<=index<len(self.doc["accessors"]):
++            raise ValueError("Invalid triangle index accessor")
++        a=self.doc["accessors"][index]
++        if a["type"]!="SCALAR" or a["componentType"] not in (5121,5123,5125) or a.get("normalized",False) is not False:
++            raise ValueError("Invalid triangle storage: unnormalized unsigned SCALAR required")
++        values=self.accessor(index).reshape(-1).astype(np.int64)
++        if not len(values) or len(values)%3 or np.any(values>=vertex_count):
++            raise ValueError("Invalid triangle count or vertex range")
++        return values
+ 
+     def skin(self):
+         return self.doc["skins"][self.doc["nodes"][self.mesh_node()]["skin"]]
+@@ -155,8 +255,7 @@
+         j=json.dumps(self.doc,ensure_ascii=True,separators=(",",":"),allow_nan=False).encode();j+=b" "*((-len(j))%4)
+         b=bytes(self.bin);b+=b"\0"*((-len(b))%4)
+         payload=struct.pack("<III",0x46546c67,2,28+len(j)+len(b))+struct.pack("<II",len(j),0x4e4f534a)+j+struct.pack("<II",len(b),0x004e4942)+b
+-        path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
+-        tmp=path.with_suffix(path.suffix+".tmp");tmp.write_bytes(payload);tmp.replace(path)
++        atomic_write(path,payload)
+ 
+ 
+ def skin_rest_vertices(glb: GLB):
+@@ -174,11 +273,12 @@
+                  sockets_json: Path, profile_json: Path) -> dict:
+     paths=[Path(p).resolve() for p in (source_glb,raw_glb,output_glb,sockets_json,profile_json)]
+     source_glb,raw_glb,output_glb,sockets_json,profile_json=paths
+-    if output_glb in (source_glb,raw_glb,sockets_json) or profile_json in (source_glb,raw_glb,sockets_json,output_glb):
+-        raise ValueError("Input/baseline overwrite is prohibited")
+-    baseline=Path(__file__).resolve().parent.parent/"baseline"
+-    if output_glb.is_relative_to(baseline) or profile_json.is_relative_to(baseline): raise ValueError("Frozen baseline write prohibited")
++    validate_output_paths((source_glb,raw_glb,sockets_json,Path(__file__)),(output_glb,profile_json))
+     src=GLB(source_glb);raw=GLB(raw_glb);src_prim=src.mesh_primitive();prim=raw.mesh_primitive()
++    src.triangle_indices(src.doc["accessors"][src_prim["attributes"]["POSITION"]]["count"])
++    input_files=src.input_files()|raw.input_files()|{sockets_json,Path(__file__).resolve()}
++    validate_output_paths(input_files,(output_glb,profile_json))
++    input_hashes={str(path):sha256(path) for path in sorted(input_files)}
+     if len(src.doc["meshes"])!=1 or len(raw.doc["meshes"])!=1 or len(src.doc["skins"])!=1 or len(raw.doc["skins"])!=1:
+         raise ValueError("Only a single body mesh and skin may be exported")
+     if raw.doc.get("animations"): raise ValueError("Raw animations must not be exported")
+@@ -194,6 +294,7 @@
+         raise ValueError("JOINTS_0 must use unnormalized unsigned byte/short VEC4 indices")
+     joints=raw.accessor(attrs["JOINTS_0"]).astype(np.int64);weights=raw.accessor(attrs["WEIGHTS_0"]).astype(float)
+     count=raw.doc["accessors"][attrs["POSITION"]]["count"]
++    raw_indices=raw.triangle_indices(count)
+     if joints.shape!=(count,4) or weights.shape!=(count,4): raise ValueError("Expected four influences per vertex")
+     if np.any(joints<0) or np.any(joints>=len(raw_names)): raise ValueError("Joint index out of range")
+     if np.any(weights<0) or np.max(np.abs(weights.sum(axis=1)-1))>0.005: raise ValueError("Raw weights must be normalized and nonnegative")
+@@ -236,7 +337,7 @@
+             morphed_tangent-=target_normals*np.sum(target_normals*morphed_tangent,axis=1,keepdims=True)
+             target["TANGENT"]=b.accessor(normalized(morphed_tangent)-new_tangents,"VEC3")
+     if np.linalg.det(linear)<0:
+-        indices=raw.accessor(prim["indices"]).ravel().reshape(-1,3)[:,[0,2,1]].ravel()
++        indices=raw_indices.reshape(-1,3)[:,[0,2,1]].ravel()
+         out_prim["indices"]=b.accessor(indices,"SCALAR",5125)
+     b.doc["nodes"]=copy.deepcopy(src.doc["nodes"])
+     b.doc["skins"]=copy.deepcopy(src.doc["skins"])
+@@ -248,7 +349,7 @@
+     # Source nodes reference mesh 0. New raw body is required to be the sole mesh.
+     for image in b.doc.get("images",[]):
+         if "uri" in image:
+-            uri=image.pop("uri");data=base64.b64decode(uri.split(",",1)[1]) if uri.startswith("data:") else (raw.path.parent/uri).read_bytes()
++            uri=image.pop("uri");data=raw.resource_bytes(uri)
+             image["bufferView"]=b.view(data);image["mimeType"]="image/png" if data.startswith(b"\x89PNG") else "image/jpeg"
+     sockets=json.loads(sockets_json.read_text(encoding="utf-8"))
+     if sockets.get("version")!=1 or sockets.get("role") not in ("player","foe") or sockets.get("space")!="blender_world_z_up":
+@@ -265,23 +366,22 @@
+     profile={"version":1,"role":sockets["role"],"hand_sockets":hand_sockets}
+     b.doc.setdefault("asset",{})["generator"]="CardBoxer canonical GLB bridge v1 (original node/skin basis)"
+     b.write(output_glb)
+-    profile_json.parent.mkdir(parents=True,exist_ok=True)
+-    profile_json.write_text(json.dumps(profile,indent=2,allow_nan=False)+"\n",encoding="utf-8")
++    atomic_write(profile_json,(json.dumps(profile,indent=2,allow_nan=False)+"\n").encode("utf-8"))
+     final=GLB(output_glb)
+     final_rest=skin_rest_vertices(final)
+     final_bind=transform_points(ms,positions)
+     report={"version":1,"source":str(source_glb),"raw":str(raw_glb),"output":str(output_glb),
+-        "source_sha256":sha256(source_glb),"raw_sha256":sha256(raw_glb),"output_sha256":sha256(output_glb),
++        "source_sha256":input_hashes[str(source_glb)],"raw_sha256":input_hashes[str(raw_glb)],"output_sha256":sha256(output_glb),
+         "profile_sha256":sha256(profile_json),"vertices":count,
+-        "triangles":int(raw.doc["accessors"][prim["indices"]]["count"]//3),"skin_joints":len(source_names),
++        "triangles":int(len(raw_indices)//3),"skin_joints":len(source_names),
+         "source_mesh_global":ms.tolist(),"raw_mesh_global":mr.tolist(),"raw_to_source_bind":frame.tolist(),
+         "raw_rest_bind_error_m":float(np.linalg.norm(raw_rest-raw_bind,axis=1).max()),
+         "canonical_rest_bind_error_m":float(np.linalg.norm(final_rest-final_bind,axis=1).max()),
+         "world_rest_transfer_error_m":float(np.linalg.norm(final_rest-raw_rest,axis=1).max()),
+         "original_nodes_exact":final.doc["nodes"]==src.doc["nodes"],
+         "original_ibms_exact":bool(np.array_equal(final.ibms(),src.ibms())),
+-        "sockets_source":str(sockets_json),"sockets_source_sha256":sha256(sockets_json),
+-        "pipeline_sha256":sha256(Path(__file__)),
++        "sockets_source":str(sockets_json),"sockets_source_sha256":input_hashes[str(sockets_json)],
++        "pipeline_sha256":input_hashes[str(Path(__file__).resolve())],"immutable_input_sha256":input_hashes,
+         "joint_remap":{name:source_names.index(name) for name in raw_names},
+         "image_sha256":[hashlib.sha256(final.view(im["bufferView"])).hexdigest() for im in final.doc.get("images",[])]}
+     return report
+@@ -291,8 +391,12 @@
+     parser=argparse.ArgumentParser(description=__doc__)
+     for name in ("source_glb","raw_glb","output_glb","sockets_json","profile_json"): parser.add_argument(name,type=Path)
+     parser.add_argument("--report",type=Path)
+-    args=parser.parse_args();report=canonicalize(args.source_glb,args.raw_glb,args.output_glb,args.sockets_json,args.profile_json)
+-    if args.report: args.report.write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
++    args=parser.parse_args()
++    if args.report:
++        inputs=GLB(args.source_glb).input_files()|GLB(args.raw_glb).input_files()|{args.sockets_json,Path(__file__)}
++        validate_output_paths(inputs,(args.output_glb,args.profile_json,args.report))
++    report=canonicalize(args.source_glb,args.raw_glb,args.output_glb,args.sockets_json,args.profile_json)
++    if args.report:atomic_write(args.report,(json.dumps(report,indent=2)+"\n").encode("utf-8"))
+     print(json.dumps(report,indent=2))
+ 
+ 
+
+--- tools/pipeline_review_round1_before/check_retopology_assets.py
++++ tools/check_retopology_assets.py
+@@ -9,33 +9,48 @@
+ from pathlib import Path
+ import numpy as np
+ sys.path.insert(0,str(Path(__file__).resolve().parent))
+-from canonical_glb import GLB, SHAPES, sha256, skin_rest_vertices, transform_points
++from canonical_glb import GLB, SHAPES, sha256, skin_rest_vertices, transform_points,validate_output_paths,atomic_write
+ 
+ 
+ @lru_cache(maxsize=12)
+ def image_dimensions(data):
+     """Check PNG integrity and complete scanline payload, not just its header."""
+     if not data.startswith(b"\x89PNG\r\n\x1a\n"):raise ValueError("PBR atlas must be PNG")
+-    off=8;header=None;compressed=bytearray();ended=False
++    off=8;header=None;compressed=bytearray();ended=False;idat_seen=False;idat_closed=False;palette=False;transparency=False
+     while off<len(data):
+         if off+12>len(data):raise ValueError("Truncated PNG chunk")
+         count=struct.unpack_from(">I",data,off)[0];kind=data[off+4:off+8];end=off+8+count
+         if end+4>len(data):raise ValueError("Truncated PNG payload")
+         payload=data[off+8:end]
++        if any(not (65<=letter<=90 or 97<=letter<=122) for letter in kind) or kind[2]&32:
++            raise ValueError("Invalid PNG chunk type")
+         if zlib.crc32(kind+payload)!=struct.unpack_from(">I",data,end)[0]:raise ValueError("PNG CRC mismatch")
+         if header is None and kind!=b"IHDR":raise ValueError("PNG IHDR must be first")
++        if idat_seen and kind!=b"IDAT":idat_closed=True
+         if kind==b"IHDR":
+             if header is not None or count!=13:raise ValueError("Invalid PNG IHDR")
+             header=struct.unpack(">IIBBBBB",payload)
+-        elif kind==b"IDAT":compressed.extend(payload)
++            if header[3] not in (2,6) or header[2] not in (8,16):
++                raise ValueError("PBR atlas PNG supports RGB/RGBA at 8/16 bits only")
++        elif kind==b"PLTE":
++            if palette or transparency or idat_seen or count<3 or count>768 or count%3:raise ValueError("Invalid PNG palette/order")
++            palette=True
++        elif kind==b"tRNS":
++            if transparency or idat_seen or header[3]!=2 or count!=6:raise ValueError("Invalid PNG transparency/order")
++            if max(struct.unpack(">3H",payload))>2**header[2]-1:raise ValueError("PNG transparent sample out of range")
++            transparency=True
++        elif kind==b"IDAT":
++            if idat_closed:raise ValueError("PNG IDAT chunks must be consecutive")
++            idat_seen=True;compressed.extend(payload)
+         elif kind==b"IEND":
+             if count or end+4!=len(data):raise ValueError("Invalid PNG end")
+             ended=True;break
++        elif not kind[0]&32:raise ValueError("Unsupported critical PNG chunk")
+         off=end+4
+     if not header or not ended or not compressed:raise ValueError("Incomplete PNG")
+     width,height,depth,colour,compression,filtering,interlace=header
+-    channels={0:1,2:3,3:1,4:2,6:4}.get(colour)
+-    allowed={0:(1,2,4,8,16),2:(8,16),3:(1,2,4,8),4:(8,16),6:(8,16)}
++    channels={2:3,6:4}.get(colour)
++    allowed={2:(8,16),6:(8,16)}
+     if not channels or depth not in allowed[colour] or compression or filtering or interlace not in (0,1) or min(width,height)<1 or max(width,height)>4096:
+         raise ValueError("Invalid or oversized PNG encoding")
+     passes=[(0,0,1,1)] if not interlace else [(0,0,8,8),(4,0,8,8),(0,4,4,8),(2,0,4,4),(0,2,2,4),(1,0,2,2),(0,1,1,2)]
+@@ -99,8 +114,11 @@
+     try:
+         pos=g.accessor(a["POSITION"]).astype(float);normal=g.accessor(a["NORMAL"]).astype(float)
+         joints=g.accessor(a["JOINTS_0"]).astype(int);weights=g.accessor(a["WEIGHTS_0"]).astype(float)
+-        indices=g.accessor(p["indices"]).astype(int).ravel()
+     except Exception as exc: error("accessors",exc);return result
++    try:indices=g.triangle_indices(len(pos))
++    except Exception as exc:error("triangle_indices",exc);return result
++    try:source_indices=src.triangle_indices(src.doc["accessors"][sp["attributes"]["POSITION"]]["count"])
++    except Exception as exc:error("triangle_indices",exc);return result
+     metrics=result["metrics"];metrics.update(vertices=len(pos),triangles=len(indices)//3,joints=len(names),surfaces=1,materials=len(d.get("materials",[])))
+     if len(indices)%3 or np.any(indices<0) or np.any(indices>=len(pos)): error("triangle_indices","Invalid triangle indices");return result
+     if len(indices)//3>80000: error("triangle_budget",f"{len(indices)//3} exceeds 80000")
+@@ -134,7 +152,7 @@
+     metrics["rest_bind_error_m"]=float(np.linalg.norm(skin_rest_vertices(g)-world,axis=1).max())
+     if metrics["rest_bind_error_m"]>1e-5: error("rest_deformation",metrics["rest_bind_error_m"])
+     original_pos=src.accessor(sp["attributes"]["POSITION"])
+-    unchanged=(pos.shape==original_pos.shape and np.array_equal(pos.astype(np.float32),original_pos) and np.array_equal(indices,src.accessor(sp["indices"]).ravel()))
++    unchanged=(pos.shape==original_pos.shape and np.array_equal(pos.astype(np.float32),original_pos) and np.array_equal(indices,source_indices))
+     if unchanged: error("new_geometry","Candidate still contains the original indexed geometry")
+     source_world=transform_points(src.globals()[src.mesh_node()],original_pos)
+     metrics["sole_y_deviation_m"]=float(abs(world[:,1].min()-source_world[:,1].min()))
+@@ -244,8 +262,15 @@
+     parser=argparse.ArgumentParser(description=__doc__)
+     parser.add_argument("source_glb",type=Path);parser.add_argument("candidate_glb",type=Path)
+     parser.add_argument("--profile",type=Path);parser.add_argument("--report",type=Path)
+-    args=parser.parse_args();report=check_asset(args.source_glb,args.candidate_glb,args.profile)
+-    if args.report: args.report.write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
++    args=parser.parse_args()
++    if args.report:
++        inputs={args.source_glb,args.candidate_glb,Path(__file__),Path(__file__).with_name("canonical_glb.py")}
++        if args.profile:inputs.add(args.profile)
++        for path in (args.source_glb,args.candidate_glb):
++            inputs|=GLB(path).input_files()
++        validate_output_paths(inputs,(args.report,))
++    report=check_asset(args.source_glb,args.candidate_glb,args.profile)
++    if args.report:atomic_write(args.report,(json.dumps(report,indent=2)+"\n").encode("utf-8"))
+     print(json.dumps(report,indent=2));return 0 if report["ok"] else 1
+ 
+ 
+
+--- tools/pipeline_review_round1_before/pipeline_test.py
++++ tools/pipeline_test.py
+@@ -4,6 +4,8 @@
+ import importlib.util
+ import json
+ import struct
++import subprocess
++import sys
+ import tempfile
+ import unittest
+ import zlib
+@@ -104,12 +106,13 @@
+     return canonical
+ 
+ 
+-def png_atlas():
++def png_atlas(colour=2,depth=8):
+     def chunk(kind, payload):
+         return struct.pack(">I",len(payload))+kind+payload+struct.pack(">I",zlib.crc32(kind+payload))
+     # Real decodable 4K RGB PNG, not an IHDR-only dimension stub.
+-    pixels=(b"\0"+b"\x80\x80\xff"*4096)*4096
+-    return b"\x89PNG\r\n\x1a\n"+chunk(b"IHDR",struct.pack(">IIBBBBB",4096,4096,8,2,0,0,0))+chunk(b"IDAT",zlib.compress(pixels))+chunk(b"IEND",b"")
++    channels={0:1,2:3,3:1,6:4}[colour];pixel=bytes([128])*channels*(depth//8)
++    pixels=(b"\0"+pixel*4096)*4096
++    return b"\x89PNG\r\n\x1a\n"+chunk(b"IHDR",struct.pack(">IIBBBBB",4096,4096,depth,colour,0,0,0))+chunk(b"IDAT",zlib.compress(pixels))+chunk(b"IEND",b"")
+ 
+ 
+ def acceptance_pair(directory):
+@@ -308,5 +311,210 @@
+                 api.canonicalize(src,raw,sockets,sockets,tmp/"profile.json")
+             self.assertEqual(sockets.read_bytes(),before)
+ 
++    def test_f1_triangle_storage_is_validated_before_casting_in_bridge_and_checker(self):
++        api=self.module("canonical_glb");checker=self.module("check_retopology_assets")
++        cases=[("fractional",5126,"SCALAR",False,np.arange(9)+.25),
++               ("vector",5123,"VEC3",False,np.arange(9).reshape(3,3)),
++               ("normalized",5123,"SCALAR",True,np.arange(9)),
++               ("signed",5122,"SCALAR",False,np.arange(9))]
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src,candidate=acceptance_pair(tmp);base=api.GLB(candidate)
++            sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++            for label,component,kind,norm,data in cases:
++                b=api.Builder(base);p=b.doc["meshes"][0]["primitives"][0]
++                p["indices"]=b.accessor(data,kind,component);b.doc["accessors"][p["indices"]]["normalized"]=norm;b.write(candidate)
++                with self.subTest(case=label,consumer="checker"):
++                    result=checker.check_asset(src,candidate)
++                    self.assertIn("triangle_indices",[e["code"] for e in result["errors"]])
++                with self.subTest(case=label,consumer="bridge"):
++                    with self.assertRaisesRegex(ValueError,"triangle"):
++                        api.canonicalize(src,candidate,tmp/(label+".glb"),sockets,tmp/(label+".json"))
++
++    def test_f1_unsigned_scalar_triangle_indices_remain_accepted(self):
++        api=self.module("canonical_glb");checker=self.module("check_retopology_assets")
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);base=api.GLB(candidate)
++            for component in (5121,5123,5125):
++                b=api.Builder(base);p=b.doc["meshes"][0]["primitives"][0];p["indices"]=b.accessor(np.arange(9),"SCALAR",component);b.write(candidate)
++                self.assertTrue(checker.check_asset(src,candidate)["ok"])
++
++    def test_f1_malformed_source_triangle_storage_is_not_trusted(self):
++        api=self.module("canonical_glb");checker=self.module("check_retopology_assets")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src,candidate=acceptance_pair(tmp);b=api.Builder(api.GLB(src));p=b.doc["meshes"][0]["primitives"][0]
++            p["indices"]=b.accessor(np.arange(9)+.25,"SCALAR");b.write(src)
++            self.assertFalse(checker.check_asset(src,candidate)["ok"])
++            sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++            with self.assertRaisesRegex(ValueError,"triangle"):
++                api.canonicalize(src,candidate,tmp/"out.glb",sockets,tmp/"profile.json")
++
++    def test_f2_base_accessor_view_offsets_counts_and_strides_are_bounded(self):
++        api=self.module("canonical_glb");checker=self.module("check_retopology_assets")
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);base=api.GLB(candidate)
++            cases=[("short_view","view","byteLength",4), ("negative_view_offset","view","byteOffset",-4),
++                   ("fractional_view_offset","view","byteOffset",.5), ("backing_buffer_crossing","view","byteOffset",len(base.buffers[0])-4),
++                   ("negative_buffer","view","buffer",-1), ("negative_accessor_offset","accessor","byteOffset",-4),
++                   ("fractional_accessor_offset","accessor","byteOffset",.5), ("unaligned_accessor_offset","accessor","byteOffset",2),
++                   ("negative_count","accessor","count",-1), ("fractional_count","accessor","count",8.5),
++                   ("short_stride","view","byteStride",8), ("unaligned_stride","view","byteStride",13),
++                   ("zero_stride","view","byteStride",0)]
++            for label,section,key,value in cases:
++                b=api.Builder(base);idx=b.doc["meshes"][0]["primitives"][0]["attributes"]["POSITION"]
++                a=b.doc["accessors"][idx];v=b.doc["bufferViews"][a["bufferView"]]
++                (a if section=="accessor" else v)[key]=value;b.write(candidate)
++                with self.subTest(case=label,consumer="reader"):
++                    with self.assertRaises(ValueError):api.GLB(candidate).accessor(idx)
++                with self.subTest(case=label,consumer="checker"):
++                    self.assertFalse(checker.check_asset(src,candidate)["ok"])
++
++    def test_f2_sparse_bounds_offsets_unsigned_order_and_range_are_validated(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);b=api.Builder(api.GLB(candidate));idx=b.doc["meshes"][0]["primitives"][0]["attributes"]["POSITION"]
++            a=b.doc["accessors"][idx];a.pop("bufferView")
++            a["sparse"]={"count":2,"indices":{"bufferView":b.view(b"\0\1"),"componentType":5121},
++                         "values":{"bufferView":b.view(struct.pack("<6f",0,.4,0,.05,.4,0))}}
++            b.write(candidate);base=api.GLB(candidate)
++            mutations=[("negative_index_offset","indices_offset",-1), ("fractional_value_offset","values_offset",.5),
++                       ("negative_sparse_count","count",-1), ("too_many_sparse","count",10),
++                       ("signed_sparse_indices","index_component",5120), ("short_index_view","index_length",1),
++                       ("short_value_view","value_length",4), ("strided_sparse","index_stride",4),
++                       ("negative_sparse_index","indices",b"\xff\0"), ("out_of_range_sparse","indices",b"\0\x09"),
++                       ("duplicate_sparse","indices",b"\1\1"), ("unordered_sparse","indices",b"\1\0")]
++            for label,kind,value in mutations:
++                m=api.Builder(base);s=m.doc["accessors"][idx]["sparse"]
++                if kind=="indices_offset":s["indices"]["byteOffset"]=value
++                elif kind=="values_offset":s["values"]["byteOffset"]=value
++                elif kind=="count":s["count"]=value
++                elif kind=="index_component":s["indices"]["componentType"]=value
++                elif kind=="index_length":m.doc["bufferViews"][s["indices"]["bufferView"]]["byteLength"]=value
++                elif kind=="value_length":m.doc["bufferViews"][s["values"]["bufferView"]]["byteLength"]=value
++                elif kind=="index_stride":m.doc["bufferViews"][s["indices"]["bufferView"]]["byteStride"]=value
++                else:s["indices"]["bufferView"]=m.view(value)
++                m.write(candidate)
++                with self.subTest(case=label):
++                    with self.assertRaises(ValueError):api.GLB(candidate).accessor(idx)
++
++    def test_f2_valid_interleaved_sparse_and_padded_matrix_accessors(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);b=api.Builder(api.GLB(candidate))
++            inter=b.accessor([[1,2,3,99],[4,5,6,99]],"VEC4");entry=b.doc["accessors"][inter];entry["type"]="VEC3"
++            b.doc["bufferViews"][entry["bufferView"]]["byteStride"]=16
++            matrix=b.accessor([[1,2,3,0,4,5,6,0,7,8,9,0]],"MAT3",5121)
++            sparse=b.accessor([[0,0,0]]*3,"VEC3");s=b.doc["accessors"][sparse];s.pop("bufferView")
++            s["sparse"]={"count":1,"indices":{"bufferView":b.view(b"\x01"),"componentType":5121},"values":{"bufferView":b.view(struct.pack("<3f",7,8,9))}}
++            b.write(candidate);g=api.GLB(candidate)
++            np.testing.assert_array_equal(g.accessor(inter),[[1,2,3],[4,5,6]])
++            np.testing.assert_array_equal(g.accessor(matrix),[[1,2,3,4,5,6,7,8,9]])
++            np.testing.assert_array_equal(g.accessor(sparse),[[0,0,0],[7,8,9],[0,0,0]])
++
++    def test_f3_png_requires_supported_colour_and_legal_chunk_structure(self):
++        checker=self.module("check_retopology_assets");api=self.module("canonical_glb")
++        def chunk(kind,payload):return struct.pack(">I",len(payload))+kind+payload+struct.pack(">I",zlib.crc32(kind+payload))
++        rgb=png_atlas();head=rgb[:33];tail=rgb[33:];rgba=png_atlas(6)
++        compressed=zlib.compress((b"\0"+b"\0"*(4096*3))*4096);middle=len(compressed)//2
++        cases={"indexed_without_palette":png_atlas(3),
++               "unknown_critical":head+chunk(b"ABCD",b"test")+tail,
++               "noncontiguous_idat":head+chunk(b"IDAT",compressed[:middle])+chunk(b"tEXt",b"x\0y")+chunk(b"IDAT",compressed[middle:])+chunk(b"IEND",b""),
++               "late_palette":rgb[:-12]+chunk(b"PLTE",b"\0\0\0")+rgb[-12:],
++               "invalid_palette_length":head+chunk(b"PLTE",b"\0")+tail,
++               "rgba_transparency":rgba[:33]+chunk(b"tRNS",b"\0"*6)+rgba[33:]}
++        for label,data in cases.items():
++            with self.subTest(case=label):
++                with self.assertRaises(ValueError):checker.image_dimensions(data)
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);b=api.Builder(api.GLB(candidate));b.doc["images"][0]={"bufferView":b.view(cases["indexed_without_palette"]),"mimeType":"image/png"};b.write(candidate)
++            self.assertIn("pbr_image",[e["code"] for e in checker.check_asset(src,candidate)["errors"]])
++
++    def test_f3_rgb_rgba_8_and_16_bit_atlases_remain_decodable(self):
++        checker=self.module("check_retopology_assets")
++        for colour,depth in ((2,8),(6,8),(2,16),(6,16)):
++            with self.subTest(colour=colour,depth=depth):self.assertEqual(checker.image_dimensions(png_atlas(colour,depth)),[4096,4096])
++
++    def test_f4_unique_staging_preserves_source_named_as_legacy_temporary_file(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src=tmp/"out.glb.tmp";raw=tmp/"raw.glb";fixture(src);fixture(raw,True)
++            sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++            before=src.read_bytes();api.canonicalize(src,raw,tmp/"out.glb",sockets,tmp/"profile.json")
++            self.assertEqual(src.read_bytes(),before)
++            self.assertFalse(list(tmp.glob(".out.glb.*.tmp")))
++
++    def test_f4_external_buffers_and_images_are_protected_from_both_outputs(self):
++        api=self.module("canonical_glb")
++        for owner in ("raw","source"):
++            for resource in ("image","buffer"):
++                for destination in ("glb","profile"):
++                    with self.subTest(owner=owner,resource=resource,destination=destination),owned_fixture_dir() as tmp:
++                        tmp=Path(tmp);src=tmp/"source.glb";raw=tmp/"raw.glb";fixture(src);fixture(raw,True)
++                        external=tmp/(owner+"-external.bin");selected=raw if owner=="raw" else src
++                        doc,payload=read_glb(selected)
++                        if resource=="image":
++                            external.write_bytes(b"original image dependency");doc["images"]=[{"uri":external.name.replace(" ","%20")}]
++                        else:
++                            external.write_bytes(payload[:doc["buffers"][0]["byteLength"]]);doc["buffers"][0]["uri"]=external.name.replace(" ","%20")
++                        encoded=json.dumps(doc,separators=(",",":")).encode();encoded+=b" "*((-len(encoded))%4)
++                        if resource=="buffer":selected.write_bytes(struct.pack("<III",0x46546c67,2,20+len(encoded))+struct.pack("<II",len(encoded),0x4e4f534a)+encoded)
++                        else:selected.write_bytes(struct.pack("<III",0x46546c67,2,28+len(encoded)+len(payload))+struct.pack("<II",len(encoded),0x4e4f534a)+encoded+struct.pack("<II",len(payload),0x004e4942)+payload)
++                        sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++                        before={p:p.read_bytes() for p in (src,raw,sockets,external)}
++                        output=external if destination=="glb" else tmp/"out.glb";profile=external if destination=="profile" else tmp/"profile.json"
++                        with self.assertRaisesRegex(ValueError,"overwrite"):
++                            api.canonicalize(src,raw,output,sockets,profile)
++                        for path,data in before.items():self.assertEqual(path.read_bytes(),data)
++
++    def test_f4_cli_report_collision_is_rejected_before_any_output_write(self):
++        for target in ("source","raw","sockets","output","profile"):
++            with self.subTest(target=target),owned_fixture_dir() as tmp:
++                tmp=Path(tmp);paths={name:tmp/(name+suffix) for name,suffix in (("source",".glb"),("raw",".glb"),("sockets",".json"),("output",".glb"),("profile",".json"))}
++                fixture(paths["source"]);fixture(paths["raw"],True)
++                paths["sockets"].write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++                before={p:p.read_bytes() for p in (paths["source"],paths["raw"],paths["sockets"])}
++                process=subprocess.run([sys.executable,str(HERE/"canonical_glb.py"),*[str(paths[k]) for k in ("source","raw","output","sockets","profile")],"--report",str(paths[target])],capture_output=True,text=True)
++                self.assertNotEqual(process.returncode,0)
++                for p,data in before.items():self.assertEqual(p.read_bytes(),data)
++                self.assertFalse(paths["output"].exists());self.assertFalse(paths["profile"].exists())
++
++    def test_f4_report_writes_protect_external_dependencies_and_checker_inputs(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src=tmp/"source.glb";raw=tmp/"raw.glb";fixture(src);fixture(raw,True)
++            external=tmp/"image.png";external.write_bytes(png_atlas())
++            b=api.Builder(api.GLB(raw));b.doc["images"]=[{"uri":external.name}];b.write(raw)
++            sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++            before={p:p.read_bytes() for p in (src,raw,external,sockets)}
++            with self.subTest(consumer="bridge_report"):
++                process=subprocess.run([sys.executable,str(HERE/"canonical_glb.py"),str(src),str(raw),str(tmp/"out.glb"),str(sockets),str(tmp/"profile.json"),"--report",str(external)],capture_output=True,text=True)
++                self.assertNotEqual(process.returncode,0)
++                for p,data in before.items():self.assertEqual(p.read_bytes(),data)
++                self.assertFalse((tmp/"out.glb").exists())
++        for target in ("source","candidate","profile"):
++            with self.subTest(consumer="checker_report",target=target),owned_fixture_dir() as tmp:
++                tmp=Path(tmp);src,candidate=acceptance_pair(tmp);profile=tmp/"profile.json";profile.write_text("{}")
++                paths={"source":src,"candidate":candidate,"profile":profile};before={p:p.read_bytes() for p in paths.values()}
++                process=subprocess.run([sys.executable,str(HERE/"check_retopology_assets.py"),str(src),str(candidate),"--profile",str(profile),"--report",str(paths[target])],capture_output=True,text=True)
++                for p,data in before.items():self.assertEqual(p.read_bytes(),data)
++
++    def test_f4_percent_encoded_external_image_resolves_without_mutation(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src=tmp/"source.glb";raw=tmp/"raw.glb";fixture(src);fixture(raw,True)
++            image=tmp/"image space.png";pixels=png_atlas();image.write_bytes(pixels)
++            b=api.Builder(api.GLB(raw));b.doc["images"]=[{"uri":"image%20space.png"}];b.write(raw)
++            sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++            api.canonicalize(src,raw,tmp/"out.glb",sockets,tmp/"profile.json")
++            output=api.GLB(tmp/"out.glb");self.assertEqual(output.view(output.doc["images"][0]["bufferView"]),pixels)
++            self.assertEqual(image.read_bytes(),pixels)
++
++    def test_f4_report_does_not_drop_dependencies_when_another_uri_is_unsupported(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src,candidate=acceptance_pair(tmp);dependency=tmp/"dependency.png";data=png_atlas();dependency.write_bytes(data)
++            b=api.Builder(api.GLB(candidate));b.doc["images"][0]={"uri":dependency.name};b.doc["images"].append({"uri":"https://invalid.example/image.png"});b.write(candidate)
++            process=subprocess.run([sys.executable,str(HERE/"check_retopology_assets.py"),str(src),str(candidate),"--report",str(dependency)],capture_output=True,text=True)
++            self.assertNotEqual(process.returncode,0);self.assertEqual(dependency.read_bytes(),data)
++
+ 
+ if __name__ == "__main__": unittest.main(verbosity=2)

@@ -1,0 +1,20 @@
+ORIGIN {"user_size": [684, 294], "board": "C:\\Users\\tutic\\Desktop\\学习资料\\牌拳-CardBoxer-bake\\朝向修复\\boards\\朝向-改前改后对照.png", "board_size": [920, 904], "best_window": {"mae": 19.653, "x0": 10, "y0": 530, "w": 900, "h": 370}, "scores": {"orientation_lower": 19.653, "orientation_upper": 18.426, "shipped_live": 30.71}, "closest": "orientation_upper", "is_orientation_lower": false, "pre_fix_closer_than_shipped": true, "note": "像素级同源只做相对判定（用户图经缩放/重编码）；另有人眼可核的标签文字「改后：玩家 -55°、对手 +55° → 两人面对面」与卡牌序列 1/9/4/6/7 逐项一致。"}
+SV shipped_player 0.311508 13902 946c0682b785
+SV shipped_foe 0.01032 725 4e1dd5089934
+SV legacy_player 0.232864 16881 e1c344699c95
+SV legacy_foe 0.01032 725 4e1dd5089934
+CHECK four_sv_present True
+CHECK sv_size_420x520 True
+CHECK shipped_player_matches_single_truth True
+CHECK shipped_foe_matches_single_truth True
+CHECK shipped_pair_distinct True
+CHECK shipped_player_is_white True
+CHECK shipped_foe_is_dark True
+CHECK legacy_both_mixed False
+CHECK legacy_differs_from_truth False
+CHECK user_frame_is_pre_world3d_fix True
+CHECK origin_three_way_scores_recorded True
+CHECK two_boards_written True
+SEPARATE_MODELS_FAILED
+C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\World3D接线修复\make_separate_models.py:61: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  for r, g, b, a in im.getdata():

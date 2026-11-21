@@ -1,0 +1,11 @@
+SHOT stance-front         900x1100   427749 B err=0 card=stance/0
+SHOT stance-front-repeat  900x1100   427749 B err=0 card=stance/0
+SHOT jab06-front          900x1100   420780 B err=0 card=jab/6
+SHOT cross07-front        900x1100   430519 B err=0 card=cross/7
+SHOT wave17-front         900x1100   427244 B err=0 card=wave/17
+SHOT wave35-front         900x1100   427954 B err=0 card=wave/35
+SHOT jab06-angle35        900x1100   452849 B err=0 card=jab/6
+SHOT cross07-angle35      900x1100   455002 B err=0 card=cross/7
+SHOT wave17-angle35       900x1100   445885 B err=0 card=wave/17
+RENDER seconds=5.086 rc=0 gl=True errs=0 stage_ready=True shots=9
+GODOT_RENDER_F_OK

@@ -1,0 +1,10 @@
+CHECK all_sizes_positive True
+CHECK no_unexpected_zero_bytes True
+CHECK key_artifacts_present True
+CHECK shots_present True
+CHECK five_boards_present True
+CHECK verify_all_green True
+CHECK mutation_all_caught True
+CHECK all_checks_green True
+CHECK upstream_reports_ok True
+FILELIST_LIVE_OK files=455 bytes=83653560

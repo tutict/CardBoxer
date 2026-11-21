@@ -1,0 +1,4 @@
+00:00.812  blend            | Read blend: "C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\A路线-资产重做\对手怪-可变形连续壳.blend"
+STRUCT {"objects": [["a_apose_rig", "ARMATURE", null, []], ["a_continuous_shell", "MESH", 20204, ["ARMATURE"]], ["foe_cam", "CAMERA", null, []], ["foe_fill", "LIGHT", null, []], ["foe_key", "LIGHT", null, []], ["node_0", "MESH", 64024, ["SURFACE_DEFORM"]]], "actions": [], "images": 3, "gltf_poll": true, "props_available": {"export_format": true, "use_selection": true, "export_apply": true, "export_animations": true, "export_skins": true, "export_materials": true, "export_image_format": true, "export_texture_dir": true, "export_yup": true, "export_cameras": true, "export_lights": true, "export_extras": true, "export_gn_mesh": true, "use_visible": true, "use_renderable": true, "use_active_collection": true}}
+BLEND_STRUCTURE_OK
+Blender 5.2.3 LTS (hash e13b728c6880 built 2026-10-22 01:37:16)

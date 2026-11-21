@@ -1,0 +1,107 @@
+{
+  "checks": [
+    {
+      "name": "R01_backup_manifest_intact",
+      "ok": true,
+      "detail": "files=15 hashes_match=True"
+    },
+    {
+      "name": "R02_thirteen_untouched_files_byte_identical",
+      "ok": true,
+      "detail": "checked=13 identical=True"
+    },
+    {
+      "name": "R03_exactly_two_existing_files_changed",
+      "ok": true,
+      "detail": "changed=['scripts/arena.gd', 'scripts/fighter.gd']"
+    },
+    {
+      "name": "R04_two_new_sources_present",
+      "ok": true,
+      "detail": "gd=3848B check=10076B"
+    },
+    {
+      "name": "R05_generated_gd_reproducible_from_json",
+      "ok": true,
+      "detail": "bytes=3848 identical=True"
+    },
+    {
+      "name": "R06_timeline_self_consistent",
+      "ok": true,
+      "detail": "resolve_seconds=1.9 total_s=1.9"
+    },
+    {
+      "name": "R07_offline_numbers_match_json",
+      "ok": true,
+      "detail": "matched=33 mismatches=[]"
+    },
+    {
+      "name": "R08_offline_timeline_matches_json",
+      "ok": true,
+      "detail": "bad=[] hitstop_label=HIT!"
+    },
+    {
+      "name": "R09_offline_script_not_modified_by_this_round",
+      "ok": true,
+      "detail": "manifest=7f6a38f2bf41d88c28e398eefce0fa96735364e40fd417e9c8493e2e6044b5b6 disk=7f6a38f2bf41d88c28e398eefce0fa96735364e40fd417e9c8493e2e6044b5b6"
+    },
+    {
+      "name": "R10_apply_hit_body_untouched",
+      "ok": true,
+      "detail": "bytes=1263 identical=True"
+    },
+    {
+      "name": "R11_damage_and_phase_lines_untouched",
+      "ok": true,
+      "detail": "lines=14 identical=True"
+    },
+    {
+      "name": "R12_visual_fields_only_in_draw_zone",
+      "ok": true,
+      "detail": "draw_zone=(14470, 16758) pose_after_draw=True"
+    },
+    {
+      "name": "R13_rhythm_wiring_forms_all_present",
+      "ok": true,
+      "detail": "checked=16 missing=[]"
+    },
+    {
+      "name": "R14_hitstop_branch_allows_capture",
+      "ok": true,
+      "detail": "real_capture_calls=1 branch_bytes=313"
+    },
+    {
+      "name": "R15_draw_does_not_start_rhythm",
+      "ok": true,
+      "detail": "draw_guard_present=True"
+    },
+    {
+      "name": "R16_twelve_engine_checks_green",
+      "ok": true,
+      "detail": "result=ALL GREEN rhythm=BATTLE RHYTHM CHECK: 62/62 passed"
+    },
+    {
+      "name": "R17_eight_engine_frames_and_state_numbers",
+      "ok": true,
+      "detail": "restore=True modes=8 marker_ok=True nums_ok=True"
+    },
+    {
+      "name": "R18_pixel_evidence_recomputed_from_png",
+      "ok": true,
+      "detail": "recalc=2350 json=2350"
+    },
+    {
+      "name": "R19_p0_wiring_not_regressed",
+      "ok": true,
+      "detail": "{\"now\": {\"MotionP0.binding_for(winner_type)\": 1, \"MotionP0.REVEAL_CARD\": 2, \"enemy.apply_hit(tk_damage, \\\"taikou\\\", tk_motion_extra, false)\": 1, \"player.apply_hit(3, \\\"taikou\\\", tk_motion_extra, false)\": 1}, \"baseline\": {\"MotionP0.binding_for(winner_type)\": 1, \"MotionP0.REVEAL_CARD\": 2, \"enemy.apply_hit(tk_damage, \\\"taikou\\\", tk_motion_extra, false)\": 1, \"player.apply_hit(3, \\\"taikou\\\", tk_motion_extra, false)\": 1}, \"real_lines\": {\"MotionP0.binding_for(winner_type)\": 1, \"MotionP0.REVEAL_CARD\": 2, \"enemy.apply_hit(tk_damage, \\\"taikou\\\", tk_motion_extra, false)\": 1, \"player.apply_hit(3, \\\"taikou\\\", tk_motion_extra, false)\": 1}}"
+    },
+    {
+      "name": "R20_source_fingerprints_written",
+      "ok": true,
+      "detail": "files=10"
+    }
+  ],
+  "passed": 20,
+  "total": 20,
+  "result": "RHYTHM_VERIFIED"
+}

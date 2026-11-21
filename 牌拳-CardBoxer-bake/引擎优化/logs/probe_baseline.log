@@ -1,0 +1,8 @@
+CMD C:\Users\tutic\Documents\godot\Godot_v4.5-stable_win64_console.exe --path C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer --resolution 1280x720 --quit-after 900 --script res://tests/perf_probe.gd
+
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 621.14 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5080 Laptop GPU
+
+PERF_PROBE_START samples=120
+PERF_PROBE_DONE out=C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\引擎优化\baseline\背景基线.png json=C:\Users\tutic\Desktop\学习资料\牌拳-CardBoxer-bake\引擎优化\baseline\perf.json prims_mean=482.00 calls_mean=13.00 proc_ms=4.27098
+

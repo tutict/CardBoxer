@@ -1,0 +1,25 @@
+Godot Engine v4.5.stable.official.876b29033 - https://godotengine.org
+
+站姿髋→前脚 87.6 px，髋→后脚 91.2 px
+
+牌               前脚单帧位移      后脚单帧位移      前腿最长      后腿最长  判定
+OK  jab              0.0      0.0      0.0     1.00x     1.07x  
+OK  cross            0.0      0.0      4.0     1.00x     1.02x  
+OK  uppercut         0.0      0.0      1.0     0.98x     1.05x  
+OK  sweep            0.0     66.0     22.0     0.98x     0.98x  
+OK  wave             0.0      0.0      0.0     1.01x     1.04x  
+OK  throw            0.0      0.0      3.0     1.00x     1.03x  
+OK  rush            34.4      0.0     12.0     0.99x     1.18x  
+OK  backstep        30.4      4.0      0.0     0.99x     0.99x  
+OK  guard            0.0      0.0      0.0     0.99x     0.99x  
+OK  sidestep        13.2      6.0      0.0     0.99x     0.99x  
+OK  focus            0.0      0.0      0.0     0.98x     0.98x  
+OK  recover          0.0      0.0      0.0     0.98x     0.99x  
+
+走路 90 帧：身体前进 322 px（3.6 px/帧）
+  f_foot  世界滑移峰值   9.0 px/帧；踩实帧 49/89（55%）；相对身体摆幅 60 px
+  b_foot  世界滑移峰值   9.0 px/帧；踩实帧 37/89（42%）；相对身体摆幅 60 px
+OK  走路: 两只脚合计踩实 48%
+
+FEET PROBE: PASS
+
