@@ -1,0 +1,1049 @@
+Review boundary: pipeline / initial
+No usable source Git history. BASE is the immutable installed V2 snapshot; HEAD is the hashed file boundary below.
+
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\canonical_glb.py
+SHA256: d5d7b5f4aa9c540144ee225e954757ebb6fc4e266846b909ddff81c6d63b0634
+--- absent-at-V2-baseline
++++ D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\canonical_glb.py
+@@ -0,0 +1,299 @@
++"""Canonical GLB bridge: new geometry, original rest hierarchy and binding basis.
++
++Run with Blender 5.2's bundled Python, or any Python with NumPy. No bpy required.
++The canonicalize API deliberately does not enforce morph/PBR acceptance, allowing
++an unedited Blender roundtrip to test the bridge independently of new authoring.
++Use check_retopology_assets.py for delivery acceptance.
++"""
++from __future__ import annotations
++import argparse
++import base64
++import copy
++import hashlib
++import json
++import math
++import struct
++from pathlib import Path
++import numpy as np
++
++DTYPES = {5120:"i1",5121:"u1",5122:"<i2",5123:"<u2",5125:"<u4",5126:"<f4"}
++WIDTH = {"SCALAR":1,"VEC2":2,"VEC3":3,"VEC4":4,"MAT2":4,"MAT3":9,"MAT4":16}
++SHAPES = ("grip_half_f","grip_f","grip_half_b","grip_b")
++
++
++def sha256(path: Path) -> str:
++    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
++
++
++class GLB:
++    def __init__(self, path: Path):
++        self.path = Path(path).resolve()
++        data = self.path.read_bytes()
++        if len(data)<20 or struct.unpack_from("<III",data) != (0x46546c67,2,len(data)):
++            raise ValueError(f"Invalid glTF 2 GLB header: {self.path}")
++        chunks=[]; off=12
++        while off < len(data):
++            n,kind=struct.unpack_from("<II",data,off); off+=8
++            if off+n>len(data): raise ValueError("Truncated GLB chunk")
++            chunks.append((kind,data[off:off+n]));off+=n
++        if chunks[0][0]!=0x4e4f534a: raise ValueError("GLB JSON must be first")
++        self.doc=json.loads(chunks[0][1])
++        bins=[b for kind,b in chunks if kind==0x004e4942]
++        self.buffers=[]
++        for i,buf in enumerate(self.doc.get("buffers",[])):
++            uri=buf.get("uri")
++            if uri:
++                b=base64.b64decode(uri.split(",",1)[1]) if uri.startswith("data:") else (self.path.parent/uri).read_bytes()
++            elif i==0 and bins: b=bins[0]
++            else: raise ValueError("Missing buffer payload")
++            if len(b)<buf["byteLength"]: raise ValueError("Truncated buffer")
++            self.buffers.append(b[:buf["byteLength"]])
++
++    def view(self, index: int) -> bytes:
++        v=self.doc["bufferViews"][index];start=v.get("byteOffset",0)
++        return self.buffers[v["buffer"]][start:start+v["byteLength"]]
++
++    def accessor(self, index: int) -> np.ndarray:
++        a=self.doc["accessors"][index];w=WIDTH[a["type"]];dtype=np.dtype(DTYPES[a["componentType"]])
++        if "bufferView" in a:
++            v=self.doc["bufferViews"][a["bufferView"]]
++            off=v.get("byteOffset",0)+a.get("byteOffset",0);stride=v.get("byteStride",w*dtype.itemsize)
++            out=np.ndarray((a["count"],w),dtype=dtype,buffer=self.buffers[v["buffer"]],offset=off,strides=(stride,dtype.itemsize)).copy()
++        else: out=np.zeros((a["count"],w),dtype=dtype)
++        if "sparse" in a:
++            s=a["sparse"];ia=s["indices"];va=s["values"]
++            indices=np.frombuffer(self.view(ia["bufferView"]),dtype=DTYPES[ia["componentType"]],count=s["count"],offset=ia.get("byteOffset",0))
++            values=np.frombuffer(self.view(va["bufferView"]),dtype=dtype,count=s["count"]*w,offset=va.get("byteOffset",0)).reshape(-1,w)
++            out[indices]=values
++        if a.get("normalized") and a["componentType"] != 5126:
++            info=np.iinfo(dtype);out=np.maximum(out.astype(np.float64)/info.max,-1.) if info.min<0 else out.astype(np.float64)/info.max
++        if not np.isfinite(out).all(): raise ValueError(f"Nonfinite accessor {index}")
++        return out
++
++    def mesh_node(self):
++        nodes=[i for i,n in enumerate(self.doc.get("nodes",[])) if "mesh" in n and "skin" in n]
++        if len(nodes)!=1: raise ValueError(f"Expected one skinned mesh node, found {len(nodes)}")
++        return nodes[0]
++
++    def mesh_primitive(self):
++        n=self.doc["nodes"][self.mesh_node()];mesh=self.doc["meshes"][n["mesh"]]
++        if len(mesh["primitives"])!=1: raise ValueError("Expected one mesh primitive/surface")
++        p=mesh["primitives"][0]
++        if p.get("mode",4)!=4: raise ValueError("Expected triangles")
++        if any(x in p.get("extensions",{}) for x in ("KHR_draco_mesh_compression","EXT_meshopt_compression")):
++            raise ValueError("Compressed geometry must be decoded before canonicalization")
++        return p
++
++    def skin(self):
++        return self.doc["skins"][self.doc["nodes"][self.mesh_node()]["skin"]]
++
++    def joint_names(self):
++        return [self.doc["nodes"][i].get("name","") for i in self.skin()["joints"]]
++
++    def globals(self):
++        nodes=self.doc["nodes"];parents={}
++        for i,node in enumerate(nodes):
++            for child in node.get("children",[]):
++                if child in parents: raise ValueError("Node has multiple parents")
++                parents[child]=i
++        cache={};visiting=set()
++        def get(i):
++            if i in visiting: raise ValueError("Cyclic node hierarchy")
++            if i not in cache:
++                visiting.add(i);local=node_matrix(nodes[i])
++                cache[i]=(get(parents[i]) @ local) if i in parents else local
++                visiting.remove(i)
++            return cache[i]
++        return [get(i) for i in range(len(nodes))]
++
++    def ibms(self):
++        s=self.skin()
++        return self.accessor(s["inverseBindMatrices"]).reshape(-1,4,4).transpose(0,2,1) if "inverseBindMatrices" in s else np.repeat(np.eye(4)[None],len(s["joints"]),axis=0)
++
++
++def node_matrix(node):
++    if "matrix" in node: return np.asarray(node["matrix"],dtype=np.float64).reshape(4,4).T
++    x,y,z,w=node.get("rotation",[0,0,0,1]);s=node.get("scale",[1,1,1])
++    q=np.asarray([x,y,z,w],float);length=np.linalg.norm(q)
++    if length<1e-12: raise ValueError("Zero quaternion")
++    x,y,z,w=q/length
++    m=np.eye(4);m[:3,:3]=np.array([[1-2*(y*y+z*z),2*(x*y-z*w),2*(x*z+y*w)],
++        [2*(x*y+z*w),1-2*(x*x+z*z),2*(y*z-x*w)],
++        [2*(x*z-y*w),2*(y*z+x*w),1-2*(x*x+y*y)]]) @ np.diag(s)
++    m[:3,3]=node.get("translation",[0,0,0]);return m
++
++
++def transform_points(matrix, points):
++    return np.asarray(points,dtype=np.float64) @ matrix[:3,:3].T + matrix[:3,3]
++
++
++def normalized(v):
++    lengths=np.linalg.norm(v,axis=1,keepdims=True)
++    if np.any(lengths<1e-12): raise ValueError("Zero length direction")
++    return v/lengths
++
++
++class Builder:
++    def __init__(self, raw: GLB):
++        if len(raw.buffers)!=1: raise ValueError("Expected one GLB buffer")
++        self.doc=copy.deepcopy(raw.doc);self.bin=bytearray(raw.buffers[0])
++
++    def view(self, data, target=None):
++        self.bin.extend(b"\0"*((-len(self.bin))%4));idx=len(self.doc.setdefault("bufferViews",[]))
++        v={"buffer":0,"byteOffset":len(self.bin),"byteLength":len(data)}
++        if target: v["target"]=target
++        self.doc["bufferViews"].append(v);self.bin.extend(data);return idx
++
++    def accessor(self, values, kind, component=5126, bounds=False):
++        a=np.ascontiguousarray(values,dtype=DTYPES[component]);idx=len(self.doc.setdefault("accessors",[]))
++        entry={"bufferView":self.view(a.tobytes()),"componentType":component,"count":len(a),"type":kind}
++        if bounds: entry.update(min=a.reshape(len(a),-1).min(axis=0).tolist(),max=a.reshape(len(a),-1).max(axis=0).tolist())
++        self.doc["accessors"].append(entry);return idx
++
++    def write(self, path):
++        self.doc["buffers"]=[{"byteLength":len(self.bin)}]
++        j=json.dumps(self.doc,ensure_ascii=True,separators=(",",":"),allow_nan=False).encode();j+=b" "*((-len(j))%4)
++        b=bytes(self.bin);b+=b"\0"*((-len(b))%4)
++        payload=struct.pack("<III",0x46546c67,2,28+len(j)+len(b))+struct.pack("<II",len(j),0x4e4f534a)+j+struct.pack("<II",len(b),0x004e4942)+b
++        path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
++        tmp=path.with_suffix(path.suffix+".tmp");tmp.write_bytes(payload);tmp.replace(path)
++
++
++def skin_rest_vertices(glb: GLB):
++    p=glb.mesh_primitive();attrs=p["attributes"];pos=glb.accessor(attrs["POSITION"]).astype(float)
++    joints=glb.accessor(attrs["JOINTS_0"]).astype(int);weights=glb.accessor(attrs["WEIGHTS_0"]).astype(float)
++    globals_=glb.globals();palette=np.array([globals_[i] @ ibm for i,ibm in zip(glb.skin()["joints"],glb.ibms())])
++    out=np.zeros_like(pos)
++    for k in range(4):
++        mats=palette[joints[:,k]]
++        out+=weights[:,k,None]*(np.einsum("nij,nj->ni",mats[:,:3,:3],pos)+mats[:,:3,3])
++    return out
++
++
++def canonicalize(source_glb: Path, raw_glb: Path, output_glb: Path,
++                 sockets_json: Path, profile_json: Path) -> dict:
++    paths=[Path(p).resolve() for p in (source_glb,raw_glb,output_glb,sockets_json,profile_json)]
++    source_glb,raw_glb,output_glb,sockets_json,profile_json=paths
++    if output_glb in (source_glb,raw_glb,sockets_json) or profile_json in (source_glb,raw_glb,sockets_json,output_glb):
++        raise ValueError("Input/baseline overwrite is prohibited")
++    baseline=Path(__file__).resolve().parent.parent/"baseline"
++    if output_glb.is_relative_to(baseline) or profile_json.is_relative_to(baseline): raise ValueError("Frozen baseline write prohibited")
++    src=GLB(source_glb);raw=GLB(raw_glb);src_prim=src.mesh_primitive();prim=raw.mesh_primitive()
++    if len(src.doc["meshes"])!=1 or len(raw.doc["meshes"])!=1 or len(src.doc["skins"])!=1 or len(raw.doc["skins"])!=1:
++        raise ValueError("Only a single body mesh and skin may be exported")
++    if raw.doc.get("animations"): raise ValueError("Raw animations must not be exported")
++    source_names=src.joint_names();raw_names=raw.joint_names()
++    if len(source_names)!=14 or "neutral_bone" not in source_names or len(set(source_names))!=14: raise ValueError("Canonical source must declare all 14 unique joints")
++    if len(set(raw_names))!=len(raw_names) or set(raw_names)-set(source_names) or (set(source_names)-{"neutral_bone"})-set(raw_names):
++        raise ValueError(f"Raw joint names differ from original body: {raw_names}")
++    attrs=prim["attributes"]
++    for name in ("POSITION","NORMAL","TEXCOORD_0","JOINTS_0","WEIGHTS_0"):
++        if name not in attrs: raise ValueError(f"Raw mesh missing {name}")
++    joint_accessor=raw.doc["accessors"][attrs["JOINTS_0"]]
++    if joint_accessor["componentType"] not in (5121,5123) or joint_accessor.get("normalized",False) or joint_accessor["type"]!="VEC4":
++        raise ValueError("JOINTS_0 must use unnormalized unsigned byte/short VEC4 indices")
++    joints=raw.accessor(attrs["JOINTS_0"]).astype(np.int64);weights=raw.accessor(attrs["WEIGHTS_0"]).astype(float)
++    count=raw.doc["accessors"][attrs["POSITION"]]["count"]
++    if joints.shape!=(count,4) or weights.shape!=(count,4): raise ValueError("Expected four influences per vertex")
++    if np.any(joints<0) or np.any(joints>=len(raw_names)): raise ValueError("Joint index out of range")
++    if np.any(weights<0) or np.max(np.abs(weights.sum(axis=1)-1))>0.005: raise ValueError("Raw weights must be normalized and nonnegative")
++    for name,acc in attrs.items():
++        if name.startswith("WEIGHTS_") and name!="WEIGHTS_0" and np.any(np.abs(raw.accessor(acc))>1e-7): raise ValueError("More than four influences")
++    remap=np.array([source_names.index(n) for n in raw_names],dtype=np.uint16);joints=remap[joints]
++    if np.any(weights[joints==source_names.index("neutral_bone")]>1e-7): raise ValueError("Neutral bone visible influence prohibited")
++    weights/=weights.sum(axis=1,keepdims=True)
++    source_globals=src.globals();raw_globals=raw.globals()
++    ms=source_globals[src.mesh_node()];mr=raw_globals[raw.mesh_node()]
++    raw_rest=skin_rest_vertices(raw);raw_bind=transform_points(mr,raw.accessor(attrs["POSITION"]))
++    raw_bind_error=float(np.linalg.norm(raw_rest-raw_bind,axis=1).max())
++    if raw_bind_error>1e-5:raise ValueError(f"Raw rest bind error {raw_bind_error:.9g}m exceeds 1e-5m")
++    frame=np.linalg.inv(ms) @ mr;linear=frame[:3,:3];normal_matrix=np.linalg.inv(linear).T
++    b=Builder(raw);out_prim=b.doc["meshes"][raw.doc["nodes"][raw.mesh_node()]["mesh"]]["primitives"][0]
++    out_attrs=out_prim["attributes"]
++    positions=transform_points(frame,raw.accessor(attrs["POSITION"]))
++    base_normals=raw.accessor(attrs["NORMAL"]).astype(float);new_normals=normalized(base_normals @ normal_matrix.T)
++    out_attrs["POSITION"]=b.accessor(positions,"VEC3",bounds=True)
++    out_attrs["NORMAL"]=b.accessor(new_normals,"VEC3")
++    out_attrs["JOINTS_0"]=b.accessor(joints,"VEC4",5123)
++    out_attrs["WEIGHTS_0"]=b.accessor(weights,"VEC4")
++    for name in list(out_attrs):
++        if name.startswith(("JOINTS_","WEIGHTS_")) and name not in ("JOINTS_0","WEIGHTS_0"): del out_attrs[name]
++    if "TANGENT" in attrs:
++        t=raw.accessor(attrs["TANGENT"]).astype(float);direction=t[:,:3] @ linear.T
++        direction-=new_normals*np.sum(new_normals*direction,axis=1,keepdims=True)
++        new_tangents=normalized(direction)
++        out_attrs["TANGENT"]=b.accessor(np.c_[new_tangents,t[:,3]*np.sign(np.linalg.det(linear))],"VEC4")
++    for original,target in zip(prim.get("targets",[]),out_prim.get("targets",[])):
++        if "POSITION" in original: target["POSITION"]=b.accessor(raw.accessor(original["POSITION"]) @ linear.T,"VEC3",bounds=True)
++        if "NORMAL" in original:
++            normals=normalized((base_normals+raw.accessor(original["NORMAL"])) @ normal_matrix.T)
++            target["NORMAL"]=b.accessor(normals-new_normals,"VEC3")
++        if "TANGENT" in original:
++            if "TANGENT" not in attrs:raise ValueError("Morph tangent needs a base tangent")
++            # Tangent XYZ morphs are deltas of normalized directions, just like normals.
++            morphed_tangent=(t[:,:3]+raw.accessor(original["TANGENT"])) @ linear.T
++            target_normals=normals if "NORMAL" in original else new_normals
++            morphed_tangent-=target_normals*np.sum(target_normals*morphed_tangent,axis=1,keepdims=True)
++            target["TANGENT"]=b.accessor(normalized(morphed_tangent)-new_tangents,"VEC3")
++    if np.linalg.det(linear)<0:
++        indices=raw.accessor(prim["indices"]).ravel().reshape(-1,3)[:,[0,2,1]].ravel()
++        out_prim["indices"]=b.accessor(indices,"SCALAR",5125)
++    b.doc["nodes"]=copy.deepcopy(src.doc["nodes"])
++    b.doc["skins"]=copy.deepcopy(src.doc["skins"])
++    # Preserve IBM payload bit-for-bit; only its accessor index changes.
++    b.doc["skins"][0]["inverseBindMatrices"]=b.accessor(src.ibms().transpose(0,2,1).reshape(-1,16),"MAT4")
++    for key in ("scenes","scene"):
++        if key in src.doc: b.doc[key]=copy.deepcopy(src.doc[key])
++        else: b.doc.pop(key,None)
++    # Source nodes reference mesh 0. New raw body is required to be the sole mesh.
++    for image in b.doc.get("images",[]):
++        if "uri" in image:
++            uri=image.pop("uri");data=base64.b64decode(uri.split(",",1)[1]) if uri.startswith("data:") else (raw.path.parent/uri).read_bytes()
++            image["bufferView"]=b.view(data);image["mimeType"]="image/png" if data.startswith(b"\x89PNG") else "image/jpeg"
++    sockets=json.loads(sockets_json.read_text(encoding="utf-8"))
++    if sockets.get("version")!=1 or sockets.get("role") not in ("player","foe") or sockets.get("space")!="blender_world_z_up":
++        raise ValueError("Socket schema must be version 1, role player/foe, blender_world_z_up")
++    hand_sockets={}
++    for side,bone in (("front","forearm_f"),("rear","forearm_b")):
++        forearm=source_globals[src.skin()["joints"][source_names.index(bone)]];inv=np.linalg.inv(forearm)
++        hand_sockets[side]={}
++        for state in ("open","half","closed"):
++            point=np.asarray(sockets[side][state],dtype=float)
++            if point.shape!=(3,) or not np.isfinite(point).all(): raise ValueError("Socket must be a finite 3-vector")
++            yup=np.array([point[0],point[2],-point[1]])
++            hand_sockets[side][state]=transform_points(inv,yup).tolist()
++    profile={"version":1,"role":sockets["role"],"hand_sockets":hand_sockets}
++    b.doc.setdefault("asset",{})["generator"]="CardBoxer canonical GLB bridge v1 (original node/skin basis)"
++    b.write(output_glb)
++    profile_json.parent.mkdir(parents=True,exist_ok=True)
++    profile_json.write_text(json.dumps(profile,indent=2,allow_nan=False)+"\n",encoding="utf-8")
++    final=GLB(output_glb)
++    final_rest=skin_rest_vertices(final)
++    final_bind=transform_points(ms,positions)
++    report={"version":1,"source":str(source_glb),"raw":str(raw_glb),"output":str(output_glb),
++        "source_sha256":sha256(source_glb),"raw_sha256":sha256(raw_glb),"output_sha256":sha256(output_glb),
++        "profile_sha256":sha256(profile_json),"vertices":count,
++        "triangles":int(raw.doc["accessors"][prim["indices"]]["count"]//3),"skin_joints":len(source_names),
++        "source_mesh_global":ms.tolist(),"raw_mesh_global":mr.tolist(),"raw_to_source_bind":frame.tolist(),
++        "raw_rest_bind_error_m":float(np.linalg.norm(raw_rest-raw_bind,axis=1).max()),
++        "canonical_rest_bind_error_m":float(np.linalg.norm(final_rest-final_bind,axis=1).max()),
++        "world_rest_transfer_error_m":float(np.linalg.norm(final_rest-raw_rest,axis=1).max()),
++        "original_nodes_exact":final.doc["nodes"]==src.doc["nodes"],
++        "original_ibms_exact":bool(np.array_equal(final.ibms(),src.ibms())),
++        "sockets_source":str(sockets_json),"sockets_source_sha256":sha256(sockets_json),
++        "pipeline_sha256":sha256(Path(__file__)),
++        "joint_remap":{name:source_names.index(name) for name in raw_names},
++        "image_sha256":[hashlib.sha256(final.view(im["bufferView"])).hexdigest() for im in final.doc.get("images",[])]}
++    return report
++
++
++def main():
++    parser=argparse.ArgumentParser(description=__doc__)
++    for name in ("source_glb","raw_glb","output_glb","sockets_json","profile_json"): parser.add_argument(name,type=Path)
++    parser.add_argument("--report",type=Path)
++    args=parser.parse_args();report=canonicalize(args.source_glb,args.raw_glb,args.output_glb,args.sockets_json,args.profile_json)
++    if args.report: args.report.write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
++    print(json.dumps(report,indent=2))
++
++
++if __name__=="__main__": main()
+
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\check_retopology_assets.py
+SHA256: ea2cc1f1e696a44a082918fbfc15aef7cc2ebe6d20d7f32995099f7ba0531384
+--- absent-at-V2-baseline
++++ D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\check_retopology_assets.py
+@@ -0,0 +1,252 @@
++"""Read-only acceptance gates for canonical character retopology GLBs."""
++from __future__ import annotations
++import argparse
++import json
++import struct
++import sys
++import zlib
++from functools import lru_cache
++from pathlib import Path
++import numpy as np
++sys.path.insert(0,str(Path(__file__).resolve().parent))
++from canonical_glb import GLB, SHAPES, sha256, skin_rest_vertices, transform_points
++
++
++@lru_cache(maxsize=12)
++def image_dimensions(data):
++    """Check PNG integrity and complete scanline payload, not just its header."""
++    if not data.startswith(b"\x89PNG\r\n\x1a\n"):raise ValueError("PBR atlas must be PNG")
++    off=8;header=None;compressed=bytearray();ended=False
++    while off<len(data):
++        if off+12>len(data):raise ValueError("Truncated PNG chunk")
++        count=struct.unpack_from(">I",data,off)[0];kind=data[off+4:off+8];end=off+8+count
++        if end+4>len(data):raise ValueError("Truncated PNG payload")
++        payload=data[off+8:end]
++        if zlib.crc32(kind+payload)!=struct.unpack_from(">I",data,end)[0]:raise ValueError("PNG CRC mismatch")
++        if header is None and kind!=b"IHDR":raise ValueError("PNG IHDR must be first")
++        if kind==b"IHDR":
++            if header is not None or count!=13:raise ValueError("Invalid PNG IHDR")
++            header=struct.unpack(">IIBBBBB",payload)
++        elif kind==b"IDAT":compressed.extend(payload)
++        elif kind==b"IEND":
++            if count or end+4!=len(data):raise ValueError("Invalid PNG end")
++            ended=True;break
++        off=end+4
++    if not header or not ended or not compressed:raise ValueError("Incomplete PNG")
++    width,height,depth,colour,compression,filtering,interlace=header
++    channels={0:1,2:3,3:1,4:2,6:4}.get(colour)
++    allowed={0:(1,2,4,8,16),2:(8,16),3:(1,2,4,8),4:(8,16),6:(8,16)}
++    if not channels or depth not in allowed[colour] or compression or filtering or interlace not in (0,1) or min(width,height)<1 or max(width,height)>4096:
++        raise ValueError("Invalid or oversized PNG encoding")
++    passes=[(0,0,1,1)] if not interlace else [(0,0,8,8),(4,0,8,8),(0,4,4,8),(2,0,4,4),(0,2,2,4),(1,0,2,2),(0,1,1,2)]
++    rows=[]
++    for x,y,dx,dy in passes:
++        pw=max(0,(width-x+dx-1)//dx);ph=max(0,(height-y+dy-1)//dy)
++        if pw and ph:rows.extend([1+(pw*channels*depth+7)//8]*ph)
++    expected=sum(rows);decoder=zlib.decompressobj()
++    try:decoded=decoder.decompress(bytes(compressed),expected+1)
++    except zlib.error as exc:raise ValueError("Invalid PNG compression") from exc
++    if len(decoded)!=expected or not decoder.eof or decoder.unused_data:raise ValueError("PNG scanline payload mismatch")
++    cursor=0
++    for stride in rows:
++        if decoded[cursor]>4:raise ValueError("Invalid PNG row filter")
++        cursor+=stride
++    return [width,height]
++
++
++def point_surface_distance(point, triangles):
++    """Minimum Euclidean distance to triangles, including interior projections."""
++    if len(triangles)==0: return float("inf")
++    a,b,c=triangles[:,0],triangles[:,1],triangles[:,2]
++    best=np.full(len(a),np.inf)
++    for start,end in ((a,b),(b,c),(c,a)):
++        e=end-start;t=np.clip(np.sum((point-start)*e,axis=1)/np.maximum(np.sum(e*e,axis=1),1e-30),0,1)
++        best=np.minimum(best,np.sum((point-(start+t[:,None]*e))**2,axis=1))
++    u=b-a;v=c-a;n=np.cross(u,v);n2=np.sum(n*n,axis=1)
++    dist=np.sum((point-a)*n,axis=1)/np.maximum(n2,1e-30)
++    projection=point-dist[:,None]*n;q=projection-a
++    uu=np.sum(u*u,axis=1);uv=np.sum(u*v,axis=1);vv=np.sum(v*v,axis=1)
++    qu=np.sum(q*u,axis=1);qv=np.sum(q*v,axis=1);den=uu*vv-uv*uv
++    s=(vv*qu-uv*qv)/np.maximum(den,1e-30);t=(uu*qv-uv*qu)/np.maximum(den,1e-30)
++    inside=(s>=0)&(t>=0)&(s+t<=1)&(n2>1e-20)
++    best[inside]=np.minimum(best[inside],dist[inside]**2*n2[inside])
++    return float(np.sqrt(best.min()))
++
++
++def _check_asset(source_glb: Path, candidate_glb: Path, profile_json: Path|None=None) -> dict:
++    result={"version":1,"source":str(Path(source_glb).resolve()),"candidate":str(Path(candidate_glb).resolve()),"ok":False,"errors":[],"warnings":[],"metrics":{}}
++    def error(code,detail): result["errors"].append({"code":code,"detail":str(detail)})
++    def warning(code,detail): result["warnings"].append({"code":code,"detail":str(detail)})
++    try:
++        src=GLB(source_glb);g=GLB(candidate_glb);sp=src.mesh_primitive();p=g.mesh_primitive()
++    except Exception as exc:
++        error("glb_structure",exc);return result
++    d=g.doc;names=g.joint_names();original_names=src.joint_names();a=p["attributes"]
++    result.update(source_sha256=sha256(source_glb),candidate_sha256=sha256(candidate_glb))
++    if len(d.get("meshes",[]))!=1 or len(d.get("skins",[]))!=1 or len([n for n in d["nodes"] if "mesh" in n])!=1:
++        error("single_mesh_skin","Runtime needs exactly one body mesh node and one skin")
++    if d["nodes"]!=src.doc["nodes"]: error("canonical_nodes","Names, hierarchy, rest TRS/matrices and mesh/skeleton node transforms must exactly match source")
++    if names!=original_names or len(names)!=14: error("joint_declaration",f"Expected all original 14 joints in original order: {names}")
++    if g.skin().get("joints")!=src.skin().get("joints"): error("joint_indices","Original skin joint node declaration changed")
++    if not np.array_equal(g.ibms(),src.ibms()): error("inverse_bind_matrices","Original IBM values changed")
++    if {k:v for k,v in g.skin().items() if k!="inverseBindMatrices"}!={k:v for k,v in src.skin().items() if k!="inverseBindMatrices"}:
++        error("skin_metadata","Original skin metadata changed")
++    if d.get("scenes")!=src.doc.get("scenes") or d.get("scene")!=src.doc.get("scene"): error("canonical_scene","Original scene root declaration changed")
++    if d.get("animations"): error("no_animations","Runtime body quaternion data must remain external")
++    if len(d.get("materials",[]))!=1 or p.get("material")!=0: error("single_material","One PBR atlas material at surface 0 required")
++    missing=[n for n in ("POSITION","NORMAL","TEXCOORD_0","JOINTS_0","WEIGHTS_0") if n not in a]
++    if missing: error("vertex_attributes",missing);return result
++    try:
++        pos=g.accessor(a["POSITION"]).astype(float);normal=g.accessor(a["NORMAL"]).astype(float)
++        joints=g.accessor(a["JOINTS_0"]).astype(int);weights=g.accessor(a["WEIGHTS_0"]).astype(float)
++        indices=g.accessor(p["indices"]).astype(int).ravel()
++    except Exception as exc: error("accessors",exc);return result
++    metrics=result["metrics"];metrics.update(vertices=len(pos),triangles=len(indices)//3,joints=len(names),surfaces=1,materials=len(d.get("materials",[])))
++    if len(indices)%3 or np.any(indices<0) or np.any(indices>=len(pos)): error("triangle_indices","Invalid triangle indices");return result
++    if len(indices)//3>80000: error("triangle_budget",f"{len(indices)//3} exceeds 80000")
++    if len(pos)==0: error("empty_geometry","No vertices");return result
++    if normal.shape!=pos.shape or np.max(np.abs(np.linalg.norm(normal,axis=1)-1))>.01: error("normal_length","Vertex normals must be finite unit vectors")
++    try:
++        uv=g.accessor(a["TEXCOORD_0"])
++        if uv.shape!=(len(pos),2) or np.any(uv < -1e-6) or np.any(uv > 1+1e-6):error("atlas_uv","UV0 must be finite VEC2 per vertex within the 0..1 atlas")
++        if "TANGENT" not in a:error("tangent_basis","Tangent normal atlas requires an exported UV0 tangent basis")
++        else:
++            tangent=g.accessor(a["TANGENT"])
++            if tangent.shape!=(len(pos),4) or np.max(np.abs(np.linalg.norm(tangent[:,:3],axis=1)-1))>.01 or np.max(np.abs(np.sum(tangent[:,:3]*normal,axis=1)))>.01 or np.any(np.abs(np.abs(tangent[:,3])-1)>1e-5):
++                error("tangent_basis","Tangents must be finite unit XYZ perpendicular to normal, W +/-1")
++    except Exception as exc:error("tangent_basis",exc)
++    tri=pos[indices.reshape(-1,3)];areas=np.linalg.norm(np.cross(tri[:,1]-tri[:,0],tri[:,2]-tri[:,0]),axis=1)*.5
++    metrics["degenerate_triangles"]=int(np.sum(areas<1e-12))
++    if metrics["degenerate_triangles"]: error("degenerate_triangles",metrics["degenerate_triangles"])
++    if joints.shape!=(len(pos),4) or weights.shape!=(len(pos),4): error("four_influences","Exactly JOINTS_0/WEIGHTS_0 VEC4 required");return result
++    joint_accessor=d["accessors"][a["JOINTS_0"]]
++    if joint_accessor["componentType"] not in (5121,5123) or joint_accessor.get("normalized",False) or joint_accessor["type"]!="VEC4":
++        error("joint_format","JOINTS_0 requires unnormalized unsigned byte/short VEC4")
++    if np.any(joints<0) or np.any(joints>=len(names)): error("joint_range","Out of range JOINTS_0");return result
++    weights_error=float(np.max(np.abs(weights.sum(axis=1)-1)));metrics["weight_sum_error"]=weights_error
++    if np.any(weights<0) or weights_error>1e-5: error("normalized_weights",weights_error)
++    for key,value in a.items():
++        if key.startswith("WEIGHTS_") and key!="WEIGHTS_0" and np.any(np.abs(g.accessor(value))>1e-7): error("four_influences",key)
++    neutral=names.index("neutral_bone") if "neutral_bone" in names else -1
++    neutral_max=float(np.max(np.where(joints==neutral,weights,0)));metrics["neutral_max_weight"]=neutral_max
++    if neutral_max>1e-7: error("neutral_influence",neutral_max)
++    world=transform_points(g.globals()[g.mesh_node()],pos)
++    metrics["rest_bind_error_m"]=float(np.linalg.norm(skin_rest_vertices(g)-world,axis=1).max())
++    if metrics["rest_bind_error_m"]>1e-5: error("rest_deformation",metrics["rest_bind_error_m"])
++    original_pos=src.accessor(sp["attributes"]["POSITION"])
++    unchanged=(pos.shape==original_pos.shape and np.array_equal(pos.astype(np.float32),original_pos) and np.array_equal(indices,src.accessor(sp["indices"]).ravel()))
++    if unchanged: error("new_geometry","Candidate still contains the original indexed geometry")
++    source_world=transform_points(src.globals()[src.mesh_node()],original_pos)
++    metrics["sole_y_deviation_m"]=float(abs(world[:,1].min()-source_world[:,1].min()))
++    if metrics["sole_y_deviation_m"]>.02: error("sole_deviation",metrics["sole_y_deviation_m"])
++    # Source-bound hand envelope: distal forearm region and its own forearm group.
++    # This excludes every boot/body vertex and the opposing hand, while allowing
++    # new fingers/UV seams and changed vertex counts without authored index masks.
++    hand_masks={};globals_=g.globals();source_globals=src.globals();source_joints=src.skin()["joints"]
++    source_weights=src.accessor(sp["attributes"]["WEIGHTS_0"]);source_indices=src.accessor(sp["attributes"]["JOINTS_0"])
++    for side,bone in (("front","forearm_f"),("rear","forearm_b")):
++        if bone not in names: continue
++        idx=names.index(bone);own=np.sum(weights*(joints==idx),axis=1)
++        local=transform_points(np.linalg.inv(globals_[g.skin()["joints"][idx]]),world)
++        source_i=source_joints[original_names.index(bone)]
++        source_local=transform_points(np.linalg.inv(source_globals[source_i]),source_world)
++        source_own=np.sum(source_weights*(source_indices==original_names.index(bone)),axis=1)
++        weighted=source_own>=.25
++        # Original forearm geometry determines its distal region. Upperarm length
++        # is unrelated to the wrist and falsely rejects the foe's shorter hands.
++        distal_start=float(source_local[weighted,1].max())*.5 if weighted.any() else float("inf")
++        source_hand=weighted&(source_local[:,1]>=distal_start)
++        hand_masks[side]=(own>=.25)&(local[:,1]>=distal_start)
++        metrics[side+"_hand_distal_start_local_m"]=distal_start if np.isfinite(distal_start) else None
++        if source_hand.any():
++            lo=source_local[source_hand].min(axis=0)-.02;hi=source_local[source_hand].max(axis=0)+.02
++            hand_masks[side]&=np.all((local>=lo)&(local<=hi),axis=1)
++            metrics[side+"_source_hand_bounds_local_m"]=[lo.tolist(),hi.tolist()]
++        else:
++            hand_masks[side][:]=False
++            error("source_hand_bounds",f"No original distal {bone} vertices")
++        metrics[side+"_hand_envelope_vertices"]=int(hand_masks[side].sum())
++    mesh=d["meshes"][d["nodes"][g.mesh_node()]["mesh"]]
++    shape_names=mesh.get("extras",{}).get("targetNames",[]);targets=p.get("targets",[])
++    metrics["morph_names"]=shape_names
++    if len(shape_names)!=4 or set(shape_names)!=set(SHAPES) or len(targets)!=4: error("required_morphs",f"Expected exact four grip targets; got {shape_names}")
++    defaults=mesh.get("weights",[0]*len(targets));node_defaults=d["nodes"][g.mesh_node()].get("weights",defaults)
++    if len(defaults)!=len(targets) or any(v!=0 for v in defaults) or any(v!=0 for v in node_defaults): error("morph_defaults","Basis must be open, all morph defaults zero")
++    morphs={}
++    for name,target in zip(shape_names,targets):
++        if "POSITION" not in target: error("morph_position",name);continue
++        try:delta=g.accessor(target["POSITION"]).astype(float)
++        except Exception as exc:error("morph_accessor",f"{name}.POSITION: {exc}");continue
++        if delta.shape!=pos.shape: error("morph_count",name);continue
++        morphs[name]=delta;active=np.linalg.norm(delta,axis=1)>1e-8
++        side="front" if name.endswith("_f") else "rear";mask=hand_masks.get(side,np.zeros(len(pos),bool))
++        for semantic,accessor in target.items():
++            try:values=g.accessor(accessor)
++            except Exception as exc:error("morph_accessor",f"{name}.{semantic}: {exc}");continue
++            if values.shape!=pos.shape:error("morph_count",f"{name}.{semantic}");continue
++            affected=np.any(np.abs(values)>1e-8,axis=1)
++            if np.any(affected & ~mask): error("morph_hand_only",f"{name}.{semantic}: {int(np.sum(affected & ~mask))} vertices outside its own distal forearm/hand")
++        metrics[name+"_active_vertices"]=int(active.sum())
++        if not active.any(): error("nonempty_morph",name)
++        if np.any(np.linalg.norm(delta,axis=1)>.3): error("morph_spike",name)
++    if len(d.get("images",[]))!=3: error("pbr_images","Exactly 3 embedded 4096x4096 PNG atlases required")
++    sizes=[]
++    for image in d.get("images",[]):
++        try:
++            if "uri" in image: error("embedded_images",image["uri"]);continue
++            size=image_dimensions(g.view(image["bufferView"]));sizes.append(size)
++            if size!=[4096,4096]: error("atlas_resolution",size)
++        except Exception as exc: error("pbr_image",exc)
++    metrics["image_sizes"]=sizes
++    if len(d.get("materials",[]))==1:
++        m=d["materials"][0];pbr=m.get("pbrMetallicRoughness",{})
++        texture_refs=[pbr.get("baseColorTexture"),m.get("normalTexture"),pbr.get("metallicRoughnessTexture")]
++        if any(x is None for x in texture_refs): error("pbr_channels","Base color, tangent normal and metallic/roughness textures required")
++        else:
++            try:
++                if any(x.get("texCoord",0)!=0 or x.get("extensions",{}).get("KHR_texture_transform") for x in texture_refs+[m.get("occlusionTexture",{})]):
++                    error("pbr_texcoord","All PBR roles must use the authored UV0 atlas without extra texture transforms")
++                image_indices=[d["textures"][x["index"]]["source"] for x in texture_refs]
++                if len(set(image_indices))!=3: error("pbr_channels","PBR roles must reference three distinct images")
++                ao=m.get("occlusionTexture")
++                if not ao or d["textures"][ao["index"]]["source"]!=image_indices[2]: error("orm_occlusion","Occlusion must use the same ORM image as metallic/roughness")
++            except (KeyError,IndexError) as exc: error("pbr_texture_indices",exc)
++    if profile_json is not None:
++        try:
++            profile=json.loads(Path(profile_json).read_text(encoding="utf-8"))
++            if profile.get("version")!=1 or profile.get("role") not in ("player","foe"): raise ValueError("Invalid profile version/role")
++            for side,bone,half,full in (("front","forearm_f","grip_half_f","grip_f"),("rear","forearm_b","grip_half_b","grip_b")):
++                for state,name in (("open",None),("half",half),("closed",full)):
++                    point=np.asarray(profile["hand_sockets"][side][state],dtype=float)
++                    if point.shape!=(3,) or not np.isfinite(point).all(): raise ValueError("Socket must be finite VEC3")
++                    socket_world=transform_points(globals_[g.skin()["joints"][names.index(bone)]],point)
++                    vertices=transform_points(globals_[g.mesh_node()],pos+(morphs[name] if name else 0))
++                    hand_tris=np.any(hand_masks[side][indices.reshape(-1,3)],axis=1)
++                    distance=point_surface_distance(socket_world,vertices[indices.reshape(-1,3)[hand_tris]])
++                    metrics[side+"_"+state+"_socket_surface_error_m"]=distance
++                    if distance>.02: error("socket_surface",f"{side}.{state}: {distance:.6f}m")
++        except Exception as exc: error("profile",exc)
++    else: warning("profile_unchecked","Supply --profile to verify contact sockets on open/half/closed geometry")
++    warning("visual_runtime_required","Surface openings, silhouette, all19 clips/both facings and render performance require the root's visual/runtime acceptance")
++    result["ok"]=not result["errors"]
++    return result
++
++
++def check_asset(source_glb: Path, candidate_glb: Path, profile_json: Path|None=None) -> dict:
++    """Malformed input is a failed gate with diagnostics, never an uncaught crash."""
++    try:return _check_asset(source_glb,candidate_glb,profile_json)
++    except (ValueError,KeyError,IndexError,TypeError,OSError,struct.error,np.linalg.LinAlgError) as exc:
++        return {"version":1,"source":str(Path(source_glb).resolve()),"candidate":str(Path(candidate_glb).resolve()),
++                "ok":False,"errors":[{"code":"malformed_asset","detail":str(exc)}],"warnings":[],"metrics":{}}
++
++
++def main():
++    parser=argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("source_glb",type=Path);parser.add_argument("candidate_glb",type=Path)
++    parser.add_argument("--profile",type=Path);parser.add_argument("--report",type=Path)
++    args=parser.parse_args();report=check_asset(args.source_glb,args.candidate_glb,args.profile)
++    if args.report: args.report.write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
++    print(json.dumps(report,indent=2));return 0 if report["ok"] else 1
++
++
++if __name__=="__main__": raise SystemExit(main())
+
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\pipeline_author_audit.py
+SHA256: 8d6fed4bfeea84f109acede995fa1e13e6d67f06d63002c21640a641c3865f87
+--- absent-at-V2-baseline
++++ D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\pipeline_author_audit.py
+@@ -0,0 +1,33 @@
++"""Diagnostic canonical assembly/acceptance, strictly within tools/ output paths.
++
++This is not promotion. Authors may replace raw inputs while refining; record hashes.
++"""
++import json
++from pathlib import Path
++from canonical_glb import GLB,canonicalize,sha256
++from check_retopology_assets import check_asset
++
++ROOT=Path(__file__).resolve().parent.parent
++OUT=ROOT/"tools/pipeline_author_audit"
++OUT.mkdir(exist_ok=True)
++inventory=[]
++for role in ("player","foe"):
++    source=ROOT/"baseline/assets/3d"/(role+"-rigged.glb")
++    raw=ROOT/"authoring"/role/(role+"-raw.glb")
++    sockets=raw.parent/"contact-sockets.json";profile=OUT/(role+"-diagnostic-profile.json")
++    output=OUT/(role+"-diagnostic-canonical.glb")
++    g=GLB(source);parents={child:i for i,n in enumerate(g.doc["nodes"]) for child in n.get("children",[])}
++    inventory.append(dict(role=role,source_sha256=sha256(source),nodes=g.doc["nodes"],skin=g.skin(),ibms=g.ibms().tolist(),
++                          joints=[dict(name=g.doc["nodes"][i]["name"],node=i,parent=parents.get(i),global_matrix=g.globals()[i].tolist()) for i in g.skin()["joints"]]))
++    raw_before=sha256(raw);sockets_before=sha256(sockets)
++    try:
++        bridge=canonicalize(source,raw,output,sockets,profile)
++        (OUT/(role+"-bridge-report.json")).write_text(json.dumps(bridge,indent=2)+"\n",encoding="utf-8")
++        report=check_asset(source,output,profile)
++    except Exception as exc:
++        report={"ok":False,"errors":[{"code":"canonicalize","detail":str(exc)}]}
++    report.update(raw_sha256=raw_before,sockets_sha256=sockets_before,
++                  inputs_stable_during_audit=raw_before==sha256(raw) and sockets_before==sha256(sockets))
++    (OUT/(role+"-acceptance-report.json")).write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
++    print("DIAGNOSTIC_AUTHOR_ACCEPTANCE",role,json.dumps(report,indent=2),flush=True)
++(OUT/"source-contract-inventory.json").write_text(json.dumps(inventory,indent=2)+"\n",encoding="utf-8")
+
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\pipeline_blender_roundtrip.py
+SHA256: c291fbf6ff8621204501805c7087231ec77f4fa50ecb5d487ddd516b800f034c
+--- absent-at-V2-baseline
++++ D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\pipeline_blender_roundtrip.py
+@@ -0,0 +1,37 @@
++"""Owned background Blender diagnostic: import/export each frozen source unedited.
++
++Run: blender --background --factory-startup --python this_file.py
++Only writes tools/pipeline_roundtrip/ and logs its Blender version/options.
++"""
++import hashlib
++import json
++from pathlib import Path
++import bpy
++
++ROOT=Path(__file__).resolve().parent.parent
++OUT=ROOT/"tools/pipeline_roundtrip"
++OUT.mkdir(exist_ok=True)
++OPTIONS=dict(export_format="GLB",use_selection=True,export_skins=True,
++             export_morph=True,export_morph_normal=True,export_animations=False,
++             export_apply=False,export_yup=True,export_materials="EXPORT")
++records=[]
++for role in ("player","foe"):
++    bpy.ops.wm.read_factory_settings(use_empty=True)
++    source=ROOT/"baseline/assets/3d"/(role+"-rigged.glb")
++    before=hashlib.sha256(source.read_bytes()).hexdigest()
++    bpy.ops.import_scene.gltf(filepath=str(source))
++    meshes=[o for o in bpy.context.scene.objects if o.type=="MESH" and any(m.type=="ARMATURE" for m in o.modifiers)]
++    armatures=[o for o in bpy.context.scene.objects if o.type=="ARMATURE"]
++    assert len(meshes)==len(armatures)==1,(meshes,armatures)
++    bpy.ops.object.select_all(action="DESELECT")
++    for obj in meshes+armatures:obj.select_set(True)
++    raw=OUT/(role+"-roundtrip-raw.glb")
++    bpy.ops.export_scene.gltf(filepath=str(raw),**OPTIONS)
++    assert hashlib.sha256(source.read_bytes()).hexdigest()==before,"Source modified"
++    records.append(dict(role=role,source=str(source),source_sha256=before,
++                        raw=str(raw),raw_sha256=hashlib.sha256(raw.read_bytes()).hexdigest(),
++                        blender_version=bpy.app.version_string,export_options=OPTIONS,
++                        mesh_vertices=len(meshes[0].data.vertices),mesh_polygons=len(meshes[0].data.polygons),
++                        armature_bones=[bone.name for bone in armatures[0].data.bones]))
++(OUT/"blender-roundtrip-provenance.json").write_text(json.dumps(records,indent=2)+"\n",encoding="utf-8")
++print("PIPELINE_UNEDITED_ROUNDTRIP_EXPORTED",json.dumps(records,indent=2))
+
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\pipeline_roundtrip_test.py
+SHA256: 53aa71fb388ca3992492b75b9c507558375388bfbe29ca6ad2640c0f65e40c01
+--- absent-at-V2-baseline
++++ D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\pipeline_roundtrip_test.py
+@@ -0,0 +1,68 @@
++"""Real Blender roundtrip compatibility tests; first run pipeline_blender_roundtrip.py.
++
++No authoring/project/baseline writes. Outputs and provenance stay in tools/.
++Vertex comparisons use symmetric nearest distances to handle exporter seam ordering.
++"""
++import itertools
++import json
++import unittest
++from pathlib import Path
++import numpy as np
++from canonical_glb import GLB,canonicalize,sha256,skin_rest_vertices,transform_points
++
++ROOT=Path(__file__).resolve().parent.parent
++OUT=ROOT/"tools/pipeline_roundtrip"
++
++
++def nearest_error(reference,points,tolerance=1e-5):
++    """Spatial hash independent of exporter ordering; search neighboring cells."""
++    cells={}
++    for i,key in enumerate(np.floor(reference/tolerance).astype(np.int64)):
++        cells.setdefault(tuple(key),[]).append(i)
++    offsets=list(itertools.product((-1,0,1),repeat=3));worst=0.
++    for point,key in zip(points,np.floor(points/tolerance).astype(np.int64)):
++        candidates=[]
++        for delta in offsets:candidates.extend(cells.get(tuple(key+delta),()))
++        if not candidates:return float("inf")
++        distance=float(np.linalg.norm(reference[candidates]-point,axis=1).min())
++        worst=max(worst,distance)
++    return worst
++
++
++class RealRoundtripTests(unittest.TestCase):
++    def verify_role(self,role):
++        source=ROOT/"baseline/assets/3d"/(role+"-rigged.glb")
++        raw=OUT/(role+"-roundtrip-raw.glb");output=OUT/(role+"-roundtrip-canonical.glb")
++        before=sha256(source)
++        self.assertTrue(raw.is_file(),"Run the owned Blender diagnostic before this test")
++        socket=OUT/(role+"-diagnostic-sockets.json");profile=OUT/(role+"-diagnostic-profile.json")
++        socket.write_text(json.dumps({"version":1,"role":role,"space":"blender_world_z_up",
++                                     **{side:{state:[0,0,0] for state in ("open","half","closed")} for side in ("front","rear")}}),encoding="utf-8")
++        report=canonicalize(source,raw,output,socket,profile)
++        s=GLB(source);g=GLB(output);r=GLB(raw)
++        self.assertEqual(g.doc["nodes"],s.doc["nodes"])
++        self.assertEqual(g.joint_names(),s.joint_names());self.assertEqual(len(g.joint_names()),14)
++        self.assertEqual({k:v for k,v in g.skin().items() if k!="inverseBindMatrices"},{k:v for k,v in s.skin().items() if k!="inverseBindMatrices"})
++        np.testing.assert_array_equal(g.ibms(),s.ibms())
++        source_pos=s.accessor(s.mesh_primitive()["attributes"]["POSITION"])
++        canonical_pos=g.accessor(g.mesh_primitive()["attributes"]["POSITION"])
++        canonical_to_source=nearest_error(source_pos,canonical_pos)
++        source_to_canonical=nearest_error(canonical_pos,source_pos)
++        self.assertLessEqual(canonical_to_source,1e-5);self.assertLessEqual(source_to_canonical,1e-5)
++        world=transform_points(g.globals()[g.mesh_node()],canonical_pos)
++        rest_error=float(np.linalg.norm(skin_rest_vertices(g)-world,axis=1).max())
++        self.assertLessEqual(rest_error,1e-5);self.assertLessEqual(report["world_rest_transfer_error_m"],1e-5)
++        self.assertEqual(before,sha256(source))
++        report.update(canonical_to_source_max_m=canonical_to_source,source_to_canonical_max_m=source_to_canonical,
++                      source_vertices=len(source_pos),raw_nodes_equal_source=r.doc["nodes"]==s.doc["nodes"],
++                      raw_ibms_equal_source=bool(np.array_equal(r.ibms(),s.ibms())),
++                      source_unchanged=True,diagnostic_sockets_only=True,
++                      test_script_sha256=sha256(Path(__file__)))
++        (OUT/(role+"-roundtrip-report.json")).write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
++        print("REAL_ROUNDTRIP_PASS",role,canonical_to_source,source_to_canonical,rest_error,flush=True)
++
++    def test_player_unedited_roundtrip_original_rig_and_rest_geometry(self):self.verify_role("player")
++    def test_foe_unedited_roundtrip_original_rig_and_rest_geometry(self):self.verify_role("foe")
++
++
++if __name__=="__main__":unittest.main(verbosity=2)
+
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\pipeline_test.py
+SHA256: c5b02e824385c7db85de8f3e2db082262c74ac5726a95e172cd64a6b97b31c86
+--- absent-at-V2-baseline
++++ D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\pipeline_test.py
+@@ -0,0 +1,312 @@
++"""Executable compatibility tests; run with Blender's bundled Python (NumPy)."""
++from __future__ import annotations
++import copy
++import importlib.util
++import json
++import struct
++import tempfile
++import unittest
++import zlib
++from pathlib import Path
++import numpy as np
++
++HERE = Path(__file__).resolve().parent
++BASE = HERE.parent / "baseline/assets/3d"
++NAMES = ["hips", "spine", "chest", "neck", "head", "upperarm_b", "forearm_b",
++         "upperarm_f", "forearm_f", "thigh_b", "shin_b", "thigh_f", "shin_f", "neutral_bone"]
++SHAPES = ["grip_half_f", "grip_f", "grip_half_b", "grip_b"]
++
++
++def owned_fixture_dir():
++    directory=tempfile.TemporaryDirectory(prefix="pipeline_fixture_",dir=HERE)
++    if not Path(directory.name).resolve().is_relative_to(HERE.resolve()):
++        raise ValueError("Fixture cleanup must stay within owned tools workspace")
++    return directory
++
++
++def read_glb(path):
++    b = Path(path).read_bytes()
++    n = struct.unpack_from("<I", b, 12)[0]
++    d = json.loads(b[20:20+n])
++    off = 20+n
++    bn = struct.unpack_from("<I", b, off)[0]
++    return d, b[off+8:off+8+bn]
++
++
++def fixture(path, raw=False, body_leak=False):
++    """Independent fixture writer: nonidentity mesh frame + reordered raw joints."""
++    d = {"asset": {"version": "2.0"}, "buffers": [{"byteLength": 0}],
++         "bufferViews": [], "accessors": [], "nodes": [], "scenes": [{"nodes": [14, 15]}],
++         "scene": 0, "materials": [{}]}
++    blob = bytearray()
++
++    def add(a, kind, component=5126):
++        a = np.asarray(a, dtype={5126:"<f4",5123:"<u2"}[component])
++        while len(blob) % 4: blob.append(0)
++        view = len(d["bufferViews"])
++        d["bufferViews"].append({"buffer":0,"byteOffset":len(blob),"byteLength":a.nbytes})
++        blob.extend(a.tobytes())
++        idx = len(d["accessors"])
++        d["accessors"].append({"bufferView":view,"componentType":component,"count":len(a),"type":kind})
++        return idx
++
++    for i, name in enumerate(NAMES):
++        d["nodes"].append({"name":name, "translation":[0,float(i)/100,0]})
++    # Both forearms retain anatomically named parents. Independent neutral root.
++    d["nodes"][5]["children"] = [6]
++    d["nodes"][7]["children"] = [8]
++    d["nodes"].append({"name":"original_rig","children":[i for i in range(14) if i not in (6,8)]})
++    if raw:
++        # An importer guessed bone basis. It must NEVER become the output basis.
++        d["nodes"][6]["rotation"] = [0,0,np.sin(.37),np.cos(.37)]
++        mesh_matrix = np.array([[0,-2,0,4],[2,0,0,-1],[0,0,2,.5],[0,0,0,1.]])
++    else:
++        mesh_matrix = np.array([[0,-1,0,2],[1,0,0,-3],[0,0,1,.2],[0,0,0,1.]])
++    d["nodes"].append({"name":"body","mesh":0,"skin":0,"matrix":mesh_matrix.T.ravel().tolist()})
++    canonical = np.array([[.1,1.,0],[.2,1.,0],[.1,1.1,0]])
++    source_matrix = np.array([[0,-1,0,2],[1,0,0,-3],[0,0,1,.2],[0,0,0,1.]])
++    frame = np.linalg.inv(mesh_matrix) @ source_matrix
++    p = (np.c_[canonical,np.ones(3)] @ frame.T)[:,:3]
++    joint_order = list(reversed(range(13))) if raw else list(range(14))
++    joint = joint_order.index(8)
++    attrs = {"POSITION":add(p,"VEC3"),"NORMAL":add([[0,0,1]]*3,"VEC3"),
++             "TEXCOORD_0":add([[0,0],[1,0],[0,1]],"VEC2"),
++             "JOINTS_0":add([[joint,0,0,0]]*3,"VEC4",5123),
++             "WEIGHTS_0":add([[1,0,0,0]]*3,"VEC4")}
++    prim = {"attributes":attrs,"indices":add([0,1,2],"SCALAR",5123),"material":0}
++    if raw:
++        morph = (frame[:3,:3] @ np.array([.01,.02,0])).tolist()
++        prim["targets"] = [{"POSITION":add([morph]*3 if n.endswith("_f") or n == "grip_f" else [[0,0,0]]*3,"VEC3")} for n in SHAPES]
++        if body_leak:
++            a = np.array([[joint_order.index(0),0,0,0]]*3,dtype="<u2")
++            access = d["accessors"][attrs["JOINTS_0"]]
++            view = d["bufferViews"][access["bufferView"]]
++            blob[view["byteOffset"]:view["byteOffset"]+a.nbytes] = a.tobytes()
++    d["meshes"] = [{"name":"new_topology" if raw else "source_topology","primitives":[prim]}]
++    if raw: d["meshes"][0].update(extras={"targetNames":SHAPES},weights=[0]*4)
++    # Derive correct raw rest IBMs independently for this hierarchy.
++    def global_joint(i):
++        m = np.eye(4)
++        m[:3,3] = d["nodes"][i]["translation"]
++        if i == 6 and raw:
++            c,s = np.cos(.74),np.sin(.74)
++            m[:3,:3] = [[c,-s,0],[s,c,0],[0,0,1]]
++        if i in (6,8):
++            parent = np.eye(4); parent[:3,3] = d["nodes"][i-1]["translation"]
++            m = parent @ m
++        return m
++    ibms = np.array([(np.linalg.inv(global_joint(i)) @ mesh_matrix).T.ravel() for i in joint_order])
++    d["skins"] = [{"name":"original_rig", "joints":joint_order,"inverseBindMatrices":add(ibms,"MAT4")}]
++    d["buffers"][0]["byteLength"] = len(blob)
++    j = json.dumps(d,separators=(",",":")).encode(); j += b" "*((-len(j))%4)
++    blob += b"\0"*((-len(blob))%4)
++    Path(path).write_bytes(struct.pack("<III",0x46546c67,2,28+len(j)+len(blob))+struct.pack("<II",len(j),0x4e4f534a)+j+struct.pack("<II",len(blob),0x004e4942)+blob)
++    return canonical
++
++
++def png_atlas():
++    def chunk(kind, payload):
++        return struct.pack(">I",len(payload))+kind+payload+struct.pack(">I",zlib.crc32(kind+payload))
++    # Real decodable 4K RGB PNG, not an IHDR-only dimension stub.
++    pixels=(b"\0"+b"\x80\x80\xff"*4096)*4096
++    return b"\x89PNG\r\n\x1a\n"+chunk(b"IHDR",struct.pack(">IIBBBBB",4096,4096,8,2,0,0,0))+chunk(b"IDAT",zlib.compress(pixels))+chunk(b"IEND",b"")
++
++
++def acceptance_pair(directory):
++    """Independent three-triangle anatomy: own front/rear hands and boot."""
++    from canonical_glb import GLB,Builder
++    directory=Path(directory);source=directory/"source.glb";candidate=directory/"candidate.glb"
++    fixture(source);b=Builder(GLB(source));b.doc["nodes"][15]["matrix"]=np.eye(4).T.ravel().tolist()
++    pos=np.array([[0,.4,0],[.05,.4,0],[0,.45,0],[0,.36,.1],[.05,.36,.1],[0,.41,.1],
++                  [0,0,0],[.05,0,0],[0,.05,0]],dtype=float)
++    joints=np.array([[8,0,0,0]]*3+[[6,0,0,0]]*3+[[10,0,0,0]]*3)
++    attrs={"POSITION":b.accessor(pos,"VEC3",bounds=True),"NORMAL":b.accessor([[0,0,1]]*9,"VEC3"),
++           "TEXCOORD_0":b.accessor([[0,0],[1,0],[0,1]]*3,"VEC2"),"TANGENT":b.accessor([[1,0,0,1]]*9,"VEC4"),
++           "JOINTS_0":b.accessor(joints,"VEC4",5123),"WEIGHTS_0":b.accessor([[1,0,0,0]]*9,"VEC4")}
++    prim={"attributes":attrs,"indices":b.accessor(np.arange(9),"SCALAR",5123),"material":0}
++    b.doc["meshes"][0]["primitives"]=[prim]
++    ibms=[]
++    for i in range(14):
++        m=np.eye(4);m[1,3]=-float(i)/100-(float(i-1)/100 if i in (6,8) else 0);ibms.append(m.T.ravel())
++    b.doc["skins"][0]["inverseBindMatrices"]=b.accessor(ibms,"MAT4")
++    atlas=png_atlas();b.doc["images"]=[{"bufferView":b.view(atlas),"mimeType":"image/png"} for _ in range(3)]
++    b.doc["textures"]=[{"source":i} for i in range(3)]
++    b.doc["materials"]=[{"pbrMetallicRoughness":{"baseColorTexture":{"index":0},"metallicRoughnessTexture":{"index":2}},
++                        "normalTexture":{"index":1},"occlusionTexture":{"index":2}}]
++    b.write(source)
++    pos[0,0]=.001;prim["attributes"]["POSITION"]=b.accessor(pos,"VEC3",bounds=True)
++    prim["targets"]=[]
++    for name in SHAPES:
++        delta=np.zeros((9,3));delta[:3 if name.endswith("_f") else 0]=[.01,.01,0]
++        if name.endswith("_b"):delta[3:6]=[-.01,.01,0]
++        if name in ("grip_f","grip_b"):delta*=2
++        prim["targets"].append({"POSITION":b.accessor(delta,"VEC3",bounds=True)})
++    b.doc["meshes"][0].update(extras={"targetNames":SHAPES},weights=[0]*4)
++    b.write(candidate);return source,candidate
++
++
++class CanonicalTests(unittest.TestCase):
++    def module(self, name):
++        spec = importlib.util.spec_from_file_location(name,HERE/(name+".py"))
++        self.assertTrue(spec and spec.loader and Path(spec.origin).is_file(), "missing canonical pipeline API")
++        mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
++        return mod
++
++    @unittest.expectedFailure
++    def test_original_acceptance_red_missing_hand_morphs(self):
++        # Intentional RED acceptance proof: frozen baseline cannot supply fists.
++        for role in ("player","foe"):
++            d,_ = read_glb(BASE/(role+"-rigged.glb"))
++            self.assertEqual(d["meshes"][0].get("extras",{}).get("targetNames",[]),SHAPES)
++
++    def test_fixture_nonidentity_frame_and_reordered_joints_preserve_original_basis(self):
++        api = self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp); source=tmp/"source.glb"; raw=tmp/"raw.glb"
++            expected=fixture(source); fixture(raw,raw=True)
++            sockets=tmp/"sockets.json"; sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up","front":{"open":[1,2,3],"half":[1,2,3],"closed":[1,2,3]},"rear":{"open":[1,2,3],"half":[1,2,3],"closed":[1,2,3]}}))
++            out=tmp/"out.glb"; profile=tmp/"profile.json"
++            report=api.canonicalize(source,raw,out,sockets,profile)
++            sd,sb=read_glb(source); od,ob=read_glb(out)
++            self.assertEqual(sd["nodes"],od["nodes"])
++            self.assertEqual(sd["skins"][0]["joints"],od["skins"][0]["joints"])
++            np.testing.assert_array_equal(api.GLB(source).accessor(sd["skins"][0]["inverseBindMatrices"]),api.GLB(out).accessor(od["skins"][0]["inverseBindMatrices"]))
++            final=api.GLB(out); prim=od["meshes"][0]["primitives"][0]
++            np.testing.assert_allclose(final.accessor(prim["attributes"]["POSITION"]),expected,atol=1e-6)
++            self.assertEqual(set(final.accessor(prim["attributes"]["JOINTS_0"])[:,0]),{8})
++            np.testing.assert_allclose(final.accessor(prim["targets"][0]["POSITION"]),[[.01,.02,0]]*3,atol=1e-7)
++            p=json.loads(profile.read_text())
++            # Blender (x,y,z) -> glTF (x,z,-y), forearm world head y=.15.
++            np.testing.assert_allclose(p["hand_sockets"]["front"]["open"],[1,2.85,-2],atol=1e-7)
++            self.assertEqual(report["skin_joints"],14)
++
++    def test_bridge_refuses_baseline_overwrite_and_unknown_joint(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp); src=tmp/"source.glb"; raw=tmp/"raw.glb"; fixture(src);fixture(raw,True)
++            sockets=tmp/"sockets.json"; sockets.write_text("{}")
++            with self.assertRaises(ValueError): api.canonicalize(src,raw,src,sockets,tmp/"profile.json")
++
++    def test_checker_rejects_baseline_missing_hand_morphs(self):
++        checker=self.module("check_retopology_assets")
++        result=checker.check_asset(BASE/"player-rigged.glb",BASE/"player-rigged.glb")
++        self.assertFalse(result["ok"])
++        self.assertIn("required_morphs",[e["code"] for e in result["errors"]])
++
++    def test_checker_detects_rig_drift_and_body_morph_leak(self):
++        checker=self.module("check_retopology_assets")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp); src=tmp/"source.glb"; raw=tmp/"raw.glb"; fixture(src);fixture(raw,True,True)
++            result=checker.check_asset(src,raw)
++            codes=[e["code"] for e in result["errors"]]
++            self.assertIn("canonical_nodes",codes)
++            self.assertIn("joint_declaration",codes)
++            self.assertIn("morph_hand_only",codes)
++
++    def test_checker_rejects_truncated_png_atlas(self):
++        checker=self.module("check_retopology_assets")
++        with self.assertRaises(ValueError):checker.image_dimensions(png_atlas()[:33])
++
++    def test_complete_fixture_passes_geometry_material_hand_acceptance(self):
++        checker=self.module("check_retopology_assets")
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);r=checker.check_asset(src,candidate)
++            self.assertTrue(r["ok"],r["errors"])
++
++    def test_checker_rejects_invalid_tangent_uv_and_pbr_texcoord(self):
++        checker=self.module("check_retopology_assets");api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);b=api.Builder(api.GLB(candidate));a=b.doc["meshes"][0]["primitives"][0]["attributes"]
++            a["TANGENT"]=b.accessor([[0,0,1,0]]*9,"VEC4")
++            a["TEXCOORD_0"]=b.accessor([[0,0],[2,0],[0,1]]*3,"VEC2")
++            b.doc["materials"][0]["normalTexture"]["texCoord"]=1;b.write(candidate)
++            codes=[e["code"] for e in checker.check_asset(src,candidate)["errors"]]
++            for code in ("tangent_basis","atlas_uv","pbr_texcoord"):self.assertIn(code,codes)
++
++    def test_checker_rejects_forearm_weighted_morph_outside_source_hand_bounds(self):
++        checker=self.module("check_retopology_assets");api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);g=api.GLB(candidate);b=api.Builder(g);p=b.doc["meshes"][0]["primitives"][0]
++            pos=g.accessor(p["attributes"]["POSITION"]);pos[:3,0]+=2
++            p["attributes"]["POSITION"]=b.accessor(pos,"VEC3",bounds=True);b.write(candidate)
++            self.assertIn("morph_hand_only",[e["code"] for e in checker.check_asset(src,candidate)["errors"]])
++
++    def test_checker_returns_errors_for_malformed_morph_accessor(self):
++        checker=self.module("check_retopology_assets");api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);b=api.Builder(api.GLB(candidate));p=b.doc["meshes"][0]["primitives"][0]
++            p["targets"][0]["NORMAL"]=b.accessor([[float("nan"),0,0]]*9,"VEC3");b.write(candidate)
++            result=checker.check_asset(src,candidate)
++            self.assertIn("morph_accessor",[e["code"] for e in result["errors"]])
++
++    def test_bridge_rejects_raw_rest_bind_drift_before_writing_outputs(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src=tmp/"source.glb";raw=tmp/"raw.glb";fixture(src);fixture(raw,True)
++            g=api.GLB(raw);b=api.Builder(g);ibms=g.ibms().copy();ibms[:,:3,3]+=.1
++            b.doc["skins"][0]["inverseBindMatrices"]=b.accessor(ibms.transpose(0,2,1).reshape(-1,16),"MAT4");b.write(raw)
++            sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++            with self.assertRaisesRegex(ValueError,"rest.bind"):
++                api.canonicalize(src,raw,tmp/"out.glb",sockets,tmp/"profile.json")
++            self.assertFalse((tmp/"out.glb").exists())
++
++    def test_bridge_transforms_morph_tangent_as_normalized_direction_delta(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src=tmp/"source.glb";raw=tmp/"raw.glb";fixture(src);fixture(raw,True)
++            b=api.Builder(api.GLB(raw));p=b.doc["meshes"][0]["primitives"][0]
++            p["attributes"]["TANGENT"]=b.accessor([[1,0,0,1]]*3,"VEC4")
++            p["targets"][0]["TANGENT"]=b.accessor([[0,.2,0]]*3,"VEC3");b.write(raw)
++            sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++            api.canonicalize(src,raw,tmp/"out.glb",sockets,tmp/"profile.json")
++            g=api.GLB(tmp/"out.glb");target=g.mesh_primitive()["targets"][0]
++            np.testing.assert_allclose(g.accessor(target["TANGENT"]),[[-.0194193243,.1961161351,0]]*3,atol=1e-6)
++
++    def test_checker_reports_malformed_skin_without_crashing(self):
++        checker=self.module("check_retopology_assets");api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);b=api.Builder(api.GLB(candidate));b.doc["skins"][0]["inverseBindMatrices"]=999999;b.write(candidate)
++            result=checker.check_asset(src,candidate)
++            self.assertFalse(result["ok"]);self.assertIn("malformed_asset",[e["code"] for e in result["errors"]])
++
++    def test_bridge_rejects_fractional_joint_indices_instead_of_truncating(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src=tmp/"source.glb";raw=tmp/"raw.glb";fixture(src);fixture(raw,True)
++            g=api.GLB(raw);b=api.Builder(g);p=b.doc["meshes"][0]["primitives"][0];joints=g.accessor(p["attributes"]["JOINTS_0"]).astype(float);joints[:,0]+=.25
++            p["attributes"]["JOINTS_0"]=b.accessor(joints,"VEC4");b.write(raw)
++            sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++            with self.assertRaisesRegex(ValueError,"JOINTS_0"):
++                api.canonicalize(src,raw,tmp/"out.glb",sockets,tmp/"profile.json")
++
++    def test_checker_rejects_float_joint_storage_and_negative_extra_weights(self):
++        checker=self.module("check_retopology_assets");api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp);g=api.GLB(candidate);b=api.Builder(g);a=b.doc["meshes"][0]["primitives"][0]["attributes"]
++            a["JOINTS_0"]=b.accessor(g.accessor(a["JOINTS_0"]),"VEC4")
++            a["WEIGHTS_1"]=b.accessor([[-.1,0,0,0]]*9,"VEC4");b.write(candidate)
++            codes=[e["code"] for e in checker.check_asset(src,candidate)["errors"]]
++            self.assertIn("joint_format",codes);self.assertIn("four_influences",codes)
++
++    def test_hand_envelope_uses_original_forearm_geometry_not_upperarm_length(self):
++        checker=self.module("check_retopology_assets");api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            src,candidate=acceptance_pair(tmp)
++            for path in (src,candidate):
++                b=api.Builder(api.GLB(path));b.doc["nodes"][7]["translation"]=[0,-1,0]
++                b.doc["nodes"][8]["translation"]=[0,1.15,0];b.write(path)
++            result=checker.check_asset(src,candidate)
++            self.assertTrue(result["ok"],result["errors"])
++
++    def test_bridge_cannot_overwrite_input_socket_json(self):
++        api=self.module("canonical_glb")
++        with owned_fixture_dir() as tmp:
++            tmp=Path(tmp);src=tmp/"source.glb";raw=tmp/"raw.glb";fixture(src);fixture(raw,True)
++            sockets=tmp/"sockets.json";sockets.write_text(json.dumps({"version":1,"role":"player","space":"blender_world_z_up",**{side:{state:[1,2,3] for state in ("open","half","closed")} for side in ("front","rear")}}))
++            before=sockets.read_bytes()
++            with self.assertRaisesRegex(ValueError,"overwrite"):
++                api.canonicalize(src,raw,sockets,sockets,tmp/"profile.json")
++            self.assertEqual(sockets.read_bytes(),before)
++
++
++if __name__ == "__main__": unittest.main(verbosity=2)
+
+Structured data boundary:
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\reports\body-motion-contract.json
+{
+  "ok": true,
+  "keys": 1502,
+  "body_and_phase_exact": true,
+  "baseline_sha256": "083c84e3e24bdb4bea6d3e4b92855322caea97d675cae19a06df36acefd5a703",
+  "candidate_sha256": "27278a748c8c2e6a3e6165e9f92843b0de5976b2b1da9f99744f33b26c20f5ed"
+}

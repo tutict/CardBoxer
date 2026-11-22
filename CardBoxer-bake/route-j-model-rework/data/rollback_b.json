@@ -1,0 +1,30 @@
+{
+  "restored": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer\\assets\\3d\\foe-rigged.glb",
+  "from": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-j-model-rework\\orig\\pre-b\\foe-rigged.glb",
+  "expected": {
+    "glb_bytes": 42914328,
+    "glb_sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+    "import_bytes": 1046,
+    "import_sha256": "63132d5c5f857641c969fd9bb0a5fee3cda97983be13036ff6b7db64e17e208f"
+  },
+  "actual": {
+    "glb_bytes": 42914328,
+    "glb_sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+    "import_sha256": "63132d5c5f857641c969fd9bb0a5fee3cda97983be13036ff6b7db64e17e208f"
+  },
+  "reimport": {
+    "seconds": 11.213,
+    "returncode": 0,
+    "script_errors": 0
+  },
+  "checks": {
+    "glb_sha_matches_i_baseline": true,
+    "glb_size_matches": true,
+    "import_file_untouched": true,
+    "backup_still_intact": true,
+    "reimport_rc0": true,
+    "no_script_errors": true
+  },
+  "failed": [],
+  "ok": true
+}

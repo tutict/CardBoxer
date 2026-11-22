@@ -1,0 +1,322 @@
+《牌拳》G 路线 · 游戏内 3D 接线与侧面战斗 · 验证记录
+生成日期：2026-11-11
+工作区：CardBoxer-bake/route-g-game-3d-integration/
+可运行工程：D:\Projects\CardBoxer\CardBoxer
+上游：F 路线（player-rigged.glb + rig_driver.gd + motion_input.json）、
+      D 路线（引擎内截帧通道）、side-view-battle-demo / 侧身节奏接线（节奏层）
+下游：无。本路线是**第一次真正把 3D 角色接进可运行游戏工程**，
+      但默认关；判定层零改动。
+
+========================================================================
+1. 结论（先说结果）
+========================================================================
+工程师要的是「把 F 路线的 3D 人物真接进游戏」+「而且要侧面战斗」——
+**两件都落地了，但都是表现层，不是玩法层，而且默认不打开**：
+
+· 3D 接线：F 的 3 件资产按二进制逐字节复制进可运行工程，Godot 4.5
+  headless 导入成功；arena.gd 加环境变量 `CARD_BOXER_3D` 双轨开关
+  （默认 `use_3d := false`），打开时创建 `fighter_3d_layer.gd`，用一个
+  透明 SubViewport 装 GLB + 13 骨运行时驱动层，用 ViewportTexture
+  贴回 2D 擂台；fighter.gd 加 `draw_3d_override` 让 2D 自绘让位。
+  判定 / position / HP / 伤害 / 牌型 / 硬直 / 阶段时长**一字未改**。
+· 侧面战斗：相机绕 +Y 转 **yaw = +55°**（3/4 侧身，不用 90°），
+  `DEFAULT_SIDE_FLIP := false`；再加 10 根骨的**格斗站架偏置**
+  （双拳护脸 + 前后脚分开），从 6 组反向扫描里按看图证据选
+  `r0-flip-all` 定稿。站架是逐帧后处理，只加在 driver 算完的
+  bone pose 上，rig_driver / motion_input / 73 帧表一字未改。
+· 零污染：改动前 105 文件基线工程复制并逐项核对；**冻结状态**下
+  baseline vs 默认关跨进程逐像素等价 `CHANGED_PIXELS=0`；
+  6 种节奏帧 × 3 组的 `[RHYTHM_SHOT]` marker 逐字相同；
+  15 套自检改动前 / 后各 15/15 全绿。
+· 开了能看到：同一进程同一棵树 off→on，玩家侧 ROI 16,314 px 变化，
+  prims 5,136 → 118,856（23.14x），stance / jab6 / wave17 三帧互不相同
+  （ROI 12,441 / 13,015 / 12,045 px）；引擎内 0 SCRIPT ERROR。
+· 判据：`verify_g.py` 71/71 `G_VERIFIED`；`mutation_g.py` 16/16
+  CAUGHT（另 1 条负对照按预期 MISSED）、逐字节还原 17/17、
+  clean re-run GREEN；`selftest_did_not_run_g.py` 11/11
+  `DID_NOT_RUN_BRANCH_OK`；清单 112 条稳定（含本记录） + 外部复核 0 差错。
+
+一句话：**3D 角色第一次在真游戏里动起来了，且是侧身格斗站姿；
+默认关时游戏和改动前逐像素一样。** 但对手侧仍是 2D 自绘，
+"侧面战斗"只做在玩家 3D 层的观察方向上，没动 facing / 判定平面。
+
+========================================================================
+2. 范围与零污染
+========================================================================
+改动前先把可运行工程 105 个文件复制成隔离基线工程
+`baseline_project/`（BASELINE_FILES=105 BACKUP_VERIFIED=True
+MISMATCH=0），并把改动前源码另存 `orig/pre-3d/`，侧面战斗改动前
+另存 `orig/pre-side/`。基线工程 `no_3d_assets=True` /
+`no_rig_driver=True`，导入 rc=0 / 0 error。
+
+相对基线，**只有 2 个既有文件被改**：`scripts/arena.gd`、
+`scripts/fighter.gd`；新增 17 个文件，全部落在白名单族里
+（3D 资产 / PBR / .import / motion / layer / driver / 探针脚本），
+`B02_only_allowed_changed=True`、`B05_no_unclassified_added=True`、
+`B01_no_baseline_file_deleted=True`。
+
+判据口径提醒（本轮订正过一次）：第一版想断言六个节奏模式
+baseline vs off 的**跨进程逐像素等价**，实测 6/6 全红。
+`diag_ab.py` 证明差异均匀铺满全屏（top_bg / mid / bottom_hud /
+player 四区都有，MAE=10.43、gt6=34,785 px），根因是 Godot 每次启动
+随机化全局 RNG（手牌 / 观众席 / 灯光相位），不是回归。
+因此**退役** `off_pixel_identical_*` 6 条，换成三条真有牙的证据：
+  ① `static_ab_g.json`：paused + 隐藏动态子节点的冻结状态，
+     同一状态跨进程 `changed_pixels=0`，9/9 判据全绿；
+  ② `same_tree_ab_g.json`：同进程同树 off→on 的 ROI 判据全绿；
+  ③ 逐模式 RHYTHM_SHOT marker 三组逐字相同（判定层零变化）。
+跨进程的 `on_vs_off_changed_px` 只留作观察值，不再当等价判据；
+`retired_cross_process_claim_not_reused=True` 钉住这条退役不被复用。
+
+========================================================================
+3. 资产搬运（F → 可运行工程）
+========================================================================
+`install_assets_g.py` 只读 F 归档，二进制复制后逐项 sha256 对账：
+
+  文件                              字节        sha256 前 12
+  assets/3d/player-rigged.glb     38,478,140  80e5a1a03f44
+  data/motion_input.json              19,771  c3ff4f76f558
+  scripts/rig_driver.gd                7,827  f287bf80a929
+
+三件 `identical=True`。Godot `--headless --editor --quit` 导入
+rc=0 / 21.218 s / 0 SCRIPT ERROR / 0 Parse Error；生成 8 个文件，
+其中 3 张 PBR 全是 4096×4096、与 F 路线逐项一致、零重编码。
+`C03/C04/C05` 分别钉住 GLB / driver / motion 与 F 归档逐字节相同，
+`C06/C07/C08` 钉住字节数、PBR 尺寸与数量。
+
+隔离可行性探针 `run_probe_subviewport.py` 先证过：
+GL Compatibility 下 2D 主场景挂 3D SubViewport 可行
+（隔离工程视口 600×560，游戏层实际 420×520），
+`sv-probe.png` 1280×720 / 3D 区亮像素 49,783 / 色阶 3,585 /
+2D 红锚点 75,600 / texture_drawn=True / 13/13 判据全绿。
+
+========================================================================
+4. 双轨开关与动作同步
+========================================================================
+  · `arena.gd:52`  `var use_3d := false`；`arena.gd:219`
+    `use_3d = OS.get_environment("CARD_BOXER_3D") != ""`。
+    环境变量非空才建层，失败则 `remove_child + queue_free`，
+    不会留下半初始化的 3D 节点。
+  · `fighter.gd:564` `var draw_3d_override := false`，
+    `_draw()` 里先判它再决定要不要画 2D 自绘；默认 false。
+  · `_sync_3d_layer()`：层的位置 = `player.position + player.visual_shift`
+    （沿用 P0 节奏的位移，判定坐标不变）；只有「玩家赢下本回 +
+    节奏时钟激活 + 有赢家动作 + 在 ATTACK_S 窗口内」才播攻击，
+    其余（输家 / 平局 / 亮牌阶段）一律 `stance`——73 帧表里没有
+    受击轨道，硬凑会变成自造动作。
+  · `fighter_3d_layer.gd` 明确只画：不写 position / HP / 伤害 /
+    牌型 / 硬直 / 阶段时长；`A13_layer_no_gameplay_writes=True`。
+  · 贴图：`DRAW_SCALE=0.45`、`DRAW_OFFSET_Y=18.0`，把 3D 脚底
+    对齐 2D 擂台地面；水平镜像用**负宽度 Rect2**，不用
+    `draw_set_transform`（后者会吃掉 arena 设的 position）。
+
+========================================================================
+5. 侧面战斗（本轮硬要求）
+========================================================================
+诊断：`use_3d` 之前 3D 层是 F 路线的正视 A-pose，出拳像摆臂；
+"侧面战斗"落点应该是相机朝向 + 站架，而不是改动作表。
+
+  · 相机：`_place_camera()` 用 `CAM_RADIUS=3.55`、
+    `position = (R*sin(yaw), 1.12, R*cos(yaw))`，
+    `look_at(0, 0.86, 0)`，FOV 33°。`DEFAULT_SIDE_YAW := 55.0`。
+    **不用 90°**：D 路线实测零厚度披风壳退化成一条细线，且骨架
+    动作平面 (XY) 与视线平行会把出拳幅度压成 0；
+    `A07_no_90deg_view=True` 钉住源码里不存在 90° 视角。
+  · 八宫格 `run_side_view_probe.py`：yaw 0 / -35 / -55 / +35 / +55
+    与 flip 组合共 8 视图、8/8 截帧 1280×720、0 error、
+    `view_changes=8`、`bones=13`、final=55.0/False。看图定稿
+    `yp55-f0`：相机在左前方、脸朝画面右，正对右侧 2D 对手，
+    披风/发髻/护腕都有侧面厚度，没有退化成线。
+  · 站架：四档对照 `run_side_stance_probe.py`（none / light /
+    mid / heavy，固定 yaw=55°）+ 六组反向扫描
+    `run_side_stance_scan.py`（r0-flip-all / r1-flip-fore /
+    r2-flip-upper / r3-fonly-neg / r4-both-neg /
+    r5-guard-high）。看图选 `r0-flip-all`：
+    双拳收到胸前护脸、前后脚分开、双脚贴地、无撕裂。
+  · 定稿偏置（度，绕 Z，与 rig_driver 的 delta 同符号口径）：
+        upperarm_f  26.0    forearm_f -50.0
+        upperarm_b -26.0    forearm_b  50.0
+        spine        4.0    head       -2.4
+        thigh_f     10.0    shin_f     -6.0
+        thigh_b    -12.0    shin_b      7.0
+    `A08_stance_bias_exact` 逐值钉死，`A09` 钉默认值被应用，
+    `A10` 钉它只是后处理，`A11` 钉实现走
+    `get_bone_pose_rotation → 乘四元数 → set_bone_pose_rotation`，
+    而不是改公式或烘进表。`CARD_BOXER_3D_STANCE=none` 可退回
+    F 原样 A-pose，专供 A/B 取证，不是生产默认。
+
+诚实边界：`view_flip` 有开关但默认 false，层里**没有按 facing
+自动镜像**；对手侧没有 3D 模型（F 只产出玩家侧带 skin 的 GLB）。
+所以这是"玩家 3D 侧身对 2D 对手"的混搭画面，
+不是 KOF 式双方都侧身、也不是玩法层的朝向翻转。
+
+========================================================================
+6. 引擎内 A/B 证据
+========================================================================
+(a) 同树双轨 `run_three_d_probe.py` / `compare_same_tree_g.py`
+    同一进程、同一棵树，off / on-stance / on-jab6 / on-wave17：
+      `frames_applied=79`、`bones=13`、`last_card=wave`、
+      `last_frame=17`、`tex_drawn=True`、0 SCRIPT ERROR。
+      prims 5,136 → 118,856（23.14x），
+      draw calls 117 → 67（2D 自绘让位后反而下降）。
+      ROI (290,270,580,535)：
+        off__on-stance        full=16,314  roi=16,314  outside=0
+        on-stance__on-jab6    full=13,015  roi=12,968  outside=47
+        on-jab6__on-wave17    full=12,045  roi=11,998  outside=47
+        on-stance__on-wave17  full=12,441  roi=12,441  outside=0
+      `3d_visible_in_roi=True`、三档互不相同、prims 跨帧稳定。
+
+(b) 六模式节奏截帧 `capture_g.py`：t000 / t048 / t112 / t140 /
+    draw / foewin × baseline / off / on = 18 张 1280×720，
+    每组 `rc=0 / gl=True / errors=0 / shots=1`，
+    `RESTORE OK sha256=a0964e2ec643...`（截帧通道还原成功）。
+    `on_visible_*` 六条全过（>20,000 px），`judgement_same_*`
+    六条全过（marker 逐字相同）。`on` 组三张板见 §9。
+
+(c) 静态零污染 `run_static_ab_g.py`：基线工程 vs 默认关工程，
+    `PERF_PROBE_DONE` 双 marker / 双 GL / 双 0 error /
+    120 samples / 1280×720 / `CHANGED_PIXELS=0`。
+
+========================================================================
+7. 全量自检（改动前 / 后各一遍）
+========================================================================
+`run_all_checks_g.py` 15 套，`TOTAL 15 checks, 0 failed / ALL_GREEN`：
+
+  motion_check PASS          pose_probe PASS          duel_probe PASS
+  reach_probe PASS           feet_probe PASS          fighter_skin_check PASS
+  battle_motion_p0 93/93     battle_rhythm 62/62     engine_opt 37/37
+  redraw_gate 72/72          taikou_flow 51/51       taikou_rage 1482/1482
+  taikou_rules 90/90         combo_check 8/8         portrait_wiring 157/157
+
+`F01_all_green_before` / `F01_all_green_after` / `F02_after_output_all_green`
+三条判据把这两份汇总钉进 verify_g.py。
+
+========================================================================
+8. 承重判据与变异验证
+========================================================================
+`verify_g.py` 71/71 PASS，`failed=[]`，`G_VERIFIED`。分组：
+
+  A01–A13  开关默认关 / override 默认 false / 预加载 / 同步钩子 /
+           yaw=55 / flip=false / 无 90° / 站架逐值 / 后处理 /
+           camera 用 yaw / 层不写玩法
+  B01–B07  基线无删除 / 只改白名单 / 新增全白名单 / 5 个资产族齐全 /
+           两处源码备份 / pre-side 备份
+  C01–C08  三件复制逐项对账 / 与 F 归档逐字节一致 / PBR 4096²×3
+  D01–D05  六模式 / marker 全同 / ab_g 全绿 / 退役声明未被复用 /
+           三组截帧都还原
+  E01–E14  静态像素等价 / 同树 AB / ROI 可见 / 三档互异 / 13 骨 /
+           侧视 8 视图 / 站架 4 档 / 反向扫描 6 组 / SubViewport
+           探针 / 6 张对照板 / off、on 各 6 张截帧非空
+  F01–F02  15 套自检前后全绿
+  G01–G04  清单非空 / sha 自洽 / 覆盖全部 / diff 非空
+
+`mutation_g.py`：M01–M16 各改坏一处（含把 yaw 改成别的值、
+把 flip 打开、删站架、把开关默认改 true、改偏置实现、
+删 motion_input、抹掉退役声明、换掉自检汇总），
+**16/16 CAUGHT**；N01 负对照按预期 MISSED；
+`DID_NOT_RUN=0`、逐字节还原 17/17、clean re-run GREEN、
+`MUTATION_G_OK`。
+
+`selftest_did_not_run_g.py`：把 M10 的 needle 改成不存在的字面量，
+在工作区外跑副本，证明"锚点失配"不会被算成"已证明"：
+`SELFTEST 11/11 dnr=1 caught=15 / DID_NOT_RUN_BRANCH_OK`
+（副本里 `CAUGHT=15/16 DID_NOT_RUN=1 MUTATION_G_FAILED`，
+clean re-run 仍 GREEN、还原 16/16）。
+
+清单：`make_filelist_g.py` 112 条 / diff 105,836 B / `STABLE=True`；
+`crosscheck_filelist_g.py` 外部独立复核
+`ROWS=112 ACTUAL=112 BAD=0 EXTRA=0 MISSING=0 / CROSSCHECK_OK`。
+（本验证记录自己也在清单里，条目数是随交付文件变化的，
+ 所以判据只查「sha 自洽 + 覆盖全部」，不写死数字；改记录后
+ 必须重跑 make_filelist_g.py，否则 G02 会如实报红。）
+清单排除自身 / diff / logs / orig / baseline_project / .godot /
+__pycache__，避免自指导致永远不稳定。
+
+========================================================================
+9. 看图记录与迭代（六张对照板，逐张人工看过）
+========================================================================
+  G-dual-track-AB-comparison.png        t048 命中帧三栏：改动前 / 默认关 / 3D 开。
+                          前两栏 2D 自绘一致；第三栏玩家换成 3D
+                          侧身人物，HUD、卡牌、血条、擂台背景不变。
+  G-3D-motion-three-frames.png        3D ON 下 t000 起手 / t048 命中 / t112 窗口末，
+                          人物姿态随节奏变化，卡牌与飘字保持原样。
+  G-same-scene-3d-dual-track-AB.png      off 两人都 2D；on 的左侧玩家变 3D 侧身，
+                          右侧对手仍是 2D；jab6 / wave17 手臂可读。
+  G-side-view-angle-eight-panel.png    0° 正视最薄，-35°/-55° 朝向不对，
+                          +55° 不翻最像"侧身面朝对手"；
+                          镜像格会让人物背对对手。
+  G-side-view-four-level-stance-comparison.png  none 是 A-pose 摆臂；heavy 手臂折叠过头；
+                          定稿档护脸站架成立。
+  G-side-view-reverse-stance-scan.png  六组里 r0-flip-all 唯一同时满足
+                          双拳护脸 + 前后脚分开 + 无断裂，
+                          r3/r4 出现手臂方向反折，r5 抬手过高。
+
+看图修过的两处：① 3D 脚底离 2D 影子约 27 px → `DRAW_OFFSET_Y=18.0`；
+② 用 `draw_set_transform` 做镜像会把层画到 (0,0) → 改负宽度 Rect2。
+这两条都写进源码注释，并被 A 组判据间接钉住。
+
+========================================================================
+10. 踩坑清单（可复用）
+========================================================================
+  ① Godot 每次启动随机化全局 RNG —— 跨进程整帧像素等价不可当判据，
+     必须用冻结状态（paused + 隐藏动态子节点）或同进程同树 A/B。
+  ② GL Compatibility 下 2D 主场景可挂 3D SubViewport，但
+     `transparent_bg=true` + `UPDATE_ALWAYS` 必须显式设；
+     截图必须带窗口启动，headless 拿不到有效纹理。
+  ③ 90° 侧视会把零厚度披风壳压成线，出拳平面与视线平行后幅度归零，
+     3/4 视角（55°）才是这套资产的可行区间。
+  ④ 站架偏置不能烘进 motion_input：driver 每帧覆写全部 13 骨，
+     只能在 `apply_frame()` 之后逐帧叠加，否则会被冲掉；
+     也不能改 driver 公式，否则 F 路线的三重对账全部作废。
+  ⑤ 负宽度 Rect2 做水平镜像；`draw_set_transform` 会覆盖节点自身
+     transform，把 arena 设的 position 吃掉。
+  ⑥ 验证记录 / 清单会进清单 → 不写死条目数，给可复算命令 +
+     动态覆盖检查；清单用 `write_bytes` 写，避免 CRLF/LF 假红。
+  ⑦ 变异 harness 的"锚点失配"必须计入未证明，并用独立 selftest
+     证明这个分支有牙；否则汇总会比没有汇总更坏。
+
+========================================================================
+11. 可复算命令与下一步候选
+========================================================================
+Windows，项目 venv：
+  C:\Users\tutic\IdeaProjects\Fantasy-Agent\.venv\Scripts\python.exe
+工作目录：...\CardBoxer-bake\route-g-game-3d-integration
+
+  python make_baseline_g.py            # 105 文件基线
+  python run_all_checks_g.py           # 15 套自检
+  python install_assets_g.py           # F → 游戏工程（会写游戏目录）
+  python run_static_ab_g.py            # 冻结状态零污染
+  python capture_g.py                  # 6 模式 × 3 组截帧
+  python run_three_d_probe.py          # 同树 off/on 四帧
+  python compare_same_tree_g.py        # ROI 判据
+  python compare_g.py                  # AB 汇总 + 两张板
+  python run_side_view_probe.py        # 八宫格
+  python run_side_stance_probe.py      # 站架四档
+  python run_side_stance_scan.py       # 站架反向扫描
+  python verify_g.py                   # 71 条承重判据
+  python mutation_g.py                 # 16 组变异
+  python selftest_did_not_run_g.py     # 锚点失配分支自检
+  python make_filelist_g.py            # 清单 + diff
+  python crosscheck_filelist_g.py      # 外部独立复核
+
+打开 3D（不改源码，环境变量）：
+  set CARD_BOXER_3D=1 && play-2d.bat
+  set CARD_BOXER_3D_YAW=55 / CARD_BOXER_3D_FLIP=0
+  set CARD_BOXER_3D_STANCE=none   # 退回 F 原样 A-pose 做 A/B
+
+**没做的部分（明说）**：
+  · 对手侧没有 3D 模型，画面仍是 3D 玩家 + 2D 对手混搭；
+  · `view_flip` 有开关但没有按 facing 自动镜像，玩法层朝向没动；
+  · 只覆盖 73 帧三档动作，不是 `card_motion.json` 全 228 帧；
+    GLB 0 animations，全靠 GDScript 每帧现算，未测 GPU skin 性能；
+  · 3D 人物按 0.45 缩放后比 2D 对手小一圈，构图没做统一；
+  · 没做受击轨道 / 输家动作 / 平局动作；没做双方同时 3D；
+  · 3D 开时的 CPU/GPU 帧开销只量了 prims 与 draw calls，
+    没有跑 `perf_probe` 的 3D 开帧统计对比；
+  · 默认关，玩家不设环境变量看到的仍是原来的 2D 游戏。
+
+下一步候选（等工程师定，不替他决定）：
+  A 把对手怪也做成同款带 skin 的 GLB，补齐"双方 3D 侧面战斗"；
+  B 把 3D 开时做成默认 / 或做成设置面板开关，并处理构图与性能；
+  C 把动作表从 73 帧扩到 228 帧 + 受击 / 输家轨道；
+  D 存档收口，把 G 路线当"技术验证完成"归档，转去做别的。

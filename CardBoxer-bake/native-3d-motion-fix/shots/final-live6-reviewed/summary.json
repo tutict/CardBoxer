@@ -1,0 +1,14 @@
+{
+  "failures": [],
+  "scenario_count": 6,
+  "rendered": true,
+  "evidence": "Reviewed six-scenario aggregate: four realtime scenarios recaptured after test-only mode-before-ready initialization repair; two unchanged taikou captures retained. Original PNGs and manifests retained at source paths.",
+  "source_scenarios": {
+    "player-card-cross": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\shots\\final-live-realtime-fixed\\player-card-cross.json",
+    "foe-card-sweep": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\shots\\final-live-realtime-fixed\\foe-card-sweep.json",
+    "taikou-player": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\shots\\final-live6\\taikou-player.json",
+    "taikou-enemy": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\shots\\final-live6\\taikou-enemy.json",
+    "player-wave-new-action": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\shots\\final-live-realtime-fixed\\player-wave-new-action.json",
+    "foe-fatal-facing-reset": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\shots\\final-live-realtime-fixed\\foe-fatal-facing-reset.json"
+  }
+}

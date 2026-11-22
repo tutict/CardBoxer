@@ -1,0 +1,193 @@
+{
+  "source": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\shots\\live-core",
+  "scenario_count": 16,
+  "checks": [
+    {
+      "scenario": "foe-block",
+      "check": "melee hit samples the native contact endpoint",
+      "pass": true,
+      "detail": {
+        "tick": 6,
+        "card": "jab",
+        "frame": 6.0,
+        "contact": 6
+      }
+    },
+    {
+      "scenario": "foe-combo-super",
+      "check": "melee hit samples the native contact endpoint",
+      "pass": true,
+      "detail": {
+        "tick": 6,
+        "card": "jab",
+        "frame": 6.0,
+        "contact": 6
+      }
+    },
+    {
+      "scenario": "foe-combo-super",
+      "check": "melee hit samples the native contact endpoint",
+      "pass": true,
+      "detail": {
+        "tick": 31,
+        "card": "uppercut",
+        "frame": 10.0,
+        "contact": 10
+      }
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "check": "fatal victim renders KO",
+      "pass": true
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "check": "terminal KO reaches final native frame 27",
+      "pass": true
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "check": "final KO frame holds across multiple production ticks",
+      "pass": true
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "check": "round reset clears stale KO",
+      "pass": true
+    },
+    {
+      "scenario": "foe-melee-super",
+      "check": "melee hit samples the native contact endpoint",
+      "pass": true,
+      "detail": {
+        "tick": 45,
+        "card": "uppercut",
+        "frame": 10.0,
+        "contact": 10
+      }
+    },
+    {
+      "scenario": "foe-wave-new-action",
+      "check": "wave collides after a newer attacker action begins",
+      "pass": true
+    },
+    {
+      "scenario": "foe-wave-new-action",
+      "check": "late collision does not rewind actor to old wave release",
+      "pass": true
+    },
+    {
+      "scenario": "player-block",
+      "check": "melee hit samples the native contact endpoint",
+      "pass": true,
+      "detail": {
+        "tick": 6,
+        "card": "jab",
+        "frame": 6.0,
+        "contact": 6
+      }
+    },
+    {
+      "scenario": "player-combo-super",
+      "check": "melee hit samples the native contact endpoint",
+      "pass": true,
+      "detail": {
+        "tick": 6,
+        "card": "jab",
+        "frame": 6.0,
+        "contact": 6
+      }
+    },
+    {
+      "scenario": "player-combo-super",
+      "check": "melee hit samples the native contact endpoint",
+      "pass": true,
+      "detail": {
+        "tick": 31,
+        "card": "uppercut",
+        "frame": 10.0,
+        "contact": 10
+      }
+    },
+    {
+      "scenario": "player-fatal-facing-reset",
+      "check": "fatal victim renders KO",
+      "pass": true
+    },
+    {
+      "scenario": "player-fatal-facing-reset",
+      "check": "terminal KO reaches final native frame 27",
+      "pass": true
+    },
+    {
+      "scenario": "player-fatal-facing-reset",
+      "check": "final KO frame holds across multiple production ticks",
+      "pass": true
+    },
+    {
+      "scenario": "player-fatal-facing-reset",
+      "check": "round reset clears stale KO",
+      "pass": true
+    },
+    {
+      "scenario": "player-melee-super",
+      "check": "melee hit samples the native contact endpoint",
+      "pass": true,
+      "detail": {
+        "tick": 45,
+        "card": "uppercut",
+        "frame": 10.0,
+        "contact": 10
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "check": "wave collides after a newer attacker action begins",
+      "pass": true
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "check": "late collision does not rewind actor to old wave release",
+      "pass": true
+    },
+    {
+      "scenario": "taikou-enemy",
+      "check": "taikou contact is visibly held, not a one-frame skip",
+      "pass": true,
+      "detail": {
+        "contact_tick_count": 16
+      }
+    },
+    {
+      "scenario": "taikou-ex-fatal",
+      "check": "fatal victim renders KO",
+      "pass": true
+    },
+    {
+      "scenario": "taikou-ex-fatal",
+      "check": "terminal KO reaches final native frame 27",
+      "pass": true
+    },
+    {
+      "scenario": "taikou-ex-fatal",
+      "check": "final KO frame holds across multiple production ticks",
+      "pass": true
+    },
+    {
+      "scenario": "taikou-ex-fatal",
+      "check": "round reset clears stale KO",
+      "pass": true
+    },
+    {
+      "scenario": "taikou-player",
+      "check": "taikou contact is visibly held, not a one-frame skip",
+      "pass": true,
+      "detail": {
+        "contact_tick_count": 16
+      }
+    }
+  ],
+  "failures": [],
+  "passed": true,
+  "limitations": "Runtime pose/clip timing evidence only; rendered skins need human inspection."
+}

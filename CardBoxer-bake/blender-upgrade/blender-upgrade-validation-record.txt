@@ -1,0 +1,162 @@
+《牌拳》Blender 升级：5.2.0 LTS → 5.2.3 LTS（2026-11-06）
+================================================================
+
+一、结论与边界
+----------------------------------------------------------------
+工程师「先升级blender」。落地的是 **5.2.3 LTS 便携版并存**，路径：
+
+    D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\blender.exe
+    VERSION 5.2.3 LTS / BUILD e13b728c6880 / 2026-10-22 / Python 3.13.13
+
+系统里原有的 `C:\Program Files\Blender Foundation\Blender 5.2\blender.exe`
+（5.2.0 LTS / fbe6228777e7 / 2026-07-14）**原封未动**，仍是系统默认。
+原因见第三节：当前会话没有管理员权限，覆盖安装在技术上做不到。
+
+最关键的一条结论：**5.2.3 用现有 `boxer_bake2.py` 重跑，产出的 JSON 与
+5.2.0 基线逐字节完全一致**（226918 B / sha256 `b6a7f843…`）。也就是说
+12 张卡 228 帧 + 3 条受击轨的动作表零漂移，B 路线（精灵图集）可以
+直接用新版接手，不需要重烘、不需要改脚本。
+
+这不是 4→5 跨版本升级：`bake.txt` / `bake2.txt` 早就记录烘焙链跑在
+5.2.0 上，脚本里还有「Blender 5 把 fcurves 放 action layers，4.x 放
+action 上」的双分支兼容。`Blender 4.4` 目录只剩 `4.4/python` +
+`4.4/scripts` 卸载残留，没有 exe。
+
+二、现状取证
+----------------------------------------------------------------
+| 项 | 实测 |
+|---|---|
+| Blender Foundation 目录 | `Blender 4.4`（残留，无 exe）、`Blender 5.2`（915 MB 完整安装） |
+| 旧版 | 5.2.0 LTS，`fbe6228777e7`，2026-07-14，Python 3.13.13 |
+| 官方最新 | 5.2.3 LTS（2026-10-22）；5.3 预计 2026-11-10，尚未发布 |
+| winget | `winget list` 显示 `5.2.0`，可用 `5.2.3`；安装器类型 wix/MSI |
+| 烘焙链 | `baked2.json` 由 5.2.0 产出，`boxer_bake2.py` 无外部文件依赖 |
+| 权限 | `net session` = ADMIN NO；`Program Files\...\Blender 5.2` 写测试 = WRITE NO |
+| 磁盘 | C: 194 GB 空闲 / D: 551 GB 空闲 |
+
+三、为什么是「便携版并存」而不是覆盖升级
+----------------------------------------------------------------
+三条硬约束，不是偏好：
+
+1. **无管理员权限**：`net session` 失败、往 `Program Files` 写临时文件被拒。
+   MSI / winget upgrade 一定会弹 UAC，非交互会话只会挂住。
+2. **官方直链被挡**：`download.blender.org` 返回 403，正文是
+   `<title>Just a moment...</title>`（Cloudflare 挑战）。`--noproxy '*'`
+   和走本机代理 `127.0.0.1:62808` 都是同一个 403，不是代理问题。
+   `winget download` 也用这个 URL，直接报
+   `0x80190193 : Forbidden (403)`，7 秒即失败。
+3. **镜像可绕**：官方镜像站提供同样的字节且支持 Range，镜像上的
+   `blender-5.2.3.sha256` 清单可与 winget 包清单互证。
+
+所以改成从镜像取官方 portable zip，解压到 D 盘用户可写目录：
+零提权、零覆盖、可回退；系统默认 5.2.0 仍是随时可用的兜底。
+
+四、下载与完整性
+----------------------------------------------------------------
+镜像 2 MB range 实测（同一时刻、波动大）：
+
+    mirror.freedif.org           ~309 KB/s
+    mirrors.ocf.berkeley.edu     ~237 KB/s
+    mirror.clarkson.edu          40~500 KB/s（极不稳）
+    ftp.halifax.rwth-aachen.de    40~60 KB/s
+
+`fetch_blender.py` 把 405,839,452 B 切成 12 片并发拉，失败的片换镜像
+重试、已完成的片靠 part 文件大小断点续传，最后拼接并算 sha256。
+
+    官方 sha256 清单 : 723f08a4401502561eb763cdeacf8745b31e5f3f154d287d3830d97cf75dc2fb
+    winget 清单(MSI) : a103d4ece8d9acffd2a95c9d8860355b1f209977cc983b4a3d1e1cfb441c8605
+    本地 zip 实算     : 723f08a4401502561eb763cdeacf8745b31e5f3f154d287d3830d97cf75dc2fb
+    DOWNLOAD_OK
+
+7z 解压：exit=0 / Everything is Ok / 975 目录 / 6524 文件 / 945,021,611 B。
+最后一片（chunk 03）单条 33.8 MB 长连接反复 SSL 握手超时，改用
+`fetch_chunk3.py` 再切成 6 个 ~5.6 MB 子片并发才拿下（其中两片在慢镜像
+上各耗 ~230 s）。
+
+五、承重判据（`verify_upgrade.py`，6/6 PASS / UPGRADE_VERIFIED）
+----------------------------------------------------------------
+| # | 判据 | 结果 |
+|---|---|---|
+| 1 | version_upgrade | 5.2.0 LTS / 5.2.3 LTS，build hash 与日期都不同 |
+| 2 | baseline_deterministic | 本会话用 5.2.0 重跑的 JSON 与盘上 `baked2.json` **逐字节相同** |
+| 3 | bake_rc_0 | 5.2.3 跑 `boxer_bake2.py` rc=0、无 SCRIPT ERROR |
+| 4 | bake_bytes_identical | 5.2.3 产出 `b6a7f843…` == 5.2.0 基线 == 归档 `baked2.json` |
+| 5/6 | eevee_old_ok / eevee_new_ok | 两版都 headless EEVEE 真出 128×128 透明 PNG |
+
+独立复核（不复用验收脚本的判据）：
+* Pillow 打开两张 PNG：都是 `(128,128) RGBA`、7836 B、7740/16384 非透明像素。
+* **像素逐点完全一致**：`ImageChops.difference` bbox = None、extrema 全 0、
+  差异像素 0 / 16384。
+* 但文件 sha256 不同 → 逐 PNG chunk 比对定位到只有 2 个 `tEXt`：
+  `Date 2026/11/06 19:35:20` vs `19:35:23`、
+  `RenderTime 00:02.14` vs `00:01.79`；**IDAT 7410 B 两者完全相同**。
+  又一次「字节变了 ≠ 画面变了」。
+* 渲染耗时 1.79 s vs 2.14 s 是单次探针，样本量 1，**不作为性能结论**。
+
+六、踩的坑（跨会话）
+----------------------------------------------------------------
+* **日志不是判据，落盘 JSON 才是**：归档 `bake2.txt` 写
+  `[sweep] held 5/27, k<=1.20`、`末帧回归 1.000 px`、`stance[b_elbow]` 一行；
+  本会话同版重跑却是 `4/27, k<=1.00`、`1.100 px`、无那行——但 JSON 逐字节相同。
+  根因是 `bake2.txt` mtime **22:49**，而 `boxer_bake2.py` / `baked2.json`
+  都是 **23:33** 重新生成过，日志过期了。版本对比只认 JSON 字节。
+* **打印和判据必须同源**：验收脚本第一版给 `header_ok` 打印用了转义过的
+  字面量 `b'\\x89PNG...'`，判据用真 magic，结果打印 `header_ok=False` 却判
+  `OK`。改成同一个变量后再跑，两版都 `header_ok=True`。这种自相矛盾的
+  证据比没有证据更坏。
+* **分块别按索引轮转镜像**：第一版 `MIRRORS[(i + attempt) % 4]` 让 3/4 的块
+  一上来就落到 40–60 KB/s 镜像，先熬两个 120 s SSL 超时才轮到快镜像，
+  9 分钟只完成 8/12。改成**每块都从最快镜像起手**、超时降到 45 s 后，
+  剩余块 11~15 s 一片。
+* **前台长连接会被 SIGTERM**：两条前台命令（单块 150 s curl、续传）都在
+  无输出期间被杀；改后台任务 + 小分片短超时才稳。
+* `winget show` 能读到安装器 URL 和 SHA256，但 `winget download/upgrade`
+  仍会去撞那个被 Cloudflare 挡的官方域；清单可用 ≠ 通道可用。
+
+七、故意没做 / 已知问题
+----------------------------------------------------------------
+* **没把 5.2.3 设为系统默认**（权限不允许，见第三节）。B 路线脚本请显式
+  用第一节那个 exe 绝对路径，不要依赖 `blender` 这个命令名。
+* 没下载 MSI（349 MB）；需要覆盖安装时按第八节命令自行获取。
+* 没清理 `Blender 4.4` 卸载残留，也没碰系统里的 5.2.0。
+* 便携版与安装版是两套 Python site-packages；目前只验了 stdlib + bpy，
+  没装任何第三方插件。
+* B 路线尚未开工，因此不存在「旧版渲的精灵要和新版对齐」的存量资产问题；
+  一旦开始渲图，建议固定用 5.2.3，别两版混用。
+
+八、切换默认 / 回退
+----------------------------------------------------------------
+立即可用（推荐，零风险）：
+    D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\blender.exe
+
+要把系统默认也换成 5.2.3，需**以管理员身份**另开会话：
+    curl -o blender-5.2.3.msi https://mirror.freedif.org/blender/release/Blender5.2/blender-5.2.3-windows-x64.msi
+    certutil -hashfile blender-5.2.3.msi SHA256   # 应为 a103d4ec…
+    msiexec /i blender-5.2.3.msi /qb
+（winget upgrade 在本机仍会因 403 失败，别走那条。）
+
+回退：直接删 `D:\Tools\Blender-5.2.3\` 即可，系统 5.2.0 从未被改动。
+
+九、文件清单与 sha256
+----------------------------------------------------------------
+  723f08a4401502561eb763cdeacf8745b31e5f3f154d287d3830d97cf75dc2fb  D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64.zip
+  b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55  baked-5.2.0.json
+  b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55  baked-5.2.3.json
+  b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55  ..\baked2.json（未改动）
+  55088d3608d5f608838b20a3717b910cfa0c4405c9af9551f531881fe484dafe  eevee-5.2.0.png
+  f05e9514d173b564742227dbaaf1cf39b5b7cce50b63cfd63804ff4c5d2ad375  eevee-5.2.3.png
+  31e0d5c75c46fb0b4826a1e406c57184e909f910c93c2a265ca49dc4aaf24b56  fetch_blender.py
+  5e690e9d5b5ca4cf0aa945e6639221bf53194aa62d15c7078537ffee5f44623f  fetch_chunk3.py
+  c360fded079a27b4eb14f3786bb0c0ae9a286ef0ae429b27595d518cb07078e3  verify_upgrade.py
+  2a96602c5a3eb5e926504477555c94d55cab49d084db1c58d1fd812a24520a95  bake-5.2.0.log
+  5686c3a9cb7386403746d0684875ed533e393c140641ab69696a74856cb1e0b2  bake-5.2.3.log
+  723c00c879ace2d772e2e568dd80e124dfe30e72e38e5f3b4af5f00b6535402c  render-5.2.0.log
+  112c5cb7a92372d47f34021ca7dfcde3af5481842518ca7fce7b7b769897fd40  render-5.2.3.log
+  ff1b759b94b552698a918ad6c1316453b26bc26e22b749f02a505b74d80a4029  version-5.2.0.log
+  d631711802fe38a700c78cb207346aa4a554ad193c3f58bb6555b765e3bc79ea  version-5.2.3.log
+  6c5746104b894885ef2e27239bf6f3d25d5483da25d32be755eff0b61cc2123f  result.json
+  本文件：blender-upgrade-validation-record.txt
+
+复算命令：
+  python verify_upgrade.py "D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\blender.exe"
+（依赖同目录的 `baked-5.2.0.json` 作基线；脚本会重建其余产物。）

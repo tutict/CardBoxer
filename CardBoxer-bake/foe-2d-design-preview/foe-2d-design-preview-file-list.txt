@@ -1,0 +1,31 @@
+《牌拳》对手怪 V1 · 2D 设计展示文件清单
+========================================================================
+目录：D:/Projects/CardBoxer/CardBoxer-bake/foe-2d-design-preview
+文件数：22（不含清单自身 / __pycache__ / .pyc）
+
+相对路径                                bytes  sha256
+-----------------------------------------------------------------------------------------------------------
+design_run.log                        723  d40553db91730d673b6ae816013390843cd37602be1d1c70ffe411c088575fa1
+design_stats.json                    3489  bb24e23e35efcc89fc2da47d8104c9d74c320496d079092fd270879a7459379e
+foe-full-clean.png                1945030  e8edf4871f21083cd8adcae28660f637ac9a1161b70569d222bdea726b71cde7
+foe-full-original.png             1924625  a6ea4d6a1f47f18baa75089abf471d7bbc8eafdfa40de10d83d47ec7302c7e03
+foe-redraw.png                    1639313  5884a733fa46a13058731f0b23a26b7e5a3b151129f8bdca0f33c280b46beb42
+make_foe_design.py                  13246  ad385b53b4612b47b2e1fb2786a00974f3b6429bd49406ea52256a80d237e813
+make_foe_viewer.py                   7867  6cdca43db9e4f6e567a40cbc65a4779ff5987aab5d422a94f533e9199ee77967
+make_showcase_filelist.py            1327  4e2acff7a057dfb9c0654ad555b8c4236f7a2404e468e028edb595b21b102b19
+mutation_run.log                      306  5cbf834147d0780397f7a0d67e5c0f6a86a23885c5a880550ed19687c17d9132
+mutation_showcase.log                 287  3313af8c7bf0ae8ced9ec5bde38d0a649bd2903da5af101a3bc6094830fd73ef
+mutation_showcase.py                 4869  0a15f16fa17bd6231132ecb73ae39cf7c218d8e0ecfdb069d57408ef9b22261f
+mutation_showcase_result.json         651  5df87176f17e7c5c4681710c1f6940862461bd34dd34c65b92face1a86475b8b
+verify_run.log                        942  7fd89f155c8cb8c663f48bdf891d2d3bbc99e6960491aca0eb4332149d8a2063
+verify_showcase.log                   940  3bc6f7bcce5575f9f430697568746c87f968891cad9cf2337936ca929c34a426
+verify_showcase.py                   5913  03898dcc30939453905b5cc5fca7ca2584379474dc7c1e76c0176569de002d06
+verify_showcase_result.json          1565  4514d7e9584c0c6c4b9e1ed249707d0089360f8e6cd2dfdbe8172b579cd01316
+viewer_run.log                        144  977bfdf43a473ce1c4a018b995607f6b09108941c08d9185b43edc19789d7513
+foe-V1-2D-design-board.png                   1569615  38824d812b859e6e49c5a576b69ba0528b069bcbd35daaeb7f19882737ac73c6
+foe-V1-2D-design-viewer.html                   6376  4b0322e33a4a7234b435fc43d27c8f120533cbe1570eb4fdb5d700078c924198
+foe-V1-six-detail-panels.png                    1452322  8c4977c6ffcd08dde5fbe4a7bf314e137cc07792010c5a232609d18ad9e260bf
+player-V4b-foe-V1-concept-comparison.png               757175  73cadb5acfc9e4f4fb16c2f442bd127f8c01396b192313590bee635e8110b9d8
+design-preview-notes.txt                           6633  b6401203886d613daf03bfcbac4ce9a3dfe6fed1aa0055965a2b64a33e2631e6
+
+复算： <venv>/python.exe make_showcase_filelist.py

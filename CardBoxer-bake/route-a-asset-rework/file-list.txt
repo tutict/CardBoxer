@@ -1,0 +1,66 @@
+《牌拳》A 路线 · 资产重做（Voxel 连续壳 + SURFACE_DEFORM）· 文件清单
+条目数由脚本现算：59（WORK=本工作区）
+复算命令：python make_filelist.py  # 连续生成两次比对 STABLE_OK
+排除：logs/make_filelist.log 是生成器自身 stdout 日志（自指，写入中哈希会变）
+
+PATH                                                                              BYTES  SHA256
+--------------------------------------------------------------------------------------------------------------
+WORK/A-keyframe-board.png                                                                  522066  1987064226734ff3d9e7cf9b88093772a1eb30f94d2581f85e63736e0f72e5d9
+WORK/A-original-vs-reworked-board.png                                                           560231  09e63036cbd8d8292ecc062b5dee29d087e32c4acfff818464e4338a9f21fcd0
+WORK/A-single-variable-gain-comparison.png                                                               430633  cb004caf3e574d2f1d1688bfd1f86994c0d84434feaa10e2f94bb89a2b1e34b0
+WORK/A-waist-panel-detail.png                                                                289738  fa2512543461a9c53732b3b96a3189b7c1e7ad429bca8e3658b851453a70c889
+WORK/a_build.json                                                                108955  3145be51c20b94ecc99949a42509d7ccb9f4710779bdf4bfe7dc6a8515f47a54
+WORK/a_build.py                                                                   12903  0f71885cc5dc427b16fab8628ebe844d8124a038c9e11aa2d0f96fd11ff9c32c
+WORK/analyze_a.py                                                                  3720  6ecd53f5aae3a50fb74585c9668de617b176f0d32350b69c2e72f758e178ada2
+WORK/A-route-asset-rework-validation-record.txt                                                             12972  f80bdd147fcc8c16d8ac1f6ef5a0b37f3a6b2f4265c02c54367fbe3f8e3e3bf3
+WORK/bake_probe.json                                                                470  6f7e5ce1defa44aacd4a5ff700bbdc165df5cedc2a7db8102d62a7272feaeab7
+WORK/diag_shard.py                                                                 2725  5273b723d81ca773842bff906a750ed231963dcaf1c96dc28a24de037c6d77b9
+WORK/frames/a-cross01-x15.png                                                    451966  448393319c3cdf4874047bbeefe0b1b0278040a5263c7b89b12382b012cd4f3d
+WORK/frames/a-cross11-x1.png                                                     458208  b99b22b0b7e7f997308dfdf6a3fcca6a541932b204cc2e05576de8416aa7e218
+WORK/frames/a-cross11-x15.png                                                    457372  c1de5fa4057d78d7248a705e6460a6561c235f14e29f7804ea4a258e59068564
+WORK/frames/a-cross21-x15.png                                                    451975  b2b12f8e8b92d731ff82c4f12e976e4f2dd3ea4b781ab7fe52966b8ab914c5ee
+WORK/frames/a-jab01-x15.png                                                      451964  cd2d7ee4353acf80e16e29f73255c6a74b501af555e9ce6fff3ff6030f20c92c
+WORK/frames/a-jab07-x1.png                                                       456634  ae15808a45c3ad10a38f9c272c32a3d117a74fbbb7c23ecbdd70dc2fee087b4d
+WORK/frames/a-jab07-x15.png                                                      455049  e863310560af1b89450208689ceba61644efc8671e27c7baff916844d8457fb7
+WORK/frames/a-jab13-x15.png                                                      451384  cded718d8e6fa57553d28647fc2d7cf4e459525783c65c18969580c17d427db8
+WORK/frames/a-stance-angle55.png                                                 410598  2472f20094d36b9161558a7402b310fb2c0a57128c0d0e4c2584b3153897b0bf
+WORK/frames/a-stance-x15.png                                                     451966  d5384c803194af0404b87960559efb82d129fb7a3b297aa00c0b03edf6a8cfbd
+WORK/frames/a-wave01-x15.png                                                     451974  4e976bc8193cd817de85b6be4200d52e1a0026790d951d971a21271e8dd80f57
+WORK/frames/a-wave18-x1.png                                                      455938  8110de8a70e1dbe31466ad3ff43fce496a6c96bcbd9c6ff07a3335d5e547fbf2
+WORK/frames/a-wave18-x15.png                                                     456690  73600317abac3f345c48795e9bb5ee18b8369d64962db2705ade5a120c2fb295
+WORK/frames/a-wave35-x15.png                                                     451421  baa406dadaa2129931daa90a2592ac6876e059166b2b6363feec1854a661ff7f
+WORK/frames/a1-bake-probe.png                                                    378229  b9aeb6a61836d768aaa59b85b732c18ad9d773a77ecdb904e081837688de9a88
+WORK/frames/a2-cross10.png                                                       458219  cd86fd77fc480c8739c0b6af58dbdc79fe69d698c177801348e35567f31eae24
+WORK/frames/a2-jab06.png                                                         456636  02104640704f7ecb670ccbe4a66f0e882f67c90030b60e057e8435de38b11ad4
+WORK/frames/a2-rest.png                                                          451873  a06f14f39a589e7ac95627efb0a97ef1262e217bbe6bbc70e5f4319407024c65
+WORK/frames/a2-stance-angle55.png                                                417842  ec57d55f33bda6472d1eab88b763ffce3ac115cae8549b638649a3feddd6781f
+WORK/frames/a2-wave17.png                                                        455932  91eeefebb37118e358f2bdf81125fe20978b8a4ca7d339e243078f336fc0d676
+WORK/logs/a_build.log                                                              3431  a43b3e7948bb2c1e807f8508f09060a5251ea48d69eea4382a74587c58cfd161
+WORK/logs/analyze_a.log                                                             720  17fc87b0ee77acaa0f209d354b9ff0d5b8079a04b5b203d271b9dbe0352c476c
+WORK/logs/bake_probe.log                                                            704  ed37befb54cc437d4a9d1bb19c49d05ae6fa76f0feb722880941548b6675e29c
+WORK/logs/diag_shard.log                                                            100  0a1cbf3e2be5fa1d616ee7e4dbd255344778e52b444ad0d0e472d4d82ed89ca1
+WORK/logs/empty_marker.bin                                                            0  e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+WORK/logs/make_a_board.log                                                          154  b82be542388a637210cfa0adc119b163af16f512d273dd8e8416fc25b8b1b0a5
+WORK/logs/make_baseline.log                                                          52  7eae4c9dcf8a95087fca96f60b2e6210e274027e646d63d9351bbcf400281b71
+WORK/logs/material_probe.log                                                       1179  6d0804db858ba6730636f7457cff37b33b286e73b5ccf9cc10b544dca39619db
+WORK/logs/mutation_a.log                                                            667  ac751c2030ba3ce75b0f9f55e13f0223ff633ccbde05548b24c019acefe6946b
+WORK/logs/mutation_a_selftest.log                                                   638  8cacece4e1b4d06ea895cc694d1497d0a597bb583ad65c760073f515e6d010c6
+WORK/logs/surfdeform_probe.log                                                     2071  23fb3081d2429c09505076a165078fd0c772921744a8c5ae05e9f38607260011
+WORK/logs/verify_a.log                                                             1907  dadada71944134a32d77b60e7003f3e81e7f5cca189621782f830cede0e01fcb
+WORK/make_a_board.py                                                               8028  0d4a6446b56f6f27be54f1fc0100cb78e1b0dfa44b9f288ba59370303426e59a
+WORK/make_baseline.py                                                              2269  f79bce3f65b5b73c0c55b9950e1d54a2051e63e1f32e043efa0d08708ac3c441
+WORK/make_filelist.py                                                              3818  97ce6c749b84edd9fed7c224968be202e725a942a35d302977c38999623208d8
+WORK/material_probe.json                                                           4045  285ddcc1e3eeaddf489bc84aa8ba0f34110d95faa6fc4c1dd2d87c48a12abf18
+WORK/metrics_a.json                                                                6564  ab5e13753697f0ace5a768470800b127d9cd668d21a34d4c109005e9c271600d
+WORK/mutation_a.py                                                                 6710  5a677f97945515fb93e184da05bcdb7e44578e37842074097cbf00b84bef3156
+WORK/mutation_a_result.json                                                        2218  59d1a1dff0fe911a04ae2795f61e38408f66fc73787930c25457493e6a718a67
+WORK/mutation_a_selftest_result.json                                               2167  039339fd114164c7470daee286622aeb61dd3b3c72cbadd85e417912a049af59
+WORK/probe_bake.py                                                                 2990  74a7f4403e3105ad28b65d6baae781636dc7024960b08dd684aa2894666b54a1
+WORK/probe_material.py                                                             5101  4cdde7921332c1b7c2976a38e3851fac219b18eea0bd064e4ae0f5f5606fa065
+WORK/probe_surfdeform.py                                                           8619  a05f082013d54d5374662af40deafe6b4e8916f87bb4682066e7ac37d0c08f20
+WORK/shard_stats.json                                                               285  d9b465c6ab1676417e6991c4d77e3fc699fa911480f988802788bb8fd303d789
+WORK/surfdeform_probe.json                                                         3234  011dc40777cb658c56e1f128d9ddde00dd9be454ac6ed738e06c77af8017205f
+WORK/verify_a.py                                                                  16251  d4bfdc588628da17b98e9e9c4f68dd8209a40e54e668ec6a1591bdb8a585208c
+WORK/verify_a_result.json                                                          3578  bcca232cd8146233ae8729f5ccd3a131190acc92440f9753b199ebbaf73cf291
+WORK/baseline.json                                                                      10444  3510adc266dd29780b0bb3fa683fd1c22d6aaada03493d96c1053d4d6d5a854d
+WORK/foe-deformable-continuous-shell.blend                                                          59118499  88dca6d28aa36caeda9f5af5564bf553aa8a9ee618846457b036fe3b1bd54239

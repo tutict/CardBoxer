@@ -1,0 +1,20 @@
+{
+  "gifs": [
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-live-boards\\foe-card-sweep.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-live-boards\\foe-fatal-facing-reset.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-live-boards\\player-card-cross.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-live-boards\\player-wave-new-action.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-live-boards\\taikou-enemy.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-live-boards\\taikou-player.gif"
+  ],
+  "boards": [
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-live-boards\\foe-card-sweep-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-live-boards\\foe-fatal-facing-reset-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-live-boards\\player-card-cross-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-live-boards\\player-wave-new-action-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-live-boards\\taikou-enemy-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-live-boards\\taikou-player-board.png"
+  ],
+  "limitations": "Only recorded production samples shown; human review required.",
+  "preview_scale": 0.4
+}

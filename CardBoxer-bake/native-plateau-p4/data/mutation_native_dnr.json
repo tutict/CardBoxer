@@ -1,0 +1,26 @@
+{
+  "cases": 1,
+  "caught": 0,
+  "dnr": 1,
+  "broken": 0,
+  "missed": 0,
+  "restored": 0,
+  "clean_ok": true,
+  "clean_passed": 91,
+  "clean_total": 91,
+  "selftest": true,
+  "only": "",
+  "rows": [
+    {
+      "name": "DNR_SELFTEST",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-plateau-p4\\data\\landing_tracks.json",
+      "expect": [
+        "landing_case_is_micro2"
+      ],
+      "anchor_hits": 0,
+      "status": "DID NOT RUN",
+      "why": "anchor hits 0"
+    }
+  ],
+  "ok": true
+}

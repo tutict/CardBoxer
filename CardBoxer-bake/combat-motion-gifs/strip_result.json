@@ -1,0 +1,23 @@
+{
+  "jab": {
+    "ok": true,
+    "frames": 14,
+    "expected": 14,
+    "out": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\combat-motion-gifs\\frames\\jab",
+    "bytes": 231753
+  },
+  "cross": {
+    "ok": true,
+    "frames": 22,
+    "expected": 22,
+    "out": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\combat-motion-gifs\\frames\\cross",
+    "bytes": 351161
+  },
+  "wave": {
+    "ok": true,
+    "frames": 36,
+    "expected": 36,
+    "out": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\combat-motion-gifs\\frames\\wave",
+    "bytes": 589250
+  }
+}

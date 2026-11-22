@@ -1,0 +1,62 @@
+{
+  "made": {
+    "curve": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-plateau-p4\\boards\\P4-plateau-curve-comparison.png",
+      "size": [
+        1400,
+        840
+      ],
+      "frames": 22,
+      "original_flat_pairs_in_focus": 7,
+      "shipped_flat_pairs_in_focus": 0,
+      "cards": 4
+    },
+    "strip": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-plateau-p4\\boards\\P4-frame-sequence-strip.png",
+      "size": [
+        1400,
+        980
+      ],
+      "frames": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "groups": 4,
+      "panels": 24
+    },
+    "compare": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-plateau-p4\\boards\\P4-before-after-comparison.png",
+      "size": [
+        720,
+        1230
+      ],
+      "frames": [
+        [
+          "jab",
+          6
+        ],
+        [
+          "sweep",
+          14
+        ],
+        [
+          "hit_heavy",
+          8
+        ]
+      ]
+    }
+  },
+  "checks": {
+    "three_boards_written": true,
+    "curve_flat_reduced_in_focus": true,
+    "strip_24_panels": true,
+    "compare_three_frames": true,
+    "probe_all_checks_green": true
+  },
+  "failed": [],
+  "ok": true
+}

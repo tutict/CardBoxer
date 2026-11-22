@@ -1,0 +1,277 @@
+{
+  "metric_revision": "R1 + R2（R1：mf 主指标；R2：jab 不动，放弃三档递减，改钉 wave/cross 真正驱动）",
+  "source": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer\\data\\card_motion.json",
+  "baseline_track_count": 15,
+  "baseline_frame_total": 284,
+  "attacks": [
+    "cross",
+    "jab",
+    "sweep",
+    "throw",
+    "uppercut",
+    "wave"
+  ],
+  "negative_result_v1": "logs/design_pose_candidates.out（reach 口径，三档全未过）",
+  "cases": [
+    {
+      "name": "conservative",
+      "params": {
+        "wave_push": 30.0,
+        "wave_two_hand": 0.3,
+        "jab_ratio": 0.0,
+        "cross_recoil": 10.0,
+        "cross_push": 26.0
+      },
+      "checks": {
+        "wave_arm_drive_strong": false,
+        "cross_arm_drive_strong": true,
+        "wave_stronger_than_cross": true,
+        "jab_byte_identical_for_reach_probe": true,
+        "all_attack_mf_peaks_in_active": true,
+        "cross_mf_peak_in_active": true,
+        "cross_windup_recoil_nonzero": true,
+        "wave_is_push_not_translation": true,
+        "exact_hold_pairs_zero": true,
+        "endpoint_drift_within_1_5": true,
+        "l8_peak_pair_min_within_80pct": true,
+        "frame_counts_unchanged": true,
+        "endpoints_byte_identical": true,
+        "legs_and_metadata_untouched": true
+      },
+      "passed": false,
+      "tier_mf_peak_px": {
+        "wave": 51.1312,
+        "cross": 26.0,
+        "jab": 80.2247
+      },
+      "tier_mf_peak_frame": {
+        "wave": 17,
+        "cross": 8,
+        "jab": 6
+      },
+      "tier_mf_peak_phase": {
+        "wave": "active",
+        "cross": "active",
+        "jab": "active"
+      },
+      "tier_forward_ext_gain_px": {
+        "wave": 32.0,
+        "cross": 13.4,
+        "jab": 44.4
+      },
+      "baseline_mf_peak_px": {
+        "wave": 22.0907,
+        "cross": 0.0,
+        "jab": 80.2247
+      },
+      "attack_mf_peak_phase": {
+        "cross": "active",
+        "jab": "active",
+        "sweep": "active",
+        "throw": "active",
+        "uppercut": "active",
+        "wave": "active"
+      },
+      "cross_windup_recoil_px": 10.0,
+      "cross_arc_deviation_px": 0.3997,
+      "wave_arc_deviation_px": 10.8115,
+      "exact_hold_pairs": 0,
+      "endpoint_drift_px": 1.1,
+      "endpoint_drift_at": "sweep last",
+      "max_2d_shift_px": 30.0,
+      "max_2d_shift_at": "wave:15:f_hand",
+      "max_3d_delta_diff_deg": 13.534974,
+      "max_3d_delta_diff_at": "wave:15:upperarm_f",
+      "l8_peak_pair_min": 92.0107,
+      "l8_peak_pair_at": "jab|uppercut",
+      "attack_overshoot_px": {
+        "cross": 31.0,
+        "jab": 0.0,
+        "sweep": 0.0,
+        "throw": 0.0,
+        "uppercut": 0.0,
+        "wave": 3.8954
+      },
+      "changed_frames": {
+        "wave": 23,
+        "jab": 0,
+        "cross": 19
+      },
+      "changed_frame_total": 42
+    },
+    {
+      "name": "balanced",
+      "params": {
+        "wave_push": 40.0,
+        "wave_two_hand": 0.5,
+        "jab_ratio": 0.0,
+        "cross_recoil": 12.0,
+        "cross_push": 36.0
+      },
+      "checks": {
+        "wave_arm_drive_strong": true,
+        "cross_arm_drive_strong": true,
+        "wave_stronger_than_cross": true,
+        "jab_byte_identical_for_reach_probe": true,
+        "all_attack_mf_peaks_in_active": true,
+        "cross_mf_peak_in_active": true,
+        "cross_windup_recoil_nonzero": true,
+        "wave_is_push_not_translation": true,
+        "exact_hold_pairs_zero": true,
+        "endpoint_drift_within_1_5": true,
+        "l8_peak_pair_min_within_80pct": true,
+        "frame_counts_unchanged": true,
+        "endpoints_byte_identical": true,
+        "legs_and_metadata_untouched": true
+      },
+      "passed": true,
+      "tier_mf_peak_px": {
+        "wave": 60.823,
+        "cross": 36.0,
+        "jab": 80.2247
+      },
+      "tier_mf_peak_frame": {
+        "wave": 17,
+        "cross": 8,
+        "jab": 6
+      },
+      "tier_mf_peak_phase": {
+        "wave": "active",
+        "cross": "active",
+        "jab": "active"
+      },
+      "tier_forward_ext_gain_px": {
+        "wave": 42.0,
+        "cross": 12.4,
+        "jab": 44.4
+      },
+      "baseline_mf_peak_px": {
+        "wave": 22.0907,
+        "cross": 0.0,
+        "jab": 80.2247
+      },
+      "attack_mf_peak_phase": {
+        "cross": "active",
+        "jab": "active",
+        "sweep": "active",
+        "throw": "active",
+        "uppercut": "active",
+        "wave": "active"
+      },
+      "cross_windup_recoil_px": 12.0,
+      "cross_arc_deviation_px": 0.4796,
+      "wave_arc_deviation_px": 10.6725,
+      "exact_hold_pairs": 0,
+      "endpoint_drift_px": 1.1,
+      "endpoint_drift_at": "sweep last",
+      "max_2d_shift_px": 40.0,
+      "max_2d_shift_at": "wave:15:f_hand",
+      "max_3d_delta_diff_deg": 18.06174,
+      "max_3d_delta_diff_at": "wave:15:upperarm_f",
+      "l8_peak_pair_min": 92.0107,
+      "l8_peak_pair_at": "jab|uppercut",
+      "attack_overshoot_px": {
+        "cross": 42.0,
+        "jab": 0.0,
+        "sweep": 0.0,
+        "throw": 0.0,
+        "uppercut": 0.0,
+        "wave": 3.5939
+      },
+      "changed_frames": {
+        "wave": 23,
+        "jab": 0,
+        "cross": 19
+      },
+      "changed_frame_total": 42
+    },
+    {
+      "name": "bold",
+      "params": {
+        "wave_push": 50.0,
+        "wave_two_hand": 0.7,
+        "jab_ratio": 0.0,
+        "cross_recoil": 16.0,
+        "cross_push": 46.0
+      },
+      "checks": {
+        "wave_arm_drive_strong": true,
+        "cross_arm_drive_strong": true,
+        "wave_stronger_than_cross": true,
+        "jab_byte_identical_for_reach_probe": true,
+        "all_attack_mf_peaks_in_active": true,
+        "cross_mf_peak_in_active": true,
+        "cross_windup_recoil_nonzero": true,
+        "wave_is_push_not_translation": true,
+        "exact_hold_pairs_zero": true,
+        "endpoint_drift_within_1_5": true,
+        "l8_peak_pair_min_within_80pct": true,
+        "frame_counts_unchanged": true,
+        "endpoints_byte_identical": true,
+        "legs_and_metadata_untouched": true
+      },
+      "passed": true,
+      "tier_mf_peak_px": {
+        "wave": 70.5167,
+        "cross": 46.0,
+        "jab": 80.2247
+      },
+      "tier_mf_peak_frame": {
+        "wave": 17,
+        "cross": 8,
+        "jab": 6
+      },
+      "tier_mf_peak_phase": {
+        "wave": "active",
+        "cross": "active",
+        "jab": "active"
+      },
+      "tier_forward_ext_gain_px": {
+        "wave": 52.0,
+        "cross": 10.4,
+        "jab": 44.4
+      },
+      "baseline_mf_peak_px": {
+        "wave": 22.0907,
+        "cross": 0.0,
+        "jab": 80.2247
+      },
+      "attack_mf_peak_phase": {
+        "cross": "active",
+        "jab": "active",
+        "sweep": "active",
+        "throw": "active",
+        "uppercut": "active",
+        "wave": "active"
+      },
+      "cross_windup_recoil_px": 16.0,
+      "cross_arc_deviation_px": 0.6395,
+      "wave_arc_deviation_px": 10.5742,
+      "exact_hold_pairs": 0,
+      "endpoint_drift_px": 1.1,
+      "endpoint_drift_at": "sweep last",
+      "max_2d_shift_px": 50.0,
+      "max_2d_shift_at": "wave:15:f_hand",
+      "max_3d_delta_diff_deg": 20.853333,
+      "max_3d_delta_diff_at": "cross:8:upperarm_f",
+      "l8_peak_pair_min": 92.0107,
+      "l8_peak_pair_at": "jab|uppercut",
+      "attack_overshoot_px": {
+        "cross": 54.0,
+        "jab": 0.0,
+        "sweep": 0.0,
+        "throw": 0.0,
+        "uppercut": 0.0,
+        "wave": 3.2923
+      },
+      "changed_frames": {
+        "wave": 23,
+        "jab": 0,
+        "cross": 19
+      },
+      "changed_frame_total": 42
+    }
+  ],
+  "recommended": "balanced",
+  "selection_rule": "全部硬约束通过者中 max_3d_delta_diff_deg 最小"
+}

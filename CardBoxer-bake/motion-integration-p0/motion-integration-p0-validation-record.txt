@@ -1,0 +1,165 @@
+《牌拳 / CARD BOXER》回合制战斗动作 · P0 接线验证记录
+========================================================
+日期：2026-11-08 21:33–21:58（本机时间）
+范围：把 combat-motion-design/battle_motion_spec.json 的 P0 部分真正接进游戏源码
+产物目录：CardBoxer-bake/motion-integration-p0/
+游戏源码：CardBoxer/（本轮**确实改了**，与前面几轮「0 改动」不同）
+
+────────────────────────────────────────────────────────────
+一、结论（先说）
+────────────────────────────────────────────────────────────
+P0 接线成立，且是**引擎内验证过的**，不是只写了个规格文档：
+  * 亮牌阶段改为「同时亮牌仪式」，两侧统一播 reuse:card:focus，
+    不掉血、不播招式；赢家攻击与输家受击全部挪到 resolve。
+  * 动作强度改由**赢家牌型**决定，退役了原来的
+    perform_visual(String(tk_player_ids[0])) —— 那个写法与胜负完全脱钩。
+  * 三同/三连/散牌分别接 wave/cross/jab，受击走
+    super(0.75s)/launch(0.42s)/默认(0.26s) 三档，平局双方各受 3 点
+    且不播赢家攻击。伤害公式 Rules.damage_of() 一个字没改。
+  * HUD 结算提示显示「招式 X / 受击 Y」，banner 带中文动作名。
+  * 11 套 Godot 自检 ALL GREEN（新增 93/93）、5 张真实 GL 截帧、
+    18/18 承重判据、13/13 变异 CAUGHT。
+
+没做的部分在第六节，别把「18/18 PASS」读成「动作好看」。
+
+────────────────────────────────────────────────────────────
+二、现状诊断（接线前）
+────────────────────────────────────────────────────────────
+| 项 | 接线前 | 问题 |
+|---|---|---|
+| tk_phase | discard/select/reveal(1.5s)/resolve(1.9s) | 合计 3.4s，动作只占 0.86s（25%），其余站桩 |
+| _do_taikou_reveal() | perform_visual(String(tk_*_ids[0])) | 亮牌就出招，与太阁 IV「先比牌后结算」反着来 |
+| _resolve_taikou() | apply_hit(..., "", false) ×4 | 三档伤害共用 0.26s hit_light，牌型强弱看不出 |
+| fighter.gd | 已有 0.26/0.42/0.5/0.75s 四档硬直 | 现成可用，**不需要改 fighter.gd** |
+| card_motion.json | 12 卡 228 帧 + 3 受击轨道 | reuse 够 P0 用；new 项 10 个一律未烘 |
+
+备份：orig/pre-motion-p0/ 共 10 个文件（arena.gd / hud.gd / fighter.gd /
+card_data.gd / card_motion.gd / taikou_rules.gd / taikou_rage.gd /
+taikou_flow_check.gd / project.godot / run_all_checks.py），
+其中 6 个 .gd 的 sha256 与 combat-motion-design/source-baseline.json 逐项一致，
+证明备份确实是接线前的树，不是事后拼的。
+
+────────────────────────────────────────────────────────────
+三、实际改动
+────────────────────────────────────────────────────────────
+| 文件 | 变化 | 内容 |
+|---|---|---|
+| scripts/arena.gd | 改 | +MotionP0 preload；+4 个 tk_motion_* 状态；亮牌走 REVEAL_CARD；resolve 按赢家牌型取 binding；player/enemy.perform_visual(tk_motion_id)；两处 apply_hit 传 tk_motion_extra；平局双 apply_hit 同口径；banner 与 [TAIKOU] 日志带动作名 |
+| scripts/hud.gd | 改 | resolve 提示行在 tk_motion_id 非空时追加「招式 X / 受击 Y」，平局显示「对峙，双方各受 3 点」 |
+| scripts/battle_motion_p0.gd | 新增 3021 B | 纯常量 + 纯函数：REVEAL_CARD、BINDINGS、DRAW、reuse_assets()，真相来源是 spec |
+| tests/battle_motion_p0_check.gd | 新增 9447 B | 93 条引擎内承重断言：亮牌零伤害/纯表演、三档绑定、对手赢分支、平局、重置清空、旧形态退役、reuse 资产真实存在、hit_crush 未烘 |
+
+另有一处一致性修正：平局 banner 原本硬编码「对峙」，改成
+`"双方各受 3 点 · %s" % tk_motion_label`，避免动作名两处写死。改完
+重跑了全套截帧 / 自检 / 取证。
+
+未改动：fighter.gd、card_data.gd、card_motion.gd、taikou_rules.gd、
+taikou_rage.gd、taikou_flow_check.gd、project.godot、appearance-layer/run_all_checks.py
+—— 8 个文件与备份逐字节一致（判据 V02）。
+
+────────────────────────────────────────────────────────────
+四、验收数字
+────────────────────────────────────────────────────────────
+1) 11 套 Godot 自检（run_all_checks.py，headless，逐套留 stdout）：
+   COMBO 8/8 · MOTION/POSE/DUEL/REACH/FEET PROBE PASS ·
+   TAIKOU RULES 90/90 · TAIKOU FLOW 51/51 · TAIKOU RAGE 1482/1482 ·
+   FIGHTER SKIN PASS · BATTLE MOTION P0 93/93
+   → TOTAL 11 checks, 0 failed / RESULT: ALL GREEN
+
+2) 5 张引擎内截帧（capture_p0.py，**不带 --headless**，
+   OpenGL API 3.3.0 NVIDIA；注入确定性牌型后逐字节还原 arena.gd）：
+   | 模式 | [P0_SHOT] 实读 | 伤害 |
+   |---|---|---|
+   | reveal | tk_phase=reveal p_action=focus e_action=focus hp=100/100 | 0 |
+   | triple 999 | motion=wave label=气功波 winner=player hp=100/77 | -23 |
+   | sequence 456 | motion=cross label=交叉反击 hp=100/85 | -15 |
+   | scatter 258 | motion=jab label=刺拳 hp=100/90 | -10 |
+   | draw 111:111 | motion=(空) label=对峙 winner=draw hp=97/97 | 双方 -3 |
+   [TAIKOU] 日志同步读到 motion/react/extra 三档：
+   wave/hit_crush/super、cross/hit_heavy/launch、jab/hit_light/(空)。
+
+3) 像素取证（evidence_p0.py，9/9 EVIDENCE_P0_OK）：
+   HUD 提示行 (44,692)-(1100,720) 四种 resolve 两两差异最小 1248 px；
+   banner 区亮牌 vs 结算 5767 px；角色带 (180,250)-(1100,600)
+   两两差异最小 17077 px；亮牌帧与任一结算帧整帧差异 43112..73137 px。
+   → 不是只换了文字，角色动作帧也真的不同。
+
+4) 承重判据（verify_p0.py）**18/18 P0_WIRING_VERIFIED**：
+   V01–V04 变更范围（备份=接线前、恰好 2 改 2 新增、8 个未改逐字节一致）
+   V05–V10 跨工程规格对齐（spec ↔ BINDINGS ↔ damage_tiers ↔ card_motion.json）
+   V11–V15 源码接线形态（钉完整调用串，不钉注释里也会出现的词）
+   V16–V18 引擎真实输出（11 套自检 / 5 张截帧日志 / 从 PNG 重算像素差异）
+
+5) 变异验证（mutation_p0.py）**13/13 CAUGHT / MUTATION_P0_OK**：
+   13/13 逐字节还原、clean re-run 18/18。典型：
+   M4 赢家动作写死 "jab" → V12；M5 apply_hit 退回 "" → V11/V12；
+   M6 亮牌退回旧形态 → V11/V12；M7 HUD 条件改 if false → V14；
+   M11 整张三同 PNG 换成散牌 PNG → V18（证明像素是重算不是只信 JSON）。
+   `P0_MUTATION_SELFTEST=1` 得 12/13 + did_not_run=1 + MUTATION_P0_FAILED，
+   证明「锚点失配计入未证明」的分支有牙。
+
+────────────────────────────────────────────────────────────
+五、本轮踩到并订正的四个坑（可复用）
+────────────────────────────────────────────────────────────
+① **截帧成功判据假绿**：只查 "SCRIPT ERROR" 会漏掉引擎 stderr 里的
+   `ERROR: String formatting error`。首版 4 张图照样存下来、rc=0，
+   但 [P0_SHOT] 打印的是未格式化的 `%s` 模板。改成查 stderr 段的
+   `ERROR:` / `Parse Error`，并钉 marker 必须含预期 motion/label/hp。
+   与之前「守卫钉形态不钉词」是同一类问题。
+② **GDScript print 的占位符与参数必须严格等量**：多传 1 个报
+   "not all arguments converted"，`%d` 接 float 报 "a number is required"。
+   统一改 `%s + str()`，不靠猜类型。
+③ **裸子串计数会被自己的注释骗**：V13 数 `Rules.damage_of(` 得 3
+   （2 次真调用 + 1 次注释）。改钉完整赋值形态
+   `tk_damage = Rules.damage_of(tk_player_result)` 并与备份独立复算。
+④ **变异脚本里中文路径不能写成 bytes 字面量**（SyntaxError:
+   bytes can only contain ASCII literal characters）。整文件替换型的
+   源路径改用 str，运行时再判 isinstance。与前几轮记的
+   「needle 只能 ASCII」是同一条规矩的延伸。
+
+────────────────────────────────────────────────────────────
+六、边界（没做的部分）
+────────────────────────────────────────────────────────────
+* spec 里 asset_plan.new 的 10 项（reveal_ready / reveal_present /
+  reveal_hold / ex_charge / ex_burst / hit_crush / round_victory /
+  round_defeat / round_settle / ko_fall）**一项都没烘**。
+  hit_crush 在代码里只是规格索引字符串；实际受击由 extra="super"
+  触发 fighter.gd 的 0.75s 硬直 + 已烘 hit_heavy 轨道。
+* 亮牌阶段播的是 focus 起势，不是「按牌型分三档的亮牌定格」；
+  EX 仍只有牌型升级 + HUD 角标，没有蓄力/爆发动作。这两块是 P1/P2。
+* 三回制、怒火槽、伤害公式、实时模式兜底（BATTLE_MODE 仍是
+  "taikou"）、2D 外观层全部未动；游戏内角色仍是 GDScript 自绘，
+  没有接任何 3D 模型 / 精灵图集。
+* 5 张「引擎帧」是注入确定性牌型后的**引擎内渲染**，不是真人操作录屏；
+  注入块临时写 arena.gd，finally 逐字节还原并用 sha256 证明
+  （RESTORE OK sha256=5c4c393b…）。
+* 18 条判据一条都没评「动作好不好看」；看图结论只有一句：
+  五种状态的 banner / 亮牌框 / 血条 / 角色姿势都能分辨，无空白或截断。
+* 本轮改了游戏源码，因此前面几轮「游戏源码 0 改动」的结论不再适用。
+
+────────────────────────────────────────────────────────────
+七、复算命令（顺序有依赖）
+────────────────────────────────────────────────────────────
+PY="C:/Users/tutic/IdeaProjects/Fantasy-Agent/.venv/Scripts/python.exe"
+D="D:/Projects/CardBoxer/CardBoxer-bake/motion-integration-p0"
+"$PY" -u "$D/capture_p0.py"      # 5 张 GL 截帧，会临时写 arena.gd 再还原
+"$PY" -u "$D/run_all_checks.py"  # 11 套 Godot 自检 → all_checks.json
+"$PY" -u "$D/evidence_p0.py"     # 9 条像素取证 → evidence_p0.json + 对照板
+"$PY" -u "$D/verify_p0.py"       # 18 条承重判据 → verify_p0_result.json
+"$PY" -u "$D/mutation_p0.py"     # 13 组变异（会改游戏源码再逐字节还原）
+P0_MUTATION_SELFTEST=1 "$PY" -u "$D/mutation_p0.py"   # 失配分支自测
+
+**capture 必须在 verify 之前**（verify 读 capture_result.json），
+且**不能与任何 Godot 自检并行**（注入期间 arena.gd 是临时变异态）。
+跑完变异后建议再跑一次 run_all_checks.py + verify_p0.py 收口。
+
+────────────────────────────────────────────────────────────
+八、下一步（等工程师定）
+────────────────────────────────────────────────────────────
+A 补 spec 标 new 的 2D 表演资产（亮牌定格三档 / EX 蓄力爆发 /
+  回合胜负 / KO），继续不动 3D 与判定层 —— 成本最低、见效最直接。
+B 把 KOF 式侧身演示的节奏（前压 / 击退 / HIT! 停顿）搬进 resolve，
+  仍走 2D appearance-layer，与离线 GIF 共用一套参数。
+C 等真 3D 角色能稳定摆姿势再谈替换角色资产（目前 C 路线只是
+  「网格不撕」，动作幅度仍小）。
+D 到此为止，把 P0 当可玩闭环存档。

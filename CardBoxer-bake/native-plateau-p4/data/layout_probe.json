@@ -1,0 +1,137 @@
+{
+  "game": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer",
+  "shape": {
+    "mi_root_keys": [
+      "apose_points",
+      "bones",
+      "cards",
+      "chain",
+      "joint_names",
+      "mapping",
+      "px_to_m",
+      "source",
+      "stance"
+    ],
+    "mif_root_keys": [
+      "apose_points",
+      "bones",
+      "cards",
+      "chain",
+      "joint_names",
+      "mapping",
+      "px_to_m",
+      "source",
+      "stance"
+    ],
+    "cm_root_keys": [
+      "cards",
+      "motions",
+      "rhythm",
+      "stance",
+      "units",
+      "warnings"
+    ],
+    "mi_first_card": "jab",
+    "mi_first_card_keys": [
+      "frames",
+      "track"
+    ],
+    "mi_first_frame_keys": [
+      "b_elbow",
+      "b_foot",
+      "b_hand",
+      "b_knee",
+      "f_elbow",
+      "f_foot",
+      "f_hand",
+      "f_knee",
+      "head",
+      "hip",
+      "shoulder"
+    ],
+    "cm_first_frame_keys": [
+      "b_elbow",
+      "b_foot",
+      "b_hand",
+      "b_knee",
+      "f",
+      "f_elbow",
+      "f_foot",
+      "f_hand",
+      "f_knee",
+      "head",
+      "hip",
+      "k",
+      "lean",
+      "phase",
+      "shoulder",
+      "torso_deg"
+    ],
+    "joint_names": [
+      "hip",
+      "shoulder",
+      "head",
+      "f_elbow",
+      "f_hand",
+      "b_elbow",
+      "b_hand",
+      "f_knee",
+      "f_foot",
+      "b_knee",
+      "b_foot"
+    ]
+  },
+  "cmp_mi_cm_11joints": {
+    "same_keys": true,
+    "mismatches": 0,
+    "first": []
+  },
+  "cmp_mi_mif_11joints": {
+    "same_keys": true,
+    "mismatches": 0,
+    "first": []
+  },
+  "card_match": {
+    "hybrid_tracks": 15,
+    "mi_cards": 15,
+    "hybrid_only": [],
+    "mi_only": [],
+    "frame_counts_match": true
+  },
+  "hybrid_changed_frame_total": 82,
+  "serialization": {
+    "motion_input.json": {
+      "bytes": 72940,
+      "crlf": 0,
+      "lf": 1,
+      "has_indent": false,
+      "tail": "'51667]},\"px_to_m\":0.01}\\n'",
+      "head": "'{\"source\":\"baked2.json\",\"joint_names\":[\"hip\",\"shoulder\",\"head\",\"f_elbow\",\"f_hand\",\"b_elbow\",\"b_hand\",\"f_knee\",\"f_foot\",\"b_knee\",\"b_foot\"],\"stance\":{\"hip\":[0.0,-'"
+    },
+    "motion_input_foe.json": {
+      "bytes": 72938,
+      "crlf": 0,
+      "lf": 1,
+      "has_indent": false,
+      "tail": "'10521]},\"px_to_m\":0.01}\\n'",
+      "head": "'{\"source\":\"baked2.json\",\"joint_names\":[\"hip\",\"shoulder\",\"head\",\"f_elbow\",\"f_hand\",\"b_elbow\",\"b_hand\",\"f_knee\",\"f_foot\",\"b_knee\",\"b_foot\"],\"stance\":{\"hip\":[0.0,-'"
+    },
+    "card_motion.json": {
+      "bytes": 226918,
+      "crlf": 16079,
+      "lf": 16079,
+      "has_indent": true,
+      "tail": "'ck error 2.80 px\"\\r\\n ]\\r\\n}'",
+      "head": "'{\\r\\n \"units\": \"game px; origin at the feet; +x forward; -y up\",\\r\\n \"rhythm\": \"hold=CONSTANT, snap=LINEAR, ease=BEZIER\",\\r\\n \"stance\": {\\r\\n  \"hip\": [\\r\\n   0.0,\\r\\n   -80'"
+    }
+  },
+  "checks": {
+    "mi_track_is_11_joints": true,
+    "three_tables_11joints_identical": true,
+    "hybrid_card_keys_match_mi": true,
+    "hybrid_frame_counts_match": true,
+    "mi_and_mif_same_schema": true
+  },
+  "failed": [],
+  "ok": true
+}

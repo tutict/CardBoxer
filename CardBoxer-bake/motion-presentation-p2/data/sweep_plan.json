@@ -1,0 +1,6949 @@
+{
+  "glb": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer\\assets\\3d\\player-rigged.glb",
+  "px_to_m": 0.01,
+  "chain": [
+    [
+      "hips",
+      null,
+      "A",
+      "B"
+    ],
+    [
+      "spine",
+      "hips",
+      "B",
+      "C"
+    ],
+    [
+      "chest",
+      "spine",
+      "C",
+      "D"
+    ],
+    [
+      "neck",
+      "chest",
+      "D",
+      "E"
+    ],
+    [
+      "head",
+      "neck",
+      "E",
+      "F"
+    ],
+    [
+      "upperarm_f",
+      "chest",
+      "D",
+      "f_elbow"
+    ],
+    [
+      "forearm_f",
+      "upperarm_f",
+      "f_elbow",
+      "f_hand"
+    ],
+    [
+      "upperarm_b",
+      "chest",
+      "D",
+      "b_elbow"
+    ],
+    [
+      "forearm_b",
+      "upperarm_b",
+      "b_elbow",
+      "b_hand"
+    ],
+    [
+      "thigh_f",
+      "hips",
+      "tf_head",
+      "f_knee"
+    ],
+    [
+      "shin_f",
+      "thigh_f",
+      "f_knee",
+      "f_foot"
+    ],
+    [
+      "thigh_b",
+      "hips",
+      "tb_head",
+      "b_knee"
+    ],
+    [
+      "shin_b",
+      "thigh_b",
+      "b_knee",
+      "b_foot"
+    ]
+  ],
+  "apose_points": {
+    "head": [
+      0.0,
+      1.7225
+    ],
+    "shoulder": [
+      0.0,
+      1.345156
+    ],
+    "hip": [
+      0.0,
+      1.051667
+    ],
+    "f_elbow": [
+      0.323437,
+      1.111563
+    ],
+    "f_hand": [
+      0.610938,
+      0.886953
+    ],
+    "b_elbow": [
+      -0.317448,
+      1.111563
+    ],
+    "b_hand": [
+      -0.595964,
+      0.886953
+    ],
+    "f_knee": [
+      0.197656,
+      0.512604
+    ],
+    "f_foot": [
+      0.323437,
+      0.018464
+    ],
+    "b_knee": [
+      -0.191667,
+      0.512604
+    ],
+    "b_foot": [
+      -0.317448,
+      0.018464
+    ],
+    "A": [
+      0.0,
+      1.051667
+    ],
+    "B": [
+      0.0,
+      1.127974
+    ],
+    "C": [
+      0.0,
+      1.22776
+    ],
+    "D": [
+      0.0,
+      1.345156
+    ],
+    "E": [
+      0.0,
+      1.564016
+    ],
+    "F": [
+      0.0,
+      1.7225
+    ],
+    "tf_head": [
+      0.04,
+      1.051667
+    ],
+    "tb_head": [
+      -0.04,
+      1.051667
+    ]
+  },
+  "bones": [
+    "hips",
+    "spine",
+    "chest",
+    "neck",
+    "head",
+    "upperarm_f",
+    "forearm_f",
+    "upperarm_b",
+    "forearm_b",
+    "thigh_f",
+    "shin_f",
+    "thigh_b",
+    "shin_b"
+  ],
+  "cases": [
+    {
+      "id": "cap03_hard_g100",
+      "leg_cap_deg": 3.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.0,
+      "purpose": "baseline",
+      "arm_gain_deg": {
+        "f_upper": 32.0,
+        "f_fore": 26.0,
+        "b_upper": 28.0,
+        "b_fore": 22.0
+      }
+    },
+    {
+      "id": "cap06_hard_g100",
+      "leg_cap_deg": 6.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.0,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 32.0,
+        "f_fore": 26.0,
+        "b_upper": 28.0,
+        "b_fore": 22.0
+      }
+    },
+    {
+      "id": "cap09_hard_g100",
+      "leg_cap_deg": 9.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.0,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 32.0,
+        "f_fore": 26.0,
+        "b_upper": 28.0,
+        "b_fore": 22.0
+      }
+    },
+    {
+      "id": "cap12_hard_g100",
+      "leg_cap_deg": 12.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.0,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 32.0,
+        "f_fore": 26.0,
+        "b_upper": 28.0,
+        "b_fore": 22.0
+      }
+    },
+    {
+      "id": "cap09_hard_g125",
+      "leg_cap_deg": 9.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.25,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 40.0,
+        "f_fore": 32.5,
+        "b_upper": 35.0,
+        "b_fore": 27.5
+      }
+    },
+    {
+      "id": "cap09_hard_g150",
+      "leg_cap_deg": 9.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.5,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 48.0,
+        "f_fore": 39.0,
+        "b_upper": 42.0,
+        "b_fore": 33.0
+      }
+    },
+    {
+      "id": "cap12_hard_g125",
+      "leg_cap_deg": 12.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.25,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 40.0,
+        "f_fore": 32.5,
+        "b_upper": 35.0,
+        "b_fore": 27.5
+      }
+    },
+    {
+      "id": "cap09_soft_g125",
+      "leg_cap_deg": 9.0,
+      "leg_mode": "soft",
+      "arm_gain_multiplier": 1.25,
+      "purpose": "research",
+      "arm_gain_deg": {
+        "f_upper": 40.0,
+        "f_fore": 32.5,
+        "b_upper": 35.0,
+        "b_fore": 27.5
+      }
+    },
+    {
+      "id": "cap09_soft_g150",
+      "leg_cap_deg": 9.0,
+      "leg_mode": "soft",
+      "arm_gain_multiplier": 1.5,
+      "purpose": "research",
+      "arm_gain_deg": {
+        "f_upper": 48.0,
+        "f_fore": 39.0,
+        "b_upper": 42.0,
+        "b_fore": 33.0
+      }
+    },
+    {
+      "id": "cap12_soft_g150",
+      "leg_cap_deg": 12.0,
+      "leg_mode": "soft",
+      "arm_gain_multiplier": 1.5,
+      "purpose": "research",
+      "arm_gain_deg": {
+        "f_upper": 48.0,
+        "f_fore": 39.0,
+        "b_upper": 42.0,
+        "b_fore": 33.0
+      }
+    }
+  ],
+  "poses": [
+    {
+      "case": "cap03_hard_g100",
+      "card": "jab",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.7696320326620774,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.0617792195972464,
+        "upperarm_f": -2.872087897138402,
+        "forearm_f": -2.3335714164249515,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -3.0,
+        "shin_f": -3.0,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        -0.05,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "jab",
+      "frame": 6,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -21.39324919480702,
+        "forearm_f": -17.382014970780702,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.131272363078394,
+        "shin_f": 3.0,
+        "thigh_b": 3.0,
+        "shin_b": 3.0
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "cross",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.0724250359891907,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.8434550215935144,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 1.6825905952165283,
+        "forearm_b": 1.3220354676701294,
+        "thigh_f": -3.0,
+        "shin_f": -3.0,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "cross",
+      "frame": 7,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 7.52195650903017,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.513173905418102,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 28.0,
+        "forearm_b": 22.0,
+        "thigh_f": 3.0,
+        "shin_f": 3.0,
+        "thigh_b": 3.0,
+        "shin_b": 3.0
+      },
+      "root_m": [
+        0.13699999999999998,
+        0.007000000000000029
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "uppercut",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -4.212184183119919,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.5273105098719513,
+        "upperarm_f": -5.744175794276804,
+        "forearm_f": -4.667142832849903,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -3.0,
+        "shin_f": 3.0,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        -0.05,
+        -0.12
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "uppercut",
+      "frame": 10,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.541310089195296,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.3247860535171774,
+        "upperarm_f": -19.05873961088601,
+        "forearm_f": -15.485225933844884,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 3.0,
+        "shin_f": 3.0,
+        "thigh_b": 3.0,
+        "shin_b": 3.0
+      },
+      "root_m": [
+        0.12,
+        0.04
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "sweep",
+      "frame": 7,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1811208516665124,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3086725109999073,
+        "upperarm_f": -16.70449041425688,
+        "forearm_f": -13.572398461583717,
+        "upperarm_b": 11.358804710199239,
+        "forearm_b": 8.92477512944226,
+        "thigh_f": 3.0,
+        "shin_f": 3.0,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        -0.04,
+        -0.3
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "sweep",
+      "frame": 12,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.3935705757633023,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.0361423454579812,
+        "upperarm_f": -21.340398829970873,
+        "forearm_f": -17.339074049351336,
+        "upperarm_b": 18.672848976224515,
+        "forearm_b": 14.671524195604976,
+        "thigh_f": -3.0,
+        "shin_f": -3.0,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        0.18,
+        -0.34
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "rush",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -5.805499308605782,
+        "forearm_f": -4.716968188242198,
+        "upperarm_b": 5.079811895030059,
+        "forearm_b": 3.991280774666475,
+        "thigh_f": 3.0,
+        "shin_f": 3.0,
+        "thigh_b": 3.0,
+        "shin_b": 3.0
+      },
+      "root_m": [
+        0.24,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "backstep",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -6.309219879921539,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.785531927952923,
+        "upperarm_f": -1.6865480854231358,
+        "forearm_f": -1.3703203194062978,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -3.0,
+        "shin_f": 0.8578711940058474,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        -0.17,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "guard",
+      "frame": 2,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.303481720823934,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3820890324943604,
+        "upperarm_f": -6.41110148275803,
+        "forearm_f": -5.209019954740899,
+        "upperarm_b": 5.609713797413277,
+        "forearm_b": 4.407632269396146,
+        "thigh_f": -3.0,
+        "shin_f": -0.4284784599555446,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        -0.05,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "sidestep",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.765399455363348,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.2592396732180084,
+        "upperarm_f": -2.6666666666666665,
+        "forearm_f": -2.1666666666666665,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -3.0,
+        "shin_f": 0.8578711940058474,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        -0.15,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "focus",
+      "frame": 5,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.2123848856971282,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.7274309314182769,
+        "upperarm_f": -12.98149109737056,
+        "forearm_f": -10.54746151661358,
+        "upperarm_b": 11.358804710199239,
+        "forearm_b": 8.92477512944226,
+        "thigh_f": -3.0,
+        "shin_f": 3.0,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        0.0,
+        -0.14
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "recover",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.5088798488156083,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.9053279092893649,
+        "upperarm_f": -4.8825494251352834,
+        "forearm_f": -3.967071407922418,
+        "upperarm_b": 4.302454080070014,
+        "forearm_b": 3.380499634340725,
+        "thigh_f": -3.0,
+        "shin_f": 3.0,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        0.0,
+        -0.09
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "wave",
+      "frame": 6,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1224107839579727,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.2734464703747836,
+        "upperarm_f": -7.309780358457351,
+        "forearm_f": -5.939196541246598,
+        "upperarm_b": 6.396057813650182,
+        "forearm_b": 5.025473996439429,
+        "thigh_f": -3.0,
+        "shin_f": -3.0,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "wave",
+      "frame": 17,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -10.014460655583116,
+        "forearm_f": -8.136749282661283,
+        "upperarm_b": 13.565479063498724,
+        "forearm_b": 10.658590692748998,
+        "thigh_f": 2.4497849051244,
+        "shin_f": 3.0,
+        "thigh_b": 3.0,
+        "shin_b": 3.0
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "throw",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.8873170479156758,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.1323902287494054,
+        "upperarm_f": -5.734263490438662,
+        "forearm_f": -4.659089085981413,
+        "upperarm_b": 5.0174805541338285,
+        "forearm_b": 3.94230614967658,
+        "thigh_f": -3.0,
+        "shin_f": -2.1507085289240746,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        -0.05,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "throw",
+      "frame": 8,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.673414011263274,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.404048406757964,
+        "upperarm_f": -24.896214794846045,
+        "forearm_f": -20.228174520812413,
+        "upperarm_b": 21.784187945490288,
+        "forearm_b": 17.116147671456655,
+        "thigh_f": -0.41235754688447634,
+        "shin_f": 3.0,
+        "thigh_b": 3.0,
+        "shin_b": -0.5504586928991505
+      },
+      "root_m": [
+        0.1,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "hit_light",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.531085584241875,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.318651350545125,
+        "upperarm_f": -5.8933333333333335,
+        "forearm_f": -4.788333333333333,
+        "upperarm_b": 5.156666666666667,
+        "forearm_b": 4.051666666666667,
+        "thigh_f": 0.6653996417471433,
+        "shin_f": -3.0,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        -0.08,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "hit_light",
+      "frame": 2,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.315451427129461,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.1892708562776764,
+        "upperarm_f": -5.949730152611031,
+        "forearm_f": -4.834155748996463,
+        "upperarm_b": 5.206013883534652,
+        "forearm_b": 4.090439479920084,
+        "thigh_f": 0.25230164168917013,
+        "shin_f": -3.0,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        -0.075,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "hit_heavy",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -9.111887229816272,
+        "forearm_f": -7.403408374225721,
+        "upperarm_b": 7.972901326089238,
+        "forearm_b": 6.264422470498687,
+        "thigh_f": 3.0,
+        "shin_f": -3.0,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        -0.14,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "hit_heavy",
+      "frame": 4,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -10.136841497999047,
+        "forearm_f": -8.236183717124225,
+        "upperarm_b": 8.869736310749166,
+        "forearm_b": 6.969078529874345,
+        "thigh_f": 3.0,
+        "shin_f": -3.0,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        -0.16,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "block",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.6264660570119602,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.5758796342071761,
+        "upperarm_f": -4.8825494251352834,
+        "forearm_f": -3.967071407922418,
+        "upperarm_b": 4.272230746993373,
+        "forearm_b": 3.3567527297805073,
+        "thigh_f": -0.5729386976834767,
+        "shin_f": -3.0,
+        "thigh_b": 3.0,
+        "shin_b": -3.0
+      },
+      "root_m": [
+        -0.06,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "jab",
+      "frame": 7,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -21.39324919480702,
+        "forearm_f": -17.382014970780702,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.131272363078394,
+        "shin_f": 3.0,
+        "thigh_b": 3.0,
+        "shin_b": 3.0
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "cross",
+      "frame": 11,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 28.0,
+        "forearm_b": 22.0,
+        "thigh_f": 3.0,
+        "shin_f": 3.0,
+        "thigh_b": 3.0,
+        "shin_b": 3.0
+      },
+      "root_m": [
+        0.19,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap03_hard_g100",
+      "card": "wave",
+      "frame": 18,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -10.014460655583116,
+        "forearm_f": -8.136749282661283,
+        "upperarm_b": 13.565479063498724,
+        "forearm_b": 10.658590692748998,
+        "thigh_f": 2.4497849051244,
+        "shin_f": 3.0,
+        "thigh_b": 3.0,
+        "shin_b": 3.0
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "jab",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.7696320326620774,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.0617792195972464,
+        "upperarm_f": -2.872087897138402,
+        "forearm_f": -2.3335714164249515,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -3.2587113226318976,
+        "shin_f": -4.01442551132505,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        -0.05,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "jab",
+      "frame": 6,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -21.39324919480702,
+        "forearm_f": -17.382014970780702,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.131272363078394,
+        "shin_f": 6.0,
+        "thigh_b": 6.0,
+        "shin_b": 6.0
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "cross",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.0724250359891907,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.8434550215935144,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 1.6825905952165283,
+        "forearm_b": 1.3220354676701294,
+        "thigh_f": -6.0,
+        "shin_f": -5.328456150351615,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "cross",
+      "frame": 7,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 7.52195650903017,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.513173905418102,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 28.0,
+        "forearm_b": 22.0,
+        "thigh_f": 3.466147567542904,
+        "shin_f": 6.0,
+        "thigh_b": 5.959847434415238,
+        "shin_b": 5.858480079003057
+      },
+      "root_m": [
+        0.13699999999999998,
+        0.007000000000000029
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "uppercut",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -4.212184183119919,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.5273105098719513,
+        "upperarm_f": -5.744175794276804,
+        "forearm_f": -4.667142832849903,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -6.0,
+        "shin_f": 6.0,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        -0.05,
+        -0.12
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "uppercut",
+      "frame": 10,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.541310089195296,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.3247860535171774,
+        "upperarm_f": -19.05873961088601,
+        "forearm_f": -15.485225933844884,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 6.0,
+        "shin_f": 6.0,
+        "thigh_b": 5.598189708782511,
+        "shin_b": 5.29528605784013
+      },
+      "root_m": [
+        0.12,
+        0.04
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "sweep",
+      "frame": 7,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1811208516665124,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3086725109999073,
+        "upperarm_f": -16.70449041425688,
+        "forearm_f": -13.572398461583717,
+        "upperarm_b": 11.358804710199239,
+        "forearm_b": 8.92477512944226,
+        "thigh_f": 6.0,
+        "shin_f": 6.0,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        -0.04,
+        -0.3
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "sweep",
+      "frame": 12,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.3935705757633023,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.0361423454579812,
+        "upperarm_f": -21.340398829970873,
+        "forearm_f": -17.339074049351336,
+        "upperarm_b": 18.672848976224515,
+        "forearm_b": 14.671524195604976,
+        "thigh_f": -6.0,
+        "shin_f": -6.0,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        0.18,
+        -0.34
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "rush",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -5.805499308605782,
+        "forearm_f": -4.716968188242198,
+        "upperarm_b": 5.079811895030059,
+        "forearm_b": 3.991280774666475,
+        "thigh_f": 6.0,
+        "shin_f": 6.0,
+        "thigh_b": 6.0,
+        "shin_b": 6.0
+      },
+      "root_m": [
+        0.24,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "backstep",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -6.309219879921539,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.785531927952923,
+        "upperarm_f": -1.6865480854231358,
+        "forearm_f": -1.3703203194062978,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -6.0,
+        "shin_f": 0.8578711940058474,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        -0.17,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "guard",
+      "frame": 2,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.303481720823934,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3820890324943604,
+        "upperarm_f": -6.41110148275803,
+        "forearm_f": -5.209019954740899,
+        "upperarm_b": 5.609713797413277,
+        "forearm_b": 4.407632269396146,
+        "thigh_f": -6.0,
+        "shin_f": -0.4284784599555446,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        -0.05,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "sidestep",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.765399455363348,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.2592396732180084,
+        "upperarm_f": -2.6666666666666665,
+        "forearm_f": -2.1666666666666665,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -6.0,
+        "shin_f": 0.8578711940058474,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        -0.15,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "focus",
+      "frame": 5,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.2123848856971282,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.7274309314182769,
+        "upperarm_f": -12.98149109737056,
+        "forearm_f": -10.54746151661358,
+        "upperarm_b": 11.358804710199239,
+        "forearm_b": 8.92477512944226,
+        "thigh_f": -6.0,
+        "shin_f": 6.0,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        0.0,
+        -0.14
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "recover",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.5088798488156083,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.9053279092893649,
+        "upperarm_f": -4.8825494251352834,
+        "forearm_f": -3.967071407922418,
+        "upperarm_b": 4.302454080070014,
+        "forearm_b": 3.380499634340725,
+        "thigh_f": -6.0,
+        "shin_f": 6.0,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        0.0,
+        -0.09
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "wave",
+      "frame": 6,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1224107839579727,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.2734464703747836,
+        "upperarm_f": -7.309780358457351,
+        "forearm_f": -5.939196541246598,
+        "upperarm_b": 6.396057813650182,
+        "forearm_b": 5.025473996439429,
+        "thigh_f": -6.0,
+        "shin_f": -5.166646475299042,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "wave",
+      "frame": 17,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -10.014460655583116,
+        "forearm_f": -8.136749282661283,
+        "upperarm_b": 13.565479063498724,
+        "forearm_b": 10.658590692748998,
+        "thigh_f": 2.4497849051244,
+        "shin_f": 6.0,
+        "thigh_b": 4.617748036501031,
+        "shin_b": 4.600098527399602
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "throw",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.8873170479156758,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.1323902287494054,
+        "upperarm_f": -5.734263490438662,
+        "forearm_f": -4.659089085981413,
+        "upperarm_b": 5.0174805541338285,
+        "forearm_b": 3.94230614967658,
+        "thigh_f": -5.2110327700572645,
+        "shin_f": -2.1507085289240746,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        -0.05,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "throw",
+      "frame": 8,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.673414011263274,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.404048406757964,
+        "upperarm_f": -24.896214794846045,
+        "forearm_f": -20.228174520812413,
+        "upperarm_b": 21.784187945490288,
+        "forearm_b": 17.116147671456655,
+        "thigh_f": -0.41235754688447634,
+        "shin_f": 6.0,
+        "thigh_b": 6.0,
+        "shin_b": -0.5504586928991505
+      },
+      "root_m": [
+        0.1,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "hit_light",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.531085584241875,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.318651350545125,
+        "upperarm_f": -5.8933333333333335,
+        "forearm_f": -4.788333333333333,
+        "upperarm_b": 5.156666666666667,
+        "forearm_b": 4.051666666666667,
+        "thigh_f": 0.6653996417471433,
+        "shin_f": -6.0,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        -0.08,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "hit_light",
+      "frame": 2,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.315451427129461,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.1892708562776764,
+        "upperarm_f": -5.949730152611031,
+        "forearm_f": -4.834155748996463,
+        "upperarm_b": 5.206013883534652,
+        "forearm_b": 4.090439479920084,
+        "thigh_f": 0.25230164168917013,
+        "shin_f": -6.0,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        -0.075,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "hit_heavy",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -9.111887229816272,
+        "forearm_f": -7.403408374225721,
+        "upperarm_b": 7.972901326089238,
+        "forearm_b": 6.264422470498687,
+        "thigh_f": 4.9490214259108445,
+        "shin_f": -6.0,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        -0.14,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "hit_heavy",
+      "frame": 4,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -10.136841497999047,
+        "forearm_f": -8.236183717124225,
+        "upperarm_b": 8.869736310749166,
+        "forearm_b": 6.969078529874345,
+        "thigh_f": 3.621772271457302,
+        "shin_f": -6.0,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        -0.16,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "block",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.6264660570119602,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.5758796342071761,
+        "upperarm_f": -4.8825494251352834,
+        "forearm_f": -3.967071407922418,
+        "upperarm_b": 4.272230746993373,
+        "forearm_b": 3.3567527297805073,
+        "thigh_f": -0.5729386976834767,
+        "shin_f": -6.0,
+        "thigh_b": 6.0,
+        "shin_b": -6.0
+      },
+      "root_m": [
+        -0.06,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "jab",
+      "frame": 7,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -21.39324919480702,
+        "forearm_f": -17.382014970780702,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.131272363078394,
+        "shin_f": 6.0,
+        "thigh_b": 6.0,
+        "shin_b": 6.0
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "cross",
+      "frame": 11,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 28.0,
+        "forearm_b": 22.0,
+        "thigh_f": 4.706507809533955,
+        "shin_f": 6.0,
+        "thigh_b": 6.0,
+        "shin_b": 6.0
+      },
+      "root_m": [
+        0.19,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap06_hard_g100",
+      "card": "wave",
+      "frame": 18,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -10.014460655583116,
+        "forearm_f": -8.136749282661283,
+        "upperarm_b": 13.565479063498724,
+        "forearm_b": 10.658590692748998,
+        "thigh_f": 2.4497849051244,
+        "shin_f": 6.0,
+        "thigh_b": 4.617748036501031,
+        "shin_b": 4.600098527399602
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "jab",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.7696320326620774,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.0617792195972464,
+        "upperarm_f": -2.872087897138402,
+        "forearm_f": -2.3335714164249515,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -3.2587113226318976,
+        "shin_f": -4.01442551132505,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.05,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "jab",
+      "frame": 6,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -21.39324919480702,
+        "forearm_f": -17.382014970780702,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.131272363078394,
+        "shin_f": 9.0,
+        "thigh_b": 7.047273523217479,
+        "shin_b": 6.878205663492541
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "cross",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.0724250359891907,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.8434550215935144,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 1.6825905952165283,
+        "forearm_b": 1.3220354676701294,
+        "thigh_f": -6.42874774882986,
+        "shin_f": -5.328456150351615,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "cross",
+      "frame": 7,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 7.52195650903017,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.513173905418102,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 28.0,
+        "forearm_b": 22.0,
+        "thigh_f": 3.466147567542904,
+        "shin_f": 9.0,
+        "thigh_b": 5.959847434415238,
+        "shin_b": 5.858480079003057
+      },
+      "root_m": [
+        0.13699999999999998,
+        0.007000000000000029
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "uppercut",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -4.212184183119919,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.5273105098719513,
+        "upperarm_f": -5.744175794276804,
+        "forearm_f": -4.667142832849903,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -9.0,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.05,
+        -0.12
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "uppercut",
+      "frame": 10,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.541310089195296,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.3247860535171774,
+        "upperarm_f": -19.05873961088601,
+        "forearm_f": -15.485225933844884,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 9.0,
+        "shin_f": 7.590393044953948,
+        "thigh_b": 5.598189708782511,
+        "shin_b": 5.29528605784013
+      },
+      "root_m": [
+        0.12,
+        0.04
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "sweep",
+      "frame": 7,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1811208516665124,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3086725109999073,
+        "upperarm_f": -16.70449041425688,
+        "forearm_f": -13.572398461583717,
+        "upperarm_b": 11.358804710199239,
+        "forearm_b": 8.92477512944226,
+        "thigh_f": 9.0,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.04,
+        -0.3
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "sweep",
+      "frame": 12,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.3935705757633023,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.0361423454579812,
+        "upperarm_f": -21.340398829970873,
+        "forearm_f": -17.339074049351336,
+        "upperarm_b": 18.672848976224515,
+        "forearm_b": 14.671524195604976,
+        "thigh_f": -9.0,
+        "shin_f": -9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        0.18,
+        -0.34
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "rush",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -5.805499308605782,
+        "forearm_f": -4.716968188242198,
+        "upperarm_b": 5.079811895030059,
+        "forearm_b": 3.991280774666475,
+        "thigh_f": 7.3809898335714665,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": 9.0
+      },
+      "root_m": [
+        0.24,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "backstep",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -6.309219879921539,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.785531927952923,
+        "upperarm_f": -1.6865480854231358,
+        "forearm_f": -1.3703203194062978,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -9.0,
+        "shin_f": 0.8578711940058474,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.17,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "guard",
+      "frame": 2,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.303481720823934,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3820890324943604,
+        "upperarm_f": -6.41110148275803,
+        "forearm_f": -5.209019954740899,
+        "upperarm_b": 5.609713797413277,
+        "forearm_b": 4.407632269396146,
+        "thigh_f": -7.076691878731064,
+        "shin_f": -0.4284784599555446,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.05,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "sidestep",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.765399455363348,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.2592396732180084,
+        "upperarm_f": -2.6666666666666665,
+        "forearm_f": -2.1666666666666665,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -9.0,
+        "shin_f": 0.8578711940058474,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.15,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "focus",
+      "frame": 5,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.2123848856971282,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.7274309314182769,
+        "upperarm_f": -12.98149109737056,
+        "forearm_f": -10.54746151661358,
+        "upperarm_b": 11.358804710199239,
+        "forearm_b": 8.92477512944226,
+        "thigh_f": -9.0,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        0.0,
+        -0.14
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "recover",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.5088798488156083,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.9053279092893649,
+        "upperarm_f": -4.8825494251352834,
+        "forearm_f": -3.967071407922418,
+        "upperarm_b": 4.302454080070014,
+        "forearm_b": 3.380499634340725,
+        "thigh_f": -9.0,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        0.0,
+        -0.09
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "wave",
+      "frame": 6,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1224107839579727,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.2734464703747836,
+        "upperarm_f": -7.309780358457351,
+        "forearm_f": -5.939196541246598,
+        "upperarm_b": 6.396057813650182,
+        "forearm_b": 5.025473996439429,
+        "thigh_f": -6.590699453721379,
+        "shin_f": -5.166646475299042,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "wave",
+      "frame": 17,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -10.014460655583116,
+        "forearm_f": -8.136749282661283,
+        "upperarm_b": 13.565479063498724,
+        "forearm_b": 10.658590692748998,
+        "thigh_f": 2.4497849051244,
+        "shin_f": 9.0,
+        "thigh_b": 4.617748036501031,
+        "shin_b": 4.600098527399602
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "throw",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.8873170479156758,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.1323902287494054,
+        "upperarm_f": -5.734263490438662,
+        "forearm_f": -4.659089085981413,
+        "upperarm_b": 5.0174805541338285,
+        "forearm_b": 3.94230614967658,
+        "thigh_f": -5.2110327700572645,
+        "shin_f": -2.1507085289240746,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.05,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "throw",
+      "frame": 8,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.673414011263274,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.404048406757964,
+        "upperarm_f": -24.896214794846045,
+        "forearm_f": -20.228174520812413,
+        "upperarm_b": 21.784187945490288,
+        "forearm_b": 17.116147671456655,
+        "thigh_f": -0.41235754688447634,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": -0.5504586928991505
+      },
+      "root_m": [
+        0.1,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "hit_light",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.531085584241875,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.318651350545125,
+        "upperarm_f": -5.8933333333333335,
+        "forearm_f": -4.788333333333333,
+        "upperarm_b": 5.156666666666667,
+        "forearm_b": 4.051666666666667,
+        "thigh_f": 0.6653996417471433,
+        "shin_f": -9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.08,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "hit_light",
+      "frame": 2,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.315451427129461,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.1892708562776764,
+        "upperarm_f": -5.949730152611031,
+        "forearm_f": -4.834155748996463,
+        "upperarm_b": 5.206013883534652,
+        "forearm_b": 4.090439479920084,
+        "thigh_f": 0.25230164168917013,
+        "shin_f": -9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.075,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "hit_heavy",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -9.111887229816272,
+        "forearm_f": -7.403408374225721,
+        "upperarm_b": 7.972901326089238,
+        "forearm_b": 6.264422470498687,
+        "thigh_f": 4.9490214259108445,
+        "shin_f": -9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.14,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "hit_heavy",
+      "frame": 4,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -10.136841497999047,
+        "forearm_f": -8.236183717124225,
+        "upperarm_b": 8.869736310749166,
+        "forearm_b": 6.969078529874345,
+        "thigh_f": 3.621772271457302,
+        "shin_f": -9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.16,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "block",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.6264660570119602,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.5758796342071761,
+        "upperarm_f": -4.8825494251352834,
+        "forearm_f": -3.967071407922418,
+        "upperarm_b": 4.272230746993373,
+        "forearm_b": 3.3567527297805073,
+        "thigh_f": -0.5729386976834767,
+        "shin_f": -8.082590912177809,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.06,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "jab",
+      "frame": 7,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -21.39324919480702,
+        "forearm_f": -17.382014970780702,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.131272363078394,
+        "shin_f": 9.0,
+        "thigh_b": 7.047273523217479,
+        "shin_b": 6.878205663492541
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "cross",
+      "frame": 11,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 28.0,
+        "forearm_b": 22.0,
+        "thigh_f": 4.706507809533955,
+        "shin_f": 9.0,
+        "thigh_b": 8.735117270968649,
+        "shin_b": 8.635067301424
+      },
+      "root_m": [
+        0.19,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_hard_g100",
+      "card": "wave",
+      "frame": 18,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -10.014460655583116,
+        "forearm_f": -8.136749282661283,
+        "upperarm_b": 13.565479063498724,
+        "forearm_b": 10.658590692748998,
+        "thigh_f": 2.4497849051244,
+        "shin_f": 9.0,
+        "thigh_b": 4.617748036501031,
+        "shin_b": 4.600098527399602
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "jab",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.7696320326620774,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.0617792195972464,
+        "upperarm_f": -2.872087897138402,
+        "forearm_f": -2.3335714164249515,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -3.2587113226318976,
+        "shin_f": -4.01442551132505,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.05,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "jab",
+      "frame": 6,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -21.39324919480702,
+        "forearm_f": -17.382014970780702,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.131272363078394,
+        "shin_f": 12.0,
+        "thigh_b": 7.047273523217479,
+        "shin_b": 6.878205663492541
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "cross",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.0724250359891907,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.8434550215935144,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 1.6825905952165283,
+        "forearm_b": 1.3220354676701294,
+        "thigh_f": -6.42874774882986,
+        "shin_f": -5.328456150351615,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "cross",
+      "frame": 7,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 7.52195650903017,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.513173905418102,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 28.0,
+        "forearm_b": 22.0,
+        "thigh_f": 3.466147567542904,
+        "shin_f": 12.0,
+        "thigh_b": 5.959847434415238,
+        "shin_b": 5.858480079003057
+      },
+      "root_m": [
+        0.13699999999999998,
+        0.007000000000000029
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "uppercut",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -4.212184183119919,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.5273105098719513,
+        "upperarm_f": -5.744175794276804,
+        "forearm_f": -4.667142832849903,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -12.0,
+        "shin_f": 9.028734450593156,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.05,
+        -0.12
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "uppercut",
+      "frame": 10,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.541310089195296,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.3247860535171774,
+        "upperarm_f": -19.05873961088601,
+        "forearm_f": -15.485225933844884,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 9.020402946965257,
+        "shin_f": 7.590393044953948,
+        "thigh_b": 5.598189708782511,
+        "shin_b": 5.29528605784013
+      },
+      "root_m": [
+        0.12,
+        0.04
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "sweep",
+      "frame": 7,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1811208516665124,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3086725109999073,
+        "upperarm_f": -16.70449041425688,
+        "forearm_f": -13.572398461583717,
+        "upperarm_b": 11.358804710199239,
+        "forearm_b": 8.92477512944226,
+        "thigh_f": 12.0,
+        "shin_f": 12.0,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.04,
+        -0.3
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "sweep",
+      "frame": 12,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.3935705757633023,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.0361423454579812,
+        "upperarm_f": -21.340398829970873,
+        "forearm_f": -17.339074049351336,
+        "upperarm_b": 18.672848976224515,
+        "forearm_b": 14.671524195604976,
+        "thigh_f": -12.0,
+        "shin_f": -12.0,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        0.18,
+        -0.34
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "rush",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -5.805499308605782,
+        "forearm_f": -4.716968188242198,
+        "upperarm_b": 5.079811895030059,
+        "forearm_b": 3.991280774666475,
+        "thigh_f": 7.3809898335714665,
+        "shin_f": 12.0,
+        "thigh_b": 12.0,
+        "shin_b": 12.0
+      },
+      "root_m": [
+        0.24,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "backstep",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -6.309219879921539,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.785531927952923,
+        "upperarm_f": -1.6865480854231358,
+        "forearm_f": -1.3703203194062978,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -11.857985783718007,
+        "shin_f": 0.8578711940058474,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.17,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "guard",
+      "frame": 2,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.303481720823934,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3820890324943604,
+        "upperarm_f": -6.41110148275803,
+        "forearm_f": -5.209019954740899,
+        "upperarm_b": 5.609713797413277,
+        "forearm_b": 4.407632269396146,
+        "thigh_f": -7.076691878731064,
+        "shin_f": -0.4284784599555446,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.05,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "sidestep",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.765399455363348,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.2592396732180084,
+        "upperarm_f": -2.6666666666666665,
+        "forearm_f": -2.1666666666666665,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -11.857985783718007,
+        "shin_f": 0.8578711940058474,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.15,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "focus",
+      "frame": 5,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.2123848856971282,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.7274309314182769,
+        "upperarm_f": -12.98149109737056,
+        "forearm_f": -10.54746151661358,
+        "upperarm_b": 11.358804710199239,
+        "forearm_b": 8.92477512944226,
+        "thigh_f": -12.0,
+        "shin_f": 12.0,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        0.0,
+        -0.14
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "recover",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.5088798488156083,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.9053279092893649,
+        "upperarm_f": -4.8825494251352834,
+        "forearm_f": -3.967071407922418,
+        "upperarm_b": 4.302454080070014,
+        "forearm_b": 3.380499634340725,
+        "thigh_f": -12.0,
+        "shin_f": 12.0,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        0.0,
+        -0.09
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "wave",
+      "frame": 6,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1224107839579727,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.2734464703747836,
+        "upperarm_f": -7.309780358457351,
+        "forearm_f": -5.939196541246598,
+        "upperarm_b": 6.396057813650182,
+        "forearm_b": 5.025473996439429,
+        "thigh_f": -6.590699453721379,
+        "shin_f": -5.166646475299042,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "wave",
+      "frame": 17,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -10.014460655583116,
+        "forearm_f": -8.136749282661283,
+        "upperarm_b": 13.565479063498724,
+        "forearm_b": 10.658590692748998,
+        "thigh_f": 2.4497849051244,
+        "shin_f": 10.466501783779782,
+        "thigh_b": 4.617748036501031,
+        "shin_b": 4.600098527399602
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "throw",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.8873170479156758,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.1323902287494054,
+        "upperarm_f": -5.734263490438662,
+        "forearm_f": -4.659089085981413,
+        "upperarm_b": 5.0174805541338285,
+        "forearm_b": 3.94230614967658,
+        "thigh_f": -5.2110327700572645,
+        "shin_f": -2.1507085289240746,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.05,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "throw",
+      "frame": 8,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.673414011263274,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.404048406757964,
+        "upperarm_f": -24.896214794846045,
+        "forearm_f": -20.228174520812413,
+        "upperarm_b": 21.784187945490288,
+        "forearm_b": 17.116147671456655,
+        "thigh_f": -0.41235754688447634,
+        "shin_f": 12.0,
+        "thigh_b": 10.227858659621447,
+        "shin_b": -0.5504586928991505
+      },
+      "root_m": [
+        0.1,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "hit_light",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.531085584241875,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.318651350545125,
+        "upperarm_f": -5.8933333333333335,
+        "forearm_f": -4.788333333333333,
+        "upperarm_b": 5.156666666666667,
+        "forearm_b": 4.051666666666667,
+        "thigh_f": 0.6653996417471433,
+        "shin_f": -12.0,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.08,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "hit_light",
+      "frame": 2,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.315451427129461,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.1892708562776764,
+        "upperarm_f": -5.949730152611031,
+        "forearm_f": -4.834155748996463,
+        "upperarm_b": 5.206013883534652,
+        "forearm_b": 4.090439479920084,
+        "thigh_f": 0.25230164168917013,
+        "shin_f": -11.139176552447863,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.075,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "hit_heavy",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -9.111887229816272,
+        "forearm_f": -7.403408374225721,
+        "upperarm_b": 7.972901326089238,
+        "forearm_b": 6.264422470498687,
+        "thigh_f": 4.9490214259108445,
+        "shin_f": -12.0,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.14,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "hit_heavy",
+      "frame": 4,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -10.136841497999047,
+        "forearm_f": -8.236183717124225,
+        "upperarm_b": 8.869736310749166,
+        "forearm_b": 6.969078529874345,
+        "thigh_f": 3.621772271457302,
+        "shin_f": -12.0,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.16,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "block",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.6264660570119602,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.5758796342071761,
+        "upperarm_f": -4.8825494251352834,
+        "forearm_f": -3.967071407922418,
+        "upperarm_b": 4.272230746993373,
+        "forearm_b": 3.3567527297805073,
+        "thigh_f": -0.5729386976834767,
+        "shin_f": -8.082590912177809,
+        "thigh_b": 11.936689830126154,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.06,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "jab",
+      "frame": 7,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -21.39324919480702,
+        "forearm_f": -17.382014970780702,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.131272363078394,
+        "shin_f": 12.0,
+        "thigh_b": 7.047273523217479,
+        "shin_b": 6.878205663492541
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "cross",
+      "frame": 11,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 28.0,
+        "forearm_b": 22.0,
+        "thigh_f": 4.706507809533955,
+        "shin_f": 12.0,
+        "thigh_b": 8.735117270968649,
+        "shin_b": 8.635067301424
+      },
+      "root_m": [
+        0.19,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap12_hard_g100",
+      "card": "wave",
+      "frame": 18,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -10.014460655583116,
+        "forearm_f": -8.136749282661283,
+        "upperarm_b": 13.565479063498724,
+        "forearm_b": 10.658590692748998,
+        "thigh_f": 2.4497849051244,
+        "shin_f": 10.466501783779782,
+        "thigh_b": 4.617748036501031,
+        "shin_b": 4.600098527399602
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "jab",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.7696320326620774,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.0617792195972464,
+        "upperarm_f": -3.590109871423002,
+        "forearm_f": -2.9169642705311896,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -3.2587113226318976,
+        "shin_f": -4.01442551132505,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.05,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "jab",
+      "frame": 6,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -26.741561493508776,
+        "forearm_f": -21.727518713475877,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.131272363078394,
+        "shin_f": 9.0,
+        "thigh_b": 7.047273523217479,
+        "shin_b": 6.878205663492541
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "cross",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.0724250359891907,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.8434550215935144,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 2.1032382440206603,
+        "forearm_b": 1.6525443345876616,
+        "thigh_f": -6.42874774882986,
+        "shin_f": -5.328456150351615,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "cross",
+      "frame": 7,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 7.52195650903017,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.513173905418102,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 35.0,
+        "forearm_b": 27.5,
+        "thigh_f": 3.466147567542904,
+        "shin_f": 9.0,
+        "thigh_b": 5.959847434415238,
+        "shin_b": 5.858480079003057
+      },
+      "root_m": [
+        0.13699999999999998,
+        0.007000000000000029
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "uppercut",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -4.212184183119919,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.5273105098719513,
+        "upperarm_f": -7.180219742846004,
+        "forearm_f": -5.833928541062379,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -9.0,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.05,
+        -0.12
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "uppercut",
+      "frame": 10,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.541310089195296,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.3247860535171774,
+        "upperarm_f": -23.823424513607513,
+        "forearm_f": -19.356532417306106,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 9.0,
+        "shin_f": 7.590393044953948,
+        "thigh_b": 5.598189708782511,
+        "shin_b": 5.29528605784013
+      },
+      "root_m": [
+        0.12,
+        0.04
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "sweep",
+      "frame": 7,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1811208516665124,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3086725109999073,
+        "upperarm_f": -20.8806130178211,
+        "forearm_f": -16.965498076979646,
+        "upperarm_b": 14.19850588774905,
+        "forearm_b": 11.155968911802825,
+        "thigh_f": 9.0,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.04,
+        -0.3
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "sweep",
+      "frame": 12,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.3935705757633023,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.0361423454579812,
+        "upperarm_f": -26.67549853746359,
+        "forearm_f": -21.673842561689167,
+        "upperarm_b": 23.341061220280643,
+        "forearm_b": 18.339405244506217,
+        "thigh_f": -9.0,
+        "shin_f": -9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        0.18,
+        -0.34
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "rush",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -7.2568741357572275,
+        "forearm_f": -5.896210235302747,
+        "upperarm_b": 6.349764868787574,
+        "forearm_b": 4.989100968333094,
+        "thigh_f": 7.3809898335714665,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": 9.0
+      },
+      "root_m": [
+        0.24,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "backstep",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -6.309219879921539,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.785531927952923,
+        "upperarm_f": -2.1081851067789197,
+        "forearm_f": -1.7129003992578724,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -9.0,
+        "shin_f": 0.8578711940058474,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.17,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "guard",
+      "frame": 2,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.303481720823934,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3820890324943604,
+        "upperarm_f": -8.013876853447538,
+        "forearm_f": -6.511274943426125,
+        "upperarm_b": 7.0121422467665955,
+        "forearm_b": 5.509540336745182,
+        "thigh_f": -7.076691878731064,
+        "shin_f": -0.4284784599555446,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.05,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "sidestep",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.765399455363348,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.2592396732180084,
+        "upperarm_f": -3.333333333333333,
+        "forearm_f": -2.708333333333333,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -9.0,
+        "shin_f": 0.8578711940058474,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.15,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "focus",
+      "frame": 5,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.2123848856971282,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.7274309314182769,
+        "upperarm_f": -16.2268638717132,
+        "forearm_f": -13.184326895766974,
+        "upperarm_b": 14.19850588774905,
+        "forearm_b": 11.155968911802825,
+        "thigh_f": -9.0,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        0.0,
+        -0.14
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "recover",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.5088798488156083,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.9053279092893649,
+        "upperarm_f": -6.1031867814191045,
+        "forearm_f": -4.958839259903022,
+        "upperarm_b": 5.378067600087518,
+        "forearm_b": 4.225624542925907,
+        "thigh_f": -9.0,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        0.0,
+        -0.09
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "wave",
+      "frame": 6,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1224107839579727,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.2734464703747836,
+        "upperarm_f": -9.137225448071689,
+        "forearm_f": -7.423995676558247,
+        "upperarm_b": 7.995072267062728,
+        "forearm_b": 6.281842495549286,
+        "thigh_f": -6.590699453721379,
+        "shin_f": -5.166646475299042,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "wave",
+      "frame": 17,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -12.518075819478895,
+        "forearm_f": -10.170936603326602,
+        "upperarm_b": 16.956848829373406,
+        "forearm_b": 13.323238365936248,
+        "thigh_f": 2.4497849051244,
+        "shin_f": 9.0,
+        "thigh_b": 4.617748036501031,
+        "shin_b": 4.600098527399602
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "throw",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.8873170479156758,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.1323902287494054,
+        "upperarm_f": -7.167829363048327,
+        "forearm_f": -5.8238613574767655,
+        "upperarm_b": 6.271850692667286,
+        "forearm_b": 4.927882687095725,
+        "thigh_f": -5.2110327700572645,
+        "shin_f": -2.1507085289240746,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.05,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "throw",
+      "frame": 8,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.673414011263274,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.404048406757964,
+        "upperarm_f": -31.120268493557557,
+        "forearm_f": -25.285218151015513,
+        "upperarm_b": 27.230234931862864,
+        "forearm_b": 21.39518458932082,
+        "thigh_f": -0.41235754688447634,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": -0.5504586928991505
+      },
+      "root_m": [
+        0.1,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "hit_light",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.531085584241875,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.318651350545125,
+        "upperarm_f": -7.366666666666667,
+        "forearm_f": -5.985416666666667,
+        "upperarm_b": 6.445833333333334,
+        "forearm_b": 5.064583333333333,
+        "thigh_f": 0.6653996417471433,
+        "shin_f": -9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.08,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "hit_light",
+      "frame": 2,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.315451427129461,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.1892708562776764,
+        "upperarm_f": -7.437162690763789,
+        "forearm_f": -6.042694686245579,
+        "upperarm_b": 6.507517354418315,
+        "forearm_b": 5.113049349900105,
+        "thigh_f": 0.25230164168917013,
+        "shin_f": -9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.075,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "hit_heavy",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -11.389859037270341,
+        "forearm_f": -9.254260467782151,
+        "upperarm_b": 9.966126657611548,
+        "forearm_b": 7.8305280881233585,
+        "thigh_f": 4.9490214259108445,
+        "shin_f": -9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.14,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "hit_heavy",
+      "frame": 4,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -12.671051872498808,
+        "forearm_f": -10.295229646405282,
+        "upperarm_b": 11.087170388436457,
+        "forearm_b": 8.711348162342931,
+        "thigh_f": 3.621772271457302,
+        "shin_f": -9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.16,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "block",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.6264660570119602,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.5758796342071761,
+        "upperarm_f": -6.1031867814191045,
+        "forearm_f": -4.958839259903022,
+        "upperarm_b": 5.3402884337417165,
+        "forearm_b": 4.195940912225634,
+        "thigh_f": -0.5729386976834767,
+        "shin_f": -8.082590912177809,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.06,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "jab",
+      "frame": 7,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -26.741561493508776,
+        "forearm_f": -21.727518713475877,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.131272363078394,
+        "shin_f": 9.0,
+        "thigh_b": 7.047273523217479,
+        "shin_b": 6.878205663492541
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "cross",
+      "frame": 11,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 35.0,
+        "forearm_b": 27.5,
+        "thigh_f": 4.706507809533955,
+        "shin_f": 9.0,
+        "thigh_b": 8.735117270968649,
+        "shin_b": 8.635067301424
+      },
+      "root_m": [
+        0.19,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_hard_g125",
+      "card": "wave",
+      "frame": 18,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -12.518075819478895,
+        "forearm_f": -10.170936603326602,
+        "upperarm_b": 16.956848829373406,
+        "forearm_b": 13.323238365936248,
+        "thigh_f": 2.4497849051244,
+        "shin_f": 9.0,
+        "thigh_b": 4.617748036501031,
+        "shin_b": 4.600098527399602
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "jab",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.7696320326620774,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.0617792195972464,
+        "upperarm_f": -4.308131845707603,
+        "forearm_f": -3.500357124637427,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -3.2587113226318976,
+        "shin_f": -4.01442551132505,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.05,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "jab",
+      "frame": 6,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -32.089873792210525,
+        "forearm_f": -26.073022456171056,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.131272363078394,
+        "shin_f": 9.0,
+        "thigh_b": 7.047273523217479,
+        "shin_b": 6.878205663492541
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "cross",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.0724250359891907,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.8434550215935144,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 2.5238858928247923,
+        "forearm_b": 1.983053201505194,
+        "thigh_f": -6.42874774882986,
+        "shin_f": -5.328456150351615,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "cross",
+      "frame": 7,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 7.52195650903017,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.513173905418102,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 42.0,
+        "forearm_b": 33.0,
+        "thigh_f": 3.466147567542904,
+        "shin_f": 9.0,
+        "thigh_b": 5.959847434415238,
+        "shin_b": 5.858480079003057
+      },
+      "root_m": [
+        0.13699999999999998,
+        0.007000000000000029
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "uppercut",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -4.212184183119919,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.5273105098719513,
+        "upperarm_f": -8.616263691415206,
+        "forearm_f": -7.000714249274854,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -9.0,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.05,
+        -0.12
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "uppercut",
+      "frame": 10,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.541310089195296,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.3247860535171774,
+        "upperarm_f": -28.58810941632902,
+        "forearm_f": -23.227838900767328,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 9.0,
+        "shin_f": 7.590393044953948,
+        "thigh_b": 5.598189708782511,
+        "shin_b": 5.29528605784013
+      },
+      "root_m": [
+        0.12,
+        0.04
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "sweep",
+      "frame": 7,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1811208516665124,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3086725109999073,
+        "upperarm_f": -25.05673562138532,
+        "forearm_f": -20.358597692375575,
+        "upperarm_b": 17.03820706529886,
+        "forearm_b": 13.38716269416339,
+        "thigh_f": 9.0,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.04,
+        -0.3
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "sweep",
+      "frame": 12,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.3935705757633023,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.0361423454579812,
+        "upperarm_f": -32.01059824495631,
+        "forearm_f": -26.008611074027,
+        "upperarm_b": 28.009273464336772,
+        "forearm_b": 22.007286293407464,
+        "thigh_f": -9.0,
+        "shin_f": -9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        0.18,
+        -0.34
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "rush",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -8.708248962908673,
+        "forearm_f": -7.075452282363297,
+        "upperarm_b": 7.619717842545089,
+        "forearm_b": 5.986921161999713,
+        "thigh_f": 7.3809898335714665,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": 9.0
+      },
+      "root_m": [
+        0.24,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "backstep",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -6.309219879921539,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.785531927952923,
+        "upperarm_f": -2.529822128134704,
+        "forearm_f": -2.055480479109447,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -9.0,
+        "shin_f": 0.8578711940058474,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.17,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "guard",
+      "frame": 2,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.303481720823934,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3820890324943604,
+        "upperarm_f": -9.616652224137045,
+        "forearm_f": -7.81352993211135,
+        "upperarm_b": 8.414570696119915,
+        "forearm_b": 6.611448404094219,
+        "thigh_f": -7.076691878731064,
+        "shin_f": -0.4284784599555446,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.05,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "sidestep",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.765399455363348,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.2592396732180084,
+        "upperarm_f": -4.0,
+        "forearm_f": -3.25,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -9.0,
+        "shin_f": 0.8578711940058474,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.15,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "focus",
+      "frame": 5,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.2123848856971282,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.7274309314182769,
+        "upperarm_f": -19.47223664605584,
+        "forearm_f": -15.821192274920369,
+        "upperarm_b": 17.03820706529886,
+        "forearm_b": 13.38716269416339,
+        "thigh_f": -9.0,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        0.0,
+        -0.14
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "recover",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.5088798488156083,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.9053279092893649,
+        "upperarm_f": -7.323824137702925,
+        "forearm_f": -5.950607111883627,
+        "upperarm_b": 6.4536811201050215,
+        "forearm_b": 5.070749451511088,
+        "thigh_f": -9.0,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        0.0,
+        -0.09
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "wave",
+      "frame": 6,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1224107839579727,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.2734464703747836,
+        "upperarm_f": -10.964670537686025,
+        "forearm_f": -8.908794811869896,
+        "upperarm_b": 9.594086720475273,
+        "forearm_b": 7.538210994659143,
+        "thigh_f": -6.590699453721379,
+        "shin_f": -5.166646475299042,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "wave",
+      "frame": 17,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -15.021690983374675,
+        "forearm_f": -12.205123923991923,
+        "upperarm_b": 20.34821859524809,
+        "forearm_b": 15.987886039123497,
+        "thigh_f": 2.4497849051244,
+        "shin_f": 9.0,
+        "thigh_b": 4.617748036501031,
+        "shin_b": 4.600098527399602
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "throw",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.8873170479156758,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.1323902287494054,
+        "upperarm_f": -8.601395235657993,
+        "forearm_f": -6.988633628972119,
+        "upperarm_b": 7.526220831200743,
+        "forearm_b": 5.913459224514869,
+        "thigh_f": -5.2110327700572645,
+        "shin_f": -2.1507085289240746,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.05,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "throw",
+      "frame": 8,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.673414011263274,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.404048406757964,
+        "upperarm_f": -37.34432219226907,
+        "forearm_f": -30.342261781218618,
+        "upperarm_b": 32.67628191823543,
+        "forearm_b": 25.674221507184985,
+        "thigh_f": -0.41235754688447634,
+        "shin_f": 9.0,
+        "thigh_b": 9.0,
+        "shin_b": -0.5504586928991505
+      },
+      "root_m": [
+        0.1,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "hit_light",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.531085584241875,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.318651350545125,
+        "upperarm_f": -8.84,
+        "forearm_f": -7.1825,
+        "upperarm_b": 7.735,
+        "forearm_b": 6.077500000000001,
+        "thigh_f": 0.6653996417471433,
+        "shin_f": -9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.08,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "hit_light",
+      "frame": 2,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.315451427129461,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.1892708562776764,
+        "upperarm_f": -8.924595228916546,
+        "forearm_f": -7.251233623494694,
+        "upperarm_b": 7.809020825301978,
+        "forearm_b": 6.135659219880126,
+        "thigh_f": 0.25230164168917013,
+        "shin_f": -9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.075,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "hit_heavy",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -13.667830844724408,
+        "forearm_f": -11.105112561338581,
+        "upperarm_b": 11.959351989133857,
+        "forearm_b": 9.39663370574803,
+        "thigh_f": 4.9490214259108445,
+        "shin_f": -9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.14,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "hit_heavy",
+      "frame": 4,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -15.20526224699857,
+        "forearm_f": -12.354275575686339,
+        "upperarm_b": 13.304604466123749,
+        "forearm_b": 10.453617794811517,
+        "thigh_f": 3.621772271457302,
+        "shin_f": -9.0,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.16,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "block",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.6264660570119602,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.5758796342071761,
+        "upperarm_f": -7.323824137702925,
+        "forearm_f": -5.950607111883627,
+        "upperarm_b": 6.40834612049006,
+        "forearm_b": 5.035129094670761,
+        "thigh_f": -0.5729386976834767,
+        "shin_f": -8.082590912177809,
+        "thigh_b": 9.0,
+        "shin_b": -9.0
+      },
+      "root_m": [
+        -0.06,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "jab",
+      "frame": 7,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -32.089873792210525,
+        "forearm_f": -26.073022456171056,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.131272363078394,
+        "shin_f": 9.0,
+        "thigh_b": 7.047273523217479,
+        "shin_b": 6.878205663492541
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "cross",
+      "frame": 11,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 42.0,
+        "forearm_b": 33.0,
+        "thigh_f": 4.706507809533955,
+        "shin_f": 9.0,
+        "thigh_b": 8.735117270968649,
+        "shin_b": 8.635067301424
+      },
+      "root_m": [
+        0.19,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_hard_g150",
+      "card": "wave",
+      "frame": 18,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -15.021690983374675,
+        "forearm_f": -12.205123923991923,
+        "upperarm_b": 20.34821859524809,
+        "forearm_b": 15.987886039123497,
+        "thigh_f": 2.4497849051244,
+        "shin_f": 9.0,
+        "thigh_b": 4.617748036501031,
+        "shin_b": 4.600098527399602
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "jab",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.7696320326620774,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.0617792195972464,
+        "upperarm_f": -3.590109871423002,
+        "forearm_f": -2.9169642705311896,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -3.2587113226318976,
+        "shin_f": -4.01442551132505,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.05,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "jab",
+      "frame": 6,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -26.741561493508776,
+        "forearm_f": -21.727518713475877,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.131272363078394,
+        "shin_f": 12.0,
+        "thigh_b": 7.047273523217479,
+        "shin_b": 6.878205663492541
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "cross",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.0724250359891907,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.8434550215935144,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 2.1032382440206603,
+        "forearm_b": 1.6525443345876616,
+        "thigh_f": -6.42874774882986,
+        "shin_f": -5.328456150351615,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "cross",
+      "frame": 7,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 7.52195650903017,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.513173905418102,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 35.0,
+        "forearm_b": 27.5,
+        "thigh_f": 3.466147567542904,
+        "shin_f": 12.0,
+        "thigh_b": 5.959847434415238,
+        "shin_b": 5.858480079003057
+      },
+      "root_m": [
+        0.13699999999999998,
+        0.007000000000000029
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "uppercut",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -4.212184183119919,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.5273105098719513,
+        "upperarm_f": -7.180219742846004,
+        "forearm_f": -5.833928541062379,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -12.0,
+        "shin_f": 9.028734450593156,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.05,
+        -0.12
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "uppercut",
+      "frame": 10,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.541310089195296,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.3247860535171774,
+        "upperarm_f": -23.823424513607513,
+        "forearm_f": -19.356532417306106,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 9.020402946965257,
+        "shin_f": 7.590393044953948,
+        "thigh_b": 5.598189708782511,
+        "shin_b": 5.29528605784013
+      },
+      "root_m": [
+        0.12,
+        0.04
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "sweep",
+      "frame": 7,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1811208516665124,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3086725109999073,
+        "upperarm_f": -20.8806130178211,
+        "forearm_f": -16.965498076979646,
+        "upperarm_b": 14.19850588774905,
+        "forearm_b": 11.155968911802825,
+        "thigh_f": 12.0,
+        "shin_f": 12.0,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.04,
+        -0.3
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "sweep",
+      "frame": 12,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.3935705757633023,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.0361423454579812,
+        "upperarm_f": -26.67549853746359,
+        "forearm_f": -21.673842561689167,
+        "upperarm_b": 23.341061220280643,
+        "forearm_b": 18.339405244506217,
+        "thigh_f": -12.0,
+        "shin_f": -12.0,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        0.18,
+        -0.34
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "rush",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -7.2568741357572275,
+        "forearm_f": -5.896210235302747,
+        "upperarm_b": 6.349764868787574,
+        "forearm_b": 4.989100968333094,
+        "thigh_f": 7.3809898335714665,
+        "shin_f": 12.0,
+        "thigh_b": 12.0,
+        "shin_b": 12.0
+      },
+      "root_m": [
+        0.24,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "backstep",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -6.309219879921539,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.785531927952923,
+        "upperarm_f": -2.1081851067789197,
+        "forearm_f": -1.7129003992578724,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -11.857985783718007,
+        "shin_f": 0.8578711940058474,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.17,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "guard",
+      "frame": 2,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.303481720823934,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3820890324943604,
+        "upperarm_f": -8.013876853447538,
+        "forearm_f": -6.511274943426125,
+        "upperarm_b": 7.0121422467665955,
+        "forearm_b": 5.509540336745182,
+        "thigh_f": -7.076691878731064,
+        "shin_f": -0.4284784599555446,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.05,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "sidestep",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.765399455363348,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.2592396732180084,
+        "upperarm_f": -3.333333333333333,
+        "forearm_f": -2.708333333333333,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -11.857985783718007,
+        "shin_f": 0.8578711940058474,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.15,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "focus",
+      "frame": 5,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.2123848856971282,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.7274309314182769,
+        "upperarm_f": -16.2268638717132,
+        "forearm_f": -13.184326895766974,
+        "upperarm_b": 14.19850588774905,
+        "forearm_b": 11.155968911802825,
+        "thigh_f": -12.0,
+        "shin_f": 12.0,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        0.0,
+        -0.14
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "recover",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.5088798488156083,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.9053279092893649,
+        "upperarm_f": -6.1031867814191045,
+        "forearm_f": -4.958839259903022,
+        "upperarm_b": 5.378067600087518,
+        "forearm_b": 4.225624542925907,
+        "thigh_f": -12.0,
+        "shin_f": 12.0,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        0.0,
+        -0.09
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "wave",
+      "frame": 6,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1224107839579727,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.2734464703747836,
+        "upperarm_f": -9.137225448071689,
+        "forearm_f": -7.423995676558247,
+        "upperarm_b": 7.995072267062728,
+        "forearm_b": 6.281842495549286,
+        "thigh_f": -6.590699453721379,
+        "shin_f": -5.166646475299042,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "wave",
+      "frame": 17,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -12.518075819478895,
+        "forearm_f": -10.170936603326602,
+        "upperarm_b": 16.956848829373406,
+        "forearm_b": 13.323238365936248,
+        "thigh_f": 2.4497849051244,
+        "shin_f": 10.466501783779782,
+        "thigh_b": 4.617748036501031,
+        "shin_b": 4.600098527399602
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "throw",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.8873170479156758,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.1323902287494054,
+        "upperarm_f": -7.167829363048327,
+        "forearm_f": -5.8238613574767655,
+        "upperarm_b": 6.271850692667286,
+        "forearm_b": 4.927882687095725,
+        "thigh_f": -5.2110327700572645,
+        "shin_f": -2.1507085289240746,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.05,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "throw",
+      "frame": 8,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.673414011263274,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.404048406757964,
+        "upperarm_f": -31.120268493557557,
+        "forearm_f": -25.285218151015513,
+        "upperarm_b": 27.230234931862864,
+        "forearm_b": 21.39518458932082,
+        "thigh_f": -0.41235754688447634,
+        "shin_f": 12.0,
+        "thigh_b": 10.227858659621447,
+        "shin_b": -0.5504586928991505
+      },
+      "root_m": [
+        0.1,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "hit_light",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.531085584241875,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.318651350545125,
+        "upperarm_f": -7.366666666666667,
+        "forearm_f": -5.985416666666667,
+        "upperarm_b": 6.445833333333334,
+        "forearm_b": 5.064583333333333,
+        "thigh_f": 0.6653996417471433,
+        "shin_f": -12.0,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.08,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "hit_light",
+      "frame": 2,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.315451427129461,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.1892708562776764,
+        "upperarm_f": -7.437162690763789,
+        "forearm_f": -6.042694686245579,
+        "upperarm_b": 6.507517354418315,
+        "forearm_b": 5.113049349900105,
+        "thigh_f": 0.25230164168917013,
+        "shin_f": -11.139176552447863,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.075,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "hit_heavy",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -11.389859037270341,
+        "forearm_f": -9.254260467782151,
+        "upperarm_b": 9.966126657611548,
+        "forearm_b": 7.8305280881233585,
+        "thigh_f": 4.9490214259108445,
+        "shin_f": -12.0,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.14,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "hit_heavy",
+      "frame": 4,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -12.671051872498808,
+        "forearm_f": -10.295229646405282,
+        "upperarm_b": 11.087170388436457,
+        "forearm_b": 8.711348162342931,
+        "thigh_f": 3.621772271457302,
+        "shin_f": -12.0,
+        "thigh_b": 12.0,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.16,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "block",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.6264660570119602,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.5758796342071761,
+        "upperarm_f": -6.1031867814191045,
+        "forearm_f": -4.958839259903022,
+        "upperarm_b": 5.3402884337417165,
+        "forearm_b": 4.195940912225634,
+        "thigh_f": -0.5729386976834767,
+        "shin_f": -8.082590912177809,
+        "thigh_b": 11.936689830126154,
+        "shin_b": -12.0
+      },
+      "root_m": [
+        -0.06,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "jab",
+      "frame": 7,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -26.741561493508776,
+        "forearm_f": -21.727518713475877,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.131272363078394,
+        "shin_f": 12.0,
+        "thigh_b": 7.047273523217479,
+        "shin_b": 6.878205663492541
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "cross",
+      "frame": 11,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 35.0,
+        "forearm_b": 27.5,
+        "thigh_f": 4.706507809533955,
+        "shin_f": 12.0,
+        "thigh_b": 8.735117270968649,
+        "shin_b": 8.635067301424
+      },
+      "root_m": [
+        0.19,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap12_hard_g125",
+      "card": "wave",
+      "frame": 18,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -12.518075819478895,
+        "forearm_f": -10.170936603326602,
+        "upperarm_b": 16.956848829373406,
+        "forearm_b": 13.323238365936248,
+        "thigh_f": 2.4497849051244,
+        "shin_f": 10.466501783779782,
+        "thigh_b": 4.617748036501031,
+        "shin_b": 4.600098527399602
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "jab",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.7696320326620774,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.0617792195972464,
+        "upperarm_f": -3.590109871423002,
+        "forearm_f": -2.9169642705311896,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -3.123395906299497,
+        "shin_f": -3.767800079317687,
+        "thigh_b": 8.21918677429542,
+        "shin_b": -8.631516247405672
+      },
+      "root_m": [
+        -0.05,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "jab",
+      "frame": 6,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -26.741561493508776,
+        "forearm_f": -21.727518713475877,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.0923069735117803,
+        "shin_f": 8.559675566908664,
+        "thigh_b": 5.889983695552594,
+        "shin_b": 5.792135352375644
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "cross",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.0724250359891907,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.8434550215935144,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 2.1032382440206603,
+        "forearm_b": 1.6525443345876616,
+        "thigh_f": -5.52032532955704,
+        "shin_f": -4.782319900624307,
+        "thigh_b": 8.712740989916893,
+        "shin_b": -8.917300303015898
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "cross",
+      "frame": 7,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 7.52195650903017,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.513173905418102,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 35.0,
+        "forearm_b": 27.5,
+        "thigh_f": 3.304369008396929,
+        "shin_f": 8.51454744692723,
+        "thigh_b": 5.218462254398578,
+        "shin_b": 5.150735353391426
+      },
+      "root_m": [
+        0.13699999999999998,
+        0.007000000000000029
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "uppercut",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -4.212184183119919,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.5273105098719513,
+        "upperarm_f": -7.180219742846004,
+        "forearm_f": -5.833928541062379,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -8.728449512149744,
+        "shin_f": 6.866385822596375,
+        "thigh_b": 8.985051698138776,
+        "shin_b": -8.963518046053412
+      },
+      "root_m": [
+        -0.05,
+        -0.12
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "uppercut",
+      "frame": 10,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.541310089195296,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.3247860535171774,
+        "upperarm_f": -23.823424513607513,
+        "forearm_f": -19.356532417306106,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 6.86290133455316,
+        "shin_f": 6.188342462694868,
+        "thigh_b": 4.972802876801193,
+        "shin_b": 4.758468877676291
+      },
+      "root_m": [
+        0.12,
+        0.04
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "sweep",
+      "frame": 7,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1811208516665124,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3086725109999073,
+        "upperarm_f": -20.8806130178211,
+        "forearm_f": -16.965498076979646,
+        "upperarm_b": 14.19850588774905,
+        "forearm_b": 11.155968911802825,
+        "thigh_f": 8.999999321924742,
+        "shin_f": 8.999999995010917,
+        "thigh_b": 8.887350019027004,
+        "shin_b": -8.999999984290945
+      },
+      "root_m": [
+        -0.04,
+        -0.3
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "sweep",
+      "frame": 12,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.3935705757633023,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.0361423454579812,
+        "upperarm_f": -26.67549853746359,
+        "forearm_f": -21.673842561689167,
+        "upperarm_b": 23.341061220280643,
+        "forearm_b": 18.339405244506217,
+        "thigh_f": -8.99987883841494,
+        "shin_f": -8.995940169334588,
+        "thigh_b": 8.995400694941795,
+        "shin_b": -8.999999483041714
+      },
+      "root_m": [
+        0.18,
+        -0.34
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "rush",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -7.2568741357572275,
+        "forearm_f": -5.896210235302747,
+        "upperarm_b": 6.349764868787574,
+        "forearm_b": 4.989100968333094,
+        "thigh_f": 6.076167580822479,
+        "shin_f": 8.958524113285199,
+        "thigh_b": 8.791381046760453,
+        "shin_b": 8.789262000383182
+      },
+      "root_m": [
+        0.24,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "backstep",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -6.309219879921539,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.785531927952923,
+        "upperarm_f": -2.1081851067789197,
+        "forearm_f": -1.7129003992578724,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -7.795569119764862,
+        "shin_f": 0.8552824770967656,
+        "thigh_b": 8.81409591473091,
+        "shin_b": -8.994710587222372
+      },
+      "root_m": [
+        -0.17,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "guard",
+      "frame": 2,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.303481720823934,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3820890324943604,
+        "upperarm_f": -8.013876853447538,
+        "forearm_f": -6.511274943426125,
+        "upperarm_b": 7.0121422467665955,
+        "forearm_b": 5.509540336745182,
+        "thigh_f": -5.906766350891088,
+        "shin_f": -0.4281550248582947,
+        "thigh_b": 8.70064685293946,
+        "shin_b": -8.807954118177191
+      },
+      "root_m": [
+        -0.05,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "sidestep",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.765399455363348,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.2592396732180084,
+        "upperarm_f": -3.333333333333333,
+        "forearm_f": -2.708333333333333,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -7.795569119764862,
+        "shin_f": 0.8552824770967656,
+        "thigh_b": 8.835820272169421,
+        "shin_b": -8.99151680776691
+      },
+      "root_m": [
+        -0.15,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "focus",
+      "frame": 5,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.2123848856971282,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.7274309314182769,
+        "upperarm_f": -16.2268638717132,
+        "forearm_f": -13.184326895766974,
+        "upperarm_b": 14.19850588774905,
+        "forearm_b": 11.155968911802825,
+        "thigh_f": -8.800148324509468,
+        "shin_f": 8.624115222515146,
+        "thigh_b": 8.992396307823565,
+        "shin_b": -8.894344714645616
+      },
+      "root_m": [
+        0.0,
+        -0.14
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "recover",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.5088798488156083,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.9053279092893649,
+        "upperarm_f": -6.1031867814191045,
+        "forearm_f": -4.958839259903022,
+        "upperarm_b": 5.378067600087518,
+        "forearm_b": 4.225624542925907,
+        "thigh_f": -8.241773600366834,
+        "shin_f": 7.974681735301608,
+        "thigh_b": 8.95356817091626,
+        "shin_b": -8.748061044097915
+      },
+      "root_m": [
+        0.0,
+        -0.09
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "wave",
+      "frame": 6,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1224107839579727,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.2734464703747836,
+        "upperarm_f": -9.137225448071689,
+        "forearm_f": -7.423995676558247,
+        "upperarm_b": 7.995072267062728,
+        "forearm_b": 6.281842495549286,
+        "thigh_f": -5.620233712494428,
+        "shin_f": -4.665090343644938,
+        "thigh_b": 8.706915099046238,
+        "shin_b": -8.915016188307195
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "wave",
+      "frame": 17,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -12.518075819478895,
+        "forearm_f": -10.170936603326602,
+        "upperarm_b": 16.956848829373406,
+        "forearm_b": 13.323238365936248,
+        "thigh_f": 2.391022719398967,
+        "shin_f": 7.3979748361122954,
+        "thigh_b": 4.251095366948272,
+        "shin_b": 4.237370923164357
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "throw",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.8873170479156758,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.1323902287494054,
+        "upperarm_f": -7.167829363048327,
+        "forearm_f": -5.8238613574767655,
+        "upperarm_b": 6.271850692667286,
+        "forearm_b": 4.927882687095725,
+        "thigh_f": -4.6974679037813925,
+        "shin_f": -2.11068343239197,
+        "thigh_b": 8.520151025951593,
+        "shin_b": -8.74046552604037
+      },
+      "root_m": [
+        -0.05,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "throw",
+      "frame": 8,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.673414011263274,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.404048406757964,
+        "upperarm_f": -31.120268493557557,
+        "forearm_f": -25.285218151015513,
+        "upperarm_b": 27.230234931862864,
+        "forearm_b": 21.39518458932082,
+        "thigh_f": -0.4120692426314467,
+        "shin_f": 8.355222246330477,
+        "thigh_b": 7.3188723766017265,
+        "shin_b": -0.5497733331675623
+      },
+      "root_m": [
+        0.1,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "hit_light",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.531085584241875,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.318651350545125,
+        "upperarm_f": -7.366666666666667,
+        "forearm_f": -5.985416666666667,
+        "upperarm_b": 6.445833333333334,
+        "forearm_b": 5.064583333333333,
+        "thigh_f": 0.664189899322119,
+        "shin_f": -7.90538258456231,
+        "thigh_b": 7.927303192638697,
+        "shin_b": -8.796839333389043
+      },
+      "root_m": [
+        -0.08,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "hit_light",
+      "frame": 2,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.315451427129461,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.1892708562776764,
+        "upperarm_f": -7.437162690763789,
+        "forearm_f": -6.042694686245579,
+        "upperarm_b": 6.507517354418315,
+        "forearm_b": 5.113049349900105,
+        "thigh_f": 0.2522355696886351,
+        "shin_f": -7.603149784032325,
+        "thigh_b": 7.904310287749475,
+        "shin_b": -8.7612268983785
+      },
+      "root_m": [
+        -0.075,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "hit_heavy",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -11.389859037270341,
+        "forearm_f": -9.254260467782151,
+        "upperarm_b": 9.966126657611548,
+        "forearm_b": 7.8305280881233585,
+        "thigh_f": 4.503948439561885,
+        "shin_f": -8.943579438559057,
+        "thigh_b": 8.712740989916893,
+        "shin_b": -8.917300303015898
+      },
+      "root_m": [
+        -0.14,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "hit_heavy",
+      "frame": 4,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -12.671051872498808,
+        "forearm_f": -10.295229646405282,
+        "upperarm_b": 11.087170388436457,
+        "forearm_b": 8.711348162342931,
+        "thigh_f": 3.4381527166339523,
+        "shin_f": -8.959674430675904,
+        "thigh_b": 8.681428150910564,
+        "shin_b": -8.74046552604037
+      },
+      "root_m": [
+        -0.16,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "block",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.6264660570119602,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.5758796342071761,
+        "upperarm_f": -6.1031867814191045,
+        "forearm_f": -4.958839259903022,
+        "upperarm_b": 5.3402884337417165,
+        "forearm_b": 4.195940912225634,
+        "thigh_f": -0.572165990811065,
+        "shin_f": -6.438192293847799,
+        "thigh_b": 7.815076567387097,
+        "shin_b": -8.621604813126543
+      },
+      "root_m": [
+        -0.06,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "jab",
+      "frame": 7,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -26.741561493508776,
+        "forearm_f": -21.727518713475877,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.0923069735117803,
+        "shin_f": 8.559675566908664,
+        "thigh_b": 5.889983695552594,
+        "shin_b": 5.792135352375644
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "cross",
+      "frame": 11,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 35.0,
+        "forearm_b": 27.5,
+        "thigh_f": 4.3197301048608265,
+        "shin_f": 8.884705315081526,
+        "thigh_b": 6.740586368822888,
+        "shin_b": 6.69629066879316
+      },
+      "root_m": [
+        0.19,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_soft_g125",
+      "card": "wave",
+      "frame": 18,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -12.518075819478895,
+        "forearm_f": -10.170936603326602,
+        "upperarm_b": 16.956848829373406,
+        "forearm_b": 13.323238365936248,
+        "thigh_f": 2.391022719398967,
+        "shin_f": 7.3979748361122954,
+        "thigh_b": 4.251095366948272,
+        "shin_b": 4.237370923164357
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "jab",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.7696320326620774,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.0617792195972464,
+        "upperarm_f": -4.308131845707603,
+        "forearm_f": -3.500357124637427,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -3.123395906299497,
+        "shin_f": -3.767800079317687,
+        "thigh_b": 8.21918677429542,
+        "shin_b": -8.631516247405672
+      },
+      "root_m": [
+        -0.05,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "jab",
+      "frame": 6,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -32.089873792210525,
+        "forearm_f": -26.073022456171056,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.0923069735117803,
+        "shin_f": 8.559675566908664,
+        "thigh_b": 5.889983695552594,
+        "shin_b": 5.792135352375644
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "cross",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.0724250359891907,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.8434550215935144,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 2.5238858928247923,
+        "forearm_b": 1.983053201505194,
+        "thigh_f": -5.52032532955704,
+        "shin_f": -4.782319900624307,
+        "thigh_b": 8.712740989916893,
+        "shin_b": -8.917300303015898
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "cross",
+      "frame": 7,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 7.52195650903017,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.513173905418102,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 42.0,
+        "forearm_b": 33.0,
+        "thigh_f": 3.304369008396929,
+        "shin_f": 8.51454744692723,
+        "thigh_b": 5.218462254398578,
+        "shin_b": 5.150735353391426
+      },
+      "root_m": [
+        0.13699999999999998,
+        0.007000000000000029
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "uppercut",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -4.212184183119919,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.5273105098719513,
+        "upperarm_f": -8.616263691415206,
+        "forearm_f": -7.000714249274854,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -8.728449512149744,
+        "shin_f": 6.866385822596375,
+        "thigh_b": 8.985051698138776,
+        "shin_b": -8.963518046053412
+      },
+      "root_m": [
+        -0.05,
+        -0.12
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "uppercut",
+      "frame": 10,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.541310089195296,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.3247860535171774,
+        "upperarm_f": -28.58810941632902,
+        "forearm_f": -23.227838900767328,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 6.86290133455316,
+        "shin_f": 6.188342462694868,
+        "thigh_b": 4.972802876801193,
+        "shin_b": 4.758468877676291
+      },
+      "root_m": [
+        0.12,
+        0.04
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "sweep",
+      "frame": 7,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1811208516665124,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3086725109999073,
+        "upperarm_f": -25.05673562138532,
+        "forearm_f": -20.358597692375575,
+        "upperarm_b": 17.03820706529886,
+        "forearm_b": 13.38716269416339,
+        "thigh_f": 8.999999321924742,
+        "shin_f": 8.999999995010917,
+        "thigh_b": 8.887350019027004,
+        "shin_b": -8.999999984290945
+      },
+      "root_m": [
+        -0.04,
+        -0.3
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "sweep",
+      "frame": 12,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.3935705757633023,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.0361423454579812,
+        "upperarm_f": -32.01059824495631,
+        "forearm_f": -26.008611074027,
+        "upperarm_b": 28.009273464336772,
+        "forearm_b": 22.007286293407464,
+        "thigh_f": -8.99987883841494,
+        "shin_f": -8.995940169334588,
+        "thigh_b": 8.995400694941795,
+        "shin_b": -8.999999483041714
+      },
+      "root_m": [
+        0.18,
+        -0.34
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "rush",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -8.708248962908673,
+        "forearm_f": -7.075452282363297,
+        "upperarm_b": 7.619717842545089,
+        "forearm_b": 5.986921161999713,
+        "thigh_f": 6.076167580822479,
+        "shin_f": 8.958524113285199,
+        "thigh_b": 8.791381046760453,
+        "shin_b": 8.789262000383182
+      },
+      "root_m": [
+        0.24,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "backstep",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -6.309219879921539,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.785531927952923,
+        "upperarm_f": -2.529822128134704,
+        "forearm_f": -2.055480479109447,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -7.795569119764862,
+        "shin_f": 0.8552824770967656,
+        "thigh_b": 8.81409591473091,
+        "shin_b": -8.994710587222372
+      },
+      "root_m": [
+        -0.17,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "guard",
+      "frame": 2,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.303481720823934,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3820890324943604,
+        "upperarm_f": -9.616652224137045,
+        "forearm_f": -7.81352993211135,
+        "upperarm_b": 8.414570696119915,
+        "forearm_b": 6.611448404094219,
+        "thigh_f": -5.906766350891088,
+        "shin_f": -0.4281550248582947,
+        "thigh_b": 8.70064685293946,
+        "shin_b": -8.807954118177191
+      },
+      "root_m": [
+        -0.05,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "sidestep",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.765399455363348,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.2592396732180084,
+        "upperarm_f": -4.0,
+        "forearm_f": -3.25,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -7.795569119764862,
+        "shin_f": 0.8552824770967656,
+        "thigh_b": 8.835820272169421,
+        "shin_b": -8.99151680776691
+      },
+      "root_m": [
+        -0.15,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "focus",
+      "frame": 5,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.2123848856971282,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.7274309314182769,
+        "upperarm_f": -19.47223664605584,
+        "forearm_f": -15.821192274920369,
+        "upperarm_b": 17.03820706529886,
+        "forearm_b": 13.38716269416339,
+        "thigh_f": -8.800148324509468,
+        "shin_f": 8.624115222515146,
+        "thigh_b": 8.992396307823565,
+        "shin_b": -8.894344714645616
+      },
+      "root_m": [
+        0.0,
+        -0.14
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "recover",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.5088798488156083,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.9053279092893649,
+        "upperarm_f": -7.323824137702925,
+        "forearm_f": -5.950607111883627,
+        "upperarm_b": 6.4536811201050215,
+        "forearm_b": 5.070749451511088,
+        "thigh_f": -8.241773600366834,
+        "shin_f": 7.974681735301608,
+        "thigh_b": 8.95356817091626,
+        "shin_b": -8.748061044097915
+      },
+      "root_m": [
+        0.0,
+        -0.09
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "wave",
+      "frame": 6,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1224107839579727,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.2734464703747836,
+        "upperarm_f": -10.964670537686025,
+        "forearm_f": -8.908794811869896,
+        "upperarm_b": 9.594086720475273,
+        "forearm_b": 7.538210994659143,
+        "thigh_f": -5.620233712494428,
+        "shin_f": -4.665090343644938,
+        "thigh_b": 8.706915099046238,
+        "shin_b": -8.915016188307195
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "wave",
+      "frame": 17,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -15.021690983374675,
+        "forearm_f": -12.205123923991923,
+        "upperarm_b": 20.34821859524809,
+        "forearm_b": 15.987886039123497,
+        "thigh_f": 2.391022719398967,
+        "shin_f": 7.3979748361122954,
+        "thigh_b": 4.251095366948272,
+        "shin_b": 4.237370923164357
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "throw",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.8873170479156758,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.1323902287494054,
+        "upperarm_f": -8.601395235657993,
+        "forearm_f": -6.988633628972119,
+        "upperarm_b": 7.526220831200743,
+        "forearm_b": 5.913459224514869,
+        "thigh_f": -4.6974679037813925,
+        "shin_f": -2.11068343239197,
+        "thigh_b": 8.520151025951593,
+        "shin_b": -8.74046552604037
+      },
+      "root_m": [
+        -0.05,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "throw",
+      "frame": 8,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.673414011263274,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.404048406757964,
+        "upperarm_f": -37.34432219226907,
+        "forearm_f": -30.342261781218618,
+        "upperarm_b": 32.67628191823543,
+        "forearm_b": 25.674221507184985,
+        "thigh_f": -0.4120692426314467,
+        "shin_f": 8.355222246330477,
+        "thigh_b": 7.3188723766017265,
+        "shin_b": -0.5497733331675623
+      },
+      "root_m": [
+        0.1,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "hit_light",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.531085584241875,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.318651350545125,
+        "upperarm_f": -8.84,
+        "forearm_f": -7.1825,
+        "upperarm_b": 7.735,
+        "forearm_b": 6.077500000000001,
+        "thigh_f": 0.664189899322119,
+        "shin_f": -7.90538258456231,
+        "thigh_b": 7.927303192638697,
+        "shin_b": -8.796839333389043
+      },
+      "root_m": [
+        -0.08,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "hit_light",
+      "frame": 2,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.315451427129461,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.1892708562776764,
+        "upperarm_f": -8.924595228916546,
+        "forearm_f": -7.251233623494694,
+        "upperarm_b": 7.809020825301978,
+        "forearm_b": 6.135659219880126,
+        "thigh_f": 0.2522355696886351,
+        "shin_f": -7.603149784032325,
+        "thigh_b": 7.904310287749475,
+        "shin_b": -8.7612268983785
+      },
+      "root_m": [
+        -0.075,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "hit_heavy",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -13.667830844724408,
+        "forearm_f": -11.105112561338581,
+        "upperarm_b": 11.959351989133857,
+        "forearm_b": 9.39663370574803,
+        "thigh_f": 4.503948439561885,
+        "shin_f": -8.943579438559057,
+        "thigh_b": 8.712740989916893,
+        "shin_b": -8.917300303015898
+      },
+      "root_m": [
+        -0.14,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "hit_heavy",
+      "frame": 4,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -15.20526224699857,
+        "forearm_f": -12.354275575686339,
+        "upperarm_b": 13.304604466123749,
+        "forearm_b": 10.453617794811517,
+        "thigh_f": 3.4381527166339523,
+        "shin_f": -8.959674430675904,
+        "thigh_b": 8.681428150910564,
+        "shin_b": -8.74046552604037
+      },
+      "root_m": [
+        -0.16,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "block",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.6264660570119602,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.5758796342071761,
+        "upperarm_f": -7.323824137702925,
+        "forearm_f": -5.950607111883627,
+        "upperarm_b": 6.40834612049006,
+        "forearm_b": 5.035129094670761,
+        "thigh_f": -0.572165990811065,
+        "shin_f": -6.438192293847799,
+        "thigh_b": 7.815076567387097,
+        "shin_b": -8.621604813126543
+      },
+      "root_m": [
+        -0.06,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "jab",
+      "frame": 7,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -32.089873792210525,
+        "forearm_f": -26.073022456171056,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.0923069735117803,
+        "shin_f": 8.559675566908664,
+        "thigh_b": 5.889983695552594,
+        "shin_b": 5.792135352375644
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "cross",
+      "frame": 11,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 42.0,
+        "forearm_b": 33.0,
+        "thigh_f": 4.3197301048608265,
+        "shin_f": 8.884705315081526,
+        "thigh_b": 6.740586368822888,
+        "shin_b": 6.69629066879316
+      },
+      "root_m": [
+        0.19,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap09_soft_g150",
+      "card": "wave",
+      "frame": 18,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -15.021690983374675,
+        "forearm_f": -12.205123923991923,
+        "upperarm_b": 20.34821859524809,
+        "forearm_b": 15.987886039123497,
+        "thigh_f": 2.391022719398967,
+        "shin_f": 7.3979748361122954,
+        "thigh_b": 4.251095366948272,
+        "shin_b": 4.237370923164357
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "jab",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.7696320326620774,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.0617792195972464,
+        "upperarm_f": -4.308131845707603,
+        "forearm_f": -3.500357124637427,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -3.180901779626428,
+        "shin_f": -3.8710821868449097,
+        "thigh_b": 9.852640246020893,
+        "shin_b": -10.749541837037718
+      },
+      "root_m": [
+        -0.05,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "jab",
+      "frame": 6,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -32.089873792210525,
+        "forearm_f": -26.073022456171056,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.109142003510929,
+        "shin_f": 10.577297241751657,
+        "thigh_b": 6.335176054678842,
+        "shin_b": 6.212323701861114
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "cross",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.0724250359891907,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.8434550215935144,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 2.5238858928247923,
+        "forearm_b": 1.983053201505194,
+        "thigh_f": -5.876977926282391,
+        "shin_f": -5.0038313319769605,
+        "thigh_b": 10.956720296609042,
+        "shin_b": -11.582399035645409
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "cross",
+      "frame": 7,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 7.52195650903017,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.513173905418102,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 42.0,
+        "forearm_b": 33.0,
+        "thigh_f": 3.3728638257967862,
+        "shin_f": 10.473385432631362,
+        "thigh_b": 5.5137792077218615,
+        "shin_b": 5.433503195613178
+      },
+      "root_m": [
+        0.13699999999999998,
+        0.007000000000000029
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "uppercut",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -4.212184183119919,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.5273105098719513,
+        "upperarm_f": -8.616263691415206,
+        "forearm_f": -7.000714249274854,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -10.998647091740176,
+        "shin_f": 7.638903929085451,
+        "thigh_b": 11.883090272905168,
+        "shin_b": -11.7725734205582
+      },
+      "root_m": [
+        -0.05,
+        -0.12
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "uppercut",
+      "frame": 10,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.541310089195296,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.3247860535171774,
+        "upperarm_f": -28.58810941632902,
+        "forearm_f": -23.227838900767328,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 7.633946394957945,
+        "shin_f": 6.717524977799568,
+        "thigh_b": 5.2245583230144,
+        "shin_b": 4.976397213561642
+      },
+      "root_m": [
+        0.12,
+        0.04
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "sweep",
+      "frame": 7,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1811208516665124,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3086725109999073,
+        "upperarm_f": -25.05673562138532,
+        "forearm_f": -20.358597692375575,
+        "upperarm_b": 17.03820706529886,
+        "forearm_b": 13.38716269416339,
+        "thigh_f": 11.999935104568532,
+        "shin_f": 11.999998369681744,
+        "thigh_b": 11.475194902546079,
+        "shin_b": -11.999996146375729
+      },
+      "root_m": [
+        -0.04,
+        -0.3
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "sweep",
+      "frame": 12,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.3935705757633023,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.0361423454579812,
+        "upperarm_f": -32.01059824495631,
+        "forearm_f": -26.008611074027,
+        "upperarm_b": 28.009273464336772,
+        "forearm_b": 22.007286293407464,
+        "thigh_f": -11.996828787269388,
+        "shin_f": -11.955902641667654,
+        "thigh_b": 11.951584739327275,
+        "shin_b": -11.999947052246352
+      },
+      "root_m": [
+        0.18,
+        -0.34
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "rush",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -8.708248962908673,
+        "forearm_f": -7.075452282363297,
+        "upperarm_b": 7.619717842545089,
+        "forearm_b": 5.986921161999713,
+        "thigh_f": 6.572338727265754,
+        "shin_f": 11.74979063337584,
+        "thigh_b": 11.174222128297343,
+        "shin_b": 11.168085232518111
+      },
+      "root_m": [
+        0.24,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "backstep",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -6.309219879921539,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.785531927952923,
+        "upperarm_f": -2.529822128134704,
+        "forearm_f": -2.055480479109447,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -9.078947928211846,
+        "shin_f": 0.8564127303398548,
+        "thigh_b": 11.241157553982205,
+        "shin_b": -11.946243085652636
+      },
+      "root_m": [
+        -0.17,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "guard",
+      "frame": 2,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.303481720823934,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.3820890324943604,
+        "upperarm_f": -9.616652224137045,
+        "forearm_f": -7.81352993211135,
+        "upperarm_b": 8.414570696119915,
+        "forearm_b": 6.611448404094219,
+        "thigh_f": -6.3563677067493005,
+        "shin_f": -0.42829645558732576,
+        "thigh_b": 10.92488910837341,
+        "shin_b": -11.222843258043772
+      },
+      "root_m": [
+        -0.05,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "sidestep",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -3.765399455363348,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 2.2592396732180084,
+        "upperarm_f": -4.0,
+        "forearm_f": -3.25,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": -9.078947928211846,
+        "shin_f": 0.8564127303398548,
+        "thigh_b": 11.30735171563664,
+        "shin_b": -11.923450481145405
+      },
+      "root_m": [
+        -0.15,
+        -0.06
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "focus",
+      "frame": 5,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.2123848856971282,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.7274309314182769,
+        "upperarm_f": -19.47223664605584,
+        "forearm_f": -15.821192274920369,
+        "upperarm_b": 17.03820706529886,
+        "forearm_b": 13.38716269416339,
+        "thigh_f": -11.19980209597421,
+        "shin_f": 10.731366694201824,
+        "thigh_b": 11.929468245580908,
+        "shin_b": -11.49945925027329
+      },
+      "root_m": [
+        0.0,
+        -0.14
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "recover",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 1.5088798488156083,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -0.9053279092893649,
+        "upperarm_f": -7.323824137702925,
+        "forearm_f": -5.950607111883627,
+        "upperarm_b": 6.4536811201050215,
+        "forearm_b": 5.070749451511088,
+        "thigh_f": -9.897185248538058,
+        "shin_f": 9.393409573156303,
+        "thigh_b": 11.72788171110875,
+        "shin_b": -11.051982006309926
+      },
+      "root_m": [
+        0.0,
+        -0.09
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "wave",
+      "frame": 6,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.1224107839579727,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.2734464703747836,
+        "upperarm_f": -10.964670537686025,
+        "forearm_f": -8.908794811869896,
+        "upperarm_b": 9.594086720475273,
+        "forearm_b": 7.538210994659143,
+        "thigh_f": -5.999269261621874,
+        "shin_f": -4.869409013697146,
+        "thigh_b": 10.941339575024218,
+        "shin_b": -11.573891178427179
+      },
+      "root_m": [
+        -0.08,
+        -0.04
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "wave",
+      "frame": 17,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -15.021690983374675,
+        "forearm_f": -12.205123923991923,
+        "upperarm_b": 20.34821859524809,
+        "forearm_b": 15.987886039123497,
+        "thigh_f": 2.416309855748251,
+        "shin_f": 8.429933600971793,
+        "thigh_b": 4.402552735755184,
+        "shin_b": 4.387270623970447
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "throw",
+      "frame": 4,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -1.8873170479156758,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.1323902287494054,
+        "upperarm_f": -8.601395235657993,
+        "forearm_f": -6.988633628972119,
+        "upperarm_b": 7.526220831200743,
+        "forearm_b": 5.913459224514869,
+        "thigh_f": -4.906430892688382,
+        "shin_f": -2.127972365946925,
+        "thigh_b": 10.486126152121829,
+        "shin_b": -11.031189365761485
+      },
+      "root_m": [
+        -0.05,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "throw",
+      "frame": 8,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 5.673414011263274,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -3.404048406757964,
+        "upperarm_f": -37.34432219226907,
+        "forearm_f": -30.342261781218618,
+        "upperarm_b": 32.67628191823543,
+        "forearm_b": 25.674221507184985,
+        "thigh_f": -0.41219531619477,
+        "shin_f": 10.127518198021077,
+        "thigh_b": 8.307364303730324,
+        "shin_b": -0.5500729258959681
+      },
+      "root_m": [
+        0.1,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "hit_light",
+      "frame": 3,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.531085584241875,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.318651350545125,
+        "upperarm_f": -8.84,
+        "forearm_f": -7.1825,
+        "upperarm_b": 7.735,
+        "forearm_b": 6.077500000000001,
+        "thigh_f": 0.6647185115301104,
+        "shin_f": -9.269816957604611,
+        "thigh_b": 9.308635323389867,
+        "shin_b": -11.190111199811307
+      },
+      "root_m": [
+        -0.08,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "hit_light",
+      "frame": 2,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -5.315451427129461,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 3.1892708562776764,
+        "upperarm_f": -8.924595228916546,
+        "forearm_f": -7.251233623494694,
+        "upperarm_b": 7.809020825301978,
+        "forearm_b": 6.135659219880126,
+        "thigh_f": 0.25226447107848154,
+        "shin_f": -8.757405869627496,
+        "thigh_b": 9.267924448400178,
+        "shin_b": -11.088452803043914
+      },
+      "root_m": [
+        -0.075,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "hit_heavy",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -13.667830844724408,
+        "forearm_f": -11.105112561338581,
+        "upperarm_b": 11.959351989133857,
+        "forearm_b": 9.39663370574803,
+        "thigh_f": 4.686290758190806,
+        "shin_f": -11.68549417630885,
+        "thigh_b": 10.956720296609042,
+        "shin_b": -11.582399035645409
+      },
+      "root_m": [
+        -0.14,
+        -0.02
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "hit_heavy",
+      "frame": 4,
+      "why": "arm_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 4.8,
+        "upperarm_f": -15.20526224699857,
+        "forearm_f": -12.354275575686339,
+        "upperarm_b": 13.304604466123749,
+        "forearm_b": 10.453617794811517,
+        "thigh_f": 3.5156654124470528,
+        "shin_f": -11.754971808100724,
+        "thigh_b": 10.875058952724018,
+        "shin_b": -11.031189365761485
+      },
+      "root_m": [
+        -0.16,
+        -0.03
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "block",
+      "frame": 1,
+      "why": "leg_peak",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": -2.6264660570119602,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": 1.5758796342071761,
+        "upperarm_f": -7.323824137702925,
+        "forearm_f": -5.950607111883627,
+        "upperarm_b": 6.40834612049006,
+        "forearm_b": 5.035129094670761,
+        "thigh_f": -0.5725037421053181,
+        "shin_f": -7.047716669326588,
+        "thigh_b": 9.112434207610503,
+        "shin_b": -10.725225656868975
+      },
+      "root_m": [
+        -0.06,
+        -0.01
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "jab",
+      "frame": 7,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 6.985025660234975,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.191015396140985,
+        "upperarm_f": -32.089873792210525,
+        "forearm_f": -26.073022456171056,
+        "upperarm_b": 0.0,
+        "forearm_b": 0.0,
+        "thigh_f": 2.109142003510929,
+        "shin_f": 10.577297241751657,
+        "thigh_b": 6.335176054678842,
+        "shin_b": 6.212323701861114
+      },
+      "root_m": [
+        0.13,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "cross",
+      "frame": 11,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 8.0,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -4.8,
+        "upperarm_f": -0.0,
+        "forearm_f": -0.0,
+        "upperarm_b": 42.0,
+        "forearm_b": 33.0,
+        "thigh_f": 4.479156125923048,
+        "shin_f": 11.466128102356834,
+        "thigh_b": 7.461541529643307,
+        "shin_b": 7.399855433172068
+      },
+      "root_m": [
+        0.19,
+        -0.0
+      ]
+    },
+    {
+      "case": "cap12_soft_g150",
+      "card": "wave",
+      "frame": 18,
+      "why": "historical_anchor",
+      "delta_deg": {
+        "hips": 0.0,
+        "spine": 3.281774350293424,
+        "chest": 0.0,
+        "neck": 0.0,
+        "head": -1.9690646101760543,
+        "upperarm_f": -15.021690983374675,
+        "forearm_f": -12.205123923991923,
+        "upperarm_b": 20.34821859524809,
+        "forearm_b": 15.987886039123497,
+        "thigh_f": 2.416309855748251,
+        "shin_f": 8.429933600971793,
+        "thigh_b": 4.402552735755184,
+        "shin_b": 4.387270623970447
+      },
+      "root_m": [
+        0.09,
+        0.01
+      ]
+    }
+  ],
+  "frame_count": 26,
+  "frames": [
+    {
+      "card": "jab",
+      "frame": 1,
+      "why": "leg_peak"
+    },
+    {
+      "card": "jab",
+      "frame": 6,
+      "why": "arm_peak"
+    },
+    {
+      "card": "cross",
+      "frame": 3,
+      "why": "leg_peak"
+    },
+    {
+      "card": "cross",
+      "frame": 7,
+      "why": "arm_peak"
+    },
+    {
+      "card": "uppercut",
+      "frame": 4,
+      "why": "leg_peak"
+    },
+    {
+      "card": "uppercut",
+      "frame": 10,
+      "why": "arm_peak"
+    },
+    {
+      "card": "sweep",
+      "frame": 7,
+      "why": "leg_peak"
+    },
+    {
+      "card": "sweep",
+      "frame": 12,
+      "why": "arm_peak"
+    },
+    {
+      "card": "rush",
+      "frame": 4,
+      "why": "leg_peak"
+    },
+    {
+      "card": "backstep",
+      "frame": 4,
+      "why": "leg_peak"
+    },
+    {
+      "card": "guard",
+      "frame": 2,
+      "why": "leg_peak"
+    },
+    {
+      "card": "sidestep",
+      "frame": 3,
+      "why": "leg_peak"
+    },
+    {
+      "card": "focus",
+      "frame": 5,
+      "why": "leg_peak"
+    },
+    {
+      "card": "recover",
+      "frame": 3,
+      "why": "leg_peak"
+    },
+    {
+      "card": "wave",
+      "frame": 6,
+      "why": "leg_peak"
+    },
+    {
+      "card": "wave",
+      "frame": 17,
+      "why": "arm_peak"
+    },
+    {
+      "card": "throw",
+      "frame": 4,
+      "why": "leg_peak"
+    },
+    {
+      "card": "throw",
+      "frame": 8,
+      "why": "arm_peak"
+    },
+    {
+      "card": "hit_light",
+      "frame": 3,
+      "why": "leg_peak"
+    },
+    {
+      "card": "hit_light",
+      "frame": 2,
+      "why": "arm_peak"
+    },
+    {
+      "card": "hit_heavy",
+      "frame": 1,
+      "why": "leg_peak"
+    },
+    {
+      "card": "hit_heavy",
+      "frame": 4,
+      "why": "arm_peak"
+    },
+    {
+      "card": "block",
+      "frame": 1,
+      "why": "leg_peak"
+    },
+    {
+      "card": "jab",
+      "frame": 7,
+      "why": "historical_anchor"
+    },
+    {
+      "card": "cross",
+      "frame": 11,
+      "why": "historical_anchor"
+    },
+    {
+      "card": "wave",
+      "frame": 18,
+      "why": "historical_anchor"
+    }
+  ],
+  "legend": {
+    "delta_deg": "rig_driver.gd::retarget_delta 同公式，单位度",
+    "root_m": "[dx, dz]，dz 对应 Blender Z",
+    "leg_soft": "cap * tanh(raw / cap)，研究对照，游戏当前未实现"
+  }
+}

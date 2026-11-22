@@ -1,0 +1,43 @@
+# 3d-model-probe-v4b 文件清单（sha256 前 16 位 / 字节数 / 文件名）
+# 清单文件自身不计入
+---
+4877bc348742a781  637602  V3-V4-V4b-three-version-comparison.png
+9f705b3f38355c0a  3148  V4b-correction-notes.txt
+3f790d76feb93e7d  88104  artifact_01.png
+38e92d835f230710  32342560  artifact_02.zip
+5143404cf53d0872  37314784  artifact_03.glb
+4bfbe046d4cbaa74  37296700  artifact_04.fbx
+fd2752f0581c8590  358  check_prompt.json
+c08088ae2c982564  1564  check_prompt.py
+5d49338f1200ed4f  4674  gen_stderr.log
+4fc04e635483a69b  2848  gen_stdout.json
+50b02cae4899a9d0  652  generated_model_20261107-163949_viewer.html
+af5735b17fbd9798  24851  generator_local.py
+3a5a4bbf46fb1745  1094  inspect_model.log
+68ce128bffe74fba  7165  inspect_model_v4.py
+3a5a4bbf46fb1745  1094  inspect_run.log
+5862922eb47cb371  3846  make_v4ab_compare.py
+ff358364166884f7  2428  model_inspection.json
+a59aaec8e3f37208  3851  probe_report.json
+beec3085dd982acf  12054  probe_rigfit_v4.py
+2b233c76ff28cf01  939  probe_run.log
+b0df87f6ac91ee0c  1000  prompt.txt
+5436e3899d892fc1  5342  render_character.py
+aba9afed549a8b53  1754  render_v4b.json
+1c20fb71b9a1684a  1714  render_v4b.log
+379e3d72f18405c5  5665  resume_probe.py
+4720a22fdf0c2776  202  retry_preview.log
+fb987e1f882fdb75  2069  retry_preview.py
+ea6a3b29e0ba1912  324920  rigfit_overlay.png
+09db1a1e70f79464  2780  rigfit_result.json
+210301a157677b44  2801  rigfit_v4b.log
+b4fbb8058f13362c  5562  run_probe.py
+9f3d23b40d0a99db  365517  v4b-angle25.png
+caa7afb1a1f3e07b  344638  v4b-angle55.png
+8bd61ea07ed081ee  338781  v4b-back35.png
+f8757bf0ea1ce18b  989077  v4b-face-25.png
+b03a66235e80883e  976469  v4b-face-front.png
+4fac706982c7a763  365239  v4b-front.png
+2abbd99dfff63161  992463  v4b-upper.png
+fbd19b53fea5bb48  2003  verify_v4.log
+2ddd024c5367d139  114  清单.tmp

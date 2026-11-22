@@ -1,0 +1,194 @@
+[
+  {
+    "path": "assets/3d/foe-rigged.glb",
+    "before": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+    "after": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+    "bytes": 42914328
+  },
+  {
+    "path": "assets/3d/player-rigged.glb",
+    "before": "80e5a1a03f446dd8a080e69524d4e78d97191fe56fcb30f86ed7e8c945fcab28",
+    "after": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+    "bytes": 38478140
+  },
+  {
+    "path": "data/combat_motion_3d.json",
+    "before": null,
+    "after": "083c84e3e24bdb4bea6d3e4b92855322caea97d675cae19a06df36acefd5a703",
+    "bytes": 3791837
+  },
+  {
+    "path": "README.md",
+    "before": "98cdb8731d9e63f6294dc438142afd2b44af7c9c8919c183293283f0355bbd6b",
+    "after": "2dfab11b78c56ff42f41f0a0519d6160fb25479a95330b0ab1f0f6ca82abf356",
+    "bytes": 4160
+  },
+  {
+    "path": "scripts/arena.gd",
+    "before": "59fae145dc8696f2daea4800187ed66509c291697cfd5a0f6b6ef6942c7cd71a",
+    "after": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+    "bytes": 62754
+  },
+  {
+    "path": "scripts/battle_presentation.gd",
+    "before": null,
+    "after": "2e8edb3f07ebdb99a78c4c1906b2570185b129e4b9af20d590d28ade81243171",
+    "bytes": 17390
+  },
+  {
+    "path": "scripts/battle_presentation.gd.uid",
+    "before": null,
+    "after": "94b6958d500e86cb8e2faf3cd3600b51d14b3a860004f750310f0c8e89eb034c",
+    "bytes": 20
+  },
+  {
+    "path": "scripts/fighter.gd",
+    "before": "0ad8b0c3d94e0f0bd02ac9b2566bbbcd9d3bf7ee9a0c0e82333651e9659fe1c8",
+    "after": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+    "bytes": 43019
+  },
+  {
+    "path": "scripts/fighter_3d_layer.gd",
+    "before": "560cb46fa8b898c8ade249d3a698e249a48c055628846606371423f550fb0914",
+    "after": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+    "bytes": 18200
+  },
+  {
+    "path": "scripts/native_motion.gd",
+    "before": null,
+    "after": "cbc9a3eee51c4d5e55f46365ef636c87bd3b0fd48f21d1a5f964d4a26164515f",
+    "bytes": 15944
+  },
+  {
+    "path": "scripts/native_motion.gd.uid",
+    "before": null,
+    "after": "0d27f4e617ee8287e290e044276db1c30e3071700dfc3c926a6ef23f7dbccfd8",
+    "bytes": 20
+  },
+  {
+    "path": "scripts/rig_driver.gd",
+    "before": "567688f635f5fe80f837295564c547d710c78cb82f8065459b21ae9742f5b207",
+    "after": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113",
+    "bytes": 13530
+  },
+  {
+    "path": "tests/battle_contact_spacing_check.gd",
+    "before": null,
+    "after": "7314208b15dce00b44ba2b4e64ff80509409a0661046916a8b227b3d38742d91",
+    "bytes": 5152
+  },
+  {
+    "path": "tests/battle_integration_check.gd",
+    "before": null,
+    "after": "d50a52b3e426308eb348cb69833b4cf79dc89efd45287d23ccf60654f4297d2c",
+    "bytes": 4043
+  },
+  {
+    "path": "tests/battle_integration_check.gd.uid",
+    "before": null,
+    "after": "dee551150b16054f8b218d6698b789f214e10730054b1506d19e8a8e86ebccd0",
+    "bytes": 20
+  },
+  {
+    "path": "tests/battle_presentation_check.gd",
+    "before": null,
+    "after": "f5832031b5d805a9bc211db08da7e27af4b750277cae73872126064fbe593449",
+    "bytes": 11120
+  },
+  {
+    "path": "tests/battle_presentation_check.gd.uid",
+    "before": null,
+    "after": "789342edd3efd841a1ac16912c43533a73d2c0fc958893dbcb9fdb8236c9013e",
+    "bytes": 19
+  },
+  {
+    "path": "tests/battle_shadow_check.gd",
+    "before": null,
+    "after": "6ea75aab1f93867e8f8617a41cf918a7b3c4323dd692c11ec77c80e1495070ec",
+    "bytes": 1016
+  },
+  {
+    "path": "tests/battle_transition_check.gd",
+    "before": null,
+    "after": "80c790c0a219085a5538cefbf77222dd799064b1c45311f31bf218b4fad10d30",
+    "bytes": 9178
+  },
+  {
+    "path": "tests/native_live_check.gd",
+    "before": null,
+    "after": "8155d624340b8abc842c1d54617c4034fd6344ed78bb8afb86441347fcf3598f",
+    "bytes": 15249
+  },
+  {
+    "path": "tests/native_live_check.gd.uid",
+    "before": null,
+    "after": "96e4b0553853c786450111c0e941fa0fb86b0c07981b65b328e81456a98f35a0",
+    "bytes": 20
+  },
+  {
+    "path": "tests/native_match_capture.gd",
+    "before": null,
+    "after": "f38d41bbb692a7ffde3ee6e0ae307f551908644252422ef77d14a924a9920cda",
+    "bytes": 3191
+  },
+  {
+    "path": "tests/native_motion_capture.gd",
+    "before": null,
+    "after": "7dc43a682919c94e626f9847b695230f2dd3f3f645f14641a51a772698a925c8",
+    "bytes": 5343
+  },
+  {
+    "path": "tests/native_motion_capture.gd.uid",
+    "before": null,
+    "after": "331470e50b12f3efd00d9d9622c9ee1079523681bfa57a790d4cdf54b339aa9c",
+    "bytes": 20
+  },
+  {
+    "path": "tests/native_motion_check.gd",
+    "before": null,
+    "after": "7c342380f961858049b6ca5c0a907114c31b944749d91cfa107bf9ccc94a472a",
+    "bytes": 18658
+  },
+  {
+    "path": "tests/native_motion_check.gd.uid",
+    "before": null,
+    "after": "f51c8032ff21fe4bf39cee6961b631ecd53f5ff082b2638e716752158c5bb936",
+    "bytes": 20
+  },
+  {
+    "path": "tests/native_rig_check.gd",
+    "before": null,
+    "after": "c6b5f2c9351cab61ac18edd64bae5c95829627d100d8b35cbe47afba3a8b9f00",
+    "bytes": 8374
+  },
+  {
+    "path": "tests/native_rig_check.gd.uid",
+    "before": null,
+    "after": "ad620ee47f93b12d8d8e231b3bf54420f70bf838e509153c4723f43d6caa55a4",
+    "bytes": 20
+  },
+  {
+    "path": "tests/natural_runtime_benchmark.gd",
+    "before": null,
+    "after": "4f5d87f1e4a3a03d67dd10378028105b91f90089d4721a1f48f4ea137afce5bc",
+    "bytes": 3905
+  },
+  {
+    "path": "tests/natural_runtime_check.gd",
+    "before": null,
+    "after": "4aaa2ae851074184605952d3f5a00fbeea1e0198da6d4bc2e43d54bf9e972336",
+    "bytes": 9925
+  },
+  {
+    "path": "play-realtime.bat",
+    "before": null,
+    "after": "de34525a7cd02b7fca969d622330983e10ff560d7a1994ab003782e807c7cc63",
+    "bytes": 105
+  },
+  {
+    "path": "play.bat",
+    "before": "a39007f8c64344364ad274c01bd638894f03181beefac032b582137148ad9398",
+    "after": "cb7c6e76b2a5f68147d0d9d462b2de8ae19ef9c36d18c5c2280139269cb4b6dd",
+    "bytes": 1316
+  }
+]

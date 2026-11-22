@@ -1,0 +1,43 @@
+{
+	"foe_glb": "res://assets/3d/foe-rigged.glb",
+	"foe_layer_ready": true,
+	"player_glb": "res://assets/3d/player-rigged.glb",
+	"player_layer_ready": true,
+	"shots": [
+		{
+			"h": 720,
+			"name": "off",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\vp_diag/vp-off.png",
+			"save_error": 0,
+			"w": 1280
+		},
+		{
+			"h": 720,
+			"name": "both",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\vp_diag/vp-both.png",
+			"save_error": 0,
+			"w": 1280
+		},
+		{
+			"h": 720,
+			"name": "player-hidden",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\vp_diag/vp-player-hidden.png",
+			"save_error": 0,
+			"w": 1280
+		},
+		{
+			"h": 720,
+			"name": "foe-hidden",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\vp_diag/vp-foe-hidden.png",
+			"save_error": 0,
+			"w": 1280
+		},
+		{
+			"h": 720,
+			"name": "neither",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\vp_diag/vp-neither.png",
+			"save_error": 0,
+			"w": 1280
+		}
+	]
+}

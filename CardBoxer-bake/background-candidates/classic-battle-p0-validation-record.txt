@@ -1,0 +1,146 @@
+《牌拳 / CARD BOXER》太阁 IV 回合制合战 P0 —— 验证记录
+2026-11-06
+
+一、结论
+工程师选定「改成回合制比牌 / P0 先落地」。已完成最小可玩闭环：
+默认玩法从实时格斗切成太阁 IV 式「每轮弃牌换牌 → 双方同时亮 3 张 →
+比牌型 → 赢家结算伤害 → 补牌」。原实时玩法一行未删，BATTLE_MODE 改回
+"realtime" 即可完整回退，且这条回退已实证跑过（见第七节）。
+
+二、太阁 4 机制 → P0 范围
+规则来源（多源一致）：游侠《太阁立志传四》攻略指南 / 中文版简单指南、
+日文 taikou4.shiyo.info 合战页、巴哈姆特全卡片详解。
+
+| 太阁 IV 合战规则 | P0 | 留到后续 |
+|---|---|---|
+| 每轮弃最多 3 张换牌 | 已做（1-5 标记，空格确认，AI 自动弃 2 张） | — |
+| 绿色数字卡一次出 3 张 | 已做（手牌 5 张选 3） | — |
+| 双方同时亮牌比大小 | 已做 | — |
+| 三同 > 三连 > 散牌；111 最大、123 最大、同张恒压连张 | 已做，90 条断言钉死 | — |
+| 红/蓝/黄特殊卡（先制 / 后发 / 常驻） | 未做 | P2 |
+| 红色特殊卡 Lv1–15 优先级 | 未做（TYPE_SPECIAL 分段已预留） | P2 |
+| 士气为第二败北资源、蓝色卡打士气 | 未做 | P1 |
+| 秘策（整场最多 5 次定向换牌） | 未做 | P2 |
+| 阵形相克（攻 > 机 > 守 > 攻） | 未做 | P2 |
+| 兵种 / 攻城战 / 野战 5 轮 | 未做；P0 用 12 轮上限 + 三局两胜 | P3 |
+
+三、规则实现
+- score 分段（同张恒大于连张的机器判据）：三同 702..800 / 三连 602..700 / 散牌 101..127。
+  最弱三同 222=702 仍高于最强三连 123=700。
+- 三同 `111 > 999 > 888 > … > 222`；三连 `123 > 789 > 678 > … > 234`；散牌按点数和。
+- rank（1..9，与实时模式的伤害/气耗无关）：jab=1, cross=2, uppercut=3, sweep=4,
+  wave=5, throw=6, rush=7, backstep=8, guard=9, sidestep=2, focus=3, recover=4。
+- 伤害 = 牌型底数（三同 14 / 三连 10 / 散牌 5） + 点数和 / 3；平局双方各受 3 点。
+- 胜负：HP 归零 K.O.；12 轮耗尽按剩余兵力判定；三局两胜外壳保留。
+
+四、改动文件（游戏目录不是 git 仓库，全部先备份）
+新增：scripts/taikou_rules.gd（牌型纯函数）、scripts/taikou_ai.gd（穷举 C(5,3) 决策）、
+      tests/taikou_rules_check.gd（90 条）、tests/taikou_flow_check.gd（35 条）。
+修改：scripts/card_data.gd（12 张牌加 rank）、
+      scripts/fighter.gd（新增 perform_visual() + _visual_only 三处守卫）、
+      scripts/arena.gd（BATTLE_MODE 分流 + 9 个回合制函数 + 输入分流 + 验收日志）、
+      scripts/hud.gd（点数卡面 / 勾选态 / 双方亮牌区 / 轮数 / 阶段提示）、
+      project.godot（描述订正）。
+备份：bake/orig/pre-taikou/ 六个文件，改造前 sha256 逐个核对一致。
+字节补丁：verification-tools/apply_taikou_patch.py、apply_arena_patch.py、apply_hud_patch.py，
+每个锚点都要求恰好命中 1 次，未命中即报错停下；全部命中记录见各脚本输出。
+
+五、最终验收（真实输出）
+- 编辑器解析 SCRIPT ERROR = 0（注意：Godot 导入的 exit=0 不代表没语法错，必须读日志）。
+- taikou_rules_check  90/90 passed
+- taikou_flow_check   35/35 passed（含真人按键路径、平局、轮数耗尽、纯表演不掉血）
+- motion_check PASS / pose_probe PASS / duel_probe PASS / reach_probe PASS / feet_probe PASS
+- combo_check 8/8 passed（实时路径零回归）
+- 引擎内截帧 4 张，SCRIPT ERROR = 0。
+
+六、自动对局证据（CARD_BOXER_TAIKOU_BOT，日志节选）
+  turn=1 hp=100/85 | 你 三同·111 [1,1,1] vs 青岚 三连·123 [2,3,1] | winner=player dmg=15
+  turn=7 hp=76/31  | 你 三连·678 [8,7,6] vs 青岚 三连·123 [1,2,3] | winner=enemy  dmg=12
+  turn=11 hp=64/0  | 你 三同·333 [3,3,3] vs 青岚 散牌·和22        | winner=player dmg=17
+  turn=1 hp=89/100 | 第二局开始（K.O. → 三局两胜推进正常）
+70s 内跑完 12 轮 + 第二局首轮，SCRIPT ERROR = 0。截帧里血条 100 → 88
+与日志 dmg=12 完全一致。
+
+七、回退实证（不是「应该能行」）
+把 arena.gd 的 `BATTLE_MODE := "taikou"` 临时改成 "realtime"，
+CARD_BOXER_BOT=1 跑 22s：[BOT] 日志显示 HP 97/85 → 66/59、气在涨、手牌在补、
+SCRIPT ERROR = 0、[TAIKOU] 行数 = 0。随后反向字节替换还原，
+sha256 fda6fe95… 前后完全一致，RESTORE_OK。
+
+八、已知问题 / 故意没做（不藏）
+1. **平衡未调**：双方用同一个最优组合 AI，第一局 11 轮里玩家侧胜 8 轮、对手 3 轮，
+   以 64:0 K.O. 收场。原因是赢家伤害随牌型强度放大（12~18）会滚雪球，
+   且 rank 1/2/3 在 DECK 里占 12/23，三连·123 过于常见。P1 要调伤害曲线、
+   加士气/防御、给 AI 分难度。
+2. 士气条、蓝色后发卡、常驻卡、秘策、特殊卡 Lv 优先级、阵形相克全在 P1/P2；
+   顶部气槽在回合制下已被「第 N 轮 / 共 12 轮」替代，正好是 P1 士气条的接口。
+3. 亮牌窗口 1.5s，但 perform_visual 的单招动画只有约 0.3s，后半段角色回到站架。
+   P1 可加出招定格或把动画铺满亮牌窗。
+4. 12 轮上限是 P0 调试值（太阁 IV 野战是 5 轮）；顶部轮数文字已提亮到 15px。
+5. ~~真人勾选态没有截图~~ **收尾轮已补，此条关闭**：见第十一节，两张真人态
+   引擎内截帧 + 逐行像素取证已归档，不再只靠状态断言。
+6. **卡面描述文字会溢出卡片右边界**（两张新截图里都能看到：「从身后贴地扫到身前…」
+   压到相邻卡上）。原因是描述文本按固定字号直接 draw_string、没有裁剪或折行宽度限制。
+   P1 修法：给卡面文字设 clip 区域或按卡片宽度折行。勾选态抬高后更明显，但不是本次引入。
+
+九、踩的坑（值得留痕）
+- **假绿**：编辑器解析报了 3 个 GDScript 类型推断错误，游戏根本没编译起来，
+  但 6 套独立自检全绿——它们根本不加载 arena.gd。判定必须读 SCRIPT ERROR，
+  且要有一个真正实例化 arena 的流程自检。
+- `arena` 是 untyped 变量，从它的属性做 `:=` 推不出 bool，必须写 `var x: bool = ...`。
+- SceneTree._initialize() 里 add_child 不会触发 _ready()，player/enemy/hand 全是 Nil，
+  流程自检第一次 17/22 假红；显式调一次 a._ready() 后 35/35。
+- 牌型自检第一次红 1 条是我测试用例写错：[9,9,7] 与 [9,8,8] 和都是 25，本就该平局；
+  顺手把「同和判平」补成断言。
+- 纯表演入口必须同时守住 _resolve_active_hit 和 _on_active_start（后者负责位移），
+  否则回合制下一亮牌就会把角色挪走并重复结算伤害。
+
+十、回退方式
+1) 只切模式：arena.gd `const BATTLE_MODE := "taikou"` → `"realtime"`（已实证可跑）。
+2) 全量回 V1：把 bake/orig/pre-taikou/ 下六个文件拷回，
+   删 scripts/taikou_*.gd 与 tests/taikou_*_check.gd。
+3) 血条 V2 与背景图接入的回退另见 2026-11-05 / 2026-11-06 项目日志。
+
+十一、收尾补证（同日续跑，关闭第八节第 5 条）
+
+1) 全套自检复跑（证明当前磁盘就是被验收的那棵树，不是「上次通过」）：
+   taikou_rules_check 90/90、taikou_flow_check 35/35、combo_check 8/8、
+   motion_check / pose_probe / duel_probe / reach_probe / feet_probe 全 PASS，
+   8 个进程 exit=0，日志在 %TEMP%/cardboxer-final-check/。
+
+2) 补两张真人态引擎内截帧（bot 模式 tk_marks 恒空，永远拍不到勾选态）：
+   discard-selection.png —— 第 1、3 张红框 +「换」，顶部「第 1 轮 / 共 12 轮」，
+                      底部「弃牌：1-5 标记要换的牌（最多 3 张，可不换）」。
+   card-selection.png —— 第 2、4、5 张金框 +「出」，底部「选牌：1-5 选 3 张牌型」。
+   手法：verification-tools/taikou_shot.py 往 arena.gd 的 _ready() 末尾临时注入 12 行
+   纯验收代码（强制 round_phase=fight、调用 _taikou_toggle / _do_taikou_discard），
+   跑**正常主场景**，finally 里二进制写回并 sha256 证明：
+   RESTORE OK sha256=fda6fe95…、marker 计数 0，游戏源码零残留、零新文件。
+   两次运行 rc=0、SCRIPT ERROR=0，日志各有一条 [TK_SHOT] 状态行。
+
+3) **截帧不能用 --headless**（本轮踩的坑）：headless 是 dummy driver，
+   RenderingServer.frame_post_draw 不推进，_maybe_capture() 的 await 永久挂起 →
+   既不出 PNG 也不 quit()，表现为 180s 超时、日志只有引擎版本 + 一行 marker。
+   归档的 godot-capture.log 里有 `OpenGL API 3.3.0 NVIDIA ... Compatibility`，
+   说明之前能截帧的跑法一直带真实 GL 上下文。去掉 --headless 后一次成功；
+   --quit-after 900 只作挂死保险，不是退出机制。
+
+4) 像素取证（verification-tools/taikou_shot_evidence.py，项目 .venv 的 Pillow）：
+   只比**卡片上沿同一行 y=524** 上两种标记色的最长连续色段——
+     discard  1280x720 sha=7b49e73c787a | y=524 red=159 gold=  0 | y=531 red=146
+     select   1280x720 sha=78e66d8d70cd | y=524 red=  0 gold=159 | y=531 red=146
+   EVIDENCE OK。两次误判都值得留痕：① 全区域数红色像素时，选牌图仍有 2812 个
+   「红」——那是每张卡上的「进攻」橙红小字；② 改看全图最长连续段后，选牌图
+   仍有 146px 红段 @y=531——那是卡牌类别色条（进攻类），比勾选框低 7px。
+   **判据必须钉在同一条取样行上，合并统计会骗人**（与血条 V2 那轮同一类坑）。
+   y=531 两图都是 red=146 恰好反证它是与状态无关的常量底色。
+
+5) 最终源码 sha256（收尾轮结束后重算，与归档时逐个一致）：
+   arena.gd        fda6fe95d0b9765aaa1ddd9ad39eb1efc2738ee9e758c758b169b1095ef96139
+   hud.gd          78e5d8ecc13e5ed2bd049e2dd04305b41f3591738d37e35c41256a28669357fc
+   card_data.gd    2d2a3dfe7dde22ebe337a243f06dd1199b5272f9904750a21b31202f8e6cf87f
+   fighter.gd      5fa4f50455ae40715ec3870ce0bdf0e37c1505d18eb32e5e8b42c14fcee80151
+   taikou_rules.gd d16a4b16668b60d929b0eab318e98d0a2acffefd503f17e8d344cb55a599bce1
+   taikou_ai.gd    ba5d66094c53fdcd1bc5810b85a451d56c1dcd98c2c49bfa798c9d6c81404f42
+   project.godot   72cdfe54dfad3c62160e684b237e40fa87eca22f2f5cdd7292cf309f6f806dc6
+   BATTLE_MODE 仍为 "taikou"；遗留变异/调试痕迹 grep = none。

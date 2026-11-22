@@ -1,0 +1,63 @@
+{
+  "frames": [
+    {
+      "png": "rhythm-frame-t000-startup.png",
+      "changed_px": 636027,
+      "diff_top": 0,
+      "outside_hand_px": 612312,
+      "ok": false
+    },
+    {
+      "png": "rhythm-frame-t048-impact-HIT.png",
+      "changed_px": 607124,
+      "diff_top": 0,
+      "outside_hand_px": 577521,
+      "ok": false
+    },
+    {
+      "png": "rhythm-frame-t072-after-hitstop.png",
+      "changed_px": 622532,
+      "diff_top": 0,
+      "outside_hand_px": 592112,
+      "ok": false
+    },
+    {
+      "png": "rhythm-frame-t112-active-window-end.png",
+      "changed_px": 616848,
+      "diff_top": 0,
+      "outside_hand_px": 584876,
+      "ok": false
+    },
+    {
+      "png": "rhythm-frame-t140-fade-out.png",
+      "changed_px": 644606,
+      "diff_top": 0,
+      "outside_hand_px": 616597,
+      "ok": false
+    },
+    {
+      "png": "rhythm-frame-t180-reset.png",
+      "changed_px": 636894,
+      "diff_top": 0,
+      "outside_hand_px": 605194,
+      "ok": false
+    },
+    {
+      "png": "rhythm-frame-foe-win-reversed.png",
+      "changed_px": 634061,
+      "diff_top": 0,
+      "outside_hand_px": 610795,
+      "ok": false
+    },
+    {
+      "png": "rhythm-frame-draw-no-rhythm.png",
+      "changed_px": 631700,
+      "diff_top": 0,
+      "outside_hand_px": 600707,
+      "ok": false
+    }
+  ],
+  "hand_area_y0": 540,
+  "all_ok": false,
+  "note": "cross-run hand is random; everything above y=540 must be identical"
+}

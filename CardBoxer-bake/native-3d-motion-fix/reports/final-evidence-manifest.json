@@ -1,0 +1,154 @@
+{
+  "captured_at_utc": "2026-11-20T03:21:40.142740+00:00",
+  "renderer": "NVIDIA GeForce RTX 5080 Laptop GPU",
+  "display_server": "Windows",
+  "pose_capture_manifest": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\shots\\final-all-poses\\manifest.json",
+  "direct_source_sha256": {
+    "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+    "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+    "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+    "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+    "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+    "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+  },
+  "reviewed_live_source_sha256": {
+    "player-card-cross": {
+      "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+      "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+      "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+      "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+      "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+      "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+      "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+      "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+      "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+    },
+    "foe-card-sweep": {
+      "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+      "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+      "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+      "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+      "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+      "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+      "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+      "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+      "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+    },
+    "taikou-player": {
+      "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+      "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+      "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+      "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+      "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+      "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+      "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+      "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+      "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+    },
+    "taikou-enemy": {
+      "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+      "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+      "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+      "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+      "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+      "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+      "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+      "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+      "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+    },
+    "player-wave-new-action": {
+      "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+      "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+      "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+      "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+      "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+      "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+      "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+      "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+      "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+    },
+    "foe-fatal-facing-reset": {
+      "assets/3d/foe-rigged.glb": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+      "assets/3d/player-rigged.glb": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+      "data/combat_motion_3d.json": "391cf0ad5c83ee19938f8f4c3fc11b69ad4a8e0d054e387c62b060149df25d66",
+      "scripts/arena.gd": "ace6f65a55892e445526cc553cfc8bab0574d217afb8ab664708731f5767e368",
+      "scripts/battle_presentation.gd": "a5bfa5ed637264a2e67ec07a73e479b28774facfa3e755da077e6e556661f665",
+      "scripts/fighter.gd": "ce00118908263055d20980736442f70271c7a8b887e8e0d2b99d5fdaf1873280",
+      "scripts/fighter_3d_layer.gd": "982f677850c19d7bf1c822043c18cacd31ec69237f0deaabc91543def4fc22e7",
+      "scripts/native_motion.gd": "b7baa4b0ea8fe35c61f609fb3b9c889409425760ff3a9219ab3dc11ce3805bce",
+      "scripts/rig_driver.gd": "f9cb3beb60d54e06f2609ce8aa04ee47e4aa4b2cff6a6b55682a6921cfa98113"
+    }
+  },
+  "all_sources_match_current": true,
+  "harness_after_setup_repair_sha256": "8155d624340b8abc842c1d54617c4034fd6344ed78bb8afb86441347fcf3598f",
+  "raw_pose_frames": 2152,
+  "pose_combinations": 76,
+  "previews": {
+    "final-preview.gif": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-preview.gif",
+      "size": [
+        720,
+        360
+      ],
+      "frames": 152,
+      "duration_ms": 7600,
+      "sha256": "f4611d6b787043c8476c6e0bb6ea98fa3f84866aa938359ee046cb8644da085f"
+    },
+    "final-preview.png": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-preview.png",
+      "size": [
+        1644,
+        560
+      ],
+      "frames": 1,
+      "duration_ms": 0,
+      "sha256": "dc87287752fb71eee35db76483841e7fb10221ccb48a4abd09f00d25610cce93"
+    },
+    "final-live.gif": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-live.gif",
+      "size": [
+        768,
+        456
+      ],
+      "frames": 153,
+      "duration_ms": 15700,
+      "sha256": "a1c6fb72e01ec7ed3eedd7f7e01d7924b7ceb7f557c161ca67aa00d184370af6"
+    },
+    "final-live.png": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\reports\\final-live.png",
+      "size": [
+        1280,
+        1152
+      ],
+      "frames": 1,
+      "duration_ms": 0,
+      "sha256": "a9de95809106b0faee7f18a0d53e0546bdfba9b762aa90921c0a475f4301bc10"
+    }
+  },
+  "checks": {
+    "final-capture-framing": {
+      "ok": true,
+      "images": 2152,
+      "failed": 0
+    },
+    "final-live-framing": {
+      "ok": true,
+      "images": 1802,
+      "failed": 0
+    },
+    "final-live42-visual-timing": {
+      "scenario_count": 42,
+      "passed": true
+    },
+    "final-live6-reviewed-visual-timing": {
+      "scenario_count": 6,
+      "passed": true
+    },
+    "final-live-initialization-comparison": {
+      "checked": 6,
+      "equal": true,
+      "settled_rules_equal": true
+    }
+  },
+  "limitations": "Direct pose images prove actual GLB rendering, not gameplay. Fixed-input live scenes prove actual production-state rendering; full default-spawn three-round acceptance is root-owned. No headless image used as skin evidence."
+}

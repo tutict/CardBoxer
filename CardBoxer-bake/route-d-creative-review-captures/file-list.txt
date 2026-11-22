@@ -1,0 +1,48 @@
+《牌拳》D 路线 · Creative Review + 引擎内 3D 截帧 · 文件清单
+条目数由脚本现算：41（WORK=本工作区）
+复算命令：python make_filelist_d.py  # 连续生成两次比对 STABLE_OK
+排除：probe_project_d/.godot/ 引擎缓存；logs/make_filelist_d.log 生成器自身日志
+
+PATH                                                                                        BYTES  SHA256
+--------------------------------------------------------------------------------------------------------------------------
+WORK/baseline_d.json                                                                        16335  75f19d7b7a0f4d82a8f3b1114c7990750e7bf0f682a3c73c5ce5533e875c8ed9
+WORK/board_stats.json                                                                         761  0458cdf937519ce0a210da991b878d9ade25db00c9ca1190826d3768e3206b2a
+WORK/boards/D-three-way-comparison.png                                                                     573206  a758d84719d5d4753be4263996e980efe2316fb92b3b118d99c775696e425f52
+WORK/boards/D-side-view-degradation.png                                                                   567887  cff94a36fa6ddb575ca06e265afb6b06b4fac703cf58b090d3855295983b993f
+WORK/boards/D-scale-readability.png                                                                    391234  0be5bb414d7900723aba947c5ae62f20b49222fb12f25d2e6717e02ff5969eae
+WORK/boards/D-six-engine-views.png                                                                  1236419  0a24269161a601f4f3908c7755671a45ce6509048c6e80a6f6e5b97a69bb4b3d
+WORK/crosscheck_filelist_d.py                                                                1891  d60b08178c9a4c3b22bd395d4d515b8476cd607bbc49c96bd21e63a98d1dd295
+WORK/D-route-validation-record.txt                                                                           14581  c4f80a936f5cf3699d0c10a71dbb4b16e47d3cfb72f41146b043b18d484c471c
+WORK/godot_render_result.json                                                                2720  bc6f5634ad5ba9f197156d9f61c3885ec4133b8282f7add5b27a8c1777cf1a0e
+WORK/logs/empty_marker_d.bin                                                                    0  e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+WORK/logs/godot_editor_import_d.log                                                          1030  2726c26903680a7d5f1e2fd7e44b03430391e6e0a13cf735bab8d8b1d62375e0
+WORK/logs/godot_render_3d.log                                                                1671  df0afebb1ee4ec0004b084e045e899f116dcf3f49fea6ba449d6fa071a4d9b1e
+WORK/make_baseline_d.py                                                                      1999  c512f497a3a79c11bbccaa91c3ed7f6e3698783182d8b5f3569a0298d4b46dbc
+WORK/make_filelist_d.py                                                                      3606  a57aacf96d02982178c3e4f36ec799b9185053097579216c46d5f06f067356b1
+WORK/make_review_boards.py                                                                  14250  c06553154044a8322911b7eec7bff3d025a6b53a79f0dcad43f796ecb6eaefdf
+WORK/measure_scale.py                                                                        2550  e32f7295df276358df2b24af288d8c828eead1f85a7b0c32c7e38b76ba373103
+WORK/mutation_d.py                                                                           8151  f624b580cb2df555ff7f8e25168f3cd11bdc85f0a0ac3e7ad404751a5bcdd2fc
+WORK/mutation_d_result.json                                                                  3530  f00c09278f7055f66e48083eba5a3037dd29a52982886c4cee1d418bcc5e8ec5
+WORK/mutation_d_selftest_result.json                                                         3458  ab976fbc1234caec86f0dd57bb9ca73886adbeaf8fc8640efdafa0b257f594f7
+WORK/probe_project_d/assets/foe-full.glb                                                 42926956  a8440333353d2dbe46a042e0739bf68b5b959e5ba68fe6aae01316eecf896f45
+WORK/probe_project_d/assets/foe-full.glb.import                                              1037  76d71cbc0d09134aafaf4306e2457a18ab35517189c125d294f9826efd828c78
+WORK/probe_project_d/assets/foe-full_texture_pbr_20250901.png                            15782150  3c1076596ef22f2e45c6509e459f7e262053724ce05b803874ed53a927473d6a
+WORK/probe_project_d/assets/foe-full_texture_pbr_20250901.png.import                         1064  0164f192d1ffdc5707231995f36cd96751b8d585c5bfdaba78a7151d655debca
+WORK/probe_project_d/assets/foe-full_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png     14380706  c87454eacff12946de4b70254b0dbe0fe822fd93d8896efa79af5663f2cdff7e
+WORK/probe_project_d/assets/foe-full_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png.import         1184  397cbedb69af658fdbba757ca7c57e29ef6238db795e72cf0c58548962b37088
+WORK/probe_project_d/assets/foe-full_texture_pbr_20250901_normal.png                      8934769  ed4d58cd90dd1419746a26926e80e0912f23ed83fdae8a9d881629e7e848cd9f
+WORK/probe_project_d/assets/foe-full_texture_pbr_20250901_normal.png.import                  1085  423991d59431faa37b76d23795ad5b145a7d21fd289516812c083852ddadf829
+WORK/probe_project_d/probes/render_3d.gd                                                     5351  c6f838e979f7c8fa27e50476720bbc73f7a08a049e93e2e02c75cb5c9937fcaa
+WORK/probe_project_d/probes/render_3d.gd.uid                                                   20  e02883ce85bdf1bb0c8b7a84c3cdc55c48219b10469eb337bc5b328345b31c79
+WORK/probe_project_d/project.godot                                                            548  8e466ae26422aba12c8ff3a4e5d423acd8041987d9f573cc774c083953163de4
+WORK/review_conclusion.json                                                                   951  358c25318b69592d65858babd9389326891c753cdc2dbdff7d54cfb52f734fea
+WORK/run_godot_render.py                                                                     5154  cd5ce8b364b7bf57b5d4a8f09fc58518d8d2eb9ac248460663f9f91d89ed12e1
+WORK/scale_metrics.json                                                                       967  f769909ca1ca0f1411e3832f239c5bb26d6f3ab4a4c99b2e6ddbea02be79f048
+WORK/shots/godot-angle35.png                                                               790980  5c21260511edaaba6ff37b1fa2f76f790c3b4b8650ae054faa378dc7b89cbfa7
+WORK/shots/godot-back.png                                                                  530105  926a9a69685bd4ae7ea66131fc49b6cc6f527181888fa82e55f950dfaad062b4
+WORK/shots/godot-front.png                                                                 824032  a3e85f7d05a1c4041510bf6a93d1174f64c439aa36d7e5f9d26c98aefa4e8a71
+WORK/shots/godot-side90.png                                                                442835  392771f142cd4a4f4451e40ffa1cda93ac4a8da6358c3d31a6ddbbcef7610195
+WORK/shots/godot-upper.png                                                                1217294  32ee19d0b493bf7b74d1e63b673e528c2b81a8e451fc0c6e122f15374fa655af
+WORK/shots/godot-wide.png                                                                  379554  b11f520695fb82cf4d9bfece45f0dabc67113a276ae6f3a5db80ded9449dd17d
+WORK/verify_d.py                                                                            14963  f91e2c49f236eb97362e069bb40321e77fd1ae5b8b11291e0c0642329d2a90ab
+WORK/verify_d_result.json                                                                    3187  11a5bba8aebb3cdc57dc8a7ce3a94a55e37453940015ee455345840daf3b69f0

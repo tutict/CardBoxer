@@ -1,0 +1,43 @@
+{
+  "_note": "55° 侧视立绘的 11 关节标定（翻转后画布坐标，单位 px，y 向下）。量测依据：probe_side_assets.py 输出的 alpha bbox、逐行跨度与 资产量测-*.png 的 50px 网格标注图；正面版 apose_joints.json 的坐标不能直接用（55° 投影后 x 压缩、前后肢体重叠）。",
+  "camera": {
+    "resolution": 768,
+    "ortho_scale_m": 2.30,
+    "target_z_m": 0.86,
+    "px_per_m": 333.913043,
+    "px_per_game_px": 3.33913043
+  },
+  "source_images": {
+    "player": "3d-model-probe-v4b/v4b-angle55.png",
+    "foe": "foe-blender-modeling-v1/foe-angle55.png"
+  },
+  "flip_source_horizontally": true,
+  "_flip_why": "两张 55° 原图里角色脸朝画面左（游戏 -x）；baked2.json 是角色朝 +x 的侧视动作表（f=前手在 +x 侧、b=后手在 -x 侧）。先水平翻转源图使角色朝画面右，f/b 才与动作表同向，因此不需要正视版 puppet_mapping.json 的重定向。合成 GIF 时玩家直接用翻转帧（朝右），对手再翻一次（朝左），两人相对。",
+  "_f_b_convention": "f = 翻转后画面右侧（+x 前手 / 前腿），b = 翻转后画面左侧（-x 后手 / 后腿）；与 3d-attack-gifs/apose_joints.json 的 f/b 约定一致。",
+  "player": {
+    "head": [453, 110],
+    "shoulder": [446, 218],
+    "hip": [438, 320],
+    "f_elbow": [520, 308],
+    "f_hand": [563, 368],
+    "b_elbow": [363, 305],
+    "b_hand": [343, 368],
+    "f_knee": [483, 500],
+    "f_foot": [506, 645],
+    "b_knee": [398, 505],
+    "b_foot": [383, 645]
+  },
+  "foe": {
+    "head": [443, 110],
+    "shoulder": [438, 210],
+    "hip": [438, 360],
+    "f_elbow": [523, 320],
+    "f_hand": [548, 390],
+    "b_elbow": [343, 325],
+    "b_hand": [343, 410],
+    "f_knee": [483, 505],
+    "f_foot": [498, 620],
+    "b_knee": [378, 510],
+    "b_foot": [373, 620]
+  }
+}

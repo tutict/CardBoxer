@@ -1,0 +1,179 @@
+{
+  "godot": "C:\\Users\\tutic\\Documents\\godot\\Godot_v4.5-stable_win64_console.exe",
+  "probe_project": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-f-godot-driver\\probe_project_f",
+  "main_scene": "res://scenes/player_driven.tscn",
+  "render": {
+    "seconds": 5.086,
+    "returncode": 0,
+    "has_opengl": true,
+    "script_errors": 0,
+    "headless": false
+  },
+  "stage_ready": true,
+  "frames_applied": 10,
+  "pngs": [
+    {
+      "name": "stance-front",
+      "seq": 0,
+      "yaw": 0.0,
+      "card": "stance",
+      "frame": 0,
+      "root_m": [
+        0.0,
+        0.0
+      ],
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-f-godot-driver\\shots\\f-stance-front.png",
+      "exists": true,
+      "bytes": 427749,
+      "sha256": "397c26a789f159bf1b327a24e2953da613de7185eb647a2c22caed73d527e5a2",
+      "w": 900,
+      "h": 1100,
+      "save_error": 0
+    },
+    {
+      "name": "stance-front-repeat",
+      "seq": 0,
+      "yaw": 0.0,
+      "card": "stance",
+      "frame": 0,
+      "root_m": [
+        0.0,
+        0.0
+      ],
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-f-godot-driver\\shots\\f-stance-front-repeat.png",
+      "exists": true,
+      "bytes": 427749,
+      "sha256": "397c26a789f159bf1b327a24e2953da613de7185eb647a2c22caed73d527e5a2",
+      "w": 900,
+      "h": 1100,
+      "save_error": 0
+    },
+    {
+      "name": "jab06-front",
+      "seq": 7,
+      "yaw": 0.0,
+      "card": "jab",
+      "frame": 6,
+      "root_m": [
+        0.13,
+        0.0
+      ],
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-f-godot-driver\\shots\\f-jab06-front.png",
+      "exists": true,
+      "bytes": 420780,
+      "sha256": "947b36a1902d73b402b51a0104c1ae195eb4d4dd50bb09f5a1ff34957816eee1",
+      "w": 900,
+      "h": 1100,
+      "save_error": 0
+    },
+    {
+      "name": "cross07-front",
+      "seq": 22,
+      "yaw": 0.0,
+      "card": "cross",
+      "frame": 7,
+      "root_m": [
+        0.137,
+        0.007
+      ],
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-f-godot-driver\\shots\\f-cross07-front.png",
+      "exists": true,
+      "bytes": 430519,
+      "sha256": "799f01dd96b4e2d5a5a4e3ec191089bf0973dc632806a0f3e0fa7623d3c9a3e1",
+      "w": 900,
+      "h": 1100,
+      "save_error": 0
+    },
+    {
+      "name": "wave17-front",
+      "seq": 54,
+      "yaw": 0.0,
+      "card": "wave",
+      "frame": 17,
+      "root_m": [
+        0.09,
+        0.01
+      ],
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-f-godot-driver\\shots\\f-wave17-front.png",
+      "exists": true,
+      "bytes": 427244,
+      "sha256": "feb8db6e923e8b17de3af33e44da7e52faafacb181f6fe33d8d393f2f3eb56df",
+      "w": 900,
+      "h": 1100,
+      "save_error": 0
+    },
+    {
+      "name": "wave35-front",
+      "seq": 72,
+      "yaw": 0.0,
+      "card": "wave",
+      "frame": 35,
+      "root_m": [
+        0.0,
+        0.0
+      ],
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-f-godot-driver\\shots\\f-wave35-front.png",
+      "exists": true,
+      "bytes": 427954,
+      "sha256": "e448bb6f91c11ffa6d225aed26a83ce3217ee1983f7d956b30b5cd15ebd6236a",
+      "w": 900,
+      "h": 1100,
+      "save_error": 0
+    },
+    {
+      "name": "jab06-angle35",
+      "seq": 7,
+      "yaw": 35.0,
+      "card": "jab",
+      "frame": 6,
+      "root_m": [
+        0.13,
+        0.0
+      ],
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-f-godot-driver\\shots\\f-jab06-angle35.png",
+      "exists": true,
+      "bytes": 452849,
+      "sha256": "035d6edba0b980e9906338cee02f676e0c74aea4f2b501e154521fc125f8a0c7",
+      "w": 900,
+      "h": 1100,
+      "save_error": 0
+    },
+    {
+      "name": "cross07-angle35",
+      "seq": 22,
+      "yaw": 35.0,
+      "card": "cross",
+      "frame": 7,
+      "root_m": [
+        0.137,
+        0.007
+      ],
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-f-godot-driver\\shots\\f-cross07-angle35.png",
+      "exists": true,
+      "bytes": 455002,
+      "sha256": "d4b7f56a767a72fae888cfe0ba19eee4906a4ff24aad5ef2328e58c1335a8c9c",
+      "w": 900,
+      "h": 1100,
+      "save_error": 0
+    },
+    {
+      "name": "wave17-angle35",
+      "seq": 54,
+      "yaw": 35.0,
+      "card": "wave",
+      "frame": 17,
+      "root_m": [
+        0.09,
+        0.01
+      ],
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-f-godot-driver\\shots\\f-wave17-angle35.png",
+      "exists": true,
+      "bytes": 445885,
+      "sha256": "bbc100cf2650f9677933b43cc7375cb744df376cd635d16e29c86a0373b3faab",
+      "w": 900,
+      "h": 1100,
+      "save_error": 0
+    }
+  ],
+  "ok": true
+}

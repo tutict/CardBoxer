@@ -1,0 +1,160 @@
+================================================================================
+《牌拳》P5 招牌动作设计 · 规格与诊断阶段验证记录
+================================================================================
+日期：2026-11-15
+需求：工程师「那就动动作设计吧，参考拳皇街霸的招牌动作」
+范围：#213 查证并固化规格 + #214 诊断 15 轨动作与招牌语言的差距
+证据区：CardBoxer-bake/signature-motion-p5/
+状态：**两阶段收口；游戏源码与三份动作表 0 改动；未落地任何姿态改动**
+
+
+一、结论（先看这段）
+--------------------------------------------------------------------------------
+  1. 真正拖观感的不是 P2/P3/P4 修过的数值特征，而是**姿态语义倒挂**：
+     P0 规格把最大牌 triple 绑给 wave、最小牌 scatter 绑给 jab，
+     但实测前手伸展峰值 wave 1.7224 < cross 18.9248 < jab 44.0145 px。
+     最大的牌打出的姿态最弱，最小的牌最强。这是可复算的硬差距。
+  2. 第二条硬差距：cross 的伸展峰值落在 windup 第 3 帧，而 active 命中窗
+     是第 6–9 帧——「看起来在打的那一帧」和判定帧错位，违反 S3 的
+     hit pose / hitbox 对齐原则。
+  3. 查证把 KOF / 街霸招牌动作拆成 8 条通用动画原理 + 13 个在 11 关节表上
+     可复算的指标，固化成 招牌动作规格.json；不复刻任何具体角色的招式
+     造型、名称、特效或帧数。二手资料里的具体帧数只作量级参考。
+  4. 发现一条必须先解决的硬冲突：招牌动作要「命中定格」，而 P4 刚把
+     255 对精确平台清成 0 并写进 91 条承重判据。规格给出解法：用非零
+     微小差异做低速段，exact_hold_pairs 保持 0，不退役不篡改 P4。
+  5. 本阶段不评好不好看、不宣称引擎内效果。看图板只用于复核「差距是否
+     肉眼可辨」，不是观感结论。
+
+
+二、验收数字（全部可复算）
+--------------------------------------------------------------------------------
+  POSE_SPEC_VERIFIED                     14/14 PASS
+  MUTATION_POSE_SPEC                    14/14 CAUGHT
+    DNR 0 / BROKEN 0 / MISSED 0 / RESTORE 14/14 / expect_hit 14/14
+    clean re-run                        14/14 ALL GREEN
+  SELFTEST_DNR_EFFECTIVE                dnr=1 / clean 14/14
+  GAP_BOARD_OK                          1600×1000 PNG / 213624 B
+  BASELINE_P5_OK                        14 个受监控文件 sha 全同
+  probe_tables.py                       15 轨、三表 6248 个关节值分歧 0
+  diag_pose_gap.py                      13 指标 × 15 轨、6 条攻击轨、15 对峰值距离
+
+  14 条判据逐条点名：
+    1 spec_structure_complete
+    2 sources_complete_and_unique                  （12 条来源 / 7 类）
+    3 language_rules_complete_and_traceable        （L1–L8 全带 basis 与来源）
+    4 hard_rules_are_explicit                      （L3 active / L4 零平台 / L5 1.5px）
+    5 coordinate_matches_live_table                （units / 11 关节 / stance 逐值）
+    6 metrics_computable_on_all_tracks             （15 轨 × 13 指标 + 15 对峰值距离）
+    7 tiers_match_p0_binding                      （与 P0 已验收规格逐项对）
+    8 conflicts_named_and_p4_not_retired
+    9 boundaries_declared                          （8 条）
+   10 provisional_findings_independently_recomputed（自己重算，不信任产物 json）
+   11 spec_text_covers_rules_and_sources
+   12 game_sources_untouched                      （14 文件 sha）
+   13 no_engine_wiring_in_spec_stage
+   14 external_frame_numbers_not_used_as_thresholds
+
+  14 组变异逐条对应：M1 来源 id / M2 stance 快照 / M3 units / M4 L3 段 /
+  M5 L4 零平台 / M6 triple 绑定 / M7 C1 冲突 / M8 不复刻边界 / M9 wave 数字 /
+  M10 基线 sha / M11 精确平台公式 / M12 reach 默认侧 / M13 说明文档 L8 /
+  M14 **真改游戏源码 card_motion.json units**（同时被 5、12 两条抓到）。
+  每组二进制还原 + sha256 证明；守卫子进程 -B + PYTHONDONTWRITEBYTECODE=1。
+
+
+三、诊断实测（diag_pose_gap.py 输出，不写死在规格里）
+--------------------------------------------------------------------------------
+  攻击轨（有 active 段）6 条：cross / jab / sweep / throw / uppercut / wave
+  其余 9 条：backstep / block / focus / guard / hit_heavy / hit_light /
+             recover / rush / sidestep（受击轨无 phase 字段，统一标 react）
+
+  攻击轨分布
+    peak_reach_gain_px   min 1.7224 / q50 21.8228 / max 44.0145
+    peak_bbox_gain_pct   min 14.149% / q50 62.9125% / max 83.4387%
+    arc_deviation_px     min 0 / q50 10.6388 / max 25.4837
+    end_drift_px         min 0 / max 1.2083 @sweep
+    stance_width_max_px  min 82.1333 / max 90.4
+
+  差距清单 6 条
+    [hard]      L3  cross 峰值 @frame 3 在 windup，active 是 6–9
+    [hard]      L2  三档伸展倒挂 1.7224 < 18.9248 < 44.0145
+    [note]      L2  wave 剪影仅 +26.2781%
+    [note]      L1  cross 蓄力后收 0.0 px
+    [conflict]  L4  P4 后精确平台总数 0，hitstop 不能靠整帧相同实现
+    [constraint]L5  末帧最大漂移 1.2083 px，pose_probe 红线 1.5 px
+
+  另有三条「全表性」观察：
+    · 六条攻击轨 recover_overshoot_px 全为 0 —— 峰值后直接线性回站架，
+      完全没有 follow-through。
+    · focus（22 帧）与 recover（14 帧）的 peak_reach_gain_px 为 0。
+    · 峰值姿态两两距离最小 92.0107（jab|uppercut），最大 615.2215
+      （sweep|uppercut），L8 改动后不得低于现有最小值的 80%。
+
+  **口径警告**：pose_metrics.end_drift_px 是「末帧 11 关节逐点欧氏距离
+  最大值」，与 P4 验证记录里的 1.100 px 口径不同，两套数字不互相折算、
+  不要写成同一个数。这是刻意在规格里写进 caveat 的。
+
+
+四、看图迭代（boards/招牌动作-差距对照板.png）
+--------------------------------------------------------------------------------
+  V1：柱状图最高柱（44.01 px）压住三行说明文字；cross 折线负值段
+      越界画进下方「四」面板；相位窗标签与说明叠字。
+  V2：柱高 240→150、说明上移；折线改双极映射并加零基线、clamp 在面板内；
+      active 标签居中；差距清单末行缩短。仍剩标题右侧说明与标题尾部贴字。
+  V3（定稿）：删掉标题行右侧多余说明；三格骨架各补一句针对性结论
+      （wave 手臂抬高但未前伸 / cross 峰值在蓄力段 / jab 反而最强）。
+  终版 ViewImage 复核：无乱码、无缺字方框、无叠字、无越界线条，
+      四个面板内容完整。微软雅黑可用，未使用 U+21D2 等缺字字符。
+
+
+五、踩过的坑（留给下一轮）
+--------------------------------------------------------------------------------
+  1. verify_pose_spec.py 首版写了 GAP["attack_track_count"]，而
+     diag_pose_gap.py 产物里只有 attack_tracks 列表 → KeyError。
+     改成 len(GAP["attack_tracks"])，14/14 全绿。
+  2. 变异 M3/M14 的 needle 把 JSON 引号一起包进去
+     （'"+x forward; -y up"'），实际文件里该子串前面不是引号 → hits 0。
+     按纪律记为 DID NOT RUN（不是「通过」），改成裸文本后命中 1 次。
+  3. 变异 M12 首版从 JOINTS 删掉 b_foot，守卫子进程崩栈 → BROKEN。
+     语法成立不等于运行时成立；换成「改 reach 默认侧为后手」后 CAUGHT。
+  4. 汇总口径：DNR 组没有写文件，不该计入 RESTORE 分母。改为
+     restored == attempted == len(rows) - dnr，expect_hit == caught。
+  5. 图上的 wave 骨架手臂明显抬高，容易误读成「wave 其实动作很大」。
+     实际上抬高手臂并未增加 f_hand 到 shoulder 的距离（1.7224 px），
+     这正是 reach 指标要抓的东西；终版在骨架旁补了文字说明。
+
+
+六、边界
+--------------------------------------------------------------------------------
+  · 游戏源码与三份动作表 0 改动；14 个受监控文件 sha 逐项核对通过。
+  · 规格层完成 ≠ 观感改善。没有改任何 11 关节轨迹、没有渲新帧、
+    没有进 Godot、没有跑真实 GLB 撕裂、没有做引擎内 A/B。
+  · 不复刻 SNK/Capcom 具体角色招式；不改玩法、判定、阶段时长、mapping。
+  · 历史守卫（P1/P2/B/P3/P4/实机验收）本阶段全未触碰，也不声称仍然全绿；
+    它们会在 #216 改表后必然红，届时按既定约定列债，不篡改历史结论。
+  · 规格里的具体数值阈值留给 #215 按 6 条攻击轨分布复算，本阶段不写死。
+
+
+七、复算（Fantasy-Agent/.venv/Scripts/python.exe，cwd = 本目录）
+--------------------------------------------------------------------------------
+  python -u probe_tables.py
+  python -u diag_pose_gap.py
+  python -u make_baseline_p5.py
+  python -u make_gap_board.py
+  python -u verify_pose_spec.py              -> 14/14
+  python -u mutation_pose_spec.py            -> 14/14 CAUGHT
+  python -u mutation_pose_spec.py --selftest-dnr -> SELFTEST_DNR_EFFECTIVE
+  python -u verify_pose_spec.py              -> clean 14/14
+
+
+八、下一步（#215，已授权继续）
+--------------------------------------------------------------------------------
+  设计候选姿态改法并量化双侧成本，重点解决两件硬差距：
+    ① 三档倒挂：让 wave 的峰值伸展/剪影真正成为最强档，同时
+       保持 wave > cross > jab 严格递减；
+    ② cross 峰值错位：把伸展峰值移进 active 6–9 帧。
+  候选必须同时过四道关：2D 关节位移（pose_probe ≤1.5px 末帧红线）、
+  3D 13 骨 delta、全量 284 帧真实 GLB 撕裂（P4 上界 0.042681m /
+  外部锚 0.09365m）、P4 精确平台 0（视觉停顿用非零微差实现）。
+  之后才是 #216 备份落地 / #217 引擎内两态 A/B 与看图 / #218 判据变异归档。
+================================================================================

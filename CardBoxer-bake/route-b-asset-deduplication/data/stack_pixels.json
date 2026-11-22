@@ -1,0 +1,128 @@
+{
+  "source": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-b-asset-deduplication\\shots\\stack_probe",
+  "states": {
+    "0-orig": {
+      "w": 420,
+      "h": 520,
+      "opaque_px": 70249,
+      "near_white_px": 725,
+      "cyan_px": 424,
+      "warm_px": 247,
+      "bright_px": 1077,
+      "mean_rgb": [
+        51.74,
+        45.82,
+        42.4
+      ],
+      "white_ratio": 0.01032,
+      "cyan_ratio": 0.006036
+    },
+    "1-lights0": {
+      "w": 420,
+      "h": 520,
+      "opaque_px": 70249,
+      "near_white_px": 0,
+      "cyan_px": 0,
+      "warm_px": 0,
+      "bright_px": 0,
+      "mean_rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "white_ratio": 0.0,
+      "cyan_ratio": 0.0
+    },
+    "2-nometal": {
+      "w": 420,
+      "h": 520,
+      "opaque_px": 70249,
+      "near_white_px": 73,
+      "cyan_px": 250,
+      "warm_px": 292,
+      "bright_px": 239,
+      "mean_rgb": [
+        55.39,
+        47.91,
+        43.01
+      ],
+      "white_ratio": 0.001039,
+      "cyan_ratio": 0.003559
+    },
+    "3-redalbedo": {
+      "w": 420,
+      "h": 520,
+      "opaque_px": 70249,
+      "near_white_px": 468,
+      "cyan_px": 0,
+      "warm_px": 48729,
+      "bright_px": 26029,
+      "mean_rgb": [
+        166.13,
+        32.31,
+        31.53
+      ],
+      "white_ratio": 0.006662,
+      "cyan_ratio": 0.0
+    },
+    "4-neg55": {
+      "w": 420,
+      "h": 520,
+      "opaque_px": 69224,
+      "near_white_px": 668,
+      "cyan_px": 449,
+      "warm_px": 106,
+      "bright_px": 1436,
+      "mean_rgb": [
+        60.96,
+        55.49,
+        51.56
+      ],
+      "white_ratio": 0.00965,
+      "cyan_ratio": 0.006486
+    }
+  },
+  "material_slots": [
+    {
+      "albedo_color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "albedo_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901.png",
+      "class": "StandardMaterial3D",
+      "emission_texture": "",
+      "mesh": "foe_HI_skinned",
+      "metallic": 1.0,
+      "metallic_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png",
+      "normal_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901_normal.png",
+      "roughness": 1.0,
+      "roughness_texture": "res://assets/3d/foe-rigged_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png",
+      "surface": 0
+    }
+  ],
+  "lights": 4,
+  "light_energy0": [
+    1.89999997615814,
+    0.75,
+    0.550000011920929,
+    0.949999988079071
+  ],
+  "checks": {
+    "five_states_measured": true,
+    "lights_off_kills_bright": true,
+    "nometal_reduces_white": true,
+    "red_albedo_kills_cyan": true,
+    "red_albedo_reduces_white": true,
+    "s0_white_is_low": true,
+    "yaw_does_not_create_white": true,
+    "yaw_does_not_create_cyan": true,
+    "same_geometry_both_yaws": true,
+    "board_written": true
+  },
+  "failed": [],
+  "board": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-b-asset-deduplication\\boards\\B-asset-layer-analysis.png",
+  "board_bytes": 440042,
+  "conclusion": "关灯把亮像素清零、去金属把近白从 725 打到 73、换纯红 albedo 把青像素清零 ⇒ 亮/白/青全部来自「四盏高强灯 × metallic=1.0 × albedo」，不存在第二张彩色贴图或自发光。S0(+55°) 与 S4(-55°) 只差相机 yaw，近白 725→668、青 424→449，没有数量级变化 ⇒ 相机角度不是白布出现的原因。独立 foe 层探针在两种角度下都渲出纯重甲怪。",
+  "ok": true
+}

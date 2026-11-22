@@ -1,0 +1,71 @@
+{
+  "source": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\shots\\final-live6-reviewed",
+  "scenario_count": 6,
+  "checks": [
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "check": "fatal victim renders KO",
+      "pass": true
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "check": "terminal KO reaches final native frame 27",
+      "pass": true
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "check": "final KO frame holds across multiple production ticks",
+      "pass": true
+    },
+    {
+      "scenario": "foe-fatal-facing-reset",
+      "check": "round reset clears stale KO",
+      "pass": true
+    },
+    {
+      "scenario": "player-card-cross",
+      "check": "melee hit samples the native contact endpoint",
+      "pass": true,
+      "detail": {
+        "tick": 10,
+        "card": "cross",
+        "frame": 9.0,
+        "contact": 9
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "check": "wave collides after a newer attacker action begins",
+      "pass": true
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "check": "late collision does not rewind actor to old wave release",
+      "pass": true
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "check": "late wave collision preserves currently playing new jab",
+      "pass": true
+    },
+    {
+      "scenario": "taikou-enemy",
+      "check": "taikou contact is visibly held, not a one-frame skip",
+      "pass": true,
+      "detail": {
+        "contact_tick_count": 16
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "check": "taikou contact is visibly held, not a one-frame skip",
+      "pass": true,
+      "detail": {
+        "contact_tick_count": 16
+      }
+    }
+  ],
+  "failures": [],
+  "passed": true,
+  "limitations": "Runtime pose/clip timing evidence only; rendered skins need human inspection."
+}

@@ -1,0 +1,65 @@
+《牌拳》C 路线 · glTF → Godot 4.5 导入成本量测 · 文件清单
+条目数由脚本现算：58（WORK=本工作区）
+复算命令：python make_filelist_c.py  # 连续生成两次比对 STABLE_OK
+排除：probe_project/.godot/ 引擎缓存；logs/make_filelist_c.log 生成器自身日志
+
+PATH                                                                                    BYTES  SHA256
+----------------------------------------------------------------------------------------------------------------------
+WORK/blend_structure.json                                                                3163  ae67a19653c6b693940582d924c3479fbc1dae6451b4249685041cc1509f9ca8
+WORK/C-four-metric-comparison.png                                                                        98141  0bb50351869c1fee19985907d434152b68fdd4a994cbe5882eb78b5077418940
+WORK/C-pipeline-cost-ledger.png                                                                       302137  bce5e04e434b635d2353c5bb6e9187380162587873ff22d58bdb7b604012901e
+WORK/crosscheck_filelist_c.py                                                            1967  fccf9e21c81c05272e811787a695126d27a54e6a7a62eeb6c664107005a7d98d
+WORK/C-route-glTF-validation-record.txt                                                                   12716  59b6fcb9877ccbeab5cf20233333de08d613cfacc0f2ec1c0e63b8e5390ebedd
+WORK/export_gltf.py                                                                      6019  a86468f9981be8680f24cc7ff314cab5737fc1907ddd1266c502697d8fa7a560
+WORK/export_report.json                                                                  2644  1d70c11004aa2b6a873d13a1cc276c960fa5932cb1a9a05b1e312a66b038a176
+WORK/foe-full.glb                                                                    42926956  a8440333353d2dbe46a042e0739bf68b5b959e5ba68fe6aae01316eecf896f45
+WORK/foe-posed.glb                                                                    2533600  7336f17c1431cceeecd11745b6ca8e018a6bc6bf45cf54fcd6fa477d16cd10ce
+WORK/foe-proxy-rig.glb                                                                1297744  a332a6d4aceca43b48aeae0bf0f149c0e351f4b8a4e43a029a48c0ebf4883944
+WORK/foe-stance.glb                                                                   2531012  5fa6d910383cad68ac3743daefaa4357b611c3858fb94d22bbff935416295087
+WORK/gltf_inspection.json                                                               10903  7f24353256f5ddcbfe9a91a7aef9ec920cf03f9e711400608919dac9ddc4afae
+WORK/godot_import_result.json                                                            7479  8209d0a4ef9d74adda7b070f4725aea09eb9f417bff51b7e2213068606f99946
+WORK/godot_pose_result.json                                                               659  37e118262e81c8e46381381c17bc72ff342cb6d756699060309d3f508d050a93
+WORK/inspect_gltf.py                                                                     7672  1cfa96ff38717b502f2e55a5f4856214a0692e899f6c5d7c4fedc3851da99c3f
+WORK/logs/empty_marker.bin                                                                  0  e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+WORK/logs/export_gltf.log                                                                2235  0a2e964231448759d466e4fb54c9b99308469d1708aa828e1d4839a9d29c0247
+WORK/logs/godot_editor_import.log                                                        3234  5c682f7498b16c72adc6c2a2c6e2bf82bdf7d83987c40844eca5ce7cac02d15e
+WORK/logs/godot_inspect_probe.log                                                        2841  c82b854ce2e843a52c37f20215e86709d650df5cc8f4e616efa7b4d2f4f4613a
+WORK/logs/godot_pose_probe.log                                                            531  3347f6332dc31906e22eb616a6a9967d09d8f564c5deff5eeac6e7d7e4719f65
+WORK/logs/inspect_gltf.log                                                               1161  8390d033fd5739c9f2c6729501a6085df929f7aae37e7055e9a3693c69896992
+WORK/logs/make_baseline_c.log                                                              57  b685a2689132a264b02498fb2b272a8fa91b2b680829d750ecfcb70d07e52b3b
+WORK/logs/make_cost_board.log                                                              99  3c7ef498f0bc246d1effe8844c035523688ca795fe7814192bb592e54e7a0c65
+WORK/logs/mutation_c.log                                                                  852  f3eaf89e92bddef86894387738108fc398f95d4c890f1adecc7e8025c71761ab
+WORK/logs/mutation_c_selftest.log                                                         792  c38a279e183ee31247b9fda99509a65f898187ae69ff93e608d7330d989c1c4c
+WORK/logs/probe_blend_structure.log                                                       959  b1270a8a47e74ea1d85751892775f510259f19059ea3fd9cf20ce5b5ed902169
+WORK/logs/run_godot_import.log                                                            463  d05129df236b3c77d7a880bfdd36dea21b4c727ac17cb0909590962d88c85f9d
+WORK/logs/run_pose_probe.log                                                              538  f006bd23a58177429058ca86f73063f410ac191f4c9713cfcdd164b61660d1ce
+WORK/logs/verify_a_baseline.log                                                          1907  dadada71944134a32d77b60e7003f3e81e7f5cca189621782f830cede0e01fcb
+WORK/logs/verify_c.log                                                                   2760  3be84db1dfc88344f40695dbcfeec29899c72ea75d716fd88c02a2405a6ee993
+WORK/make_baseline_c.py                                                                  2201  33968bacb05153907156875762f559c2f89db35027e637266160b552377cc6f7
+WORK/make_cost_board.py                                                                 12004  7e7bd4ec0f1ba87b2a8a7becc03807dae7199b14c6f61e470d341996e048b3f9
+WORK/make_filelist_c.py                                                                  3827  be535a05d77e60a21182ec4bc9749f1913f42296c057502f8548e37a56ad0649
+WORK/mutation_c.py                                                                       6892  7f9ace760fb32e75e54b23a0cc72bb9b8c7628b376f467612bd0c66a3058aa0d
+WORK/mutation_c_result.json                                                              2578  6dd9553257758801919d6a0c21be72189be8b79bf515f7845855b67fa902de02
+WORK/mutation_c_selftest_result.json                                                     2463  ed3b20d768898a4a7af17b62eb4a3c98dc6ec390874b80c9762a9b880054bb9d
+WORK/probe_blend_structure.py                                                            4083  bcbae6a3ff460d38802ca6248979d9cd4dbba7f442f710e5c1a929326ce0113a
+WORK/probe_project/assets/foe-full.glb                                               42926956  a8440333353d2dbe46a042e0739bf68b5b959e5ba68fe6aae01316eecf896f45
+WORK/probe_project/assets/foe-full.glb.import                                            1037  10d8bea464cbfa03ee2b0684be4e12181d413b13d1053c1ba96cd90cf73c24e7
+WORK/probe_project/assets/foe-full_texture_pbr_20250901.png                          15782150  3c1076596ef22f2e45c6509e459f7e262053724ce05b803874ed53a927473d6a
+WORK/probe_project/assets/foe-full_texture_pbr_20250901.png.import                       1064  38144345e075819315c0c110006e865fbe31d1b8db95e7f51bff7336c2bcc165
+WORK/probe_project/assets/foe-full_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png     14380706  c87454eacff12946de4b70254b0dbe0fe822fd93d8896efa79af5663f2cdff7e
+WORK/probe_project/assets/foe-full_texture_pbr_20250901_metallic-texture_pbr_20250901_roughness.png.import         1184  32a9e3f143fd0bad415bf2da50a2374d23f356d73ba5df78caa0339c57b4f473
+WORK/probe_project/assets/foe-full_texture_pbr_20250901_normal.png                    8934769  ed4d58cd90dd1419746a26926e80e0912f23ed83fdae8a9d881629e7e848cd9f
+WORK/probe_project/assets/foe-full_texture_pbr_20250901_normal.png.import                1085  ab52cd0cd2db3265e37b84cc7eed3b14c4611c205e6f1292cbedbb1bd542c098
+WORK/probe_project/assets/foe-proxy-rig.glb                                           1297744  a332a6d4aceca43b48aeae0bf0f149c0e351f4b8a4e43a029a48c0ebf4883944
+WORK/probe_project/assets/foe-proxy-rig.glb.import                                       1051  eab3fd6e3cafb02cb85923d2323f6ed7847e27a30a37fafeb16a86f5151e92fc
+WORK/probe_project/assets/foe-stance.glb                                              2531012  5fa6d910383cad68ac3743daefaa4357b611c3858fb94d22bbff935416295087
+WORK/probe_project/assets/foe-stance.glb.import                                          1043  a4674d15da81879fa00caedece34f366bfea9e5fc77dba191b67057e814920ed
+WORK/probe_project/probes/inspect_import.gd                                              3447  d53ab6fbb73617496d7d478a6df4288ab876bcfae1f7329af59fb2f7feea8280
+WORK/probe_project/probes/inspect_import.gd.uid                                            19  b4a8df06cfc7bbc52b4adaa0b45dd91aee8934c9dbb979083f2668a18343d254
+WORK/probe_project/probes/pose_probe.gd                                                  2558  d97304d41b764f736124445a0cd87c3fc7866391a9c663f1d31960fc09bcd8db
+WORK/probe_project/project.godot                                                          477  861f02e4f3c62a3fe07b912f761750467655076577df470c644c1edc159b0974
+WORK/run_godot_import.py                                                                 4823  c71b703f30ee23a400aa651a6e70370c013ad5a6b2d0d49ba69a0c826455be62
+WORK/run_pose_probe.py                                                                   3031  cec76f7c53c50ff93bdbaeea61abd8b49cb0f4577b2ddf1a5ba52642393c91ba
+WORK/verify_c.py                                                                        15201  2b55f34bee540f64446ada734ace32b0e11e6c3f3fdea42284c7c349aaeae485
+WORK/verify_c_result.json                                                                4368  5941a0a17e93aed8670d3569cdcce52a0d898168b72aa9e396349cf9ee324a6c
+WORK/baseline.json                                                                            17407  a2daad17ffc9c7296d22ffc5997b3ff8566f24c4be7efb6d67f8bf5ee6e50813

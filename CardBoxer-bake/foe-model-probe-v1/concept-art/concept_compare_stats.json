@@ -1,0 +1,19 @@
+{
+  "note": "2D 概念视觉对照；bbox 可复算，明度数字等 3D 同相机渲染再算",
+  "player_bbox_in_source": [
+    174,
+    96,
+    594,
+    672
+  ],
+  "foe_luminance_bbox_in_source": [
+    58,
+    38,
+    962,
+    1500
+  ],
+  "body_height_px": 700,
+  "foot_y": 870,
+  "output": "player-V4b-foe-V1-concept-comparison.png",
+  "bytes": 757175
+}

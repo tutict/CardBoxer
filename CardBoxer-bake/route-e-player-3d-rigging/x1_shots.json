@@ -1,0 +1,38 @@
+{
+  "blend": "player-V4b-deformable-continuous-shell.blend",
+  "gain": 1.0,
+  "shots": [
+    {
+      "shot": "stance",
+      "card": null,
+      "frame": 0,
+      "file": "e-stance-x1.png",
+      "bytes": 365315,
+      "sha256": "bdd1e3b8e675e9808ba9e0e9c7b07f493da849c091a03af9209e8fe16c5f2bd1"
+    },
+    {
+      "shot": "jab07",
+      "card": "jab",
+      "frame": 6,
+      "file": "e-jab07-x1.png",
+      "bytes": 370123,
+      "sha256": "af0d476b0e8fbcf9c40f69e5be0999c265cd4b864c086c09dbeccaaa07f196d7"
+    },
+    {
+      "shot": "cross11",
+      "card": "cross",
+      "frame": 10,
+      "file": "e-cross11-x1.png",
+      "bytes": 370822,
+      "sha256": "03d799d29796cbc7808e4e8a01f6c8f2f9a9fbed17a456dfa0c0cc005eb07695"
+    },
+    {
+      "shot": "wave18",
+      "card": "wave",
+      "frame": 17,
+      "file": "e-wave18-x1.png",
+      "bytes": 367851,
+      "sha256": "81b1743c6105e38c7b3bf40c37b2df624544f9336a4537563319577659f92004"
+    }
+  ]
+}

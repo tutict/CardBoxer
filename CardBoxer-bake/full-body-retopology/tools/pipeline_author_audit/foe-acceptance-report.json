@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "source": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\full-body-retopology\\baseline\\assets\\3d\\foe-rigged.glb",
+  "candidate": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\full-body-retopology\\tools\\pipeline_author_audit\\foe-diagnostic-canonical.glb",
+  "ok": false,
+  "errors": [
+    {
+      "code": "tangent_basis",
+      "detail": "Tangent normal atlas requires an exported UV0 tangent basis"
+    },
+    {
+      "code": "morph_hand_only",
+      "detail": "grip_half_f.NORMAL: 4053 vertices outside its own distal forearm/hand"
+    },
+    {
+      "code": "morph_hand_only",
+      "detail": "grip_f.NORMAL: 4053 vertices outside its own distal forearm/hand"
+    },
+    {
+      "code": "morph_hand_only",
+      "detail": "grip_half_b.NORMAL: 4061 vertices outside its own distal forearm/hand"
+    },
+    {
+      "code": "morph_hand_only",
+      "detail": "grip_b.NORMAL: 4061 vertices outside its own distal forearm/hand"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "visual_runtime_required",
+      "detail": "Surface openings, silhouette, all19 clips/both facings and render performance require the root's visual/runtime acceptance"
+    }
+  ],
+  "metrics": {
+    "vertices": 65417,
+    "triangles": 69468,
+    "joints": 14,
+    "surfaces": 1,
+    "materials": 1,
+    "degenerate_triangles": 0,
+    "weight_sum_error": 5.21540641784668e-08,
+    "neutral_max_weight": 0.0,
+    "rest_bind_error_m": 4.452979365800225e-07,
+    "sole_y_deviation_m": 4.407749543133832e-07,
+    "front_hand_distal_start_local_m": 0.18478234178950131,
+    "front_source_hand_bounds_local_m": [
+      [
+        -0.08896492756606265,
+        0.16479027993444875,
+        -0.3766289415540603
+      ],
+      [
+        0.16955264348609286,
+        0.38956468357900265,
+        -0.09158702679795983
+      ]
+    ],
+    "front_hand_envelope_vertices": 1181,
+    "rear_hand_distal_start_local_m": 0.18166743911151173,
+    "rear_source_hand_bounds_local_m": [
+      [
+        -0.16365594158906246,
+        0.16183668914717278,
+        -0.34364342259188546
+      ],
+      [
+        0.08780307242705708,
+        0.3833348782230235,
+        -0.07447582579040479
+      ]
+    ],
+    "rear_hand_envelope_vertices": 1177,
+    "morph_names": [
+      "grip_half_f",
+      "grip_f",
+      "grip_half_b",
+      "grip_b"
+    ],
+    "grip_half_f_active_vertices": 823,
+    "grip_f_active_vertices": 823,
+    "grip_half_b_active_vertices": 816,
+    "grip_b_active_vertices": 816,
+    "image_sizes": [
+      [
+        4096,
+        4096
+      ],
+      [
+        4096,
+        4096
+      ],
+      [
+        4096,
+        4096
+      ]
+    ],
+    "front_open_socket_surface_error_m": 8.355436723213863e-17,
+    "front_half_socket_surface_error_m": 0.0,
+    "front_closed_socket_surface_error_m": 1.433355787370047e-16,
+    "rear_open_socket_surface_error_m": 0.0,
+    "rear_half_socket_surface_error_m": 5.551115123125783e-17,
+    "rear_closed_socket_surface_error_m": 8.379481490369294e-17
+  },
+  "source_sha256": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+  "candidate_sha256": "67f71b3e32e9988b8047fcddccb2644ea82e1279892063db5977251f0c81f75e",
+  "raw_sha256": "f25abddf501a257ab00283e205984ed10a433d8716f52cacad2640a5996ad824",
+  "sockets_sha256": "1cd73c039f3531a82a0ebef6fc23a03e724b80298db5956e27437353bef7735b",
+  "inputs_stable_during_audit": true
+}

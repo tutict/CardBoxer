@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>女角色 V4b 3D 查看器</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#121824; color:#ecf0fa;
+         font-family:"Microsoft YaHei",system-ui,sans-serif; }
+  header { padding:20px 28px 14px; border-bottom:1px solid #26304a; }
+  h1 { margin:0; font-size:22px; }
+  header p { margin:8px 0 0; color:#98a4b8; font-size:14px; }
+  main { display:flex; gap:24px; padding:24px 28px; align-items:flex-start; }
+  nav { width:210px; display:flex; flex-direction:column; gap:7px;
+        flex:none; }
+  button.v { text-align:left; padding:9px 12px; border-radius:8px;
+             border:1px solid #2b3550; background:#1e2636; color:#c8d2e4;
+             cursor:pointer; font-size:14px; font-family:inherit; }
+  button.v:hover { border-color:#f0d6a0; }
+  button.v.on { background:#3a3320; border-color:#f0d6a0; color:#f0d6a0; }
+  figure { margin:0; flex:1; min-width:0; }
+  .stage { background:#1e2636; border:1px solid #2b3550; border-radius:10px;
+           min-height:640px; display:flex; align-items:center;
+           justify-content:center; overflow:hidden; }
+  img { max-width:100%; max-height:76vh; object-fit:contain; display:block; }
+  figcaption { margin-top:12px; color:#98a4b8; font-size:14px; }
+  .meta { margin-top:16px; font-size:13px; color:#7e8ea8; line-height:1.7; }
+</style>
+</head>
+<body>
+<header>
+  <h1>女角色 V4b · 3D 资产查看器</h1>
+  <p>全部为真实渲染图，离线可看。左列切换；Godot 四视角是引擎内截帧，
+     E 路线帧是 Blender 13 骨逐帧驱动。</p>
+</header>
+<main>
+  <nav id="nav">
+<button class="v" data-src="viewer_assets/godot-front.png" data-note="Godot 4.5 引擎内 · player-full.glb" data-label="Godot 正面 0°">Godot 正面 0°</button>
+<button class="v" data-src="viewer_assets/godot-angle35.png" data-note="Godot 4.5 引擎内 · 同一套固定灯光" data-label="Godot 斜 35°">Godot 斜 35°</button>
+<button class="v" data-src="viewer_assets/godot-side90.png" data-note="侧面厚度可读，无薄壳退化" data-label="Godot 侧 90°">Godot 侧 90°</button>
+<button class="v" data-src="viewer_assets/godot-back.png" data-note="背面长发与披风" data-label="Godot 背 180°">Godot 背 180°</button>
+<button class="v" data-src="viewer_assets/blend-open.png" data-note="player-V4b-deformable-continuous-shell.blend 双击打开所见" data-label="blend 打开即所见">blend 打开即所见</button>
+<button class="v" data-src="viewer_assets/e-stance.png" data-note="SURFACE_DEFORM 绑定后 rest" data-label="E 站架 x1.5">E 站架 x1.5</button>
+<button class="v" data-src="viewer_assets/e-jab.png" data-note="13 骨逐帧驱动 · 单侧前臂" data-label="E jab #6">E jab #6</button>
+<button class="v" data-src="viewer_assets/e-cross.png" data-note="13 骨逐帧驱动 · 后手" data-label="E cross #10">E cross #10</button>
+<button class="v" data-src="viewer_assets/e-wave.png" data-note="13 骨逐帧驱动 · 双手" data-label="E wave #17">E wave #17</button>
+<button class="v" data-src="viewer_assets/e-angle55.png" data-note="Blender 侧视体积" data-label="E 55° 侧视">E 55° 侧视</button>
+<button class="v" data-src="viewer_assets/v4b-front.png" data-note="生成模型原始四视角" data-label="V4b 源正面">V4b 源正面</button>
+<button class="v" data-src="viewer_assets/v4b-face.png" data-note="琥珀分层虹膜 / 发饰" data-label="V4b 脸模特写">V4b 脸模特写</button>
+  </nav>
+  <figure>
+    <div class="stage"><img id="pic" alt="女角色 3D" src=""></div>
+    <figcaption id="cap"></figcaption>
+    <div class="meta">
+      静态资产说明：player-full.glb 是 1 skin / 14 joints / 0 animations，
+      高模无 JOINTS_0；能驱动的是 Blender 端的
+      player-V4b-deformable-continuous-shell.blend，Godot 内目前只能看静态 A-pose。<br>
+      可运行游戏工程里玩家战斗层仍是 2D 代码自绘，3D 资产没有进游戏。
+    </div>
+  </figure>
+</main>
+<script>
+  const pic = document.getElementById('pic');
+  const cap = document.getElementById('cap');
+  const btns = Array.from(document.querySelectorAll('button.v'));
+  function show(b) {
+    btns.forEach(x => x.classList.toggle('on', x === b));
+    pic.src = b.dataset.src;
+    cap.textContent = b.dataset.label + '  ·  ' + b.dataset.note;
+  }
+  btns.forEach(b => b.addEventListener('click', () => show(b)));
+  show(btns[0]);
+</script>
+</body>
+</html>

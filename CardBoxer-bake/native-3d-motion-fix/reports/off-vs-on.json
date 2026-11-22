@@ -1,0 +1,73 @@
+{
+  "left": "native-3d-motion-fix\\reports\\current-off",
+  "right": "native-3d-motion-fix\\reports\\current-on",
+  "checked": 42,
+  "equal": false,
+  "differences": [
+    {
+      "scenario": "taikou-draw",
+      "field": "gameplay",
+      "tick": 90,
+      "different_keys": [
+        "global_hitstop"
+      ],
+      "left": {
+        "global_hitstop": 0.07
+      },
+      "right": {
+        "global_hitstop": 0.0
+      }
+    },
+    {
+      "scenario": "taikou-enemy",
+      "field": "gameplay",
+      "tick": 90,
+      "different_keys": [
+        "global_hitstop"
+      ],
+      "left": {
+        "global_hitstop": 0.07
+      },
+      "right": {
+        "global_hitstop": 0.0
+      }
+    },
+    {
+      "scenario": "taikou-ex-fatal",
+      "field": "gameplay",
+      "tick": 90,
+      "different_keys": [
+        "combo_count",
+        "global_hitstop"
+      ],
+      "left": {
+        "combo_count": 1,
+        "global_hitstop": 0.07
+      },
+      "right": {
+        "combo_count": 0,
+        "global_hitstop": 0.0
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "field": "gameplay",
+      "tick": 90,
+      "different_keys": [
+        "combo_count",
+        "global_hitstop"
+      ],
+      "left": {
+        "combo_count": 1,
+        "global_hitstop": 0.07
+      },
+      "right": {
+        "combo_count": 0,
+        "global_hitstop": 0.0
+      }
+    }
+  ],
+  "settled_rules_equal": true,
+  "settled_rules_differences": [],
+  "comparison_scope": "Exact gameplay includes hands, timers and hitstop. Settled comparison checks ordered card/hit/super events excluding tick, HP, round wins, ranks, winner, damage, rage and EX."
+}

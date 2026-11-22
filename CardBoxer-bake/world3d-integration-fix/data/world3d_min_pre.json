@@ -1,0 +1,454 @@
+{
+  "modes": {
+    "none": {
+      "mode": "none",
+      "seconds": 5.943,
+      "returncode": 0,
+      "script_errors": 0,
+      "scenario_errors": 0,
+      "engine_error_lines": 0,
+      "layers": {
+        "player": {
+          "label": "player",
+          "own_world_3d": false,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\none/min-none-sv-player.png",
+          "world3d_id": 0,
+          "yaw": -55.0,
+          "pixels": {
+            "opaque_px": 71959,
+            "near_white_px": 17602,
+            "cyan_px": 2766,
+            "white_ratio": 0.244612
+          },
+          "png_sha256": "b319cd891b54af69dc37f7d7cf626de23a6ab239122230d31d3bab75affe9e68"
+        },
+        "foe": {
+          "label": "foe",
+          "own_world_3d": false,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\none/min-none-sv-foe.png",
+          "world3d_id": 0,
+          "yaw": 55.0,
+          "pixels": {
+            "opaque_px": 74953,
+            "near_white_px": 14643,
+            "cyan_px": 2480,
+            "white_ratio": 0.195362
+          },
+          "png_sha256": "f0b0904bc39d44c72f410be43145b474f33df9f8a28c563b60fe9543529591ed"
+        }
+      },
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\none\\min-none-live.png",
+      "live_sha256": "6a0efbddd281d585a2e16c236c9b260a9c943e2d64fcc078b5794619163b1607",
+      "live_size": [
+        1280,
+        720
+      ]
+    },
+    "own": {
+      "mode": "own",
+      "seconds": 5.207,
+      "returncode": 0,
+      "script_errors": 0,
+      "scenario_errors": 0,
+      "engine_error_lines": 0,
+      "layers": {
+        "player": {
+          "label": "player",
+          "own_world_3d": true,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\own/min-own-sv-player.png",
+          "world3d_id": 0,
+          "yaw": -55.0,
+          "pixels": {
+            "opaque_px": 42788,
+            "near_white_px": 13197,
+            "cyan_px": 2435,
+            "white_ratio": 0.308428
+          },
+          "png_sha256": "53067e3de95dacd99d323720bac4cb8bf0e525b4e8cb52c3bf6bcc2dfe852065"
+        },
+        "foe": {
+          "label": "foe",
+          "own_world_3d": true,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\own/min-own-sv-foe.png",
+          "world3d_id": 0,
+          "yaw": 55.0,
+          "pixels": {
+            "opaque_px": 70393,
+            "near_white_px": 937,
+            "cyan_px": 412,
+            "white_ratio": 0.013311
+          },
+          "png_sha256": "12d9f0c7a226e9a9c07a34133d38f8451b94d07e6f2b0b9b5d2ec83f6c4c0f56"
+        }
+      },
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\own\\min-own-live.png",
+      "live_sha256": "7a8942bf1a6e628b5833df9848cd58c6d76e7ef3a5efd371b44b78d5da57af98",
+      "live_size": [
+        1280,
+        720
+      ]
+    },
+    "world": {
+      "mode": "world",
+      "seconds": 4.951,
+      "returncode": 0,
+      "script_errors": 0,
+      "scenario_errors": 0,
+      "engine_error_lines": 0,
+      "layers": {
+        "player": {
+          "label": "player",
+          "own_world_3d": false,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\world/min-world-sv-player.png",
+          "world3d_id": -9223371998334286351,
+          "yaw": -55.0,
+          "pixels": {
+            "opaque_px": 42788,
+            "near_white_px": 13197,
+            "cyan_px": 2435,
+            "white_ratio": 0.308428
+          },
+          "png_sha256": "53067e3de95dacd99d323720bac4cb8bf0e525b4e8cb52c3bf6bcc2dfe852065"
+        },
+        "foe": {
+          "label": "foe",
+          "own_world_3d": false,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\world/min-world-sv-foe.png",
+          "world3d_id": -9223371998317509134,
+          "yaw": 55.0,
+          "pixels": {
+            "opaque_px": 70393,
+            "near_white_px": 937,
+            "cyan_px": 412,
+            "white_ratio": 0.013311
+          },
+          "png_sha256": "12d9f0c7a226e9a9c07a34133d38f8451b94d07e6f2b0b9b5d2ec83f6c4c0f56"
+        }
+      },
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\world\\min-world-live.png",
+      "live_sha256": "f408028645ba3f419b9742f727a5d88b21f9170a234e299668b66cc69cffca0f",
+      "live_size": [
+        1280,
+        720
+      ]
+    },
+    "both": {
+      "mode": "both",
+      "seconds": 5.087,
+      "returncode": 0,
+      "script_errors": 0,
+      "scenario_errors": 2,
+      "engine_error_lines": 2,
+      "layers": {
+        "player": {
+          "label": "player",
+          "own_world_3d": true,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\both/min-both-sv-player.png",
+          "world3d_id": -9223371998351063568,
+          "yaw": -55.0,
+          "pixels": {
+            "opaque_px": 42788,
+            "near_white_px": 13197,
+            "cyan_px": 2435,
+            "white_ratio": 0.308428
+          },
+          "png_sha256": "53067e3de95dacd99d323720bac4cb8bf0e525b4e8cb52c3bf6bcc2dfe852065"
+        },
+        "foe": {
+          "label": "foe",
+          "own_world_3d": true,
+          "present": true,
+          "sv_error": 0,
+          "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\both/min-both-sv-foe.png",
+          "world3d_id": -9223371998283954702,
+          "yaw": 55.0,
+          "pixels": {
+            "opaque_px": 70393,
+            "near_white_px": 937,
+            "cyan_px": 412,
+            "white_ratio": 0.013311
+          },
+          "png_sha256": "12d9f0c7a226e9a9c07a34133d38f8451b94d07e6f2b0b9b5d2ec83f6c4c0f56"
+        }
+      },
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\both\\min-both-live.png",
+      "live_sha256": "a6307e4375518d23ac4fc0760b25e02419b407ada9d07e1bcd3929d154f3eadf",
+      "live_size": [
+        1280,
+        720
+      ]
+    }
+  },
+  "payloads": {
+    "none": {
+      "apply_rows": [
+        {
+          "label": "player",
+          "mode": "none",
+          "own_after_apply": false,
+          "present": true,
+          "world_id_after_apply": 0
+        },
+        {
+          "label": "foe",
+          "mode": "none",
+          "own_after_apply": false,
+          "present": true,
+          "world_id_after_apply": 0
+        }
+      ],
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\none/min-none-live.png",
+      "mode": "none",
+      "state": {
+        "layers": [
+          {
+            "label": "player",
+            "own_world_3d": false,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\none/min-none-sv-player.png",
+            "world3d_id": 0,
+            "yaw": -55.0,
+            "pixels": {
+              "opaque_px": 71959,
+              "near_white_px": 17602,
+              "cyan_px": 2766,
+              "white_ratio": 0.244612
+            },
+            "png_sha256": "b319cd891b54af69dc37f7d7cf626de23a6ab239122230d31d3bab75affe9e68"
+          },
+          {
+            "label": "foe",
+            "own_world_3d": false,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\none/min-none-sv-foe.png",
+            "world3d_id": 0,
+            "yaw": 55.0,
+            "pixels": {
+              "opaque_px": 74953,
+              "near_white_px": 14643,
+              "cyan_px": 2480,
+              "white_ratio": 0.195362
+            },
+            "png_sha256": "f0b0904bc39d44c72f410be43145b474f33df9f8a28c563b60fe9543529591ed"
+          }
+        ]
+      },
+      "use_3d": true
+    },
+    "own": {
+      "apply_rows": [
+        {
+          "label": "player",
+          "mode": "own",
+          "own_after_apply": true,
+          "present": true,
+          "world_id_after_apply": 0
+        },
+        {
+          "label": "foe",
+          "mode": "own",
+          "own_after_apply": true,
+          "present": true,
+          "world_id_after_apply": 0
+        }
+      ],
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\own/min-own-live.png",
+      "mode": "own",
+      "state": {
+        "layers": [
+          {
+            "label": "player",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\own/min-own-sv-player.png",
+            "world3d_id": 0,
+            "yaw": -55.0,
+            "pixels": {
+              "opaque_px": 42788,
+              "near_white_px": 13197,
+              "cyan_px": 2435,
+              "white_ratio": 0.308428
+            },
+            "png_sha256": "53067e3de95dacd99d323720bac4cb8bf0e525b4e8cb52c3bf6bcc2dfe852065"
+          },
+          {
+            "label": "foe",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\own/min-own-sv-foe.png",
+            "world3d_id": 0,
+            "yaw": 55.0,
+            "pixels": {
+              "opaque_px": 70393,
+              "near_white_px": 937,
+              "cyan_px": 412,
+              "white_ratio": 0.013311
+            },
+            "png_sha256": "12d9f0c7a226e9a9c07a34133d38f8451b94d07e6f2b0b9b5d2ec83f6c4c0f56"
+          }
+        ]
+      },
+      "use_3d": true
+    },
+    "world": {
+      "apply_rows": [
+        {
+          "label": "player",
+          "mode": "world",
+          "own_after_apply": false,
+          "present": true,
+          "world_id_after_apply": -9223371998334286351
+        },
+        {
+          "label": "foe",
+          "mode": "world",
+          "own_after_apply": false,
+          "present": true,
+          "world_id_after_apply": -9223371998317509134
+        }
+      ],
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\world/min-world-live.png",
+      "mode": "world",
+      "state": {
+        "layers": [
+          {
+            "label": "player",
+            "own_world_3d": false,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\world/min-world-sv-player.png",
+            "world3d_id": -9223371998334286351,
+            "yaw": -55.0,
+            "pixels": {
+              "opaque_px": 42788,
+              "near_white_px": 13197,
+              "cyan_px": 2435,
+              "white_ratio": 0.308428
+            },
+            "png_sha256": "53067e3de95dacd99d323720bac4cb8bf0e525b4e8cb52c3bf6bcc2dfe852065"
+          },
+          {
+            "label": "foe",
+            "own_world_3d": false,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\world/min-world-sv-foe.png",
+            "world3d_id": -9223371998317509134,
+            "yaw": 55.0,
+            "pixels": {
+              "opaque_px": 70393,
+              "near_white_px": 937,
+              "cyan_px": 412,
+              "white_ratio": 0.013311
+            },
+            "png_sha256": "12d9f0c7a226e9a9c07a34133d38f8451b94d07e6f2b0b9b5d2ec83f6c4c0f56"
+          }
+        ]
+      },
+      "use_3d": true
+    },
+    "both": {
+      "apply_rows": [
+        {
+          "label": "player",
+          "mode": "both",
+          "own_after_apply": true,
+          "present": true,
+          "world_id_after_apply": -9223371998351063568
+        },
+        {
+          "label": "foe",
+          "mode": "both",
+          "own_after_apply": true,
+          "present": true,
+          "world_id_after_apply": -9223371998283954702
+        }
+      ],
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\both/min-both-live.png",
+      "mode": "both",
+      "state": {
+        "layers": [
+          {
+            "label": "player",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\both/min-both-sv-player.png",
+            "world3d_id": -9223371998351063568,
+            "yaw": -55.0,
+            "pixels": {
+              "opaque_px": 42788,
+              "near_white_px": 13197,
+              "cyan_px": 2435,
+              "white_ratio": 0.308428
+            },
+            "png_sha256": "53067e3de95dacd99d323720bac4cb8bf0e525b4e8cb52c3bf6bcc2dfe852065"
+          },
+          {
+            "label": "foe",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\both/min-both-sv-foe.png",
+            "world3d_id": -9223371998283954702,
+            "yaw": 55.0,
+            "pixels": {
+              "opaque_px": 70393,
+              "near_white_px": 937,
+              "cyan_px": 412,
+              "white_ratio": 0.013311
+            },
+            "png_sha256": "12d9f0c7a226e9a9c07a34133d38f8451b94d07e6f2b0b9b5d2ec83f6c4c0f56"
+          }
+        ]
+      },
+      "use_3d": true
+    }
+  },
+  "checks": {
+    "four_modes_ran": true,
+    "all_rc_zero": true,
+    "no_script_errors": true,
+    "two_layers_each": true,
+    "four_groups_eight_sv": true,
+    "all_sv_nonblank": true,
+    "none_world3d_null": true,
+    "none_own_false": true,
+    "none_both_viewports_white": true,
+    "own_world3d_getter_null_is_expected": true,
+    "own_flag_true": true,
+    "own_apply_readback_true": true,
+    "own_foe_clean": true,
+    "own_player_white": true,
+    "own_png_sha_equals_both": true,
+    "world_only_png_sha_equals_own": true,
+    "none_png_sha_differs": true,
+    "own_scenario_error_zero": true,
+    "own_equals_both_opaque": true,
+    "own_equals_both_white": true,
+    "both_foe_clean": true,
+    "four_live_frames": true,
+    "own_scenario_not_worse_than_both": true
+  },
+  "failed": [],
+  "ok": true,
+  "conclusion": "own 组（只设 own_world_3d=true）与 both 组（P0 口径）渲出的两层 SubViewport PNG 逐字节相同：foe 视口近白 14,643 → 937，player 视口保持 13,197；world 组（只显式 World3D.new()）同样等价。因此 setup() 只需一行 sv.own_world_3d = true，显式 new World3D 是冗余，且在运行时替换时会触发 scenario is null 非脚本错误（both=2 条，own=0 条）。注意 sv.world_3d getter 在 own 组仍为 null，这是 Godot 4.5 的「显式覆盖属性」语义，不能拿它判是否独立。"
+}

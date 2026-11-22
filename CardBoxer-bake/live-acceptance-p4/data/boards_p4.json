@@ -1,0 +1,87 @@
+{
+  "boards": {
+    "timeline": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\boards\\P4-live-rhythm-timeline.png",
+      "sha256": "30c5e01fc7a7f8782b6eb7a98e37c985b4959b6313d0e2d00fdd95251a2949d2",
+      "size": [
+        1460,
+        960
+      ],
+      "focus_zoom_points": 4,
+      "focus_zoom_frames": [
+        6,
+        7,
+        9,
+        11
+      ]
+    },
+    "strip": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\boards\\P4-live-frame-sequence-strip.png",
+      "sha256": "12ff1fc7970e2403dcaf4a812b693bad21108d8e56e7acf342ab64352e5562d0",
+      "size": [
+        1440,
+        910
+      ],
+      "picked_idx": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "picked_cards": [
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus"
+      ]
+    },
+    "keyframes": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\boards\\P4-live-full-keyframes.png",
+      "sha256": "8a3d0c6c44c3388f758bb151272c1d01f8a9e536c769fbc00ae1d0ba9aac589d",
+      "size": [
+        1400,
+        850
+      ],
+      "picked": {
+        "three_d": [
+          18,
+          78,
+          126
+        ],
+        "default_off": [
+          18,
+          78,
+          126
+        ]
+      },
+      "phases": {
+        "three_d": [
+          "reveal",
+          "resolve",
+          "resolve"
+        ],
+        "default_off": [
+          "reveal",
+          "resolve",
+          "resolve"
+        ]
+      }
+    }
+  },
+  "checks": {
+    "three_boards_valid_png_signature": true,
+    "three_boards_nonempty": true,
+    "strip_six_continuous_frames": true,
+    "keyframes_picked_from_both_tags": true,
+    "keyframes_cover_reveal_and_resolve": true,
+    "timeline_zoom_is_single_continuous_segment": true,
+    "timeline_numbers_match_analysis": true,
+    "upstream_live_and_analysis_all_checks_true": true
+  },
+  "failed": [],
+  "ok": true
+}

@@ -1,0 +1,79 @@
+{
+  "texture": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer\\assets\\3d\\foe-rigged_texture_pbr_20250901.png",
+  "orig_size": [
+    4096,
+    4096
+  ],
+  "analyzed_size": [
+    1024,
+    1024
+  ],
+  "counts": {
+    "cyan": 2437,
+    "warm": 62,
+    "white": 5
+  },
+  "ratios": {
+    "cyan": 0.002324,
+    "warm": 5.9e-05,
+    "white": 5e-06
+  },
+  "bbox_1024": {
+    "cyan": [
+      6,
+      1,
+      1004,
+      1023
+    ],
+    "warm": [
+      20,
+      84,
+      984,
+      865
+    ],
+    "white": [
+      332,
+      323,
+      1001,
+      988
+    ]
+  },
+  "grid4x4": [
+    [
+      13,
+      65,
+      45,
+      137
+    ],
+    [
+      55,
+      155,
+      46,
+      256
+    ],
+    [
+      59,
+      86,
+      242,
+      48
+    ],
+    [
+      64,
+      162,
+      740,
+      331
+    ]
+  ],
+  "board": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-j-model-rework\\boards\\B-shared-texture-features.png",
+  "board_bytes": 1449216,
+  "conclusion": "若青/暖红/近白在 foe baseColor 上聚成可辨图案，则这些同源元素是烘在保留大壳 UV 上的贴图图案，几何删壳碰不到；B 必须与贴图语义重绘组合才能根治。",
+  "checks": {
+    "texture_is_4096": true,
+    "cyan_pattern_present": true,
+    "warm_pattern_present": true,
+    "cyan_is_clustered": true,
+    "board_written": true
+  },
+  "failed": [],
+  "ok": true
+}

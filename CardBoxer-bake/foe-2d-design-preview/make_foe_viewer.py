@@ -1,0 +1,173 @@
+"""生成完全离线的对手怪 V1 2D 设计查看器。
+
+不依赖 CDN、不用 fetch、不加载 3D 文件 —— 图片全是同目录相对路径，
+file:// 直接打开也能用。数字（取景框、抹水印量）从 design_stats.json 读。
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+STATS = json.loads((HERE / "design_stats.json").read_text(encoding="utf-8"))
+
+items = [
+    {"file": "foe-V1-2D-design-board.png", "label": "2D 设计板",
+     "detail": "1800×1500 · 全身 + 四个重点特写 + 设计要点 / 如实偏差 / 边界",
+     "group": "设计整理"},
+    {"file": "foe-V1-six-detail-panels.png", "label": "细节六格",
+     "detail": "1800×1180 · 头 / 结晶 / 胸甲 / 护臂 / 腰带 / 靴，等比缩放不裁不变形",
+     "group": "设计整理"},
+    {"file": "foe-full-original.png", "label": "概念图原图（含水印）",
+     "detail": "1024×1536 · ImageGen 正面全身 · 右下角保留服务原水印，逐字节复制",
+     "group": "原始素材"},
+    {"file": "foe-full-clean.png", "label": "抹水印全身",
+     "detail": "1024×1536 · 仅把右下角服务水印填成背景色，造型像素未改",
+     "group": "原始素材"},
+    {"file": "foe-redraw.png", "label": "图生图重绘（负结果）",
+     "detail": "1024×1536 · input_fidelity=high 把构图锁死，视角几乎没换，不是多视图输入",
+     "group": "原始素材"},
+    {"file": "player-V4b-foe-V1-concept-comparison.png", "label": "玩家 V4b / 对手怪 对照",
+     "detail": "1440×1160 · 双方裁到人物包围盒、统一人物高 700px、脚底对齐",
+     "group": "对照"},
+]
+
+w = STATS["wipe_watermark"]
+facts = [
+    f"2D concept-art · 源图 {STATS['source_size'][0]}×{STATS['source_size'][1]} · ImageGen 生成",
+    "3D 探针：当日 hy-3d 配额 5/5 用满，提交阶段 HTTP 429 拒绝；无 GLB / 无骨架 / 无动画",
+    f"抹水印框 {w['box']}：深色造型像素占比 {w['dark_ratio_before']}（0 才敢填色）",
+    f"与背景色偏差像素：{w['off_fill_before']} → {w['off_fill_after']}",
+    "游戏源码 0 改动 · 未导 Godot · 未渲动作帧 · 造型好看与否由人判断",
+]
+crops = "；".join(f"{c['key']} {c['relative_box']}" for c in STATS["crops"])
+
+TEMPLATE = """<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《牌拳》对手怪 V1 · 2D 设计查看器</title>
+<style>
+:root{--bg:#14161c;--panel:#20242e;--card:#30343e;--edge:#565e70;
+      --cyan:#46d2e6;--orange:#e8944e;--fg:#eef0f6;--muted:#96a0b4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+     font-family:system-ui,"Microsoft YaHei","PingFang SC",sans-serif}
+header{padding:18px 28px 12px;border-bottom:1px solid var(--edge)}
+h1{margin:0;font-size:21px;letter-spacing:.5px}
+.sub{margin-top:6px;font-size:13px;color:var(--muted)}
+nav{display:flex;flex-wrap:wrap;gap:8px;padding:14px 28px 6px}
+button{background:var(--panel);color:var(--fg);border:1px solid var(--edge);
+       border-radius:7px;padding:8px 14px;font-size:13px;cursor:pointer;
+       font-family:inherit;transition:.15s}
+button:hover{border-color:var(--cyan)}
+button.on{background:var(--cyan);color:#101820;border-color:var(--cyan);font-weight:700}
+.sep{width:100%;height:0}
+main{display:flex;gap:18px;padding:8px 28px 20px;align-items:flex-start;flex-wrap:wrap}
+.stage{flex:1 1 620px;min-width:320px;background:var(--card);border:1px solid var(--edge);
+       border-radius:12px;display:flex;align-items:center;justify-content:center;
+       height:min(76vh,820px);overflow:hidden}
+.stage img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+aside{flex:0 1 320px;min-width:260px;background:var(--panel);border:1px solid var(--edge);
+      border-radius:12px;padding:18px}
+.kicker{color:var(--cyan);font-size:12px;letter-spacing:1px}
+h2{margin:8px 0 12px;font-size:18px}
+.meta{font-size:13px;color:var(--muted);line-height:1.8}
+.meta b{color:var(--fg);font-weight:600}
+hr{border:0;border-top:1px solid var(--edge);margin:16px 0}
+.note{font-size:12px;color:var(--muted);line-height:1.85;word-break:break-word}
+footer{padding:12px 28px 26px;font-size:12px;color:var(--muted);border-top:1px solid var(--edge)}
+kbd{background:var(--panel);border:1px solid var(--edge);border-radius:4px;padding:1px 6px}
+</style>
+</head>
+<body>
+<header>
+  <h1>《牌拳》对手怪 V1 · 2D 设计查看器</h1>
+  <div class="sub">绝区零「盗洞暴徒」视觉语言 · 六张图离线切换 · 非 3D 模型、非游戏内实渲</div>
+</header>
+<nav id="tabs"></nav>
+<main>
+  <div class="stage"><img id="view" alt="对手怪 V1 2D 设计"></div>
+  <aside>
+    <div class="kicker">当前图片</div>
+    <h2 id="label"></h2>
+    <div class="meta" id="detail"></div>
+    <hr>
+    <div class="kicker" style="color:var(--orange)">事实与边界</div>
+    <div class="note" id="facts"></div>
+    <hr>
+    <div class="kicker">六块取景框（相对原图宽高）</div>
+    <div class="note" id="crops"></div>
+    <hr>
+    <div class="note">切换：<kbd>←</kbd> <kbd>→</kbd> 或数字键 <kbd>1</kbd>–<kbd>6</kbd>。<br>
+    图片均为本目录相对路径，完全离线，无 CDN / 无 fetch / 无 3D 文件。</div>
+  </aside>
+</main>
+<footer id="foot"></footer>
+<script>
+const SHOTS = __SHOTS__;
+const FACTS = __FACTS__;
+const CROPS = __CROPS__;
+let i = 0;
+const tabs = document.getElementById('tabs');
+const view = document.getElementById('view');
+const label = document.getElementById('label');
+const detail = document.getElementById('detail');
+document.getElementById('facts').innerHTML = FACTS.map(s => '· ' + s).join('<br>');
+document.getElementById('crops').textContent = CROPS;
+SHOTS.forEach((s, n) => {
+  if (n > 0 && s.group !== SHOTS[n-1].group) {
+    const sep = document.createElement('div'); sep.className = 'sep'; tabs.appendChild(sep);
+  }
+  const b = document.createElement('button');
+  b.textContent = (n+1) + ' · ' + s.label;
+  b.onclick = () => show(n);
+  tabs.appendChild(b);
+});
+function show(n){
+  i = (n + SHOTS.length) % SHOTS.length;
+  const s = SHOTS[i];
+  view.src = s.file;
+  label.textContent = s.label;
+  detail.innerHTML = '<b>' + s.file + '</b><br>' + s.detail + '<br>分组：' + s.group;
+  [...tabs.querySelectorAll('button')].forEach((b,k) => b.classList.toggle('on', k === i));
+  document.getElementById('foot').textContent =
+    '共 ' + SHOTS.length + ' 张 · 第 ' + (i+1) + ' 张 · 素材来自 foe-model-probe-v1/（原图逐字节复制，sha256 已核对）';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') show(i+1);
+  else if (e.key === 'ArrowLeft') show(i-1);
+  else if (/^[1-9]$/.test(e.key)) show(Number(e.key)-1);
+});
+show(0);
+</script>
+</body>
+</html>
+"""
+
+missing = [s["file"] for s in items if not (HERE / s["file"]).is_file()]
+if missing:
+    raise SystemExit(f"VIEWER_MISSING_ASSETS {missing}")
+
+
+def js(value) -> str:
+    return json.dumps(value, ensure_ascii=False).replace("</", "<\\/")
+
+
+html = (TEMPLATE
+        .replace("__SHOTS__", js(items))
+        .replace("__FACTS__", js(facts))
+        .replace("__CROPS__", js(crops)))
+# 完全离线自检：一个外链 / 一个没替换的占位符都不许留
+forbidden = ["http://", "https://", "cdn.", "fetch(", "__SHOTS__", "__FACTS__", "__CROPS__"]
+hits = [t for t in forbidden if t in html]
+if hits:
+    raise SystemExit(f"VIEWER_NOT_OFFLINE {hits}")
+
+out = HERE / "foe-V1-2D-design-viewer.html"
+out.write_text(html, encoding="utf-8")
+print(json.dumps({"output": out.name, "bytes": out.stat().st_size,
+                  "shots": len(items), "missing_assets": missing,
+                  "offline_forbidden_hits": hits}, ensure_ascii=False))
+print("FOE_VIEWER_OK")

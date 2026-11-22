@@ -1,0 +1,103 @@
+《牌拳 / CARD BOXER》每局三回卡牌对战 —— 验证记录
+2026-11-06
+
+一、结论
+工程师要求「改成三回卡牌对战后结束回合」。按「一局 = 3 回亮牌比牌」实现：
+每局第 3 回结算完即按剩余兵力收局，横幅「3 回战罢 · 按兵力判定」，
+随后走原有三局两胜外壳（over 2.4s → 下一局）。原实时格斗路径一行未动，
+BATTLE_MODE 仍为 "taikou"，改回 "realtime" 可完整回到实时格斗。
+
+二、改动范围（游戏目录不是 git 仓库，改前先备份）
+| 文件 | 改动 |
+|---|---|
+| scripts/arena.gd | TK_MAX_TURNS 12 → 3；结算文案改成动态 "%d 回战罢 · 按兵力判定"；收局改为「先判上限再自增」，避免产生不存在的轮次 |
+| tests/taikou_flow_check.gd | 去掉注释里写死的「12 轮」；新增 3 条承重断言，流程自检 35 → 38 条 |
+| scripts/hud.gd | **未改**：两处「第 N 轮 / 共 M 轮」与中央圆圈都读 arena.TK_MAX_TURNS / arena.tk_turn，常量一改自动跟着变 |
+
+备份：bake/orig/pre-three-rounds/ 下 arena.gd、taikou_flow_check.gd，
+改造前 sha256 与原件逐个核对一致（fda6fe95… / e61f01f6…）。
+字节补丁：verification-tools/apply_three_rounds_patch.py、apply_no_phantom_turn.py，
+每个锚点要求恰好命中 1 次，未命中即中止；输出 PATCH_OK，纯 LF 未被换行归一化破坏。
+
+三、承重判据（不是只改一个常量就宣称完成）
+- 断言点名 `ArenaScript.TK_MAX_TURNS == 3`，防止有人把上限改回去而测试全绿。
+- 新增「从 tk_turn=1 连续推进」的循环用例：不是把轮数直接设成上限跳到末尾，
+  而是真跑 `_finish_taikou_turn()` 直到 round_phase=="over"，
+  断言恰好 3 次收局、收局时 tk_turn==3、round_wins[0]==1。
+- 8 场独立自动对局（见第四节）独立复算「每局恰好 3 回」，与自检互为交叉验证。
+
+四、最终验收（真实输出）
+| 项 | 结果 |
+|---|---|
+| 编辑器解析 | exit=0，SCRIPT ERROR=0，Parse Error=0（exit=0 不等于没语法错，必须 grep） |
+| taikou_rules_check | 90/90 passed |
+| taikou_flow_check | 38/38 passed（新增 3 条三回断言） |
+| combo_check | 8/8 passed（实时路径零回归） |
+| motion/pose/duel/reach/feet 五道门 | 全 PASS，8 个进程 exit=0 |
+| 自动对战（8 场独立，各 4200 帧 fixed-fps） | 22 局 / 66 回；完整局每局回数集合 = [3]；玩家胜 10、对手胜 11、平局 1 |
+| 三局两胜推进 | 截帧见第 2 局「开打！」+ 血条回到 100/100；日志 turn 序列按 1,2,3 分组重置 |
+| 全部运行日志 | SCRIPT ERROR = 0 |
+
+平局量化：1/22 = 4.5% 的局收在相同兵力（例：85/85）。
+平局时 `_end_round("draw")` 不给任何一方加 round_wins，`_advance_after_round()`
+会再开一局 —— 即「平局加赛」，且没有加赛上限。这是**既有规则**（12 回时代就有，
+只是概率低），本次没改，理由见第八节。
+
+顺带一个平衡变化：12 回制下旧记录是「玩家侧 8/11 轮胜、64:0 K.O.」的滚雪球，
+三回制下 8 场对局里玩家 10 胜 / 对手 11 胜，接近五五开。强牌型滚雪球被局长的
+大幅缩短自然压住了，没有额外改伤害公式。
+
+五、引擎内截帧（3 张，均非 headless，rc=0 / SCRIPT ERROR=0）
+| 图 | 内容 |
+|---|---|
+| three-round-match-turn-1.png | 顶部「第 1 轮 / 共 3 轮」、中央圆圈 1、横幅「第 1 轮 · 选牌」、100/100 |
+| three-round-match-resolution.png | 顶部「第 3 轮 / 共 3 轮」、中央圆圈 3、横幅「3 回战罢 · 按兵力判定」「青岚拿下这一回合」、75/88 |
+| three-round-match-round-2.png | 血条回到 100/100、横幅「开打！」、顶部「第 1 轮 / 共 3 轮」，证明下一局正常开启 |
+
+六、截帧时发现并修掉的问题：幽灵第 4 轮
+第一版只改常量后，结算截帧横幅是对的，但顶部显示「**第 4 轮 / 共 3 轮**」、
+中央圆圈是 4 —— `_finish_taikou_turn()` 原逻辑先 `tk_turn += 1` 再判断 `> 上限`，
+收局时自增出一个根本不存在的轮次。这违背「三回后结束」的语义。
+修法：把上限判断提前，收局时 tk_turn 停在最后一回（3），只有还要继续才自增。
+对应断言从 tk_turn==4 改成 ==3，修复后重截的结算帧已目视确认显示「第 3 轮 / 共 3 轮」。
+
+七、踩的坑（留痕）
+- **判 EOL 不能用 `grep -c $'\r'`**：它对纯 LF 的 arena.gd 报了 1087，让我第一版补丁
+  按 CRLF 构造锚点、ANCHOR_MISMATCH count=0。读 bytes 才确认两个文件都是纯 LF
+  （CRLF=0、lone LF=1087/162）。补丁脚本改成按原文件风格判「有没有被换行归一化」。
+- **`--quit-after N` 按主循环迭代计，不按秒**：非 headless 高帧率下 2400 帧 ≈ 4.8s 墙钟，
+  只截到 5 个时间点里的第 1 张就退出了。截帧不要用它当退出机制。
+- **多点截帧不稳定**：`_maybe_capture()` 每次都要 `await RenderingServer.frame_post_draw`，
+  窗口失焦时后续协程全挂在 await 上，`_capture_index` 空转但 PNG 只出 1 张
+  （日志却显示游戏跑满两局）。改成「每次运行只截 1 个时间点、截完立即 quit」，
+  三次独立运行全部 rc=0、各出 1 张。上一轮 taikou_shot.py 用的也是这个可靠跑法。
+- **`--headless` 截不了帧**：dummy driver 下 frame_post_draw 不推进（上一轮已记），
+  能截帧的日志必有 `OpenGL API 3.3.0 NVIDIA … Compatibility`。
+- 把 `--quit-after` 从 4200 加到 30000 并没有多跑局数：两局 2:0 就 match_over 了，
+  `_tick_taikou` 不再推进。要量化平局必须跑**多场独立对局**，不是加帧数。
+
+八、已知问题 / 故意没做（不藏）
+1. 平局加赛无上限（4.5% 的局）。改它要动 `_advance_after_round()`，而那段是
+   实时格斗与回合制**共用**的三局两胜外壳，动它就得重跑两套骨架的全套回归。
+   本次请求只到「三回后结束回合」，没顺手扩范围；4.5% 的概率也不构成阻塞。
+2. 卡面描述文字仍会溢出卡片右边界（上一轮合战 P0 已记录，P1 修 clip / 折行）。
+3. 12 回时代记的「士气、蓝色后发卡、常驻卡、秘策、阵形相克」仍未做，属 P1/P2。
+4. 归档 `classic-battle-p0-validation-record.txt` 里写的「12 轮上限」是该次的历史状态，本记录为现行基线。
+
+九、回退
+把 bake/orig/pre-three-rounds/ 下两个文件拷回 scripts/arena.gd 与
+tests/taikou_flow_check.gd 即回到 12 回制；HUD 无需回滚（动态读常量）。
+背景图与血条 V2 的回退另见 2026-11-05 / 2026-11-06 项目日志。
+
+十、最终源码 sha256（收尾重算）
+arena.gd               b541625379e43556e0b8b2bd100e8dbefee997bd726cf26b96edb1be51e388c5
+hud.gd                 78e5d8ecc13e5ed2bd049e2dd04305b41f3591738d37e35c41256a28669357fc（未改）
+taikou_flow_check.gd   26bffbcd6c4ce1150e499cff555dfeaedb7dec5f481c786864b8d6ec63abe583
+游戏目录内 grep「12 轮 / TK_MAX_TURNS := 12」= none，BATTLE_MODE 仍 "taikou"。
+
+十一、归档清单
+background-candidates/三回制-验证记录.txt（本文件）
+background-candidates/three-round-match/：3 张截帧、三回制-full.diff、自动对战证据.txt（8 场日志 + 汇总）
+background-candidates/verification-tools/：apply_three_rounds_patch.py、apply_no_phantom_turn.py、
+                     three_rounds_report.py、diag_eol.py（EOL 诊断留痕）
+bake/orig/pre-three-rounds/：改造前两文件备份

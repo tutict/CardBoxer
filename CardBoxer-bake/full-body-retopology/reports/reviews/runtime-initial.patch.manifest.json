@@ -1,0 +1,42 @@
+[
+  {
+    "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\full-body-retopology\\project\\scripts\\hand_shape.gd",
+    "sha256": "0eb5d2b74f1d6ece09ba34bf759a91eb3ddf70b4d134126c9b7aa5323a3866bc",
+    "bytes": 1830
+  },
+  {
+    "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\full-body-retopology\\project\\scripts\\native_motion.gd",
+    "sha256": "fbe6e684e630794bee65700dca31808210c96c2c6f4b3f774e3d1efd05f71c60",
+    "bytes": 16711
+  },
+  {
+    "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\full-body-retopology\\project\\scripts\\battle_presentation.gd",
+    "sha256": "bba3416fa4c29c5a3ca2add7c2dce59269e2f258c71d6c3d6d1a883d98e3e584",
+    "bytes": 17741
+  },
+  {
+    "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\full-body-retopology\\project\\scripts\\fighter_3d_layer.gd",
+    "sha256": "8e25710e67a7bd193c696c44519802acc8c6f60d6a3e301413866cb8af0ef64b",
+    "bytes": 20102
+  },
+  {
+    "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\full-body-retopology\\project\\tests\\hand_shape_check.gd",
+    "sha256": "bebceef79ba4743792e237145772551c7f669e159149fd436c9627f4c7bc1c1e",
+    "bytes": 6840
+  },
+  {
+    "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\full-body-retopology\\project\\tests\\hand_asset_check.gd",
+    "sha256": "73498dcf68cd4e33a9dfa03c271ff0cdda1506827ef62cab4d78a7f36a2624b6",
+    "bytes": 6049
+  },
+  {
+    "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\full-body-retopology\\tools\\author_hand_grips.py",
+    "sha256": "56bda216aa5c85b5450e48d672f360c027a8cabd524ee39b471bf6311b7ac0a3",
+    "bytes": 2749
+  },
+  {
+    "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\full-body-retopology\\tools\\check_hand_body.gd",
+    "sha256": "e89d9bcf55ab7bfcde873ac483593d788d548c1274570624d854d074afc6faad",
+    "bytes": 2500
+  }
+]

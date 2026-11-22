@@ -1,0 +1,76 @@
+[
+  {
+    "role": "player",
+    "source": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\full-body-retopology\\baseline\\assets\\3d\\player-rigged.glb",
+    "source_sha256": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+    "raw": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\full-body-retopology\\tools\\pipeline_roundtrip\\player-roundtrip-raw.glb",
+    "raw_sha256": "9526f40d8076c6823149e11b483279b2a8e895bedd4e8f4669f333ab5ed31682",
+    "blender_version": "5.2.0 LTS",
+    "export_options": {
+      "export_format": "GLB",
+      "use_selection": true,
+      "export_skins": true,
+      "export_morph": true,
+      "export_morph_normal": true,
+      "export_animations": false,
+      "export_apply": false,
+      "export_yup": true,
+      "export_materials": "EXPORT"
+    },
+    "mesh_vertices": 57934,
+    "mesh_polygons": 79986,
+    "armature_bones": [
+      "hips",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "upperarm_b",
+      "forearm_b",
+      "upperarm_f",
+      "forearm_f",
+      "thigh_b",
+      "shin_b",
+      "thigh_f",
+      "shin_f",
+      "neutral_bone"
+    ]
+  },
+  {
+    "role": "foe",
+    "source": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\full-body-retopology\\baseline\\assets\\3d\\foe-rigged.glb",
+    "source_sha256": "08713ff745ab490396cd150f4e91617055c6a648cf85dd9fdcd28c532b76cd18",
+    "raw": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\full-body-retopology\\tools\\pipeline_roundtrip\\foe-roundtrip-raw.glb",
+    "raw_sha256": "3f1cc274567a3d098baf4530e9f076368a05eaa7be02a13068f7c46b85afc447",
+    "blender_version": "5.2.0 LTS",
+    "export_options": {
+      "export_format": "GLB",
+      "use_selection": true,
+      "export_skins": true,
+      "export_morph": true,
+      "export_morph_normal": true,
+      "export_animations": false,
+      "export_apply": false,
+      "export_yup": true,
+      "export_materials": "EXPORT"
+    },
+    "mesh_vertices": 64059,
+    "mesh_polygons": 79998,
+    "armature_bones": [
+      "hips",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "upperarm_b",
+      "forearm_b",
+      "upperarm_f",
+      "forearm_f",
+      "thigh_b",
+      "shin_b",
+      "thigh_f",
+      "shin_f",
+      "neutral_bone"
+    ]
+  }
+]

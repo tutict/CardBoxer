@@ -1,0 +1,28 @@
+{
+  "source": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\shots\\natural-v2-final-live",
+  "scenario_count": 3,
+  "checks": [
+    {
+      "scenario": "player-card-cross",
+      "check": "melee hit samples the native contact endpoint",
+      "pass": true,
+      "detail": {
+        "tick": 10,
+        "card": "cross",
+        "frame": 9.0,
+        "contact": 9
+      }
+    },
+    {
+      "scenario": "taikou-player",
+      "check": "taikou contact is visibly held, not a one-frame skip",
+      "pass": true,
+      "detail": {
+        "contact_tick_count": 16
+      }
+    }
+  ],
+  "failures": [],
+  "passed": true,
+  "limitations": "Runtime pose/clip timing evidence only; rendered skins need human inspection."
+}

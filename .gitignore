@@ -24,6 +24,10 @@ __pycache__/
 .venv-cpython/
 venv/
 node_modules/
+/logs/
+/dist/
+/.impeccable/
+/.superpowers/
 
 # Temporary fixtures and recursive publication copies
 pipeline_fixture_*/

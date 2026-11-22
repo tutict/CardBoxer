@@ -1,0 +1,229 @@
+《牌拳》E 路线 · 玩家 V4b 3D 绑骨 / glTF-Godot 读回 · 验证记录
+生成日期：2026-11-10
+工作区：CardBoxer-bake/route-e-player-3d-rigging/
+上游：C 路线（对手怪 glTF-Godot 探针）、D 路线（Creative Review + 引擎内截帧）、
+      A 路线（对手怪可变形连续壳 .blend）
+
+========================================================================
+1. 结论（先说结果）
+========================================================================
+工程师选的 B =「给玩家 V4b 补对手怪那套 Voxel 连续壳 + 13 骨链，再走 glTF」，
+**做成了资产，没做成游戏内动作**。
+
+· 做成了：玩家 V4b 现在有一份 `player-V4b-deformable-continuous-shell.blend`
+  —— 2,035 连通壳原高模一张没动，UV / 材质 / 3 张 4096² PBR 逐项一致；
+  3 壳 Voxel 代理 + 13 骨 Armature + SURFACE_DEFORM 绑定；重开后仍能按
+  `baked2.json` 逐帧驱动；站架与源模型恒等（最大逐顶点差 9.828e-06 m）。
+· 没做成：glTF 里 SURFACE_DEFORM 无对应物，导出即烘焙成当前帧静态快照；
+  4 个 GLB 全部 `animations=0`；Godot 里高模 `node_0` 的
+  `skeleton_path=''`，只有代理壳挂了 14 骨；0 个 AnimationPlayer。
+  也就是说「能搬进 Godot」≠「在 Godot 里能动」，与 C 路线对手怪同构。
+· 负结果如实：72 帧全量对照里，玩家 E_x15 的边撕裂**劣于**对手怪
+  A2_x15 基线。mean_tear_ratio = 1.27632，最坏 1.84941（jab#4），
+  只有 4/72 帧撕裂更低，22/72 帧幅度不逊。这不是「变形已可用」。
+
+一句话：造型层成立、Blender 内驱动链成立；变形质量与 Godot 动作层两项
+都没过线。判定 `WORSE_THAN_FOE` + `static_snapshot_only`，
+建议 `small_sprite_sample_first`（先渲 2~8 帧 2D 精灵小样本看图证伪），
+不直接渲 228 帧、不先投 Godot 侧 14 骨驱动层重建。
+
+========================================================================
+2. 范围与零污染
+========================================================================
+· 本工作区全部产物都在 `route-e-player-3d-rigging/`，独立 `probe_project_e/`
+  隔离 Godot 工程；不回写 C / D / A 路线归档。
+· `baseline_e.json` 钉住可运行工程 `CardBoxer` 的 105 个文件 +
+  10 个单点（C/D 文件清单、A 路线 .blend、V4b 源 GLB、apose_joints、
+  puppet_mapping、baked2、c_build / c2_build / a_build 脚本）。
+  verify_e 逐项重算 size + sha256，`drift=0`。
+· 游戏工程里 `.glb/.gltf/.obj/.fbx/.blend/.dae/.vrm` 计数 = 0，
+  **游戏源码与资源 0 改动**；C 路线 verify_c 25/25、D 路线 verify_d
+  18/18 仍绿，两条清单 sha 与条目数未变。
+
+========================================================================
+3. 源资产与绑定链（全部由 e_build.json / e_probe.json 现算）
+========================================================================
+项目                          数值
+----------------------------  ------------------------------------------
+源 GLB                        `3d-model-probe-v4b/artifact_03.glb`
+                              37,314,784 B，sha256 5143404c…
+源高模                        57,901 顶点 / 79,986 面 / 2,035 连通壳
+源资产                        1 层 UV / 1 材质 / 3 张 4096² embedded PBR
+归一化                        身高 1.72 m，scale = 1.652229
+链参数                        voxel_size = 0.020、arm_only_gain = 1.5、
+                              apose_table = "player"（不是 "foe"）
+Voxel 代理壳                  14,070 顶点 / 28,128 面 / **3 连通壳** /
+                              tri_ratio = 1.0
+自动权重覆盖                  14,062 / 14,070 = 99.94%
+SURFACE_DEFORM                is_bound = true，rest_drift = 4.79e-06 m，
+                              target = e_continuous_shell
+重开复核                      1 个 rig / 13 骨 / 高模仍 57,901 顶点 /
+                              仍 bound / 驱动最大位移 0.82539 m
+站架恒等                      identical = true，最大逐顶点差 9.828e-06 m
+UV / PBR                      uv_same = true、textures_same = true，
+                              重开后 1 层 UV + 3 张 4096² 全在
+
+A-pose 表沿用 `3d-attack-gifs/apose_joints.json` 的 player 键；`e_build.py`
+零复制复用了 `c_build.apose_points()`（它只按 spec["foe"] 取表，
+这里把 player 表喂进去），没有另抄一份骨架点。
+
+========================================================================
+4. 全 72 帧变形质量：负结果
+========================================================================
+帧账本：jab 14 + cross 22 + wave 36 = 72 帧，三档增益
+E_x1 / E_x15 / A2_x15_foe 同帧同口径逐帧对照（A2_x15_foe 是对手怪
+V2 定稿基线，不是重新跑一次对手怪）。
+
+指标                          E_x1        E_x15       A2_x15_foe
+---------------------------  ----------  ----------  ----------
+tear_p999 max (m)             0.03954     0.05601     0.04739
+tear_p999 mean (m)            0.014947    0.021370    0.016299
+tear_gt5cm max (边数)          46          198         100
+max_displacement max (m)      0.58383     0.82423     0.82038
+moved_gt_1mm max (顶点)       57,873      57,873      64,006
+reach_max max (m)             0.52363     0.73905     0.74950
+foot_gap max (m)              0.02409     0.02409     0.02301
+penetration_pct               0.0         0.0         0.0
+
+逐帧比值（E_x15 / A2_x15_foe）：
+  mean_tear_ratio       = 1.27632   （> 1 = 玩家更差）
+  worst_tear_ratio      = 1.84941   @ jab#4（E 0.03586 / A 0.01939）
+  撕裂更低的帧           = 4 / 72
+  幅度不逊对手怪的帧     = 22 / 72
+结论：x1.5 增益确实放大了动作（0.58383 → 0.82423 m），但撕裂涨得更快；
+「能驱动」不等于「变形质量够渲图集」。这一项判 `WORSE_THAN_FOE`，
+板 3 标题直接写「负结果如实保留」，判据 E-13 会把它钉住。
+
+========================================================================
+5. 代表帧与人工看图（不进机器判据）
+========================================================================
+`frames/` 16 张 768² 透明 PNG：
+  e_build.json 记 11 张 x1.5（含 55° 侧视）、x1_shots.json 记 4 张 x1、
+  source_probe.json 记 1 张源正面；逐张 size + sha256 全部对上，
+  16 张互不相同（verify_e 的 E-15）。
+
+看图结论（人工，证据在 `boards/E-model-and-motion-six-frames.png` 与
+`boards/E-gain-x1-and-x15-comparison.png`）：
+  · 源正面 / 连续壳站架两格几乎像素一致，白长衫、明黄披肩、黑叶纹襟片、
+    红盘扣、太极圆牌金绳结、靛蓝云纹下摆、黑厚底靴都在，
+    没有出现对手怪 V1 那种悬浮灰矩形或手臂炸成扇形薄片。
+  · 55° 侧视体积可读，头发与披肩有前后层次。
+  · jab / cross / wave 三帧手臂位置确实变了，人形连贯、无脱离碎片。
+  · **但正视看更像「展臂」而不是「出拳」**：`baked2.json` 是 2D 侧视
+    (x,z) 关节表，套到正视 A-pose rest 上，深度方向无法表达。
+    这是动作表语义与立绘视角的错配，不是绑定 bug。
+  · x1 vs x1.5 同帧差异在 cross#10 最明显（一只手上抬），
+    站架在两档下保持恒等。
+
+========================================================================
+6. glTF 导出：静态快照 + 零重编码
+========================================================================
+4 个 GLB 全部由同一份交付 .blend 导出（Blender 5.2.3 LTS）：
+
+GLB                  字节        skins  anims  顶点     JOINTS_0  贴图
+-------------------  ----------  -----  -----  ------  ---------  ----
+player-full.glb      38,220,692  1      0      72,004  1          3
+player-stance.glb     2,335,004  0      0      57,939  0          0
+player-cross.glb      2,339,100  0      0      58,067  0          0
+player-proxy-rig.glb    905,116  1      0      14,070  1          0
+
+· `player-full` 的 1 个 skin 有 14 joints（13 骨 + neutral_bone），
+  但只挂在 14,070 顶点的代理壳上；57,934 顶点的高模 primitive
+  属性只有 NORMAL / POSITION / TEXCOORD_0，**没有 JOINTS_0/WEIGHTS_0**。
+· 3 张 embedded PBR 共 34,980,066 B，与源 packed 图逐字节 sha256
+  一致（`all_match=true`），占 full GLB 的 91.521%，零重编码。
+  PBR 索引：baseColor=1、metallicRoughness=2、normal=0。
+· `player-stance` / `player-cross` 用 `export_apply=true` 把
+  SURFACE_DEFORM 烘焙进顶点，两者 bbox 最大分量差 0.169804 m
+  （cross#10 确实和站架不是同一个形状），可当成两张不同的静态快照；
+  但两者 `skins=0 / animations=0`，shader/引擎侧无法插值。
+
+========================================================================
+7. Godot 4.5 读回（隔离工程 probe_project_e）
+========================================================================
+· 3 个 GLB 复制进工程，逐字节 identical；`--editor --quit` 导入
+  22.235 s，rc=0，生成 12 个导入文件 / 3 份 `.glb.import`。
+· 资源读回探针 0.949 s，rc=0，**0 SCRIPT ERROR**，引擎
+  `4.5-stable (official)`。
+· `player-full.glb`：PackedScene / 5 节点（2 MeshInstance3D +
+  1 Skeleton3D + 2 Node3D），3 张 4096² 贴图在 Godot 里全部 present；
+  `e_continuous_shell` 14,070 顶点 `skeleton_path='..'`；
+  `node_0` 57,934 顶点 `skeleton_path=''`；14 骨含 neutral_bone。
+· 三个 target 的 `animation_players` 全部为空；`player-stance` 是
+  单 MeshInstance 无骨架，`player-proxy-rig` 只有代理壳 + 14 骨。
+· 也就是说：手动在 Godot 里转骨架，能动的只有那层 3 壳代理，
+  不是玩家看到的高模。
+
+========================================================================
+8. 验收（全部真跑，数字从盘上现算）
+========================================================================
+判据     命令与结果
+-------- --------------------------------------------------------------
+E-01..26  `python verify_e.py` → 26/26 PASS，`E_VERIFIED`
+          （`verify_e_result.json` 逐条留名 + detail）
+变异      `python mutation_e.py` → 19/19 CAUGHT，DID_NOT_RUN=0，
+          MISSED=0，逐字节还原 15/15，clean re-run 26/26
+失配自检  `python mutation_e.py --selftest` → 18/19 CAUGHT +
+          DID_NOT_RUN=1 + 整体判未证明 + clean 26/26，
+          `SELFTEST_ASSERTION_OK`（证明锚点失配不会静默算通过）
+清单      `python make_filelist_e.py` → 两次生成一致 `FILELIST_STABLE_OK`，
+          条目数与 diff 字节数由脚本现算并写在头部 / 日志
+交叉核对  `python crosscheck_filelist_e.py` → 逐行重算 size + sha256
+          并反向查漏项，`CROSSCHECK_OK`（详见 logs/）
+前序      verify_c 25/25、verify_d 18/18，两条清单 sha 未变
+
+判据里最承重的三条：
+  · E-11 从 `e_build.json` 的 72 行原始数据独立重算 9 指标 ×
+    3 标签 × 3 统计量 = 81 个数字 + 逐帧最坏比值，与
+    `metrics_e.json` 全部对齐（`stat_diffs=0`）。
+  · E-15 把 3 个 JSON 里的 16 条帧记录逐张 sha256 对账，
+    且要求 16 张互不相同、都是 768²。
+  · E-23 直接断言 Godot 读回里高模 `skeleton_path=''`、
+    代理壳非空、0 AnimationPlayer——防止把「导入成功」写成「动作可用」。
+
+========================================================================
+9. 踩坑（可复用）
+========================================================================
+① 源渲染是 **RGBA 透明底**，`convert("RGB")` 会把 alpha=0 区域变纯黑，
+   第一版四张板全是黑方块；改成 `Image.alpha_composite(white, raw)`。
+② 板 3 的统计红字压在第二张图框底线上；用像素采样定位白框边界
+   （x=100 处 WHITE 到 y=967）后把文字移出框外，不靠肉眼猜。
+③ 验收脚本自己的 stdout 写进 `logs/` 时还是空文件，
+   判据 E-25 会把自己判成噪声（首跑 25/26 就是这么红的）；
+   显式排除 `verify_e/mutation_e/make_filelist_e/crosscheck` 自身日志。
+④ `e_build.json` 里 `"max_displacement_m": 0.82423` 出现 3 次，
+   单行 needle 不唯一；变异锚点必须先跑预检数出现次数，
+   不唯一的要么换唯一锚点，要么走 `text_all` 并明确说明。
+⑤ 验证记录自身会进文件清单，写死条目数当场过期；
+   本记录不写清单条目数，只给可复算命令，数字看清单头部 / logs。
+
+========================================================================
+10. 边界（明确没做的事）
+========================================================================
+· 没进可运行工程、没导 228 帧图集、没做 2D 精灵接入、没写 GDScript 动作层。
+· 没修 2,035 原始碎片、没给披风薄壳加厚（D 路线 side90 退化问题仍在）。
+· 没在 Godot 里重建 14 骨驱动层；没把 2D `(x,z)` 关节表转成 Y-up pose。
+· 玩家 V4b 的源 GLB 仍是 0 skins / 0 animations；E 路线产的是
+  **Blender 端可驱动资产**，不是引擎内可驱动资源。
+· 看图结论是人工视觉复核（`e_conclusion.json` 标
+  `human_visual_review=true`），机器判据只证证据图存在、互不相同、
+  sha 与清单一致，不评审美、不评「像不像出拳」。
+
+========================================================================
+11. 复算命令
+========================================================================
+  cd D:\Projects\CardBoxer\CardBoxer-bake\route-e-player-3d-rigging
+  python verify_e.py
+  python mutation_e.py
+  python mutation_e.py --selftest
+  python make_boards_e.py            # 重出四张板 + 结论 JSON
+  python make_filelist_e.py
+  python crosscheck_filelist_e.py
+Blender / Godot 侧命令与原始输出见 `logs/*.log`（7 个建链日志 +
+验收日志），四张板见 `boards/`，16 张代表帧见 `frames/`。
+
+下一步候选（等工程师定）：
+  A 渲 2~8 帧 2D 精灵小样本看图证伪（推荐，成本最低）
+  B 先修撕裂（权重领地 / voxel_size / 薄壳加厚）再小样本
+  C 在 Godot 侧重建 14 骨驱动层（C 路线已量过成本，不推荐先做）
+  D 存档收口，玩家战斗层继续用已落地的 2D appearance-layer

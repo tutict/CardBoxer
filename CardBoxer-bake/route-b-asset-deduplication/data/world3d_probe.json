@@ -1,0 +1,108 @@
+{
+  "run": {
+    "seconds": 5.92,
+    "returncode": 0,
+    "script_errors": 0
+  },
+  "payload": {
+    "states": [
+      {
+        "layers": [
+          {
+            "label": "player",
+            "own_world_3d": false,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-b-asset-deduplication\\shots\\world3d/w3d-before-sv-player.png",
+            "world3d_id": 0,
+            "yaw": -55.0,
+            "pixels": {
+              "opaque_px": 71959,
+              "near_white_px": 17602,
+              "cyan_px": 2766,
+              "white_ratio": 0.244612
+            },
+            "png_sha256": "b319cd891b54af69dc37f7d7cf626de23a6ab239122230d31d3bab75affe9e68"
+          },
+          {
+            "label": "foe",
+            "own_world_3d": false,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-b-asset-deduplication\\shots\\world3d/w3d-before-sv-foe.png",
+            "world3d_id": 0,
+            "yaw": 55.0,
+            "pixels": {
+              "opaque_px": 74953,
+              "near_white_px": 14643,
+              "cyan_px": 2480,
+              "white_ratio": 0.195362
+            },
+            "png_sha256": "f0b0904bc39d44c72f410be43145b474f33df9f8a28c563b60fe9543529591ed"
+          }
+        ],
+        "tag": "before"
+      },
+      {
+        "layers": [
+          {
+            "label": "player",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-b-asset-deduplication\\shots\\world3d/w3d-after-sv-player.png",
+            "world3d_id": -9223371997814192639,
+            "yaw": -55.0,
+            "pixels": {
+              "opaque_px": 42788,
+              "near_white_px": 13197,
+              "cyan_px": 2435,
+              "white_ratio": 0.308428
+            },
+            "png_sha256": "53067e3de95dacd99d323720bac4cb8bf0e525b4e8cb52c3bf6bcc2dfe852065"
+          },
+          {
+            "label": "foe",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-b-asset-deduplication\\shots\\world3d/w3d-after-sv-foe.png",
+            "world3d_id": -9223371997747083773,
+            "yaw": 55.0,
+            "pixels": {
+              "opaque_px": 70393,
+              "near_white_px": 937,
+              "cyan_px": 412,
+              "white_ratio": 0.013311
+            },
+            "png_sha256": "12d9f0c7a226e9a9c07a34133d38f8451b94d07e6f2b0b9b5d2ec83f6c4c0f56"
+          }
+        ],
+        "tag": "after"
+      }
+    ],
+    "use_3d": true
+  },
+  "checks": {
+    "rc": true,
+    "no_script_errors": true,
+    "no_payload_error": true,
+    "two_states": true,
+    "four_sv_written": true,
+    "four_sv_nonblank": true,
+    "before_world3d_is_null": true,
+    "after_world3d_distinct": true,
+    "before_shared_world": true,
+    "own_world_3d_before_false": true,
+    "own_world_3d_after_true": true,
+    "world_ids_changed": true,
+    "before_both_viewports_white": true,
+    "after_foe_white_drops": true,
+    "after_player_white_stays": true,
+    "after_foe_matches_single_layer": true,
+    "after_player_matches_single_layer": true
+  },
+  "failed": [],
+  "ok": true,
+  "conclusion": "若 before 两层 world_3d 的 instance_id 相同、own_world_3d=false，则两个 SubViewport 共用同一个 3D 世界，各自相机都会看到两个角色 ⇒ 用户看到的『两个人物重叠』是接线层问题，不是 GLB 资产叠层。"
+}

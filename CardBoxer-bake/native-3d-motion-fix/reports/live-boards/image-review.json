@@ -1,0 +1,39 @@
+{
+  "gifs": [
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\foe-block.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\foe-combo-super.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\foe-dodge.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\foe-fatal-facing-reset.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\foe-melee-super.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\foe-wave-new-action.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\player-block.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\player-combo-super.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\player-dodge.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\player-fatal-facing-reset.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\player-melee-super.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\player-wave-new-action.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\taikou-draw.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\taikou-enemy.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\taikou-ex-fatal.gif",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\taikou-player.gif"
+  ],
+  "boards": [
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\foe-block-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\foe-combo-super-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\foe-dodge-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\foe-fatal-facing-reset-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\foe-melee-super-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\foe-wave-new-action-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\player-block-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\player-combo-super-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\player-dodge-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\player-fatal-facing-reset-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\player-melee-super-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\player-wave-new-action-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\taikou-draw-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\taikou-enemy-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\taikou-ex-fatal-board.png",
+    "D:\\Projects\\CardBoxer\\CardBoxer-bake\\native-3d-motion-fix\\reports\\live-boards\\taikou-player-board.png"
+  ],
+  "limitations": "Only recorded production samples shown; human review required."
+}

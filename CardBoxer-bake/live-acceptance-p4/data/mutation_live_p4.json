@@ -1,0 +1,557 @@
+{
+  "cases": 33,
+  "caught": 33,
+  "dnr": 0,
+  "broken": 0,
+  "missed": 0,
+  "restored": 33,
+  "clean_ok": true,
+  "clean_line": "LIVE_P4_VERIFY 60/60 ALL GREEN",
+  "selftest": false,
+  "ok": true,
+  "rows": [
+    {
+      "name": "M01_live_paused_check_flipped",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\live_p4.json",
+      "expect": [
+        "upstream_live_all_green"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "upstream_live_all_green"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M02_live_no_modified_check_flipped",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\live_p4.json",
+      "expect": [
+        "upstream_live_all_green"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "upstream_live_all_green"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M03_marker_2d_value_tampered",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\live_p4.json",
+      "expect": [
+        "marker_2d_shipped_both"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "marker_2d_shipped_both"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M04_marker_mismatches_faked",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\live_p4.json",
+      "expect": [
+        "marker_rows_all_match_shipped"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "marker_rows_all_match_shipped"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M05_delta_mismatches_faked",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\live_p4.json",
+      "expect": [
+        "engine_delta_matches_shipped"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "engine_delta_matches_shipped"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M06_live_failed_faked",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\live_p4.json",
+      "expect": [
+        "upstream_live_all_green",
+        "upstream_three_reports_have_no_failed"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "upstream_live_all_green",
+        "upstream_three_reports_have_no_failed"
+      ],
+      "failed_count": 2,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M07_static_bound_deflated",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\live_p4_analysis.json",
+      "expect": [
+        "live_delta_diff_within_static_bound"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "live_delta_diff_within_static_bound"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M08_live_diff_inflated",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\live_p4_analysis.json",
+      "expect": [
+        "live_delta_diff_within_static_bound"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "live_delta_diff_within_static_bound"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M09_analysis_check_flipped",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\live_p4_analysis.json",
+      "expect": [
+        "upstream_analysis_all_green"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "upstream_analysis_all_green"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M10_phase_violations_faked",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\live_p4_analysis.json",
+      "expect": [
+        "phase_durations_within_spec"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "phase_durations_within_spec"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M11_stance_violations_faked",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\live_p4_analysis.json",
+      "expect": [
+        "stance_delta_zero_both_tables"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "stance_delta_zero_both_tables"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M12_engine_delta_mismatches_faked",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\live_p4_analysis.json",
+      "expect": [
+        "engine_delta_matches_shipped"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "engine_delta_matches_shipped"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M13_sample_count_tampered",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\live_p4_analysis.json",
+      "expect": [
+        "analysis_sample_count_equals_live_rows",
+        "curves_cover_all_rows_both_tables"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "analysis_sample_count_equals_live_rows",
+        "curves_cover_all_rows_both_tables"
+      ],
+      "failed_count": 3,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M14_analysis_failed_faked",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\live_p4_analysis.json",
+      "expect": [
+        "upstream_analysis_all_green",
+        "upstream_three_reports_have_no_failed"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "upstream_analysis_all_green",
+        "upstream_three_reports_have_no_failed"
+      ],
+      "failed_count": 2,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M15_boards_check_flipped",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\boards_p4.json",
+      "expect": [
+        "upstream_boards_all_green"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "upstream_boards_all_green"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M16_zoom_check_flipped",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\boards_p4.json",
+      "expect": [
+        "upstream_boards_all_green"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "upstream_boards_all_green"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M17_board_sha_tampered",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\boards_p4.json",
+      "expect": [
+        "three_boards_sha_match_report"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "three_boards_sha_match_report"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M18_boards_failed_faked",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\boards_p4.json",
+      "expect": [
+        "upstream_boards_all_green",
+        "upstream_three_reports_have_no_failed"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "upstream_boards_all_green",
+        "upstream_three_reports_have_no_failed"
+      ],
+      "failed_count": 2,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M20_all_checks_result_faked",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\all_checks_live_p4.json",
+      "expect": [
+        "all_checks_15_of_15_green"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "all_checks_15_of_15_green"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M21_all_checks_failed_faked",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\all_checks_live_p4.json",
+      "expect": [
+        "all_checks_15_of_15_green"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "all_checks_15_of_15_green"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M22_sha_baseline_game_tampered",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\data\\sha_baseline.json",
+      "expect": [
+        "sha_baseline_matches_runner"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "sha_baseline_matches_runner"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M23_raw_log_script_error",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\logs\\godot_p4_live_three_d.log",
+      "expect": [
+        "both_no_script_errors_raw_logs"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "both_no_script_errors_raw_logs"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M24_probe_freezes_arena",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\tests\\p4_live_probe.gd",
+      "expect": [
+        "probe_code_never_freezes_arena",
+        "probe_copy_matches_game_deployed"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "probe_code_never_freezes_arena",
+        "probe_copy_matches_game_deployed"
+      ],
+      "failed_count": 2,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M25_probe_drops_frame_wait",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\tests\\p4_live_probe.gd",
+      "expect": [
+        "probe_code_waits_frame_post_draw",
+        "probe_copy_matches_game_deployed"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "probe_code_waits_frame_post_draw",
+        "probe_copy_matches_game_deployed"
+      ],
+      "failed_count": 2,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M26_probe_injects_apply",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\tests\\p4_live_probe.gd",
+      "expect": [
+        "probe_code_never_injects_apply",
+        "probe_copy_matches_game_deployed"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "probe_code_never_injects_apply",
+        "probe_copy_matches_game_deployed"
+      ],
+      "failed_count": 2,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M27_probe_overrides_mapping",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\tests\\p4_live_probe.gd",
+      "expect": [
+        "probe_code_never_overrides_mapping",
+        "probe_copy_matches_game_deployed"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "probe_code_never_overrides_mapping",
+        "probe_copy_matches_game_deployed"
+      ],
+      "failed_count": 2,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M28_phase_order_swapped",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\verify_live_p4.py",
+      "expect": [
+        "both_phase_order_per_turn"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "both_phase_order_per_turn"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M29_row_minimum_inflated",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\verify_live_p4.py",
+      "expect": [
+        "both_rows_above_50"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "both_rows_above_50"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M30_sample_interval_tampered",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\verify_live_p4.py",
+      "expect": [
+        "sample_interval_0_12"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "sample_interval_0_12"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M31_process_count_tampered",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\verify_live_p4.py",
+      "expect": [
+        "two_processes_both_rc0"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "two_processes_both_rc0"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M32_pose_summary_gate_flipped",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\verify_live_p4.py",
+      "expect": [
+        "all_checks_pose_probe_pass"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "all_checks_pose_probe_pass"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M33_probe_not_watched_flipped",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\verify_live_p4.py",
+      "expect": [
+        "probe_not_in_watched_files"
+      ],
+      "anchor_hits": 1,
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "probe_not_in_watched_files"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    },
+    {
+      "name": "M19_board_png_tail_appended",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-acceptance-p4\\boards\\P4-live-rhythm-timeline.png",
+      "expect": [
+        "three_boards_sha_match_report"
+      ],
+      "status": "CAUGHT",
+      "rc": 1,
+      "red": [
+        "three_boards_sha_match_report"
+      ],
+      "failed_count": 1,
+      "restored": true,
+      "traceback": false
+    }
+  ]
+}

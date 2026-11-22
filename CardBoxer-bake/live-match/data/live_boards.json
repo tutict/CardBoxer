@@ -1,0 +1,53 @@
+{
+  "made": {
+    "timeline": {
+      "size": [
+        1400,
+        780
+      ],
+      "bytes": 78143,
+      "fight_samples": 129
+    },
+    "keyframes": {
+      "size": [
+        1360,
+        610
+      ],
+      "bytes": 296818,
+      "frames": [
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-match\\shots\\cap9/lm-0000-live.png",
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-match\\shots\\cap9/lm-0018-live.png",
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-match\\shots\\cap9/lm-0030-live.png",
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-match\\shots\\cap9/lm-0060-live.png",
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-match\\shots\\cap9/lm-0072-live.png",
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-match\\shots\\cap9/lm-0102-live.png",
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-match\\shots\\cap9/lm-0114-live.png",
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-match\\shots\\cap9/lm-0126-live.png"
+      ],
+      "count": 8
+    },
+    "player_gif": {
+      "frames": 88,
+      "bytes": 640730,
+      "duration_ms": 120,
+      "loop": 0
+    },
+    "foe_gif": {
+      "frames": 88,
+      "bytes": 1155699,
+      "duration_ms": 120,
+      "loop": 0
+    }
+  },
+  "checks": {
+    "timeline_written": true,
+    "keyframes_written": true,
+    "keyframes_count": true,
+    "player_gif_frames": true,
+    "foe_gif_frames": true,
+    "both_gifs_same_frame_count": true,
+    "all_keyframe_sources_exist": true,
+    "analysis_all_green": true
+  },
+  "ok": true
+}

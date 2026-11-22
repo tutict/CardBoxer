@@ -1,0 +1,223 @@
+H 路线 · 双方 3D 侧面战斗 · 验证记录
+日期：2026-11-11
+工程：D:\Projects\CardBoxer\CardBoxer
+归档：D:\Projects\CardBoxer\CardBoxer-bake\route-h-two-sided-3d-combat
+
+====================================================================
+1. 结论（先说结果）
+====================================================================
+
+工程师选 A：给对手怪也做一份带 skin 的 GLB，补齐「双方 3D 侧面战斗」。
+**技术上补齐了，但只补齐到表现层**：
+
+- 对手侧现在有自己独立的 GLB、独立的 14 joint skin、独立的
+  SubViewport / ViewportTexture、独立的 13 骨驱动、独立的 73 帧动作表
+  副本、独立的 -55° 侧身相机；玩家侧 +55°，两人对脸。
+- 引擎内同进程 A/B 硬证据：隐藏一侧时，另一侧 ROI 逐像素完全不变
+  （0 / 33920、0 / 33390），说明两个 3D 层互不串味、不共用贴图或视口。
+- 默认关时零污染：冻结静态状态与 G 改动前基线工程 CHANGED_PIXELS=0；
+  15 套引擎内自检全绿。
+- 判定 / HP / 伤害 / 牌型 / 硬直 / 阶段时长一字未改；fighter.gd 一字未改。
+
+**但造型层没达标**：画面里左右两个角色轮廓与服装语言高度雷同（同源
+图生 3D + 同一套「深色机甲 + 白色长衫下摆 + 青云纹 + 披风」），肉眼看
+容易误认成同一个模型翻了个面。这不是接线 bug，有定量反证（见第 5 节），
+但作为「玩家 vs 对手怪」的视觉区分度仍然不够。
+
+====================================================================
+2. 落地事实
+====================================================================
+
+| 项 | 数值 / 做法 |
+|---|---|
+| 源资产 | route-a-asset-rework/对手怪-可变形连续壳.blend（node_0 64,024 顶点、1 UV、3 张 4096² PBR） |
+| 导出 | Blender 5.2.3 → foe-rigged.glb 42,914,328 B；GLB 64,059 顶点（法线拆分 +35） |
+| skin | 高模本体直接拿到 13 骨权重（64,006/64,024 = 99.9719%），14 joints（13 骨 + neutral_bone）、inverseBindMatrices 齐、0 animations |
+| 贴图 | 3 张 PBR 内嵌零重编码，Godot 导入抽出 3 张 4096² PNG，sha256 与 GLB 内嵌逐项相同 |
+| rest 差异 | 对手怪骨架比玩家矮宽：13 根骨头 rest 全不同，hips 头差 0.209636 m，forearm_b 矩阵差 0.630073 m |
+| 驱动输入 | 因此不能复用玩家 apose_points：另出 data/motion_input_foe.json 19,769 B，只替换 apose_points，其余键与玩家逐字相同；按 bone.head_local 重建玩家值最坏误差 1e-6 |
+| 源码 | 只改 scripts/arena.gd、scripts/fighter_3d_layer.gd；fighter.gd sha256 未变 |
+| 层参数化 | FOE_GLB_PATH / DEFAULT_FOE_YAW := -55.0 / configure(role, glb, yaw, flip) / var res := load(glb_path)；环境变量扫角度只对 role_id=="player" 生效，不会把对手一起转 |
+| 接线 | arena.gd 增 layer_3d_foe / motion_3d_foe、enemy.draw_3d_override = true、对手赢时播攻击；_sync_3d_layer() 早退条件保留 |
+| 引擎内 | 双侧 13/13 骨、105/105 frames_applied、yaw +55 / -55、5 张 1280×720 截帧、0 SCRIPT ERROR |
+| 帧统计 | off 5,136 prims / 117 calls → both 1,104,816 prims / 33 calls；单侧 player 118,856、foe 242,722 |
+
+注：双侧 1,104,816 prims 远大于两个单侧之和 361,578，本轮没有解释清楚，
+如实记为待查帧统计口径问题，不拿它当「双侧正常工作」的证据。
+
+====================================================================
+3. 为什么对手怪必须单独一份动作输入
+====================================================================
+
+probe_blends_h.py 读回两份 .blend：骨名 13 根完全相同、骨架对象变换
+相同，但 rest 矩阵不同（FACT rest_matrix_identical=False）。
+rig_driver.gd 的 setup() 从 Godot Skeleton3D 读 global_rest，并用
+motion_input.json 的 apose_points 作旋转中心；若把玩家那份 apose_points
+喂给对手怪，等于用别人的关节位置算角度，动作会整体错位。
+diag_rest_h.py 逐骨列出 dhead / dmatrix；make_foe_motion_h.py 按
+Blender bone.head_local/tail_local 的 (x, z) 重建对手 rest，并先拿玩家
+那套公式反算一遍 F 路线的 apose_points 验证口径（最坏 1e-6），再替换。
+
+====================================================================
+4. 判据订正：CROSS_H_SUSPICIOUS 不是 bug
+====================================================================
+
+第一版 diag_cross_h.py 拿「双侧截帧」与「两次单侧隔离截帧」做跨进程
+ROI 绝对像素等价，要求对应侧 ratio < 0.20，实测四个 ratio 全在
+0.4093~0.5409，报 CROSS_H_SUSPICIOUS。
+
+这是口径错，不是串味：三张图来自三个不同的 Godot 进程，每次启动
+随机化全局 RNG，观众席 / 灯光相位 / 手牌都变。G 路线已经把「跨进程
+整帧像素等价」退役过一次，H 第一版等于把退役结论又捡回来用。
+
+订正（diag_cross_h.py v2，v1 负结果原样保存在
+data/cross_h_v1_retired.json，ok=false 保留）：
+1. 四个 ratio 只作事实记录，不再要求绝对值。
+2. 改方向性判据：双侧左侧更接近 only=player（0.4239 < 0.5409，
+   余量 0.1170），双侧右侧更接近 only=foe（0.4093 < 0.5280，
+   余量 0.1187），余量 > 0.05 不算噪声抖动。
+3. 真正的主证据换成同进程同树的 data/vp_diag_h.json：
+   player-hidden 时右 ROI 0/33920 不变、左 ROI 0.4499 变化；
+   foe-hidden 时左 ROI 0/33390 不变、右 ROI 0.4297 变化。
+4. verify_h.py 用 H45/H48/H49 三条钉住：退役指标必须点名、
+   旧 left_ok/right_ok 绝对阈值字段必须消失、v1 负结果不许被当成 PASS 复用。
+
+====================================================================
+5. 视觉诊断：两个角色像不像（不靠肉眼下结论）
+====================================================================
+
+h-both-stance.png 里左右两个角色看起来几乎是一个模型镜像，必须排除
+「两个层其实加载了同一份 GLB / 串了同一张贴图」。diag_identity_h.py
+给三条可复算证据：
+
+| 证据 | 数值 | 判定 |
+|---|---|---|
+| 两份 baseColor 64×64 缩略图 MAE | 75.3802 | 不是同一张贴图 |
+| baseColor 平均 RGB | 玩家 [110.06, 103.65, 95.55] / 对手 [33.21, 32.26, 31.43] | 亮度差 3.3 倍 |
+| 同进程单角色 ROI 水平镜像后差异率 | 0.8667（MAE 35.5448） | 只证明两帧非同一张图；ROI 含背景，不作角色差异证据 |
+| 同进程两侧 ROI 平均亮度 | 玩家 80.19 / 对手 89.46（差 9.27） | 渲染输出确实不同 |
+| GLB 顶点数 / X 跨度 | 57,934 / 1.254475 vs 64,059 / 1.216869 | 几何不同 |
+
+第一版把「镜像 ROI 差异率」当成「角色长得不同」的证据，是夸大：
+ROI 里包含擂台绳索 / 观众席 / 灯光，水平镜像后背景必然错位。
+订正后该判据改名 frames_not_identical_including_background，输出加
+roi_scope_note；真正针对渲染的证据换成两侧 ROI 平均亮度；结构层靠
+GLB 顶点数、bbox、三张 PBR sha256，以及引擎内读回的 mesh_sig /
+SubViewport / ViewportTexture 各自独立。verify_h.py H25 会检查
+scope_note 存在，防止哪天又把这条判据夸大复用。
+
+结论：不是串味，是**造型语言同源**。两份资产的底色亮度、几何、贴图、
+渲染亮度都不同，但轮廓、披风、下摆、头饰过于接近，视觉区分度仍不合格。
+造型区分度本身是看图判断，不用像素指标硬撑；这是造型层待办，
+不进本轮「接线是否成立」的判定。
+
+====================================================================
+6. 零污染与全量回归
+====================================================================
+
+- baseline_h.json：122 文件 sha256 基线；orig/pre-3d-foe 逐字节备份
+  已核对，MISMATCH=0。
+- verify_h.py H05：除 arena.gd / fighter_3d_layer.gd 两个白名单外，
+  基线 120 个文件在当前工程树里 sha256 全部未变。
+- run_static_ab_h.py：复用 G 路线 baseline_project（G 改动前的完整
+  2D 工程），冻结静态状态 120 帧，不设 CARD_BOXER_3D，
+  CHANGED_PIXELS=0 / rc=0 / 双侧 PERF_PROBE_DONE / 0 error。
+- run_all_checks_h.py：H 改动后 15 套引擎内自检 15/15 ALL GREEN
+  （93/93、62/62、37/37、72/72、51/51、1482/1482、90/90、8/8、
+  157/157 及其余 PASS）。
+
+====================================================================
+7. 验收（本轮真实输出）
+====================================================================
+
+见 logs/*.out 与 data/*.json。全链复跑汇总在文末「复跑结果」节，
+按 G 路线踩坑经验，顺序固定为：
+make_filelist_h → crosscheck → selftest → mutation → verify。
+（改验证记录后必须先重建清单，否则清单里记录的本文 sha 与盘上不符，
+selftest 内部的 clean re-run 会如实报红。）
+
+====================================================================
+8. 踩坑（本轮新增，可复用）
+====================================================================
+
+1. **退役过的判据会被下一轮原样捡回来**：G 路线已退役「跨进程整帧
+   像素等价」，H 第一版又用它当双侧串味判据。修法不是放宽阈值，
+   是把口径换成同进程同树 A/B，并把 v1 的 ok=false 当作必须保留的
+   负结果证据，再写三条守卫钉住不许复用。
+2. **同骨名 ≠ 同 rest**：骨名、数量、骨架对象变换全一致时，
+   rest 矩阵仍可差 0.63 m。凡是「复用驱动表」的场合，必须先读回
+   bone.head_local/tail_local 逐骨比，不能只看骨名集合。
+3. **两张贴图 sha 不同 ≠ 画面看起来不同**：肉眼判「同一模型」不可靠，
+   要同时给缩略图 MAE、平均 RGB、两侧 ROI 平均亮度、几何顶点数，
+   才能把「串味 bug」与「造型雷同」分开。而且 ROI 含背景，
+   镜像差异率只能证明两帧非同一张图，不能证明角色长得不同——
+   第一版就在这里夸大了，第二版改名 + scope_note 订正。
+4. 双 SubViewport 的 prims 不是可加量，双侧 1,104,816 ≠ 118,856 +
+   242,722；别拿帧统计当「两层都渲染了」的证据，用同进程隐藏 A/B。
+
+====================================================================
+9. 边界（明说没做的）
+====================================================================
+
+- GLB `0 animations`：动作全靠 GDScript 每帧现算 13 骨 pose，
+  不是引擎内动画资源；仍是 73 帧三档（stance/jab/cross/wave），
+  不是全 228 帧；没有受击 / 输家 / 平局轨道。
+- 视觉区分度不合格（第 5 节）；没重做对手怪造型、没调材质亮度、
+  没统一两人的构图与大小（DRAW_SCALE 仍是 0.45）。
+- 没测 3D 开时的 perf_probe 帧统计 / GPU skin 成本；双侧 prims
+  口径异常未解释。
+- 默认关：不设 CARD_BOXER_3D 看到的仍是原来的 2D 游戏；
+  view_flip 有开关但默认 false，没按 facing 自动镜像，玩法层朝向没动。
+- 产物是 Godot 工程内的运行时接线，不是导出的可执行包；
+  没导 glTF 反向回 Blender，没做真机 / 移动端验证。
+
+====================================================================
+10. 交付与状态
+====================================================================
+
+本目录除 logs / orig 外的全部文件列在 文件清单.txt（含 sha256），
+新增脚本与改动的 GDScript 全文汇在 new-files.diff。
+boards/ 三张板：双侧角色特写、单侧隔离对照、同进程单角色特写。
+项目日志追加在 .workbuddy/memory/2026-11-11.md。
+游戏源码：scripts/arena.gd、scripts/fighter_3d_layer.gd 被改（各有
+orig/pre-3d-foe 备份），scripts/fighter.gd 未动；新增资产全在
+白名单族（assets/3d/foe-rigged.*、data/motion_input_foe.json、
+tests/two_side_probe.gd、tests/vp_diag_probe.gd）。
+
+====================================================================
+11. 下一步候选（不替工程师决定）
+====================================================================
+
+A 先修视觉区分度：重做对手怪造型/配色，或至少把对手侧整体压暗、
+  放大肩宽，让两人一眼可分（当前最扎眼的问题）。
+B 处理双侧 prims 口径与 3D 开时的性能，再考虑把 3D 做成默认或设置项。
+C 动作表扩到 228 帧 + 受击/输家轨道，并给对手侧单独的动作强度映射。
+D 存档收口转做别的。
+
+====================================================================
+复跑结果
+====================================================================
+
+make_filelist_h.py         FILELIST_ENTRIES=80 DIFF_BYTES=135560 STABLE=True
+                           / FILELIST_STABLE_OK
+crosscheck_filelist_h.py   ROWS=80 ACTUAL=80 BAD=0 EXTRA=0 MISSING=0
+                           / CROSSCHECK_H_OK
+selftest_did_not_run_h.py  SELFTEST_H 8/8 / DID_NOT_RUN_BRANCH_OK
+                           （副本里把 M01 锚点改成不存在的串：
+                            DID_NOT_RUN=1、CAUGHT=12/13、restore=12/12、
+                            clean=GREEN、汇总如实 MUTATION_H_FAILED）
+mutation_h.py              CAUGHT=13/13 DID_NOT_RUN=0 restore=13/13
+                           clean=GREEN / MUTATION_H_OK
+verify_h.py                VERIFY_H 56/56 failed=0 / H_VERIFIED
+run_all_checks_h.py        15/15 ALL GREEN
+run_static_ab_h.py         CHANGED_PIXELS=0 / STATIC_AB_H_OK
+diag_cross_h.py v2         CROSS_H_V2_OK（方向余量 0.1170 / 0.1187）
+diag_identity_h.py         IDENTITY_H_OK（basecolor MAE 75.3802、
+                           贴图均值 110.06/103.65/95.55 vs
+                           33.21/32.26/31.43、ROI 亮度 80.19/89.46、
+                           镜像 ROI 差异 0.8667 仅作非同一张图证据）
+源码还原复核               arena.gd / fighter_3d_layer.gd / fighter.gd
+                           三件 sha256 与 patch_game_h.json after 逐项 MATCH
+
+顺序按 G 路线踩坑经验固定：make_filelist_h → crosscheck → selftest →
+mutation → verify。改完本记录后已重建清单再全链复跑一遍，全绿。

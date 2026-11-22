@@ -1,0 +1,76 @@
+{
+	"env_visual_none": "none",
+	"foe_initial_visual": false,
+	"foe_layer_ready": true,
+	"player_layer_ready": true,
+	"player_visual_state": {
+		"foe_materials": 0,
+		"foe_visual": false,
+		"light_rows": 4,
+		"mesh_rows": 1,
+		"role": "player"
+	},
+	"shots": [
+		{
+			"h": 720,
+			"name": "base",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-i-visual-distinction\\shots\\off_switch/off-base.png",
+			"save_error": 0,
+			"w": 1280
+		},
+		{
+			"h": 720,
+			"name": "off1",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-i-visual-distinction\\shots\\off_switch/off-off1.png",
+			"save_error": 0,
+			"w": 1280
+		},
+		{
+			"h": 720,
+			"name": "off2",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-i-visual-distinction\\shots\\off_switch/off-off2.png",
+			"save_error": 0,
+			"w": 1280
+		},
+		{
+			"h": 720,
+			"name": "forced",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-i-visual-distinction\\shots\\off_switch/off-forced.png",
+			"save_error": 0,
+			"w": 1280
+		},
+		{
+			"h": 720,
+			"name": "restored",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-i-visual-distinction\\shots\\off_switch/off-restored.png",
+			"save_error": 0,
+			"w": 1280
+		}
+	],
+	"states": [
+		{
+			"foe_materials": 0,
+			"foe_visual": false,
+			"light_rows": 4,
+			"mesh_rows": 1,
+			"role": "foe",
+			"tag": "off1"
+		},
+		{
+			"foe_materials": 0,
+			"foe_visual": true,
+			"light_rows": 4,
+			"mesh_rows": 1,
+			"role": "foe",
+			"tag": "forced"
+		},
+		{
+			"foe_materials": 0,
+			"foe_visual": false,
+			"light_rows": 4,
+			"mesh_rows": 1,
+			"role": "foe",
+			"tag": "restored"
+		}
+	]
+}

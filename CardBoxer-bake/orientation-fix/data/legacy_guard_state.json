@@ -1,0 +1,44 @@
+{
+  "note": "2026-11-14 朝向订正后，对历史归档守卫的实测状态。全部为源码文本/快照断言按设计报红，不是玩法回归。未修改任何历史归档脚本。",
+  "source_changed": {
+    "scripts/fighter_3d_layer.gd": {
+      "before_sha256": "4a68dd7b72bb351cec30d1724ed08de7e101e4bf5ca23aad50eecb0dcba9ee6b",
+      "after_sha256": "6504139c6c81bd607379739b956dea90293e2f84cc5266e8bf4d44b02917a402"
+    },
+    "scripts/arena.gd": {
+      "before_sha256": "c5dd4a3056a52e77f2269832bd898d8fbd03f2a61b81cc97b01d38e4c057e38e",
+      "after_sha256": "c5dd4a3056a52e77f2269832bd898d8fbd03f2a61b81cc97b01d38e4c057e38e"
+    }
+  },
+  "guards": [
+    {
+      "route": "display-stopgap",
+      "script": "verify_stopgap.py",
+      "result": "15/15 STOPGAP_VERIFIED",
+      "failed": [],
+      "note": "不检查 yaw 常量，改朝向不影响"
+    },
+    {
+      "route": "route-g-game-3d-integration",
+      "script": "verify_g.py",
+      "result": "68/71 G_VERIFY_FAILED",
+      "failed": ["A05_side_yaw_is_55", "B03_added_all_whitelisted", "B05_no_unclassified_added"],
+      "note": "A05 把 55.0 写死；B03/B05 是源码新增行白名单，注释订正后出现未分类行"
+    },
+    {
+      "route": "route-h-two-sided-3d-combat",
+      "script": "verify_h.py",
+      "result": "54/56 H_NOT_VERIFIED",
+      "failed": ["H07_patch_after_matches_live_sources", "H13_layer_parametrised"],
+      "note": "patch 后的 live 源码文本对账与参数化形状断言"
+    },
+    {
+      "route": "route-i-visual-distinction",
+      "script": "verify_i.py",
+      "result": "55/57 I_NOT_VERIFIED",
+      "failed": ["source_G_shape_preserved", "layer_sha_matches_final_report"],
+      "note": "源码里含旧常量文本 + 源码 sha 与当时报告快照对账；改源码必然红"
+    }
+  ],
+  "decision": "本轮不篡改历史归档。若需全量历史回归重回全绿，需另开一轮：把上述数值/文本断言按 2026-11-14 订正退役，并重采 I 路线的 sha 报告基线。"
+}

@@ -1,0 +1,68 @@
+[
+  {
+    "check": "import",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\logs\\installed-import-engine.log"
+  },
+  {
+    "check": "native-motion",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\logs\\installed-native-motion-engine.log"
+  },
+  {
+    "check": "native-rig",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\logs\\installed-native-rig-engine.log"
+  },
+  {
+    "check": "presentation",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\logs\\installed-presentation-engine.log"
+  },
+  {
+    "check": "integration",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\logs\\installed-integration-engine.log"
+  },
+  {
+    "check": "transitions",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\logs\\installed-transitions-engine.log"
+  },
+  {
+    "check": "contact",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\logs\\installed-contact-engine.log"
+  },
+  {
+    "check": "2d-motion",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\logs\\installed-2d-motion-engine.log"
+  },
+  {
+    "check": "combo",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\logs\\installed-combo-engine.log"
+  },
+  {
+    "check": "rules",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\logs\\installed-rules-engine.log"
+  },
+  {
+    "check": "natural-runtime",
+    "ok": true,
+    "exit_code": 0,
+    "log": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-3d-motion-fix\\logs\\installed-natural-runtime-engine.log"
+  }
+]

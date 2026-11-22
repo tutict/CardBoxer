@@ -1,0 +1,116 @@
+{
+  "run": {
+    "seconds": 13.749,
+    "returncode": 0,
+    "script_errors": 0
+  },
+  "out_dir": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-j-model-rework\\shots\\asset_b",
+  "payload": {
+    "foe": {
+      "glb_path": "res://assets/3d/foe-rigged.glb",
+      "meshes": [
+        {
+          "albedo": "res://assets/3d/foe-rigged_texture_pbr_20250901.png",
+          "albedo_color": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "albedo_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-j-model-rework\\shots\\asset_b/j-albedo-foe.png",
+          "albedo_png_error": 0,
+          "albedo_sample_mean": [
+            0.118244476616383,
+            0.116681955754757,
+            0.114169709384441
+          ],
+          "material": "StandardMaterial3D",
+          "name": "foe_HI_skinned_B",
+          "surfaces": 1,
+          "verts": 64121
+        }
+      ],
+      "role": "foe",
+      "sv_instance_id": 35399927241,
+      "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-j-model-rework\\shots\\asset_b/j-sv-foe.png",
+      "sv_png_error": 0,
+      "sv_size": [
+        420,
+        520
+      ],
+      "tex_instance_id": -9223372001421294133
+    },
+    "player": {
+      "glb_path": "res://assets/3d/player-rigged.glb",
+      "meshes": [
+        {
+          "albedo": "res://assets/3d/player-rigged_texture_pbr_20250901.png",
+          "albedo_color": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "albedo_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-j-model-rework\\shots\\asset_b/j-albedo-player.png",
+          "albedo_png_error": 0,
+          "albedo_sample_mean": [
+            0.399555414915085,
+            0.383731245994568,
+            0.359083652496338
+          ],
+          "material": "StandardMaterial3D",
+          "name": "player_HI_skinned",
+          "surfaces": 1,
+          "verts": 57934
+        }
+      ],
+      "role": "player",
+      "sv_instance_id": 37329307092,
+      "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-j-model-rework\\shots\\asset_b/j-sv-player.png",
+      "sv_png_error": 0,
+      "sv_size": [
+        420,
+        520
+      ],
+      "tex_instance_id": -9223371999491914267
+    },
+    "shots": [
+      {
+        "h": 720,
+        "name": "base",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-j-model-rework\\shots\\asset_b/j-base.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "foe-only",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-j-model-rework\\shots\\asset_b/j-foe-only.png",
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "h": 720,
+        "name": "both",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-j-model-rework\\shots\\asset_b/j-both.png",
+        "save_error": 0,
+        "w": 1280
+      }
+    ]
+  },
+  "checks": {
+    "rc": true,
+    "has_opengl": true,
+    "no_script_errors": true,
+    "no_payload_error": true,
+    "three_shots": true,
+    "all_png_ok": true,
+    "both_sv_png_written": true,
+    "both_albedo_png_written": true,
+    "sv_rids_differ": true,
+    "glb_paths_differ": true,
+    "albedo_paths_differ": true,
+    "foe_verts": 64121,
+    "player_verts": 57934
+  },
+  "bool_failed": [],
+  "ok": true
+}

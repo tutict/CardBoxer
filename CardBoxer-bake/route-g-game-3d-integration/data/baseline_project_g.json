@@ -1,0 +1,20 @@
+{
+  "project": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-g-game-3d-integration\\baseline_project",
+  "files": 105,
+  "import": {
+    "seconds": 3.712,
+    "returncode": 0,
+    "errors": 0
+  },
+  "checks": {
+    "copied_105": true,
+    "all_identical": true,
+    "import_rc": true,
+    "import_no_errors": true,
+    "project_godot_present": true,
+    "no_3d_assets": true,
+    "no_rig_driver": true
+  },
+  "failed": [],
+  "ok": true
+}

@@ -1,0 +1,122 @@
+{
+  "blender": "5.2.3 LTS",
+  "source_blend": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-a-asset-rework\\foe-deformable-continuous-shell.blend",
+  "source_blend_sha256": "88dca6d28aa36caeda9f5af5564bf553aa8a9ee618846457b036fe3b1bd54239",
+  "source": {
+    "object": "node_0",
+    "verts": 64024,
+    "uv_layers": 1,
+    "textures": [
+      {
+        "image": "texture_pbr_20250901",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "image": "texture_pbr_20250901_normal",
+        "size": [
+          4096,
+          4096
+        ]
+      }
+    ],
+    "vertex_groups_before": 13
+  },
+  "weight_source": {
+    "object": "a_continuous_shell",
+    "verts": 20204,
+    "groups": [
+      "hips",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "upperarm_f",
+      "forearm_f",
+      "upperarm_b",
+      "forearm_b",
+      "thigh_f",
+      "shin_f",
+      "thigh_b",
+      "shin_b"
+    ]
+  },
+  "rig": {
+    "object": "a_apose_rig",
+    "bones": [
+      "hips",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "upperarm_f",
+      "forearm_f",
+      "upperarm_b",
+      "forearm_b",
+      "thigh_f",
+      "shin_f",
+      "thigh_b",
+      "shin_b"
+    ]
+  },
+  "skinned": {
+    "object": "foe_HI_skinned",
+    "verts": 64024,
+    "weighted_verts": 64006,
+    "coverage_pct": 99.9719,
+    "assets": {
+      "uv_layers": 1,
+      "materials": 1,
+      "textures": [
+        {
+          "image": "texture_pbr_20250901",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "image": "texture_pbr_20250901_normal",
+          "size": [
+            4096,
+            4096
+          ]
+        }
+      ],
+      "uv_same": true,
+      "textures_same": true
+    },
+    "modifiers": [
+      {
+        "name": "foe_rig",
+        "type": "ARMATURE"
+      }
+    ]
+  },
+  "export": {
+    "file": "foe-rigged.glb",
+    "bytes": 42914328,
+    "sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+    "export_apply": false,
+    "export_skins": true,
+    "operator_result": [
+      "FINISHED"
+    ]
+  }
+}

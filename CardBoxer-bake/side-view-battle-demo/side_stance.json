@@ -1,0 +1,58 @@
+{
+  "_note": "把 55° 侧视 A-pose 掰成 KOF 式格斗站架的三组偏移，单位 = 度，全部是「骨局部旋转增量」。V2 参数。选组依据写在 side-view-combat-validation-record.txt，看图证据是 站架三档对照.png；V1 的负结果（长发/披风/下摆被撕成悬浮片）留在 frames/stance_probe_v1/。",
+  "_sign": "画布 y 向下，正角 = 顺时针。spine 正角 = 上身朝 +x 微前倾收腰；head 负角补偿保持视线水平；upperarm_f 正角 / upperarm_b 负角 = 两肘向躯干收；forearm_f 负角 / forearm_b 正角 = 双拳抬到下颌前护脸；thigh_f 正角、thigh_b 负角 = 前后脚分开。hips 恒 0：躯干倾角只给 spine 一次，不让腿跟着绕髋转导致脚离地，也不重演正面版 hips/spine/chest 三重累积。",
+  "_v1_failure": "V1 用 spine 6/12/18 度 + 前臂 -70/-95/-112 度的大偏移。看图发现长发、披风、白色长衫下摆被撕成悬浮片，对手怪头部被水平切成两半。根因不是幅度，是分区规则：build_masks 按「最近骨段」分配，长发/披风离全部 13 段都超过 100px，却被归到 upperarm_b / forearm_b，于是跟着手臂变换飞走。",
+  "_v2_fix": "两处：① 站架偏移只留上身 2/4/6 度微前倾，主要靠手臂护脸与前后脚读出格斗预备式；② 新增 build_masks_safe：像素到最近骨段距离 > far_px 时判为「附属物」，强制归到 hips（delta 恒 0 → 变换恒等 → 原地不动），长发/披风/下摆因此保持连续。这是按形状判定，不是按文件/名字列白名单。",
+  "_not_claimed": "这三组不是从 baked2.json 的站架推出来的角度，是「把 A-pose 立绘摆成格斗预备式」的外观基准；之后每一帧的動作增量才来自动作表。即站架是外观基线，不是动作帧。",
+  "far_px": 72.0,
+  "candidates": {
+    "S1": {
+      "label": "轻",
+      "torso_deg": 2.0,
+      "head_comp": 0.6,
+      "f_upper": 14.0,
+      "f_fore": -45.0,
+      "b_upper": -14.0,
+      "b_fore": 45.0,
+      "thigh_f": 8.0,
+      "shin_f": -5.0,
+      "thigh_b": -10.0,
+      "shin_b": 6.0
+    },
+    "S2": {
+      "label": "中",
+      "torso_deg": 4.0,
+      "head_comp": 0.6,
+      "f_upper": 26.0,
+      "f_fore": -70.0,
+      "b_upper": -26.0,
+      "b_fore": 70.0,
+      "thigh_f": 12.0,
+      "shin_f": -7.0,
+      "thigh_b": -15.0,
+      "shin_b": 9.0
+    },
+    "S3": {
+      "label": "重",
+      "torso_deg": 6.0,
+      "head_comp": 0.6,
+      "f_upper": 36.0,
+      "f_fore": -92.0,
+      "b_upper": -36.0,
+      "b_fore": 92.0,
+      "thigh_f": 16.0,
+      "shin_f": -9.0,
+      "thigh_b": -20.0,
+      "shin_b": 12.0
+    }
+  },
+  "guard_zone": [
+    420,
+    180,
+    540,
+    290
+  ],
+  "_guard_zone_why": "翻转后脸约在 (400..480, 110..200)；护脸拳应落在脸前下方这一带。V1 实测三组数值 5630..5902（玩家）/ 9131..9248（对手），区分度不足，只作辅助数值，选组以看图为准。",
+  "selected": "S2",
+  "_selected_after_review": "看图 three-level-stance-comparison.png 后选定 S2；理由见 side-view-combat-validation-record.txt"
+}

@@ -1,0 +1,52 @@
+《牌拳》P4 · 实机验收 · 双表来源与 sha256
+================================================================
+本轮不改任何动作表，只按下面两份表做同源帧序列复算。
+sha256 于 2026-11-15 落盘时实测；复算命令见文末。
+
+
+一、P4 落地表（shipped，游戏工程当前态）
+----------------------------------------------------------------
+目录：D:\Projects\CardBoxer\CardBoxer\data\
+
+  card_motion.json
+    ca4060d75ccc4621dc00ccae85c4eaab8751de50a016f1ca4ab43cf5ad3a2f93
+  motion_input.json
+    61f8a14ea7b9ec60ff44d0d57f520357d03e258219d94bf7d9512a980dd244be
+  motion_input_foe.json
+    fa5960b79faf26b3f2dd2f6f0dfea493a6c2f2ed0f6856656df37737fcb65aae
+
+mapping 三份一致：leg_cap_deg = 12.0，leg_mode = "atan"（P3 上线态）。
+P4 只动过 109 帧上的四个腿关节坐标，其余元数据逐值不变。
+2D 表标记 focus:8 的 f_knee = 46.533333|-39.511111。
+
+
+二、P3 上线态原表（rolled_back，P4 落地前备份）
+----------------------------------------------------------------
+目录：CardBoxer-bake\native-plateau-p4\orig\pre-p4\
+
+  card_motion.json
+    b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55
+  motion_input.json
+    ae617c8b88423352ed05aa5d151c05586fa2f24326d1da594de0dc027bf100a2
+  motion_input_foe.json
+    e8191ccd966fad7b1ad9a3e85bf69fad1bce5629cc668dc5a03349cb54784372
+
+mapping 与 P4 落地表完全相同，差别只在动作表的 109 帧四个腿关节。
+因此「换表」不会连带改变 retarget 公式、cap 或 mode。
+
+
+三、复算与核对
+----------------------------------------------------------------
+公式层：native-plateau-p4\p4_math.py（与 rig_driver.gd::retarget_delta 同口径，
+        按「哪张表」分派 shipped / rolled_back）。
+本轮入口：analyze_live_p4.py 的 static_upper_bound() 与 leg_series()，
+          前者遍历两版表全量 284 帧得 D_static = 1.870037° @wave:34。
+
+核对命令（Bash，先修 PATH）：
+  export PATH="/c/Users/tutic/.workbuddy/binaries/PortableGit/versions/1.2.0/usr/bin:/c/Users/tutic/.workbuddy/binaries/PortableGit/versions/1.2.0/bin:$PATH"
+  sha256sum \
+    "D:/Projects/CardBoxer/CardBoxer/data/"{card_motion,motion_input,motion_input_foe}.json \
+    "D:/Projects/CardBoxer/CardBoxer-bake/native-plateau-p4/orig/pre-p4/"{card_motion,motion_input,motion_input_foe}.json
+
+注意：这里只记录来源与 sha，不复制三份大表进本证据区；
+若上游 P4 证据区被改动，本轮的复算结论需要重新验证。

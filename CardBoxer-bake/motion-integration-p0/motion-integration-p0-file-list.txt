@@ -1,0 +1,51 @@
+《牌拳》回合制战斗动作 P0 接线 · 文件清单
+目录: CardBoxer-bake/motion-integration-p0/
+格式: 相对路径 / 字节数 / sha256
+共 46 项
+----------------------------------------------------------------------------------------------------
+all_checks.json                                           1606  ae5487fdfb02d8dcc59953b74ba5a6227808b6f7dffe876a2a736af4873bdac6
+capture_p0.py                                             9974  2b431d8f833bb946b2b0138d5ce09857c3e1bd9ddbd5536d654126e8fa8c474f
+capture_result.json                                       2466  abc678533c0b7dacf0c847a18da4171357d988e681c079b319ed140b113d3fff
+evidence_p0.json                                          1935  40f4a417665d77f82db439db2b9a116a0d781f76c0c45d6eaf2c023f0baa87ea
+evidence_p0.py                                            6245  acd7cdcf85da1e76e60a0d2c80fa881f89fd495f247be93fe49f5884df4cb1eb
+logs/all_checks.log                                        113  f1c1a5af9e0ed43fd9fe8399e65483f73f385bdd838c4381adb0f17e9d5bc60c
+logs/capture_all.log                                      1128  9571d4540cb20a9b7f0c58052a37048ac19f27ded67f7f37e8dd34827bbd4960
+logs/capture_draw.log                                      432  87aabe27c0ae50d330c876f2baae3aa0ddb015066b4a37fbb76ca0a96f070e53
+logs/capture_first.log                                     295  1a876e0ee691cea273ac3bb3db944893c565763a2efe537f5f0f5f28c4c73bce
+logs/capture_reveal.log                                    277  3b76d9d1e73272990817c7b2ae8efe30fd2c1c6abc698c6f440945d5b8e688b6
+logs/capture_scatter.log                                   450  c66e97661e7d989184f62d596dedea26aaea966f8ef3956159148f3a97ce65aa
+logs/capture_sequence.log                                  466  0422cf82dc83dca2bcb6cd6fd888fec254c30329968aee50515582571e639e3d
+logs/capture_triple.log                                    459  8487ad562735360b2bda119b540fa195d79a36a2c93df3e6098cd85b429789d8
+logs/empty_marker.bin                                        0  e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+logs/evidence_run.log                                      961  d25397b8b25385e0777af72cb3e7672a8219c7efd34edfe068600d83e6d8f77c
+logs/mutation_run.log                                     1029  7c376da3f71685dafb7177feb590b3c82e2607c24642aa78b6b8cf145c79f1e2
+logs/mutation_selftest.log                                1040  c95c3e33b35542b93b23559affab21eaff114e58bad6a7e6a06a6627f8a1c12b
+logs/p0_check_first.log                                    111  994800465a0c7514c3c66b959aa2e5a614c6e044e1cf2f2f2257a65cdc606318
+logs/run_all_stdout.log                                    906  bfe923e69721888e9311a2d2c3561e0c50130f92a8e80e20b909cf2f5a6c987e
+logs/scripts_combo_check.log                               469  9b26e30ae116990b8310897aec4e709027b87c58e75e1c0bbe9dab45a80e069d
+logs/tests_battle_motion_p0_check.log                      116  61e0799d9e9332c7e2688716552421b9949fe5ae619d56343f090589edb36635
+logs/tests_duel_probe.log                                  642  3e9b44cb5d12ff333be6895300ddd8f14601443c297a43c3baf232a4d7087711
+logs/tests_feet_probe.log                                 1358  b200cc4e422532410d3166e2947bf076933e379a39c4a1734f09dd7baf2e9d88
+logs/tests_fighter_skin_check.log                          137  49a5d0a4ccea04463a4482ac217f3d9c96147f67b0fb25427120247faeddde20
+logs/tests_motion_check.log                                360  b155a33f34c2846d76bed5a1c18092ab04f3fcc4065262de2b4d4ba4c4fc4691
+logs/tests_pose_probe.log                                  893  0e6578c703da384118d1f6d945b48887a987d03afdbeb7cd1be7487cec5546cd
+logs/tests_reach_probe.log                                 555  362bbd61ebf79e719503c7a7f006e448bbb40a91ce6043ac06bcf467fa780f1d
+logs/tests_taikou_flow_check.log                           111  be8e3cd87ff56946e538069a9ef11d46ccd07da1f8a273530c9d1405889595f8
+logs/tests_taikou_rage_check.log                           115  8daf8d9bfe0da632bddda69ab1f704242fb773a110dc0658000a343dd6675b3d
+logs/tests_taikou_rules_check.log                          112  0b9ca166d36a3fd37cbdacbe5a4cfe8f72baa8603117d7d0ac990dc7da693620
+logs/verify_run.log                                       2581  9730a139e7c122e4bd4813e4c1d13b98669cf7c8113b2df7bd964126c63105da
+make_filelist.py                                          1282  35b8a2928810663bdbe2230bb73459ee6f35cba783c2dd862294a8f807ec4998
+mutation_p0.py                                            7178  9a02f16b48e46f1b50c1b716173e85cabc4a5797cd8826feceb0059fb572a7c4
+mutation_p0_result.json                                   2754  11a833b9ca4e0da7300ab5092b16d43cf3daff70d027dad3c6d57f16d0e27666
+run_all_checks.py                                         3925  bd0aa8230579af477831dd4686504451a8b612e379234e301ced1e53fbaa8c2c
+verify_p0.py                                             15421  8f2c410dcde3cccde64bbd588cdd5c36498eacdb6b2f0d7c508cf351390d7dfa
+verify_p0_result.json                                     3866  671daa667099846124ad8b2cda50e4b00f983c1c57169a5f7591054f7e1e2d6e
+motion-integration-p0-validation-record.txt                                          12886  85f1e9e7eb7fbe0bb0a4faf4c3520d184b4d36da2d3f28ed6e49f152eb52d778
+engine-frames-triple-wave.png                                           693305  00443f37adb9a48c1da6e7435cd73be5929057d29ab6a4139c635f68d071544a
+engine-frames-straight-cross-counter.png                                          697981  137abf74c8cf84338a449136ed2053ef033d7153e6196281a8d7a64f502d93ae
+engine-frames-five-state-board.png                                           885120  f0880b01591a654a6762f4fa1223dc127fe54663355406abf468f6aff20a17eb
+engine-frames-reveal-focus.png                                         665235  b8e8fda0ffa5616fbde9c66c8c9899cfe62408adc3d46061eabae4054f780b1c
+engine-frames-draw-standoff.png                                            680094  8f1d2ddc7df4a3632fb56a1d4c0e99cddfaa02b445b8f05a6770f545541ec833
+engine-frames-scatter-jab.png                                            699661  23b08d944dafd9778860ceae429748d0eb92af37552d0a5bedd1520070824649
+source-fingerprints.json                                                  979  2d5ac43ca9e7c68bcd54b30379c15f8e60956b2e0cff2a4a52e0b4a5aed4de3e
+check-summary.txt                                                   851  88af8f10ec869ef8f2054d39d9bc0670bd99eb9aa122145f6801a3b8483d4efd

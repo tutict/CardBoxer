@@ -1,0 +1,181 @@
+{
+  "runs": [
+    {
+      "only": "player",
+      "rc": 0,
+      "seconds": 5.284,
+      "has_opengl": true,
+      "errors": 0,
+      "stance_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\isolate\\player\\h-both-stance.png",
+      "payload": {
+        "bones": 13,
+        "enemy_override": false,
+        "foe_bones": 0,
+        "foe_frames_applied": 0,
+        "foe_glb_path": "",
+        "foe_layer_ready": false,
+        "foe_mesh_name": "",
+        "foe_role": "",
+        "foe_tex_drawn": false,
+        "foe_yaw": 0.0,
+        "only": "player",
+        "player_frames_applied": 105,
+        "player_glb_path": "res://assets/3d/player-rigged.glb",
+        "player_layer_ready": true,
+        "player_mesh_name": "player_HI_skinned",
+        "player_override": true,
+        "player_tex_drawn": true,
+        "player_yaw": 55.0,
+        "shots": [
+          {
+            "draw_calls_mean": 117.0,
+            "h": 720,
+            "name": "off",
+            "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\isolate\\player/h-off.png",
+            "prims_mean": 5136.0,
+            "save_error": 0,
+            "w": 1280
+          },
+          {
+            "draw_calls_mean": 67.0,
+            "h": 720,
+            "name": "both-stance",
+            "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\isolate\\player/h-both-stance.png",
+            "prims_mean": 118856.0,
+            "save_error": 0,
+            "w": 1280
+          },
+          {
+            "draw_calls_mean": 67.0,
+            "h": 720,
+            "name": "player-jab6",
+            "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\isolate\\player/h-player-jab6.png",
+            "prims_mean": 118856.0,
+            "save_error": 0,
+            "w": 1280
+          },
+          {
+            "draw_calls_mean": 67.0,
+            "h": 720,
+            "name": "foe-cross11",
+            "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\isolate\\player/h-foe-cross11.png",
+            "prims_mean": 118856.0,
+            "save_error": 0,
+            "w": 1280
+          },
+          {
+            "draw_calls_mean": 67.0,
+            "h": 720,
+            "name": "both-wave17",
+            "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\isolate\\player/h-both-wave17.png",
+            "prims_mean": 118856.0,
+            "save_error": 0,
+            "w": 1280
+          }
+        ],
+        "sv_same": false,
+        "tex_same": false,
+        "use_3d_env": ""
+      }
+    },
+    {
+      "only": "foe",
+      "rc": 0,
+      "seconds": 5.056,
+      "has_opengl": true,
+      "errors": 0,
+      "stance_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\isolate\\foe\\h-both-stance.png",
+      "payload": {
+        "bones": 0,
+        "enemy_override": true,
+        "foe_bones": 13,
+        "foe_frames_applied": 105,
+        "foe_glb_path": "res://assets/3d/foe-rigged.glb",
+        "foe_layer_ready": true,
+        "foe_mesh_name": "foe_HI_skinned",
+        "foe_role": "foe",
+        "foe_tex_drawn": true,
+        "foe_yaw": -55.0,
+        "only": "foe",
+        "player_frames_applied": 0,
+        "player_glb_path": "",
+        "player_layer_ready": false,
+        "player_mesh_name": "",
+        "player_override": false,
+        "player_tex_drawn": false,
+        "player_yaw": 0.0,
+        "shots": [
+          {
+            "draw_calls_mean": 117.0,
+            "h": 720,
+            "name": "off",
+            "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\isolate\\foe/h-off.png",
+            "prims_mean": 5136.0,
+            "save_error": 0,
+            "w": 1280
+          },
+          {
+            "draw_calls_mean": 68.0,
+            "h": 720,
+            "name": "both-stance",
+            "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\isolate\\foe/h-both-stance.png",
+            "prims_mean": 242722.0,
+            "save_error": 0,
+            "w": 1280
+          },
+          {
+            "draw_calls_mean": 68.0,
+            "h": 720,
+            "name": "player-jab6",
+            "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\isolate\\foe/h-player-jab6.png",
+            "prims_mean": 242722.0,
+            "save_error": 0,
+            "w": 1280
+          },
+          {
+            "draw_calls_mean": 68.0,
+            "h": 720,
+            "name": "foe-cross11",
+            "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\isolate\\foe/h-foe-cross11.png",
+            "prims_mean": 242722.0,
+            "save_error": 0,
+            "w": 1280
+          },
+          {
+            "draw_calls_mean": 68.0,
+            "h": 720,
+            "name": "both-wave17",
+            "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-h-two-sided-3d-combat\\shots\\isolate\\foe/h-both-wave17.png",
+            "prims_mean": 242722.0,
+            "save_error": 0,
+            "w": 1280
+          }
+        ],
+        "sv_same": false,
+        "tex_same": false,
+        "use_3d_env": ""
+      }
+    }
+  ],
+  "checks": {
+    "player_rc0": true,
+    "player_gl": true,
+    "player_no_errors": true,
+    "player_marker_only": true,
+    "player_layer_ready": true,
+    "player_foe_layer_absent": true,
+    "player_mesh_is_player": true,
+    "foe_rc0": true,
+    "foe_gl": true,
+    "foe_no_errors": true,
+    "foe_marker_only": true,
+    "foe_layer_ready": true,
+    "foe_player_layer_absent": true,
+    "foe_mesh_is_foe": true,
+    "board_nonempty": true
+  },
+  "failed": [],
+  "board": "H-single-side-isolation-comparison.png",
+  "board_bytes": 250350,
+  "ok": true
+}

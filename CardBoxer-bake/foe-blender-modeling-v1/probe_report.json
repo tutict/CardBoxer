@@ -1,0 +1,49 @@
+{
+  "mode": "image-to-3D",
+  "job_id": "1510835580992241664",
+  "status": "DONE",
+  "resumed_after_connection_drop": true,
+  "transient_queries": 0,
+  "submit_poll_failure": "CONNECTION_ERROR at elapsed=21s (job was already RUN)",
+  "input_image": {
+    "file": "foe-2d-design-preview/foe-full-clean.png",
+    "bytes": 1945030,
+    "sha256": "e8edf4871f21083cd8adcae28660f637ac9a1161b70569d222bdea726b71cde7"
+  },
+  "prompt": null,
+  "settings": {
+    "enable_pbr": true,
+    "face_count": 80000,
+    "result_format": "FBX",
+    "model": "3.1",
+    "generate_type": "Normal(default)"
+  },
+  "artifacts": [
+    {
+      "file": "artifact_01.zip",
+      "bytes": 36062095,
+      "sha256": "f2e0ff324eb835a0cd5d8e0cf36f39299fa60b6e09aca23554bb307db6434226",
+      "source_url_path": "b2eb2f72-7fba-45c0-a503-77ad7f675752_0.zip"
+    },
+    {
+      "file": "artifact_02.png",
+      "bytes": 127531,
+      "sha256": "1221e13657b77bead42a418de11b2f0ae3e98ec2917e704393d3ccee124514a4",
+      "source_url_path": "preview_b2eb2f72-7fba-45c0-a503-77ad7f675752_0.png"
+    },
+    {
+      "file": "artifact_03.glb",
+      "bytes": 41628356,
+      "sha256": "e3ba93f0d61dace74af7b3fee70214aa96d3477f362f9188152801f77cc26707",
+      "source_url_path": "b2eb2f72-7fba-45c0-a503-77ad7f675752_0.glb"
+    },
+    {
+      "file": "artifact_04.fbx",
+      "bytes": 40901036,
+      "sha256": "5849ad11367ab4e1fd099f794a9b23f9f73ff97a5083dc686b5823cb300dc5bd",
+      "source_url_path": "b2eb2f72-7fba-45c0-a503-77ad7f675752_0.fbx"
+    }
+  ],
+  "glb": "artifact_03.glb",
+  "viewer_html": "generated_model_20261108-104647_viewer.html"
+}

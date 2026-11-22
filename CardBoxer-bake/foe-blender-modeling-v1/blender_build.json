@@ -1,0 +1,134 @@
+{
+  "blender": "5.2.3 LTS",
+  "glb": "artifact_03.glb",
+  "glb_sha256": "e3ba93f0d61dace74af7b3fee70214aa96d3477f362f9188152801f77cc26707",
+  "mode": "image-to-3D -> Blender build",
+  "raw": {
+    "verts": 64024,
+    "tris": 79998,
+    "uv_layers": 1,
+    "textures": [
+      {
+        "name": "texture_pbr_20250901",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+        "size": [
+          4096,
+          4096
+        ]
+      },
+      {
+        "name": "texture_pbr_20250901_normal",
+        "size": [
+          4096,
+          4096
+        ]
+      }
+    ],
+    "bbox_min": [
+      -0.35456,
+      -0.13681,
+      -0.0
+    ],
+    "bbox_max": [
+      0.36318,
+      0.28817,
+      1.01451
+    ]
+  },
+  "normalize": {
+    "target_height_m": 1.72,
+    "scale": 1.695408,
+    "bbox_min": [
+      -0.60843,
+      -0.36025,
+      0.0
+    ],
+    "bbox_max": [
+      0.60843,
+      0.36025,
+      1.72
+    ]
+  },
+  "armature": {
+    "bones": 13,
+    "source": "boxer_rig.BONES",
+    "weight_mode": "nearest-segment rigid 1.0",
+    "assigned": 64024,
+    "total": 64024,
+    "coverage": 1.0,
+    "per_bone": {
+      "hips": 3210,
+      "spine": 4435,
+      "chest": 666,
+      "neck": 1503,
+      "head": 410,
+      "upperarm_f": 8688,
+      "forearm_f": 2092,
+      "upperarm_b": 8408,
+      "forearm_b": 4379,
+      "thigh_f": 9963,
+      "shin_f": 4880,
+      "thigh_b": 10073,
+      "shin_b": 5317
+    }
+  },
+  "material_policy": "original PBR kept (no toon / no outline)",
+  "shots": [
+    {
+      "shot": "front",
+      "angle_deg": 0,
+      "target_z": 0.86,
+      "ortho_scale": 2.3,
+      "resolution": 768,
+      "file": "foe-front.png",
+      "bytes": 451628
+    },
+    {
+      "shot": "angle25",
+      "angle_deg": 25,
+      "target_z": 0.86,
+      "ortho_scale": 2.3,
+      "resolution": 768,
+      "file": "foe-angle25.png",
+      "bytes": 445436
+    },
+    {
+      "shot": "angle55",
+      "angle_deg": 55,
+      "target_z": 0.86,
+      "ortho_scale": 2.3,
+      "resolution": 768,
+      "file": "foe-angle55.png",
+      "bytes": 410501
+    },
+    {
+      "shot": "back35",
+      "angle_deg": -35,
+      "target_z": 0.86,
+      "ortho_scale": 2.3,
+      "resolution": 768,
+      "file": "foe-back35.png",
+      "bytes": 443552
+    },
+    {
+      "shot": "upper",
+      "angle_deg": 0,
+      "target_z": 1.24,
+      "ortho_scale": 1.0,
+      "resolution": 1024,
+      "file": "foe-upper.png",
+      "bytes": 1407579
+    }
+  ],
+  "blend_file": {
+    "file": "foe-V1.blend",
+    "bytes": 42300798
+  },
+  "elapsed_seconds": 4.05
+}

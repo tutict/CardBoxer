@@ -1,0 +1,36 @@
+# portrait-integration-preview-v4b 文件清单（sha256 前 16 位 / 字节数 / 文件名）
+# 清单文件自身不计入
+---
+fabeb2c267f977e7  529995  debug-A-original-capture.png
+93a9700b7da9a267  287956  debug-A-right-character-difference.png
+54331027ac79811f  243052  debug-A-right-character.png
+14a2249c31c6cebe  289150  debug-A-left-character-difference.png
+94bddd80de77bd04  257081  debug-A-left-character.png
+423ca7abecbe3219  584257  debug-A-arena-difference.png
+35e8b4fd87a74785  590789  debug-A-arena.png
+86065d4237a35cb6  295242  debug-B-card-area.png
+b088d14982e5fc7a  26561  debug-B-avatar.png
+fdbef4ef87732688  187094  debug-C-info-table.png
+d4838ed41b97fe76  166071  debug-D-avatar-row.png
+7edb5d998722a25b  1693  debug_crop_v4b.py
+56b3a30a531e2b96  274  make_preview_v4b.log
+d21b1cd2ed814232  17674  make_preview_v4b.py
+ab29a107dbd7715f  532  mutation_preview_v4b.log
+54c9c2e4e0026acd  5783  mutation_preview_v4b.py
+6d2e046e6814f7d7  994  mutation_preview_v4b_result.json
+6395ab2905b2113c  535  mutation_run.log
+bbd0757f427a9b93  2645  preview_manifest.json
+d33e6ed64c7de901  4346  probe_v4b_assets.json
+223409ef1ace9b5d  1909  probe_v4b_assets.log
+35b1839ca145f5d6  3479  probe_v4b_assets.py
+97db2d603b18fbd2  2043  verify_preview_v4b.log
+7930dbb4dc90cf21  10223  verify_preview_v4b.py
+716d0eeb126c0747  3613  verify_preview_v4b_result.json
+63fc4330a1b59ce5  2045  verify_run.log
+3bfbd640f6964964  119  清单.tmp
+e13ac1cad051f718  6440  portrait-integration-preview-V4b-notes.txt
+03da34b3f790dc7e  646611  preview-A-arena-replacement.png
+749696e1d663d15d  650992  preview-B-card-art-and-avatars.png
+33e6a5320ef18c78  285655  preview-C-character-profile.png
+61496e876b68dd08  136225  preview-D-part-size-samples.png
+165f5f6b017b0e93  488387  preview-overview.png

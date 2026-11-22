@@ -1,0 +1,24 @@
+{
+  "note": "V4b 七张同相机渲染的排版总览；只做合成，不改渲染图/材质",
+  "source_dir": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\3d-model-probe-v4b",
+  "source_files": {
+    "v4b-front.png": "4fac706982c7a763c653a1f8ae6eb63b26726d0587fa5c371dccc6c959c4c079",
+    "v4b-angle25.png": "9f3d23b40d0a99db0116a9da283a593bf0cba9ab6715d40ac1a0c4d1e1228bf0",
+    "v4b-angle55.png": "caa7afb1a1f3e07bdb442090c1c0efad402d650d7e5bfcdf6e56fc2f722d28f8",
+    "v4b-back35.png": "8bd61ea07ed081ee327f8e6603f2dc1801c7ecf6a334f2d368dc570637a57f34",
+    "v4b-face-front.png": "b03a66235e80883ef25e793dd09918aa9fbacd18508c8d87f121077092fe13ce",
+    "v4b-face-25.png": "f8757bf0ea1ce18b5350ec2b1757787313e587b02fe36286eb857461b9e37da8",
+    "v4b-upper.png": "2abbd99dfff63161a8667055c9bc0f13b0f679689e652020917f0df45bf0f8f7"
+  },
+  "render_params_sha256": "aba9afed549a8b53e0e5b293aa085e2ea3ff1a49a3fe403a45df5afca281ddee",
+  "inspection_sha256": "ff358364166884f7b373b134d68366dce067246f6f9f8abf00d64daadef35d50",
+  "canvas": [
+    1800,
+    1320
+  ],
+  "output": {
+    "file": "V4b-model-preview-board.png",
+    "bytes": 803275,
+    "sha256": "5937ec149a464d65dbbff1895ffc24d9a9c0777f2a14f3db8ea8329054bba62c"
+  }
+}

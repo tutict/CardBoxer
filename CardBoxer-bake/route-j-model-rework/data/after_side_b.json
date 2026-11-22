@@ -1,0 +1,40 @@
+{
+  "image": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-j-model-rework\\shots\\after_b\\b-after-side.png",
+  "size": [
+    640,
+    768
+  ],
+  "strip_roi": [
+    300,
+    150,
+    470,
+    720
+  ],
+  "counts": {
+    "red": 0,
+    "gray": 68325,
+    "other": 0,
+    "transparent": 423195
+  },
+  "bbox": {
+    "red": [
+      640,
+      768,
+      0,
+      0
+    ],
+    "gray": [
+      188,
+      165,
+      451,
+      731
+    ]
+  },
+  "strip_counts": {
+    "red": 0,
+    "gray": 18449,
+    "other": 0
+  },
+  "verdict": "gray=尚有未删的细长保留壳",
+  "ok": true
+}

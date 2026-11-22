@@ -1,0 +1,381 @@
+{
+  "blender": "5.2.0 LTS",
+  "glb": "D:\\Projects\\CardBoxer\\CardBoxer\\assets\\3d\\player-rigged.glb",
+  "vertices": 57934,
+  "edges": 136092,
+  "armature_bones": 14,
+  "chain_bones": 13,
+  "missing_bones": [],
+  "cases": [
+    {
+      "id": "cap03_hard_g100",
+      "leg_cap_deg": 3.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.0,
+      "purpose": "baseline",
+      "arm_gain_deg": {
+        "f_upper": 32.0,
+        "f_fore": 26.0,
+        "b_upper": 28.0,
+        "b_fore": 22.0
+      }
+    },
+    {
+      "id": "cap06_hard_g100",
+      "leg_cap_deg": 6.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.0,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 32.0,
+        "f_fore": 26.0,
+        "b_upper": 28.0,
+        "b_fore": 22.0
+      }
+    },
+    {
+      "id": "cap09_hard_g100",
+      "leg_cap_deg": 9.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.0,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 32.0,
+        "f_fore": 26.0,
+        "b_upper": 28.0,
+        "b_fore": 22.0
+      }
+    },
+    {
+      "id": "cap12_hard_g100",
+      "leg_cap_deg": 12.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.0,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 32.0,
+        "f_fore": 26.0,
+        "b_upper": 28.0,
+        "b_fore": 22.0
+      }
+    },
+    {
+      "id": "cap09_hard_g125",
+      "leg_cap_deg": 9.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.25,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 40.0,
+        "f_fore": 32.5,
+        "b_upper": 35.0,
+        "b_fore": 27.5
+      }
+    },
+    {
+      "id": "cap09_hard_g150",
+      "leg_cap_deg": 9.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.5,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 48.0,
+        "f_fore": 39.0,
+        "b_upper": 42.0,
+        "b_fore": 33.0
+      }
+    },
+    {
+      "id": "cap12_hard_g125",
+      "leg_cap_deg": 12.0,
+      "leg_mode": "hard",
+      "arm_gain_multiplier": 1.25,
+      "purpose": "candidate",
+      "arm_gain_deg": {
+        "f_upper": 40.0,
+        "f_fore": 32.5,
+        "b_upper": 35.0,
+        "b_fore": 27.5
+      }
+    },
+    {
+      "id": "cap09_soft_g125",
+      "leg_cap_deg": 9.0,
+      "leg_mode": "soft",
+      "arm_gain_multiplier": 1.25,
+      "purpose": "research",
+      "arm_gain_deg": {
+        "f_upper": 40.0,
+        "f_fore": 32.5,
+        "b_upper": 35.0,
+        "b_fore": 27.5
+      }
+    },
+    {
+      "id": "cap09_soft_g150",
+      "leg_cap_deg": 9.0,
+      "leg_mode": "soft",
+      "arm_gain_multiplier": 1.5,
+      "purpose": "research",
+      "arm_gain_deg": {
+        "f_upper": 48.0,
+        "f_fore": 39.0,
+        "b_upper": 42.0,
+        "b_fore": 33.0
+      }
+    },
+    {
+      "id": "cap12_soft_g150",
+      "leg_cap_deg": 12.0,
+      "leg_mode": "soft",
+      "arm_gain_multiplier": 1.5,
+      "purpose": "research",
+      "arm_gain_deg": {
+        "f_upper": 48.0,
+        "f_fore": 39.0,
+        "b_upper": 42.0,
+        "b_fore": 33.0
+      }
+    }
+  ],
+  "frames": [
+    {
+      "card": "jab",
+      "frame": 1,
+      "why": "leg_peak"
+    },
+    {
+      "card": "jab",
+      "frame": 6,
+      "why": "arm_peak"
+    },
+    {
+      "card": "cross",
+      "frame": 3,
+      "why": "leg_peak"
+    },
+    {
+      "card": "cross",
+      "frame": 7,
+      "why": "arm_peak"
+    },
+    {
+      "card": "uppercut",
+      "frame": 4,
+      "why": "leg_peak"
+    },
+    {
+      "card": "uppercut",
+      "frame": 10,
+      "why": "arm_peak"
+    },
+    {
+      "card": "sweep",
+      "frame": 7,
+      "why": "leg_peak"
+    },
+    {
+      "card": "sweep",
+      "frame": 12,
+      "why": "arm_peak"
+    },
+    {
+      "card": "rush",
+      "frame": 4,
+      "why": "leg_peak"
+    },
+    {
+      "card": "backstep",
+      "frame": 4,
+      "why": "leg_peak"
+    },
+    {
+      "card": "guard",
+      "frame": 2,
+      "why": "leg_peak"
+    },
+    {
+      "card": "sidestep",
+      "frame": 3,
+      "why": "leg_peak"
+    },
+    {
+      "card": "focus",
+      "frame": 5,
+      "why": "leg_peak"
+    },
+    {
+      "card": "recover",
+      "frame": 3,
+      "why": "leg_peak"
+    },
+    {
+      "card": "wave",
+      "frame": 6,
+      "why": "leg_peak"
+    },
+    {
+      "card": "wave",
+      "frame": 17,
+      "why": "arm_peak"
+    },
+    {
+      "card": "throw",
+      "frame": 4,
+      "why": "leg_peak"
+    },
+    {
+      "card": "throw",
+      "frame": 8,
+      "why": "arm_peak"
+    },
+    {
+      "card": "hit_light",
+      "frame": 3,
+      "why": "leg_peak"
+    },
+    {
+      "card": "hit_light",
+      "frame": 2,
+      "why": "arm_peak"
+    },
+    {
+      "card": "hit_heavy",
+      "frame": 1,
+      "why": "leg_peak"
+    },
+    {
+      "card": "hit_heavy",
+      "frame": 4,
+      "why": "arm_peak"
+    },
+    {
+      "card": "block",
+      "frame": 1,
+      "why": "leg_peak"
+    },
+    {
+      "card": "jab",
+      "frame": 7,
+      "why": "historical_anchor"
+    },
+    {
+      "card": "cross",
+      "frame": 11,
+      "why": "historical_anchor"
+    },
+    {
+      "card": "wave",
+      "frame": 18,
+      "why": "historical_anchor"
+    }
+  ],
+  "poses_total_in_plan": 260,
+  "poses_evaluated": 6,
+  "elapsed_s": 0.84,
+  "max_pose_matrix_err": 2.38e-07,
+  "rows": [
+    {
+      "edges": 136092,
+      "max_edge_tear_m": 0.066406,
+      "p999_edge_tear_m": 0.009076,
+      "p99_edge_tear_m": 0.004738,
+      "mean_edge_tear_m": 0.000669,
+      "edges_gt_2cm": 37,
+      "edges_gt_5cm": 36,
+      "max_displacement_m": 0.080109,
+      "case": "cap03_hard_g100",
+      "card": "jab",
+      "frame": 1,
+      "why": "leg_peak",
+      "max_delta_deg": 3.0,
+      "leg_peak_deg": 3.0,
+      "pose_matrix_max_err": 1.79e-07
+    },
+    {
+      "edges": 136092,
+      "max_edge_tear_m": 0.183951,
+      "p999_edge_tear_m": 0.033367,
+      "p99_edge_tear_m": 0.010675,
+      "mean_edge_tear_m": 0.001517,
+      "edges_gt_2cm": 280,
+      "edges_gt_5cm": 36,
+      "max_displacement_m": 0.383126,
+      "case": "cap03_hard_g100",
+      "card": "jab",
+      "frame": 6,
+      "why": "arm_peak",
+      "max_delta_deg": 21.3932,
+      "leg_peak_deg": 3.0,
+      "pose_matrix_max_err": 1.79e-07
+    },
+    {
+      "edges": 136092,
+      "max_edge_tear_m": 0.108877,
+      "p999_edge_tear_m": 0.008321,
+      "p99_edge_tear_m": 0.004588,
+      "mean_edge_tear_m": 0.000627,
+      "edges_gt_2cm": 37,
+      "edges_gt_5cm": 36,
+      "max_displacement_m": 0.117228,
+      "case": "cap03_hard_g100",
+      "card": "cross",
+      "frame": 3,
+      "why": "leg_peak",
+      "max_delta_deg": 3.0724,
+      "leg_peak_deg": 3.0,
+      "pose_matrix_max_err": 1.79e-07
+    },
+    {
+      "edges": 136092,
+      "max_edge_tear_m": 0.195057,
+      "p999_edge_tear_m": 0.038212,
+      "p99_edge_tear_m": 0.018108,
+      "mean_edge_tear_m": 0.002046,
+      "edges_gt_2cm": 1107,
+      "edges_gt_5cm": 43,
+      "max_displacement_m": 0.57894,
+      "case": "cap03_hard_g100",
+      "card": "cross",
+      "frame": 7,
+      "why": "arm_peak",
+      "max_delta_deg": 28.0,
+      "leg_peak_deg": 3.0,
+      "pose_matrix_max_err": 2.38e-07
+    },
+    {
+      "edges": 136092,
+      "max_edge_tear_m": 0.138738,
+      "p999_edge_tear_m": 0.013495,
+      "p99_edge_tear_m": 0.005442,
+      "mean_edge_tear_m": 0.000853,
+      "edges_gt_2cm": 36,
+      "edges_gt_5cm": 36,
+      "max_displacement_m": 0.168102,
+      "case": "cap03_hard_g100",
+      "card": "uppercut",
+      "frame": 4,
+      "why": "leg_peak",
+      "max_delta_deg": 5.7442,
+      "leg_peak_deg": 3.0,
+      "pose_matrix_max_err": 1.19e-07
+    },
+    {
+      "edges": 136092,
+      "max_edge_tear_m": 0.164043,
+      "p999_edge_tear_m": 0.030549,
+      "p99_edge_tear_m": 0.009836,
+      "mean_edge_tear_m": 0.001444,
+      "edges_gt_2cm": 216,
+      "edges_gt_5cm": 36,
+      "max_displacement_m": 0.381967,
+      "case": "cap03_hard_g100",
+      "card": "uppercut",
+      "frame": 10,
+      "why": "arm_peak",
+      "max_delta_deg": 19.0587,
+      "leg_peak_deg": 3.0,
+      "pose_matrix_max_err": 1.79e-07
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "game_dir": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer",
+  "files": {
+    "scripts/arena.gd": {
+      "sha256": "41e07b984b172c51549179f20ef9094a32db8d6b8a0a7cd23b237129fe753ee5",
+      "bytes": 37676
+    },
+    "scripts/fighter.gd": {
+      "sha256": "c453d735077b3f61053f999eb1be283de503ddd9ee0e77ccf3b4d638b86ef41a",
+      "bytes": 39925
+    },
+    "scripts/card_data.gd": {
+      "sha256": "2d2a3dfe7dde22ebe337a243f06dd1199b5272f9904750a21b31202f8e6cf87f",
+      "bytes": 6365
+    },
+    "scripts/card_motion.gd": {
+      "sha256": "417201008f7deed9f6de942311b5e4048a5ad6d58828309ce9b52f32068e6050",
+      "bytes": 5324
+    },
+    "scripts/taikou_rules.gd": {
+      "sha256": "d16a4b16668b60d929b0eab318e98d0a2acffefd503f17e8d344cb55a599bce1",
+      "bytes": 3362
+    },
+    "scripts/taikou_rage.gd": {
+      "sha256": "83e6509f78b3a469247de47e28f471e492c8cd7d955f800676efb55caadc3172",
+      "bytes": 2224
+    },
+    "data/card_motion.json": {
+      "sha256": "b6a7f8435b08bd8160d436d5b11cc7d273cd5b9f36338bcb61cf1b6b875e2f55",
+      "bytes": 226918
+    }
+  }
+}

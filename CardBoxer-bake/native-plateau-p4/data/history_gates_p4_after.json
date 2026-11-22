@@ -1,0 +1,118 @@
+{
+  "phase": "after",
+  "rows": [
+    {
+      "tag": "motion_p1",
+      "folder": "motion-coverage-p1",
+      "script": "verify_motion_p1.py",
+      "report": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\motion-coverage-p1\\data\\verify_motion_p1.json",
+      "rc": 1,
+      "traceback": false,
+      "verdict_line": "MOTION_P1_VERIFY 48/52 FAILED",
+      "failed": [
+        "ten_untouched_unchanged",
+        "original_three_unchanged_both",
+        "non_cards_fields_equal_backup_both",
+        "mapping_gains_unchanged_both"
+      ],
+      "total": 52,
+      "passed": 48,
+      "parsed": true,
+      "restored_sha_equal": true,
+      "before_sha256": "d50a3c9de69ec0b00e33b888e8ed1af5845460d2901e3e79ddc82fc9289bb859",
+      "status": "OK"
+    },
+    {
+      "tag": "motion_p2",
+      "folder": "motion-presentation-p2",
+      "script": "verify_p2.py",
+      "report": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\motion-presentation-p2\\data\\verify_p2.json",
+      "rc": 1,
+      "traceback": false,
+      "verdict_line": "MOTION_P2_VERIFY 53/59 FAILED",
+      "failed": [
+        "player_cap_is_9",
+        "foe_cap_is_9",
+        "only_one_diff_path_player",
+        "only_one_diff_path_foe",
+        "other_12_watched_files_unchanged",
+        "three_core_scripts_sha_unchanged"
+      ],
+      "total": 59,
+      "passed": 53,
+      "parsed": true,
+      "restored_sha_equal": true,
+      "before_sha256": "d2fcdfe69b0a749dc5b76fb764849e94ecceddc3fa4a4fae824cbf4717ca0664",
+      "status": "OK"
+    },
+    {
+      "tag": "live_match",
+      "folder": "live-match",
+      "script": "verify_live.py",
+      "report": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\live-match\\data\\verify_live.json",
+      "rc": 1,
+      "traceback": false,
+      "verdict_line": "LIVE_VERIFY 65/68 FAILED",
+      "failed": [
+        "shipped_cap_still_9_both",
+        "jump_numeric_fields_match_recomputation",
+        "peak_stats_match_recomputation"
+      ],
+      "total": 68,
+      "passed": 65,
+      "parsed": true,
+      "restored_sha_equal": true,
+      "before_sha256": "239fc2bb917c560e13a5ed0f61e7167895d61676748246a46bb5419539c0e095",
+      "status": "OK"
+    },
+    {
+      "tag": "plateau_p3",
+      "folder": "square-wave-plateau",
+      "script": "verify_plateau.py",
+      "report": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\square-wave-plateau\\data\\verify_plateau.json",
+      "rc": 1,
+      "traceback": false,
+      "verdict_line": "PLATEAU_VERIFY 75/80 FAILED",
+      "failed": [
+        "only_two_diff_paths_player",
+        "only_two_diff_paths_foe",
+        "other_11_watched_files_unchanged",
+        "delta_13_bones_independently_recomputed",
+        "timeline_flat_stats_independently_recomputed"
+      ],
+      "total": 80,
+      "passed": 75,
+      "parsed": true,
+      "restored_sha_equal": true,
+      "before_sha256": "99d027e5dd7008376ab932b4f8ad9a51bfdee0a970d27d9a41fb04ab5a43ffe8",
+      "status": "OK"
+    }
+  ],
+  "new_reds_vs_before": {
+    "motion_p1": [
+      "original_three_unchanged_both"
+    ],
+    "motion_p2": [],
+    "live_match": [
+      "jump_numeric_fields_match_recomputation",
+      "peak_stats_match_recomputation"
+    ],
+    "plateau_p3": [
+      "delta_13_bones_independently_recomputed",
+      "only_two_diff_paths_foe",
+      "only_two_diff_paths_player",
+      "other_11_watched_files_unchanged",
+      "timeline_flat_stats_independently_recomputed"
+    ]
+  },
+  "checks": {
+    "all_reports_present_and_parsed": true,
+    "all_restored_bytewise": true,
+    "no_verify_crashed": true,
+    "all_verdict_lines_present": true,
+    "venv_python_has_pil": true,
+    "no_history_script_modified": true
+  },
+  "failed_checks": [],
+  "ok": true
+}

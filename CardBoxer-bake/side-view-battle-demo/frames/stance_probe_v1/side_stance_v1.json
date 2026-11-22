@@ -1,0 +1,20 @@
+{
+  "_note": "把 55° 侧视 A-pose 掰成 KOF 式格斗站架的三组偏移，单位 = 度，全部是「骨局部旋转增量」。选组依据写在 side-view-combat-validation-record.txt，看图证据是 three-level-stance-comparison.png。",
+  "_sign": "画布 y 向下，正角 = 顺时针。spine 正角 = 上身朝 +x 前倾收腰；head 负角补偿保持视线水平；upperarm_f 正角 / upperarm_b 负角 = 两肘向躯干收；forearm_f 负角 / forearm_b 正角 = 双拳抬到下颌前护脸；thigh_f 正角、thigh_b 负角 = 前后脚分开。hips 恒 0：躯干倾角只给 spine 一次，不让腿跟着绕髋转导致脚离地，也不重演正面版 hips/spine/chest 三重累积。",
+  "_not_claimed": "这三组不是从 baked2.json 的站架推出来的角度，是「把 A-pose 立绘摆成格斗预备式」的外观基准；之后每一帧的動作增量才来自动作表。即站架是外观基线，不是动作帧。",
+  "candidates": {
+    "S1": {"label": "轻", "torso_deg": 6.0, "head_comp": 0.6,
+           "f_upper": 22.0, "f_fore": -70.0, "b_upper": -22.0, "b_fore": 70.0,
+           "thigh_f": 6.0, "shin_f": -4.0, "thigh_b": -8.0, "shin_b": 5.0},
+    "S2": {"label": "中", "torso_deg": 12.0, "head_comp": 0.6,
+           "f_upper": 34.0, "f_fore": -95.0, "b_upper": -34.0, "b_fore": 95.0,
+           "thigh_f": 10.0, "shin_f": -6.0, "thigh_b": -13.0, "shin_b": 8.0},
+    "S3": {"label": "重", "torso_deg": 18.0, "head_comp": 0.6,
+           "f_upper": 44.0, "f_fore": -112.0, "b_upper": -44.0, "b_fore": 112.0,
+           "thigh_f": 14.0, "shin_f": -8.0, "thigh_b": -18.0, "shin_b": 11.0}
+  },
+  "guard_zone": [420, 180, 540, 290],
+  "_guard_zone_why": "翻转后脸约在 (400..480, 110..200)；护脸拳应落在脸前下方这一带。统计该区 alpha>16 的像素数，作为「拳有没有抬到脸前」的辅助数值，选组仍以看图为准。",
+  "selected": null,
+  "_selected_after_review": "看图后由 make_side_stance.py --select 写入；未选之前 make_side_frames.py 拒绝运行。"
+}

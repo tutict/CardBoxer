@@ -1,0 +1,89 @@
+{
+  "blender": "5.2.3 LTS",
+  "glb": {
+    "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\3d-model-probe-v4b\\artifact_03.glb",
+    "bytes": 37314784,
+    "sha256": "5143404cf53d087210d4ef7e341ceae73f72174d1c8fd4f0c3c464c250b6244e"
+  },
+  "raw_bbox": {
+    "min": [
+      -0.39296,
+      -0.13527,
+      -0.0
+    ],
+    "max": [
+      0.3663,
+      0.33039,
+      1.04102
+    ]
+  },
+  "normalize": {
+    "target_height_m": 1.72,
+    "scale": 1.652229,
+    "bbox_min": [
+      -0.62724,
+      -0.38469,
+      0.0
+    ],
+    "bbox_max": [
+      0.62724,
+      0.38469,
+      1.72
+    ]
+  },
+  "structure": {
+    "verts": 57901,
+    "faces": 79986,
+    "shells": 2035,
+    "uv_layers": 1,
+    "materials": 1,
+    "textures": [
+      {
+        "image": "texture_pbr_20250901",
+        "size": [
+          4096,
+          4096
+        ],
+        "packed": true,
+        "source": "FILE"
+      },
+      {
+        "image": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+        "size": [
+          4096,
+          4096
+        ],
+        "packed": true,
+        "source": "FILE"
+      },
+      {
+        "image": "texture_pbr_20250901_normal",
+        "size": [
+          4096,
+          4096
+        ],
+        "packed": true,
+        "source": "FILE"
+      }
+    ],
+    "packed_textures": 3
+  },
+  "stage": {
+    "camera": "e_cam",
+    "lights": [
+      "e_fill",
+      "e_key"
+    ]
+  },
+  "front_render": {
+    "file": "e-source-front.png",
+    "bytes": 365238,
+    "sha256": "42497951731c248456e9759c097e01e6de90183d7b3c51e2a724b727e2ecb8ea"
+  },
+  "source_blend": {
+    "file": "player-V4b-source.blend",
+    "bytes": 37993889,
+    "sha256": "c4fbb3d5608ede43ebac573eb8c70166b5624a7fff376e3a1b546966b1f96371"
+  },
+  "elapsed_seconds": 2.74
+}

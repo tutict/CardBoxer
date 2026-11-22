@@ -1,0 +1,31 @@
+{
+  "静止像素等价": {
+    "a": "A_still-disabled.png",
+    "b": "B_still-enabled.png",
+    "changed_px": 0,
+    "extra": "(None, (1280, 720))"
+  },
+  "变更后像素等价": {
+    "a": "C_modified-enabled.png",
+    "b": "D_modified-disabled.png",
+    "changed_px": 0,
+    "extra": "(None, (1280, 720))"
+  },
+  "回退像素等价": {
+    "a": "E_rollback-enabled.png",
+    "b": "A_still-disabled.png",
+    "changed_px": 0,
+    "extra": "(None, (1280, 720))"
+  },
+  "状态变化必须可见(非0)": {
+    "a": "A_still-disabled.png",
+    "b": "C_modified-enabled.png",
+    "changed_px": 3504,
+    "extra": "((250, 568, 401, 684), (1280, 720))"
+  },
+  "A_still-disabled.png": 498219,
+  "B_still-enabled.png": 498219,
+  "C_modified-enabled.png": 499952,
+  "D_modified-disabled.png": 499952,
+  "E_rollback-enabled.png": 498219
+}

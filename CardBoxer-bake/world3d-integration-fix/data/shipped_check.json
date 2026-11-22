@@ -1,0 +1,472 @@
+{
+  "runs": {
+    "shipped": {
+      "tag": "shipped",
+      "seconds": 5.7,
+      "rc": 0,
+      "script_errors": 0,
+      "scenario_errors": 0,
+      "pngs": [
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\shipped\\sh-shipped-live.png",
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\shipped\\sh-shipped-sv-foe.png",
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\shipped\\sh-shipped-sv-player.png"
+      ]
+    },
+    "legacy": {
+      "tag": "legacy",
+      "seconds": 4.63,
+      "rc": 0,
+      "script_errors": 0,
+      "scenario_errors": 2,
+      "pngs": [
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\legacy\\sh-legacy-live.png",
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\legacy\\sh-legacy-sv-foe.png",
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\legacy\\sh-legacy-sv-player.png"
+      ]
+    },
+    "no_tint": {
+      "tag": "no_tint",
+      "seconds": 4.744,
+      "rc": 0,
+      "script_errors": 0,
+      "scenario_errors": 0,
+      "pngs": [
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\no_tint\\sh-shipped-live.png",
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\no_tint\\sh-shipped-sv-foe.png",
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\no_tint\\sh-shipped-sv-player.png"
+      ]
+    },
+    "default": {
+      "tag": "default",
+      "seconds": 3.102,
+      "rc": 0,
+      "script_errors": 0,
+      "scenario_errors": 0,
+      "pngs": [
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\default\\display-frozen.png",
+        "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\default\\display-live.png"
+      ]
+    }
+  },
+  "payloads": {
+    "shipped": {
+      "enemy_override": true,
+      "env_3d": "1",
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\shipped/sh-shipped-live.png",
+      "mode": "shipped",
+      "player_override": true,
+      "state": {
+        "layers": [
+          {
+            "flip": false,
+            "label": "player",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\shipped/sh-shipped-sv-player.png",
+            "visual_state": {
+              "foe_materials": 0,
+              "foe_visual": false,
+              "light_rows": 4,
+              "mesh_rows": 1,
+              "role": "player"
+            },
+            "world3d_id": 0,
+            "yaw": -55.0,
+            "pixels": {
+              "opaque_px": 44628,
+              "near_white_px": 13902,
+              "cyan_px": 2611,
+              "white_ratio": 0.311508
+            },
+            "png_sha256": "946c0682b7855467f22140151d39da48871354025185a269b710fcf3aef96ddc"
+          },
+          {
+            "flip": false,
+            "label": "foe",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\shipped/sh-shipped-sv-foe.png",
+            "visual_state": {
+              "foe_materials": 0,
+              "foe_visual": true,
+              "light_rows": 4,
+              "mesh_rows": 1,
+              "role": "foe"
+            },
+            "world3d_id": 0,
+            "yaw": 55.0,
+            "pixels": {
+              "opaque_px": 70249,
+              "near_white_px": 725,
+              "cyan_px": 424,
+              "white_ratio": 0.01032
+            },
+            "png_sha256": "4e1dd508993423650a6c7418350ff4f335f64606a9a9cd4540a74d417b9ee3cf"
+          }
+        ]
+      },
+      "tk_phase": "discard",
+      "use_3d": true
+    },
+    "legacy": {
+      "enemy_override": true,
+      "env_3d": "1",
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\legacy/sh-legacy-live.png",
+      "mode": "legacy",
+      "player_override": true,
+      "state": {
+        "layers": [
+          {
+            "flip": false,
+            "label": "player",
+            "own_world_3d": false,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\legacy/sh-legacy-sv-player.png",
+            "visual_state": {
+              "foe_materials": 0,
+              "foe_visual": false,
+              "light_rows": 4,
+              "mesh_rows": 1,
+              "role": "player"
+            },
+            "world3d_id": 0,
+            "yaw": -55.0,
+            "pixels": {
+              "opaque_px": 72493,
+              "near_white_px": 16881,
+              "cyan_px": 3146,
+              "white_ratio": 0.232864
+            },
+            "png_sha256": "e1c344699c95a47d3835fe60f7f43d7ba1f9635c952ef29c8a99c97c222a2ed6"
+          },
+          {
+            "flip": false,
+            "label": "foe",
+            "own_world_3d": false,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\legacy/sh-legacy-sv-foe.png",
+            "visual_state": {
+              "foe_materials": 0,
+              "foe_visual": true,
+              "light_rows": 4,
+              "mesh_rows": 1,
+              "role": "foe"
+            },
+            "world3d_id": 0,
+            "yaw": 55.0,
+            "pixels": {
+              "opaque_px": 74910,
+              "near_white_px": 14404,
+              "cyan_px": 2747,
+              "white_ratio": 0.192284
+            },
+            "png_sha256": "6e142fd93232ed26774e99991b90bc799ae10d69c680a94d005e5d6b30f35bd7"
+          }
+        ]
+      },
+      "tk_phase": "discard",
+      "use_3d": true
+    },
+    "no_tint": {
+      "enemy_override": true,
+      "env_3d": "1",
+      "live_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\no_tint/sh-shipped-live.png",
+      "mode": "shipped",
+      "player_override": true,
+      "state": {
+        "layers": [
+          {
+            "flip": false,
+            "label": "player",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\no_tint/sh-shipped-sv-player.png",
+            "visual_state": {
+              "foe_materials": 0,
+              "foe_visual": false,
+              "light_rows": 4,
+              "mesh_rows": 1,
+              "role": "player"
+            },
+            "world3d_id": 0,
+            "yaw": -55.0,
+            "pixels": {
+              "opaque_px": 44628,
+              "near_white_px": 13902,
+              "cyan_px": 2611,
+              "white_ratio": 0.311508
+            },
+            "png_sha256": "946c0682b7855467f22140151d39da48871354025185a269b710fcf3aef96ddc"
+          },
+          {
+            "flip": false,
+            "label": "foe",
+            "own_world_3d": true,
+            "present": true,
+            "sv_error": 0,
+            "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\no_tint/sh-shipped-sv-foe.png",
+            "visual_state": {
+              "foe_materials": 0,
+              "foe_visual": false,
+              "light_rows": 4,
+              "mesh_rows": 1,
+              "role": "foe"
+            },
+            "world3d_id": 0,
+            "yaw": 55.0,
+            "pixels": {
+              "opaque_px": 70249,
+              "near_white_px": 725,
+              "cyan_px": 424,
+              "white_ratio": 0.01032
+            },
+            "png_sha256": "4e1dd508993423650a6c7418350ff4f335f64606a9a9cd4540a74d417b9ee3cf"
+          }
+        ]
+      },
+      "tk_phase": "discard",
+      "use_3d": true
+    },
+    "default": {
+      "enemy_override": false,
+      "env_3d": "",
+      "f_flip": false,
+      "f_yaw": 0.0,
+      "layer_3d": false,
+      "layer_3d_foe": false,
+      "p_flip": false,
+      "p_yaw": 0.0,
+      "player_override": false,
+      "shots": [
+        {
+          "h": 720,
+          "name": "live",
+          "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\default/display-live.png",
+          "save_error": 0,
+          "w": 1280
+        },
+        {
+          "h": 720,
+          "name": "frozen",
+          "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\default/display-frozen.png",
+          "save_error": 0,
+          "w": 1280
+        }
+      ],
+      "tk_phase": "discard",
+      "use_3d": false
+    }
+  },
+  "foe_roi_mean_luma": {
+    "shipped": 24.826,
+    "legacy": 26.911,
+    "no_tint": 28.47
+  },
+  "shipped_layers": {
+    "player": {
+      "flip": false,
+      "label": "player",
+      "own_world_3d": true,
+      "present": true,
+      "sv_error": 0,
+      "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\shipped/sh-shipped-sv-player.png",
+      "visual_state": {
+        "foe_materials": 0,
+        "foe_visual": false,
+        "light_rows": 4,
+        "mesh_rows": 1,
+        "role": "player"
+      },
+      "world3d_id": 0,
+      "yaw": -55.0,
+      "pixels": {
+        "opaque_px": 44628,
+        "near_white_px": 13902,
+        "cyan_px": 2611,
+        "white_ratio": 0.311508
+      },
+      "png_sha256": "946c0682b7855467f22140151d39da48871354025185a269b710fcf3aef96ddc"
+    },
+    "foe": {
+      "flip": false,
+      "label": "foe",
+      "own_world_3d": true,
+      "present": true,
+      "sv_error": 0,
+      "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\shipped/sh-shipped-sv-foe.png",
+      "visual_state": {
+        "foe_materials": 0,
+        "foe_visual": true,
+        "light_rows": 4,
+        "mesh_rows": 1,
+        "role": "foe"
+      },
+      "world3d_id": 0,
+      "yaw": 55.0,
+      "pixels": {
+        "opaque_px": 70249,
+        "near_white_px": 725,
+        "cyan_px": 424,
+        "white_ratio": 0.01032
+      },
+      "png_sha256": "4e1dd508993423650a6c7418350ff4f335f64606a9a9cd4540a74d417b9ee3cf"
+    }
+  },
+  "legacy_layers": {
+    "player": {
+      "flip": false,
+      "label": "player",
+      "own_world_3d": false,
+      "present": true,
+      "sv_error": 0,
+      "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\legacy/sh-legacy-sv-player.png",
+      "visual_state": {
+        "foe_materials": 0,
+        "foe_visual": false,
+        "light_rows": 4,
+        "mesh_rows": 1,
+        "role": "player"
+      },
+      "world3d_id": 0,
+      "yaw": -55.0,
+      "pixels": {
+        "opaque_px": 72493,
+        "near_white_px": 16881,
+        "cyan_px": 3146,
+        "white_ratio": 0.232864
+      },
+      "png_sha256": "e1c344699c95a47d3835fe60f7f43d7ba1f9635c952ef29c8a99c97c222a2ed6"
+    },
+    "foe": {
+      "flip": false,
+      "label": "foe",
+      "own_world_3d": false,
+      "present": true,
+      "sv_error": 0,
+      "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\legacy/sh-legacy-sv-foe.png",
+      "visual_state": {
+        "foe_materials": 0,
+        "foe_visual": true,
+        "light_rows": 4,
+        "mesh_rows": 1,
+        "role": "foe"
+      },
+      "world3d_id": 0,
+      "yaw": 55.0,
+      "pixels": {
+        "opaque_px": 74910,
+        "near_white_px": 14404,
+        "cyan_px": 2747,
+        "white_ratio": 0.192284
+      },
+      "png_sha256": "6e142fd93232ed26774e99991b90bc799ae10d69c680a94d005e5d6b30f35bd7"
+    }
+  },
+  "no_tint_layers": {
+    "player": {
+      "flip": false,
+      "label": "player",
+      "own_world_3d": true,
+      "present": true,
+      "sv_error": 0,
+      "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\no_tint/sh-shipped-sv-player.png",
+      "visual_state": {
+        "foe_materials": 0,
+        "foe_visual": false,
+        "light_rows": 4,
+        "mesh_rows": 1,
+        "role": "player"
+      },
+      "world3d_id": 0,
+      "yaw": -55.0,
+      "pixels": {
+        "opaque_px": 44628,
+        "near_white_px": 13902,
+        "cyan_px": 2611,
+        "white_ratio": 0.311508
+      },
+      "png_sha256": "946c0682b7855467f22140151d39da48871354025185a269b710fcf3aef96ddc"
+    },
+    "foe": {
+      "flip": false,
+      "label": "foe",
+      "own_world_3d": true,
+      "present": true,
+      "sv_error": 0,
+      "sv_png": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\no_tint/sh-shipped-sv-foe.png",
+      "visual_state": {
+        "foe_materials": 0,
+        "foe_visual": false,
+        "light_rows": 4,
+        "mesh_rows": 1,
+        "role": "foe"
+      },
+      "world3d_id": 0,
+      "yaw": 55.0,
+      "pixels": {
+        "opaque_px": 70249,
+        "near_white_px": 725,
+        "cyan_px": 424,
+        "white_ratio": 0.01032
+      },
+      "png_sha256": "4e1dd508993423650a6c7418350ff4f335f64606a9a9cd4540a74d417b9ee3cf"
+    }
+  },
+  "single_layer_truth_sha256": {
+    "player": "946c0682b7855467f22140151d39da48871354025185a269b710fcf3aef96ddc",
+    "foe": "4e1dd508993423650a6c7418350ff4f335f64606a9a9cd4540a74d417b9ee3cf"
+  },
+  "arena_guard_lines": [
+    "const Fighter3DLayerScript = preload(\"res://scripts/fighter_3d_layer.gd\")",
+    "var layer_3d = null",
+    "var layer_3d_foe = null",
+    "\t\t\tvar l3 := Fighter3DLayerScript.new()",
+    "\t\t\t\tlayer_3d = l3",
+    "\t\t\tvar lf := Fighter3DLayerScript.new()",
+    "\t\t\tlf.configure(\"foe\", Fighter3DLayerScript.FOE_GLB_PATH,",
+    "\t\t\t\t\tFighter3DLayerScript.DEFAULT_FOE_YAW, false)",
+    "\t\t\t\tlayer_3d_foe = lf",
+    "\tif (layer_3d == null and layer_3d_foe == null) or motion_3d.is_empty():",
+    "\tif layer_3d != null:",
+    "\t\tlayer_3d.position = player.position + player.visual_shift"
+  ],
+  "checks": {
+    "four_ran": true,
+    "all_rc_zero": true,
+    "no_script_errors": true,
+    "shipped_use_3d": true,
+    "shipped_two_layers": true,
+    "shipped_own_true": true,
+    "shipped_yaw_face_to_face": true,
+    "shipped_flip_false": true,
+    "shipped_foe_visual_on": true,
+    "shipped_4_lights_each": true,
+    "shipped_sv_matches_single_layer": true,
+    "shipped_sv_pixels_match_single_layer": true,
+    "shipped_two_sv_written": true,
+    "shipped_no_scenario_error": true,
+    "shipped_live_frame": true,
+    "legacy_own_false": true,
+    "legacy_both_white": true,
+    "legacy_sv_differs_from_single_layer": true,
+    "legacy_live_frame": true,
+    "no_tint_foe_visual_off": true,
+    "no_tint_both_sv_unchanged": true,
+    "no_tint_foe_roi_brighter": true,
+    "no_tint_live_frame": true,
+    "default_use_3d_false": true,
+    "default_no_layers": true,
+    "default_no_overrides": true,
+    "default_no_yaw_read": true,
+    "default_two_pngs": true,
+    "default_arena_has_use3d_guard": true,
+    "default_layer_creation_is_guarded": true
+  },
+  "failed": [],
+  "ok": true
+}

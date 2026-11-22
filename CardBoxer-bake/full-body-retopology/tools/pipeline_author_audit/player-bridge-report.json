@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "source": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\full-body-retopology\\baseline\\assets\\3d\\player-rigged.glb",
+  "raw": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\full-body-retopology\\authoring\\player\\player-raw.glb",
+  "output": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\full-body-retopology\\tools\\pipeline_author_audit\\player-diagnostic-canonical.glb",
+  "source_sha256": "d4548f09c017ca65b1620cdabf6f9e4532bfbbddd7519d25da8eb3cdab6e2e5b",
+  "raw_sha256": "4320e2bb2940d967af5b39dd2e76ed8cec21fb22e7388fe7d110b675d0c6927b",
+  "output_sha256": "804e907be8c1f69de69ee0f735a825aedcd23ac4c938998abf2b49e2c54328bd",
+  "profile_sha256": "570361c392b5372985a2c8b9f9f627e6ce9a512b9cd72deff5f4d3d5edc7ce55",
+  "vertices": 59195,
+  "triangles": 73575,
+  "skin_joints": 14,
+  "source_mesh_global": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "raw_mesh_global": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "raw_to_source_bind": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "raw_rest_bind_error_m": 2.84614508608228e-07,
+  "canonical_rest_bind_error_m": 7.060051897060168e-07,
+  "world_rest_transfer_error_m": 5.131786278830233e-07,
+  "original_nodes_exact": true,
+  "original_ibms_exact": true,
+  "sockets_source": "D:\\Projects\\CardBoxer\\CardBoxer-bake\\full-body-retopology\\authoring\\player\\contact-sockets.json",
+  "sockets_source_sha256": "2fa97c8ff98fb481629a29438fe56dd5a5aa9be32330455656fe33840ab42754",
+  "pipeline_sha256": "d64a7179218f7c38836ecbffa1d39646219290d58c77a9be43894e23662f9694",
+  "joint_remap": {
+    "hips": 0,
+    "spine": 1,
+    "chest": 2,
+    "neck": 3,
+    "head": 4,
+    "upperarm_b": 5,
+    "forearm_b": 6,
+    "upperarm_f": 7,
+    "forearm_f": 8,
+    "thigh_b": 9,
+    "shin_b": 10,
+    "thigh_f": 11,
+    "shin_f": 12,
+    "neutral_bone": 13
+  },
+  "image_sha256": [
+    "0070399bfe1fe4eb574f115ceae55f0f080cffd26691839c58a403aab7ab5eb2",
+    "3ecedae53ec0f5471f3382dd1bef3d616c6fd42d2e59fa474a717cf4cf1addf7",
+    "6b7e1c24ea8b45bb68c7b17a13904a841de5309f400c67ea0d3c08d5cb886f16"
+  ]
+}

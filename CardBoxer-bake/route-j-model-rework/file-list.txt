@@ -1,0 +1,20 @@
+# J 路线 · 造型重做（r1 负结果 + r2 方向订正）· 交付文件清单
+# 格式: 相对路径<TAB>字节<TAB>sha256
+# 排除: 本清单 / new-files.diff / logs / orig / shots / boards / data
+# shots / boards / data 的 sha256 见 new-files.diff 末尾对账段
+
+build_foe_shape_j.py	12639	ff984b1d26f1e9906060f1da9cbe795aacd9a1124f74174a07e854de467fc764
+diag_motif_j.py	10195	7302f5d6c7c688d9302fa9588be29cc5683259448fc0611f0c29266b3940ab20
+diag_shape_root.py	6399	445d00065d8eee5851b5f61bf59d9cdd31408c906c21ebd04c4ae1498020a175
+diag_texture_pair_j.py	3512	5a03942461352846e0e30d145a7d9e6f4b3a5fde88e309b84a533dfafcdca0ff
+foe-rigged-v2.glb	42917240	f30c31a1b90234f6c9b77600c272f6c9c9b4c8304f88659cd528ad87c1394b92
+install_foe_v2_j.py	4309	3cc335d422b37fccb3e395a63de6bfeedd9f3f7f42526202badb1f07872b2ed6
+J-route-negative-results-and-direction-correction.txt	11965	01058f5ebffeca7b8a63eed33f604d79e217927e14953d0cc47a510ab78de828
+J-route-model-spec.txt	10268	3921316d869ab6aa1cb9fb2c89f8e43f2e35ab53109ffa69091638b116bf8424
+make_filelist_j.py	6326	3c7c143212e7fbd05a15e5e51e3ae20f851f76a998b573083ac85c43adfa4c6e
+probe_recolor_j.py	8243	362dbf18817083a3a6cd5de7e60a5573391ae0b87ad6b2588d5bd26fbafabff5
+probe_shells_j.py	5983	9e6227939eba068ec3fc0c5c38b8bc820aa11ea9b8c184e57a8309f01dc15622
+rollback_shape_j.py	3383	4dcf493f3e0cdcd148e16bcc7d355f66284c2c5d8775127d2121425391f31e09
+run_all_checks_j.py	3834	19d44ffffae002eb94dbbf365fbe39fd7e80b0240eed73c4839d4d0c41b114bc
+run_asset_probe_j.py	4259	be12a4f0d6924867f97ef5328d0f37f16725193d71fecb4082691ee3fc12b322
+tests/asset_probe_j.gd	6338	0a9ce7444deaa1b2dc67711dd77dec0908b1c0f34f4059e317904012471aa4cf

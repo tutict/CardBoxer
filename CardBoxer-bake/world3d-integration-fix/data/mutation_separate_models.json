@@ -1,0 +1,110 @@
+{
+  "cases": [
+    {
+      "id": "M1",
+      "desc": "玩家视口换成共享 World3D 串扰图（模拟修复回归）",
+      "target": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\shipped\\sh-shipped-sv-player.png",
+      "original_sha256": "946c0682b7855467f22140151d39da48871354025185a269b710fcf3aef96ddc",
+      "anchor_hits": 1,
+      "returncode": 1,
+      "crashed": false,
+      "red_checks": [
+        "shipped_player_matches_single_truth",
+        "shipped_player_is_white"
+      ],
+      "restored": true,
+      "status": "CAUGHT",
+      "reason": "rc=1 + FAIL 行"
+    },
+    {
+      "id": "M2",
+      "desc": "对手视口换成共享 World3D 串扰图（模拟修复回归）",
+      "target": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\shipped\\sh-shipped-sv-foe.png",
+      "original_sha256": "4e1dd508993423650a6c7418350ff4f335f64606a9a9cd4540a74d417b9ee3cf",
+      "anchor_hits": 1,
+      "returncode": 1,
+      "crashed": false,
+      "red_checks": [
+        "shipped_foe_matches_single_truth",
+        "shipped_foe_is_dark"
+      ],
+      "restored": true,
+      "status": "CAUGHT",
+      "reason": "rc=1 + FAIL 行"
+    },
+    {
+      "id": "M3",
+      "desc": "单层真值 player sha 被篡改（防止拿错真值当证据）",
+      "target": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-b-asset-deduplication\\data\\single_layers.json",
+      "original_sha256": "62ff20353b2e63559298846a28a2fbba2f078f84d537b3ed33b63f9964bf8d3b",
+      "anchor_hits": 1,
+      "returncode": 1,
+      "crashed": false,
+      "red_checks": [
+        "shipped_player_matches_single_truth"
+      ],
+      "restored": true,
+      "status": "CAUGHT",
+      "reason": "rc=1 + FAIL 行"
+    },
+    {
+      "id": "M4",
+      "desc": "改前对照组被换成干净图（防止上下排无差别）",
+      "target": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\legacy\\sh-legacy-sv-foe.png",
+      "original_sha256": "6e142fd93232ed26774e99991b90bc799ae10d69c680a94d005e5d6b30f35bd7",
+      "anchor_hits": 1,
+      "returncode": 1,
+      "crashed": false,
+      "red_checks": [
+        "legacy_both_mixed",
+        "legacy_differs_from_truth"
+      ],
+      "restored": true,
+      "status": "CAUGHT",
+      "reason": "rc=1 + FAIL 行"
+    },
+    {
+      "id": "M5",
+      "desc": "对手视口换成 1x1 空图（防止「文件存在」真空通过）",
+      "target": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\shipped\\sh-shipped-sv-foe.png",
+      "original_sha256": "4e1dd508993423650a6c7418350ff4f335f64606a9a9cd4540a74d417b9ee3cf",
+      "anchor_hits": 1,
+      "returncode": 1,
+      "crashed": false,
+      "red_checks": [
+        "four_sv_present",
+        "sv_size_420x520",
+        "shipped_foe_matches_single_truth"
+      ],
+      "restored": true,
+      "status": "CAUGHT",
+      "reason": "rc=1 + FAIL 行"
+    }
+  ],
+  "counts": {
+    "total": 5,
+    "caught": 5,
+    "did_not_run": 0,
+    "missed": 0,
+    "restored": 5
+  },
+  "clean_re_run": {
+    "green": true,
+    "returncode": 0,
+    "separate_models_ok": true
+  },
+  "products_sha_unchanged": true,
+  "baseline": {
+    "D:/Projects/CardBoxer/CardBoxer-bake/world3d-integration-fix/boards/independent-models-presentation-board.png": "cbbb23660e404a884107948bff67bceeac5018ae8bdddd38ea55daf87df02802",
+    "D:/Projects/CardBoxer/CardBoxer-bake/world3d-integration-fix/boards/independent-models-cross-talk-comparison.png": "0164031fe2e1cd82a2c2cadbf03ecd643f3e8f55ec598fc229c8f91e56879f47",
+    "D:/Projects/CardBoxer/CardBoxer-bake/world3d-integration-fix/data/separate_models.json": "ad28510efd12cb049a51b9f4f08655ee1c9fa3d81082480e8e9398e0783ca7fb"
+  },
+  "after_clean": {
+    "D:/Projects/CardBoxer/CardBoxer-bake/world3d-integration-fix/boards/independent-models-presentation-board.png": "cbbb23660e404a884107948bff67bceeac5018ae8bdddd38ea55daf87df02802",
+    "D:/Projects/CardBoxer/CardBoxer-bake/world3d-integration-fix/boards/independent-models-cross-talk-comparison.png": "0164031fe2e1cd82a2c2cadbf03ecd643f3e8f55ec598fc229c8f91e56879f47",
+    "D:/Projects/CardBoxer/CardBoxer-bake/world3d-integration-fix/data/separate_models.json": "ad28510efd12cb049a51b9f4f08655ee1c9fa3d81082480e8e9398e0783ca7fb"
+  },
+  "selftest": false,
+  "selftest_expectations_met": false,
+  "ok": true
+}

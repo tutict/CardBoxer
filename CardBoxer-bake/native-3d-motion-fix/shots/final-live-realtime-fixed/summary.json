@@ -1,0 +1,8 @@
+{
+	"evidence": "Production state machine, fixed input, no direct sampled-pose injection",
+	"failures": [],
+	"fixed_dt": 0.0166666666666667,
+	"rendered": true,
+	"scenario_count": 4,
+	"source_project": "D:/Projects/CardBoxer/CardBoxer-bake/native-3d-motion-fix/project/"
+}

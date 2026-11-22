@@ -1,0 +1,202 @@
+《牌拳》人物建模 · 第一步：SDXL 角色设定图（2026-11-06）
+================================================================
+
+一、目标与边界
+----------------------------------------------------------------
+工程师两轮选择：路线 =「先用 SDXL 出角色设定图」；造型方向 =「尼古喵喵」。
+「尼古喵喵」= 2026 年那部猫耳兽人番：青绿短发猫耳、红眼、宽大 T 恤 +
+长裤、慵懒反套路不卖萌（资料见 WebSearch，非凭印象）。
+
+边界，逐条如实交代：
+  * 本轮只定造型，游戏目录 0 字节变更。
+  * 造型参考 ≠ 原角色复刻。真做进游戏前必须差异化，避免直接搬 IP。
+  * 不画烟：原角色的「烟不离手」是标志，但游戏角色 + 不美化烟草；
+    慵懒 / 摆烂 / 不讨好的气质保留。工程师要加，下一轮补。
+  * 产出不是游戏精灵。SDXL 设定图只用来定轮廓 / 服装 / 配色语言，
+    A（2D 外观层）或 B（Blender 精灵图集）落地另算。
+
+二、现状取证：为什么这一步是「定造型」而不是「改模型」
+----------------------------------------------------------------
+  * 游戏目录无任何 .blend / .fbx / .glb / .obj 角色资源；只有
+    background/arena.png（上一轮接入的擂台背景）。
+  * scripts/fighter.gd::_draw() 用 11 关节坐标自绘：
+    draw_line / draw_circle / draw_colored_polygon，圆头 + 梯形躯干 +
+    线条四肢 + 圆形拳套 + 椭圆脚 + 单点眼睛，约 190 px 高。
+  * data/card_motion.json：12 卡 228 帧 + 3 条受击轨（16/30/10 帧）。
+    走路 / 待机呼吸 / KO 倒地是程序化的，不在表里。
+  * CardBoxer-bake/boxer_rig.py：13 骨解析 IK，只解算关节坐标，
+    没有网格 / 材质 / 渲染。
+  * Blender 5.2.0 LTS / Python 3.13.13，headless EEVEE 实测真出 PNG
+    （128×128 立方体正交探针，16.8s 含启动）→ B 路线技术可行。
+
+三、环境与启动（两个真实的坑）
+----------------------------------------------------------------
+ComfyUI 0.44.0，端点 http://127.0.0.1:8188，
+checkpoint 列表 = ['sd_xl_base_1.0.safetensors', 'v1-5-pruned-emaonly.safetensors']。
+
+坑 1：用错 Python 解释器。桌面版同时有两个环境：
+  * ComfyUI/standalone-env/python.exe —— 没有 torch，comfy_aimdo 是旧版
+    （init 签名只有 implementation / simple_vram_headroom）。
+    启动报 main.py:83 TypeError: init() got an unexpected keyword
+    argument 'nvml_pressure'。
+    试图用 --disable-dynamic-vram 绕过 → 又炸 main.py:266
+    ModuleNotFoundError: No module named 'torch'。
+  * 正解：ComfyUI/.venv/Scripts/python.exe —— torch 2.13.0+cu130，
+    comfy_aimdo.control.init 签名带 nvml_pressure，与 main.py 匹配。
+    和 11-05 那次成功日志（Python 3.13.12 / pytorch 2.13.0+cu130）
+    是同一个环境。
+坑 2：--disable-dynamic-vram 不是修法，是掩盖症状。换对解释器后
+      不需要它，dynamic VRAM 照常启用。
+
+正确启动命令：
+  cd D:\Comfy-Desktop\ComfyUI-Installs\ComfyUI\ComfyUI
+  D:\Comfy-Desktop\ComfyUI-Installs\ComfyUI\ComfyUI\.venv\Scripts\python.exe main.py \
+    --models-directory "D:\Comfy-Desktop\ComfyUI-Shared\models" \
+    --output-directory "D:\Comfy-Desktop\ComfyUI-Shared\output" \
+    --listen 127.0.0.1 --port 8188 --disable-auto-launch
+HTTP 请求一律 ProxyHandler({}) 绕开本机 HTTP_PROXY（同 11-05）。
+
+四、出图参数（全部可复现）
+----------------------------------------------------------------
+  * 模板：Fantasy-Agent/templates/comfyui/ui-reference.json
+    （CheckpointLoaderSimple 图，{{ prompt }} 等占位符注入），未改仓库文件。
+  * checkpoint = sd_xl_base_1.0.safetensors
+  * 768×1024 / 26 steps / cfg 6.5 / dpmpp_2m + karras / 普通 VAEDecode
+    （竖版全身；不回到 1024×640 是因为那次 VAEDecode bad allocation）
+  * 脚本 gen_character_sdxl.py 把 V1/V2/V3 三版 prompt 全留在盘上：
+      python gen_character_sdxl.py V1 1
+      python gen_character_sdxl.py V2 2
+      python gen_character_sdxl.py V3 1
+  * seed：V1 20261106；V2 551199 / 906271；V3 424242
+
+五、四张候选逐张评审
+----------------------------------------------------------------
+文件                          构图                     命中的要点                        偏差
+nigumiaomiao-boxer-design-01.png      服装拆解表 + 侧面头 +    宽大 T 恤 / 宽松裤 / 慵懒      红发（薄荷绿被吸到 T 恤）、
+  (V1)                        背面视图，最干净         / 全身完整 / 平涂细描边        灰蓝眼、双臂垂下、薄手套、
+                                                                                    无拳套护脸、无猫尾
+nigumiaomiao-boxer-design-V2-01.png  正面 + 背面 + 部件线稿   部件拆解最细、绿主色          变成真猫头兽人（不是人面
+  (V2)                                                                          猫耳娘）、拳套很小、无琥珀色
+nigumiaomiao-boxer-design-V2-02.png  装备设定表 + 拳套特写    青绿主色 / 大号圆拳套 /       双手插兜、无猫尾、无红眼、
+  (V2)                        + 伪文字标注             深紫腰带 / 全身完整           伪文字多、偏潮服不是废柴
+nigumiaomiao-boxer-design-V3-01.png  主人物 + 猫耳帽多视图    人脸猫耳 / 青绿短发 / 慵懒    眼非红、拳套深绿非琥珀、
+  (V3)                        / 部件，无伪文字         半睁眼 / 大拳套 / 一手护脸    无可见猫尾、连帽衫非宽 T 恤
+                                                       / 宽松上衣裤 / 全身完整
+                                                       / 平涂赛璐璐、最干净
+
+四张均无烟、无暴露内容、无多余肢体、无手脚崩坏、无背景场景。
+
+六、实测结论：SDXL 压不住「设定表」构图
+----------------------------------------------------------------
+  * V1 的 negative 已写 multiple panels / collage / character sheet grid /
+    turnaround → 仍出服装拆解表。
+  * V3 的 positive 明写 "no panels, no callouts, no text"，negative 再加
+    design sheet / turnaround / multiple views / detail callouts / infographic
+    → 仍出猫耳帽多视图 + 部件小图。
+  * 属性绑定也不稳：mint green 从头发跑到 T 恤（V1 出红发绿衣）；
+    amber copper boxing gloves 四张都没稳定出来；bright red irises 也没稳。
+  * 结论：这是模型行为，不是 prompt bug。不再继续调词撞墙。
+    设定表本来就是「角色设定图」的合适形态，直接取其可用部分。
+
+七、落地规格（给下一步 A / B 用）
+----------------------------------------------------------------
+  造型基准：V3-01 的主人物。
+  必须保留：猫耳、青绿短发、慵懒半睁眼、宽松上衣 + 宽松长裤、
+            大圆拳套、细描边平涂、不卖萌。
+  从别处取：V2-02 的拳套特写与青绿主色；V1-01 的服装三视图 / 背面结构。
+  必须修正 5 项：红瞳、可见猫尾、双手都护脸、宽大 T 恤（若更贴原作）、
+                  暖琥珀 / 冷青阵营色。
+  阵营色不要靠出图：fighter.gd 已有 PALETTE_PLAYER / PALETTE_ENEMY，
+  换色是代码一行，不值得为对手再渲一套图。
+  11 关节骨架约束：设定图是正面站姿，游戏是侧视 2D + facing 镜像。
+  猫耳 / 猫尾应作为附加装饰挂在 head / hip 上，不进关节表 ——
+  否则 228 帧动作表全要重烘。
+
+八、故意没做 / 待定
+----------------------------------------------------------------
+  * 没有改游戏任何文件（那个目录不是 git 仓库，覆盖即不可恢复）。
+  * 没有出「对手冷青版」：颜色由代码 palette 控制。
+  * 没有画烟、没有复刻原角色。
+  * 没选 A / B 落地路线：等工程师挑图后再定。
+  * ComfyUI 8188 本轮仍在后台跑（临时起着），要停说一声。
+
+九、文件清单与 sha256（第十节后更新）
+----------------------------------------------------------------
+  caef28a15af96c52717f84fb80a9361c6ec6e1ee4b4b05a861775361fa363700  nigumiaomiao-boxer-design-01.png        [弃用/对照]
+  7e180bc439e6255ddfe8ed1fbcf6e8b5950cb743cd789c1213eee61b304fd43d  nigumiaomiao-boxer-design-V2-01.png     [弃用/对照]
+  59b5a3cd5205d68667eab03bee8b88d30bf0ed12eaf6cca26df86b38402c8d25  nigumiaomiao-boxer-design-V2-02.png     [弃用/对照]
+  81cfac8934d663ba5aca92df1c2553d2e6c294eaef63e469483acd56716ba5e8  nigumiaomiao-boxer-design-V3-01.png     [弃用/对照]
+  e756ed073defcad4dffe4da05bf2913ddba08fd4aa62654ac2069578023b8863  liuyin-boxer-design-V4-01.png          [道具细节]
+  e4a6d0a7352b36887e14fc6b0ae38b861415679dae7c676ecf311be14b7ef582  liuyin-boxer-design-V4-02.png          [推荐基准]
+  0c949e16a30cf6b83d3e1b211d65aa283b62dff1fd86214995f2c3e69d3b2ba5  liuyin-boxer-design-V5-01.png          [负结果/对照]
+  7a71f67f932090341233ea07be17faf0aa9f6c32fbac68ffe07d0f1f75c9d76f  liuyin-boxer-design-V5-02.png          [负结果/对照]
+  9fb33ad39c1ee6f23f4da18c8ca031a49a3d492954510d1d111b631a0993c717  gen_character_sdxl.py
+  本文件：角色设定-验证记录.txt（含第十节）
+
+十、换方向：绝区零「琉音」（工程师「算了，能不能换成绝区零的琉音」）
+----------------------------------------------------------------
+第一至九节的「尼古喵喵」四张图**已弃用**，保留作对照，不删除。
+
+资料取证（WebSearch，非凭印象）：琉音 / Dialyn，《绝区零》2.4
+（2025-11-26）S 级物理·击破，坎卜斯黑枝「裁决官」，表面是 TOPS
+客服工号 2493。两篇服饰品鉴 + 百科给出：
+  * 黑白「白切黑」熊猫配色：白在外、黑在内；
+  * 黑白交织头发、头顶空心双环「鬟」、金/银发夹、双辫；
+  * 红中国结（胸前/腰间/头顶/鞋跟）、黑腰带 + 金 8 字扣、
+    包子/熊猫挂件「禁步」、京剧绒球、花边袖；
+  * 厚底金扣鞋、松石绿电话线、背后老式拨号电话机；
+  * 一黑一白可一分为二的环刃，左手拇指/小指金属件；
+  * 战斗动作：抱拳、掌击、剑指、石头剪刀布。
+身高 145 cm，少女体型；原作服装含露肩 / 肚兜元素。
+
+安全与边界（主动处理，不等工程师问）：
+  * 按中性全覆盖战斗服出图，不画露肩 / 露腰 / 肚兜 /
+    丝袜特写 / 任何性化姿势；negative 词里逐条点名禁掉。
+  * 造型参考 ≠ 角色复刻；进游戏前要差异化（IP）。
+  * 不画烟、无背景场景、不是游戏精灵。
+  * 游戏目录仍是 0 字节变更。
+
+**为什么这个方向比上一个更贴《牌拳》**（判断，不是迎合）：
+琉音的招式是抱拳 / 掌击 / **石头剪刀布** / 双环刃，
+「客服 → 裁决官」的身份又能对应三回比牌的结算播报。
+猫耳娘只是换皮；琉音和「回合制比牌 + 拳击」在动词层对得上。
+
+V4（2 张）：
+  V4-01  黑白线稿设定表，正面/背面/部件，拨号电话、圆盘、
+         环刃、鞋特写最全；缺点：几乎纯线稿无红金，服装偏
+         古风长袍，**没有拳套**、双臂未护脸、黑白发色没出来。
+  V4-02  **推荐基准**：正面 + 背面双视图、无伪文字、彩色
+         完成度最高；白衣 + 黑交领马甲 + 红腰带 + 金纹样/
+         金腰扣 + 黑色双环发髻 + 厚底鞋，全覆盖无暴露。
+         缺点：双手裸露垂下、无拳套、无熊猫图案/电话/环刃/
+         松石绿。
+  两张都无动物头、猫耳、烟、暴露内容、崩坏手脚。
+
+V5（2 张，负结果，**不要再用这个思路**）：
+  为补「拳套 + 护脸」把该属性提到 prompt 最前、反复强调，
+  并砍掉其他服装细节词。结果两张都**彻底翻车**：
+  V5-01 → 男性中式道服正/侧视图，裸手；
+  V5-02 → 男性道服多视图 + 伪文字 + 圆盘线稿。
+  黑白配色、双环发髻、拳套全丢。
+  **结论：SDXL 上「反复前置强化单一属性 + 删除竞争细节」
+  会把语义簇整体推走**（martial arts 与 boxing gloves 冲突时
+  模型选了武术道服），比不强化更差。停手，不再撞墙。
+
+**拳套不靠出图**：`fighter.gd::_draw_glove()` 本来就是
+`draw_circle` 画圆拳套，A 路线落地时由代码画；设定图只负责
+服装 / 配色 / 发型 / 配件语言。所以「四张都没有拳套」不是
+阻塞项，别为它再渲一轮。
+
+落地规格（覆盖第七节）：
+  基准 = V4-02；道具细节取 V4-01（拨号电话、环刃、圆盘、鞋）。
+  保留：黑白主色 + 红中国结 + 金扣、双环发髻、交领/花边袖、
+        全覆盖战斗服、俏皮但笃定的半睁眼。
+  补：拳套由代码画；环刃/电话作为挂件；黑白双色发与熊猫
+      小图案可在自绘里用色块补。
+  阵营色仍由 `PALETTE_PLAYER/ENEMY` 控制，别靠出图。
+  第七节的猫耳/猫尾附加装饰规则作废（本方向无兽耳）。
+
+复现：`python gen_character_sdxl.py V4 2` / `V5 2`。
+脚本 PRESETS 现有 V1..V5 五版，V1..V3 的 prompt/seed 未改
+（只把 ComfyUI 侧 filename_prefix 从 character_neko_ 改成
+character_，不影响图像内容与归档文件名）。

@@ -1,0 +1,190 @@
+《牌拳》P3 · square-wave-plateau · 验证记录
+时间：2026-11-15
+证据区：CardBoxer-bake/square-wave-plateau/
+
+────────────────────────────────────────────────────────────
+一、结论（先说结果）
+
+  已收口。B 路线时间线上「腿峰值整段钉在 9°」的方波，成因实测是
+  255 对原生重复帧 + 227 对硬 clamp 削平（482 对，接近对半）。
+  本轮把腿骨映射从硬 clamp 换成 atan 软限幅：
+
+      out = cap * (2/π) * atan((π/2) * raw / cap)
+
+  上线态为 leg_mode="atan" / leg_cap_deg=12.0。clamp 造成的 227 对
+  平台全部消除，精确平台降到 255（动作表原生重复帧的理论下限）；
+  可辨平台 497 → 308，最长平台段 26 → 8 帧，真实对局动作段平台
+  35 → 13，曲线不同取值数 7 → 22。
+
+  成本没有变差：真实 player-rigged.glb 上 5 档 × 284 帧 = 1420 个姿态
+  全量扫描，atan12 最坏 p999 = 0.042737 m，低于上线前 hard09 的
+  0.043694 m，越外部锚 0.09365 m 的帧数 0，代表帧抽样 gap 全 0。
+
+  **最小改动只落 3 个文件**：scripts/rig_driver.gd 新增 _leg() 分派，
+  两份 motion_input*.json 的 mapping 改两个值；其余 11 个受监控文件
+  sha256 逐字不变。旧动作表没有 leg_mode 时默认回落 "hard"，
+  引擎内 legacy_compat 模式与回滚态逐像素相同，已实证向后兼容。
+
+────────────────────────────────────────────────────────────
+二、诊断与成本账（看结果前先钉口径）
+
+  | 项 | hard09（上线前） | atan12（上线后） |
+  |---|---|---|
+  | 精确平台对（15 轨 284 帧 4 腿骨 = 1136 骨帧） | 482 | 255 |
+  | 其中由 clamp 造成 | 227 | 0 |
+  | 其中动作表原生重复帧 | 255 | 255 |
+  | 可辨平台对（< 0.1°） | 497 | 308 |
+  | 最长精确平台段 | 26 帧 | 8 帧 |
+  | 腿角幅度均值 / 最大 | 4.9982° / 9.00° | 4.7692° / 11.50° |
+  | 真实对局动作段平台对 | 35 / 47 | 13 / 47 |
+  | 曲线不同取值数 | 7 | 22 |
+  | 全量 284 帧最坏 p999 撕裂 | 0.043694 m | 0.042737 m |
+  | 越外部锚的帧数 | 0 | 0 |
+
+  为什么不用 P2 研究过的 tanh：tanh 尾部指数饱和，raw 超过约 3×cap
+  后几乎恒等 cap；同 cap 12 下 tanh12 可辨平台 331 对，atan12 只有
+  308 对。atan 初始斜率为 1（小信号逐值不变），尾部按 1/x 慢衰减，
+  语义上就是「只改大信号区」。
+  逐轨峰值归一化（contextual，需要 card 上下文）实测精确平台同为 255，
+  可辨平台 363 > 308，做不更好，因此不改 retarget_delta 签名。
+
+  档位按「平台达到原生下限 + 撕裂在外部锚内 + 腿峰值均值最接近现状」
+  独立重算选出 atan12；atan09 幅度掉太多（4.03°），atan15 撕裂
+  0.044806 m 高于现状，均不选。
+
+────────────────────────────────────────────────────────────
+三、落地形态与兼容性
+
+  1. scripts/rig_driver.gd
+       新增 func _leg(x, cap, mode)：mode=="atan" 走软限幅，
+       否则 return clampf(x, -cap, cap)。
+       retarget_delta 里 var leg_mode := String(mapping.get(
+       "leg_mode", "hard"))，四条腿骨全部改走 _leg(...)。
+       **默认值是 "hard"**：旧动作表配新驱动行为与 P2 完全一致。
+  2. data/motion_input.json / motion_input_foe.json
+       mapping.leg_cap_deg 9.0 → 12.0，新增 mapping.leg_mode "atan"。
+       递归逐值 diff 证明每份只有这两条路径变化，cards 仍 15 / 284 帧。
+  3. orig/pre-p3/ 保存三份证据生成前原字节；apply_p3.py 支持
+       --restore 逐字节回退；data/baseline_p3.json 记录 14 个受监控
+       文件的 sha256。motion_check.gd 语法冒烟 PASS。
+
+  引擎内四模式同进程 A/B（shipped / rolled_back / reapplied /
+  legacy_compat，12 帧 × 4 = 48 行）：
+    读回 atan / 12.0（双侧），13 骨 delta 与 Python 同公式逐骨零差异，
+    每个非站架动作帧双侧像素差 > 0（22/22 超过 200 px，最大 17608），
+    站架帧逐像素差 0，reapplied 与 shipped 全 0，
+    legacy_compat（删掉 leg_mode）与 rolled_back 逐像素相同。
+  默认关 3D 零污染；15 套引擎内自检 ALL_CHECKS_P3 15/15 ALL GREEN。
+
+────────────────────────────────────────────────────────────
+四、看图复核（不是只有数字）
+
+  * P3-时间线方波.png（1400×760）：B 路线真实对局 129 采样，
+    三回阶段色带 + 灰线 hard9 / 橙线 atan12。橙线峰顶不再水平钉死，
+    峰值抬到约 10.4° 且呈圆顶；仍有一小段平顶，是原生重复帧。
+    相邻采样腿峰值完全不变处 107 → 85，取值 7 → 22 种。
+    标签无重叠 / 截断 / 缺字方框。
+  * P3-连续帧条带.png（1400×1060）：sweep 14–21 连续 8 帧 ×
+    4 行（玩家/对手 × hard9/atan12）= 32 格，全部有人物、无空白格。
+    hard9 行数字恒 9.00°，atan12 行 11.26 → 10.36° 逐帧递减，
+    无甩飞 / 穿模 / 出框。
+  * P3-上线前后对照.png（720×1230）：jab1 / sweep7 / hit_heavy1
+    三帧 × 2 列共 6 格，站架、上身、手臂不变，差异集中在膝/踝角度。
+  * P3全量284帧-撕裂权衡.png（1400×760）：5 档 p999 与平台数双面板，
+    数值改画在柱内、虚线说明移到标题行右侧，已复核无压字。
+
+  **看图边界要如实说**：连续帧条带上两排人物的姿态差异肉眼很弱，
+  本轮「平台期消除」主要由数值分布与引擎内像素差证明，不能夸大成
+  「一眼可见的动作改善」。方波本来就是腿骨数值特征，不是可见卡顿
+  （B 路线已证）。静态板是冻结探针截帧，不是实时观感。
+
+────────────────────────────────────────────────────────────
+五、历史守卫债（实测，不篡改）
+
+  改 scripts/rig_driver.gd 会撞历史守卫的源码 sha 快照；改 mapping
+  会撞旧值断言。本轮用 check_history_gates.py 逐个重跑 P1 / P2 / B
+  三套历史 verify，先把输出 json 原字节备份、跑完立刻按 sha256 还原，
+  历史脚本本身一个字节都没改。实测红因共 10 条：
+
+    verify_motion_p1.py 49/52：ten_untouched_unchanged、
+      non_cards_fields_equal_backup_both、mapping_gains_unchanged_both
+    verify_p2.py 53/59：player_cap_is_9、foe_cap_is_9、
+      only_one_diff_path_player、only_one_diff_path_foe、
+      other_12_watched_files_unchanged、three_core_scripts_sha_unchanged
+    verify_live.py 67/68：shipped_cap_still_9_both
+
+  全部是「旧值 / sha 快照 / 未改动」类，没有一条指向本轮新行为。
+  按项目约定不篡改历史守卫、不折进本轮判据计数，单独列债。
+  归档还原的独立复核（不靠脚本自证）：收口后直接读三份报告，
+  P1 = 50/52（P2 时期留下的两条历史红因）、P2 = 59/59、B = 68/68，
+  全是各自收口时的原值，没有被 P3 的重跑污染成 FAILED。
+
+  订正：square-wave-plateau-diagnostics.txt §四 曾预告「P2 两条 + P1 若干」，
+  实测是 P2 六条 + P1 三条 + B 一条。预告不准，已在诊断说明末尾补记。
+
+────────────────────────────────────────────────────────────
+六、验收数字
+
+  | 项 | 结果 |
+  |---|---|
+  | 诊断 | PLATEAU_DIAG_OK 16/16 |
+  | 全量姿态计划 | PLATEAU_PLAN_OK，5 档 × 284 = 1420 |
+  | 真实 GLB 全量撕裂 | 1420 姿态，Blender 5.2.0 LTS，285.28 s，pose_matrix_max_err 4.77e-07 |
+  | 撕裂汇总 | PLATEAU_TEAR_OK，推荐 atan12，越锚帧 0，代表帧 gap 0 |
+  | 落地 | APPLY_P3_OK，3 处替换各命中 1 次，11 个文件 sha 不变 |
+  | 引擎内 A/B | P3_PROBE_OK 16/16，48 行，MODE_BAD 0 / DELTA_BAD 0 |
+  | 15 套全量自检 | ALL_CHECKS_P3 15/15 ALL GREEN |
+  | 三张板 | P3_BOARDS_OK 6/6 |
+  | 历史守卫实测 | HISTORY_GATES_OK 5/5，三份报告 sha 原字节还原 |
+  | 汇总承重判据 | PLATEAU_VERIFY 80/80 ALL GREEN |
+  | 变异验证 | MUTATION_PLATEAU 39/39 CAUGHT / DNR 0 / MISSED 0 / RESTORE 39/39 / clean 80/80 |
+  | DNR 分支自测 | --selftest-dnr 按设计 FAILED，SELFTEST_DNR_EFFECTIVE |
+  | 文件清单 | 见 file-list.txt / data/filelist_p3.json |
+
+  变异首版有一条 M21 多行 needle 用 \n 写、而诊断 JSON 在 Windows
+  由 write_text 落成 CRLF，命中 0 次被记 DID NOT RUN（37/38）。
+  按纪律 DNR 计入未证明、绝不静默算通过：改成带 \r\n 的唯一锚点并
+  补一条 M39 后重跑，39/39 全 CAUGHT。这是「行尾按文件实际字节转」
+  的又一次实证。
+
+────────────────────────────────────────────────────────────
+七、边界（故意没做 / 未解决）
+
+  * 剩下的 255 对原生平台是 card_motion.json 的 2D 动作表重复帧，
+    任何单调映射都消不掉。要动它会同时改 2D 侧动作，属于另开一轮。
+  * 本轮没有再跑一次真实自动对局；时间线复用 B 路线真实帧序列做
+    同源公式复算，引擎内取证是 arena.paused 冻结的静态 A/B。
+    长时间实时观感舒适度仍未验证。
+  * 腿峰值上限从 9° 抬到 12°（atan12 实测最大 11.498°），
+    全量 284 帧撕裂在锚内，但更极端的自定义动作表不在此结论内。
+  * 历史守卫 10 条红因未修（按约定保留作历史真值）。
+  * #53「后续待定：可变形 .blend 的下一步方向」仍 pending。
+
+────────────────────────────────────────────────────────────
+八、复跑命令（全部用项目 venv，Windows）
+
+  PY="C:/Users/tutic/IdeaProjects/Fantasy-Agent/.venv/Scripts/python.exe"
+  D="C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\square-wave-plateau"
+  P2="C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\motion-presentation-p2"
+  BLENDER="C:\\Program Files\\Blender Foundation\\Blender 5.2\\blender.exe"
+
+  "$PY" -u -B "$D\\diag_plateau.py"            # 成因与候选映射诊断
+  "$PY" -u -B "$D\\make_plateau_plan.py"        # 5 档 × 284 帧计划
+  # 全量撕裂脚本复用 P2 区的 sweep_tear_blender.py（本区 tests/ 只有 .gd 探针），
+  # 参数是 <plan.json> <out.json>；约 285 s
+  "$BLENDER" -b --factory-startup --python "$P2\\tests\\sweep_tear_blender.py" -- \
+      "$D\\data\\plateau_plan.json" "$D\\data\\full_tear_blender.json"
+  "$PY" -u -B "$D\\analyze_plateau_tear.py"     # 成本账与推荐档
+  "$PY" -u -B "$D\\apply_p3.py"                 # 落地（可 --restore）
+  "$PY" -u -B "$D\\run_p3_probe.py"             # 引擎内四模式 A/B
+  "$PY" -u -B "$D\\make_p3_boards.py"           # 三张看图产物
+  "$PY" -u -B "$D\\run_all_checks_p3.py"        # 15 套引擎内自检
+  "$PY" -u -B "$D\\check_history_gates.py"      # 历史守卫红因（自动还原）
+  "$PY" -u -B "$D\\verify_plateau.py"           # 80 条承重判据
+  "$PY" -u -B "$D\\mutation_plateau.py"         # 39 组变异
+  "$PY" -u -B "$D\\mutation_plateau.py" --selftest-dnr
+  "$PY" -u -B "$D\\make_filelist_p3.py"         # 交付清单
+
+  注意：时间线板依赖 live-match/data/live_match.json 的 129 采样；
+  若重跑 run_live_match.py，跨进程 RNG 漂移会换一局牌，
+  P3 时间线板、p3_boards.json 与判据里的固定锚需同步重生成。

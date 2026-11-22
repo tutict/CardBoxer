@@ -1,0 +1,117 @@
+{
+  "user_image": "C:\\Users\\tutic\\.workbuddy\\clipboard-images\\clipboard-2026-11-14T07-41-08-103Z-c0f0d105.png",
+  "user_size": [
+    684,
+    294
+  ],
+  "sample_rows": [
+    20,
+    60,
+    120,
+    200,
+    260
+  ],
+  "candidates": [
+    {
+      "file": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\orientation-fix\\boards\\orientation-before-after-comparison.png",
+      "size": [
+        920,
+        904
+      ],
+      "hits": [],
+      "matched_rows": 0,
+      "offset_y": null,
+      "offset_x": null
+    },
+    {
+      "file": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-b-asset-deduplication\\boards\\B-World3D-root-cause-comparison.png",
+      "size": [
+        734,
+        1210
+      ],
+      "hits": [],
+      "matched_rows": 0,
+      "offset_y": null,
+      "offset_x": null
+    },
+    {
+      "file": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-b-asset-deduplication\\boards\\B-asset-layer-analysis.png",
+      "size": [
+        1032,
+        938
+      ],
+      "hits": [],
+      "matched_rows": 0,
+      "offset_y": null,
+      "offset_x": null
+    },
+    {
+      "file": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\boards\\World3D-fix-before-after-comparison.png",
+      "size": [
+        1280,
+        1712
+      ],
+      "hits": [],
+      "matched_rows": 0,
+      "offset_y": null,
+      "offset_x": null
+    },
+    {
+      "file": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\boards\\World3D-fix-character-brightness-comparison.png",
+      "size": [
+        840,
+        630
+      ],
+      "hits": [],
+      "matched_rows": 0,
+      "offset_y": null,
+      "offset_x": null
+    },
+    {
+      "file": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\legacy\\sh-legacy-live.png",
+      "size": [
+        1280,
+        720
+      ],
+      "hits": [],
+      "matched_rows": 0,
+      "offset_y": null,
+      "offset_x": null
+    },
+    {
+      "file": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\shipped\\sh-shipped-live.png",
+      "size": [
+        1280,
+        720
+      ],
+      "hits": [],
+      "matched_rows": 0,
+      "offset_y": null,
+      "offset_x": null
+    },
+    {
+      "file": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\none\\min-none-live.png",
+      "size": [
+        1280,
+        720
+      ],
+      "hits": [],
+      "matched_rows": 0,
+      "offset_y": null,
+      "offset_x": null
+    },
+    {
+      "file": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\world3d-integration-fix\\shots\\world3d_min\\own\\min-own-live.png",
+      "size": [
+        1280,
+        720
+      ],
+      "hits": [],
+      "matched_rows": 0,
+      "offset_y": null,
+      "offset_x": null
+    }
+  ],
+  "exact_matches": [],
+  "conclusion": "未找到未缩放的精确裁剪来源；可能是缩放/重编码过的截图"
+}

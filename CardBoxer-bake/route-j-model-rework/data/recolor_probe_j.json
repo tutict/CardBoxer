@@ -1,0 +1,89 @@
+{
+  "source": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-j-model-rework\\shots\\asset_v1\\j-sv-foe.png",
+  "tint": [
+    0.42,
+    0.3,
+    0.28
+  ],
+  "stats": {
+    "source": {
+      "mask_px": 71959,
+      "near_white_ratio": 0.208647,
+      "cyan_ratio": 0.034256,
+      "hot_red_ratio": 0.003919,
+      "warning_orange_ratio": 0.005406,
+      "mean_rgb": [
+        132.26,
+        126.41,
+        120.53
+      ]
+    },
+    "C0": {
+      "mask_px": 71959,
+      "near_white_ratio": 0.0,
+      "cyan_ratio": 0.0,
+      "hot_red_ratio": 0.0,
+      "warning_orange_ratio": 0.0,
+      "mean_rgb": [
+        55.16,
+        37.49,
+        33.3
+      ]
+    },
+    "C1": {
+      "mask_px": 71959,
+      "near_white_ratio": 0.0,
+      "cyan_ratio": 0.0,
+      "hot_red_ratio": 0.0,
+      "warning_orange_ratio": 0.0,
+      "mean_rgb": [
+        45.85,
+        28.28,
+        24.08
+      ]
+    },
+    "C2": {
+      "mask_px": 71959,
+      "near_white_ratio": 0.0,
+      "cyan_ratio": 0.0,
+      "hot_red_ratio": 0.0,
+      "warning_orange_ratio": 0.134729,
+      "mean_rgb": [
+        63.06,
+        39.54,
+        24.15
+      ]
+    },
+    "player_reference": {
+      "mask_px": 74953,
+      "near_white_ratio": 0.170427,
+      "cyan_ratio": 0.030086,
+      "hot_red_ratio": 0.006204,
+      "warning_orange_ratio": 0.005764,
+      "mean_rgb": [
+        112.74,
+        105.59,
+        99.89
+      ]
+    }
+  },
+  "board": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-j-model-rework\\boards\\J-semantic-redraw-probe.png",
+  "board_bytes": 280124,
+  "conclusion": "I 路线 canvas tint 已把 foe 掩膜内近白/青特征清零；C1/C2 相对 C0 只改颜色，角色掩膜像素数逐档相同，证明 2D canvas 层无法改变剪影。C2 的橙黑警示条纹能把白衫下摆的色彩语义换成工业条幅，观感改善明显，但披风/头饰/站姿形状不变：表现层链是低成本观感改进，不是根治。要根治几何同源仍需精确删壳或重生成 3D。",
+  "checks": {
+    "source_is_rgba_with_alpha": true,
+    "source_has_high_white": true,
+    "i_route_tint_already_removes_white": true,
+    "i_route_tint_already_removes_cyan": true,
+    "c1_removes_white": true,
+    "c2_removes_white": true,
+    "c1_removes_cyan": true,
+    "c2_adds_warning_color": true,
+    "c1_darker_than_c0": true,
+    "all_modes_keep_identical_silhouette": true,
+    "player_reference_unchanged": true,
+    "board_written": true
+  },
+  "failed": [],
+  "ok": true
+}

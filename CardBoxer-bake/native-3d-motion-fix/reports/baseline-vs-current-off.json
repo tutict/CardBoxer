@@ -1,0 +1,507 @@
+{
+  "left": "native-3d-motion-fix\\reports\\baseline-off",
+  "right": "native-3d-motion-fix\\reports\\current-off",
+  "checked": 42,
+  "equal": false,
+  "differences": [
+    {
+      "scenario": "foe-block",
+      "field": "gameplay",
+      "tick": 123,
+      "different_keys": [
+        "enemy_hand"
+      ],
+      "left": {
+        "enemy_hand": [
+          "recover",
+          "uppercut",
+          "wave",
+          "cross",
+          "guard"
+        ]
+      },
+      "right": {
+        "enemy_hand": [
+          "jab",
+          "uppercut",
+          "wave",
+          "cross",
+          "guard"
+        ]
+      }
+    },
+    {
+      "scenario": "foe-card-jab",
+      "field": "gameplay",
+      "tick": 125,
+      "different_keys": [
+        "enemy_hand"
+      ],
+      "left": {
+        "enemy_hand": [
+          "guard",
+          "jab",
+          "uppercut",
+          "wave",
+          "guard"
+        ]
+      },
+      "right": {
+        "enemy_hand": [
+          "jab",
+          "jab",
+          "uppercut",
+          "wave",
+          "guard"
+        ]
+      }
+    },
+    {
+      "scenario": "foe-card-wave",
+      "field": "gameplay",
+      "tick": 125,
+      "different_keys": [
+        "enemy_hand"
+      ],
+      "left": {
+        "enemy_hand": [
+          "rush",
+          "jab",
+          "uppercut",
+          "wave",
+          "guard"
+        ]
+      },
+      "right": {
+        "enemy_hand": [
+          "jab",
+          "jab",
+          "uppercut",
+          "wave",
+          "guard"
+        ]
+      }
+    },
+    {
+      "scenario": "foe-combo-super",
+      "field": "gameplay",
+      "tick": 135,
+      "different_keys": [
+        "enemy_hand"
+      ],
+      "left": {
+        "enemy_hand": [
+          "cross",
+          null,
+          null,
+          "cross",
+          "guard"
+        ]
+      },
+      "right": {
+        "enemy_hand": [
+          "jab",
+          null,
+          null,
+          "cross",
+          "guard"
+        ]
+      }
+    },
+    {
+      "scenario": "foe-dodge",
+      "field": "gameplay",
+      "tick": 120,
+      "different_keys": [
+        "enemy_hand"
+      ],
+      "left": {
+        "enemy_hand": [
+          "cross",
+          "uppercut",
+          "wave",
+          "cross",
+          "guard"
+        ]
+      },
+      "right": {
+        "enemy_hand": [
+          "jab",
+          "uppercut",
+          "wave",
+          "cross",
+          "guard"
+        ]
+      }
+    },
+    {
+      "scenario": "foe-late-wave-fatal",
+      "field": "gameplay",
+      "tick": 72,
+      "different_keys": [
+        "foe",
+        "round_phase",
+        "round_wins"
+      ],
+      "left": {
+        "foe": {
+          "card": "jab",
+          "combo": "",
+          "combo_bonus": 0,
+          "dodging": false,
+          "facing": -1,
+          "guarding": false,
+          "hp": 100,
+          "local_hitstop": 0.0,
+          "meter": 3.219,
+          "phase": "recover",
+          "phase_time": 0.0,
+          "position": [
+            990.0,
+            520.0
+          ],
+          "state": 1,
+          "state_time": 0.116667,
+          "super": false,
+          "visual_only": false
+        },
+        "round_phase": "fight",
+        "round_wins": [
+          0,
+          0
+        ]
+      },
+      "right": {
+        "foe": {
+          "card": "",
+          "combo": "",
+          "combo_bonus": 0,
+          "dodging": false,
+          "facing": -1,
+          "guarding": false,
+          "hp": 100,
+          "local_hitstop": 0.0,
+          "meter": 3.219,
+          "phase": "",
+          "phase_time": 0.0,
+          "position": [
+            990.0,
+            520.0
+          ],
+          "state": 0,
+          "state_time": 0.116667,
+          "super": false,
+          "visual_only": false
+        },
+        "round_phase": "over",
+        "round_wins": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "scenario": "foe-melee-super",
+      "field": "gameplay",
+      "tick": 189,
+      "different_keys": [
+        "enemy_hand"
+      ],
+      "left": {
+        "enemy_hand": [
+          "jab",
+          "recover",
+          "sidestep",
+          "jab",
+          "guard"
+        ]
+      },
+      "right": {
+        "enemy_hand": [
+          "jab",
+          "recover",
+          "focus",
+          "jab",
+          "guard"
+        ]
+      }
+    },
+    {
+      "scenario": "foe-wave-new-action",
+      "field": "gameplay",
+      "tick": 125,
+      "different_keys": [
+        "enemy_hand"
+      ],
+      "left": {
+        "enemy_hand": [
+          "wave",
+          null,
+          null,
+          null,
+          "jab"
+        ]
+      },
+      "right": {
+        "enemy_hand": [
+          "jab",
+          null,
+          null,
+          null,
+          "jab"
+        ]
+      }
+    },
+    {
+      "scenario": "player-block",
+      "field": "gameplay",
+      "tick": 123,
+      "different_keys": [
+        "hand"
+      ],
+      "left": {
+        "hand": [
+          "recover",
+          "uppercut",
+          "wave",
+          "cross",
+          "guard"
+        ]
+      },
+      "right": {
+        "hand": [
+          "jab",
+          "uppercut",
+          "wave",
+          "cross",
+          "guard"
+        ]
+      }
+    },
+    {
+      "scenario": "player-card-jab",
+      "field": "gameplay",
+      "tick": 125,
+      "different_keys": [
+        "hand"
+      ],
+      "left": {
+        "hand": [
+          "guard",
+          "jab",
+          "uppercut",
+          "wave",
+          "guard"
+        ]
+      },
+      "right": {
+        "hand": [
+          "jab",
+          "jab",
+          "uppercut",
+          "wave",
+          "guard"
+        ]
+      }
+    },
+    {
+      "scenario": "player-card-wave",
+      "field": "gameplay",
+      "tick": 125,
+      "different_keys": [
+        "hand"
+      ],
+      "left": {
+        "hand": [
+          "rush",
+          "jab",
+          "uppercut",
+          "wave",
+          "guard"
+        ]
+      },
+      "right": {
+        "hand": [
+          "jab",
+          "jab",
+          "uppercut",
+          "wave",
+          "guard"
+        ]
+      }
+    },
+    {
+      "scenario": "player-combo-super",
+      "field": "gameplay",
+      "tick": 141,
+      "different_keys": [
+        "hand"
+      ],
+      "left": {
+        "hand": [
+          "uppercut",
+          null,
+          null,
+          "cross",
+          "guard"
+        ]
+      },
+      "right": {
+        "hand": [
+          "jab",
+          null,
+          null,
+          "cross",
+          "guard"
+        ]
+      }
+    },
+    {
+      "scenario": "player-dodge",
+      "field": "gameplay",
+      "tick": 120,
+      "different_keys": [
+        "hand"
+      ],
+      "left": {
+        "hand": [
+          "cross",
+          "uppercut",
+          "wave",
+          "cross",
+          "guard"
+        ]
+      },
+      "right": {
+        "hand": [
+          "jab",
+          "uppercut",
+          "wave",
+          "cross",
+          "guard"
+        ]
+      }
+    },
+    {
+      "scenario": "player-late-wave-fatal",
+      "field": "gameplay",
+      "tick": 72,
+      "different_keys": [
+        "player",
+        "round_phase",
+        "round_wins"
+      ],
+      "left": {
+        "player": {
+          "card": "jab",
+          "combo": "",
+          "combo_bonus": 0,
+          "dodging": false,
+          "facing": 1,
+          "guarding": false,
+          "hp": 100,
+          "local_hitstop": 0.0,
+          "meter": 3.219,
+          "phase": "recover",
+          "phase_time": 0.0,
+          "position": [
+            290.0,
+            520.0
+          ],
+          "state": 1,
+          "state_time": 0.116667,
+          "super": false,
+          "visual_only": false
+        },
+        "round_phase": "fight",
+        "round_wins": [
+          0,
+          0
+        ]
+      },
+      "right": {
+        "player": {
+          "card": "",
+          "combo": "",
+          "combo_bonus": 0,
+          "dodging": false,
+          "facing": 1,
+          "guarding": false,
+          "hp": 100,
+          "local_hitstop": 0.0,
+          "meter": 3.219,
+          "phase": "",
+          "phase_time": 0.0,
+          "position": [
+            290.0,
+            520.0
+          ],
+          "state": 0,
+          "state_time": 0.116667,
+          "super": false,
+          "visual_only": false
+        },
+        "round_phase": "over",
+        "round_wins": [
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "scenario": "player-melee-super",
+      "field": "gameplay",
+      "tick": 189,
+      "different_keys": [
+        "hand"
+      ],
+      "left": {
+        "hand": [
+          "jab",
+          "recover",
+          "sidestep",
+          "jab",
+          "guard"
+        ]
+      },
+      "right": {
+        "hand": [
+          "jab",
+          "recover",
+          "focus",
+          "jab",
+          "guard"
+        ]
+      }
+    },
+    {
+      "scenario": "player-wave-new-action",
+      "field": "gameplay",
+      "tick": 125,
+      "different_keys": [
+        "hand"
+      ],
+      "left": {
+        "hand": [
+          "wave",
+          null,
+          null,
+          null,
+          "jab"
+        ]
+      },
+      "right": {
+        "hand": [
+          "jab",
+          null,
+          null,
+          null,
+          "jab"
+        ]
+      }
+    }
+  ],
+  "settled_rules_equal": true,
+  "settled_rules_differences": [],
+  "comparison_scope": "Exact gameplay includes hands, timers and hitstop. Settled comparison checks ordered card/hit/super events excluding tick, HP, round wins, ranks, winner, damage, rage and EX."
+}

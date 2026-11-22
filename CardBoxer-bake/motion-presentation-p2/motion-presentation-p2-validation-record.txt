@@ -1,0 +1,214 @@
+《牌拳》动作表现 P2 · 验证记录
+日期：2026-11-14
+证据区：CardBoxer-bake/motion-presentation-p2/
+真游戏工程：D:\Projects\CardBoxer\CardBoxer
+Python 解释器：C:\Users\tutic\IdeaProjects\Fantasy-Agent\.venv\Scripts\python.exe
+              （3.12.14 / Pillow 12.3.0；系统 binaries/python/3.13.12 无 Pillow）
+
+════════════════════════════════════════════════════════════
+一、结论先给
+
+P2 已收口。落盘改动只有一处数值：两份 data/motion_input*.json 的
+mapping.leg_cap_deg 3.0 → 9.0，其余逐值不变。
+
+  腿部信号送达率              21.18% → 49.01%（峰值 3.0° → 9.0°，幅度 ×3）
+  全量 284 帧真实 GLB 最坏 p999
+      cap3 线上基线            0.040791 m
+      cap9 上线后              0.043694 m（+7.12%）
+      外部锚（C 路线 7 档）    0.09365 m，仍有一倍余量
+  引擎读回落盘 cap             玩家 9.0 / 对手 9.0
+  站架帧                      上线前后逐像素相同（0 px）
+  动作帧                      6 组非站架对比全部可见变化（17,206..24,732 px）
+  默认关 3D                   零污染（use_3d=false、两层 null、override 全 false）
+
+没做也没打算做的：不放大手臂增益、不动躯干 cap、不改判定 / 伤害 /
+阶段时长 / GLB / 贴图 / 任何游戏源码；软压缩（cap*tanh(raw/cap)）只在
+研究扫描里作对照，游戏未实现、未采纳；「双臂」不改招式语义。
+
+════════════════════════════════════════════════════════════
+二、为什么是 cap=9，不是 12，也不是放开限幅
+
+诊断（diag_p2.py，DIAG_P2_OK 9/9）：15 轨 284 帧、1136 个腿骨帧，
+原始 |delta| 均值 10.1991° / p95 34.9608° / 最大 116.0986°。
+cap=3 实际只送达均值 2.1599°、峰值 3.0°，702/1136 骨帧被削角。
+源数据有动作，瓶颈是硬 clamp，不是动作表没数据。
+
+  cap     送达率    峰值      被削角骨帧
+  3°      0.2118    3.0°      702   ← 线上基线
+  6°      0.3682    6.0°      526
+  9°      0.4901    9.0°      426   ← 本轮选定
+  12°     0.5906    12.0°     355
+  无上限  1.0000    116.0986° 0     ← 绝不可取，腿会翻折
+
+真实 GLB 成本账（不是历史 C 路线的对手怪高模）：
+导入游戏 assets/3d/player-rigged.glb，Blender 5.2.0 LTS headless
+逐姿态施加 13 骨 delta，重算 136,092 条边的长度变化。
+  player_HI_skinned：57,934 顶点 / 136,092 边 / 79,986 面 / 14 权重组
+  e_apose_rig：14 骨（13 链骨 + neutral_bone）
+  代表帧 sweep：10 档 × 26 帧 = 260 姿态，max_pose_err 4.77e-07
+  全量复核：3 档 × 284 帧 = 852 姿态，max_pose_err 4.17e-07，133.8 s
+
+全量 284 帧结果（analyze_full_tear.py，FULL_TEAR_OK，11/11）：
+  cap03_hard_g100  最坏 p999 0.040791 m，>5cm 边 44，越锚帧 0
+  cap09_hard_g100  最坏 p999 0.043694 m，>5cm 边 71，越锚帧 0
+  cap12_hard_g100  最坏 p999 0.044522 m，>5cm 边 83，越锚帧 0
+  最坏帧三档同为 throw/8；代表帧 sweep 的 sampling_gap 全为 0
+  ⇒ 26 帧抽样没漏掉更坏的帧，cap9/cap12 全部 284 帧都在锚内
+
+选 9 不选 12 的理由是边际账：12 相对 9 的送达率只多 10 个百分点、
+最坏 p999 多 1.9%，但 >5cm 边数从 71 涨到 83，且看图并没有多出
+可读性收益。按「最小表现层改动」取 9。手臂增益不动，因为
+cap9/gain1.5 的 >5cm 边数会涨到 289，成本明显不划算。
+
+看图复核（boards/ 共 5 张，全部 ViewImage 逐张看过）：
+  4 档 A/B 板：站架四档逐像素相同；进攻帧腿部随 cap 逐步打开；
+    cap9 已明显可读（玩家 jab 前腿抬起、sweep 两腿分开；对手 jab 抬腿）；
+    cap12 无甩飞 / 穿模 / 出框但增益边际变小。
+  上线前后板：两列（运行时回滚 cap3 / 引擎读回落盘 cap9），
+    文字无截断、无重叠、无缺字方框，差异可辨。
+  增益撕裂权衡板：补了右轴 x0..x4 刻度与双轴说明，量纲无歧义。
+
+════════════════════════════════════════════════════════════
+三、落盘边界与可逆性
+
+apply_p2_mapping.py（APPLY_P2_OK 20/20）：
+  锚点 b'"leg_cap_deg":3.0' 在两份文件各恰好命中 1 次；
+  单次精确 bytes 替换，改后与 pre-p2 备份递归逐值 diff 的差异路径
+  两份都只有 ["mapping.leg_cap_deg"] 一条；
+  15 卡 / 284 帧 / cards 表 / arm_gain_deg / torso_cap_deg / chain /
+  apose_points 全部逐值不变；两份 mapping 仍完全一致；
+  14 个受监控文件里除这两份数据外，其余 12 个 sha256 全同，
+  含 arena.gd / fighter_3d_layer.gd / rig_driver.gd / 两份 GLB /
+  card_motion.json / project.godot。
+
+可逆：python apply_p2_mapping.py --restore
+  从 orig/pre-p2/ 逐字节写回并用 sha256 证明；本轮未执行还原，
+  只在变异验证里对文件做过同等二进制往返。
+
+工程里只新增两个探针文件（不算游戏逻辑）：
+  tests/amplitude_p2_probe.gd、tests/p2_shipped_probe.gd
+3D 仍默认关；play.bat 未改。
+
+════════════════════════════════════════════════════════════
+四、引擎内取证
+
+阶段二 A/B（run_amplitude_p2_probe.py，AMPLITUDE_P2_PROBE_OK 15/15）：
+  4 档 cap × 4 帧，单进程运行时切 mapping，delta 与 Python 同公式
+  逐骨对账；LEG_MEAN {3:2.25, 6:4.5, 9:6.75, 12:9.0} 单调；
+  stance 对 cap3 逐像素差 0；cap12_hit_heavy01 玩家 29,362 / 对手 24,140 px。
+
+上线态 A/B（run_p2_shipped_probe.py，P2_SHIPPED_PROBE_OK 15/15）：
+  同一 Godot 进程内三模式 shipped / rolled_back(3.0) / reapplied(读回值)。
+  shipped 刻意不覆盖 mapping，引擎读回 9.0 / 9.0；
+  每个非站架动作帧双侧都 >200 px（实测 17,206..24,732）；
+  站架帧 shipped vs rolled_back 差 0；
+  shipped vs reapplied 8 组全部差 0（同进程可复现、改动可逆）；
+  delta 逐骨对 Python 同公式、腿骨不越 mode cap；
+  HP [100,100]、15 卡、0 脚本错误、0 scenario 错误；
+  默认关另起进程零污染。
+  额外实证（diagnostic_only，不进承重判据）：上线态独立进程的
+  SubViewport 原图与阶段二探针 cap9 图 8/8 逐字节相同 —— 说明落地的
+  确实就是阶段二测过的那一档。整帧跨进程逐像素等价在本仓不成立
+  （全局 RNG），这条只对 SubViewport 原图成立，不推广到整帧。
+
+全量自检（run_all_checks_p2.py）：ALL_CHECKS_P2 15/15 ALL GREEN
+  battle_motion_p0_check 93/93、battle_rhythm_check 62/62、
+  engine_opt_check 37/37、redraw_gate_check 72/72、
+  taikou_flow_check 51/51、taikou_rage_check 1482/1482、
+  taikou_rules_check 90/90、combo_check 8/8、
+  portrait_wiring_check 157/157、其余 6 套 PASS。
+
+════════════════════════════════════════════════════════════
+五、承重判据与变异
+
+verify_p2.py：MOTION_P2_VERIFY 59/59 ALL GREEN
+  五层：落盘真值 16（直接读游戏工程、与备份逐值 diff、sha 对账）、
+  上游报告自洽 8（独立复核 checks 全 True / failed 空，不信 ok 字段）、
+  真实 GLB 全量撕裂 13（852 姿态、284 帧、锚 0.09365、姿态矩阵误差）、
+  引擎上线态 15（读回、像素差、公式对账、默认关、跨进程交叉）、
+  交付物与历史守卫边界 7。
+  首版 58/58 一次通过；变异前发现「板子只查 size，改坏 PNG 头抓不到」，
+  补 five_boards_valid_png_signature 后为 59 条。这是加固，不是放宽。
+
+mutation_p2.py：19/19 CAUGHT / DNR 0 / MISSED 0 / RESTORE 19/19 /
+  clean 59/59 ALL GREEN
+  变异覆盖：两份落盘 cap、arm_gain、torso_cap、jab 帧数、pre-p2 备份、
+  baseline sha、apply 报告布尔值、外部锚、852 姿态数、284 帧数、
+  引擎读回值、像素差、自检 result、P1 守卫日志、探针脚本字节、
+  PNG 签名、rig_driver.gd 源码、幅度单调性。
+  CAUGHT 要求同时满足：rc≠0、报告可解析、ok=False、failed 非空、
+  errors 为空（守卫靠崩栈变红不算证明）、点名的具体判据出现在 failed。
+  每组 needle 恰好命中 1 次，二进制替换 + 无条件还原 + sha256 证明，
+  子进程带 PYTHONDONTWRITEBYTECODE=1 / -B。
+  --selftest-dnr：0/1 CAUGHT / DNR 1 / SELFTEST_DNR_EFFECTIVE，
+  按设计整体 FAILED，报告单独写 data/mutation_p2_dnr.json，
+  不覆盖正式的 mutation_p2.json。
+
+历史守卫债（不篡改、单独复核）：
+  P1 的 verify_motion_p1.py 在 P2 落地后为 50/52 FAILED，红因恰好两条：
+    mapping_gains_unchanged_both        （P1「没有改 mapping」的范围断言）
+    non_cards_fields_equal_backup_both （P1「非 cards 字段等于备份」，
+                                         mapping 正属于非 cards 字段）
+  其余 50 条仍全绿。这两条是 P1 范围断言，不是玩法回归；
+  在 verify_p2.py 里钉成「恰好两条预期红因 + 其余 50 条绿」，
+  不折进 P2 判据计数。
+
+════════════════════════════════════════════════════════════
+六、本轮订正（都是实测推翻了上一轮的说法）
+
+1. 阶段一诊断说明 §五 只预告了 1 条历史守卫会红，实测 2 条
+   （多了 non_cards_fields_equal_backup_both）。已在说明末尾追加订正，
+   并在 P2 判据里钉死边界。
+2. 阶段一诊断说明写「Blender 5.2.3 headless」，实测
+   tear_sweep_blender.json / full_tear_blender.json 的 blender 字段是
+   "5.2.0 LTS (hash fbe6228777e7...)"。系统装的是 5.2.0 LTS，
+   便携 5.2.3 是另一份，探针跑的是系统版。
+3. P1 收口记录写「两条手臂仍不会在同一招里同时大幅动」实测不成立：
+   15 轨里 focus / hit_heavy / sweep / throw / wave 双臂都动，
+   66 帧双手信号同时触发；jab / cross / uppercut / backstep /
+   sidestep 单臂冻结是 2D 招式语义本身。P2 不改双臂，只订正结论。
+4. analyze_tear_sweep.py 首版全红，订正口径：max_edge_tear_m 跨档
+   恒定（既有单边伪影）降级 diagnostic_only；
+   RIGID_BASELINE_P999_M = 0.28048 只作对照数字，不拿来卡 max edge。
+5. make_amplitude_board.py 首版 LEFT=20，行标签与列标题 / 首格上沿
+   重叠；改 LEFT=118 后看图复核才过。
+6. P2-real-glb-gain-tearing-tradeoff.png 首版橙线与柱共用纵轴有量纲歧义，
+   补右轴刻度与双轴说明后重出。
+7. analyze_full_tear.py 上一轮写完但没跑（852 姿态原始数据已产出），
+   本轮恢复后补跑，FULL_TEAR_OK 11/11、sampling_gap 全 0。
+
+════════════════════════════════════════════════════════════
+七、边界与未决
+
+  * 只改 2 个数据文件各 1 个数值；游戏源码 / GLB / 贴图 /
+    project.godot / 判定 / 伤害 / 阶段时长零改动。
+  * 看图是 4 档 + 上线前后静态对照，不是逐帧动画验证；
+    「在游戏里实跑一局看整体节奏」仍待做。
+  * 软压缩研究分支未实现、未采纳；若要换成 tanh 需改 rig_driver.gd
+    的驱动公式，那是另一轮。
+  * 跨进程 SubViewport 8/8 逐字节相同只作 diagnostic，不进承重判据。
+  * P1 的两条历史守卫红因按项目约定不篡改，作为已知债保留。
+  * #53（可变形 .blend 的下一步方向）仍 pending。
+
+════════════════════════════════════════════════════════════
+八、复跑命令（在 motion-presentation-p2/ 目录，用上面的 venv Python）
+
+  python diag_p2.py                      # 阶段一诊断 9/9
+  python tests/probe_glb_structure.py    # 真实 GLB 结构（需 Blender）
+  python make_sweep_plan.py              # 代表帧 260 姿态计划
+  python tests/sweep_tear_blender.py     # Blender 逐姿态撕裂
+  python analyze_tear_sweep.py           # 代表帧成本账 + 权衡板
+  python make_sweep_plan.py --all-frames # 全量 852 姿态计划
+  python analyze_full_tear.py            # 全量 284 帧复核 11/11
+  python make_baseline_p2.py             # 备份 + 14 文件 sha 基线
+  python apply_p2_mapping.py             # 落地 3→9（20/20）
+  python run_amplitude_p2_probe.py       # 阶段二 4 档 A/B（15/15）
+  python make_amplitude_board.py         # 4 档对照板
+  python run_p2_shipped_probe.py         # 上线态 A/B（15/15）
+  python make_shipped_board.py           # 上线前后板
+  python run_all_checks_p2.py            # 15 套全量自检
+  python verify_p2.py                    # 承重判据 59/59
+  python mutation_p2.py                  # 19/19 变异
+  python mutation_p2.py --selftest-dnr   # DNR 分支有牙（按设计 FAILED）
+  python make_filelist_p2.py             # 交付清单
+  python apply_p2_mapping.py --restore   # 需要回退时

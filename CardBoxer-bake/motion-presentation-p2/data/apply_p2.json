@@ -1,0 +1,89 @@
+{
+  "game": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer",
+  "mode": "apply",
+  "old_needle": "\"leg_cap_deg\":3.0",
+  "new_needle": "\"leg_cap_deg\":9.0",
+  "chosen_cap_deg": 9.0,
+  "rows": {
+    "data/motion_input.json": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer\\data\\motion_input.json",
+      "before_sha256": "8646e80356d5a665e9535843241129405136dd3a7f31d836320b47f08fd74b98",
+      "baseline_sha256": "8646e80356d5a665e9535843241129405136dd3a7f31d836320b47f08fd74b98",
+      "backup_sha256": "8646e80356d5a665e9535843241129405136dd3a7f31d836320b47f08fd74b98",
+      "mode": "apply",
+      "needle_count_old": 1,
+      "before_matches_baseline": true,
+      "applied": true,
+      "after_sha256": "ec74ff6c116fcba2214a422b5c8c85b4ec0b1ee301ef46d02c28c5f1e05c4537",
+      "expected_bytes": "ec74ff6c116fcba2214a422b5c8c85b4ec0b1ee301ef46d02c28c5f1e05c4537",
+      "bytewise_single_replace": true,
+      "json_parses": true,
+      "diff_paths": [
+        "mapping.leg_cap_deg"
+      ],
+      "new_leg_cap_deg": 9.0,
+      "old_leg_cap_deg": 3.0,
+      "cards_before": 15,
+      "cards_after": 15
+    },
+    "data/motion_input_foe.json": {
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer\\data\\motion_input_foe.json",
+      "before_sha256": "4fd0721933d5d05fcdb068d5b97587883d8a9122e64a7124d2dc4ace8716d88e",
+      "baseline_sha256": "4fd0721933d5d05fcdb068d5b97587883d8a9122e64a7124d2dc4ace8716d88e",
+      "backup_sha256": "4fd0721933d5d05fcdb068d5b97587883d8a9122e64a7124d2dc4ace8716d88e",
+      "mode": "apply",
+      "needle_count_old": 1,
+      "before_matches_baseline": true,
+      "applied": true,
+      "after_sha256": "a44d689482e01c1210208ef8e5bfd089f694156a755ca564a383baa0403a2e1f",
+      "expected_bytes": "a44d689482e01c1210208ef8e5bfd089f694156a755ca564a383baa0403a2e1f",
+      "bytewise_single_replace": true,
+      "json_parses": true,
+      "diff_paths": [
+        "mapping.leg_cap_deg"
+      ],
+      "new_leg_cap_deg": 9.0,
+      "old_leg_cap_deg": 3.0,
+      "cards_before": 15,
+      "cards_after": 15
+    }
+  },
+  "other_files_unchanged": {
+    "scripts/arena.gd": true,
+    "scripts/fighter_3d_layer.gd": true,
+    "scripts/fighter.gd": true,
+    "scripts/rig_driver.gd": true,
+    "scripts/battle_motion_p0.gd": true,
+    "scripts/battle_rhythm.gd": true,
+    "scripts/card_motion.gd": true,
+    "scripts/hud.gd": true,
+    "data/card_motion.json": true,
+    "project.godot": true,
+    "assets/3d/player-rigged.glb": true,
+    "assets/3d/foe-rigged.glb": true
+  },
+  "checks": {
+    "baseline_report_ok": true,
+    "baseline_two_to_change": true,
+    "pre_p2_backups_match_baseline_sha": true,
+    "data/motion_input.json::needle_exactly_once": true,
+    "data/motion_input.json::before_matches_baseline": true,
+    "data/motion_input.json::bytewise_single_replace": true,
+    "data/motion_input.json::only_mapping_leg_cap_changed": true,
+    "data/motion_input.json::cap_is_9": true,
+    "data/motion_input.json::cards_untouched": true,
+    "data/motion_input_foe.json::needle_exactly_once": true,
+    "data/motion_input_foe.json::before_matches_baseline": true,
+    "data/motion_input_foe.json::bytewise_single_replace": true,
+    "data/motion_input_foe.json::only_mapping_leg_cap_changed": true,
+    "data/motion_input_foe.json::cap_is_9": true,
+    "data/motion_input_foe.json::cards_untouched": true,
+    "two_mappings_still_identical": true,
+    "two_card_tables_still_identical": true,
+    "arm_gains_untouched": true,
+    "torso_cap_untouched": true,
+    "other_12_files_unchanged": true
+  },
+  "failed": [],
+  "ok": true
+}

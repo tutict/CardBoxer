@@ -1,0 +1,91 @@
+{
+  "group": "baseline",
+  "project": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-g-game-3d-integration\\baseline_project",
+  "modes": [
+    "t000",
+    "t048",
+    "t112",
+    "t140",
+    "draw",
+    "foewin"
+  ],
+  "env_3d": "",
+  "returncode": 0,
+  "restore_ok": true,
+  "records": [
+    {
+      "mode": "t000",
+      "rc": 0,
+      "ok": true,
+      "marker": [
+        "[RHYTHM_SHOT] mode=t000 t=0.0 p_shift=0.0 e_shift=40.0 p_tilt=0.0 e_tilt=0.15707963267949 hit=false hp=100/77"
+      ],
+      "engine_errors": 0,
+      "gl": true,
+      "bytes": 1030595
+    },
+    {
+      "mode": "t048",
+      "rc": 0,
+      "ok": true,
+      "marker": [
+        "[RHYTHM_SHOT] mode=t048 t=0.48 p_shift=102.142860412598 e_shift=9.43987655639648 p_tilt=0.0 e_tilt=0.0628318530718 hit=true hp=100/77"
+      ],
+      "engine_errors": 0,
+      "gl": true,
+      "bytes": 1032162
+    },
+    {
+      "mode": "t112",
+      "rc": 0,
+      "ok": true,
+      "marker": [
+        "[RHYTHM_SHOT] mode=t112 t=1.12 p_shift=0.0 e_shift=0.30215129256248 p_tilt=0.0 e_tilt=0.0 hit=true hp=100/77"
+      ],
+      "engine_errors": 0,
+      "gl": true,
+      "bytes": 1051092
+    },
+    {
+      "mode": "t140",
+      "rc": 0,
+      "ok": true,
+      "marker": [
+        "[RHYTHM_SHOT] mode=t140 t=1.36 p_shift=0.0 e_shift=1.61216390132904 p_tilt=0.0 e_tilt=0.0 hit=true hp=100/77"
+      ],
+      "engine_errors": 0,
+      "gl": true,
+      "bytes": 1052071
+    },
+    {
+      "mode": "draw",
+      "rc": 0,
+      "ok": true,
+      "marker": [
+        "[RHYTHM_SHOT] mode=draw t=-1.0 p_shift=0.0 e_shift=0.0 p_tilt=0.0 e_tilt=0.0 hit=false hp=97/97"
+      ],
+      "engine_errors": 0,
+      "gl": true,
+      "bytes": 1015636
+    },
+    {
+      "mode": "foewin",
+      "rc": 0,
+      "ok": true,
+      "marker": [
+        "[RHYTHM_SHOT] mode=foewin t=0.48 p_shift=-12.2744083404541 e_shift=-102.142860412598 p_tilt=-0.0628318530718 e_tilt=0.0 hit=true hp=77/100"
+      ],
+      "engine_errors": 0,
+      "gl": true,
+      "bytes": 1040996
+    }
+  ],
+  "pngs": [
+    "rhythm-frame-t000-startup.png",
+    "rhythm-frame-t048-impact-HIT.png",
+    "rhythm-frame-t112-active-window-end.png",
+    "rhythm-frame-t140-fade-out.png",
+    "rhythm-frame-foe-win-reversed.png",
+    "rhythm-frame-draw-no-rhythm.png"
+  ]
+}

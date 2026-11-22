@@ -1,0 +1,48 @@
+{
+	"bones": 13,
+	"cases_count": 4,
+	"final_bias_keys": [
+		"upperarm_f",
+		"forearm_f",
+		"upperarm_b",
+		"forearm_b",
+		"spine",
+		"head",
+		"thigh_f",
+		"shin_f",
+		"thigh_b",
+		"shin_b"
+	],
+	"fixed_yaw": 55.0,
+	"layer_ready": true,
+	"shots": [
+		{
+			"h": 720,
+			"name": "b0-none",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-g-game-3d-integration\\shots\\side_stance/stance-b0-none.png",
+			"save_error": 0,
+			"w": 1280
+		},
+		{
+			"h": 720,
+			"name": "b1-light",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-g-game-3d-integration\\shots\\side_stance/stance-b1-light.png",
+			"save_error": 0,
+			"w": 1280
+		},
+		{
+			"h": 720,
+			"name": "b2-mid",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-g-game-3d-integration\\shots\\side_stance/stance-b2-mid.png",
+			"save_error": 0,
+			"w": 1280
+		},
+		{
+			"h": 720,
+			"name": "b3-heavy",
+			"path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-g-game-3d-integration\\shots\\side_stance/stance-b3-heavy.png",
+			"save_error": 0,
+			"w": 1280
+		}
+	]
+}

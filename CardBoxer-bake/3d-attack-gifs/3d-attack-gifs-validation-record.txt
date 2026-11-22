@@ -1,0 +1,226 @@
+《牌拳》新 3D 建模人物 · 攻击 GIF 交付验证记录
+日期：2026-11-08
+目录：CardBoxer-bake/3d-attack-gifs/
+
+======================================================================
+1. 结论（先说结果）
+======================================================================
+
+用户要看的是「新的 3D 建模人物」打拳的动图，不是上一轮误做的
+「游戏内 2D 自绘外观层」。本轮纠正方向后，实测两条路线：
+
+  * 真 3D 网格 + 13 骨刚性权重驱动：**证伪，不能交付当动画**。
+    64,024/64,024 顶点全部移动，平均位移 0.26873 m、最大 0.88084 m，
+    站架帧就已折叠，jab/wave 手臂炸成扇形薄片。
+  * 3D 渲染立绘 + 图像空间骨骼重定向（puppet）：**可以动、人形完整**，
+    玩家 V4b 与对手怪 V1 各出三档攻击 GIF。但动作幅度保守，读作
+    「抬臂前冲」而不是真正出拳，是 C 路线的节奏预览，不是成品战斗动作。
+
+因此本轮交付 3 套（9 条单档 GIF + 3 条连播 + 6 张对照/时间线板），
+其中「证伪-网格」一套是**反例证据**，不是可用素材。
+
+15 条承重判据 15/15 PASS / ATTACK_3D_VERIFIED；
+6 组变异 6/6 CAUGHT、逐字节还原 6/6、clean re-run 15/15；
+DID NOT RUN 分支自检 5/6 CAUGHT + did_not_run=1 / DID_NOT_RUN_SELFTEST_OK。
+游戏源码 7 个文件与 `combat-motion-design/source-baseline.json` 逐字节一致，0 改动。
+
+======================================================================
+2. 资产现状与可驱动链
+======================================================================
+
+| 资产 | 结构 | 能否驱动 |
+|---|---|---|
+| 玩家 V4b（3d-model-probe-v4b/artifact_03.glb） | 55,622 顶点 / 0 skins / 0 animations / 2,035 连通壳 | 无骨架，未建 .blend |
+| 对手怪 V1（foe-blender-modeling-v1/对手怪V1.blend） | 64,024 顶点 / 79,998 面 / 13 骨 / 刚性权重 100% / 2,809 壳 | 可驱动，但撕裂 |
+| 两张正面立绘 | v4b-front.png / foe-front.png，均 768² RGBA，同机位同尺度 | puppet 输入 |
+
+坐标桥沿用既有管线：`game px = (x*100, -z*100)`，脚底原点、+x 前、-y 上；
+相机 ortho_scale=2.30 m / 768 px / target_z=0.86 m，
+故 1 m = 333.913 px、1 game px = 3.33913 px（写在 apose_joints.json）。
+两张立绘 alpha bbox 分别是 (173,96,595,672) 与 (180,96,588,672)，
+可以直接同框对照。
+
+`baked2.json` 仍是唯一动作真值：12 卡 / 228 帧 / 11 关节，
+本轮取 jab 14、cross 22、wave 36 共 72 帧 + 1 站架帧 = 73 帧/路线。
+
+======================================================================
+3. 三条路线与看图结果
+======================================================================
+
+| 路线 | 做法 | 结果 |
+|---|---|---|
+| A 真 3D 网格 | 打开 .blend，13 骨 `pb.matrix` 逐帧摆位（只旋转、不写 scale） | 碎片、折叠、手臂扇形撕裂 |
+| B 玩家 V4b puppet | v4b-front.png 按 13 段分区 + 重定向仿射 | 人形完整，单手/双手动作可读 |
+| C 对手怪 V1 puppet | foe-front.png 同链 | 人形完整，装甲幅变化较小 |
+
+A 路线为什么撕：模型是 A-pose / 0 skins / 数千开放薄壳，
+`foe_blender_build.py` 当初按「格斗站架骨段」给每顶点最近段刚性权重 1.0。
+绝对骨位一摆，薄壳被整片带走；连站架帧都不是原模型。
+这不是渲染参数问题，是「A-pose 模型 + 站架骨架 + 刚性权重」的结构矛盾。
+
+B/C 路线为什么能看：C 路线进引擎的本来就是 2D 精灵 PNG，
+所以在**图像空间**做骨骼变形，保留 3D 立绘的全部 PBR 外观细节，
+动作时间曲线仍逐帧来自 baked2.json。
+
+======================================================================
+4. 三次看图迭代与根因订正（都是实测，不是推测）
+======================================================================
+
+v1：把 `baked2.json` 的逐骨方向角差直接当本地旋转增量套到正面立绘。
+  * `atan2` 跨 ±π 分支未归一化，jab 第 7 帧算出 310.194°「增量」，
+    wave 第 18 帧 199.019° → 整条手臂绕肩转大半圈。
+  * 修：加 `wrap_pi()`，jab 降为 63.867°（原始）/ wave 162.075°（原始）。
+  * 判据 `angle_wrap_wired_and_bounded` 钉住源码接线 + 映射后最大角 <= 40°。
+
+v1 看图：整个人斜转 60°、腿飞出去。`diag_delta.py` 逐骨打印定位：
+  * `hips / spine / chest` 三段拿到**完全相同**的 19.96°（jab）/ 27.18°（cross），
+    层级左乘被累积三次 → 整个人绕髋翻倒；
+  * `cross` 后手 -147.62°、`wave` 后臂 +162.08°：动作表是**侧视**语义
+    （f/b = 前手/后手、前腿/后腿，靠 x 前后区分），正面立绘的左右是镜像，
+    两者语义根本不对齐。
+  * 修：写显式 retarget 层（puppet_mapping.json），
+    躯干只给 spine 一次并 clamp 到 8°、hips/chest 固定 0、头部反向补偿；
+    两臂改由各自 hand 相对站架的**位移幅度**做 0..1 强度；
+    腿沿用原始角度差但 clamp 3°。
+
+v2 看图：人形完整但三档几乎一样。两个原因：
+  * 双手信号用 `sum(mf,mb)`，jab 单手 80.2 px 也把另一只手抬起来；
+  * 抬臂 42/32° 把 A-pose 抬成水平 T-pose（像投降）。
+  * 修：双手信号改 `min(mf,mb)/60` 触发（jab 后手不动、cross 前手不动、
+    wave 两臂同时小幅），增益砍到 18..24°。
+
+v3 看图：仍偏「双臂张开」。加前推层 —— 只对**正在出拳的那只前臂**
+绕肘放大 `1+0.30*t`、向画面中心平移 `26*t px`、上抬 `8*t px`，
+模拟 2D 格斗里拳朝镜头伸出的透视；单手增益回调到 22..32°。
+最终看图：jab 前手明显变大前伸、cross 后手、wave 双手，人形完整，
+无洞/无重影/无悬浮部件。对照板 `three-driver-paths-comparison.png`、
+时间线 `player-V4b-motion-timeline.png` 是看图依据。
+
+重定向量化信号（manifest 可复算）：
+
+| 帧 | arm_f | arm_b | push_scale_f | push_scale_b | 原始最大角 |
+|---|---|---|---|---|---|
+| jab #8 | 0.6685 | 0.0 | 1.2006 | 1.0 | 63.867° |
+| cross #12 | 0.0 | 1.0 | 1.0 | 1.3 | 147.62° |
+| wave #19 | 两手均 >0 | 两手均 >0 | >1 | >1 | 162.075° |
+
+======================================================================
+5. GIF 帧数口径订正（一次真红）
+======================================================================
+
+判据 `gifs_frames_exact` 初版要求「GIF 帧数 == 源帧数」，实测
+`player-V4b-attack-jab.gif` 只有 11 帧而非 14 → 判据红。
+先怀疑 `optimize=True`，关掉后**仍是 11 帧**，说明诊断错了。
+逐帧读 duration 才定位真因：Pillow 会把像素完全相同的连续帧合并，
+并把被合并帧的时长累加到保留帧（jab 出现 120/180ms 的帧）。
+
+实测 9 条 GIF 总播放时长**严格守恒**：
+
+| 档 | 源帧 | 期望时长 | 各路线实测总时长 |
+|---|---|---|---|
+| jab | 14 | 840 ms | 840 / 840 / 840 ms |
+| cross | 22 | 1320 ms | 1320 / 1320 / 1320 ms |
+| wave | 36 | 2160 ms | 2160 / 2160 / 2160 ms |
+
+时间曲线没丢，是判据口径写死了帧数。判据改为
+`gifs_timeline_conserved`：总时长守恒 + 2 <= 编码帧数 <= 源帧数 +
+与 gif_stats.json 自报的 encoded_frames / duration_sum_ms 双算对账。
+三路线合计 33 个重复帧被合并，全部有时长补偿。
+`make_3d_attack_gifs.py` 的注释已同步订正，不再误导下一轮。
+
+======================================================================
+6. 15 条承重判据（verify_attack_3d.py）
+======================================================================
+
+| # | 判据 | 要点 |
+|---|---|---|
+| 1 | frame_counts_exact | 3 路线 x 73 帧 = 219 PNG，manifest 与盘上一致 |
+| 2 | png_bytes_and_hash | 219 帧魔数 / >10KB / sha256 / 字节数逐项对账 |
+| 3 | gifs_timeline_conserved | 9 条 GIF + 3 条连播总时长守恒 + stats 双算 |
+| 4 | gifs_animated | is_animated / loop=0 / duration>0 / n_frames>=2 |
+| 5 | boards_nonempty | 6 张板图 >=50KB 且 >=600x400 |
+| 6 | joint_hashes_recomputed | 219 帧关节哈希从 baked2.json 独立复算 |
+| 7 | stance_is_untouched_portrait | 两站架帧与 3D 立绘逐像素一致 + 恒等标记 |
+| 8 | stance_matrices_identity | 2 x 13 = 26 个仿射矩阵在站架全为单位阵 |
+| 9 | single_arm_semantics | jab 只前手 / cross 只后手 / wave 双手（两角色） |
+| 10 | push_only_on_active_forearm | 前推只作用于激活的前臂 |
+| 11 | angle_wrap_wired_and_bounded | 源码钉 wrap_pi + 映射后最大角 <=40° |
+| 12 | mesh_deform_falsified | 64,024/64,024 移动 / mean 0.26873 / max 0.88084 |
+| 13 | sources_are_distinct_3d_assets | 两立绘来自不同 3D 探针目录且 sha256 匹配 |
+| 14 | game_sources_untouched | 7 个游戏源码与基线逐字节一致 |
+| 15 | spec_mapping_table_consistency | spec/mapping/table/chain 哈希与值全对账 |
+
+15/15 PASS / ATTACK_3D_VERIFIED。
+注意：**这 15 条一条都没评「好不好看」**，全部在守链路、时间线、
+产物完整性与边界诚实性。看图结论写在第 3、4 节，不假装被判据覆盖。
+
+======================================================================
+7. 变异验证（mutation_attack_3d.py）
+======================================================================
+
+| case | 变异 | 目标判据 | 结果 |
+|---|---|---|---|
+| M1 | 站架「与原图一致」标记 true->false | stance_is_untouched_portrait | CAUGHT |
+| M2 | 改坏一张帧 PNG 魔数 | png_bytes_and_hash | CAUGHT |
+| M3 | 网格平均位移 0.26873->0.0 | mesh_deform_falsified | CAUGHT |
+| M4 | 偷改 A-pose 头顶标定 | spec_mapping_table_consistency | CAUGHT |
+| M5 | 摘掉 wrap_pi 调用 | angle_wrap_wired_and_bounded | CAUGHT |
+| M6 | 篡改源码基线指纹 | game_sources_untouched | CAUGHT |
+
+6/6 CAUGHT、每组都有绿哨兵、6/6 逐字节 sha256 还原、
+`all_restored=True`、clean re-run 15/15 GREEN。
+`ATTACK3D_SELFTEST=1` 把 M1 锚点换成不存在的串，
+得到 `did_not_run=1` + 5/6 CAUGHT + `DID_NOT_RUN_SELFTEST_OK`，
+证明「锚点失配」不会被算成已证明。
+全程 `PYTHONDONTWRITEBYTECODE=1`。
+
+======================================================================
+8. 边界 / 故意没做的部分
+======================================================================
+
+  * 游戏源码 0 改动；没有把任何 GIF/立绘接进 Godot，没有改 arena.gd/hud.gd。
+  * 没有给玩家 V4b 新建带骨架的 .blend：真网格驱动已被证伪，
+    再造一份 40 MB 资产只是复现同一个失败，故直接用现成 PBR 正面立绘。
+  * puppet 是**2D 图像骨骼重定向**，不是真 3D 蒙皮动画；
+    它不能侧视、不能转身、不能做透视正确的出拳。
+  * 动作幅度保守：A-pose 底子本身双臂斜张，正面 2D 无法表现「拳朝镜头」，
+    只能靠放大前臂 + 抬臂 + 整体前冲暗示。看图结论是「可读但不够像打拳」。
+  * 没有重拓扑 / 平滑权重 / 修 2,809 个开放壳；上一轮已证 Blender
+    Voxel Proxy + Data Transfer 能给 99.97% 覆盖，但 35° 驱动右臂仍不可见。
+  * 没有渲 228 帧全量图集，没有导 glTF / Godot，没有做多视角立绘。
+  * `two-driver-paths-comparison.png` / `driver-probe-foe.png` / `make_probe_sheet.py`
+    是迭代中间产物，保留作看图证据，不是最终交付；
+    最终对照以 `three-driver-paths-comparison.png` 与 `three-routes-impact-frame-overview.png` 为准。
+  * 本机没能给 .venv 装上 numpy（pip 下载 12.6 MB 超时），
+    puppet 因此写成纯 PIL 实现，不引入新依赖。
+
+======================================================================
+9. 复算命令（Windows / Bash，先修 PATH）
+======================================================================
+
+export PATH="/c/Users/tutic/.workbuddy/binaries/PortableGit/versions/1.2.0/usr/bin:/c/Users/tutic/.workbuddy/binaries/PortableGit/versions/1.2.0/bin:$PATH"
+cd "D:/Projects/CardBoxer/CardBoxer-bake/3d-attack-gifs"
+PY="C:/Users/tutic/IdeaProjects/Fantasy-Agent/.venv/Scripts/python.exe"
+BL="D:/Tools/Blender-5.2.3/blender-5.2.3-windows-x64/blender.exe"
+
+"$BL" -b --python render_3d_frames.py -- --tag foe --cards jab,cross,wave
+"$PY" make_puppet.py --tag player --cards jab,cross,wave
+"$PY" make_puppet.py --tag foe    --cards jab,cross,wave
+"$PY" make_3d_attack_gifs.py
+"$PY" make_timeline.py
+"$PY" make_probe_compare.py
+"$PY" -u verify_attack_3d.py              # 15/15
+"$PY" -u mutation_attack_3d.py            # 6/6 CAUGHT
+ATTACK3D_SELFTEST=1 "$PY" -u mutation_attack_3d.py   # DID NOT RUN 自检
+"$PY" make_filelist.py                    # FILELIST_STABLE_OK
+
+======================================================================
+10. 下一步（等工程师定）
+======================================================================
+
+  A. 只把这个 puppet 当节奏预览，先接 arena.gd 的 P0 动作规格做接线验证；
+  B. 要真正像打拳：先补 3/4 侧视与正视两套立绘，按视角切换分块，
+     或改走手绘/SDXL 精灵切片，正面 A-pose 单张立绘有物理上限；
+  C. 要真 3D：必须先修网格拓扑（连续壳体）并做可用平滑权重，
+     再解决 A-pose -> 格斗站架的 rest 对齐，ZBrush 不对症（上一轮已给账）；
+  D. 到此为止，把这批 GIF 只作为「两条驱动路线的可行性证据」存档。

@@ -1,0 +1,57 @@
+{
+  "decision": "落地 micro2，三份表同步；否决候选扫描推荐的 hybrid",
+  "why_hybrid_rejected": "hybrid 的 2D 关节最大位移 33.0606 px 来自 build_lerp 把整帧定格段改成匀速过渡，等于重设动画语义；诊断显示 255 对原生平台中 224 对是 11 关节完全相同的整帧定格 hold 帧，属设计意图而非缺陷。用户要求的是攻数值平台，不是重设动作。",
+  "why_micro2": "段内 w = A*(k+1)/(m+2) 线性递增，恒 > 0、相邻帧必不同、不累积漂移；每条 track 的首帧与末帧是起手/收招归位帧，刻意不扰动，避免撞 pose_probe 的 1.5 px 归位红线（首版四分之一正弦把 wave 末帧推到 1.569 px 已实测判红）。幅度上限 2 px 在 2D 侧不足 2 像素不可见；三份表 11 关节同步修改，跨表对账守卫保持成立。",
+  "amplitude_px": 2.0,
+  "build_rule": "w = A*(k+1)/(m+2)，段内恒 > 0 且严格递增；每条 track 的首帧与末帧（起手/收招归位帧）不扰动",
+  "cost_table": {
+    "baseline": {
+      "exact_flat_pairs": 255,
+      "perceptual_flat_pairs": 308,
+      "max_joint_delta_px": 0.0,
+      "worst_p999_m": 0.042737
+    },
+    "micro_2": {
+      "exact_flat_pairs": 0,
+      "perceptual_flat_pairs": 200,
+      "max_joint_delta_px": 1.7778,
+      "worst_p999_m": 0.042681
+    },
+    "micro05": {
+      "exact_flat_pairs": 0,
+      "perceptual_flat_pairs": 257,
+      "max_joint_delta_px": 0.4904,
+      "worst_p999_m": 0.042737
+    },
+    "hybrid": {
+      "exact_flat_pairs": 0,
+      "perceptual_flat_pairs": 120,
+      "max_joint_delta_px": 33.0606,
+      "worst_p999_m": 0.0435
+    }
+  },
+  "anchor_p999_m": 0.09365,
+  "roundtrip_identity": {
+    "motion_input.json": true,
+    "motion_input_foe.json": true,
+    "card_motion.json": true
+  },
+  "scan_recommended_case": "hybrid_lerp_micro03",
+  "checks": {
+    "all_three_roundtrip_identical": true,
+    "all_track_endpoints_untouched": true,
+    "no_endpoint_frame_in_edits": true,
+    "exact_flat_reaches_zero": true,
+    "perceptual_below_baseline": true,
+    "max_displacement_under_2px": true,
+    "hybrid_displacement_much_larger": true,
+    "no_worsened_adjacent_jump": true,
+    "plan_284_poses": true,
+    "plan_tracks_15": true,
+    "no_nan_in_plan_deltas": true,
+    "segments_nonempty": true
+  },
+  "failed": [],
+  "ok": true,
+  "full_tear_source": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\native-plateau-p4\\data\\micro2_tear.json"
+}

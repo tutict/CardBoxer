@@ -1,0 +1,250 @@
+《牌拳 / CARD BOXER》2.5D 建模验证记录  ——  V3「街霸 IV 式卡通渲染」版
+工程师反馈：「现在还是太过于丑陋了，要不学习街霸那样的建模吧」
+日期：2026-11-07  工具：Blender 5.2.3 LTS 便携版
+目录：D:\Projects\CardBoxer\CardBoxer-bake\2.5d-modeling\
+基线存档：old-blockout/（V1，16 文件）、v2-baseline/（V2，23 文件）
+
+====================================================================
+一、结论先行
+====================================================================
+V2 是「扁平剪影 + 单一平涂」；街霸的核心是**体积 + 卡通二分明暗 +
+夸张比例 + 清晰剪影**。V3 按 **Street Fighter IV** 路线重做渲染层与比例，
+不复刻 IP：cel shading 三档硬边明暗、粗墨线描边、放大手脚、宽肩缩头、
+凶眉鼻影、双臂可见。八帧全部从「纸片人」变成有体积的卡通拳手。
+
+verify_2d5.py **11/11 PASS**（MODEL_2D5_VERIFIED），坐标桥仍成立
+（鞋距 157.0 px vs 预测 157.5 px），游戏目录 0 文件改动。
+
+**上限如实说**：这是程序化几何 + 卡通渲染，能到「SF IV 的味道」，
+到不了 SF6 的角色精度。SF6 是 RE ENGINE 写实肌肉 + 皮肤细节 + 布料物理
++ 微表情（资料称隆的升龙拳脸有 47 个 blend shape），那是天级美术资产
+投入，不是调渲染参数能到的。要真到那个程度得换路线（第七节）。
+
+====================================================================
+二、风格定位：为什么选 SF IV 而不是 SF6
+====================================================================
+ 查证结果（2026-11-07 检索）：
+  - SF II / III：手绘像素精灵，靠画师逐帧绘制（Akiman / Bengus）
+  - **SF IV (2008)**：3D 模型 + 2D 玩法平面 + 卡通渲染 + 水墨（sumi-e）、
+    粗描边、夸张厚重的四肢、大手脚
+  - SF V (UE4)：风格化写实「可动人偶」
+  - SF6 (RE Engine)：写实肌肉 / 皮肤 / 微表情 / 涂鸦街头风
+
+ 关键发现：**SF IV 的「夸张大手大脚」不是审美失误，是为让命中判定
+ 在远距离更可读的功能设计**。这跟《牌拳》「屏幕 x == 判定 x」的正交
+ 坐标桥是同一套逻辑 —— 我上一轮把拳套从 9 缩到更小其实走反了，
+ V3 反而放大到 13 game px。
+
+ 所以选 SF IV：它是「3D 体块 + 2D 判定」这条路，和现有 228 帧动作表、
+ 坐标桥同构，不用推翻任何已验证的东西。
+
+====================================================================
+三、V3 技术改造（坐标桥 / 11 关节 / 12 部件 / 8 shot / manifest 全不动）
+====================================================================
+ 1. toon_material()：Diffuse → ShaderToRGB → ColorRamp(CONSTANT 三档)
+    → Emission → Output。把光照结果量化成硬边明暗，末端用 Emission
+    保证档色就是调色板、不被场景二次打光。
+ 2. probe_toon.py **先做可行性探针**：单独渲一个球，证明本机的
+    Blender 5.2.3 EEVEE headless 确实支持 ShaderToRGB 且颜色被量化
+    （主色聚成 2~3 簇而非连续渐变），才动主脚本。
+ 3. flat_material()：描边 / 五官 / 金扣 / 银环用不受光 Emission，
+    墨线在任何角度都是稳定的深色。马甲另用 toon 深色，避免纯黑死板。
+ 4. ribbon 加 BEVEL 修改器（width 0.011 / 2 段）：平面挤出带有了圆角
+    弧面，cel shading 会在窄倒角面落进另一档亮度 —— 体积感从这里来。
+ 5. 街霸式比例：拳套 9→13 game px、鞋 22×11→30×14 + 金底加厚、
+    躯干肩半宽 26→30、头半宽 18.5→16（头小身壮）、描边 3→4 px。
+ 6. 表情：加凶眉（倒八）、鼻影、略斜的嘴；SF 的脸是「远距离一眼
+    读出情绪」，比五官精细度重要。
+ 7. 双臂可见：护头姿势下后臂的 x 落在躯干宽度内，V2 里被完全遮挡。
+    V3 把后臂挪到躯干**前**但用暗一档袖色（sleeve_back），
+    用明度编码前后而不是靠遮挡 —— 2D 格斗的常见手法。
+ 8. 环刃压暗、缩小、后移，从「腰侧发光圈」变成暗色腰饰；
+    中国结从小沙漏改成圆结 + 流苏。
+
+====================================================================
+四、迭代与两次误判（都靠对象级诊断纠正，不靠连试参数）
+====================================================================
+ 轮次   现象                              实际根因 / 处置
+ --------------------------------------------------------------------
+ V3-1  cel shading 生效，明暗档出现      探针先行，一次成功
+ V3-2  加大手脚/宽肩/凶眉后，jab、      先猜「cel 亮部过曝融白底」，
+       throw、hit_heavy 出现两条        把全局亮部档 1.08→0.94，**无变化**
+       穿过身体的深色长斜线
+ V3-3  再猜「白外套整体太亮」，         仍无变化
+       给白外套单独调 bands
+ V3-4  **停止猜测，做隔离实验**         diag_pose.py（可指定帧）：
+       arm only = 两条水平灰带；
+       leg only = 两条裤腿；
+       white_outer only = 白梯形 + 两条深色边
+       => 斜线就是白外套的左右描边，不是多余物体
+       diag_body.py 单变量：主体单独渲可见（浅灰梯形），
+       把三档强制染红也可见 => 几何/材质链路都正常
+       **真因：材质色是线性值**，线性 0.77 经 Standard
+       view transform 编码成 sRGB ≈ 0.89(227)，仍撞纯白背景，
+       所以躯干内部看不见、只剩两条墨边像孤立的线。
+       修法：白外套三档压到 (0.22, 0.38, 0.54)，亮部
+       线性 0.51 → sRGB ≈ 0.74(189)，终于与白底拉开。
+ V3-5  躯干成为连续灰白块，斜线读作轮廓  11/11 PASS
+
+ 这已经是第二次踩「白部件融进白背景」：V2 是白外套与白底同色，
+ V3 是线性色经 sRGB 编码后又撞白底。**同色消失要先查颜色管线，
+ 不要先查几何**。
+
+====================================================================
+五、11 条硬判据（verify_2d5.py，11/11 PASS）
+====================================================================
+ 判据                              实测                                  守什么
+ --------------------------------------------------------------------
+ pngs_valid                        8/8 PNG 512x512，manifest 大小一致     没坏没漏
+ renders_nonempty                  8/8 非白像素 > 8000                    不真空通过
+ repeat_pixels_identical           difference bbox=None                    同输入同画面
+ repeat_sha_diff_is_metadata_only  IDAT 完全相同、tEXt 不同，             字节变 != 画面变
+                                   两文件都 148130 B
+ pose_frames_distinct              最小两两差异 28441 px                  真吃了不同帧
+ manifest_joints_traceable         8/8 从 baked2.json 独立重算一致        manifest 不手写
+ table_sha256_matches              b6a7f8435b08... 盘上一致               没换动作表
+ palette_and_angle_live            配色 3365 px / 角度 14527 px           两个开关接线
+ ortho_coordinate_bridge           鞋距 157.0 vs 预测 157.5 px            坐标桥成立
+ differs_from_v1_baseline          变化 47445 px                          不是同一张图
+ toon_shader_is_wired              ShaderToRGB / CONSTANT /              cel shading 接线
+                                   Emission 齐备，toon_material 9 处，
+                                   探针产物存在
+
+ 【判据订正，不是调阈值放水】
+  - `differs_from_v1_baseline` 原来的 `dark_final > dark_run1` 条件退役。
+    V3 把 Principled 换成 Emission/cel shading，深色像素计数不再跨渲染
+    模型可比（V2 880 → V3 120，但画面明明更有对比）。改为只保留
+    变化像素数，并在 detail 里写明退役原因。
+  - 新增 `toon_shader_is_wired`：源码级接线守卫，**把 toon_material
+    换回平涂就会报红**，这才是承重判据。
+  - 曾尝试用「颜色档数 / 主色集中度」从像素证明 cel shading 生效，
+    实测 V3 vs V2 只有 3991 vs 5187、top8 0.79 vs 0.74 —— EEVEE 的
+    TAA 抖动让直方图噪声太大，**区分度不够就不拿来当判据**。
+    好看与否由看图判定，不假装脚本能证明。
+  - 脸部报告从 V2 描述更新为 V3（凶眉/鼻影），删掉过时的
+    `D_FACE / head sphere` 与 `gold=0` 口径。
+
+====================================================================
+六、视觉评审（V3-5 最终）
+====================================================================
+ 【达到的】硬边三分明暗（白外套 / 裤腿 / 拳套都可读出亮中暗）、
+ 粗墨线轮廓、明显体积感、大拳套与厚底靴、宽肩、凶眉与鼻影、
+ 双臂都可见（前后用明度区分）、红腰带/金扣/圆结、双环发髻。
+ 八帧 stance / jab / sweep / throw / hit_heavy 姿势可辨，
+ enemy 配色与 12° 相机角生效。相比 V1 的「球 + 黑椭圆」和
+ V2 的「扁平剪影」是两次质变。
+
+ 【已知遗留，不粉饰】
+  1. 白外套为了不融白底被压成浅灰白，不是纯白；纯白背景仍偏廉价，
+     真要「场景感」得加擂台背景与地面阴影（会牵动验收脚本的白底口径，
+     本轮刻意没做）。
+  2. 仍是程序化几何：无手指、布料褶皱、肌肉分块、表情变化。
+  3. 正面正交没有纵深，jab 只表现为横向张臂（坐标桥红利换来的代价）。
+  4. 腰侧环刃仍露出两个小暗弧；中国结是简化圆结。
+  5. 【交付前最终看图追加】八帧对照图里 `sweep | impact f13` 左下有一块
+     大的深灰 V 形箭头（极端膝折角下的腿带轮廓），其余 7 帧没有。
+     **本轮未做对象级隔离，根因未证，不猜参数**；按第四节教训，下轮
+     要修先 `diag_pose.py -- sweep 13 leg only` 隔离再动。11/11 判据
+     不含「逐帧几何无自交」，所以这个缺陷不会触发任何红 —— 脚本判据
+     覆盖不到的东西，必须靠看图补上。
+  6. 手臂相对放大的拳套偏细（jab 帧尤其明显）；这是 V2 为避免三角翼
+     把半宽砍到 5.5/4.2 game px 的代价，V3 只放大了拳套没同步加粗臂。
+
+ 【判据边界】11/11 只证明数据驱动 / 确定性 / 坐标正确 / 卡通渲染接线，
+ **不证明好看、也不证明逐帧几何无自交**。像不像街霸、有没有断裂，
+ 是看图判的。
+
+====================================================================
+七、成本账与下一步
+====================================================================
+ 本轮渲染开销仍可忽略（8 帧约 2.6s/轮），成本全在 V3-2/V3-3 两次
+ 猜错根因。教训已固化：**形状/颜色异常先做对象级隔离 + 单变量实验**。
+
+ 若要继续往「街霸」走：
+  A. 加擂台背景 + 地面投影 + 受击特效（视觉收益大，但需同步改验收
+     脚本的白底口径）。成本中等。
+  B. 真 3D 角色：完整人体 mesh + 骨架 + 贴图 + 逐帧驱动。
+     最接近 SF6，但会引入「渲染帧 vs 判定帧」同步问题，天级成本。
+  C. 手绘 / SDXL 出精灵再切片：上限最高，但要重做 228 帧对齐，
+     AI 多帧一致性是已知坑。
+  D. 到此为止：作为设定/预览，运行时继续用 A 路线代码自绘appearance-layer。成本 0。
+
+ 仍不建议现在渲 228 帧图集，除非先选定路线。
+
+====================================================================
+八、复算命令
+====================================================================
+ 卡通渲染可行性探针：
+   blender -b --factory-startup --python .../probe_toon.py
+ 重渲 8 帧 + 重建 .blend / manifest：
+   "D:\Tools\Blender-5.2.3\blender-5.2.3-windows-x64\blender.exe" \
+     --background --factory-startup --python \
+     "D:\Projects\CardBoxer\CardBoxer-bake\2.5d-modeling\boxer_2d5.py"
+ 复跑 11 条判据 / 重建八帧对照：
+   <项目 venv>/python.exe -u .../verify_2d5.py
+   <项目 venv>/python.exe -u .../make_contact_sheet.py
+ 按帧对象级诊断（hide / only）：
+   blender -b --factory-startup --python diag_pose.py -- jab 7 white_outer only
+ 躯干单变量诊断（主体 / 描边 / 强制染红）：
+   blender -b --factory-startup --python diag_body.py
+ 证明没碰游戏源码：
+   find ".../CardBoxer" -type f -newer ".../2.5d-modeling/boxer_2d5.py" \
+     -not -path "*/.godot/*" | wc -l   => 0
+
+====================================================================
+九、文件清单与 sha256（顶层 41 项 = 3 目录 + 本记录 + 下列 37 个文件）
+====================================================================
+2709f23d2af4d8cdf73d64063c64f8b06cfe0da123c2b234e65ab14ae69079c9  2d5-hit_heavy_mid.png
+02ab03ab003ee3a73ac1c2d23031855f356302225a69245d6c83f93dee326793  2d5-jab_impact.png
+9f6a3fc6a271f288a17fe0183de79159227f564ec9c441884ba16110ddc1f78d  2d5-run1-stance-comparison.png
+4f55203970eb4644f7adbbfef07600758bf0db393804350ef1f671d3b6595f3e  2d5-stance.png
+f9be7438b17748620527716f488028ec796ee620e359a717f8b6a1cec30df075  2d5-stance_angle12.png
+5b927e100ef1bf4c795321a89032021c038ce7d5e52bed1a312ec6c7875580a8  2d5-stance_enemy.png
+eaecb86493cdb18a545ff9c2ecb028d520e5a236adf3d8f5f232269c5c8c1078  2d5-stance_repeat.png
+fdc3d89ad5d897223cce99c6bb8fc393d0e8b4ea634d429e9e6561b7bac54def  2d5-sweep_impact.png
+45e25eb2bc6ac063229d4ea36dcd2379792a3fb54bd306152268e32d5605e3a9  2d5-throw_impact.png
+91d5d3938dbf728f3d3bacd6ff4942aeac8975b3d4b714ac3223af337ade1f0b  2d5-eight-frame-comparison.png
+430b669c2894c5a6ca6bd735ed4a601512ac3437f44b3aaf7034c9be711e7222  boxer_2d5.blend
+5f3c9164ec23e00e15eb3f651a1db4c21fa3a9a7edbe1094ad9028a37eef3cc1  boxer_2d5.blend1
+12daebae86be8aee5fb68272a16d0d796ef295e844ca30546a538f518ed40ade  boxer_2d5.py
+fe0593e2b70e04ef0b2f940e836770bb7023229e3131c68f531eed736ad21e19  diag-arm-only.png
+99e27c9d678d5daec9c926917b5147613e9831825b497a85bc6b249567705f76  diag-arm.png
+3ab688a284522215ed315ee6302534e182d77c99f51ff2bd23b2246ef283c7d1  diag-body-only.png
+48d3128571ca134e584e66dfd3673affac24a5400fc87d22b381df742c7d17cd  diag-body-red.png
+8b5ec97ba25d390104880c63ffec04814ade6d4bfb205c2da5a707fe0029b1a4  diag-elbow.png
+32ebb7a447a288c666157c46c80e3a025a0a72ad2e2370ea63347ef7e7cd4ba7  diag-outline-only.png
+c7979f99ea60a8aab9ab312cc6ab1c8020304767d058e87ab718d908f18fd0d4  diag-white_outer.png
+f783e876fc952f0834af76db6ec6996d769aa9968bc108407942eb04b0a018c3  diag_body.log
+4fd275b06516f62848d2948131f62100a6ba81d271ff78ed7d19a176f1fbcf09  diag_body.py
+c8af7fcc72a2df8fbef825f73acf8d38613d14eaf7d372c0f30a24c1b3a917fd  diag_parts.py
+9500581d69bb6e7c5c1bd5fb189eda99196a4e33945f3807dc641dbee252c535  diag_pose.py
+730073f55ea34fad8f289e9af65f34cb4f21eaff4b99927621bbba9e7436d4ce  diagpose-jab7-arm-only.png
+90defddd4f048ba90c3b51b91cd99ca6068591ac1fa68875bab93d686c81e423  diagpose-jab7-leg-only.png
+804f7d2b6f404d2fa51d7bd0139e4c2bae14adedd3df36481ee75b17d896248b  diagpose-jab7-white_outer-only.png
+166bf961b15bd3f40a5c4005f53d5ae04c6ff6367d11caa636558d20b3c41c35  make_contact_sheet.py
+d2d960db3771ce5519147363f15fe4c63a63841c8e1f2e2580d75fc5a7765387  probe_toon.log
+ed49cbc8bc3d01685b0c45dcd5c945dcd598d60ca18e95047d7fc35799e20754  probe_toon.png
+1826deda91644d2496a4fbfed2638d0a67483b20044a985625f336b5dc981924  probe_toon.py
+59f83e5d1ad3814ad54ba2f9fbdf9359a4aadb9631092db5b1e0e25fd5e49868  render_manifest.json
+35e61fce26f0aa0ff46c14e5f9339788ce9dc863457cfc0df8499a1100e0800f  render_v2.log
+4dcf97b946d99a63800ec0dce2d81fb9fd1fb5027ecdd65ff9b17cd2f9349fc6  render_v3.log
+3499fa17f343ff080f4de7e37b5a848cee1c3426811e9543827d7fe301da5f51  verify_2d5.log
+3f380e4063503516afabf8256a9bed15bc1577dee718b3a8cf16b2a092a05f01  verify_2d5.py
+fc9c29d5a00e8e22990b1700a7e82a48e62ad63c35645aef4e9939e85932828c  verify_2d5_result.json
+
+ 注：2d5-run1-stance-comparison.png 是 V1 初版过曝图，判据
+     differs_from_v1_baseline 依赖它；probe_toon.png 是卡通渲染探针，
+     判据 toon_shader_is_wired 依赖它。两者都别删。
+     old-blockout/ = V1 基线（16 文件），v2-baseline/ = V2 基线（23 文件）。
+
+====================================================================
+十、回退与边界
+====================================================================
+ 回退 V2：把 v2-baseline/ 里的 boxer_2d5.py、8 张 PNG、.blend、
+ manifest、verify_2d5.py 拷回本目录。回退 V1 用 old-blockout/。
+ 游戏侧完全没动，不需要回退。
+
+ 边界：未导入 Godot、未做 228 帧图集、未改系统默认 Blender（仍 5.2.0）、
+       未改 baked2.json、未改游戏源码（find -newer = 0）、未复刻任何 IP 资产。
+ 历史遗留：Blender 4.4 残留目录仍在（需管理员 PowerShell 走回收站）；
+           卡面描述文字溢出、平局无上限加赛仍是 P1。

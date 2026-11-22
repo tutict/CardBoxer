@@ -1,0 +1,53 @@
+{
+  "boards": [
+    {
+      "file": "E-model-and-motion-six-frames.png",
+      "w": 1800,
+      "h": 1320,
+      "bytes": 448223
+    },
+    {
+      "file": "E-gain-x1-and-x15-comparison.png",
+      "w": 1800,
+      "h": 1300,
+      "bytes": 497419
+    },
+    {
+      "file": "E-all-72-frames-deformation-quality.png",
+      "w": 1800,
+      "h": 1120,
+      "bytes": 103632
+    },
+    {
+      "file": "E-glTF-and-Godot-cost-ledger.png",
+      "w": 1800,
+      "h": 900,
+      "bytes": 113860
+    }
+  ],
+  "board_names": [
+    "E-model-and-motion-six-frames.png",
+    "E-gain-x1-and-x15-comparison.png",
+    "E-all-72-frames-deformation-quality.png",
+    "E-glTF-and-Godot-cost-ledger.png"
+  ],
+  "frame_files": [
+    "e-cross01-x15.png",
+    "e-cross11-x1.png",
+    "e-cross11-x15.png",
+    "e-cross21-x15.png",
+    "e-jab01-x15.png",
+    "e-jab07-x1.png",
+    "e-jab07-x15.png",
+    "e-jab13-x15.png",
+    "e-source-front.png",
+    "e-stance-angle55.png",
+    "e-stance-x1.png",
+    "e-stance-x15.png",
+    "e-wave01-x15.png",
+    "e-wave18-x1.png",
+    "e-wave18-x15.png",
+    "e-wave35-x15.png"
+  ],
+  "recommendation": "small_sprite_sample_first"
+}

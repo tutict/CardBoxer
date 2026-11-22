@@ -1,0 +1,110 @@
+{
+  "selftest": true,
+  "total": 10,
+  "caught": 9,
+  "did_not_run": 1,
+  "restore": {
+    "baseline.json": true,
+    "bake_probe.json": true,
+    "surfdeform_probe.json": true,
+    "a_build.json": true,
+    "metrics_a.json": true,
+    "a_build.py": true
+  },
+  "restore_all_ok": true,
+  "clean_rerun": {
+    "passed": 26,
+    "total": 26,
+    "green": true
+  },
+  "all_proven": false,
+  "rows": [
+    {
+      "id": "M1",
+      "status": "DID NOT RUN",
+      "reason": "anchor count=0 (need 1)",
+      "label": "M1"
+    },
+    {
+      "id": "M2",
+      "status": "CAUGHT",
+      "red": [
+        "A-02_game_source_unchanged"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    },
+    {
+      "id": "M3",
+      "status": "CAUGHT",
+      "red": [
+        "A-06_bake_probe_nonblank"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    },
+    {
+      "id": "M4",
+      "status": "CAUGHT",
+      "red": [
+        "A-08_surfdeform_probe_bind"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    },
+    {
+      "id": "M5",
+      "status": "CAUGHT",
+      "red": [
+        "A-12_reopen_is_driveable"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    },
+    {
+      "id": "M6",
+      "status": "CAUGHT",
+      "red": [
+        "A-17_gain_ratio_double_computed"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    },
+    {
+      "id": "M7",
+      "status": "CAUGHT",
+      "red": [
+        "A-19_ab_counts_double_computed"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    },
+    {
+      "id": "M8",
+      "status": "CAUGHT",
+      "red": [
+        "A-23_params_match_source"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    },
+    {
+      "id": "M9",
+      "status": "CAUGHT",
+      "red": [
+        "A-24_source_wiring"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    },
+    {
+      "id": "M10",
+      "status": "CAUGHT",
+      "red": [
+        "A-21_shot_files_intact"
+      ],
+      "sentinel_green": true,
+      "restored": true
+    }
+  ]
+}

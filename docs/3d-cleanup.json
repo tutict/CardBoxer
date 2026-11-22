@@ -1,0 +1,214 @@
+{
+  "removed_files": [
+    {
+      "path": "CardBoxer\\scripts\\card_motion.gd",
+      "bytes": 5324
+    },
+    {
+      "path": "CardBoxer\\scripts\\card_motion.gd.uid",
+      "bytes": 19
+    },
+    {
+      "path": "CardBoxer\\scripts\\fighter_skin.gd",
+      "bytes": 1783
+    },
+    {
+      "path": "CardBoxer\\scripts\\fighter_skin.gd.uid",
+      "bytes": 20
+    },
+    {
+      "path": "CardBoxer\\data\\card_motion.json",
+      "bytes": 229358
+    },
+    {
+      "path": "CardBoxer\\tests\\motion_check.gd",
+      "bytes": 5045
+    },
+    {
+      "path": "CardBoxer\\tests\\motion_check.gd.uid",
+      "bytes": 20
+    },
+    {
+      "path": "CardBoxer\\tests\\fighter_skin_check.gd",
+      "bytes": 5876
+    },
+    {
+      "path": "CardBoxer\\tests\\fighter_skin_check.gd.uid",
+      "bytes": 20
+    },
+    {
+      "path": "CardBoxer\\tests\\pose_probe.gd",
+      "bytes": 8144
+    },
+    {
+      "path": "CardBoxer\\tests\\pose_probe.gd.uid",
+      "bytes": 19
+    },
+    {
+      "path": "CardBoxer\\tests\\feet_probe.gd",
+      "bytes": 7181
+    },
+    {
+      "path": "CardBoxer\\tests\\feet_probe.gd.uid",
+      "bytes": 20
+    },
+    {
+      "path": "CardBoxer\\tests\\reach_probe.gd",
+      "bytes": 4136
+    },
+    {
+      "path": "CardBoxer\\tests\\reach_probe.gd.uid",
+      "bytes": 20
+    },
+    {
+      "path": "CardBoxer\\tests\\duel_probe.gd",
+      "bytes": 5719
+    },
+    {
+      "path": "CardBoxer\\tests\\duel_probe.gd.uid",
+      "bytes": 20
+    },
+    {
+      "path": "CardBoxer\\tests\\p4_2d_readback.gd",
+      "bytes": 2749
+    },
+    {
+      "path": "CardBoxer\\tests\\p4_2d_readback.gd.uid",
+      "bytes": 18
+    },
+    {
+      "path": "CardBoxer\\tests\\p5_2d_readback.gd",
+      "bytes": 5295
+    },
+    {
+      "path": "CardBoxer\\tests\\p5_2d_readback.gd.uid",
+      "bytes": 20
+    },
+    {
+      "path": "CardBoxer\\tests\\motion_strip.gd",
+      "bytes": 2163
+    },
+    {
+      "path": "CardBoxer\\tests\\motion_strip.gd.uid",
+      "bytes": 20
+    },
+    {
+      "path": "CardBoxer\\tests\\walk_strip.gd",
+      "bytes": 1806
+    },
+    {
+      "path": "CardBoxer\\tests\\walk_strip.gd.uid",
+      "bytes": 20
+    },
+    {
+      "path": "CardBoxer\\tests\\p4_live_probe.gd",
+      "bytes": 8722
+    },
+    {
+      "path": "CardBoxer\\tests\\p4_live_probe.gd.uid",
+      "bytes": 19
+    },
+    {
+      "path": "CardBoxer\\tests\\off_switch_probe.gd",
+      "bytes": 4614
+    },
+    {
+      "path": "CardBoxer\\tests\\off_switch_probe.gd.uid",
+      "bytes": 20
+    },
+    {
+      "path": "CardBoxer\\tests\\display_stopgap_probe.gd",
+      "bytes": 2755
+    },
+    {
+      "path": "CardBoxer\\tests\\display_stopgap_probe.gd.uid",
+      "bytes": 20
+    },
+    {
+      "path": "CardBoxer\\docs\\production-workflow.html",
+      "bytes": 25680
+    },
+    {
+      "path": "CardBoxer\\docs\\shots\\arena.png",
+      "bytes": 73654
+    },
+    {
+      "path": "CardBoxer\\docs\\shots\\arena.png.import",
+      "bytes": 930
+    },
+    {
+      "path": "CardBoxer\\docs\\shots\\fight.png",
+      "bytes": 72668
+    },
+    {
+      "path": "CardBoxer\\docs\\shots\\fight.png.import",
+      "bytes": 930
+    },
+    {
+      "path": "CardBoxer\\docs\\shots\\hit.png",
+      "bytes": 76173
+    },
+    {
+      "path": "CardBoxer\\docs\\shots\\hit.png.import",
+      "bytes": 923
+    },
+    {
+      "path": "CardBoxer\\docs\\shots\\round_start.png",
+      "bytes": 88201
+    },
+    {
+      "path": "CardBoxer\\docs\\shots\\round_start.png.import",
+      "bytes": 948
+    },
+    {
+      "path": "CardBoxer\\play-2d.bat",
+      "bytes": 69
+    },
+    {
+      "path": "CardBoxer-bake\\full-body-retopology\\baseline\\play-2d.bat",
+      "bytes": 647
+    },
+    {
+      "path": "CardBoxer-bake\\full-body-retopology\\project\\play-2d.bat",
+      "bytes": 647
+    },
+    {
+      "path": "CardBoxer-bake\\gameplay-integration\\project\\play-2d.bat",
+      "bytes": 69
+    },
+    {
+      "path": "CardBoxer-bake\\gameplay-integration\\release\\original\\play-2d.bat",
+      "bytes": 647
+    },
+    {
+      "path": "CardBoxer-bake\\gameplay-integration\\release\\payload\\play-2d.bat",
+      "bytes": 69
+    },
+    {
+      "path": "CardBoxer-bake\\native-3d-motion-fix\\baseline\\play-2d.bat",
+      "bytes": 647
+    },
+    {
+      "path": "CardBoxer-bake\\native-3d-motion-fix\\project\\play-2d.bat",
+      "bytes": 647
+    },
+    {
+      "path": "CardBoxer-bake\\route-g-game-3d-integration\\baseline_project\\play-2d.bat",
+      "bytes": 647
+    },
+    {
+      "path": "CardBoxer-bake\\route-g-game-3d-integration\\orig\\pre-3d\\play-2d.bat",
+      "bytes": 647
+    },
+    {
+      "path": "CardBoxer-bake\\route-h-two-sided-3d-combat\\orig\\pre-3d-foe\\play-2d.bat",
+      "bytes": 647
+    },
+    {
+      "path": "CardBoxer-bake\\route-i-visual-distinction\\orig\\pre-visual\\play-2d.bat",
+      "bytes": 647
+    }
+  ],
+  "removed_bytes": 647102,
+  "character_rendering": "native-3d-only"
+}

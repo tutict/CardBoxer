@@ -1,0 +1,278 @@
+{
+  "roi": [
+    [
+      361,
+      280,
+      487,
+      545
+    ],
+    [
+      793,
+      280,
+      921,
+      545
+    ]
+  ],
+  "board": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-j-model-rework\\boards\\J-current-left-right-details.png",
+  "board_bytes": 1188107,
+  "shapes": {
+    "game_player": {
+      "file": "player-rigged.glb",
+      "bytes": 38478140,
+      "sha256": "80e5a1a03f446dd8a080e69524d4e78d97191fe56fcb30f86ed7e8c945fcab28",
+      "verts": 57934,
+      "pos_min": [
+        -0.6272372603416443,
+        0,
+        -0.384692519903183
+      ],
+      "pos_max": [
+        0.6272372603416443,
+        1.7200000286102295,
+        0.384692519903183
+      ],
+      "bbox_xyz": [
+        1.254475,
+        1.72,
+        0.769385
+      ],
+      "attributes": [
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "skins": 1,
+      "animations": 0,
+      "nodes": 16,
+      "node_names": [
+        "head",
+        "neck",
+        "forearm_b",
+        "upperarm_b",
+        "forearm_f",
+        "upperarm_f",
+        "chest",
+        "spine",
+        "shin_b",
+        "thigh_b",
+        "shin_f",
+        "thigh_f",
+        "hips",
+        "neutral_bone",
+        "e_apose_rig",
+        "player_HI_skinned"
+      ],
+      "images": [
+        "texture_pbr_20250901_normal",
+        "texture_pbr_20250901",
+        "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness"
+      ],
+      "materials": 1
+    },
+    "game_foe": {
+      "file": "foe-rigged.glb",
+      "bytes": 42914328,
+      "sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+      "verts": 64059,
+      "pos_min": [
+        -0.6084343791007996,
+        0,
+        -0.36025306582450867
+      ],
+      "pos_max": [
+        0.6084343791007996,
+        1.7200000286102295,
+        0.36025306582450867
+      ],
+      "bbox_xyz": [
+        1.216869,
+        1.72,
+        0.720506
+      ],
+      "attributes": [
+        "JOINTS_0",
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0",
+        "WEIGHTS_0"
+      ],
+      "skins": 1,
+      "animations": 0,
+      "nodes": 16,
+      "node_names": [
+        "head",
+        "neck",
+        "forearm_b",
+        "upperarm_b",
+        "forearm_f",
+        "upperarm_f",
+        "chest",
+        "spine",
+        "shin_b",
+        "thigh_b",
+        "shin_f",
+        "thigh_f",
+        "hips",
+        "neutral_bone",
+        "a_apose_rig",
+        "foe_HI_skinned"
+      ],
+      "images": [
+        "texture_pbr_20250901_normal",
+        "texture_pbr_20250901",
+        "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness"
+      ],
+      "materials": 1
+    },
+    "foe_v1_source": {
+      "file": "artifact_03.glb",
+      "bytes": 41628356,
+      "sha256": "e3ba93f0d61dace74af7b3fee70214aa96d3477f362f9188152801f77cc26707",
+      "verts": 64024,
+      "pos_min": [
+        -0.35456299781799316,
+        -0.2881680130958557,
+        -1.0145050287246704
+      ],
+      "pos_max": [
+        0.3631809949874878,
+        0.13680699467658997,
+        0
+      ],
+      "bbox_xyz": [
+        0.717744,
+        0.424975,
+        1.014505
+      ],
+      "attributes": [
+        "NORMAL",
+        "POSITION",
+        "TEXCOORD_0"
+      ],
+      "skins": 0,
+      "animations": 0,
+      "nodes": 1,
+      "node_names": [
+        "node_0"
+      ],
+      "images": [
+        "texture_pbr_20250901_normal",
+        "texture_pbr_20250901",
+        "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness"
+      ],
+      "materials": 1
+    }
+  },
+  "h_inspect_foe": {
+    "file": "foe-rigged.glb",
+    "bytes": 42914328,
+    "sha256": "0edcfe9e455f3c8c9deb7034397c815fd701130ed9a10c2e08800fff789cba88",
+    "counts": {
+      "scenes": 1,
+      "nodes": 16,
+      "meshes": 1,
+      "materials": 1,
+      "textures": 3,
+      "images": 3,
+      "skins": 1,
+      "animations": 0,
+      "accessors": 7
+    },
+    "primitives": [
+      {
+        "mesh": 0,
+        "primitive": 0,
+        "attributes": [
+          "JOINTS_0",
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0",
+          "WEIGHTS_0"
+        ],
+        "verts": 64059,
+        "has_joints": true,
+        "has_weights": true,
+        "pos_min": [
+          -0.6084343791007996,
+          0,
+          -0.36025306582450867
+        ],
+        "pos_max": [
+          0.6084343791007996,
+          1.7200000286102295,
+          0.36025306582450867
+        ]
+      }
+    ],
+    "skinned_nodes": [
+      {
+        "node": 15,
+        "name": "foe_HI_skinned",
+        "skin": 0,
+        "mesh": 0
+      }
+    ],
+    "skins": [
+      {
+        "joints": 14,
+        "has_inverse_bind": true
+      }
+    ],
+    "images": [
+      {
+        "index": 0,
+        "bytes": 8934769,
+        "sha256": "ed4d58cd90dd1419746a26926e80e0912f23ed83fdae8a9d881629e7e848cd9f",
+        "name": "texture_pbr_20250901_normal"
+      },
+      {
+        "index": 1,
+        "bytes": 15782150,
+        "sha256": "3c1076596ef22f2e45c6509e459f7e262053724ce05b803874ed53a927473d6a",
+        "name": "texture_pbr_20250901"
+      },
+      {
+        "index": 2,
+        "bytes": 14380706,
+        "sha256": "c87454eacff12946de4b70254b0dbe0fe822fd93d8896efa79af5663f2cdff7e",
+        "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness"
+      }
+    ],
+    "joint_node_names": [
+      "hips",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "upperarm_b",
+      "forearm_b",
+      "upperarm_f",
+      "forearm_f",
+      "thigh_b",
+      "shin_b",
+      "thigh_f",
+      "shin_f",
+      "neutral_bone"
+    ]
+  },
+  "v1_source_inspect": {
+    "vertices_total": 64024,
+    "connected_shells_unionfind": 2809,
+    "has_skin": false
+  },
+  "foe_basecolor_png_bytes": 15782150,
+  "checks": {
+    "three_glbs_parsed": true,
+    "game_foe_has_skin": true,
+    "game_foe_verts_match_v1_source": true,
+    "source_model_is_unskinned": true,
+    "foe_and_player_geometry_differ": true,
+    "foe_basecolor_size_matches_v1_zip": true,
+    "h_export_verts_match_game_glb": true,
+    "board_written": true
+  },
+  "failed": [],
+  "ok": true
+}

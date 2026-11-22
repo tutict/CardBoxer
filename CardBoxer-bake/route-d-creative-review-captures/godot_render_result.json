@@ -1,0 +1,94 @@
+{
+  "godot_executable": "C:\\Users\\tutic\\Documents\\godot\\Godot_v4.5-stable_win64_console.exe",
+  "probe_project": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-d-creative-review-captures\\probe_project_d",
+  "views_requested": "ALL",
+  "copy_identical": true,
+  "editor_import": {
+    "seconds": 3.135,
+    "returncode": 0,
+    "import_file": true
+  },
+  "render": {
+    "seconds": 4.994,
+    "returncode": 0,
+    "has_opengl": true,
+    "script_errors": 0,
+    "headless": false
+  },
+  "engine_version_marker": "4.5-stable",
+  "pngs": [
+    {
+      "name": "front",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-d-creative-review-captures\\shots\\godot-front.png",
+      "exists": true,
+      "bytes": 824032,
+      "w": 900,
+      "h": 1100,
+      "save_error": 0,
+      "yaw": 0.0,
+      "radius": 3.55,
+      "fov": 33.0
+    },
+    {
+      "name": "angle35",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-d-creative-review-captures\\shots\\godot-angle35.png",
+      "exists": true,
+      "bytes": 790980,
+      "w": 900,
+      "h": 1100,
+      "save_error": 0,
+      "yaw": 35.0,
+      "radius": 3.55,
+      "fov": 33.0
+    },
+    {
+      "name": "side90",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-d-creative-review-captures\\shots\\godot-side90.png",
+      "exists": true,
+      "bytes": 442835,
+      "w": 900,
+      "h": 1100,
+      "save_error": 0,
+      "yaw": 90.0,
+      "radius": 3.55,
+      "fov": 33.0
+    },
+    {
+      "name": "back",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-d-creative-review-captures\\shots\\godot-back.png",
+      "exists": true,
+      "bytes": 530105,
+      "w": 900,
+      "h": 1100,
+      "save_error": 0,
+      "yaw": 180.0,
+      "radius": 3.55,
+      "fov": 33.0
+    },
+    {
+      "name": "upper",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-d-creative-review-captures\\shots\\godot-upper.png",
+      "exists": true,
+      "bytes": 1217294,
+      "w": 900,
+      "h": 1100,
+      "save_error": 0,
+      "yaw": 20.0,
+      "radius": 1.7,
+      "fov": 32.0
+    },
+    {
+      "name": "wide",
+      "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-d-creative-review-captures\\shots\\godot-wide.png",
+      "exists": true,
+      "bytes": 379554,
+      "w": 900,
+      "h": 1100,
+      "save_error": 0,
+      "yaw": 15.0,
+      "radius": 4.8,
+      "fov": 38.0
+    }
+  ],
+  "ok": true
+}

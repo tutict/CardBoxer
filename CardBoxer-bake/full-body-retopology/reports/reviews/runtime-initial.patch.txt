@@ -1,0 +1,1172 @@
+Review boundary: runtime / initial
+No usable source Git history. BASE is the immutable installed V2 snapshot; HEAD is the hashed file boundary below.
+
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\project\scripts\hand_shape.gd
+SHA256: 0eb5d2b74f1d6ece09ba34bf759a91eb3ddf70b4d134126c9b7aa5323a3866bc
+--- D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\baseline\scripts\hand_shape.gd
++++ D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\project\scripts\hand_shape.gd
+@@ -0,0 +1,42 @@
++extends RefCounted
++## One scalar per hand drives the same progressive geometry and contact socket.
++const DEFAULT := .75
++const TARGET_NAMES := ["grip_half_f","grip_f","grip_half_b","grip_b"]
++
++static func valid_grip(value: Variant) -> bool:
++	if not value is Array or value.size()!=2: return false
++	for number: Variant in value:
++		if not (number is float or number is int) or not is_finite(float(number)) or float(number)<0.0 or float(number)>1.0: return false
++	return true
++
++static func grip(pose: Dictionary) -> Array:
++	var value: Variant = pose.get("hand_grip",[DEFAULT,DEFAULT])
++	return value.duplicate() if valid_grip(value) else []
++
++## Returned components are Basis, half and fully closed coefficients.
++static func weights(amount: float) -> Vector3:
++	var g := clampf(amount,0.0,1.0)
++	if g<=.5: return Vector3(1.0-2.0*g,2.0*g,0.0)
++	return Vector3(0.0,2.0*(1.0-g),2.0*g-1.0)
++
++static func valid_profile(profile: Dictionary) -> bool:
++	var sockets: Variant = profile.get("hand_sockets")
++	if not sockets is Dictionary: return false
++	for hand: String in ["front","rear"]:
++		if not sockets.get(hand) is Dictionary: return false
++		for state: String in ["open","half","closed"]:
++			var point: Variant = sockets[hand].get(state)
++			if not point is Array or point.size()!=3: return false
++			for number: Variant in point:
++				if not (number is float or number is int) or not is_finite(float(number)): return false
++	return true
++
++static func socket(profile: Dictionary, front: bool, amount: float) -> Vector3:
++	var states: Dictionary = profile.hand_sockets["front" if front else "rear"]
++	var mix := weights(amount)
++	var result := Vector3.ZERO
++	var names := ["open","half","closed"]
++	for index in range(3):
++		var point: Array = states[names[index]]
++		result += Vector3(float(point[0]),float(point[1]),float(point[2]))*mix[index]
++	return result
+
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\project\scripts\native_motion.gd
+SHA256: fbe6e684e630794bee65700dca31808210c96c2c6f4b3f774e3d1efd05f71c60
+--- D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\baseline\scripts\native_motion.gd
++++ D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\project\scripts\native_motion.gd
+@@ -1,50 +1,56 @@
+ extends RefCounted
+ ## Authored Skeleton3D local rest-relative poses. Coordinates: +Y up, +Z forward.
+ const Defs = preload("res://scripts/card_data.gd")
++const Hands = preload("res://scripts/hand_shape.gd")
+ const BONES := ["hips", "spine", "chest", "neck", "head", "upperarm_f", "forearm_f", "upperarm_b", "forearm_b", "thigh_f", "shin_f", "thigh_b", "shin_b"]
+ var last_error := ""
+ var _data: Dictionary = {}
+ var _support_cache: Dictionary = {}
+ 
+ func _fail(message: String) -> bool:
+ 	last_error = "NativeMotion: " + message
+ 	_data.clear()
+ 	return false
+ 
+ func _finite_array(value: Variant, count: int) -> bool:
+ 	if not value is Array or value.size() != count:
+ 		return false
+ 	for number in value:
+ 		if not (number is float or number is int) or not is_finite(float(number)):
+ 			return false
+ 	return true
+ 
+ func _quat(value: Array) -> Quaternion:
+ 	return Quaternion(float(value[0]), float(value[1]), float(value[2]), float(value[3]))
+ 
+ func _same_pose(a: Dictionary, b: Dictionary) -> bool:
++	var ag := Hands.grip(a)
++	var bg := Hands.grip(b)
++	if ag.size()!=2 or bg.size()!=2: return false
++	for index in range(2):
++		if absf(float(ag[index])-float(bg[index]))>.000001: return false
+ 	for index in range(3):
+ 		if absf(float(a.root_offset[index]) - float(b.root_offset[index])) > .000001:
+ 			return false
+ 	for bone in BONES:
+ 		if absf(_quat(a.rotations[bone]).dot(_quat(b.rotations[bone]))) < .999999:
+ 			return false
+ 	return true
+ 
+ func load_data(path: String = "res://data/combat_motion_3d.json") -> bool:
+ 	_data.clear()
+ 	_support_cache.clear()
+ 	last_error = ""
+ 	if not FileAccess.file_exists(path):
+ 		return _fail("file missing: " + path)
+ 	var parser := JSON.new()
+ 	if parser.parse(FileAccess.get_file_as_string(path)) != OK:
+ 		return _fail("invalid JSON: " + parser.get_error_message())
+ 	var parsed: Variant = parser.data
+ 	if not parsed is Dictionary:
+ 		return _fail("root must be a dictionary")
+ 	if parsed.get("version") != 1 or parsed.get("coordinate_system") != "godot_y_up_z_forward":
+ 		return _fail("unsupported version or coordinates")
+ 	if parsed.get("bones", []) != BONES:
+ 		return _fail("13 bone names/order must match native contract")
+ 	var roles: Variant = parsed.get("roles", {})
+@@ -86,50 +92,52 @@
+ 			if float(contact) < -1 or float(contact) >= frames:
+ 				return _fail(prefix + ": contact frame out of range")
+ 			if not Defs.CARDS.has(id) and int(contact) != -1:
+ 				return _fail(prefix + ": only attack cards have a contact frame")
+ 			if Defs.CARDS.has(id):
+ 				var card: Dictionary = Defs.CARDS[id]
+ 				var expected := [int(card.windup), int(card.active), int(card.recover)]
+ 				if int(split[0]) != expected[0] or int(split[1]) != expected[1] or int(split[2]) != expected[2]:
+ 					return _fail(prefix + ": split differs from gameplay card")
+ 				var expected_contact := int(card.windup + card.active - 1) if card.kind == Defs.KIND_ATTACK else -1
+ 				if int(contact) != expected_contact:
+ 					return _fail(prefix + ": contact must be final active frame")
+ 			var keys: Variant = clip.get("keys", [])
+ 			if not keys is Array or keys.is_empty():
+ 				return _fail(prefix + ": missing keys")
+ 			var previous := -1.0
+ 			for key in keys:
+ 				if not key is Dictionary:
+ 					return _fail(prefix + ": key must be a dictionary")
+ 				var frame: Variant = key.get("frame", -1)
+ 				if not (frame is float or frame is int) or not is_finite(float(frame)) or float(frame) <= previous or float(frame) >= frames:
+ 					return _fail(prefix + ": keys must increase within frame range")
+ 				previous = float(frame)
+ 				if not _finite_array(key.get("root_offset"), 3):
+ 					return _fail(prefix + ": invalid root offset")
++				if key.has("hand_grip") and not Hands.valid_grip(key.hand_grip):
++					return _fail(prefix + ": invalid hand grip")
+ 				var rotations: Variant = key.get("rotations", {})
+ 				if not rotations is Dictionary or rotations.size() != BONES.size():
+ 					return _fail(prefix + ": key must contain exactly 13 rotations")
+ 				for bone in BONES:
+ 					if not _finite_array(rotations.get(bone), 4):
+ 						return _fail(prefix + ": invalid quaternion for " + bone)
+ 					if absf(_quat(rotations[bone]).length_squared() - 1.0) > 0.0001:
+ 						return _fail(prefix + ": non-unit quaternion for " + bone)
+ 			if float(keys[0].frame) != 0.0 or float(keys[-1].frame) != frames - 1.0:
+ 				return _fail(prefix + ": keys must cover first and final frame")
+ 			if int(contact) >= 0:
+ 				var contact_authored := false
+ 				for key in keys:
+ 					if float(key.frame) == float(contact):
+ 						contact_authored = true
+ 				if not contact_authored:
+ 					return _fail(prefix + ": final active contact must have an authored key")
+ 		# Cross-clip validation runs after every quaternion/root has been validated.
+ 		var stance_key: Dictionary = clips.stance["keys"][0]
+ 		for id in clips:
+ 			var keys: Array = clips[id]["keys"]
+ 			if Defs.CARDS.has(id):
+ 				if not _same_pose(keys[0], stance_key) or not _same_pose(keys[-1], stance_key):
+ 					return _fail(role + "/" + String(id) + ": card endpoints must return to guard")
+ 			if id in ["idle", "walk"] and not _same_pose(keys[0], keys[-1]):
+@@ -173,87 +181,94 @@
+ 	if index < 0:
+ 		last_error = "NativeMotion: unknown phase " + phase
+ 		return -1.0
+ 	var start := 0
+ 	for previous in range(index):
+ 		start += int(clip.split[previous])
+ 	var count := int(clip.split[index])
+ 	if count == 0:
+ 		return float(maxi(0, start - 1))
+ 	return float(start) + float(count - 1) * clampf(progress, 0.0, 1.0)
+ 
+ func sample(role: String, clip_id: String, frame_float: float) -> Dictionary:
+ 	var clip := _clip(role, clip_id)
+ 	if clip.is_empty():
+ 		return {"error": last_error, "clip_id": clip_id}
+ 	if not is_finite(frame_float):
+ 		last_error = "NativeMotion: sample frame must be finite"
+ 		return {"error": last_error, "clip_id": clip_id}
+ 	var frame := clampf(frame_float, 0.0, float(clip.frames - 1))
+ 	var keys: Array = clip["keys"]
+ 	var right_index := 0
+ 	while right_index < keys.size()-1 and float(keys[right_index].frame) < frame:
+ 		right_index += 1
+ 	var right: Dictionary = keys[right_index]
+ 	if frame == float(right.frame):
+-		return {"clip_id":clip_id,"frame":frame,"rotations":right.rotations.duplicate(true),"root_offset":right.root_offset.duplicate()}
++		return {"clip_id":clip_id,"frame":frame,"rotations":right.rotations.duplicate(true),"root_offset":right.root_offset.duplicate(),"hand_grip":Hands.grip(right)}
+ 	var left_index := maxi(0,right_index-1)
+ 	var left: Dictionary = keys[left_index]
+ 	var span := float(right.frame) - float(left.frame)
+ 	var t := (frame - float(left.frame)) / span if span > 0.0 else 0.0
+ 	var previous: Dictionary = keys[maxi(0,left_index-1)]
+ 	var following: Dictionary = keys[mini(keys.size()-1,right_index+1)]
+ 	var pre_time := float(previous.frame)-float(left.frame)
+ 	var post_time := float(following.frame)-float(left.frame)
+ 	# Cyclic neighbours retain velocity across the walk/idle seam. Clamped card
+ 	# neighbours keep the exact guard endpoints, without stopping at breakdowns.
+ 	if clip_id in ["idle","walk"] and keys.size() > 2:
+ 		var period := float(clip.frames-1)
+ 		if left_index == 0:
+ 			previous = keys[-2]
+ 			pre_time = float(previous.frame)-period
+ 		if right_index == keys.size()-1:
+ 			following = keys[1]
+ 			post_time = period+float(following.frame)-float(left.frame)
+ 	var rotations := {}
+ 	for bone in BONES:
+ 		var a := _quat(left.rotations[bone])
+ 		var b := _quat(right.rotations[bone])
+ 		var pre := _quat(previous.rotations[bone])
+ 		var post := _quat(following.rotations[bone])
+ 		if a.dot(b) < 0.0: b = -b
+ 		if a.dot(pre) < 0.0: pre = -pre
+ 		if b.dot(post) < 0.0: post = -post
+ 		var q := a.spherical_cubic_interpolate_in_time(b,pre,post,t,span,pre_time,post_time).normalized()
+ 		rotations[bone] = [q.x, q.y, q.z, q.w]
+ 	var a_root: Array = left.root_offset
+ 	var b_root: Array = right.root_offset
+ 	var root := []
+ 	for axis in range(3):
+ 		root.append(_monotone_component(float(previous.root_offset[axis]),float(a_root[axis]),float(b_root[axis]),float(following.root_offset[axis]),pre_time,span,post_time,t))
++	var hand_grip := []
++	var pre_grip := Hands.grip(previous)
++	var a_grip := Hands.grip(left)
++	var b_grip := Hands.grip(right)
++	var post_grip := Hands.grip(following)
++	for hand in range(2):
++		hand_grip.append(clampf(_monotone_component(float(pre_grip[hand]),float(a_grip[hand]),float(b_grip[hand]),float(post_grip[hand]),pre_time,span,post_time,t),0.0,1.0))
+ 	return {"clip_id": clip_id, "frame": frame, "rotations": rotations,
+-		"root_offset": root}
++		"root_offset": root,"hand_grip":hand_grip}
+ 
+ ## A shared time-aware slope at each key, bounded to avoid lifting planted soles
+ ## through cubic root overshoot. Interior monotone keys retain nonzero velocity.
+ func _slope(before: float, after: float, before_span: float, after_span: float) -> float:
+ 	if before_span <= 0.0 or after_span <= 0.0 or before*after <= 0.0: return 0.0
+ 	var w1 := 2.0*after_span+before_span
+ 	var w2 := after_span+2.0*before_span
+ 	return (w1+w2)/(w1/before+w2/after)
+ 
+ func _monotone_component(pre: float,a: float,b: float,post: float,pre_time: float,span: float,post_time: float,t: float) -> float:
+ 	var slope := (b-a)/span
+ 	var before_span := -pre_time
+ 	var after_span := post_time-span
+ 	var before := (a-pre)/before_span if before_span>0.0 else 0.0
+ 	var after := (post-b)/after_span if after_span>0.0 else 0.0
+ 	var m0 := _slope(before,slope,before_span,span)*span
+ 	var m1 := _slope(slope,after,span,after_span)*span
+ 	var t2 := t*t
+ 	var t3 := t2*t
+ 	return (2.0*t3-3.0*t2+1.0)*a+(t3-2.0*t2+t)*m0+(-2.0*t3+3.0*t2)*b+(t3-t2)*m1
+ 
+ func _find_rig(node: Node, skeleton: bool) -> Node:
+ 	if (skeleton and node is Skeleton3D) or (not skeleton and node is MeshInstance3D and node.skin != null): return node
+ 	for child: Node in node.get_children():
+ 		var found := _find_rig(child,skeleton)
+
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\project\scripts\battle_presentation.gd
+SHA256: bba3416fa4c29c5a3ca2add7c2dce59269e2f258c71d6c3d6d1a883d98e3e584
+--- D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\baseline\scripts\battle_presentation.gd
++++ D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\project\scripts\battle_presentation.gd
+@@ -1,29 +1,30 @@
+ extends RefCounted
+ ## Independent visual clocks. No rule, meter, collision or RNG changes occur here.
+ signal cue_ready(impact: Dictionary)
+ const Defs = preload("res://scripts/card_data.gd")
++const Hands = preload("res://scripts/hand_shape.gd")
+ const CONTACT_S := 0.48
+ const ATTACK_S := 1.12
+ const CONTACT_HOLD_S := 0.24
+ const KO_S := 0.45
+ const BLEND_S := 0.06
+ const RETREAT_START_S := 0.56
+ const GAIT_STRIDE_PX := 120.0
+ var library = null
+ var round_id := 0
+ var exchange: Dictionary = {}
+ var exchange_time := 0.0
+ var contact_emitted := false
+ var _hold_left := 0.0
+ var _remainder := 0.0
+ var _seen: Dictionary = {}
+ var _latches: Dictionary = {}
+ var _reactions: Dictionary = {}
+ var _terminal: Dictionary = {}
+ var _terminal_attacks: Dictionary = {}
+ var _fresh_latches: Dictionary = {}
+ var _idle_time := 0.0
+ var _last_poses: Dictionary = {}
+ var _last_pose_keys: Dictionary = {}
+ var _transitions: Dictionary = {}
+ 
+@@ -205,50 +206,51 @@
+ 		clip = "block" if int(snapshot["state"]) == 3 else ("hit_heavy" if float(snapshot.get("stun_duration", 0.26)) > 0.26 else "hit_light")
+ 		frame = clampf(float(snapshot.get("state_time", 0.0)) / maxf(0.001, float(snapshot.get("stun_duration", 0.26))), 0.0, 1.0) * float(library.clip_frames(role, clip) - 1)
+ 	elif bool(snapshot.get("guarding", false)):
+ 		clip = "guard"
+ 		frame = float(library.clip_frames(role, clip) - 1)
+ 	elif bool(snapshot.get("dodging", false)):
+ 		clip = "sidestep"
+ 		frame = float(library.clip_frames(role, clip) - 1)
+ 	elif float(snapshot.get("walk_blend", 0.0)) > 0.001:
+ 		clip = "walk"
+ 		var phase := float(snapshot.get("walk_phase", 0.0))
+ 		if int(snapshot.get("walk_direction",1)) < 0: phase = fposmod(-phase,1.0)
+ 		frame = phase * float(library.clip_frames(role, clip) - 1)
+ 	else:
+ 		frame = fposmod(_idle_time * 60.0, float(maxi(library.clip_frames(role, clip) - 1, 1)))
+ 	if taikou and not exchange.is_empty():
+ 		var direction := 1.0 if String(exchange.get("actor", "")) == "player" else -1.0
+ 		var after := maxf(0.0, exchange_time - CONTACT_S)
+ 		if role == String(exchange.get("actor", "")) and exchange_time <= ATTACK_S:
+ 			shift.x = _contact_shift(direction)*_travel_weight(exchange_time)
+ 		elif contact_emitted and String(exchange.get("winner", "")) != "draw":
+ 			var fade := maxf(0.0, 1.0 - after / 0.56)
+ 			shift.x = 40.0 * direction * fade
+ 			tilt = deg_to_rad(9.0) * direction * fade
+ 	var pose: Dictionary = library.sample(role, clip, frame)
++	if bool(snapshot.get("guarding",false)) and clip=="guard": pose.hand_grip = [1.0,1.0]
+ 	if clip == "walk": pose = _blend_stance(role, pose, float(snapshot.get("walk_blend", 0.0)))
+ 	if taikou and role == String(exchange.get("actor","")) and absf(float(exchange.get("approach_extra_x",0.0))) > 20.0 and exchange_time > 0.0 and exchange_time < ATTACK_S:
+ 		var direction := 1.0 if role == "player" else -1.0
+ 		var travel := absf(_contact_shift(direction))
+ 		var returning := exchange_time > RETREAT_START_S
+ 		var progress := clampf((exchange_time-RETREAT_START_S)/(ATTACK_S-RETREAT_START_S),0.0,1.0) if returning else clampf(exchange_time/CONTACT_S,0.0,1.0)
+ 		var duration := ATTACK_S-RETREAT_START_S if returning else CONTACT_S
+ 		var velocity := travel*30.0*progress*progress*(1.0-progress)*(1.0-progress)/duration
+ 		var signed_travel := -travel*(1.0-_travel_weight(exchange_time)) if returning else travel*_travel_weight(exchange_time)
+ 		# Smooth saturation keeps fast dashes readable without a velocity corner
+ 		# when an arbitrary gait-strength cap is reached.
+ 		pose = _travel_legs(role,pose,signed_travel,.55*(1.0-exp(-velocity/600.0)))
+ 	var contact: float = library.contact_frame(role,clip)
+ 	var immediate := clip in ["hit_light","hit_heavy","block","ko"] or (contact >= 0.0 and is_equal_approx(frame,contact) and frozen)
+ 	var identity := str([context.get("mode","realtime"),clip,snapshot.get("action_seq",0),snapshot.get("state",0),snapshot.get("walk_direction",1) if clip == "walk" else 0])
+ 	pose = _transition_pose(role,pose,identity,immediate)
+ 	return {"pose":pose,"facing":facing,"canvas_shift":shift,"canvas_tilt":tilt,"clip_id":clip,"frame":frame,"frozen":frozen}
+ 
+ func _transition_pose(role: String, target: Dictionary, identity: String, immediate: bool) -> Dictionary:
+ 	if immediate:
+ 		_transitions.erase(role)
+ 	elif _last_poses.has(role) and String(_last_pose_keys.get(role,"")) != identity:
+ 		_transitions[role] = {"from":_last_poses[role].duplicate(true),"time":0.0}
+ 	_last_pose_keys[role] = identity
+ 	var displayed := target
+@@ -294,32 +296,35 @@
+ 
+ func _impact_holding(impact: Dictionary, context: Dictionary) -> bool:
+ 	if float(context.get("global_hitstop", 0.0)) > 0.0: return true
+ 	var snapshots: Dictionary = context.get("snapshots", {})
+ 	return float(snapshots.get(String(impact.get("target", "foe")), {}).get("local_hitstop", 0.0)) > 0.0
+ 
+ func _terminal_action_frame(role: String, clip: String, attack: Dictionary) -> float:
+ 	var card: Dictionary = Defs.card(clip)
+ 	var phases := ["windup","active","recover"]
+ 	var index := maxi(0,phases.find(String(attack.snapshot.get("phase","windup"))))
+ 	var elapsed := float(attack.snapshot.get("phase_time",0.0)) + float(attack["time"])
+ 	while index < 3:
+ 		var duration := float(card[phases[index]]) * Defs.FRAME
+ 		if elapsed <= duration and duration > 0.0:
+ 			return library.phase_frame(role,clip,phases[index],clampf(elapsed / duration,0.0,1.0))
+ 		elapsed -= duration
+ 		index += 1
+ 	return float(library.clip_frames(role,clip) - 1)
+ 
+ func _blend_stance(role: String, pose: Dictionary, weight: float) -> Dictionary:
+ 	var stance: Dictionary = library.sample(role, "stance", 0.0)
+ 	return _mix_pose(stance,pose,weight)
+ 
+ func _mix_pose(from: Dictionary, pose: Dictionary, weight: float) -> Dictionary:
+ 	var out: Dictionary = pose.duplicate(true)
++	var a_hand := Hands.grip(from)
++	var b_hand := Hands.grip(pose)
++	out.hand_grip = [lerpf(float(a_hand[0]),float(b_hand[0]),clampf(weight,0.0,1.0)),lerpf(float(a_hand[1]),float(b_hand[1]),clampf(weight,0.0,1.0))]
+ 	for bone: String in out.get("rotations", {}):
+ 		var a: Array = from.rotations[bone]
+ 		var b: Array = out.rotations[bone]
+ 		var q := Quaternion(a[0],a[1],a[2],a[3]).slerp(Quaternion(b[0],b[1],b[2],b[3]), clampf(weight,0.0,1.0))
+ 		out.rotations[bone] = [q.x,q.y,q.z,q.w]
+ 	for axis in range(3): out.root_offset[axis] = lerpf(float(from.root_offset[axis]), float(pose.root_offset[axis]), clampf(weight,0.0,1.0))
+ 	return out
+
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\project\scripts\fighter_3d_layer.gd
+SHA256: 8e25710e67a7bd193c696c44519802acc8c6f60d6a3e301413866cb8af0ef64b
+--- D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\baseline\scripts\fighter_3d_layer.gd
++++ D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\project\scripts\fighter_3d_layer.gd
+@@ -1,125 +1,129 @@
+ extends Node2D
+ ## G 路线：把 F 路线的 14 骨运行时驱动层接进 2D 擂台。
+ ##
+ ## 一个透明 SubViewport 里装 player-rigged.glb + 相机 + 灯，
+ ## 用 ViewportTexture 画进 2D 画布；RigDriver 按 73 帧运动表现算 13 骨 pose。
+ ## 本层**只画**，不改 position / HP / 伤害 / 牌型 / 硬直 / 阶段时长。
+ ##
+ ## 开关在 arena.gd：CARD_BOXER_3D 环境变量非空才创建本层，默认关。
+ ## 对手侧仍是既有 2D 自绘（F 路线只有玩家侧带 skin 的 GLB），见验证记录边界。
+ 
+ const RigDriverScript := preload("res://scripts/rig_driver.gd")
++const Hands := preload("res://scripts/hand_shape.gd")
+ const GLB_PATH := "res://assets/3d/player-rigged.glb"
+ # H 路线：对手怪是另一份带 skin 的 GLB（13 骨同名、rest 更矮更宽）。
+ const FOE_GLB_PATH := "res://assets/3d/foe-rigged.glb"
+ 
+ const SV_W := 720
+ const SV_H := 680
+ # Fixed framing includes extended punches, low sweeps and a prone body. The
+ # orthographic 3/4 camera keeps planted feet on the 2D arena's flat ground line.
+ const DRAW_SCALE := 0.45
+ const DRAW_OFFSET_X := 0.0
+ # 3D 人物脚在 SubViewport 里略高于底边；照原样贴会离 2D 影子约 27px，
+ # 看图后把整块下移，让脚落到擂台地面上。
+ const DRAW_OFFSET_Y := 18.0
+ 
+ # ── G 路线「侧面战斗」表现层 ──────────────────────────────────
+ # 只改观察方向，不改 rig_driver 的任何一根骨头 / 任何一条公式。
+ # 相机绕 +Y 转 yaw（3/4 侧身）；贴图可选水平镜像让脸朝对手。
+ # D 路线实测 yaw=90° 时零厚度披风壳退化成一条细线，且骨架动作平面
+ # (XY) 与视线平行会让出拳幅度被压成 0，所以定稿角度必须 < 70°。
+ const CAM_RADIUS := 3.55
+ const CAM_HEIGHT := 0.84
+ const CAM_TARGET_Y := 0.84
+ const CAM_ORTHO_SIZE := 2.9
+ # The imported boot sole sits just below the shin's authored foot endpoint.
+ # This only anchors the rendered texture; fighter.position remains authoritative.
+ const NATIVE_GROUND_Y := 0.0
+ # 2026-11-14 订正：G/H 路线原注释把方向写反了。
+ # 原话「+55° = 相机在角色左前方，脸朝画面右」与实测相反：
+ # 同进程扫描（orientation-fix/shots/o-*.png）逐格看图，+55° 看到的是角色
+ # 左后侧，脸朝画面左、黑披风在右；-55° 才脸朝画面右、披风在左后。
+ # 玩家站左侧、对手站右侧，要面对面就必须：玩家 -55°（朝右）、
+ # 对手 +55°（朝左）。原来 +55/-55 让两人背对背朝外，用户反馈属实。
+ # 不用 ±90°：D 路线实测零厚度披风壳会退化成一条线，且骨架动作平面
+ # (XY) 与视线平行后出拳幅度被压成 0。
+ const DEFAULT_SIDE_YAW := -55.0
+ const DEFAULT_SIDE_FLIP := false
+ # H 路线原文「对手 yaw 取负」同属写反；取正才让右侧对手脸朝左。
+ # arena.gd 与所有探针都引用本常量，改这一处即可同步。
+ const DEFAULT_FOE_YAW := 55.0
+ 
+ # ── I 路线「视觉区分度」：只作用于 foe ──────────────────────
+ # rootcause_i.json：贴图 UV 岛亮度差 70.99 被四盏高强度灯 +
+ # metallic 乘数 1.0 吃成渲染 -11.18。定稿走纯 2D 合成层：
+ # 3D 渲染树（灯 / 材质 / mesh）与 GLB 一个都不动。
+ # 数值与 data/visual_diff_spec.json 逐项对应，改一处要改两处。
+ # 已退役：3D albedo tint、metallic 乘数（v2 串扰玩家层 7940 px）、
+ # 灯能量缩放（v1 跨 SubViewport 串光）；负结果见 data/v1-failed/
+ # 与 data/v2-failed/。shader 字符串是 tint 的唯一真相来源。
+-const FOE_CANVAS_SHADER_CODE := "shader_type canvas_item;\nvoid fragment() {\n\tvec4 c = texture(TEXTURE, UV);\n\tCOLOR = vec4(c.rgb * vec3(0.42, 0.30, 0.28), c.a);\n}\n"
++const FOE_CANVAS_SHADER_CODE := "shader_type canvas_item;\nvoid fragment() {\n\tvec4 c = texture(TEXTURE, UV);\n\tCOLOR = vec4(c.rgb * vec3(0.65, 0.55, 0.52), c.a);\n}\n"
+ const FOE_DRAW_SCALE_X := 1.22
+ const FOE_DRAW_SCALE_Y := 0.94
+ 
+ # 定稿站架（看图证据 boards/G-side-view-reverse-stance-scan.png 的 r0-flip-all）：
+ # 双拳收到胸前护脸、前后脚分开、双脚贴地、无撕裂。
+ # 单位 = 度，绕 Z，与 rig_driver 的 delta 同符号口径。
+ # 这只是表现层静态偏置：rig_driver / motion_input / 73 帧表一字未改。
+ const DEFAULT_STANCE_BIAS := {
+ 	"upperarm_f": 26.0, "forearm_f": -50.0,
+ 	"upperarm_b": -26.0, "forearm_b": 50.0,
+ 	"spine": 4.0, "head": -2.4,
+ 	"thigh_f": 10.0, "shin_f": -6.0,
+ 	"thigh_b": -12.0, "shin_b": 7.0,
+ }
+ 
+ var sv: SubViewport = null
+ var cam: Camera3D = null
+ var drv = null
+ var motion: Dictionary = {}
+ # H 路线：同一个层类服务两个角色；默认仍是 G 的玩家形态。
+ var glb_path := GLB_PATH
+ var role_id := "player"
+ var ready_ok := false
+ var model_root: Node3D = null
+ var imported_model_transform := Transform3D.IDENTITY
+ var current_facing := 0
+ var native_active := false
+ var last_native_visual: Dictionary = {}
+ var tex_drawn := false
+ var frames_applied := 0
+ var last_card := "stance"
+ var last_frame := 0
+ var view_yaw_deg := DEFAULT_SIDE_YAW
+ var view_flip := DEFAULT_SIDE_FLIP
+ var view_changes := 0
+ # I 路线：foe 专属视觉开关。_mesh_rows/_light_rows 仅供诊断读回；
+ # _foe_materials 恒空（v3 断言没有 3D 材质副本）；_foe_canvas_mat
+ # 是本层本地的 2D 合成材质，物理上不会串到玩家层。
+ var foe_visual := false
+ var _mesh_rows: Array = []
++var _hand_meshes: Array = []
++var _hand_profile: Dictionary = {}
++var last_hand_grip: Array = [.75,.75]
+ var _light_rows: Array = []
+ var _foe_materials: Array = []
+ var _foe_canvas_mat: ShaderMaterial = null
+ # 格斗站架偏置（度，绕 Z，与 rig_driver 同符号口径）。
+ # 这是表现层后处理，不改 rig_driver 的公式 / motion_input / 73 帧表。
+ # 可用 CARD_BOXER_3D_STANCE=none 关掉，用来做「有/无站架」A/B 取证。
+ var stance_bias_deg: Dictionary = DEFAULT_STANCE_BIAS.duplicate()
+ 
+ 
+ func _find_skel(n: Node) -> Skeleton3D:
+ 	if n is Skeleton3D:
+ 		return n as Skeleton3D
+ 	for c in n.get_children():
+ 		var r := _find_skel(c)
+ 		if r != null:
+ 			return r
+ 	return null
+ 
+ 
+ func _add_light(rot: Vector3, energy: float, col: Color, shadow: bool) -> void:
+ 	var l := DirectionalLight3D.new()
+ 	l.rotation_degrees = rot
+ 	l.light_energy = energy
+ 	l.light_color = col
+ 	l.shadow_enabled = shadow
+@@ -192,50 +196,52 @@
+ 	# （四组独立进程 A/B，判据见该区 data/world3d_min.json）。
+ 	# 只设这一行即可；显式 World3D.new() 是冗余，且在运行时替换 world
+ 	# 会触发 `ERROR: Parameter "scenario" is null.`。
+ 	# 注意 own_world_3d=true 时 sv.world_3d getter 仍返回 null，这是
+ 	# Godot 4.5 的「显式覆盖属性」语义，不能用它判是否独立。
+ 	sv.own_world_3d = true
+ 	add_child(sv)
+ 
+ 	var res := load(glb_path)
+ 	if res == null or not (res is PackedScene):
+ 		return false
+ 	var inst: Node3D = (res as PackedScene).instantiate()
+ 	model_root = inst
+ 	imported_model_transform = inst.transform
+ 	sv.add_child(inst)
+ 	# I 路线：收集 mesh / 灯初值，仅供 visual_state() 读回诊断；
+ 	# v3 不复制、不改写任何 3D 材质。
+ 	_collect_meshes(inst)
+ 
+ 	var skel := _find_skel(inst)
+ 	if skel == null:
+ 		return false
+ 	drv = RigDriverScript.new()
+ 	if not drv.setup(skel, motion):
+ 		return false
++	if not _load_hand_profile():
++		return false
+ 
+ 	cam = Camera3D.new()
+ 	cam.current = true
+ 	cam.projection = Camera3D.PROJECTION_ORTHOGONAL
+ 	cam.size = CAM_ORTHO_SIZE
+ 	cam.near = 0.05
+ 	cam.far = 100.0
+ 	sv.add_child(cam)
+ 	_place_camera()
+ 
+ 	# 不加 Ground：2D 背景已有擂台地面，透明视口让背景透出来。
+ 	_add_light(Vector3(-38.0, -32.0, 0.0), 1.9,
+ 			Color(1.00, 0.96, 0.90), true)
+ 	_add_light(Vector3(-20.0, 145.0, 0.0), 0.75,
+ 			Color(0.68, 0.79, 1.00), false)
+ 	_add_light(Vector3(-12.0, 75.0, 0.0), 0.55,
+ 			Color(1.00, 0.85, 0.70), false)
+ 	_add_light(Vector3(-25.0, 200.0, 0.0), 0.95,
+ 			Color(0.76, 0.85, 1.00), false)
+ 
+ 	if foe_visual:
+ 		set_foe_visual(true)
+ 	apply("stance", 0)
+ 	ready_ok = true
+ 	return true
+@@ -248,180 +254,220 @@
+ ## 覆写全部 13 骨），因此不会累积、不会污染 retarget 公式。
+ func set_stance_bias(p_bias: Dictionary) -> void:
+ 	stance_bias_deg = p_bias.duplicate()
+ 	queue_redraw()
+ 
+ 
+ func _apply_stance_bias() -> void:
+ 	if stance_bias_deg.is_empty() or drv == null or drv.skel == null:
+ 		return
+ 	for key in stance_bias_deg.keys():
+ 		var n := String(key)
+ 		if not drv.bone_idx.has(n):
+ 			continue
+ 		var i: int = int(drv.bone_idx[n])
+ 		var cur: Quaternion = drv.skel.get_bone_pose_rotation(i)
+ 		var q := Quaternion(Vector3(0.0, 0.0, 1.0),
+ 				-deg_to_rad(float(stance_bias_deg[key])))
+ 		drv.skel.set_bone_pose_rotation(i, cur * q)
+ 
+ 
+ ## I 路线：递归收集 MeshInstance3D 的 surface 基础材质。
+ func _collect_meshes(n: Node) -> void:
+ 	if n is MeshInstance3D:
+ 		var mi := n as MeshInstance3D
+ 		if mi.mesh != null:
++			var indices := []
++			for name: String in Hands.TARGET_NAMES: indices.append(mi.find_blend_shape_by_name(name))
++			if not indices.has(-1): _hand_meshes.append({"mi":mi,"indices":indices})
+ 			for i in range(mi.mesh.get_surface_count()):
+ 				_mesh_rows.append({"mi": mi, "surface": i,
+ 						"base": mi.mesh.surface_get_material(i)})
+ 	for c in n.get_children():
+ 		_collect_meshes(c)
++
++func _load_hand_profile() -> bool:
++	_hand_profile.clear()
++	var path := "res://data/model_profile_3d.json"
++	# V2 assets can still render without the new, optional hand profile.
++	if not FileAccess.file_exists(path): return true
++	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
++	if not parsed is Dictionary or parsed.get("version")!=1 or not parsed.get("roles") is Dictionary:
++		push_error("Invalid 3D model profile")
++		return false
++	var profile: Variant = parsed.roles.get(role_id)
++	if not profile is Dictionary or not Hands.valid_profile(profile) or _hand_meshes.is_empty():
++		push_error("Missing hand morphs/profile for "+role_id)
++		return false
++	_hand_profile = profile.duplicate(true)
++	return true
++
++func apply_hand_grip(grip: Array) -> bool:
++	if not Hands.valid_grip(grip): return false
++	var front := Hands.weights(float(grip[0]))
++	var rear := Hands.weights(float(grip[1]))
++	var values := [front.y,front.z,rear.y,rear.z]
++	for entry: Dictionary in _hand_meshes:
++		var mi: MeshInstance3D = entry.mi
++		for index in range(4): mi.set_blend_shape_value(int(entry.indices[index]),float(values[index]))
++	last_hand_grip = grip.duplicate()
++	queue_redraw()
++	return true
+ 
+ 
+ ## I 路线：可反复切换。true = 本层挂 canvas_item 调色 shader +
+ ## 加宽压矮绘制尺寸；false = 清 material、尺寸回 1.0，逐项还原到
+ ## H 路线原样（玩家层恒定 false，从不被本函数触碰）。
+ func set_foe_visual(enabled: bool) -> void:
+ 	foe_visual = enabled
+ 	# I 路线 v3：3D 材质一律不动。v2 实测改 foe 层 surface override
+ 	# 会让玩家层角色整体变暗（7940 px / 变化像素平均 -25），即使两层
+ 	# 灯能量、玩家层 override、玩家层 CanvasItem.material 全部恒定。
+ 	# 视觉区分全部交给纯 2D 合成的 canvas_item shader + 绘制尺寸。
+ 	# I 路线 v2：灯光一个都不碰。v1 实测 GL Compatibility 下改一个
+ 	# SubViewport 的 DirectionalLight3D 会让另一个 SubViewport 的角色
+ 	# 一起变暗（玩家层灯能量恒定，玩家 ROI 仍暗 20.08）。
+ 	# 改用每层独立的 CanvasItem.material，物理上不会串到玩家层。
+ 	if enabled:
+ 		if _foe_canvas_mat == null:
+ 			var sh := Shader.new()
+ 			sh.code = FOE_CANVAS_SHADER_CODE
+ 			var sm := ShaderMaterial.new()
+ 			sm.shader = sh
+ 			_foe_canvas_mat = sm
+ 		material = _foe_canvas_mat
+ 	else:
+ 		material = null
+ 	queue_redraw()
+ 
+ 
+ ## 探针读回状态，避免靠画面猜开关有没有生效。
+ func visual_state() -> Dictionary:
+ 	return {"role": role_id, "foe_visual": foe_visual,
+ 			"mesh_rows": _mesh_rows.size(),
+ 			"light_rows": _light_rows.size(),
+ 			"foe_materials": _foe_materials.size(),
+ 			"native_active": native_active, "facing": current_facing}
+ 
+ 
+ ## A native clip already contains its guard, rotations and recoil. Do not add
+ ## DEFAULT_STANCE_BIAS again. The model rotates as a whole for facing; local
+ ## anatomical quaternions retain their handedness and independently bent elbows.
+ func apply_visual(visual: Dictionary) -> void:
+ 	if drv == null:
+ 		return
+ 	var raw_pose: Variant = visual.get("pose")
+ 	if typeof(raw_pose) != TYPE_DICTIONARY:
+ 		return
+ 	var pose: Dictionary = raw_pose
++	var grip := Hands.grip(pose)
++	if grip.is_empty():
++		push_error("Invalid native hand grip")
++		return
+ 	var applied: Dictionary = drv.apply_pose(pose)
+ 	if applied.has("error"):
+ 		push_error(String(applied["error"]))
+ 		return
++	apply_hand_grip(grip)
+ 	native_active = true
+ 	last_native_visual = visual.duplicate(true)
+ 	last_card = String(pose.get("clip_id", "stance"))
+ 	last_frame = int(float(pose.get("frame", 0.0)))
+ 	rotation = float(visual.get("canvas_tilt", 0.0))
+ 	set_facing(int(visual.get("facing", 1 if role_id == "player" else -1)))
+ 	frames_applied += 1
+ 	queue_redraw()
+ 
+ 
+ func set_facing(facing: int) -> void:
+ 	var wanted := 1 if facing >= 0 else -1
+ 	if model_root == null or current_facing == wanted:
+ 		return
+ 	current_facing = wanted
+ 	var base_face := 1 if role_id == "player" else -1
+ 	var angle := 0.0 if wanted == base_face else PI
+ 	model_root.transform = Transform3D(Basis(Vector3.UP, angle), Vector3.ZERO) \
+ 		* imported_model_transform
+ 	queue_redraw()
+ 
+ 
+ ## Canvas-local contact socket for a valid NativePose. Prediction is read-only:
+ ## it includes the actual imported rig, model facing, camera and canvas scales.
+ ## Callers add fighter.position and canvas_shift exactly once.
+ func anchor_offset(pose: Dictionary, anchor: String, facing: int,
+ 		canvas_tilt: float = 0.0) -> Vector2:
+ 	if drv == null or cam == null or model_root == null:
+ 		return Vector2.ZERO
+ 	var transforms: Dictionary = drv.pose_global_transforms(pose)
+ 	if transforms.is_empty():
+ 		return Vector2.ZERO
+ 	var point := Vector3.ZERO
+ 	if anchor == "lead_hand" or anchor == "rear_hand":
+ 		var front := anchor == "lead_hand"
+ 		var bone := "forearm_f" if front else "forearm_b"
+ 		var joint := "f_hand" if front else "b_hand"
+ 		var endpoint: Array = motion.apose_points[joint]
+ 		var rest_point := Vector3(float(endpoint[0]),float(endpoint[1]),0.0)
+ 		var local_point: Vector3 = (drv.global_rest[bone] as Transform3D).affine_inverse() * rest_point
++		if not _hand_profile.is_empty():
++			var grip := Hands.grip(pose)
++			if grip.size()==2: local_point = Hands.socket(_hand_profile,front,float(grip[0 if front else 1]))
+ 		point = (transforms[bone] as Transform3D) * local_point
+ 	elif anchor == "palms":
+ 		return (anchor_offset(pose,"lead_hand",facing,canvas_tilt)
+ 			+anchor_offset(pose,"rear_hand",facing,canvas_tilt))*.5
+ 	elif anchor == "head" or anchor == "chest":
+ 		var bone := "head" if anchor == "head" else "chest"
+ 		var rest: Transform3D = drv.global_rest[bone]
+ 		var forward := Vector3(0.0,0.0,0.08 if anchor == "head" else 0.16)
+ 		var local_front := rest.basis.inverse() * forward
+ 		point = (transforms[bone] as Transform3D) * local_front
+ 	else:
+ 		return Vector2.ZERO
+ 	var base_face := 1 if role_id == "player" else -1
+ 	var wanted := 1 if facing >= 0 else -1
+ 	var angle := 0.0 if wanted == base_face else PI
+ 	var desired_model := Transform3D(Basis(Vector3.UP,angle),Vector3.ZERO) * imported_model_transform
+ 	var skeleton_in_model: Transform3D = model_root.global_transform.affine_inverse() * drv.skel.global_transform
+ 	var world_point: Vector3 = desired_model * skeleton_in_model * point
+ 	var pixel := cam.unproject_position(world_point)
+ 	var ground_pixel := cam.unproject_position(Vector3(0.0,NATIVE_GROUND_Y,0.0))
+ 	var sx := FOE_DRAW_SCALE_X if foe_visual else 1.0
+ 	var sy := FOE_DRAW_SCALE_Y if foe_visual else 1.0
+ 	var offset := Vector2((pixel.x-float(SV_W)*.5)*DRAW_SCALE*sx,
+ 		(pixel.y-ground_pixel.y)*DRAW_SCALE*sy)
+ 	if view_flip:
+ 		offset.x = -offset.x
+ 	return offset.rotated(canvas_tilt)
+ 
+ 
+ func apply(card: String, frame: int) -> void:
+ 	if drv == null:
+ 		return
+ 	native_active = false
+ 	last_native_visual = {}
++	apply_hand_grip([.75,.75])
+ 	rotation = 0.0
+ 	set_facing(1 if role_id == "player" else -1)
+ 	var c := card
+ 	if c != "stance" and not motion["cards"].has(c):
+ 		c = "stance"
+ 	var f := 0
+ 	if c != "stance":
+ 		var n := int(motion["cards"][c]["frames"])
+ 		f = clampi(frame, 0, maxi(0, n - 1))
+ 	last_card = c
+ 	last_frame = f
+ 	drv.apply_frame(c, f)
+ 	_apply_stance_bias()
+ 	frames_applied += 1
+ 
+ 
+ func _draw() -> void:
+ 	if sv == null:
+ 		return
+ 	var t := sv.get_texture()
+ 	if t == null:
+ 		return
+ 	# I 路线：只有启用 foe 视觉时改绘制尺寸；玩家侧乘 1.0 精确不变。
+ 	var sx := FOE_DRAW_SCALE_X if foe_visual else 1.0
+ 	var sy := FOE_DRAW_SCALE_Y if foe_visual else 1.0
+
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\project\tests\hand_shape_check.gd
+SHA256: bebceef79ba4743792e237145772551c7f669e159149fd436c9627f4c7bc1c1e
+--- D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\baseline\tests\hand_shape_check.gd
++++ D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\project\tests\hand_shape_check.gd
+@@ -0,0 +1,116 @@
++extends SceneTree
++const Motion = preload("res://scripts/native_motion.gd")
++const Flow = preload("res://scripts/battle_presentation.gd")
++const Layer = preload("res://scripts/fighter_3d_layer.gd")
++var failures: Array[String] = []
++var total := 0
++
++func expect(ok: bool, label: String) -> void:
++	total += 1
++	if not ok: failures.append(label)
++
++func fixture() -> Dictionary:
++	var keys := []
++	for item: Array in [[0.0,.25,.75],[2.0,.5,.5],[6.0,.75,.25]]:
++		var rotations := {}
++		for bone: String in Motion.BONES: rotations[bone] = [0.0,0.0,0.0,1.0]
++		keys.append({"frame":item[0],"rotations":rotations,"root_offset":[0.0,0.0,0.0],"hand_grip":[item[1],item[2]]})
++	return {"roles":{"player":{"clips":{"hands":{"frames":7,"keys":keys}}}}}
++
++func make_mesh() -> MeshInstance3D:
++	var mesh := ArrayMesh.new()
++	for name: String in ["grip_half_f","grip_f","grip_half_b","grip_b"]: mesh.add_blend_shape(name)
++	var arrays := []
++	arrays.resize(Mesh.ARRAY_MAX)
++	arrays[Mesh.ARRAY_VERTEX] = PackedVector3Array([Vector3.ZERO,Vector3.RIGHT,Vector3.UP])
++	arrays[Mesh.ARRAY_NORMAL] = PackedVector3Array([Vector3.FORWARD,Vector3.FORWARD,Vector3.FORWARD])
++	arrays[Mesh.ARRAY_INDEX] = PackedInt32Array([0,1,2])
++	var shapes: Array[Array] = []
++	for index in range(4):
++		var shape := []
++		shape.resize(Mesh.ARRAY_MAX)
++		shape[Mesh.ARRAY_VERTEX] = PackedVector3Array([Vector3.ZERO,Vector3.RIGHT,Vector3.UP+Vector3.FORWARD*float(index+1)*.1])
++		shape[Mesh.ARRAY_NORMAL] = arrays[Mesh.ARRAY_NORMAL].duplicate()
++		shapes.append(shape)
++	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays,shapes)
++	var node := MeshInstance3D.new()
++	node.mesh = mesh
++	return node
++
++func _initialize() -> void: call_deferred("run")
++
++func run() -> void:
++	var lib = Motion.new()
++	lib.set("_data",fixture())
++	var exact: Dictionary = lib.sample("player","hands",2.0)
++	expect(exact.get("hand_grip",[]) == [.5,.5],"authored hand key preserved exactly")
++	var middle: Dictionary = lib.sample("player","hands",3.5)
++	var middle_grip: Array = middle.get("hand_grip",[])
++	expect(middle_grip.size()==2,"hand-only interpolation is sampled")
++	if middle_grip.size()==2:
++		expect(middle_grip[0]>.5 and middle_grip[0]<.75,"front hand interpolates between nonuniform keys")
++		expect(middle_grip[1]<.5 and middle_grip[1]>.25,"rear hand interpolates independently")
++	var first: Dictionary = fixture().roles.player.clips.hands.keys[0]
++	var last: Dictionary = fixture().roles.player.clips.hands.keys[-1]
++	expect(not lib._same_pose(first,last),"different hands invalidate otherwise identical body pose")
++	for frame in range(121):
++		var pose: Dictionary = lib.sample("player","hands",frame/20.0)
++		expect(pose.root_offset==[0.0,0.0,0.0] and pose.rotations.chest==[0.0,0.0,0.0,1.0],"hand sampling leaves body unchanged")
++	var flow = Flow.new()
++	var from_pose: Dictionary = first.duplicate(true)
++	var to_pose: Dictionary = last.duplicate(true)
++	var blended: Dictionary = flow._mix_pose(from_pose,to_pose,.5)
++	expect(blended.get("hand_grip",[])==[.5,.5],"ordinary transitions blend both hand controls")
++	var helper_type = load("res://scripts/hand_shape.gd") if FileAccess.file_exists("res://scripts/hand_shape.gd") else null
++	expect(helper_type!=null,"progressive hand helper exists")
++	if helper_type!=null:
++		var helper = helper_type.new()
++		expect(helper.valid_grip([.0,1.0]),"valid endpoints accepted")
++		expect(not helper.valid_grip([NAN,.5]) and not helper.valid_grip([-.1,.5]) and not helper.valid_grip([.5,1.1]),"invalid hand values rejected")
++		for item: Array in [[0.0,Vector3(1,0,0)],[.25,Vector3(.5,.5,0)],[.5,Vector3(0,1,0)],[.75,Vector3(0,.5,.5)],[1.0,Vector3(0,0,1)]]:
++			expect(helper.weights(item[0]).is_equal_approx(item[1]),"progressive coefficients at "+str(item[0]))
++		var profile := {"hand_sockets":{"front":{"open":[0,0,0],"half":[1,0,0],"closed":[1,1,0]},"rear":{"open":[0,0,1],"half":[0,1,1],"closed":[0,2,1]}}}
++		expect(helper.valid_profile(profile),"both hand profiles are valid")
++		expect(helper.socket(profile,true,.75).is_equal_approx(Vector3(1,.5,0)),"front contact follows the same half/full morph mixture")
++		expect(helper.socket(profile,false,.25).is_equal_approx(Vector3(0,.5,1)),"rear contact follows the same open/half mixture")
++	var layer = Layer.new()
++	var mi := make_mesh()
++	layer._collect_meshes(mi)
++	expect(layer.has_method("apply_hand_grip"),"layer can apply hand-only changes")
++	if layer.has_method("apply_hand_grip"):
++		expect(layer.call("apply_hand_grip",[.25,.75]),"valid grip applied to real MeshInstance3D")
++		expect(is_equal_approx(mi.get_blend_shape_value(0),.5) and is_equal_approx(mi.get_blend_shape_value(1),0.0),"front actual morph values match open-half")
++		expect(is_equal_approx(mi.get_blend_shape_value(2),.5) and is_equal_approx(mi.get_blend_shape_value(3),.5),"rear actual morph values match half-closed")
++		expect(not layer.call("apply_hand_grip",[NAN,.5]),"invalid shape update rejected")
++		expect(is_equal_approx(mi.get_blend_shape_value(0),.5),"invalid update preserves previous hand")
++		layer.call("apply_hand_grip",[.0,1.0])
++		expect(is_equal_approx(mi.get_blend_shape_value(0),0.0) and is_equal_approx(mi.get_blend_shape_value(2),0.0) and is_equal_approx(mi.get_blend_shape_value(3),1.0),"subsequent hand-only update replaces all old coefficients")
++	mi.free()
++	layer.free()
++	lib = Motion.new()
++	expect(lib.load_data(),"production motion remains loadable")
++	if lib.available():
++		flow.setup(lib)
++		flow.reset(1)
++		flow.begin_exchange({"round_id":1,"actor":"player","winner":"player","target":"foe","clip_id":"wave","action_seq":1})
++		var context := {"mode":"taikou","pause":false,"global_hitstop":0.0}
++		var snapshot := {"state":0,"action_seq":1,"facing":1}
++		flow.advance(.21,context)
++		var before: Dictionary = flow.sample("player",snapshot,context).pose
++		expect(before.get("hand_grip",[]).size()==2,"production hand timeline exists")
++		var paused: Dictionary = context.duplicate(true)
++		paused.pause = true
++		flow.advance(.3,paused)
++		expect(flow.sample("player",snapshot,paused).pose.get("hand_grip",[])==before.get("hand_grip",[]),"pause freezes displayed hands")
++		var held: Dictionary = context.duplicate(true)
++		held.global_hitstop = .1
++		flow.advance(.3,held)
++		expect(flow.sample("player",snapshot,held).pose.get("hand_grip",[])==before.get("hand_grip",[]),"global hitstop freezes displayed hands")
++		flow.reset(2)
++		var reset_pose: Dictionary = flow.sample("player",snapshot,context).pose
++		expect(reset_pose.get("hand_grip",[])==[.75,.75],"round reset returns to guard hand state")
++		var ko_pose: Dictionary = flow.sample("player",{"state":5,"state_time":.45,"facing":1},context).pose
++		expect(ko_pose.get("hand_grip",[])==[0.0,0.0],"completed KO has relaxed hands")
++	for failure: String in failures: print("FAIL: ",failure)
++	print("HAND SHAPE CHECK: %d/%d passed" % [total-failures.size(),total])
++	quit(0 if failures.is_empty() else 1)
+
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\project\tests\hand_asset_check.gd
+SHA256: 73498dcf68cd4e33a9dfa03c271ff0cdda1506827ef62cab4d78a7f36a2624b6
+--- D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\baseline\tests\hand_asset_check.gd
++++ D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\project\tests\hand_asset_check.gd
+@@ -0,0 +1,113 @@
++extends SceneTree
++## Verifies real imported morph arrays and sockets after skinning, not a fixture.
++const Layer = preload("res://scripts/fighter_3d_layer.gd")
++const Motion = preload("res://scripts/native_motion.gd")
++const Hands = preload("res://scripts/hand_shape.gd")
++var failures: Array[String] = []
++var total := 0
++var max_socket_error := 0.0
++
++func expect(ok: bool,label: String) -> void:
++	total+=1
++	if not ok: failures.append(label)
++
++func closest(point: Vector3,a: Vector3,b: Vector3,c: Vector3) -> Vector3:
++	var u := b-a
++	var v := c-a
++	var n := u.cross(v)
++	if n.length_squared()>1e-16:
++		var projected := point-n*((point-a).dot(n)/n.length_squared())
++		var q := projected-a
++		var den := u.dot(u)*v.dot(v)-u.dot(v)*u.dot(v)
++		if den>1e-16:
++			var s := (v.dot(v)*q.dot(u)-u.dot(v)*q.dot(v))/den
++			var t := (u.dot(u)*q.dot(v)-u.dot(v)*q.dot(u))/den
++			if s>=0.0 and t>=0.0 and s+t<=1.0: return projected
++	var result := Geometry3D.get_closest_point_to_segment(point,a,b)
++	for segment: Array in [[b,c],[c,a]]:
++		var candidate := Geometry3D.get_closest_point_to_segment(point,segment[0],segment[1])
++		if point.distance_squared_to(candidate)<point.distance_squared_to(result): result=candidate
++	return result
++
++func bind_name(layer,mi: MeshInstance3D,index: int) -> String:
++	var named := String(mi.skin.get_bind_name(index))
++	return named if named!="" else String(layer.drv.skel.get_bone_name(mi.skin.get_bind_bone(index)))
++
++func _initialize() -> void: call_deferred("run")
++
++func run() -> void:
++	expect(FileAccess.file_exists("res://data/model_profile_3d.json"),"canonical model profile exists")
++	var library = Motion.new()
++	expect(library.load_data(),"hand-aware body library loads")
++	for role: String in ["player","foe"]:
++		var layer = Layer.new()
++		root.add_child(layer)
++		layer.configure(role,"res://assets/3d/"+role+"-rigged.glb",Layer.DEFAULT_SIDE_YAW if role=="player" else Layer.DEFAULT_FOE_YAW,false)
++		var path := "res://data/motion_input.json" if role=="player" else "res://data/motion_input_foe.json"
++		var legacy: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(path))
++		expect(layer.setup(legacy),role+" actual imported layer setup")
++		expect(layer.drv!=null and layer.drv.skel.get_bone_count()==14,role+" original14bone rig retained")
++		expect(layer._hand_meshes.size()==1,role+" one actual mesh exposes four hand morphs")
++		expect(Hands.valid_profile(layer._hand_profile),role+" actual canonical socket profile valid")
++		if layer._hand_meshes.size()!=1 or not Hands.valid_profile(layer._hand_profile):
++			layer.free()
++			continue
++		var mi: MeshInstance3D = layer._hand_meshes[0].mi
++		var mesh := mi.mesh as ArrayMesh
++		expect(mesh.get_surface_count()==1 and mesh.get_blend_shape_count()==4,role+" one surface and four imported targets")
++		var base := mesh.surface_get_arrays(0)
++		var targets: Array = mesh.surface_get_blend_shape_arrays(0)
++		var vertices: PackedVector3Array = base[Mesh.ARRAY_VERTEX]
++		var bones: PackedInt32Array = base[Mesh.ARRAY_BONES]
++		var weights: PackedFloat32Array = base[Mesh.ARRAY_WEIGHTS]
++		var indices: PackedInt32Array = base[Mesh.ARRAY_INDEX]
++		var half_f: PackedVector3Array = targets[0][Mesh.ARRAY_VERTEX]
++		var full_f: PackedVector3Array = targets[1][Mesh.ARRAY_VERTEX]
++		var half_b: PackedVector3Array = targets[2][Mesh.ARRAY_VERTEX]
++		var full_b: PackedVector3Array = targets[3][Mesh.ARRAY_VERTEX]
++		# The canonical bridge fixes target order; inspect real arrays after import.
++		for front: bool in [true,false]:
++			var name := "forearm_f" if front else "forearm_b"
++			var half: PackedVector3Array = half_f if front else half_b
++			var full: PackedVector3Array = full_f if front else full_b
++			var hand_vertices := {}
++			for vertex in range(vertices.size()):
++				var influence := 0.0
++				for slot in range(4):
++					var at := vertex*4+slot
++					if weights[at]>0.0 and bind_name(layer,mi,bones[at])==name: influence+=weights[at]
++				if influence>.9: hand_vertices[vertex]=true
++			var hand_triangles := []
++			for index in range(0,indices.size(),3):
++				if hand_vertices.has(indices[index]) and hand_vertices.has(indices[index+1]) and hand_vertices.has(indices[index+2]):
++					hand_triangles.append([indices[index],indices[index+1],indices[index+2]])
++			expect(hand_triangles.size()>10,role+" "+name+" actual hand surface identified")
++			for grip: float in [.0,.25,.5,.75,1.0]:
++				var pose: Dictionary = library.sample(role,"jab",library.contact_frame(role,"jab"))
++				pose.hand_grip=[grip,grip]
++				layer.apply_visual({"pose":pose,"facing":1 if role=="player" else -1,"canvas_tilt":0.0})
++				var coefficients := Hands.weights(grip)
++				var globals: Dictionary = layer.drv.pose_global_transforms(pose)
++				var deformed := {}
++				for vertex: int in hand_vertices:
++					var point := vertices[vertex]*coefficients.x+half[vertex]*coefficients.y+full[vertex]*coefficients.z
++					if mesh.blend_shape_mode==Mesh.BLEND_SHAPE_MODE_RELATIVE:
++						point=vertices[vertex]+half[vertex]*coefficients.y+full[vertex]*coefficients.z
++					var skinned := Vector3.ZERO
++					for slot in range(4):
++						var at := vertex*4+slot
++						if weights[at]<=0.0: continue
++						var joint := bind_name(layer,mi,bones[at])
++						if globals.has(joint): skinned+=(globals[joint]*mi.skin.get_bind_pose(bones[at])*point)*weights[at]
++					deformed[vertex]=skinned
++				var predicted: Vector3 = globals[name]*Hands.socket(layer._hand_profile,front,grip)
++				var distance := INF
++				for triangle: Array in hand_triangles:
++					distance=minf(distance,predicted.distance_to(closest(predicted,deformed[triangle[0]],deformed[triangle[1]],deformed[triangle[2]])))
++				max_socket_error=maxf(max_socket_error,distance)
++				expect(distance<=.02,role+" "+name+" actual skinned hand socket g="+str(grip)+" distance="+str(distance))
++				expect(layer.last_hand_grip==[grip,grip],role+" hand-only update reaches actual mesh")
++		layer.free()
++	for failure: String in failures: print("FAIL: ",failure)
++	print("HAND ASSET CHECK: %d/%d passed socket_max_m=%f" % [total-failures.size(),total,max_socket_error])
++	quit(0 if failures.is_empty() else 1)
+
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\author_hand_grips.py
+SHA256: 56bda216aa5c85b5450e48d672f360c027a8cabd524ee39b471bf6311b7ac0a3
+--- absent-at-V2-baseline
++++ D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\author_hand_grips.py
+@@ -0,0 +1,59 @@
++"""Add progressive hand controls without changing any V2 body/phase data."""
++from __future__ import annotations
++import json
++from pathlib import Path
++
++TASK = Path(__file__).resolve().parent.parent
++
++def ease(value: float) -> float:
++    p = min(1.0,max(0.0,value))
++    return p*p*p*(p*(6*p-15)+10)
++
++def mix(a: float,b: float,progress: float) -> float:
++    return a+(b-a)*ease(progress)
++
++def amount(clip: str,frame: float,total: int,split: list[int]) -> float:
++    end = max(1.0,float(total-1))
++    if clip=='ko': return mix(.75,0.0,frame/(end*.3))
++    if clip in ('hit_light','hit_heavy'): return mix(.25,.75,frame/end)
++    if clip=='block': return mix(1.0,.75,frame/end)
++    if clip not in ('jab','cross','uppercut','wave','throw','guard'): return .75
++    windup,active,_ = split
++    contact = max(float(windup+active-1),float(windup))
++    if clip=='guard':
++        peak=max(1.0,float(windup))
++        return mix(.75,1.0,frame/peak) if frame<=peak else mix(1.0,.75,(frame-peak)/max(1.0,end-peak))
++    if clip in ('jab','cross','uppercut'):
++        if frame<float(windup): return mix(.75,1.0,frame/max(1.0,float(windup-1)))
++        if frame<=contact: return 1.0
++        return mix(1.0,.75,(frame-contact)/max(1.0,end-contact))
++    opened=max(1.0,float(windup)*.7)
++    if frame<=opened: return mix(.75,0.0,frame/opened)
++    if clip=='wave':
++        if frame<=contact: return 0.0
++        return mix(0.0,.75,(frame-contact)/max(1.0,end-contact))
++    if frame<=contact: return mix(0.0,.65,(frame-opened)/max(.5,contact-opened))
++    return mix(.65,.75,(frame-contact)/max(1.0,end-contact))
++
++def main() -> None:
++    source=TASK/'baseline/data/combat_motion_3d.json'
++    destination=TASK/'project/data/combat_motion_3d.json'
++    original=json.loads(source.read_text(encoding='utf-8'))
++    data=json.loads(source.read_text(encoding='utf-8'))
++    keys=0
++    for role in ('player','foe'):
++        for name,clip in data['roles'][role]['clips'].items():
++            for key in clip['keys']:
++                grip=amount(name,float(key['frame']),int(clip['frames']),clip['split'])
++                key['hand_grip']=[grip,grip]
++                keys+=1
++    without_hands=json.loads(json.dumps(data))
++    for role in without_hands['roles'].values():
++        for clip in role['clips'].values():
++            for key in clip['keys']: key.pop('hand_grip',None)
++    assert without_hands==original,'V2 body/phase data must remain exact'
++    destination.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
++    (TASK/'reports/hand-grip-authoring.json').write_text(json.dumps({'keys':keys,'body_and_phase_exact':True},indent=2),encoding='utf-8')
++    print(f'AUTHORED_HAND_GRIPS: {keys} keys; V2 body/phase data exact')
++
++if __name__=='__main__': main()
+
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\check_hand_body.gd
+SHA256: e89d9bcf55ab7bfcde873ac483593d788d548c1274570624d854d074afc6faad
+--- absent-at-V2-baseline
++++ D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\tools\check_hand_body.gd
+@@ -0,0 +1,54 @@
++extends SceneTree
++## Compare all integer/fractional body samples with the immutable V2 implementation.
++const Motion = preload("res://scripts/native_motion.gd")
++var checks := 0
++var failures: Array[String] = []
++var max_root_error := 0.0
++var max_rotation_error := 0.0
++
++func _initialize() -> void: call_deferred("run")
++
++func expect(ok: bool,label: String) -> void:
++	checks+=1
++	if not ok and failures.size()<24: failures.append(label)
++
++func quaternion(values: Array) -> Quaternion:
++	return Quaternion(float(values[0]),float(values[1]),float(values[2]),float(values[3]))
++
++func run() -> void:
++	var baseline_root:=String(get_script().resource_path).get_base_dir().path_join("../baseline").simplify_path()
++	var original_script=load(baseline_root.path_join("scripts/native_motion.gd"))
++	if original_script==null:
++		print("FAIL: immutable original body sampler unavailable")
++		quit(1)
++		return
++	var before=original_script.new()
++	var after=Motion.new()
++	expect(before.load_data(baseline_root.path_join("data/combat_motion_3d.json")),"immutable V2 body library loads")
++	expect(after.load_data(),"hand-aware candidate library loads")
++	if not failures.is_empty():
++		for failure in failures: print("FAIL: ",failure)
++		quit(1)
++		return
++	var data: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://data/combat_motion_3d.json"))
++	var samples := 0
++	for role: String in ["player","foe"]:
++		for clip: String in data.roles[role].clips:
++			var frames:=int(data.roles[role].clips[clip].frames)
++			for step in range(maxi(1,frames*2-1)):
++				var at:=float(step)*.5
++				var old_pose: Dictionary=before.sample(role,clip,at)
++				var new_pose: Dictionary=after.sample(role,clip,at)
++				var label:=role+" "+clip+" frame "+str(at)
++				for bone: String in Motion.BONES:
++					var error:=1.0-absf(quaternion(old_pose.rotations[bone]).normalized().dot(quaternion(new_pose.rotations[bone]).normalized()))
++					max_rotation_error=maxf(max_rotation_error,error)
++					expect(error<=.000001,label+" body rotation "+bone)
++				for axis in range(3):
++					var error:=absf(float(old_pose.root_offset[axis])-float(new_pose.root_offset[axis]))
++					max_root_error=maxf(max_root_error,error)
++					expect(error<=.000001,label+" root axis "+str(axis))
++				samples+=1
++	for failure in failures: print("FAIL: ",failure)
++	print("HAND BODY INVARIANCE CHECK: %d checks, %d samples, failures=%d rotation_dot_error=%f root_error_m=%f" % [checks,samples,failures.size(),max_rotation_error,max_root_error])
++	quit(0 if failures.is_empty() else 1)
+
+Structured data boundary:
+D:\Projects\CardBoxer\CardBoxer-bake\full-body-retopology\reports\body-motion-contract.json
+{
+  "ok": true,
+  "keys": 1502,
+  "body_and_phase_exact": true,
+  "baseline_sha256": "083c84e3e24bdb4bea6d3e4b92855322caea97d675cae19a06df36acefd5a703",
+  "candidate_sha256": "27278a748c8c2e6a3e6165e9f92843b0de5976b2b1da9f99744f33b26c20f5ed"
+}

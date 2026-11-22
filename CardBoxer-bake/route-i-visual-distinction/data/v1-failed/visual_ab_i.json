@@ -1,0 +1,102 @@
+{
+  "run": {
+    "seconds": 7.136,
+    "returncode": 0,
+    "has_opengl": true,
+    "script_errors": 0,
+    "headless": false
+  },
+  "payload": {
+    "env_visual_none": "",
+    "foe_layer_ready": true,
+    "player_layer_ready": true,
+    "player_visual_state": {
+      "foe_materials": 0,
+      "foe_visual": false,
+      "light_rows": 4,
+      "mesh_rows": 1,
+      "role": "player"
+    },
+    "shots": [
+      {
+        "draw_calls": 117.0,
+        "h": 720,
+        "name": "base",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-i-visual-distinction\\shots\\visual_ab/vis-base.png",
+        "prims": 5136.0,
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "draw_calls": 33.0,
+        "h": 720,
+        "name": "on",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-i-visual-distinction\\shots\\visual_ab/vis-on.png",
+        "prims": 1104816.0,
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "draw_calls": 33.0,
+        "h": 720,
+        "name": "plain",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-i-visual-distinction\\shots\\visual_ab/vis-plain.png",
+        "prims": 1104816.0,
+        "save_error": 0,
+        "w": 1280
+      },
+      {
+        "draw_calls": 33.0,
+        "h": 720,
+        "name": "again",
+        "path": "C:\\Users\\tutic\\Desktop\\学习资料\\CardBoxer-bake\\route-i-visual-distinction\\shots\\visual_ab/vis-again.png",
+        "prims": 1104816.0,
+        "save_error": 0,
+        "w": 1280
+      }
+    ],
+    "states": [
+      {
+        "foe_materials": 1,
+        "foe_visual": true,
+        "light_rows": 4,
+        "mesh_rows": 1,
+        "role": "foe",
+        "tag": "on"
+      },
+      {
+        "foe_materials": 1,
+        "foe_visual": false,
+        "light_rows": 4,
+        "mesh_rows": 1,
+        "role": "foe",
+        "tag": "plain"
+      },
+      {
+        "foe_materials": 1,
+        "foe_visual": true,
+        "light_rows": 4,
+        "mesh_rows": 1,
+        "role": "foe",
+        "tag": "again"
+      }
+    ]
+  },
+  "checks": {
+    "rc": true,
+    "has_opengl": true,
+    "no_script_errors": true,
+    "no_payload_error": true,
+    "four_shots": true,
+    "all_png_ok": true,
+    "both_layers_ready": true,
+    "env_not_none": true,
+    "on_state_enabled": true,
+    "plain_state_disabled": true,
+    "again_state_enabled": true,
+    "player_layer_never_visual": true,
+    "mesh_and_lights_collected": true
+  },
+  "failed": [],
+  "ok": true
+}

@@ -1,0 +1,392 @@
+{
+  "meta": {
+    "id": "P5-POSE-LANGUAGE-SPEC",
+    "date": "2026-11-15",
+    "request": "那就动动作设计吧，参考拳皇街霸的招牌动作",
+    "scope": "规格层：把 KOF/街霸 招牌动作提炼成 11 关节表上可复算的姿态语法",
+    "status": "规格已固化；游戏源码与三份动作表 0 改动；未落地任何姿态改动",
+    "not": "不是玩法变更、不是 IP 复刻、不是美术资产、不是引擎内效果宣称",
+    "recompute": [
+      "python -u probe_tables.py",
+      "python -u diag_pose_gap.py",
+      "python -u make_baseline_p5.py",
+      "python -u verify_pose_spec.py"
+    ]
+  },
+  "coordinate_system": {
+    "source": "card_motion.json:units",
+    "units": "game px; origin at the feet; +x forward; -y up",
+    "semantics": {
+      "hip_y_larger": "质心下沉（向地面靠近）",
+      "f_hand_x_smaller": "前手后收（蓄力）",
+      "foot_y_near_zero": "脚接地"
+    },
+    "joints": [
+      "hip", "shoulder", "head", "f_elbow", "f_hand", "b_elbow",
+      "b_hand", "f_knee", "f_foot", "b_knee", "b_foot"
+    ],
+    "stance_source": "card_motion.json:stance（不写死，判据逐值核对）",
+    "stance_snapshot": {
+      "hip": [0.0, -80.0], "shoulder": [2.0, -148.0], "head": [4.0, -172.0],
+      "f_elbow": [30.0, -132.0], "f_hand": [44.0, -156.0],
+      "b_elbow": [-18.0, -130.0], "b_hand": [-24.0, -152.0],
+      "f_knee": [34.0, -40.0], "f_foot": [36.0, -0.0],
+      "b_knee": [-24.2, -42.1], "b_foot": [-44.0, -0.0]
+    },
+    "metric_module": "pose_metrics.py",
+    "metric_count": 13
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "kind": "practitioner_tutorial_primary",
+      "title": "【动作教程】街头霸王-隆的必杀升龙拳（游戏动作设计师拆解）",
+      "url": "http://mp.weixin.qq.com/s?__biz=MzAxNzk5MDkwNg==&mid=2247490644&idx=1&sn=7757ee2c0232545f6e7fb730c2e34c2a",
+      "key_claims": [
+        "十个关键 pose：待机质心压低站稳、蓄力质心下压+胸腔旋转+击打手后收、发力质心前移上提+手臂接近伸直、惯性最高帧稍稍放松、落地缓冲质心下压、回到待机",
+        "二次蓄力是整段质心最低点，蓄力越深发力越强",
+        "打击感三件套：定格 pose（第一次 6 帧、第二次 10 帧）、摄像机震动、受击震动",
+        "制作流程：设计 → 关键帧 → 节奏 → 中间帧 → 细节"
+      ]
+    },
+    {
+      "id": "S2",
+      "kind": "industry_tutorial",
+      "title": "How to Animate a Fighting Game: Complete Guide (Artemisia College)",
+      "url": "https://www.artemisiacollege.com/feeds/blog/fighting-game-animation",
+      "key_claims": [
+        "Anticipation 给玩家可读的预告；过长会变成输入延迟",
+        "关键 pose 必须当成纯黑剪影仍可辨认（silhouette test）",
+        "Exaggeration 把命中帧拉伸到解剖学之外，让 60fps 下也能一眼读出",
+        "Start-up / Active / Recovery 三段帧数据决定轻重与公平感",
+        "FX 不能盖住角色剪影"
+      ]
+    },
+    {
+      "id": "S3",
+      "kind": "industry_article",
+      "title": "How 2D Fighting Game Characters Are Designed, Animated, and Rigged (DashFight)",
+      "url": "https://dashfight.com/news/how-2-d-fighting-game-characters-are-designed-animated-and-rigged-9271",
+      "key_claims": [
+        "每个招式 = startup（蓄力 pose）+ active（命中 pose）+ recovery（回到 neutral）",
+        "命中 pose 必须与 hitbox 对齐：看起来在打的那个拳头/脚就是判定所在",
+        "recovery 先 hold pose、附属物继续动，再 snap 回 idle",
+        "纯骨骼平滑过渡在快招上会发飘，极值 pose / impact frame 要单独换图"
+      ]
+    },
+    {
+      "id": "S4",
+      "kind": "industry_article",
+      "title": "How Do You Create Weight and Impact in Combat Animations?",
+      "url": "https://mygamedesign.com/how-do-you-create-weight-and-impact-in-combat-animations",
+      "key_claims": [
+        "Anticipation / Follow-through / Squash-and-stretch 是打击感三支柱",
+        "随动：重击不会在命中瞬间停住，身体继续带着惯性往前",
+        "hit-stop：轻攻击 4–6 帧、重攻击 10–12 帧的冻结强化碰撞感",
+        "recovery 是重量感的第二次机会，也是玩法上的破绽窗口"
+      ]
+    },
+    {
+      "id": "S5",
+      "kind": "reference_mapping",
+      "title": "Disney 12 Principles → Game Development Animation (SkillsCat)",
+      "url": "https://skills.cat/skills/dylantarre/animation-principles/game-development",
+      "key_claims": [
+        "Slow in / slow out：攻击快出、收招慢回，绝不线性",
+        "Arc：挥击走弧线，直线路径显得机械",
+        "Exaggeration：夸张 20–30% 才读得出来；Timing：hit-stop 典型 2–5 帧",
+        "Follow through：落地回收延伸过命中点，附属物最后才停"
+      ]
+    },
+    {
+      "id": "S6",
+      "kind": "encyclopedia_secondary",
+      "title": "Tenchi Haoh Ken (SNK Wiki / KOF)",
+      "url": "https://snk.fandom.com/wiki/Tenchi_Haoh_Ken",
+      "key_claims": [
+        "起手：后拳收到腰侧、前臂绕到与头平行、采用宽站架",
+        "发力：踏步前压送出直拳；超必杀版本起手有更长的蓄力停顿",
+        "命中后对手长距离飞退并进入僵直；命中成立时才回到架势"
+      ]
+    },
+    {
+      "id": "S7",
+      "kind": "secondary_article",
+      "title": "拳皇95 的像素艺术：人物动作帧背后的设计",
+      "url": "https://bk.taobao.com/k/youximeishusheji_3407/cb483386126ff102f3fc5ee5d608d438.html",
+      "key_claims": [
+        "帧序列靠关键帧 + 插值构成，关键帧是能表现动作特征的姿态节点",
+        "每个角色有专属动作曲线；动作帧同时要兼顾体型比例、动作范围、打击判定"
+      ]
+    },
+    {
+      "id": "S8",
+      "kind": "secondary_article",
+      "title": "拳皇经典人物格斗动作解析",
+      "url": "http://sng.cn/sjyx/dzgd/699134.html",
+      "key_claims": [
+        "必杀技优先保证辨识度与威力反馈；超必杀在帧数上留出足够停顿",
+        "受击靠身体姿态（后仰 / 踉跄 / 短僵直）传递伤害程度",
+        "轻拳重拳的前摇 / 后摇帧数差异是节奏语言"
+      ]
+    },
+    {
+      "id": "S9",
+      "kind": "secondary_article",
+      "title": "升龙拳考：隆与肯的毫厘之争（帧数分析）",
+      "url": "https://tsight.io/articles/7043471",
+      "key_claims": [
+        "起手帧 / 无敌帧 / 硬直帧分开计量；同招式轻重档起手 3/4/5 帧、硬直 22/24/26 帧",
+        "帧数差异直接改变角色手感定位"
+      ]
+    },
+    {
+      "id": "S10",
+      "kind": "secondary_article",
+      "title": "《街头霸王：冠军版》实战技巧（波动拳/升龙拳帧数）",
+      "url": "https://www.sgebuy.cn/ybkpyx/34265.html",
+      "key_claims": [
+        "隆·波动拳 15 帧发动 / 30 帧硬直；升龙拳 3 帧发动 / 25 帧硬直",
+        "帧数表决定招式是压制还是破绽"
+      ]
+    },
+    {
+      "id": "P0",
+      "kind": "project_accepted_evidence",
+      "title": "CardBoxer-bake/combat-motion-design/combat-motion-design-notes.txt + battle_motion_spec.json",
+      "url": "local://CardBoxer-bake/combat-motion-design/",
+      "key_claims": [
+        "牌型绑定：triple→wave / sequence→cross / scatter→jab / draw 双方不攻击",
+        "亮牌阶段不打架，赢家攻击只在 resolve 0.12–0.72s",
+        "reveal 1.5s + resolve 1.9s；伤害按牌型分档，不按数值分档"
+      ]
+    },
+    {
+      "id": "P1",
+      "kind": "project_accepted_evidence",
+      "title": "CardBoxer-bake/side-view-battle-demo/side-view-combat-validation-record.txt",
+      "url": "local://CardBoxer-bake/side-view-battle-demo/",
+      "key_claims": [
+        "KOF 式表达靠「面对面 + 贴身前压 + 地面投影 + 命中火花 + 3 帧停顿」",
+        "离线演示已实测：动作幅度偏小（gain 0.55）导致三档差别主要靠整体前压读出",
+        "18 条判据一条都没评好不好看，看图结论单独写"
+      ]
+    }
+  ],
+  "source_caveat": "S6–S10 是百科/社区/媒体二手资料，其中的具体帧数（6/10/15/30 帧等）只作量级参考，绝不直接搬成本项目的硬阈值；本项目硬阈值一律来自可复算的仓内口径（pose_probe 1.5px、P4 精确平台 0、GLB 撕裂锚 0.09365m）。",
+  "language": [
+    {
+      "id": "L1",
+      "name": "蓄力预备可读（Anticipation）",
+      "claims": "起手段必须有反向预加载：击打手后收 + 质心下沉 + 躯干反向拧转，且蓄力深度随招式强度递增。",
+      "metrics": ["windup_recoil_px", "windup_hip_drop_px"],
+      "phase_scope": "windup",
+      "applies_to": "attack_tracks",
+      "target": {
+        "direction": "increase_with_tier",
+        "rule": "windup_recoil_px 与 windup_hip_drop_px 均随 heavy > medium > light 递增，且不得为 0",
+        "basis": "S1 pose2/pose4（二次蓄力是全段质心最低点）、S2/S3 anticipation、S6 后拳收腰+宽站架；阈值按 threshold_policy 从仓内分布复算，不照抄外部帧数"
+      },
+      "source_ids": ["S1", "S2", "S3", "S6"]
+    },
+    {
+      "id": "L2",
+      "name": "命中帧剪影张开（Impact / Silhouette）",
+      "claims": "active 段峰值帧击打手接近伸直，四肢末端与躯干拉开，剪影包围盒显著大于站架；强度随牌型递增。",
+      "metrics": ["peak_reach_gain_px", "peak_bbox_gain_pct"],
+      "phase_scope": "active",
+      "applies_to": "attack_tracks",
+      "target": {
+        "direction": "increase_with_tier",
+        "rule": "wave > cross > jab 的 peak_reach_gain_px 必须严格递减；三档 peak_bbox_gain_pct 同序",
+        "basis": "S1 pose6（完全发力、接近伸直）、S2 silhouette test、S3 hit pose 与 hitbox 对齐、P0 牌型绑定、P1 实测『幅度偏小让三档读不出来』"
+      },
+      "source_ids": ["S1", "S2", "S3", "P0", "P1"]
+    },
+    {
+      "id": "L3",
+      "name": "峰值与命中帧对齐（Pose matches hitbox）",
+      "claims": "伸展峰值必须落在 active 段；不能出现在 windup 或 recover。",
+      "metrics": ["peak_reach_phase", "peak_reach_argmax"],
+      "phase_scope": "active",
+      "applies_to": "attack_tracks",
+      "target": {
+        "direction": "hard_constraint",
+        "rule": "hard_rule: peak_reach_phase == 'active' for every attack track",
+        "basis": "S3『The hit pose should match the hitbox』、S1 定格帧即击中帧、S2 start-up/active/recovery 分段"
+      },
+      "source_ids": ["S1", "S2", "S3"]
+    },
+    {
+      "id": "L4",
+      "name": "命中停顿（Hit-stop）",
+      "claims": "峰值附近需要视觉停顿，但本项目禁止用『整帧 11 关节完全相同』实现。",
+      "metrics": ["impact_hold_len", "exact_hold_pairs"],
+      "phase_scope": "active",
+      "applies_to": "attack_tracks",
+      "target": {
+        "direction": "bounded_visual_hold",
+        "rule": "hard_rule: 用非零微小差异制造低速段，exact_hold_pairs 必须保持 0；不得引入整帧完全相同的定格",
+        "basis": "S1 定格 pose、S4 hit-stop 4–6/10–12 帧、S5 2–5 帧、S8 超必杀留停顿；但 P4 已把精确平台清零并写进承重判据，冲突解法见 conflicts[0]"
+      },
+      "source_ids": ["S1", "S4", "S5", "S8"]
+    },
+    {
+      "id": "L5",
+      "name": "随动过冲与收招缓冲（Follow-through / Recovery）",
+      "claims": "峰值后不直接线性回站架：先带惯性过冲、再回落、末帧回到 stance 邻域。",
+      "metrics": ["recover_overshoot_px", "end_drift_px"],
+      "phase_scope": "recover",
+      "applies_to": "all_tracks",
+      "target": {
+        "direction": "increase_then_return",
+        "rule": "recover_overshoot_px > 0，且 end_drift_px 不得超过 pose_probe.gd 的 1.5px 红线",
+        "basis": "S1 pose7/8/9/10（惯性最高帧、落地缓冲、回到待机）、S4 follow-through、S5 slow-in；1.5px 是仓内 pose_probe.gd 已上线红线"
+      },
+      "source_ids": ["S1", "S4", "S5"]
+    },
+    {
+      "id": "L6",
+      "name": "重心与接地（Weight / Grounding）",
+      "claims": "下沉与前压联动，不只动手臂；脚保持接地，前后脚水平张开形成宽站架。",
+      "metrics": ["foot_ground_max_px", "stance_width_max_px", "windup_hip_drop_px"],
+      "phase_scope": "all",
+      "applies_to": "all_tracks",
+      "target": {
+        "direction": "preserve_and_widen",
+        "rule": "foot_ground_max_px 不得显著变大（脚不能浮空），stance_width_max_px 在 heavy 档不缩窄",
+        "basis": "S1『质心压低站稳 / 左脚踏实右脚跟抬起 / 落地缓冲』、S6 wide-legged stance、S2 weight & physics"
+      },
+      "source_ids": ["S1", "S2", "S6"]
+    },
+    {
+      "id": "L7",
+      "name": "弧线路径（Arc）",
+      "claims": "击打手从起手到峰值走弧线，不是 shoulder→peak 的直线；上勾向上、扫腿向下。",
+      "metrics": ["arc_deviation_px"],
+      "phase_scope": "windup_to_active",
+      "applies_to": "attack_tracks",
+      "target": {
+        "direction": "nonzero",
+        "rule": "攻击轨 arc_deviation_px 不得全为 0；重档不小于轻档",
+        "basis": "S5 Arc『线性路径显得机械』、S1 胸腔旋转带动手臂、S7 关键帧+插值形成专属动作曲线"
+      },
+      "source_ids": ["S1", "S5", "S7"]
+    },
+    {
+      "id": "L8",
+      "name": "招式可辨（Distinct Silhouettes）",
+      "claims": "不同招式的峰值姿态两两可区分，不能都长得像同一个挥手。",
+      "metrics": ["peak_pose_distance"],
+      "phase_scope": "peak_frames",
+      "applies_to": "attack_tracks",
+      "target": {
+        "direction": "preserve_minimum",
+        "rule": "改动后任意两攻击轨峰值帧 11 关节逐点距离之和不得降到现有最小值的 80% 以下",
+        "basis": "S2 黑剪影测试、S3 每个 pose 都是玩法信息、S8 必杀技优先保证辨识度；最小值由 diag_pose_gap.py 复算"
+      },
+      "source_ids": ["S2", "S3", "S8"]
+    }
+  ],
+  "threshold_policy": {
+    "method": "quantile_of_current_attack_tracks",
+    "source": "diag_pose_gap.py / pose_metrics.all_metrics()",
+    "quantile": 0.75,
+    "note": "规格层只钉公式、方向、约束与依据；具体数值阈值由 #215 对当前 6 条攻击轨分布复算后写进候选评估，绝不照抄 S9/S10 的外部帧数"
+  },
+  "tiers": {
+    "source": "battle_motion_spec.json:card_type_binding（P0 已验收）",
+    "triple": {"winner_asset": "wave", "strength": "heavy", "phase": "resolve"},
+    "sequence": {"winner_asset": "cross", "strength": "medium", "phase": "resolve"},
+    "scatter": {"winner_asset": "jab", "strength": "light", "phase": "resolve"},
+    "draw": {"winner_asset": null, "strength": "none", "phase": "resolve",
+             "note": "双方对峙不攻击"}
+  },
+  "conflicts": [
+    {
+      "id": "C1",
+      "topic": "hitstop vs P4 精确平台",
+      "detail": "L4 要视觉停顿，但 P4 已把 255 对精确平台清成 0 并写进 91 条承重判据；重新引入『整帧 11 关节完全相同』会打回 P4。",
+      "resolution": "用非零微小差异的低速段制造视觉停顿，exact_hold_pairs 保持 0。不退役、不篡改 P4 判据。"
+    },
+    {
+      "id": "C2",
+      "topic": "随动过冲 vs pose_probe 红线",
+      "detail": "L5 要峰值后过冲，但 pose_probe.gd 有『表内起收招最大漂移 ≤ 1.5px』红线。",
+      "resolution": "过冲只允许发生在峰值与 recover 中段，末帧必须回到 stance 邻域；end_drift_px 逐轨复算并留余量。"
+    },
+    {
+      "id": "C3",
+      "topic": "三表同步",
+      "detail": "card_motion.json / motion_input.json / motion_input_foe.json 的 11 关节在 P4 后逐值同步（6248 值、0 分歧）；任一表单独改会同时破坏 2D 与 3D 读回一致性。",
+      "resolution": "任何姿态改动必须三表同帧同值落地，并用 sha + 逐值对账证明。"
+    },
+    {
+      "id": "C4",
+      "topic": "历史 verify 债",
+      "detail": "P1/P2/B/P3/P4 与实机验收的 verify 都钉过动作表 sha、旧值断言或源码文本；改 11 关节必然红。",
+      "resolution": "按项目既定约定不篡改历史结论：实测、逐条列红因、原字节还原，在验证记录里单列『历史守卫债』。"
+    },
+    {
+      "id": "C5",
+      "topic": "2D 与 3D 可见性分叉",
+      "detail": "3D 开态 fighter.gd::_draw() 画完影子即 return，2D 关节表不参与绘制；姿态改动在 3D 开态只通过 13 骨 delta 可见，默认关才直接改 2D 火柴人。",
+      "resolution": "引擎内 A/B 必须分 3D 开态与默认关两态取证，不能只截一种。"
+    }
+  ],
+  "boundaries": [
+    "不复刻 SNK/Capcom 具体角色的专有招式造型、招式名、特效、帧数与台词；只采用通用动画原理（anticipation / impact / follow-through / silhouette / arc / hitstop）。",
+    "不改玩法判定、卡牌规则、伤害公式、三回制、怒火槽、EX 规则。",
+    "不改 reveal 1.5s / resolve 1.9s 等阶段时长，不改 tk_phase 状态机。",
+    "不改 arena.gd / fighter.gd / rig_driver.gd / card_motion.gd 源码；不改 mapping 的增益与限幅参数（除非 #215 证明确有必要并另立成本账）。",
+    "不改 GLB / .blend / 贴图 / .import，不重烘外部资产。",
+    "三份动作表必须同步；不改非关节元数据与序列化格式（沿用 P4 的 round-trip 恒等证明）。",
+    "规格只钉可复算指标，不评『好不好看』；观感结论由 #217 的看图环节单独给。",
+    "本阶段不宣称任何引擎内效果、不宣称实机观感提升；规格成立与否由 verify_pose_spec.py 判据证明。"
+  ],
+  "cost_account": [
+    "2D 火柴人：fighter.gd:1027 → CardMotion.sample() → _pose_at()，11 关节改动直接进入 2D 绘制。",
+    "3D 13 骨：rig_driver.gd::_joints_of() 读 motion_input*.json，retarget_delta 由 11 关节算 13 骨 delta；姿态改动会改变逐骨角度。",
+    "GLB 撕裂：P4 全量 284 帧真实 GLB 上界 0.042681m、外部锚 0.09365m；姿态幅度变大必须用 sweep_tear_blender.py 重跑全量。",
+    "pose_probe.gd：起收招漂移 ≤ 1.5px 红线。",
+    "历史守卫：P1/P2/B/P3/P4/实机验收的 verify 与 mutation 共 6 套判据，改表必红，按 C4 处理。",
+    "P4 承重：精确平台 255→0、可辨平台 308→200、2D 最大位移 1.7778px；L4 不得把精确平台打回去。"
+  ],
+  "metric_revision": {
+    "id": "R1",
+    "date": "2026-11-15",
+    "trigger": "#215 逐帧读盘（logs/diag_arm_axes.out / data/arm_axes.json）",
+    "finding": "cross 的 f_hand 全程恒为 (44,-156)，动的只有 shoulder（-16.4→50.8），mf=|f_hand-stance.f_hand| 全程为 0，即 3D 侧双臂完全不驱动；wave 的手与肩同步平移，fwd_ext 恒 44，mf 峰值仅 22.09。#213 的 reach=|f_hand-shoulder| 是欧氏距离，会把躯干后仰误判成伸展峰值、把整体平移误判成无动作。",
+    "decision": "#215 起落地判据的主强度指标改为 mf（与 rig_driver.gd::retarget_delta 的 tf=min(1,mf/reach_norm_px) 完全同口径）；forward_ext=f_hand.x-shoulder.x 只作辅助报告并标注肩部轨迹干扰。L2 的严格递减按 mf 重述为 wave > cross > jab，且 wave >= 40 px / cross >= 25 px / jab <= 40 px。",
+    "scope_change": "L3 的峰值对齐判据由 reach 改为 mf；六条攻击轨全部适用（含 sweep），不再需要为腿招另立例外。",
+    "history_policy": "不篡改 #213 的 14 条判据与当时的实测数字：它们按当时口径成立，历史归档保持原样；本订正只约束 #215 之后的候选、落地与验收。",
+    "new_metric_module": "pose_axes.py"
+  },
+  "metric_revision_r2": {
+    "id": "R2",
+    "date": "2026-11-15",
+    "trigger": "R1 首版候选落地后，引擎内 15 套自检的 reach_probe 报真回归",
+    "finding": "为凑 R1 里「wave > cross > jab 严格递减」把 jab 前手按比例收短 60%，导致画面最远手位从 118 掉到 76，而卡牌判定 reach 仍是 118 → 隔空命中 42 px（logs/checks/reach_probe.out）。三份表已用 --restore 逐字节回退到 P4 上线态（sha ca4060d / 61f8a14 / fa5960b）。",
+    "decision": "否决「三档 mf 严格递减」这个人为目标：格斗游戏里轻拳的「轻」由帧数短、收招快表达，不由手伸多远表达；拿判定一致性换数字排序不可接受。jab 完全不动，L2 目标改为「wave 与 cross 从几乎不驱动变成真正驱动」：wave_mf_peak >= 55 px、cross_mf_peak >= 25 px、wave >= cross + 5 px，并新钉 jab_byte_identical_for_reach_probe。",
+    "history_policy": "R1 的 mf 口径继续有效；只废弃其中的三档递减条款。V1（reach 口径）与 R1 首版（削 jab）两次负结果都留档，不删除、不改写。",
+    "verification": "落地后必须重跑 run_all_checks_p5.py 的 15 套，reach_probe 转 PASS 才算 R2 成立"
+  },
+  "provisional_findings": {
+    "source": "data/pose_gap.json + data/tables_probe.json（两个脚本可独立复算）",
+    "track_count": 15,
+    "attack_track_count": 6,
+    "three_tier_reach_gain_px": {"wave": 1.7224, "cross": 18.9248, "jab": 44.0145},
+    "three_tier_order_is_inverted": true,
+    "cross_peak_reach_phase": "windup",
+    "cross_peak_reach_argmax": 3,
+    "wave_peak_bbox_gain_pct": 26.2781,
+    "exact_hold_total": 0,
+    "attack_recover_overshoot_all_zero": true,
+    "end_drift_worst_px": 1.2083,
+    "end_drift_worst_track": "sweep",
+    "end_drift_metric_caveat": "pose_metrics.end_drift_px 是末帧 11 关节逐点欧氏距离最大值；与 P4 验证记录里的 1.100 px 口径不同，不互相折算，也不要写成同一套数字。",
+    "joint_sync_checked": 6248,
+    "joint_sync_disagreements": 0,
+    "headline": "真正拖观感的不是 P2/P3/P4 修的数值特征，而是『最大牌 wave 打出的姿态最弱、最小牌 jab 最强』的语义倒挂，以及 cross 峰值落在 windup 导致命中帧与姿态错位。"
+  }
+}
